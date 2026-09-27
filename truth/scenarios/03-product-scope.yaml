@@ -1,0 +1,20 @@
+id: S03
+slug: product-scope
+title: NS-Cloud request (Experiment E)
+kind: discount_decision
+question: Can Sarah Chen approve 15% for Acme Manufacturing on the NS-Cloud Operations Suite on 2026-09-23?
+teaches: [narrow-exception-scope]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001, product: PROD-002 }
+expected:
+  outcome: REVIEW_REQUIRED
+  commercial_eligibility: not_covered
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: VP_SALES
+  approver: EMP-200
+  evidence: [CRM-2048, C-1001, MSA-ACME-2025, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9001]
+reasoning:
+  - The Acme 15% exception applies specifically to the NS-500 Industrial Controller.
+  - It does not transfer to NS-Cloud Operations Suite.

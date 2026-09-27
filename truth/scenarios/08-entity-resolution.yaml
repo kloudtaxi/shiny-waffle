@@ -1,0 +1,12 @@
+id: S08
+slug: entity-resolution
+title: Similar-name customer (Experiment F)
+kind: identity
+question: Which customer do CRM-2048, C-1001 and ACME-MFG-2025 refer to — and is Acme Industrial Supply Co. the same customer?
+teaches: [identity]
+corpus: base
+expected:
+  same_as:
+    CUST-1001: [CRM-2048, C-1001, ACME-MFG-2025]
+    CUST-1044: [CRM-2091, C-1044]
+  distinct: [[CUST-1001, CUST-1044]]

@@ -1,0 +1,10 @@
+product_id,sku,product_name,category,list_price_usd
+PROD-001,NS-500,NS-500 Industrial Controller,Equipment,250000
+PROD-002,NS-CLOUD,NS-Cloud Operations Suite,Software,120000
+PROD-003,NS-EDGE,NS-Edge Monitoring Package,Software,85000
+PROD-101,NS-250-SOF,NS-250 Safety Module,Software,308000
+PROD-102,NS-880-SER,NS-880 Commissioning Service,Service,320000
+PROD-103,NS-760-SER,NS-760 Premium Support Plan,Service,38000
+PROD-104,NS-400-EQU,NS-400 Gateway,Equipment,9000
+PROD-105,NS-840-SER,NS-840 Commissioning Service,Service,93000
+PROD-106,NS-830-EQU,NS-830 I/O Module,Equipment,203000

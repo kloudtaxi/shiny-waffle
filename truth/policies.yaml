@@ -1,0 +1,35 @@
+# Pricing policies. Authority is determined by role and the policy in effect
+# on the decision date. Bands are (min_exclusive, max_inclusive]; null = open.
+
+policies:
+  - id: pricing_policy_2025
+    title: Northstar Pricing Policy 2025
+    valid_from: 2025-01-01
+    valid_to: 2025-12-31
+    authority_matrix_document: null   # the 2025 bands live in the policy itself
+    approval_evidence_required_above: null
+    bands:
+      - { role: ENTERPRISE_AE, min_exclusive: null, max_inclusive: 0.15 }
+      - { role: VP_SALES, min_exclusive: 0.15, max_inclusive: null }
+    rules:
+      - Discounts must be calculated against the current list price.
+      - Contract-specific pricing exceptions must be reviewed.
+
+  - id: pricing_policy_2026
+    title: Northstar Pricing Policy 2026
+    valid_from: 2026-01-01
+    valid_to: 2026-12-31
+    authority_matrix_document: approval_authority_matrix
+    approval_evidence_required_above: 0.10
+    bands:
+      - { role: ENTERPRISE_AE, min_exclusive: null, max_inclusive: 0.10 }
+      - { role: VP_SALES, min_exclusive: 0.10, max_inclusive: 0.20 }
+      - { role: CRO, min_exclusive: 0.20, max_inclusive: null }
+    rules:
+      - Discounts are calculated against the current list price.
+      - Contract-specific pricing exceptions must be reviewed.
+      - Discounts greater than 10% require recorded approval evidence.
+
+principles:
+  - Contractual eligibility does not change employee authority.
+  - A request must not be approved solely because the requested commercial discount is permitted by a customer contract.

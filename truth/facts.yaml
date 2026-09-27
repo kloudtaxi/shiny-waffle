@@ -1,0 +1,32 @@
+# The evaluation sheet (doc 02 §7). `asserted` facts are stated outright by at
+# least one evidence artifact. `derived` facts are stated by NO single artifact —
+# they must be composed. `owm_needed: true` marks the candidate OWM capabilities:
+# "the knowledge foundation knows X and Y but not the organizational implication Z".
+facts:
+  - { id: F01, kind: asserted, owm_needed: false, statement: "CRM-2048 is Acme Manufacturing (CUST-1001)" }
+  - { id: F02, kind: asserted, owm_needed: false, statement: "ERP customer C-1001 (Acme Mfg. Holdings) is Acme Manufacturing" }
+  - { id: F03, kind: asserted, owm_needed: false, statement: "ACME-MFG-2025 is the reference of MSA-ACME-2025 with Acme Manufacturing" }
+  - { id: F04, kind: asserted, owm_needed: false, statement: "Sarah Chen owns the Acme account" }
+  - { id: F05, kind: asserted, owm_needed: false, statement: "Sarah Chen reports to Michael Torres" }
+  - { id: F06, kind: asserted, owm_needed: false, statement: "Michael Torres is VP Sales" }
+  - { id: F07, kind: asserted, owm_needed: false, statement: "Sarah Chen is an Enterprise Account Executive" }
+  - { id: F08, kind: asserted, owm_needed: false, statement: "2026: Enterprise AE discount authority is <=10%" }
+  - { id: F09, kind: asserted, owm_needed: false, statement: "2026: VP Sales discount authority is >10% and <=20%" }
+  - { id: F10, kind: asserted, owm_needed: false, statement: "2026: discounts >20% require CRO approval" }
+  - { id: F11, kind: asserted, owm_needed: false, statement: "2025: Enterprise AE discount authority is <=15%" }
+  - { id: F12, kind: asserted, owm_needed: false, statement: "Acme's NS-500 exception permits up to 15%" }
+  - { id: F13, kind: asserted, owm_needed: false, statement: "The 15% exception is valid 2025-04-01 to 2028-03-31" }
+  - { id: F14, kind: asserted, owm_needed: false, statement: "MSA-ACME-2025 is in force 2025-04-01 to 2028-03-31" }
+  - { id: F15, kind: asserted, owm_needed: false, statement: "An older 10% NS-500 exception applied 2023-04-01 to 2025-03-31" }
+  - { id: F16, kind: asserted, owm_needed: false, statement: "The 15% exception covers the NS-500 only" }
+  - { id: F17, kind: asserted, owm_needed: false, statement: "Acme is a strategic account" }
+  - { id: F18, kind: asserted, owm_needed: false, statement: "DR-9001: Sarah Chen requests 15% on NS-500 for Acme on 2026-09-23" }
+  - { id: D01, kind: derived, owm_needed: false, statement: "Michael Torres holds authority for a 15% discount in 2026" }
+  - { id: D02, kind: derived, owm_needed: true, statement: "Sarah Chen can approve a 15% Acme discount on 2026-09-23 — NO" }
+  - { id: D03, kind: derived, owm_needed: true, statement: "Michael Torres is the required approver for DR-9001" }
+  - { id: D04, kind: derived, owm_needed: true, statement: "Acme's 15% eligibility does not let Sarah approve DR-9001" }
+  - { id: D05, kind: derived, owm_needed: true, statement: "Sarah Chen could approve the same 15% on 2025-09-23 — YES" }
+  - { id: D06, kind: derived, owm_needed: true, statement: "The Acme exception does not extend to NS-Cloud" }
+  - { id: D07, kind: derived, owm_needed: true, statement: "Without the contract documents, 15% eligibility cannot be established" }
+  - { id: D08, kind: derived, owm_needed: true, statement: "On 2026-09-23 the applicable Acme NS-500 cap is 15%, not 10%" }
+  - { id: D09, kind: derived, owm_needed: false, statement: "Acme Industrial Supply Co. is not Acme Manufacturing" }

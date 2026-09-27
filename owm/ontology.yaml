@@ -1,0 +1,59 @@
+# Conceptual OWM ontology for the Northstar lab (doc 02 §2). HAND-AUTHORED.
+# Independent of Utopia: map it onto the knowledge foundation's ontology, never
+# the other way round. "Don't obsess over getting this perfect — the point is to
+# discover the model."
+
+entity_types:
+  Organization:    { layer: foundation }
+  Person:          { layer: foundation }
+  Employee:        { layer: foundation, is_a: Person }
+  Role:            { layer: owm, note: authority attaches here, not to people }
+  Department:      { layer: foundation }
+  Customer:        { layer: foundation, note: the real-world party; resolved identity }
+  Account:         { layer: foundation, note: a CRM representation of a Customer }
+  Product:         { layer: foundation }
+  Contract:        { layer: foundation, temporal: true }
+  PricingException: { layer: owm, temporal: true, note: commercial eligibility, product-scoped }
+  Policy:          { layer: owm, temporal: true }
+  AuthorityBand:   { layer: owm, temporal: true, note: (min_exclusive, max_inclusive] per role per policy }
+  Order:           { layer: foundation }
+  DiscountRequest: { layer: foundation }
+  Approval:        { layer: owm }
+  Decision:        { layer: owm, note: first-class, carries evidence }
+  Evidence:        { layer: foundation, note: artifact + provenance }
+
+relationship_types:
+  employee_of:      [Employee, Organization]
+  member_of:        [Employee, Department]
+  has_role:         [Employee, Role]
+  reports_to:       [Employee, Employee]
+  owns:             [Employee, Customer]
+  represents:       [Account, Customer]
+  identifies:       [str, Contract]           # an alias / reference number
+  has_contract:     [Customer, Contract]
+  covers:           [Contract, Product]
+  eligible_for:     [Customer, PricingException]
+  applies_to:       [PricingException, Product]
+  supersedes:       [PricingException, PricingException]
+  placed_by:        [Order, Customer]
+  for_customer:     [DiscountRequest, Customer]
+  for_product:      [DiscountRequest, Product]
+  submitted_by:     [DiscountRequest, Employee]
+  governs:          [Policy, DiscountRequest]
+  grants_authority: [Role, AuthorityBand]
+  authorizes:       [Approval, DiscountRequest]
+  evaluates:        [Decision, DiscountRequest]
+  supported_by:     [Decision, Evidence]
+
+decision_outcomes:
+  - APPROVE
+  - APPROVE_WITH_AUTHORIZATION
+  - REJECT_OR_ESCALATE
+  - REVIEW_REQUIRED
+  - REQUEST_EVIDENCE
+
+invariants:
+  - Contractual eligibility does not change employee authority.
+  - A pricing exception applies only to the product and dates it names.
+  - Superseded facts are preserved; selection is by validity on the decision date.
+  - Hearsay and precedent are not a basis for eligibility.

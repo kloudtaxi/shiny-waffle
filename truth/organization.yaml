@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# Northstar Industrial Systems — organizational ground truth (OWM Demo v0.1)
+#
+# HAND-AUTHORED. This directory is the laboratory control: the intended
+# organizational reality after every messy representation in the evidence
+# corpus is reconciled. It is NEVER loaded into Utopia / the knowledge
+# foundation. Source: "03 — OWM Domain Model + Ground Truth".
+#
+# Items marked `lab_extension: true` are not in doc 03; they were added so the
+# corpus is closed (e.g. doc 03 names EMP-402 as Priya's manager but never
+# defines EMP-402) or to run the doc-02 experiments (e.g. a similar-name
+# customer for Experiment F). They are candidates for review, not canon.
+# ---------------------------------------------------------------------------
+id: ORG-001
+name: Northstar Industrial Systems
+industry: Industrial equipment and software
+headquarters: Chicago, Illinois
+employees_approx: 850
+annual_revenue_usd_approx: 240000000
+operating_model: direct enterprise sales
+email_domain: northstar.example
+
+systems:
+  - { id: CRM, name: Northstar CRM }
+  - { id: ERP, name: Northstar ERP }
+  - { id: SERVICE, name: Northstar Service }
+  - { id: DRIVE, name: Northstar Drive }
+
+departments: [Sales, Executive, Finance]
+
+roles:
+  - { id: ENTERPRISE_AE, title: Enterprise Account Executive, department: Sales }
+  - { id: VP_SALES, title: VP Sales, department: Sales }
+  - { id: CRO, title: Chief Revenue Officer, department: Executive }
+  - { id: FINANCE_MANAGER, title: Finance Manager, department: Finance }
+  - { id: FINANCE_DIRECTOR, title: Director of Finance, department: Finance, lab_extension: true }

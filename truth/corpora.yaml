@@ -1,0 +1,16 @@
+# Evidence corpora. `base` is the full knowledge base. Every other corpus is the
+# base minus the listed artifact ids — load each as its own Utopia knowledge base.
+# Add a variant here (e.g. doc-02 Experiment A: drop organization_chart) and
+# re-run `northstar build`; scenarios opt in via `corpus:`.
+corpora:
+  base:
+    description: Full Northstar evidence corpus.
+    exclude: []
+  missing-contract-evidence:
+    description: >-
+      Scenario 5 — the Acme agreements and pricing exceptions are removed. Hearsay
+      (account strategy, email, the 2025 precedent) deliberately remains.
+    exclude:
+      - acme_master_supply_agreement
+      - acme_pricing_exception
+      - acme_pricing_exception_2023

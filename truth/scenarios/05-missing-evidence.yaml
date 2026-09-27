@@ -1,0 +1,21 @@
+id: S05
+slug: missing-evidence
+title: Missing contract evidence (Experiment B)
+kind: discount_decision
+question: Can Sarah Chen's 15% NS-500 discount for Acme (DR-9001) be approved on 2026-09-23?
+teaches: [uncertainty, evidence-requirements]
+corpus: missing-contract-evidence
+as_of: 2026-09-23
+request: { base: DR-9001 }
+expected:
+  outcome: REQUEST_EVIDENCE
+  commercial_eligibility: unknown
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: VP_SALES
+  approver: EMP-200
+  evidence: [CRM-2048, C-1001, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9001]
+reasoning:
+  - Acme exists, Sarah owns the account, Sarah cannot approve 15%, VP Sales approval is required.
+  - No authoritative evidence establishes Acme's 15% eligibility.
+  - Hearsay (account strategy, email, the 2025 precedent DR-8104) must not stand in for the contract.

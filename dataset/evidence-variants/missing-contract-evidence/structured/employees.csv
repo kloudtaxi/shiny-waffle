@@ -1,0 +1,16 @@
+employee_id,full_name,preferred_name,title,department,manager_id,email,location
+EMP-101,Sarah Chen,,Enterprise Account Executive,Sales,EMP-200,sarah.chen@northstar.example,"Chicago, IL"
+EMP-200,Michael Torres,Mike,VP Sales,Sales,EMP-300,michael.torres@northstar.example,"Chicago, IL"
+EMP-300,David Morgan,,Chief Revenue Officer,Executive,,david.morgan@northstar.example,"Chicago, IL"
+EMP-401,Priya Shah,,Finance Manager,Finance,EMP-402,priya.shah@northstar.example,"Chicago, IL"
+EMP-402,Elena Novak,,Director of Finance,Finance,,elena.novak@northstar.example,"Chicago, IL"
+EMP-500,Kelly Floyd,,Enterprise Account Executive,Sales,EMP-200,kelly.floyd@northstar.example,"Indianapolis, IN"
+EMP-501,Anthony Day,,Enterprise Account Executive,Sales,EMP-200,anthony.day@northstar.example,"Milwaukee, WI"
+EMP-502,Zachary Brown,,Enterprise Account Executive,Sales,EMP-200,zachary.brown@northstar.example,"Indianapolis, IN"
+EMP-503,Bryan Rivera,,Sales Operations Analyst,Sales,EMP-200,bryan.rivera@northstar.example,"Milwaukee, WI"
+EMP-504,Misty Peterson,,Customer Success Manager,Sales,EMP-200,misty.peterson@northstar.example,Remote
+EMP-505,Courtney Barron,,Sales Engineer,Sales,EMP-200,courtney.barron@northstar.example,"Chicago, IL"
+EMP-506,Robert Hernandez,,Accounts Receivable Specialist,Finance,EMP-402,robert.hernandez@northstar.example,"Chicago, IL"
+EMP-507,Stephanie Romero,,Financial Analyst,Finance,EMP-402,stephanie.romero@northstar.example,"Milwaukee, WI"
+EMP-508,Shari Brown,,Financial Analyst,Finance,EMP-402,shari.brown@northstar.example,"Chicago, IL"
+EMP-509,Glenn Hayes,,Customer Success Manager,Sales,EMP-200,glenn.hayes@northstar.example,"Chicago, IL"

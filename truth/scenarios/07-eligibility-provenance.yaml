@@ -1,0 +1,16 @@
+id: S07
+slug: eligibility-provenance
+title: Why is Acme eligible for 15%?
+kind: provenance
+question: Why is Acme Manufacturing eligible for a 15% discount on the NS-500, and what is the evidence?
+teaches: [evidence, provenance]
+corpus: base
+as_of: 2026-09-23
+subject: { customer: CUST-1001, product: PROD-001 }
+expected:
+  basis: EXC-ACME-NS500-15
+  contract: MSA-ACME-2025
+  must_cite: [acme_pricing_exception, acme_master_supply_agreement]
+  must_not_cite_as_basis: [acme_account_strategy, email_sarah_to_michael, discount_requests]
+reasoning:
+  - Eligibility rests on the exception granted under the MSA — not on the account plan, an email, or the 2025 precedent.

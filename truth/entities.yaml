@@ -1,0 +1,168 @@
+# Canonical entities. See organization.yaml for the provenance note.
+
+customers:
+  - id: CUST-1001
+    canonical_name: Acme Manufacturing
+    customer_type: Enterprise
+    industry: Industrial Manufacturing
+    annual_revenue_usd_approx: 125000000
+    strategic: true
+    segment: Midwest Enterprise
+    aliases: [Acme, Acme Manufacturing, Acme Mfg. Holdings, ACME Manufacturing, ACME-MFG-2025]
+    source_ids: { crm: CRM-2048, erp: C-1001, contract_ref: ACME-MFG-2025 }
+    erp_name: Acme Mfg. Holdings      # how the ERP bill-to master names it
+    address: { street: 2200 N Industrial Pkwy, city: Milwaukee, state: WI, postal_code: "53209" }
+    duns: "04-812-7730"
+
+  - id: CUST-1002
+    canonical_name: BlueRiver Logistics
+    customer_type: Enterprise
+    industry: Logistics
+    strategic: false
+    segment: Central Enterprise
+    aliases: [BlueRiver, Blue River Logistics]
+    source_ids: { crm: CRM-2051, erp: C-1002 }
+    erp_name: Blue River Logistics LLC
+    address: { street: 890 Harbor Way, city: St. Louis, state: MO, postal_code: "63102" }
+    duns: "07-331-9025"
+
+  - id: CUST-1003
+    canonical_name: Cedar Health Systems
+    customer_type: Enterprise
+    industry: Healthcare
+    strategic: false
+    segment: Central Enterprise
+    aliases: [Cedar Health]
+    source_ids: { crm: CRM-2063, erp: C-1003 }
+    erp_name: Cedar Health Systems Inc.
+    address: { street: 51 Cedar Crest Blvd, city: Indianapolis, state: IN, postal_code: "46204" }
+    duns: "02-906-4418"
+
+  # Experiment F (doc 02): a similar-name customer that is NOT Acme Manufacturing.
+  - id: CUST-1044
+    canonical_name: Acme Industrial Supply Co.
+    customer_type: Mid-Market
+    industry: Industrial Distribution
+    strategic: false
+    segment: Midwest Mid-Market
+    aliases: [Acme Industrial, Acme Supply]
+    source_ids: { crm: CRM-2091, erp: C-1044 }
+    erp_name: Acme Industrial Supply Co.
+    address: { street: 17 Tallmadge Ave, city: Akron, state: OH, postal_code: "44310" }
+    duns: "09-552-1187"
+    lab_extension: true
+
+accounts:
+  - { id: CRM-2048, customer: CUST-1001, owner: EMP-101, name: Acme Manufacturing, tier: Strategic }
+
+employees:
+  - id: EMP-101
+    name: Sarah Chen
+    aliases: [S. Chen, Sarah]
+    role: ENTERPRISE_AE
+    department: Sales
+    manager: EMP-200
+    responsibility: enterprise customer accounts
+  - id: EMP-200
+    name: Michael Torres
+    preferred_name: Mike
+    aliases: [Mike Torres, M. Torres]
+    role: VP_SALES
+    department: Sales
+    manager: EMP-300
+  - id: EMP-300
+    name: David Morgan
+    aliases: [D. Morgan]
+    role: CRO
+    department: Executive
+    manager: null
+  - id: EMP-401
+    name: Priya Shah
+    role: FINANCE_MANAGER
+    department: Finance
+    manager: EMP-402
+    note: Not the approval authority for sales discounts (a routing trap).
+  - id: EMP-402
+    name: Elena Novak
+    role: FINANCE_DIRECTOR
+    department: Finance
+    manager: null
+    lab_extension: true
+
+products:
+  - { id: PROD-001, sku: NS-500, name: NS-500 Industrial Controller, category: Equipment, list_price_usd: 250000 }
+  - { id: PROD-002, sku: NS-CLOUD, name: NS-Cloud Operations Suite, category: Software, list_price_usd: 120000 }
+  - { id: PROD-003, sku: NS-EDGE, name: NS-Edge Monitoring Package, category: Software, list_price_usd: 85000 }
+
+contracts:
+  - id: MSA-ACME-2025
+    title: Acme Master Supply Agreement
+    aliases: [ACME-MFG-2025]
+    customer: CUST-1001
+    valid_from: 2025-04-01
+    valid_to: 2028-03-31
+    covers: [PROD-001, PROD-002, PROD-003]
+    grants_approval_authority: false
+  # Predecessor agreement, needed as the basis of the older exception (Scenario 6).
+  - id: SA-ACME-2023
+    title: Acme Supply Agreement (2023)
+    aliases: [ACME-SA-2023]
+    customer: CUST-1001
+    valid_from: 2023-04-01
+    valid_to: 2025-03-31
+    covers: [PROD-001]
+    grants_approval_authority: false
+    lab_extension: true
+
+pricing_exceptions:
+  - id: EXC-ACME-NS500-15
+    title: Acme NS-500 Strategic Account Exception
+    customer: CUST-1001
+    contract: MSA-ACME-2025
+    product: PROD-001
+    maximum_discount: 0.15
+    valid_from: 2025-04-01
+    valid_to: 2028-03-31
+    supersedes: EXC-ACME-NS500-10
+    grants_approval_authority: false
+  - id: EXC-ACME-NS500-10
+    title: Acme NS-500 Volume Exception (2023)
+    customer: CUST-1001
+    contract: SA-ACME-2023
+    product: PROD-001
+    maximum_discount: 0.10
+    valid_from: 2023-04-01
+    valid_to: 2025-03-31
+    supersedes: null
+    grants_approval_authority: false
+
+orders:
+  - { id: SO-7001, customer: CUST-1001, date: 2026-06-10, value_usd: 480000, status: Completed }
+  - { id: SO-7002, customer: CUST-1001, date: 2026-08-18, value_usd: 720000, status: Completed }
+
+discount_requests:
+  - id: DR-9001
+    customer: CUST-1001
+    product: PROD-001
+    requested_discount: 0.15
+    requestor: EMP-101
+    request_date: 2026-09-23
+    list_value_usd: 250000
+    basis: contract_exception     # the request CLAIMS contractual eligibility...
+    basis_ref: MSA-ACME-2025      # ...which the decision must verify, not trust
+    status: Pending Approval
+    approved_by: null
+  # Temporal trap: a genuine 2025 precedent. Correct under the 2025 policy,
+  # and exactly the fact a naive system will reuse for DR-9001 in 2026.
+  - id: DR-8104
+    customer: CUST-1001
+    product: PROD-001
+    requested_discount: 0.15
+    requestor: EMP-101
+    request_date: 2025-09-16
+    list_value_usd: 250000
+    basis: contract_exception
+    basis_ref: MSA-ACME-2025
+    status: Approved
+    approved_by: EMP-101
+    lab_extension: true
