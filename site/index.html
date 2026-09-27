@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Northstar Industrial Systems</title>
+<meta name="description" content="Northstar Industrial Systems — a synthetic enterprise built as the front door to the Sovera OWM experiment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  /* ---------------------------------------------------------------------
+     Tokens. Light = machine-cabinet enamel; dark = the cabinet at night.
+     The lab band ("behind the panel") is dark in both themes on purpose.
+     --------------------------------------------------------------------- */
+  :root {
+    --ground: #EDEFEC;
+    --surface: #F8F9F7;
+    --panel: #DDE1DC;
+    --panel-edge: #C3C9C3;
+    --ink: #192024;
+    --ink-2: #4B5558;
+    --ink-3: #6E777A;
+    --rule: #CDD2CD;
+    --blue: #1D4F7C;
+    --blue-soft: #DCE6EF;
+    --on-blue: #F4F7FA;
+    --amber: #E9A21B;
+    --run: #2E9E5B;
+    --fault: #C8452F;
+    --lab-ground: #11181B;
+    --lab-card: #1A2428;
+    --lab-ink: #E4E9E6;
+    --lab-ink-2: #9FABAD;
+    --lab-rule: #2C393E;
+    --lab-blue: #8DB8E3;
+    --yes: #4FBF7F;
+    --no: #E77A62;
+    --wait: #E9B64A;
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    --gutter: clamp(16px, 4vw, 40px);
+    --max: 1180px;
+    --radius: 6px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #0F1416;
+      --surface: #151C1F;
+      --panel: #222B2F;
+      --panel-edge: #333E43;
+      --ink: #E3E7E4;
+      --ink-2: #A5AFB1;
+      --ink-3: #7D888B;
+      --rule: #273135;
+      --blue: #8DB8E3;
+      --blue-soft: #1B2B39;
+      --on-blue: #0F1416;
+      --lab-ground: #182328;
+      --lab-card: #1F2C31;
+      --lab-rule: #33424A;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #0F1416;
+    --surface: #151C1F;
+    --panel: #222B2F;
+    --panel-edge: #333E43;
+    --ink: #E3E7E4;
+    --ink-2: #A5AFB1;
+    --ink-3: #7D888B;
+    --rule: #273135;
+    --blue: #8DB8E3;
+    --blue-soft: #1B2B39;
+    --on-blue: #0F1416;
+    --lab-ground: #182328;
+    --lab-card: #1F2C31;
+    --lab-rule: #33424A;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font: 400 17px/1.6 var(--body);
+    font-stretch: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 3px; }
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  .wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .eyebrow {
+    font: 500 12px/1.2 var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ---- Fiction strip + nav ------------------------------------------- */
+  .fiction {
+    background: var(--ink);
+    color: var(--ground);
+    font: 500 12.5px/1.4 var(--mono);
+    letter-spacing: .04em;
+  }
+  .fiction .wrap { display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: space-between; padding-block: 8px; }
+  .fiction a { color: var(--amber); text-decoration: none; }
+  .fiction a:hover { text-decoration: underline; }
+
+  .nav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: saturate(1.2) blur(10px);
+    -webkit-backdrop-filter: saturate(1.2) blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav .wrap { display: flex; align-items: center; gap: 28px; padding-block: 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand svg { width: 26px; height: 26px; flex: none; }
+  .brand b {
+    font: 800 15px/1 var(--display); font-stretch: 125%;
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  .nav ul { display: flex; gap: 24px; list-style: none; margin: 0 0 0 auto; padding: 0; align-items: center; }
+  .nav li a { text-decoration: none; font-size: 15px; color: var(--ink-2); }
+  .nav li a:hover { color: var(--ink); }
+  .nav .lab-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 14px; border-radius: 999px;
+    background: var(--ink); color: var(--ground); font-weight: 600;
+  }
+  .nav .lab-link:hover { color: var(--ground); background: var(--blue); }
+  .nav .lab-link i { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); display: block; }
+  @media (max-width: 760px) { .nav li:not(:last-child) { display: none; } }
+
+  /* ---- Hero ----------------------------------------------------------- */
+  .hero { padding-block: clamp(48px, 8vw, 96px) clamp(40px, 6vw, 72px); }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+  @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } }
+  .hero h1 {
+    font: 800 clamp(40px, 6.4vw, 78px)/.98 var(--display);
+    font-stretch: 125%;
+    letter-spacing: -.01em;
+    margin-top: 18px;
+  }
+  .hero h1 em { font-style: normal; color: var(--blue); }
+  .hero .lede { margin-top: 24px; font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 36em; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 20px; border-radius: var(--radius);
+    font: 600 15px/1 var(--body); text-decoration: none; cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform .15s ease, background-color .15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--blue); color: var(--on-blue); }
+  .btn-primary:hover { background: color-mix(in srgb, var(--blue) 86%, var(--ink)); }
+  .btn-ghost { border-color: var(--panel-edge); color: var(--ink); background: transparent; }
+  .btn-ghost:hover { background: var(--surface); }
+  .btn svg { width: 16px; height: 16px; }
+
+  .hero-facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  .hero-facts div { display: grid; gap: 2px; }
+  .hero-facts dt { font: 500 11.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .hero-facts dd { margin: 0; font-weight: 600; }
+
+  /* ---- The NS-500 faceplate (the one bold element) --------------------- */
+  .faceplate {
+    position: relative;
+    max-width: 440px; width: 100%; justify-self: center;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--panel) 70%, #fff) 0%, var(--panel) 18%, var(--panel) 100%);
+    border: 1px solid var(--panel-edge);
+    border-radius: 10px;
+    box-shadow: 0 1px 0 #ffffff55 inset, 0 24px 48px -28px #0b1a2466, 0 2px 6px -2px #0b1a2433;
+    padding: 18px 20px 20px;
+    font-family: var(--mono);
+  }
+  .fp-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .fp-model { font: 800 26px/1 var(--display); font-stretch: 125%; letter-spacing: .02em; }
+  .fp-sub { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .fp-vents {
+    height: 16px; margin: 14px 0;
+    background: repeating-linear-gradient(90deg, var(--panel-edge) 0 3px, transparent 3px 9px);
+    border-radius: 3px; opacity: .8;
+  }
+  .fp-screen {
+    background: #0C1417; color: #9FE8B9;
+    border-radius: 6px; padding: 14px 16px;
+    box-shadow: inset 0 0 0 1px #000, inset 0 8px 18px #0008;
+    display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: baseline;
+    font-variant-numeric: tabular-nums;
+  }
+  .fp-screen .lbl { font-size: 11px; letter-spacing: .12em; color: #5E8A72; text-transform: uppercase; }
+  .fp-screen .big { font-size: 30px; font-weight: 500; letter-spacing: .02em; text-shadow: 0 0 12px #6fe39a55; }
+  .fp-screen .unit { font-size: 13px; color: #6FB08A; }
+  .fp-screen .row { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: 12px; color: #7FC39A; border-top: 1px dashed #1F3A2C; padding-top: 8px; }
+  .fp-leds { display: grid; grid-template-columns: repeat(3, auto) 1fr; gap: 10px 18px; align-items: center; margin-top: 16px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  .led { display: inline-flex; align-items: center; gap: 7px; }
+  .led i { width: 9px; height: 9px; border-radius: 50%; display: block; background: #0000; box-shadow: inset 0 0 0 1.5px var(--panel-edge); }
+  .led.on-run i { background: var(--run); box-shadow: 0 0 8px var(--run), inset 0 0 0 1px #0003; }
+  .led.fault i { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--fault) 55%, var(--panel-edge)); }
+  .io { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; }
+  .io-bank { display: grid; grid-template-columns: repeat(16, 1fr); gap: 5px; }
+  .io-bank i { aspect-ratio: 1; max-width: 100%; border-radius: 2px; background: color-mix(in srgb, var(--amber) 16%, var(--panel)); box-shadow: inset 0 0 0 1px #0002; transition: background-color .12s linear, box-shadow .12s linear; }
+  .io-bank i.hot { background: var(--amber); box-shadow: 0 0 6px color-mix(in srgb, var(--amber) 70%, transparent); }
+  .fp-terminals { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; margin-top: 18px; padding: 8px; background: color-mix(in srgb, var(--ink) 85%, var(--panel)); border-radius: 4px; }
+  .fp-terminals i { aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #cfd5d2 0 30%, #8d9793 60%, #5b6461 100%); position: relative; }
+  .fp-terminals i::after { content: ""; position: absolute; inset: 44% 18%; background: #3a4240; border-radius: 1px; }
+  .fp-foot { display: flex; justify-content: space-between; margin-top: 12px; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* ---- Generic section scaffolding ----------------------------------- */
+  section { scroll-margin-top: 72px; }
+  .section { padding-block: clamp(56px, 8vw, 104px); }
+  .section-head { display: grid; gap: 14px; max-width: 46em; margin-bottom: clamp(32px, 4vw, 48px); }
+  .section-head h2 { font: 800 clamp(28px, 3.6vw, 44px)/1.05 var(--display); font-stretch: 118%; letter-spacing: -.005em; }
+  .section-head p { color: var(--ink-2); font-size: 18px; }
+
+  /* ---- Principles ------------------------------------------------------ */
+  .principles { border-top: 1px solid var(--rule); }
+  .principle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--rule); }
+  .principle { padding: 28px 28px 32px 0; display: grid; gap: 12px; align-content: start; }
+  .principle + .principle { padding-left: 28px; border-left: 1px solid var(--rule); }
+  .principle h3 { font: 700 21px/1.2 var(--display); font-stretch: 112%; }
+  .principle p { color: var(--ink-2); }
+  @media (max-width: 820px) {
+    .principle-grid { grid-template-columns: 1fr; }
+    .principle, .principle + .principle { padding: 24px 0; border-left: 0; border-bottom: 1px solid var(--rule); }
+  }
+
+  /* ---- Products -------------------------------------------------------- */
+  .products { background: var(--surface); border-block: 1px solid var(--rule); }
+  .product-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .product-grid { grid-template-columns: 1fr; } }
+  .product {
+    display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px;
+    padding: 26px; border: 1px solid var(--rule); border-radius: var(--radius);
+    background: var(--ground);
+  }
+  .product.flagship { background: var(--blue); color: var(--on-blue); border-color: transparent; }
+  .product.flagship .sku, .product.flagship p, .product.flagship dt { color: color-mix(in srgb, var(--on-blue) 78%, var(--blue)); }
+  .product .sku { font: 500 12.5px/1 var(--mono); letter-spacing: .08em; color: var(--ink-3); display: flex; justify-content: space-between; }
+  .product h3 { font: 800 24px/1.1 var(--display); font-stretch: 115%; }
+  .product p { color: var(--ink-2); }
+  .spec { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 0; padding-top: 14px; border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent); font-size: 14.5px; }
+  .spec dt { font: 500 12px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .spec dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+  /* ---- Customers + people --------------------------------------------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 64px); }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+  .quote {
+    font: 600 clamp(22px, 2.4vw, 28px)/1.3 var(--display); font-stretch: 105%;
+    text-wrap: pretty; margin: 0;
+  }
+  .quote-by { margin-top: 18px; color: var(--ink-2); font-size: 15px; }
+  .customer-list { list-style: none; margin: 32px 0 0; padding: 0; border-top: 1px solid var(--rule); }
+  .customer-list li { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .customer-list b { font-weight: 600; }
+  .customer-list span { color: var(--ink-3); font: 400 13.5px/1.5 var(--mono); }
+  .customer-list small { grid-column: 1 / -1; color: var(--ink-2); font-size: 14.5px; }
+  .people { display: grid; gap: 12px; }
+  .person { display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: center; padding: 14px 16px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font: 700 16px/1 var(--display); font-stretch: 115%; background: var(--blue-soft); color: var(--blue); }
+  .person b { display: block; font-weight: 600; }
+  .person span { color: var(--ink-2); font-size: 15px; }
+  .people-note { color: var(--ink-3); font-size: 14px; margin-top: 4px; }
+
+  /* ---- Behind the panel (lab) ------------------------------------------ */
+  .lab { background: var(--lab-ground); color: var(--lab-ink); position: relative; }
+  .lab::before {
+    content: ""; position: absolute; inset: 0 0 auto; height: 10px;
+    background: repeating-linear-gradient(135deg, var(--amber) 0 14px, #11181B 14px 28px);
+    opacity: .9;
+  }
+  .lab .eyebrow { color: var(--amber); }
+  .lab .section-head p { color: var(--lab-ink-2); }
+  .lab-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+  @media (max-width: 900px) { .lab-intro { grid-template-columns: 1fr; } }
+  .lab-intro h2 { font: 800 clamp(30px, 4vw, 50px)/1.02 var(--display); font-stretch: 120%; }
+  .lab-intro .copy { display: grid; gap: 16px; color: var(--lab-ink-2); font-size: 18px; }
+  .lab-intro .copy strong { color: var(--lab-ink); font-weight: 600; }
+
+  .pipeline { list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; counter-reset: step; border: 1px solid var(--lab-rule); border-radius: var(--radius); overflow: hidden; }
+  .pipeline li { padding: 22px; display: grid; gap: 8px; align-content: start; counter-increment: step; }
+  .pipeline li + li { border-left: 1px solid var(--lab-rule); }
+  .pipeline li::before { content: "0" counter(step); font: 500 12px/1 var(--mono); color: var(--amber); letter-spacing: .1em; }
+  .pipeline b { font: 700 18px/1.2 var(--display); font-stretch: 112%; }
+  .pipeline span { color: var(--lab-ink-2); font-size: 15px; }
+  .pipeline li.owm { background: color-mix(in srgb, var(--lab-blue) 10%, transparent); }
+  .pipeline li.owm b { color: var(--lab-blue); }
+  @media (max-width: 820px) {
+    .pipeline { grid-template-columns: 1fr 1fr; }
+    .pipeline li:nth-child(3) { border-left: 0; }
+    .pipeline li:nth-child(n+3) { border-top: 1px solid var(--lab-rule); }
+  }
+  @media (max-width: 480px) {
+    .pipeline { grid-template-columns: 1fr; }
+    .pipeline li + li { border-left: 0; border-top: 1px solid var(--lab-rule); }
+  }
+
+  /* Decision trace */
+  .trace-wrap { margin-top: clamp(56px, 7vw, 88px); display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
+  @media (max-width: 900px) { .trace-wrap { grid-template-columns: 1fr; } }
+  .trace-wrap h3 { font: 800 clamp(24px, 2.8vw, 34px)/1.1 var(--display); font-stretch: 115%; margin-top: 12px; }
+  .trace-wrap .copy { color: var(--lab-ink-2); display: grid; gap: 14px; margin-top: 16px; }
+  .big-claim { margin-top: 24px; font: 700 20px/1.3 var(--display); font-stretch: 110%; color: var(--lab-ink); padding-left: 16px; border-left: 3px solid var(--amber); }
+  .trace { border: 1px solid var(--lab-rule); border-radius: var(--radius); background: var(--lab-card); overflow: hidden; }
+  .trace-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; padding: 14px 18px; border-bottom: 1px solid var(--lab-rule); font: 500 12.5px/1.4 var(--mono); color: var(--lab-ink-2); }
+  .trace-head b { color: var(--lab-ink); font-weight: 600; }
+  .trace ol { list-style: none; margin: 0; padding: 0; }
+  .trace li { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 12px 18px; border-bottom: 1px solid var(--lab-rule); align-items: center; }
+  .trace li small { grid-column: 1; color: var(--lab-ink-2); font: 400 12.5px/1.4 var(--mono); }
+  .trace li > span:first-child { font-weight: 500; }
+  .chip { font: 600 12px/1 var(--mono); letter-spacing: .06em; padding: 6px 9px; border-radius: 4px; white-space: nowrap; grid-row: span 2; }
+  .chip.yes { color: var(--yes); background: color-mix(in srgb, var(--yes) 14%, transparent); }
+  .chip.no { color: var(--no); background: color-mix(in srgb, var(--no) 14%, transparent); }
+  .chip.info { color: var(--lab-ink); background: color-mix(in srgb, var(--lab-ink) 10%, transparent); }
+  .trace-outcome { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 16px 18px; background: color-mix(in srgb, var(--amber) 12%, transparent); }
+  .trace-outcome .eyebrow { color: var(--amber); }
+  .trace-outcome b { font: 600 15px/1.2 var(--mono); letter-spacing: .04em; color: var(--lab-ink); }
+
+  /* Scenarios */
+  .scen-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px; margin-top: clamp(64px, 8vw, 104px); margin-bottom: 28px; }
+  .scen-head h3 { font: 800 clamp(24px, 2.8vw, 34px)/1.1 var(--display); font-stretch: 115%; margin-top: 10px; }
+  .scen-head p { color: var(--lab-ink-2); max-width: 34em; }
+  .reveal-all { background: transparent; color: var(--lab-ink); border: 1px solid var(--lab-rule); }
+  .reveal-all:hover { background: var(--lab-card); }
+  .scen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; }
+  .scen {
+    display: grid; grid-template-rows: auto auto 1fr auto auto; gap: 12px;
+    padding: 20px; border: 1px solid var(--lab-rule); border-radius: var(--radius);
+    background: var(--lab-card);
+    scroll-margin-top: 90px;
+  }
+  .scen:target { border-color: var(--amber); }
+  .scen-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font: 500 12px/1 var(--mono); letter-spacing: .08em; color: var(--lab-ink-2); }
+  .scen-top a { color: var(--amber); text-decoration: none; }
+  .scen-top a:hover { text-decoration: underline; }
+  .scen h4 { margin: 0; font: 700 18px/1.25 var(--display); font-stretch: 108%; color: var(--lab-ink); }
+  .scen q { color: var(--lab-ink-2); font-size: 15.5px; quotes: "“" "”"; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { font: 500 11.5px/1 var(--mono); padding: 5px 8px; border-radius: 999px; border: 1px solid var(--lab-rule); color: var(--lab-ink-2); }
+  .tags span.corpus { border-color: color-mix(in srgb, var(--wait) 45%, var(--lab-rule)); color: var(--wait); }
+  .answer { border-top: 1px dashed var(--lab-rule); padding-top: 12px; display: grid; gap: 10px; }
+  .answer button {
+    justify-self: start; display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; border: 0; padding: 0; cursor: pointer;
+    color: var(--lab-blue); font: 600 14px/1.4 var(--body);
+  }
+  .answer button:hover { text-decoration: underline; }
+  .answer button svg { width: 14px; height: 14px; transition: transform .2s ease; }
+  .answer button[aria-expanded="true"] svg { transform: rotate(90deg); }
+  .answer-body { display: grid; gap: 4px; }
+  .answer-body b { font: 600 14px/1.35 var(--mono); letter-spacing: .03em; color: var(--lab-ink); overflow-wrap: anywhere; }
+  .answer-body span { color: var(--lab-ink-2); font-size: 14.5px; }
+  .scen-foot { font: 400 12px/1.4 var(--mono); color: var(--lab-ink-2); display: flex; align-items: center; gap: 8px; }
+  .scen-foot i { width: 6px; height: 6px; border-radius: 50%; background: var(--wait); display: block; }
+
+  /* Dataset + run */
+  .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); margin-top: clamp(64px, 8vw, 104px); }
+  @media (max-width: 900px) { .data-grid { grid-template-columns: 1fr; } }
+  .data-grid h3 { font: 800 clamp(22px, 2.4vw, 28px)/1.15 var(--display); font-stretch: 115%; margin: 10px 0 20px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--lab-rule); border-radius: var(--radius); overflow: hidden; }
+  .stats div { padding: 16px; display: grid; gap: 4px; }
+  .stats div:not(:nth-child(3n+1)) { border-left: 1px solid var(--lab-rule); }
+  .stats div:nth-child(n+4) { border-top: 1px solid var(--lab-rule); }
+  .stats b { font: 600 28px/1 var(--mono); font-variant-numeric: tabular-nums; color: var(--lab-ink); }
+  .stats span { font-size: 13.5px; color: var(--lab-ink-2); }
+  @media (max-width: 480px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stats div { border-left: 0 !important; border-top: 1px solid var(--lab-rule); }
+    .stats div:nth-child(even) { border-left: 1px solid var(--lab-rule) !important; }
+    .stats div:nth-child(-n+2) { border-top: 0; }
+  }
+  .traps { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--lab-rule); }
+  .traps li { display: grid; grid-template-columns: 9.5em 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--lab-rule); font-size: 14.5px; }
+  .traps b { font-weight: 600; color: var(--lab-ink); }
+  .traps span { color: var(--lab-ink-2); }
+  @media (max-width: 480px) { .traps li { grid-template-columns: 1fr; gap: 2px; } }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: s; }
+  .steps li { display: grid; gap: 8px; counter-increment: s; }
+  .steps li > span { color: var(--lab-ink-2); font-size: 15px; }
+  .steps li > span::before { content: counter(s) ". "; color: var(--amber); font-family: var(--mono); }
+  .cmd { display: flex; align-items: stretch; border: 1px solid var(--lab-rule); border-radius: var(--radius); background: #0B1114; overflow: hidden; }
+  .cmd code { flex: 1; min-width: 0; padding: 11px 14px; font: 400 13.5px/1.5 var(--mono); color: #CFE3D6; overflow-x: auto; white-space: pre; }
+  .cmd button { flex: none; border: 0; border-left: 1px solid var(--lab-rule); background: transparent; color: var(--lab-ink-2); font: 500 12px/1 var(--mono); padding: 0 14px; cursor: pointer; }
+  .cmd button:hover { color: var(--lab-ink); background: var(--lab-card); }
+  .warn { margin-top: 18px; font-size: 14.5px; color: var(--lab-ink-2); padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--wait) 40%, var(--lab-rule)); border-radius: var(--radius); }
+  .warn b { color: var(--wait); font-weight: 600; }
+
+  /* ---- Footer ----------------------------------------------------------- */
+  footer { background: var(--ground); border-top: 1px solid var(--rule); padding-block: 40px 56px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: start; }
+  footer p { color: var(--ink-3); font-size: 14px; max-width: 40em; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; }
+  footer nav a { color: var(--ink-2); text-decoration: none; }
+  footer nav a:hover { color: var(--ink); text-decoration: underline; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+
+</head>
+<body>
+<div class="fiction" role="note">
+  <div class="wrap">
+    <span>Northstar Industrial Systems is a fictional company, built for the Sovera OWM experiment.</span>
+    <a href="#lab">Go behind the panel →</a>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Northstar Industrial Systems, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="6" fill="var(--ink)"/>
+        <path d="M16 4 L18.4 13.6 L28 16 L18.4 18.4 L16 28 L13.6 18.4 L4 16 L13.6 13.6 Z" fill="var(--ground)"/>
+        <circle cx="16" cy="16" r="2.2" fill="var(--amber)"/>
+      </svg>
+      <b>Northstar</b>
+    </a>
+    <ul>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#customers">Customers</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a class="lab-link" href="#lab"><i></i>Behind the panel</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ================================================================ HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Industrial controls · Chicago, Illinois</p>
+        <h1 id="hero-title">Controllers that <em>keep their word.</em></h1>
+        <p class="lede">
+          Northstar builds the controllers, monitoring and plant-floor software that
+          Midwest manufacturers run their lines on. We say what the machine will do, we
+          put it in writing, and we stand behind it.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#products">See the NS-500</a>
+          <a class="btn btn-ghost" href="#lab">
+            Open the experiment
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>People</dt><dd>~850</dd></div>
+          <div><dt>Revenue</dt><dd>~$240M</dd></div>
+          <div><dt>Sales model</dt><dd>Direct enterprise</dd></div>
+          <div><dt>HQ</dt><dd>Chicago</dd></div>
+        </dl>
+      </div>
+
+      <figure class="faceplate" aria-label="Illustration of an NS-500 Industrial Controller faceplate, running">
+        <div class="fp-head">
+          <span class="fp-model">NS-500</span>
+          <span class="fp-sub">Industrial Controller</span>
+        </div>
+        <div class="fp-vents" aria-hidden="true"></div>
+        <div class="fp-screen" aria-hidden="true">
+          <span class="lbl">Scan time</span>
+          <span class="lbl">Mode</span>
+          <span><span class="big" id="scan">4.00</span> <span class="unit">ms</span></span>
+          <span class="big" style="font-size:20px">RUN</span>
+          <span class="row"><span>LINE 3 · PLANT MKE-2</span><span id="cycles">cycles 1,204,331</span></span>
+        </div>
+        <div class="fp-leds" aria-hidden="true">
+          <span class="led on-run"><i></i>Pwr</span>
+          <span class="led on-run"><i></i>Run</span>
+          <span class="led fault"><i></i>Fault</span>
+          <span></span>
+          <div class="io">
+            <span>I/O</span>
+            <div class="io-bank" id="io"></div>
+          </div>
+        </div>
+        <div class="fp-terminals" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="fp-foot" aria-hidden="true"><span>SKU NS-500</span><span>Made in Chicago</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- =========================================================== PRINCIPLES -->
+  <section class="principles" aria-labelledby="how-title">
+    <div class="wrap section" style="padding-bottom:0">
+      <div class="section-head">
+        <p class="eyebrow">How we work</p>
+        <h2 id="how-title">Three habits we don't bend on.</h2>
+      </div>
+    </div>
+    <div class="wrap" style="padding-bottom:clamp(56px,8vw,104px)">
+      <div class="principle-grid">
+        <div class="principle">
+          <p class="eyebrow">Deterministic</p>
+          <h3>Say what the machine will do.</h3>
+          <p>A 4 ms scan is 4 ms on the first day and the ten-thousandth. We publish the numbers we can hold to, and only those.</p>
+        </div>
+        <div class="principle">
+          <p class="eyebrow">Documented</p>
+          <h3>Put it in writing.</h3>
+          <p>Terms, pricing, service levels. If it matters to your plant, it's in the agreement, with a start date and an end date.</p>
+        </div>
+        <div class="principle">
+          <p class="eyebrow">Accountable</p>
+          <h3>Know who decides.</h3>
+          <p>Every account has one owner at Northstar, and every decision has a name next to it. You'll never wonder who said yes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= PRODUCTS -->
+  <section class="products section" id="products" aria-labelledby="products-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Products</p>
+        <h2 id="products-title">One controller on the line. Software that watches all of them.</h2>
+        <p>Buy the NS-500 on its own, or run your fleet with NS-Cloud and NS-Edge. Every product is sold and supported directly by Northstar.</p>
+      </div>
+      <div class="product-grid">
+        <article class="product flagship">
+          <p class="sku"><span>NS-500</span><span>Equipment</span></p>
+          <h3>NS-500 Industrial Controller</h3>
+          <p>The controller our customers standardise on. Built for multi-line plants that can't afford a surprise between shifts.</p>
+          <dl class="spec">
+            <dt>Scan</dt><dd>4 ms deterministic</dd>
+            <dt>Programming</dt><dd>IEC 61131-3</dd>
+            <dt>Support</dt><dd>Direct, from Chicago</dd>
+          </dl>
+        </article>
+        <article class="product">
+          <p class="sku"><span>NS-CLOUD</span><span>Software</span></p>
+          <h3>NS-Cloud Operations Suite</h3>
+          <p>Plant-floor analytics across every line and site, from the same team that builds the controller.</p>
+          <dl class="spec">
+            <dt>Scope</dt><dd>Multi-site</dd>
+            <dt>Works with</dt><dd>NS-500, NS-Edge</dd>
+          </dl>
+        </article>
+        <article class="product">
+          <p class="sku"><span>NS-EDGE</span><span>Software</span></p>
+          <h3>NS-Edge Monitoring Package</h3>
+          <p>Sensor gateways and condition monitoring at the edge of the line, before a fault becomes downtime.</p>
+          <dl class="spec">
+            <dt>Scope</dt><dd>Per line</dd>
+            <dt>Works with</dt><dd>NS-500, NS-Cloud</dd>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== CUSTOMERS + TEAM -->
+  <section class="section" id="customers" aria-labelledby="customers-title">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Customers</p>
+        <h2 id="customers-title" style="font:800 clamp(28px,3.6vw,44px)/1.05 var(--display);font-stretch:118%;margin:14px 0 28px">Built for the Midwest's working plants.</h2>
+        <blockquote class="quote">
+          “We standardised on the NS-500 across two plants in 2025. The third is next.”
+        </blockquote>
+        <p class="quote-by">VP Procurement, Acme Manufacturing · Milwaukee, WI</p>
+        <ul class="customer-list">
+          <li><b>Acme Manufacturing</b><span>Milwaukee, WI</span><small>Industrial manufacturing · strategic account</small></li>
+          <li><b>BlueRiver Logistics</b><span>St. Louis, MO</span><small>Logistics</small></li>
+          <li><b>Cedar Health Systems</b><span>Indianapolis, IN</span><small>Healthcare</small></li>
+        </ul>
+      </div>
+      <div id="team">
+        <p class="eyebrow">Team</p>
+        <h2 style="font:800 clamp(28px,3.6vw,44px)/1.05 var(--display);font-stretch:118%;margin:14px 0 28px">The people you'll deal with.</h2>
+        <div class="people">
+          <div class="person"><span class="avatar" aria-hidden="true">SC</span><div><b>Sarah Chen</b><span>Enterprise Account Executive · owns the Acme account</span></div></div>
+          <div class="person"><span class="avatar" aria-hidden="true">MT</span><div><b>Michael Torres</b><span>VP Sales</span></div></div>
+          <div class="person"><span class="avatar" aria-hidden="true">DM</span><div><b>David Morgan</b><span>Chief Revenue Officer</span></div></div>
+          <div class="person"><span class="avatar" aria-hidden="true">PS</span><div><b>Priya Shah</b><span>Finance Manager</span></div></div>
+        </div>
+        <p class="people-note">Enterprise sales, direct. Your account executive is your single point of contact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== BEHIND THE PANEL -->
+  <section class="lab section" id="lab" aria-labelledby="lab-title">
+    <div class="wrap">
+      <div class="lab-intro">
+        <div>
+          <p class="eyebrow">Behind the panel · Sovera OWM lab</p>
+          <h2 id="lab-title" style="margin-top:14px">Northstar is a synthetic company, built to answer one question.</h2>
+        </div>
+        <div class="copy">
+          <p><strong>Where does knowledge end and organizational understanding begin?</strong></p>
+          <p>Everything above is a front. Behind it sits a complete fictional organization: people, reporting lines, customers, contracts, pricing policies and a pending discount request. Its records are scattered across CRM, ERP, documents and email, deliberately messy and sometimes contradictory.</p>
+          <p>We load that evidence into a knowledge foundation, then check whether an AI system can do what a good employee does: work out what the evidence means here, and what should happen next.</p>
+        </div>
+      </div>
+
+      <ol class="pipeline" aria-label="Experiment pipeline">
+        <li><b>Evidence</b><span>17 artifacts from CRM, ERP, Drive, Service and email.</span></li>
+        <li><b>Knowledge foundation</b><span>Utopia / OG-RAG extracts entities, facts and provenance.</span></li>
+        <li class="owm"><b>Organizational World Model</b><span>Adds meaning: roles, authority, policy in force, exceptions.</span></li>
+        <li><b>Decision</b><span>A governed outcome, with its reasons and its evidence.</span></li>
+      </ol>
+
+      <!-- The central case -->
+      <div class="trace-wrap" id="dr-9001">
+        <div>
+          <p class="eyebrow">The central case · DR-9001</p>
+          <h3>Can Sarah Chen approve a 15% discount for Acme on 2026-09-23?</h3>
+          <div class="copy">
+            <p>The contract says Acme can have 15%. A system that stops there answers yes. It is wrong.</p>
+            <p>The right answer needs facts that no single document states together: Sarah's role, the 2026 policy, the authority bands, the reporting line, and the pricing exception with its dates and product scope.</p>
+          </div>
+          <p class="big-claim">Eligibility is not authority.</p>
+        </div>
+        <div class="trace" aria-label="Decision trace for DR-9001">
+          <div class="trace-head"><span><b>DEC-9001</b> · discount_approval</span><span>as of 2026-09-23</span></div>
+          <ol>
+            <li><span>Acme is a valid customer</span><span class="chip yes">YES</span><small>CRM-2048 ≡ C-1001 ≡ ACME-MFG-2025</small></li>
+            <li><span>Master supply agreement active</span><span class="chip yes">YES</span><small>MSA-ACME-2025 · 2025-04-01 → 2028-03-31</small></li>
+            <li><span>Commercial eligibility for 15% on NS-500</span><span class="chip yes">YES</span><small>EXC-ACME-NS500-15 · NS-500 only</small></li>
+            <li><span>Policy in force</span><span class="chip info">2026</span><small>pricing_policy_2026</small></li>
+            <li><span>Sarah's own approval authority</span><span class="chip no">NO</span><small>Enterprise AE · up to 10%</small></li>
+            <li><span>Required authority</span><span class="chip info">VP SALES</span><small>band &gt;10% and ≤20%</small></li>
+            <li><span>Authorized approver</span><span class="chip yes">M. TORRES</span><small>Sarah's manager · VP Sales</small></li>
+          </ol>
+          <div class="trace-outcome"><span class="eyebrow">Decision</span><b>APPROVE_WITH_AUTHORIZATION</b></div>
+        </div>
+      </div>
+
+      <!-- Scenarios -->
+      <div class="scen-head" id="scenarios">
+        <div>
+          <p class="eyebrow">Scenarios</p>
+          <h3>Eight questions. Answers stay hidden until you ask for them.</h3>
+        </div>
+        <div style="display:grid;gap:12px;justify-items:start">
+          <p>Put each question to the system first, then reveal the expected answer. Each scenario will get its own page.</p>
+          <button class="btn reveal-all" type="button" id="reveal-all" aria-pressed="false">Reveal all answers</button>
+        </div>
+      </div>
+
+      <div class="scen-grid">
+        <article class="scen" id="s01">
+          <div class="scen-top"><span>S01</span><a href="#s01" aria-label="Link to scenario S01">#s01</a></div>
+          <h4>Standard 15% request</h4>
+          <q>Can Sarah Chen approve a 15% discount for Acme Manufacturing on an NS-500 on 2026-09-23?</q>
+          <div class="tags"><span>authority</span><span>policy</span><span>eligibility ≠ authority</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s01"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s01" hidden><b>APPROVE_WITH_AUTHORIZATION</b><span>Sarah can't approve 15% under the 2026 policy. Michael Torres, VP Sales, can.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+
+        <article class="scen" id="s02">
+          <div class="scen-top"><span>S02</span><a href="#s02" aria-label="Link to scenario S02">#s02</a></div>
+          <h4>18% request</h4>
+          <q>Can we offer Acme Manufacturing 18% on the NS-500 on 2026-09-23?</q>
+          <div class="tags"><span>exception as a limit</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s02"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s02" hidden><b>REJECT_OR_ESCALATE</b><span>18% exceeds Acme's 15% exception. VP approval can't create eligibility.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+
+        <article class="scen" id="s03">
+          <div class="scen-top"><span>S03</span><a href="#s03" aria-label="Link to scenario S03">#s03</a></div>
+          <h4>NS-Cloud request</h4>
+          <q>Can Sarah Chen approve 15% for Acme on the NS-Cloud Operations Suite on 2026-09-23?</q>
+          <div class="tags"><span>exception scope</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s03"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s03" hidden><b>REVIEW_REQUIRED</b><span>The 15% exception covers the NS-500 only. It doesn't carry over.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+
+        <article class="scen" id="s04">
+          <div class="scen-top"><span>S04</span><a href="#s04" aria-label="Link to scenario S04">#s04</a></div>
+          <h4>Historical 15% request</h4>
+          <q>Could Sarah Chen have approved a 15% NS-500 discount for Acme on 2025-09-23?</q>
+          <div class="tags"><span>time</span><span>policy change</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s04"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s04" hidden><b>APPROVE</b><span>The 2025 policy let account executives approve up to 15%. The policy changed, not the customer.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+
+        <article class="scen" id="s05">
+          <div class="scen-top"><span>S05</span><a href="#s05" aria-label="Link to scenario S05">#s05</a></div>
+          <h4>Missing contract evidence</h4>
+          <q>With the contract documents removed, can DR-9001 be approved on 2026-09-23?</q>
+          <div class="tags"><span>uncertainty</span><span class="corpus">separate corpus</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s05"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s05" hidden><b>REQUEST_EVIDENCE</b><span>An email and an account plan say "15%". Hearsay isn't a contract.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+
+        <article class="scen" id="s06">
+          <div class="scen-top"><span>S06</span><a href="#s06" aria-label="Link to scenario S06">#s06</a></div>
+          <h4>Conflicting exceptions</h4>
+          <q>What is Acme's maximum contractual NS-500 discount on a given date?</q>
+          <div class="tags"><span>time</span><span>superseded facts</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s06"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s06" hidden><b>15% on 2026-09-23 · 10% on 2024-10-01 · none on 2022-10-01</b><span>Both exceptions stay on record. The date picks which one applies.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+
+        <article class="scen" id="s07">
+          <div class="scen-top"><span>S07</span><a href="#s07" aria-label="Link to scenario S07">#s07</a></div>
+          <h4>Why is Acme eligible?</h4>
+          <q>Why is Acme Manufacturing eligible for 15% on the NS-500, and what is the evidence?</q>
+          <div class="tags"><span>evidence</span><span>provenance</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s07"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s07" hidden><b>EXC-ACME-NS500-15 under MSA-ACME-2025</b><span>Cite the exception and the agreement. The 2025 precedent is not the basis.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+
+        <article class="scen" id="s08">
+          <div class="scen-top"><span>S08</span><a href="#s08" aria-label="Link to scenario S08">#s08</a></div>
+          <h4>Similar-name customer</h4>
+          <q>Do CRM-2048, C-1001 and ACME-MFG-2025 refer to one customer, and is Acme Industrial Supply Co. that customer?</q>
+          <div class="tags"><span>identity</span></div>
+          <div class="answer">
+            <button type="button" aria-expanded="false" aria-controls="a-s08"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reveal expected answer</button>
+            <div class="answer-body" id="a-s08" hidden><b>Yes, one customer · No, a different one</b><span>All three IDs are Acme Manufacturing. Acme Industrial Supply (CRM-2091) is not.</span></div>
+          </div>
+          <p class="scen-foot"><i></i>Scenario page planned</p>
+        </article>
+      </div>
+
+      <!-- Dataset + run -->
+      <div class="data-grid" id="dataset">
+        <div>
+          <p class="eyebrow">The dataset</p>
+          <h3>Small on purpose. Every mess is deliberate.</h3>
+          <div class="stats">
+            <div><b>17</b><span>evidence artifacts</span></div>
+            <div><b>106</b><span>rows across 6 tables</span></div>
+            <div><b>11</b><span>documents</span></div>
+            <div><b>27</b><span>checklist facts</span></div>
+            <div><b>7</b><span>need the OWM</span></div>
+            <div><b>8</b><span>scenarios</span></div>
+          </div>
+          <ul class="traps" aria-label="Deliberate traps">
+            <li><b>Identity drift</b><span>"Acme Mfg. Holdings" in ERP, "Acme Manufacturing" in CRM.</span></li>
+            <li><b>Similar name</b><span>Acme Industrial Supply is a different customer.</span></li>
+            <li><b>Old precedent</b><span>Sarah approved 15% herself in September 2025.</span></li>
+            <li><b>Stale status</b><span>The 2023 exception still says "Status: Active".</span></li>
+            <li><b>Hearsay</b><span>"I believe it's 15%" in the account plan and email.</span></li>
+            <li><b>Wrong department</b><span>A Finance Manager who isn't a discount approver.</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="eyebrow">Run it</p>
+          <h3>Rebuild the whole company from one seed.</h3>
+          <ol class="steps">
+            <li><span>Clone the lab.</span>
+              <div class="cmd"><code>git clone https://github.com/kloudtaxi/shiny-waffle.git</code><button type="button" data-copy>Copy</button></div></li>
+            <li><span>Generate the dataset. The same seed gives byte-identical files.</span>
+              <div class="cmd"><code>uv sync &amp;&amp; uv run northstar build</code><button type="button" data-copy>Copy</button></div></li>
+            <li><span>Load <span class="mono">dataset/evidence/</span> into Utopia as the Northstar knowledge base. Load the scenario-5 variant as a separate one.</span>
+              <div class="cmd"><code>dataset/evidence-variants/missing-contract-evidence/</code><button type="button" data-copy>Copy</button></div></li>
+            <li><span>Ask each scenario question, then record answers in <span class="mono">dataset/evaluation/</span>.</span></li>
+          </ol>
+          <p class="warn"><b>Keep the answer key out.</b> Never load <span class="mono">dataset/answer-key/</span>, or this page, into the system you're testing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="display:grid;gap:10px">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="6" fill="var(--ink)"/>
+          <path d="M16 4 L18.4 13.6 L28 16 L18.4 18.4 L16 28 L13.6 18.4 L4 16 L13.6 13.6 Z" fill="var(--ground)"/>
+          <circle cx="16" cy="16" r="2.2" fill="var(--amber)"/>
+        </svg>
+        <b>Northstar</b>
+      </a>
+      <p>Northstar Industrial Systems, its people, customers and products are fictional. Marketing copy on this page is scenery. The canonical facts live in the lab's <span class="mono">truth/</span> directory.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#products">Products</a>
+      <a href="#customers">Customers</a>
+      <a href="#lab">Behind the panel</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="https://github.com/kloudtaxi/shiny-waffle">Source on GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- NS-500 faceplate: I/O lamps and scan readout -------------------
+  const bank = document.getElementById("io");
+  const lamps = [];
+  const seedPattern = [1,0,1,1,0,0,1,0,1,0,0,1,1,0,1,0];
+  for (let i = 0; i < 16; i++) {
+    const lamp = document.createElement("i");
+    if (seedPattern[i]) lamp.className = "hot";
+    bank.appendChild(lamp);
+    lamps.push(lamp);
+  }
+  const scan = document.getElementById("scan");
+  const cycles = document.getElementById("cycles");
+  let count = 1204331;
+  if (!reduce) {
+    setInterval(() => {
+      for (let k = 0; k < 3; k++) lamps[Math.floor(Math.random() * 16)].classList.toggle("hot");
+    }, 180);
+    setInterval(() => {
+      scan.textContent = (3.98 + Math.random() * 0.04).toFixed(2);
+      count += 125;
+      cycles.textContent = "cycles " + count.toLocaleString("en-US");
+    }, 500);
+  }
+
+  // ---- Scenario answer reveals ----------------------------------------
+  const buttons = [...document.querySelectorAll(".answer button")];
+  const setOpen = (btn, open) => {
+    btn.setAttribute("aria-expanded", String(open));
+    btn.lastChild.textContent = open ? "Hide expected answer" : "Reveal expected answer";
+    document.getElementById(btn.getAttribute("aria-controls")).hidden = !open;
+  };
+  const all = document.getElementById("reveal-all");
+  const syncAll = () => {
+    const allOpen = buttons.every(b => b.getAttribute("aria-expanded") === "true");
+    all.setAttribute("aria-pressed", String(allOpen));
+    all.textContent = allOpen ? "Hide all answers" : "Reveal all answers";
+  };
+  buttons.forEach(btn => btn.addEventListener("click", () => {
+    setOpen(btn, btn.getAttribute("aria-expanded") !== "true");
+    syncAll();
+  }));
+  all.addEventListener("click", () => {
+    const open = all.getAttribute("aria-pressed") !== "true";
+    buttons.forEach(b => setOpen(b, open));
+    syncAll();
+  });
+
+  // ---- Copy buttons -----------------------------------------------------
+  document.querySelectorAll("[data-copy]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const code = btn.previousElementSibling;
+      const done = (label) => { btn.textContent = label; setTimeout(() => (btn.textContent = "Copy"), 1600); };
+      const select = () => {
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        done("Selected");
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code.textContent).then(() => done("Copied"), select);
+      } else {
+        select();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

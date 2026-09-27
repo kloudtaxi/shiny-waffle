@@ -165,7 +165,7 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-/site
+# /site  (mkdocs output) — not used here; site/ holds the Northstar landing page
 
 # mypy
 .mypy_cache/

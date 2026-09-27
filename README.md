@@ -36,6 +36,14 @@ The same seed produces **byte-identical** output. A different seed changes only
 the background noise. The truth, the documents that carry it and the expected
 answers stay exactly the same (both properties are tested).
 
+## Site
+
+`site/index.html` is the front door to the experiment: the fictional Northstar
+company site, with the lab, the scenarios and the dataset "behind the panel".
+It is a single self-contained page; open it in a browser. Scenario pages will
+sit next to it as `site/scenarios/<id>.html`. The site is scenery. **Never load
+it into the system under test**; the canonical facts live in `truth/`.
+
 ## Layout
 
 ```
