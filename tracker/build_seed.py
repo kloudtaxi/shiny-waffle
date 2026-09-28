@@ -198,6 +198,18 @@ CONDITIONS = [
         "curation/arm-b/r1/B2",
         "B2 after curating the facts extraction got wrong or missed, via a Statements source.",
     ),
+    (
+        "B2kP",
+        7,
+        "After fact curation",
+        "Opus · graph only + procedure",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "9 MCP tools; search_chunks and get_document hidden",
+        "Corrected + curated facts (bands, exception values, reporting lines)",
+        "procedure/arm-b/r1/B2",
+        "B2k plus the OWM decision procedure (from the corpus SOP and doc 03 §11); "
+        "S01-S05 auto-scored against the answer key.",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.
@@ -207,6 +219,7 @@ REPEAT_DIRS = {
     "B1c": "repeats/r{n}/B1",
     "B2c": "repeats/r{n}/B2",
     "B2k": "curation/arm-b/r{n}/B2",
+    "B2kP": "procedure/arm-b/r{n}/B2",
 }
 
 

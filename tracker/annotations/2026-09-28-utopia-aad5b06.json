@@ -4,12 +4,12 @@
   "title": "Northstar × Utopia · boundary run",
   "date": "2026-09-28",
   "status": "active",
-  "status_note": "Curation arm done: graph-only B2 on curated facts grades 7/2/1 ×3 (authority fixed), but S05 flips to a confident approval without evidence.",
+  "status_note": "Procedure arm done: curated facts + the OWM decision procedure take graph-only B2 to 8/1/1, 9/1/0, 9/1/0 (auto-scored S01–S05), level with the full-text reader.",
   "next": [
+   "Model the request record (basis) as an OWM input; rerun S05",
    "Scale arm: northstar build --scale large",
-   "Steps 7–8: fact checklist and rubric scoring",
-   "Model the decision procedure (evidence requirements) in the OWM",
-   "Raise upstream: quotes on entity_facts; as_of on find_entities; merge keeps ids; id slot on statements"
+   "Steps 7–8: fact checklist and human rubric scoring",
+   "File upstream asks (docs/upstream/utopia-read-contract.md)"
   ],
   "utopia": "dev @ aad5b06",
   "lab_commit": "976d119",
@@ -20,6 +20,7 @@
    "{run}/correction/comparison.md",
    "{run}/repeats/notes.md",
    "{run}/curation/notes.md",
+   "{run}/procedure/notes.md",
    "docs/experiment-runbook.md",
    "docs/tracking-mlflow-review.md"
   ]
@@ -167,6 +168,48 @@
    "S08": [
     "partial",
     "Acme Industrial different ✓; the three ids still not in the graph (not curated)."
+   ]
+  },
+  "B2kP": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S05": [
+    "fail",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION; mismatched: outcome. Fields: outcome ✗, eligibility ✓, authorized ✓, approver ✓, required_role ✓. Hedged: assumed standard pricing because DR-9001's basis is not in the graph."
+   ],
+   "S06a": [
+    "pass",
+    "Matches the expected outcome and reasoning."
+   ],
+   "S06b": [
+    "pass",
+    "Matches the expected outcome and reasoning."
+   ],
+   "S06c": [
+    "pass",
+    "Matches the expected outcome and reasoning."
+   ],
+   "S07": [
+    "pass",
+    "Basis = the NS-500 exception; hearsay not used."
+   ],
+   "S08": [
+    "partial",
+    "Acme Industrial different ✓; the three ids not in the graph."
    ]
   }
  },
@@ -590,6 +633,146 @@
    "repeat": 3,
    "grade": "partial",
    "note": "Acme Industrial different ✓; the three ids still not in the graph (not curated)."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S06a",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S06b",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S06c",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S07",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Basis = the NS-500 exception; hearsay not used."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S08",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "Acme Industrial different ✓; the three ids not in the graph."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S06a",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S06b",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S06c",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S07",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Basis = the NS-500 exception; hearsay not used."
+  },
+  {
+   "condition": "B2kP",
+   "scenario": "S08",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "Acme Industrial different ✓; the three ids not in the graph."
   }
  ],
  "findings": [
@@ -737,6 +920,26 @@
    "body": "The Statements contract takes names, not entity ids. The pilot's exact names created new Sarah Chen and Michael Torres entities, queued for a human at 0.52-0.54; the full push attached most names directly but not all, and raised two new candidate pairs. An OWM that writes back must pass through review for every write, or treat the foundation as read-only evidence.",
    "evidence": [
     "curation/notes.md"
+   ]
+  },
+  {
+   "id": "f17",
+   "category": "owm",
+   "title": "The decision procedure closes the gap",
+   "body": "Adding the organization's own procedure (the corpus SOP + doc 03 §11, now owm/procedures/discount-approval.md) to the blind graph-only reader on curated facts: S01–S04 pass the automatic answer-key check in 3 of 3 runs, S03 is fully right (REVIEW_REQUIRED) for the first time in any condition, and S05 returns REQUEST_EVIDENCE in 2 of 3. Runs grade 8/1/1, 9/1/0, 9/1/0, level with the full-text reader (B1 9/1/0). Facts plus procedure, not a stronger reader, is what the boundary needs.",
+   "evidence": [
+    "procedure/notes.md",
+    "procedure/scores.json"
+   ]
+  },
+  {
+   "id": "f18",
+   "category": "foundation",
+   "title": "The last S05 miss is a missing request record",
+   "body": "All three S05 runs found the request's basis 'unknown' and listed the contract as missing evidence; one assumed standard pricing and approved. The graph lost DR-9001's own row (justification: 'Contract pricing per Acme MSA') to CSV truncation. An OWM decision needs the request record with its stated basis, from the CRM, as a first-class input.",
+   "evidence": [
+    "procedure/notes.md",
+    "notes.md"
    ]
   }
  ]

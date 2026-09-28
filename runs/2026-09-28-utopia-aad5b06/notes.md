@@ -1,9 +1,9 @@
-> **STATUS: ACTIVE 2026-09-28**. Four arms done: A, B1/B2, correction (confirmed, n=3 each side,
-> `repeats/notes.md`) and **curation** (`curation/notes.md`). Curated facts fix graph-only authority
-> answers (7/2/1 ×3), but S05 flips to a confident approval without evidence: the decision procedure is
-> the OWM's job. KBs are corrected **and curated** (26 inverted edges retracted, 25 statements pushed).
-> Next: the scale arm, steps 7–8, and modelling the decision procedure. Upstream asks: quotes on
-> `entity_facts`, `as_of` on `find_entities`, merges that keep ids, an entity-id slot on statements.
+> **STATUS: ACTIVE 2026-09-28**. Five arms done: A, B1/B2, correction (confirmed), curation, and the
+> **decision procedure** (`procedure/notes.md`). Curated facts + the OWM procedure
+> (`owm/procedures/discount-approval.md`) take graph-only B2 to 8/1/1, 9/1/0, 9/1/0 (S01–S05
+> auto-scored against the answer key), level with the full-text reader, with S03 right for the first
+> time. Next: model the request record as an OWM input; the scale arm; steps 7–8. The upstream
+> drafts are in `docs/upstream/utopia-read-contract.md` (not filed).
 
 # Run 2026-09-28 · Utopia baseline (arm A)
 

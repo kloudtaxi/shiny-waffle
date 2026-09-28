@@ -41,6 +41,9 @@ tail -n +2 runs/<run>/questions.tsv | while IFS=$'\t' read -r sid kb q; do
 python3 lab/utopia/blind_reader.py probe --run runs/<run> --variant B2
 python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/arm-b B1 B2
 python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/repeats/r2 B2
+# with an OWM procedure appended to the fixed system prompt (path and sha256 go in setup-*.json)
+python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/procedure/arm-b/r1 \
+  --procedure owm/procedures/discount-approval.md B2
 ```
 
 ## The blind reader's controls

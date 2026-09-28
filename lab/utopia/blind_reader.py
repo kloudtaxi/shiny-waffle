@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures as cf
+import hashlib
 import json
 import os
 import shutil
@@ -104,6 +105,7 @@ def reader(
     hidden: list[str],
     model: str,
     max_turns: int = 40,
+    system_prompt: str = SYSTEM_PROMPT,
 ) -> str:
     blind = Path(tempfile.mkdtemp(prefix="northstar-blind-"))
     if blind.resolve().is_relative_to(utopia.LAB):
@@ -118,7 +120,7 @@ def reader(
         "stream-json",
         "--verbose",
         "--system-prompt",
-        SYSTEM_PROMPT,
+        system_prompt,
         "--strict-mcp-config",
         "--mcp-config",
         mcp_config(kb),
@@ -218,6 +220,12 @@ def main() -> None:
     sub.choices["probe"].add_argument("--variant", choices=sorted(HIDDEN), default="B1")
     run_p = sub.choices["run"]
     run_p.add_argument("--out", type=Path, required=True, help="e.g. runs/<run>/arm-b")
+    run_p.add_argument(
+        "--procedure",
+        type=Path,
+        default=None,
+        help="an OWM procedure appended to the system prompt",
+    )
     run_p.add_argument("variants", nargs="*", choices=sorted(HIDDEN), default=["B1", "B2"])
     a = parser.parse_args()
 
@@ -236,10 +244,18 @@ def main() -> None:
             print(summarize("probe", a.variant, kbs[0], "(probe)", out, allowed[a.variant]))
             return
 
+        system_prompt = SYSTEM_PROMPT
+        procedure = None
+        if a.procedure:
+            text = a.procedure.read_text()
+            system_prompt = f"{SYSTEM_PROMPT}\n\n{text}"
+            digest = hashlib.sha256(text.encode()).hexdigest()
+            procedure = {"path": str(a.procedure), "sha256": digest}
         a.out.mkdir(parents=True, exist_ok=True)
         setup = {
             "model": a.model,
-            "system_prompt": SYSTEM_PROMPT,
+            "system_prompt": system_prompt,
+            "procedure": procedure,
             "server": SERVER,
             "variants": {v: allowed[v] for v in a.variants},
             "hidden_via_disallowedTools": {v: HIDDEN[v] for v in a.variants},
@@ -260,7 +276,15 @@ def main() -> None:
                     continue  # already run; never re-ask a finished question
                 t0 = time.time()
                 try:
-                    stream = reader(token, kb, question, allowed[variant], HIDDEN[variant], a.model)
+                    stream = reader(
+                        token,
+                        kb,
+                        question,
+                        allowed[variant],
+                        HIDDEN[variant],
+                        a.model,
+                        system_prompt=system_prompt,
+                    )
                 except Exception as exc:  # keep going; record the failure
                     (vdir / f"{sid}.error.txt").write_text(str(exc))
                     print(f"{variant} {sid} FAILED: {str(exc)[:200]}", flush=True)
