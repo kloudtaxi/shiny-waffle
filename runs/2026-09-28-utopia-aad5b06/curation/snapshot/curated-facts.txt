@@ -1,0 +1,35 @@
+== base: live facts 269, live entities 149
+   Acme Mfg. Holdings —is eligible for discounts of up to→ NS-500 Industrial Controller
+   Acme Mfg. Holdings —may receive NS-500 Industrial Controller discounts of up to→ 10% of list price  [2023-04-01..2025-03-31]
+   Acme Mfg. Holdings —may receive NS-500 Industrial Controller discounts of up to→ 15% of list price  [2025-04-01..2028-03-31]
+   Acme NS-500 Strategic Account Exception —sets the maximum eligible NS-500 Industrial Controller discount at→ 15% of list price  [2025-04-01..2028-03-31]
+   Anthony Day —reports to→ Michael Torres
+   EXC-ACME-NS500-10 —sets the maximum eligible NS-500 Industrial Controller discount at→ 10% of list price  [2023-04-01..2025-03-31]
+   Kelly Floyd —reports to→ Michael Torres
+   Michael Torres —reports to→ David Morgan
+   Northstar Pricing Policy 2025 —is effective from→ 2025-01-01  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2025 —lets Enterprise Account Executives approve discounts up to and including→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2025 —requires VP Sales approval for discounts greater than→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2026 —is effective from→ 2026-01-01  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —lets Enterprise Account Executives approve discounts up to and including→ 10%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —replaces→ Northstar Pricing Policy 2025
+   Northstar Pricing Policy 2026 —requires Chief Revenue Officer approval for discounts greater than→ 20%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —requires VP Sales approval for discounts→ greater than 10% and up to and including 20%  [2026-01-01..2026-12-31]
+   Priya Shah —reports to→ Elena Novak
+   Sarah Chen —reports to→ Michael Torres
+   Zachary Brown —reports to→ Michael Torres
+== missing-contract: live facts 262, live entities 175
+   Anthony Day —reports to→ Michael Torres
+   Kelly Floyd —reports to→ Michael Torres
+   Michael Torres —reports to→ David Morgan
+   Northstar Pricing Policy 2025 —is effective from→ 2025-01-01  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2025 —lets Enterprise Account Executives approve discounts up to and including→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2025 —requires VP Sales approval for discounts greater than→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2026 —is effective from→ 2026-01-01  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —lets Enterprise Account Executives approve discounts up to and including→ 10%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —replaces→ Northstar Pricing Policy 2025
+   Northstar Pricing Policy 2026 —requires Chief Revenue Officer approval for discounts greater than→ 20%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —requires VP Sales approval for discounts→ greater than 10% and up to and including 20%  [2026-01-01..2026-12-31]
+   Priya Shah —reports to→ Elena Novak
+   Sarah Chen —reports to→ Michael Torres
+   zachary.brown@northstar.example —reports to→ Michael Torres

@@ -4,12 +4,12 @@
   "title": "Northstar × Utopia · boundary run",
   "date": "2026-09-28",
   "status": "active",
-  "status_note": "Correction effect confirmed with n=3 each side: pre-correction B2 6-4-0 / 6-4-0 / 5-4-1 vs post 4-3-3 / 4-3-3 / 4-4-2.",
+  "status_note": "Curation arm done: graph-only B2 on curated facts grades 7/2/1 ×3 (authority fixed), but S05 flips to a confident approval without evidence.",
   "next": [
-   "Curation arm: fix VP band, percentages, reporting direction",
-   "Steps 7–8: fact checklist and rubric scoring",
    "Scale arm: northstar build --scale large",
-   "Raise upstream: quotes on entity_facts; as_of on find_entities; merge keeps ids"
+   "Steps 7–8: fact checklist and rubric scoring",
+   "Model the decision procedure (evidence requirements) in the OWM",
+   "Raise upstream: quotes on entity_facts; as_of on find_entities; merge keeps ids; id slot on statements"
   ],
   "utopia": "dev @ aad5b06",
   "lab_commit": "976d119",
@@ -19,6 +19,7 @@
    "{run}/comparison.md",
    "{run}/correction/comparison.md",
    "{run}/repeats/notes.md",
+   "{run}/curation/notes.md",
    "docs/experiment-runbook.md",
    "docs/tracking-mlflow-review.md"
   ]
@@ -124,6 +125,48 @@
    "S08": [
     "partial",
     "Ids \"not recorded anywhere, not even as an alias\" — the merge erased C-1001."
+   ]
+  },
+  "B2k": {
+   "S01": [
+    "pass",
+    "No: over her 10% limit; VP Sales Michael Torres must approve; eligible under the 15% exception."
+   ],
+   "S02": [
+    "pass",
+    "No: 18% exceeds the curated 15% cap."
+   ],
+   "S03": [
+    "partial",
+    "No NS-Cloud exception ✓ (NS-500 only); framed as VP sign-off, not review."
+   ],
+   "S04": [
+    "pass",
+    "Yes: the 2025 band let AEs approve up to 15%; exception active."
+   ],
+   "S05": [
+    "fail",
+    "Approves with Michael's sign-off; never asks whether the contract exists. Authority facts without evidence requirements."
+   ],
+   "S06a": [
+    "pass",
+    "Matches the expected outcome and reasoning."
+   ],
+   "S06b": [
+    "pass",
+    "Matches the expected outcome and reasoning."
+   ],
+   "S06c": [
+    "pass",
+    "Matches the expected outcome and reasoning."
+   ],
+   "S07": [
+    "pass",
+    "Matches the expected outcome and reasoning."
+   ],
+   "S08": [
+    "partial",
+    "Acme Industrial different ✓; the three ids still not in the graph (not curated)."
    ]
   }
  },
@@ -407,6 +450,146 @@
    "repeat": 3,
    "grade": "partial",
    "note": "C-1001 = Acme Mfg. Holdings ✓ (customers.csv quote); CRM-2048, ACME-MFG-2025 missing."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "No: over her 10% limit; VP Sales Michael Torres must approve; eligible under the 15% exception."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "No: 18% exceeds the curated 15% cap."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "No NS-Cloud exception ✓ (NS-500 only); framed as VP sign-off, not review."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Yes: the 2025 band let AEs approve up to 15%; exception active."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Approves with Michael's sign-off; never asks whether the contract exists. Authority facts without evidence requirements."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S06a",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S06b",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S06c",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S07",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S08",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "Acme Industrial different ✓; the three ids still not in the graph (not curated)."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "No: over her 10% limit; VP Sales Michael Torres must approve; eligible under the 15% exception."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "No: 18% exceeds the curated 15% cap."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "No NS-Cloud exception ✓ (NS-500 only); framed as VP sign-off, not review."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Yes: the 2025 band let AEs approve up to 15%; exception active."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Approves with Michael's sign-off; never asks whether the contract exists. Authority facts without evidence requirements."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S06a",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S06b",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S06c",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S07",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2k",
+   "scenario": "S08",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "Acme Industrial different ✓; the three ids still not in the graph (not curated)."
   }
  ],
  "findings": [
@@ -527,6 +710,33 @@
    "body": "On S01, S02 and S04 the reader dug through per-entity `changes` in 8 of 9 pre-correction runs and 0 of 9 post-correction (Fisher p ≈ 0.0002). S04 is right exactly when it dug. The correction changed reader behaviour; the \"consolidated entities look complete\" mechanism is inferred from traces. Graph-only answers ride on an undocumented path: the fix is quotes on `entity_facts`, not identity review.",
    "evidence": [
     "repeats/notes.md"
+   ]
+  },
+  {
+   "id": "f14",
+   "category": "foundation",
+   "title": "Curating facts fixed the authority questions",
+   "body": "With the approval bands, exception values and reporting lines curated as graph facts, graph-only B2 graded 7/2/1 in all three runs (vs 4/3/3 uncurated). S01, S02 and S04 were right every time, read straight from `entity_facts` with no `changes` dig, in ~30% fewer turns. The gap was missing facts, not reader reasoning.",
+   "evidence": [
+    "curation/notes.md"
+   ]
+  },
+  {
+   "id": "f15",
+   "category": "owm",
+   "title": "Complete authority facts made the missing-evidence case worse",
+   "body": "In the missing-contract KB, curated bands let the reader approve DR-9001 \"with Michael's sign-off\" in 3 of 3 runs, never asking whether the contract exists (uncurated it declined). More facts without the decision procedure (check contract and exception before authority, doc 03 §11) produce a confident wrong answer. The procedure and its evidence requirements belong to the OWM.",
+   "evidence": [
+    "curation/notes.md"
+   ]
+  },
+  {
+   "id": "f16",
+   "category": "review",
+   "title": "Writing facts back to Utopia is an identity review",
+   "body": "The Statements contract takes names, not entity ids. The pilot's exact names created new Sarah Chen and Michael Torres entities, queued for a human at 0.52-0.54; the full push attached most names directly but not all, and raised two new candidate pairs. An OWM that writes back must pass through review for every write, or treat the foundation as read-only evidence.",
+   "evidence": [
+    "curation/notes.md"
    ]
   }
  ]

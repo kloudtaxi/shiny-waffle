@@ -187,6 +187,17 @@ CONDITIONS = [
         "correction/arm-b/B2",
         "B2 rerun after the corrections. Its drop is reader-strategy variance, not the correction.",
     ),
+    (
+        "B2k",
+        6,
+        "After fact curation",
+        "Opus · graph only",
+        "Opus 5.5, blind, headless claude -p",
+        "9 MCP tools; search_chunks and get_document hidden",
+        "Corrected + curated facts (bands, exception values, reporting lines)",
+        "curation/arm-b/r1/B2",
+        "B2 after curating the facts extraction got wrong or missed, via a Statements source.",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.
@@ -195,6 +206,7 @@ REPEAT_DIRS = {
     "B2": "repeats/pre-r{n}/B2",  # graph reverted to pre-correction for these runs
     "B1c": "repeats/r{n}/B1",
     "B2c": "repeats/r{n}/B2",
+    "B2k": "curation/arm-b/r{n}/B2",
 }
 
 

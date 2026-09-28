@@ -1,9 +1,9 @@
-> **STATUS: ACTIVE 2026-09-28**. The correction effect is **confirmed**: B2 repeats with n=3 on both
-> sides (`repeats/notes.md`). Pre-correction 6/4/0, 6/4/0, 5/4/1 vs post 4/3/3, 4/3/3, 4/4/2; the
-> `changes` dig on authority questions is 8/9 vs 0/9 (p≈0.0002). The KBs are in the corrected
-> state; the revert/re-apply was verified both ways. Next: the curation arm. Still open: steps 7–8
-> and the scale arm. Upstream asks: quotes on `entity_facts`, `as_of` on `find_entities`, merges
-> that keep identifiers.
+> **STATUS: ACTIVE 2026-09-28**. Four arms done: A, B1/B2, correction (confirmed, n=3 each side,
+> `repeats/notes.md`) and **curation** (`curation/notes.md`). Curated facts fix graph-only authority
+> answers (7/2/1 ×3), but S05 flips to a confident approval without evidence: the decision procedure is
+> the OWM's job. KBs are corrected **and curated** (26 inverted edges retracted, 25 statements pushed).
+> Next: the scale arm, steps 7–8, and modelling the decision procedure. Upstream asks: quotes on
+> `entity_facts`, `as_of` on `find_entities`, merges that keep ids, an entity-id slot on statements.
 
 # Run 2026-09-28 · Utopia baseline (arm A)
 
