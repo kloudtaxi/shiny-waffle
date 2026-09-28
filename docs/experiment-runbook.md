@@ -139,6 +139,9 @@ H="Authorization: Bearer $TOK"
 sql() { docker exec utopia-db-1 psql -U utopia -d utopia -At -F ' | ' -c "$1"; }
 ```
 
+**The scripted path is `lab/utopia/`** (`utopia.py`, `blind_reader.py`, `status.sh`; see
+its README). They implement every step below and the arm B reader with its controls.
+
 The throwaway CLI at `_owm-local/cli/utopia.mjs` wraps most of this (`login`, `kbs`, `upload`,
 `watch`, `drops`, `jobs --failed`, `mcp`, `raw`, `sql`). It was verified against Utopia
 @ `d676c22`, so treat it as a convenience, not a contract.

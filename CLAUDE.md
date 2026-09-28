@@ -128,6 +128,15 @@ filenames contain an em dash, so quote paths:
   object that S01 must reproduce field for field.
 - **doc 04**, *Synthetic Data Generation*: the Polyfactory/Faker split and the scale targets.
 
+## Utopia experiment (runs, scripts, tracker)
+
+- `runs/<date>-utopia-<sha>/`: one folder per live run: `notes.md` (start here, status banner on top),
+  questions, answers, reader transcripts, snapshots. Runs are results: add to them, never rewrite them.
+- `lab/utopia/`: the stdlib scripts that drive Utopia and the blind Opus reader. Its README lists the
+  controls that define the experiment (blindness, hidden tools, fixed prompt, revoked tokens).
+- `tracker/`: the Northstar Lab Ledger artifact (results matrix, human grades, findings). Human grades
+  live in the artifact's `grades` collection; read them before scoring and never overwrite them.
+
 ## Local-only context (gitignored)
 
 `_owm-local/` holds local notes on running Utopia (the knowledge foundation under test, a
