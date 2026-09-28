@@ -210,6 +210,18 @@ CONDITIONS = [
         "B2k plus the OWM decision procedure (from the corpus SOP and doc 03 §11); "
         "S01-S05 auto-scored against the answer key.",
     ),
+    (
+        "B2kPR",
+        8,
+        "After fact curation",
+        "Opus · graph only + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "9 MCP tools; search_chunks and get_document hidden",
+        "Corrected + curated facts (bands, exception values, reporting lines)",
+        "request/arm-b/r1/B2",
+        "B2kP plus the request as recorded in the CRM (the DR-9001 row, varied per scenario), "
+        "as the OWM would receive it. Decision scenarios S01-S05 only; auto-scored.",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.
@@ -220,7 +232,10 @@ REPEAT_DIRS = {
     "B2c": "repeats/r{n}/B2",
     "B2k": "curation/arm-b/r{n}/B2",
     "B2kP": "procedure/arm-b/r{n}/B2",
+    "B2kPR": "request/arm-b/r{n}/B2",
 }
+# Conditions whose reader got a different question text than the run's questions.tsv.
+QUESTION_FILES = {"B2kPR": "request/questions.tsv"}
 
 
 def annotations(run_name: str) -> dict:
@@ -326,10 +341,18 @@ def main(run_dir: str) -> None:
         (r["condition"], r["scenario"], r["repeat"]): (r["grade"], r["note"])
         for r in ann["provisional_repeats"]
     }
-    questions = {}
-    for row in (run / "questions.tsv").read_text().splitlines()[1:]:
-        sid, kb, q = row.split("\t")
-        questions[sid] = (kb, q)
+
+    def read_questions(path: Path) -> dict[str, tuple[str, str]]:
+        out = {}
+        for row in path.read_text().splitlines()[1:]:
+            sid, kb, q = row.split("\t")
+            out[sid] = (kb, q)
+        return out
+
+    questions = read_questions(run / "questions.tsv")
+    per_condition = {
+        c: read_questions(run / f) for c, f in QUESTION_FILES.items() if (run / f).exists()
+    }
 
     scenarios = {}
     for sid, order, title, as_of, corpus, outcome, detail, traps in SCENARIOS:
@@ -372,7 +395,7 @@ def main(run_dir: str) -> None:
                     grade, note = first_run.get(cid, {}).get(sid, default)
                 else:
                     grade, note = repeats.get((cid, sid, rep), (None, "Not read yet."))
-                kb, q = questions[sid]
+                kb, q = per_condition.get(cid, questions).get(sid, questions[sid])
                 doc_id = f"{exp}~{cid}~{sid}~r{rep}"
                 answers[doc_id] = {
                     "experiment": exp,

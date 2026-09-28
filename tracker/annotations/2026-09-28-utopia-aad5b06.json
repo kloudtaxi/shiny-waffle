@@ -4,11 +4,11 @@
   "title": "Northstar × Utopia · boundary run",
   "date": "2026-09-28",
   "status": "active",
-  "status_note": "Procedure arm done: curated facts + the OWM decision procedure take graph-only B2 to 8/1/1, 9/1/0, 9/1/0 (auto-scored S01–S05), level with the full-text reader.",
+  "status_note": "Request-record arm done: curated facts + OWM procedure + CRM request record → S01–S05 match the answer key 15/15 (auto-scored). The boundary is mapped for this corpus.",
   "next": [
-   "Model the request record (basis) as an OWM input; rerun S05",
-   "Scale arm: northstar build --scale large",
-   "Steps 7–8: fact checklist and human rubric scoring",
+   "Scale arm: northstar build --scale large (does facts + procedure + record hold under noise?)",
+   "Steps 7–8: human rubric scoring to calibrate Claude's provisional grades",
+   "Build the OWM decision service: procedure + record in, decision object out (persisted)",
    "File upstream asks (docs/upstream/utopia-read-contract.md)"
   ],
   "utopia": "dev @ aad5b06",
@@ -21,6 +21,7 @@
    "{run}/repeats/notes.md",
    "{run}/curation/notes.md",
    "{run}/procedure/notes.md",
+   "{run}/request/notes.md",
    "docs/experiment-runbook.md",
    "docs/tracking-mlflow-review.md"
   ]
@@ -210,6 +211,28 @@
    "S08": [
     "partial",
     "Acme Industrial different ✓; the three ids not in the graph."
+   ]
+  },
+  "B2kPR": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S05": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
    ]
   }
  },
@@ -773,6 +796,76 @@
    "repeat": 3,
    "grade": "partial",
    "note": "Acme Industrial different ✓; the three ids not in the graph."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
   }
  ],
  "findings": [
@@ -935,11 +1028,21 @@
   {
    "id": "f18",
    "category": "foundation",
-   "title": "The last S05 miss is a missing request record",
-   "body": "All three S05 runs found the request's basis 'unknown' and listed the contract as missing evidence; one assumed standard pricing and approved. The graph lost DR-9001's own row (justification: 'Contract pricing per Acme MSA') to CSV truncation. An OWM decision needs the request record with its stated basis, from the CRM, as a first-class input.",
+   "title": "The last S05 miss was a missing request record (confirmed)",
+   "body": "All three S05 runs found the request's basis 'unknown' and listed the contract as missing evidence; one assumed standard pricing and approved. The graph lost DR-9001's own row (justification: 'Contract pricing per Acme MSA') to CSV truncation. An OWM decision needs the request record with its stated basis, from the CRM, as a first-class input. Confirmed: given the CRM row as input, S05 returned REQUEST_EVIDENCE in 3 of 3, with basis contract_exception and the MSA listed as missing.",
    "evidence": [
     "procedure/notes.md",
-    "notes.md"
+    "request/notes.md"
+   ]
+  },
+  {
+   "id": "f19",
+   "category": "owm",
+   "title": "Facts + procedure + request record: 15 of 15 decisions match the answer key",
+   "body": "Blind graph-only reader on the curated graph, with the OWM procedure and the request as recorded in the CRM: S01–S05 match the oracle's decision object on every scored field (outcome, eligibility, authorization, required role, approver) in 3 of 3 runs, at the same cost as without the record. Each of the three was necessary: facts for S01/S02/S04, the procedure for S03/S05, the request record for S05's basis.",
+   "evidence": [
+    "request/notes.md",
+    "request/scores.json"
    ]
   }
  ]

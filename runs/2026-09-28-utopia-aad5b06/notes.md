@@ -1,9 +1,9 @@
-> **STATUS: ACTIVE 2026-09-28**. Five arms done: A, B1/B2, correction (confirmed), curation, and the
-> **decision procedure** (`procedure/notes.md`). Curated facts + the OWM procedure
-> (`owm/procedures/discount-approval.md`) take graph-only B2 to 8/1/1, 9/1/0, 9/1/0 (S01–S05
-> auto-scored against the answer key), level with the full-text reader, with S03 right for the first
-> time. Next: model the request record as an OWM input; the scale arm; steps 7–8. The upstream
-> drafts are in `docs/upstream/utopia-read-contract.md` (not filed).
+> **STATUS: ACTIVE 2026-09-28**. Six arms done. The last, the **request record**
+> (`request/notes.md`), completes the result: a blind graph-only reader on the curated graph, with
+> the OWM procedure and the CRM request record as input, matches the answer key on S01–S05 in **15 of
+> 15** decisions (auto-scored). The foundation/OWM boundary for this corpus is summarised there. Next:
+> the scale arm; steps 7–8 (human scoring); a persisted OWM decision service. Upstream drafts:
+> `docs/upstream/utopia-read-contract.md` (not filed).
 
 # Run 2026-09-28 · Utopia baseline (arm A)
 

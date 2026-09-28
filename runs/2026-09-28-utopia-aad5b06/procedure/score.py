@@ -1,6 +1,6 @@
 """Score the decision-procedure runs against the lab's answer key, field by field.
 
-    python3 runs/2026-09-28-utopia-aad5b06/procedure/score.py runs/.../procedure/arm-b/r1/B2 ...
+    python3 runs/2026-09-28-utopia-aad5b06/procedure/score.py [--out FILE] runs/.../arm-b/r1/B2 ...
 
 For the discount decisions (S01-S05), the reader ends its answer with a decision JSON
 (owm/procedures/discount-approval.md). That is compared with `dataset/answer-key/
@@ -104,7 +104,7 @@ def score(sid: str, got: dict[str, Any] | None, exp: dict[str, Any]) -> dict[str
     return {"grade": grade, "fields": fields, "note": note}
 
 
-def main(dirs: list[str]) -> None:
+def main(dirs: list[str], out: Path) -> None:
     exp = expected()
     report: dict[str, Any] = {}
     for d in dirs:
@@ -119,10 +119,13 @@ def main(dirs: list[str]) -> None:
         for sid, r in rows.items():
             if r["grade"] != "pass":
                 print(f"    {sid} {r['grade']}: {r['note']}")
-    out = Path(__file__).resolve().parent / "scores.json"
     out.write_text(json.dumps(report, indent=1, ensure_ascii=False) + "\n")
     print(f"wrote {out.relative_to(LAB)}")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    args = sys.argv[1:]
+    dest = Path(__file__).resolve().parent / "scores.json"
+    if args[:1] == ["--out"]:
+        dest, args = (LAB / args[1]).resolve(), args[2:]
+    main(args, dest)
