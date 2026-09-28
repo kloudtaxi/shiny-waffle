@@ -1,0 +1,462 @@
+event: snapshot
+data: {"content":"","sources":[],"steps":[]}
+
+event: conversation
+data: {"id":"01a0e78f-26e7-7992-957f-f858b1a0ae56"}
+
+event: step
+data: {"at":0,"count":6,"detail":"6 sources","kind":"search","label":"Acme Manufacturing 15% discount NS-500","status":"ok"}
+
+event: sources
+data: [{"chunk_id":"01a0e787-7e3f-7ba1-ae13-e6879fdaeb7f","document_id":"01a0e787-7dd2-7fe0-9be1-2e25e0456585","excerpt":"doc_id: EXC-ACME-NS500-15\ntitle: Acme NS-500 Strategic Account Exception\nowner: Deal Desk\ncreated: '2025-03-20'\neffective_from: '2025-04-01'\neffective_to: '2028…","filename":"acme_pricing_exception.md","n":1},{"chunk_id":"01a0e787-7dec-7a63-a609-33b465c6a93c","document_id":"01a0e787-7dae-70f1-b85c-c3994cb3fbd4","excerpt":"doc_id: EXC-ACME-NS500-10\ntitle: Acme NS-500 Volume Pricing Exception\nowner: Deal Desk\ncreated: '2023-03-12'\n---\n\n# Acme Manufacturing — NS-500 Volume Pricing E…","filename":"acme_pricing_exception_2023.md","n":2},{"chunk_id":"01a0e787-7da7-76c3-8a2c-801e92c1150f","document_id":"01a0e787-7d0f-7613-9c7d-f6223b382b0f","excerpt":"doc_id: ACCT-PLAN-CRM-2048-2026\ntitle: ACME Manufacturing — Account Strategy 2026\nowner: Sarah Chen\ncreated: '2026-02-10'\n---\n\n# ACME Manufacturing — Account St…","filename":"acme_account_strategy.md","n":3},{"chunk_id":"01a0e787-7dd0-7b12-89f4-30a068965168","document_id":"01a0e787-7d66-7c91-9a6e-2185b4e0555d","excerpt":"doc_id: ACME-MFG-2025\ntitle: Master Supply Agreement — Acme\nowner: Legal\ncreated: '2025-03-20'\neffective_from: '2025-04-01'\neffective_to: '2028-03-31'\n---\n\n# Ma…","filename":"acme_master_supply_agreement.md","n":4},{"chunk_id":"01a0e787-7c8d-7fc1-a655-09d9f4083a9a","document_id":"01a0e787-7c1e-7a50-8d7a-61d98294818d","excerpt":"| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…","filename":"discount_requests.csv","n":5},{"chunk_id":"01a0e787-7eab-70a0-b8b2-50b73fca55d1","document_id":"01a0e787-7e46-7f53-a529-e4c774d8b1ab","excerpt":"doc_id: MSG-20260923-0914\ntitle: Acme NS-500 — DR-9001\nfrom: sarah.chen@northstar.example\nto: michael.torres@northstar.example\nsent: '2026-09-23'\n---\n\n**From:**…","filename":"email_sarah_to_michael.md","n":6}]
+
+event: step
+data: {"at":0,"count":1,"detail":"1 sections","kind":"document","label":"acme_pricing_exception.md","status":"ok"}
+
+event: delta
+data: {"text":"Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":" Manufacturing"}
+
+event: delta
+data: {"text":" is"}
+
+event: delta
+data: {"text":" eligible"}
+
+event: delta
+data: {"text":" for"}
+
+event: delta
+data: {"text":" a"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"15"}
+
+event: delta
+data: {"text":"%"}
+
+event: delta
+data: {"text":" discount"}
+
+event: delta
+data: {"text":" on"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" NS"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"500"}
+
+event: delta
+data: {"text":" Industrial"}
+
+event: delta
+data: {"text":" Controller"}
+
+event: delta
+data: {"text":" due"}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" a"}
+
+event: delta
+data: {"text":" pricing"}
+
+event: delta
+data: {"text":" exception"}
+
+event: delta
+data: {"text":" established"}
+
+event: delta
+data: {"text":" in"}
+
+event: delta
+data: {"text":" their"}
+
+event: delta
+data: {"text":" Master"}
+
+event: delta
+data: {"text":" Supply"}
+
+event: delta
+data: {"text":" Agreement"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" effective"}
+
+event: delta
+data: {"text":" from"}
+
+event: delta
+data: {"text":" April"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"5"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" March"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"31"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"8"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" This"}
+
+event: delta
+data: {"text":" exception"}
+
+event: delta
+data: {"text":" specifically"}
+
+event: delta
+data: {"text":" applies"}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" NS"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"500"}
+
+event: delta
+data: {"text":" product"}
+
+event: delta
+data: {"text":" only"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" \n\n"}
+
+event: delta
+data: {"text":"The"}
+
+event: delta
+data: {"text":" evidence"}
+
+event: delta
+data: {"text":" for"}
+
+event: delta
+data: {"text":" this"}
+
+event: delta
+data: {"text":" discount"}
+
+event: delta
+data: {"text":" can"}
+
+event: delta
+data: {"text":" be"}
+
+event: delta
+data: {"text":" referenced"}
+
+event: delta
+data: {"text":" in"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" \""}
+
+event: delta
+data: {"text":"Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":" NS"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"500"}
+
+event: delta
+data: {"text":" Strategic"}
+
+event: delta
+data: {"text":" Account"}
+
+event: delta
+data: {"text":" Exception"}
+
+event: delta
+data: {"text":"\""}
+
+event: delta
+data: {"text":" document"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" which"}
+
+event: delta
+data: {"text":" states"}
+
+event: delta
+data: {"text":":\n\n"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":" **"}
+
+event: delta
+data: {"text":"Maximum"}
+
+event: delta
+data: {"text":" eligible"}
+
+event: delta
+data: {"text":" discount"}
+
+event: delta
+data: {"text":":**"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"15"}
+
+event: delta
+data: {"text":"%"}
+
+event: delta
+data: {"text":" of"}
+
+event: delta
+data: {"text":" list"}
+
+event: delta
+data: {"text":" price"}
+
+event: delta
+data: {"text":"\n"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":" **"}
+
+event: delta
+data: {"text":"Effective"}
+
+event: delta
+data: {"text":" Date"}
+
+event: delta
+data: {"text":":**"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"5"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"04"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"01"}
+
+event: delta
+data: {"text":"\n"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":" **"}
+
+event: delta
+data: {"text":"Expiration"}
+
+event: delta
+data: {"text":" Date"}
+
+event: delta
+data: {"text":":**"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"8"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"03"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"31"}
+
+event: delta
+data: {"text":"\n\n"}
+
+event: delta
+data: {"text":"This"}
+
+event: delta
+data: {"text":" exception"}
+
+event: delta
+data: {"text":" supers"}
+
+event: delta
+data: {"text":"edes"}
+
+event: delta
+data: {"text":" an"}
+
+event: delta
+data: {"text":" earlier"}
+
+event: delta
+data: {"text":" pricing"}
+
+event: delta
+data: {"text":" exception"}
+
+event: delta
+data: {"text":" that"}
+
+event: delta
+data: {"text":" allowed"}
+
+event: delta
+data: {"text":" for"}
+
+event: delta
+data: {"text":" a"}
+
+event: delta
+data: {"text":" maximum"}
+
+event: delta
+data: {"text":" discount"}
+
+event: delta
+data: {"text":" of"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"10"}
+
+event: delta
+data: {"text":"%"}
+
+event: delta
+data: {"text":" ["}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":"]."}
+
+event: sources
+data: [{"chunk_id":"01a0e787-7e3f-7ba1-ae13-e6879fdaeb7f","document_id":"01a0e787-7dd2-7fe0-9be1-2e25e0456585","excerpt":"doc_id: EXC-ACME-NS500-15\ntitle: Acme NS-500 Strategic Account Exception\nowner: Deal Desk\ncreated: '2025-03-20'\neffective_from: '2025-04-01'\neffective_to: '2028…","filename":"acme_pricing_exception.md","n":1},{"chunk_id":"01a0e787-7dec-7a63-a609-33b465c6a93c","document_id":"01a0e787-7dae-70f1-b85c-c3994cb3fbd4","excerpt":"doc_id: EXC-ACME-NS500-10\ntitle: Acme NS-500 Volume Pricing Exception\nowner: Deal Desk\ncreated: '2023-03-12'\n---\n\n# Acme Manufacturing — NS-500 Volume Pricing E…","filename":"acme_pricing_exception_2023.md","n":2},{"chunk_id":"01a0e787-7da7-76c3-8a2c-801e92c1150f","document_id":"01a0e787-7d0f-7613-9c7d-f6223b382b0f","excerpt":"doc_id: ACCT-PLAN-CRM-2048-2026\ntitle: ACME Manufacturing — Account Strategy 2026\nowner: Sarah Chen\ncreated: '2026-02-10'\n---\n\n# ACME Manufacturing — Account St…","filename":"acme_account_strategy.md","n":3},{"chunk_id":"01a0e787-7dd0-7b12-89f4-30a068965168","document_id":"01a0e787-7d66-7c91-9a6e-2185b4e0555d","excerpt":"doc_id: ACME-MFG-2025\ntitle: Master Supply Agreement — Acme\nowner: Legal\ncreated: '2025-03-20'\neffective_from: '2025-04-01'\neffective_to: '2028-03-31'\n---\n\n# Ma…","filename":"acme_master_supply_agreement.md","n":4},{"chunk_id":"01a0e787-7c8d-7fc1-a655-09d9f4083a9a","document_id":"01a0e787-7c1e-7a50-8d7a-61d98294818d","excerpt":"| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…","filename":"discount_requests.csv","n":5},{"chunk_id":"01a0e787-7eab-70a0-b8b2-50b73fca55d1","document_id":"01a0e787-7e46-7f53-a529-e4c774d8b1ab","excerpt":"doc_id: MSG-20260923-0914\ntitle: Acme NS-500 — DR-9001\nfrom: sarah.chen@northstar.example\nto: michael.torres@northstar.example\nsent: '2026-09-23'\n---\n\n**From:**…","filename":"email_sarah_to_michael.md","n":6}]
+
+event: done
+data: {}
+

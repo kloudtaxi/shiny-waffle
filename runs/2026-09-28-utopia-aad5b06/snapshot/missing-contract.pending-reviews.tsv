@@ -1,0 +1,6 @@
+left_entity	right_entity	score	status	reason
+Michael Torres	Michael Torres	0.41749036	pending	proposed
+NS-840-SER	NS-500 controller	0.67466116	pending	proposed
+NS-840-SER	NS-880 Commissioning Service	0.63889843	pending	proposed
+NS-840-SER	NS-830 I/O Module	0.61867374	pending	proposed
+(4 rows)

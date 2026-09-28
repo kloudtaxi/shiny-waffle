@@ -1,0 +1,264 @@
+event: snapshot
+data: {"content":"","sources":[],"steps":[]}
+
+event: conversation
+data: {"id":"01a0e78e-a36c-77f0-9ef9-ed19a991ed20"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 matches","kind":"entity","label":"Acme Manufacturing","status":"ok"}
+
+event: step
+data: {"at":0,"count":3,"detail":"3 matches","kind":"entity","label":"NS-500","status":"ok"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 matches","kind":"entity","label":"DR-9001","status":"ok"}
+
+event: step
+data: {"as_of":"2023-10-01T00:00:00Z","at":0,"count":0,"detail":"0 facts at 2026-09-23T00:00:00Z, as recorded by 2023-10-01T00:00:00Z","kind":"facts","label":"Acme Mfg. Holdings","status":"ok","valid_at":"2026-09-23T00:00:00Z"}
+
+event: step
+data: {"as_of":"2023-10-01T00:00:00Z","at":0,"count":0,"detail":"0 facts at 2026-09-23T00:00:00Z, as recorded by 2023-10-01T00:00:00Z","kind":"facts","label":"NS-500 Industrial Controller","status":"ok","valid_at":"2026-09-23T00:00:00Z"}
+
+event: step
+data: {"as_of":"2023-10-01T00:00:00Z","at":0,"count":0,"detail":"0 facts at 2026-09-23T00:00:00Z, as recorded by 2023-10-01T00:00:00Z","kind":"facts","label":"DR-9001","status":"ok","valid_at":"2026-09-23T00:00:00Z"}
+
+event: delta
+data: {"text":"As"}
+
+event: delta
+data: {"text":" of"}
+
+event: delta
+data: {"text":" September"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"23"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"6"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" there"}
+
+event: delta
+data: {"text":" are"}
+
+event: delta
+data: {"text":" no"}
+
+event: delta
+data: {"text":" valid"}
+
+event: delta
+data: {"text":" records"}
+
+event: delta
+data: {"text":" for"}
+
+event: delta
+data: {"text":" Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":" Manufacturing"}
+
+event: delta
+data: {"text":" ("}
+
+event: delta
+data: {"text":"Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":" M"}
+
+event: delta
+data: {"text":"fg"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" Holdings"}
+
+event: delta
+data: {"text":"),"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" NS"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"500"}
+
+event: delta
+data: {"text":" Industrial"}
+
+event: delta
+data: {"text":" Controller"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" or"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" DR"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"900"}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":" in"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" knowledge"}
+
+event: delta
+data: {"text":" base"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" Therefore"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" I"}
+
+event: delta
+data: {"text":" cannot"}
+
+event: delta
+data: {"text":" determine"}
+
+event: delta
+data: {"text":" whether"}
+
+event: delta
+data: {"text":" an"}
+
+event: delta
+data: {"text":" offer"}
+
+event: delta
+data: {"text":" of"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"18"}
+
+event: delta
+data: {"text":"%"}
+
+event: delta
+data: {"text":" on"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" NS"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"500"}
+
+event: delta
+data: {"text":" ("}
+
+event: delta
+data: {"text":"DR"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"900"}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":" at"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"18"}
+
+event: delta
+data: {"text":"%)"}
+
+event: delta
+data: {"text":" can"}
+
+event: delta
+data: {"text":" be"}
+
+event: delta
+data: {"text":" made"}
+
+event: delta
+data: {"text":" on"}
+
+event: delta
+data: {"text":" that"}
+
+event: delta
+data: {"text":" date"}
+
+event: delta
+data: {"text":"."}
+
+event: sources
+data: []
+
+event: done
+data: {}
+

@@ -1,0 +1,19 @@
+target	source	by_human	reason	created_at
+Sarah Chen	Sarah Chen	f	governed|0.95	2026-09-28 10:20:49.113484+00
+NS-CLOUD	NS-Cloud	f	governed|0.90	2026-09-28 10:21:34.225315+00
+NS-Edge Monitoring Package	NS-Edge Monitoring Package	f	governed|0.90	2026-09-28 10:21:40.004549+00
+Weiss Ltd	Weiss Ltd Holdings	f	governed|0.90	2026-09-28 10:21:41.447825+00
+Miller LLC	Miller LLC Co.	f	governed|0.95	2026-09-28 10:21:41.514057+00
+zachary.brown@northstar.example	Zachary Brown	f	governed|0.95	2026-09-28 10:21:51.091859+00
+Sarah Chen	sarah.chen@northstar.example	f	governed|0.90	2026-09-28 10:21:55.054502+00
+kelly.floyd@northstar.example	kelly.floyd@northstar.example	f	governed|0.90	2026-09-28 10:23:47.631953+00
+Michael Torres	Michael Torres	t	employees.csv has one Michael Torres (EMP-200, VP Sales).	2026-09-28 17:25:40.833548+00
+ACME Manufacturing	Acme Mfg. Holdings	t	overrode agent keep	2026-09-28 17:25:40.881667+00
+NS-500 Industrial Controller	NS-500 controller	t	overrode agent keep	2026-09-28 17:25:40.905356+00
+NS-CLOUD	NS-Cloud Operations Suite	t	overrode agent keep	2026-09-28 17:25:40.923404+00
+Acme Industrial Supply Co.	Acme Industrial	t	overrode agent keep	2026-09-28 17:25:40.941333+00
+ACME Manufacturing	C-1001	t	customers.csv: erp_customer_id C-1001 is Acme Mfg. Holdings (= CRM-2048 Acme Manufacturing).	2026-09-28 17:25:41.055558+00
+ACME Manufacturing	CRM-2048	t	crm_accounts.csv: account_id CRM-2048 is Acme Manufacturing.	2026-09-28 17:25:41.161261+00
+Acme Industrial Supply Co.	C-1044	t	customers.csv: erp_customer_id C-1044 is Acme Industrial Supply Co.	2026-09-28 17:25:41.266084+00
+Michael Torres	michael.torres@northstar.example	t	employees.csv: EMP-200 Michael Torres, email michael.torres@northstar.example.	2026-09-28 17:25:41.375609+00
+(17 rows)

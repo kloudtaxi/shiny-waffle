@@ -1,0 +1,33 @@
+event: snapshot
+data: {"content":"","sources":[],"steps":[]}
+
+event: conversation
+data: {"id":"01a0e78e-85ff-77d0-ac13-a136be7e77ca"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 matches","kind":"entity","label":"Sarah Chen","status":"ok"}
+
+event: step
+data: {"at":0,"count":3,"detail":"3 of 3 linked","kind":"neighbors","label":"Sarah Chen","status":"ok","total":3}
+
+event: step
+data: {"at":0,"count":2,"detail":"2 paths, shortest 3 hops","hops":3,"kind":"path","label":"Sarah Chen ↔ Acme Mfg. Holdings","status":"ok"}
+
+event: step
+data: {"at":0,"count":0,"detail":"0 facts as of 2026-09-23T00:00:00Z","kind":"facts","label":"Sarah Chen","status":"ok","valid_at":"2026-09-23T00:00:00Z"}
+
+event: step
+data: {"at":0,"detail":"invalid id","kind":"facts","label":"?","status":"not_found"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 matches","kind":"entity","label":"Acme Manufacturing","status":"ok"}
+
+event: sources
+data: []
+
+event: delta
+data: {"text":"As of 2026-09-23, there are no facts indicating that Sarah Chen may receive the authority to approve a 15% discount for Acme Manufacturing on an NS-500 Industrial Controller. The evidence confirms her role and connections but does not provide any facts validating her ability to approve this discount. Thus, it is unsupported whether she can approve a discount at that time."}
+
+event: done
+data: {}
+

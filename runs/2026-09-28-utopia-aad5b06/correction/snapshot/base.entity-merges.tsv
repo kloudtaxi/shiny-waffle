@@ -1,0 +1,25 @@
+target	source	by_human	reason	created_at
+Acme Mfg. Holdings	Acme Manufacturing	f	governed|0.90	2026-09-28 10:20:33.087067+00
+NS-500 Industrial Controller	NS-500 Industrial Controller	f	governed|0.90	2026-09-28 10:21:25.355569+00
+NS-500 Industrial Controller	Acme NS-500	f	governed|0.90	2026-09-28 10:21:25.474406+00
+NS-CLOUD	NS-Cloud	f	governed|0.90	2026-09-28 10:21:25.598533+00
+Sarah Chen	Sarah Chen	f	governed|0.95	2026-09-28 10:21:25.646066+00
+Michael Torres	Michael Torres	f	governed|0.90	2026-09-28 10:21:30.710865+00
+David Morgan	David Morgan	f	governed|0.90	2026-09-28 10:21:30.770511+00
+NS-500 Industrial Controller	NS-500 controller	f	governed|0.95	2026-09-28 10:21:40.081884+00
+Weiss Ltd Holdings	Weiss Ltd	f	governed|0.90	2026-09-28 10:21:41.58206+00
+Miller LLC Co.	Miller LLC	f	governed|0.90	2026-09-28 10:21:41.619719+00
+NS-Edge Monitoring Package	NS-Edge Monitoring Package	f	governed|0.90	2026-09-28 10:21:45.810961+00
+NS-Edge Monitoring Package	NS-EDGE	f	governed|0.90	2026-09-28 10:21:45.8764+00
+Northstar Industrial Systems	Northstar Industrial Systems	f	governed|0.90	2026-09-28 10:21:49.804141+00
+Greer and Sons Holdings	Greer and Sons	f	governed|0.90	2026-09-28 10:21:52.247292+00
+Chang-James Co.	Chang-James	f	governed|0.90	2026-09-28 10:21:57.652777+00
+NS-830-EQU	NS-830-EQU	t	Same SKU NS-830-EQU (products.csv).	2026-09-28 17:25:39.965776+00
+NS-CLOUD	NS-Cloud Operations Suite	t	overrode agent keep	2026-09-28 17:25:40.113095+00
+Acme Industrial Supply Co.	Acme Industrial	t	overrode agent keep	2026-09-28 17:25:40.187964+00
+NS-500 Industrial Controller	NS-500 Industrial Controller	t	Two entities with the same product name; products.csv has one PROD-001.	2026-09-28 17:25:40.340263+00
+Acme Mfg. Holdings	C-1001	t	customers.csv: erp_customer_id C-1001 is Acme Mfg. Holdings.	2026-09-28 17:25:40.456724+00
+Acme Industrial Supply Co.	C-1044	t	customers.csv: erp_customer_id C-1044 is Acme Industrial Supply Co.	2026-09-28 17:25:40.573363+00
+Sarah Chen	sarah.chen@northstar.example	t	employees.csv: EMP-101 Sarah Chen, email sarah.chen@northstar.example.	2026-09-28 17:25:40.712694+00
+Michael Torres	michael.torres@northstar.example	t	employees.csv: EMP-200 Michael Torres, email michael.torres@northstar.example.	2026-09-28 17:25:40.818326+00
+(23 rows)

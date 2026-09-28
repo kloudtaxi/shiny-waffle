@@ -1,0 +1,159 @@
+{
+  "counts": {
+    "agent": 5,
+    "agent_queue": 0,
+    "agent_rows": 229,
+    "agent_running": false,
+    "alignment": 0,
+    "conflicts": 0,
+    "defects": 0,
+    "duplicates": 5,
+    "duplicates_same_type": 0,
+    "duplicates_type_conflict": 0,
+    "errata": 0,
+    "lowconf": 0,
+    "mappings": 0,
+    "merges": 15,
+    "pending": 0,
+    "unconfirmed": 0,
+    "violations": 0
+  },
+  "items": [
+    {
+      "created_at": "2026-09-28T10:21:57.652777Z",
+      "id": "01a0e789-1c1f-7812-bdf1-8cce300bec22",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Chang-James",
+      "target_name": "Chang-James Co."
+    },
+    {
+      "created_at": "2026-09-28T10:21:52.247292Z",
+      "id": "01a0e789-0701-7941-a06b-34e9cb2ce048",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Greer and Sons",
+      "target_name": "Greer and Sons Holdings"
+    },
+    {
+      "created_at": "2026-09-28T10:21:49.804141Z",
+      "id": "01a0e788-fd82-7e80-a052-63dbe665ec41",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Northstar Industrial Systems",
+      "target_name": "Northstar Industrial Systems"
+    },
+    {
+      "created_at": "2026-09-28T10:21:45.876400Z",
+      "id": "01a0e788-ee20-7061-a660-5127e2986dd1",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "NS-EDGE",
+      "target_name": "NS-Edge Monitoring Package"
+    },
+    {
+      "created_at": "2026-09-28T10:21:45.810961Z",
+      "id": "01a0e788-ede9-7972-b9d5-8ae669cb50be",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "NS-Edge Monitoring Package",
+      "target_name": "NS-Edge Monitoring Package"
+    },
+    {
+      "created_at": "2026-09-28T10:21:41.619719Z",
+      "id": "01a0e788-dd78-74e3-9d32-0682075865ca",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Miller LLC",
+      "target_name": "Miller LLC Co."
+    },
+    {
+      "created_at": "2026-09-28T10:21:41.582060Z",
+      "id": "01a0e788-dd58-7fd2-99f1-d45a21ac13e1",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Weiss Ltd",
+      "target_name": "Weiss Ltd Holdings"
+    },
+    {
+      "created_at": "2026-09-28T10:21:40.081884Z",
+      "id": "01a0e788-d780-7660-96fc-5b3f463fd70a",
+      "merged_by_name": null,
+      "reason": "governed|0.95",
+      "reverted_at": null,
+      "source_name": "NS-500 controller",
+      "target_name": "NS-500 Industrial Controller"
+    },
+    {
+      "created_at": "2026-09-28T10:21:30.770511Z",
+      "id": "01a0e788-b323-7550-8cdb-080efc6b6add",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "David Morgan",
+      "target_name": "David Morgan"
+    },
+    {
+      "created_at": "2026-09-28T10:21:30.710865Z",
+      "id": "01a0e788-b2eb-7690-a6a8-5c1e42461b75",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Michael Torres",
+      "target_name": "Michael Torres"
+    },
+    {
+      "created_at": "2026-09-28T10:21:25.646066Z",
+      "id": "01a0e788-9f1d-7803-a6fd-62139b1fdebe",
+      "merged_by_name": null,
+      "reason": "governed|0.95",
+      "reverted_at": null,
+      "source_name": "Sarah Chen",
+      "target_name": "Sarah Chen"
+    },
+    {
+      "created_at": "2026-09-28T10:21:25.598533Z",
+      "id": "01a0e788-9ee7-76a0-98d4-47045bc1a785",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "NS-Cloud",
+      "target_name": "NS-CLOUD"
+    },
+    {
+      "created_at": "2026-09-28T10:21:25.474406Z",
+      "id": "01a0e788-9e74-76d3-bde6-f6a5c8076b5a",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Acme NS-500",
+      "target_name": "NS-500 Industrial Controller"
+    },
+    {
+      "created_at": "2026-09-28T10:21:25.355569Z",
+      "id": "01a0e788-9dfd-7c43-9e72-377008711e42",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "NS-500 Industrial Controller",
+      "target_name": "NS-500 Industrial Controller"
+    },
+    {
+      "created_at": "2026-09-28T10:20:33.087067Z",
+      "id": "01a0e787-d1dc-7150-a921-7a8289f1a9af",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Acme Manufacturing",
+      "target_name": "Acme Mfg. Holdings"
+    }
+  ],
+  "queue": "merges"
+}

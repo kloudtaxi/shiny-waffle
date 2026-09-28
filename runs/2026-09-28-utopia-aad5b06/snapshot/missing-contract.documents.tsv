@@ -1,0 +1,16 @@
+filename	status	graph_status	chunk_count	doc_time	doc_time_source
+acme_account_strategy.md	ready	done	1	2026-02-10 00:00:00+00	content
+approval_authority_matrix.md	ready	done	1	2025-12-08 00:00:00+00	content
+crm_accounts.csv	ready	done	3		none
+customers.csv	ready	done	2		none
+discount_requests.csv	ready	done	9	2025-01-06 00:00:00+00	content
+email_sarah_to_michael.md	ready	done	1	2026-09-23 00:00:00+00	content
+employees.csv	ready	done	2		none
+erp_orders.csv	ready	done	4		none
+organization_chart.md	ready	done	1	2026-09-01 00:00:00+00	content
+pricing_policy_2025.md	ready	done	1	2024-12-10 00:00:00+00	content
+pricing_policy_2026.md	ready	done	1	2025-12-08 00:00:00+00	content
+products.csv	ready	done	1		none
+sales_discount_sop.md	ready	done	1	2025-12-15 00:00:00+00	content
+service_ticket_acme_industrial.md	ready	done	1	2026-09-14 00:00:00+00	content
+(14 rows)

@@ -1,0 +1,36 @@
+filename	reason	count	detail	example
+acme_account_strategy.md	unknown_ref	5	a statement's subject is not a listed thing	Target FY26 bookings
+acme_account_strategy.md	unknown_ref	1	a name's thing is not a listed thing	Sarah Chen
+approval_authority_matrix.md	object_undeclared	1	a statement's object is not a listed thing; written as a value	discount requests
+approval_authority_matrix.md	unknown_ref	3	a statement's subject is not a listed thing	Approvals
+crm_accounts.csv	name_not_in_text	2	an extra name is not in the chunk	Acme Supply
+crm_accounts.csv	object_undeclared	7	a statement's object is not a listed thing; written as a value	account_id
+customers.csv	object_undeclared	5	a statement's object is not a listed thing; written as a value	Pharmaceuticals
+customers.csv	quote_not_in_chunk	5	a quoted sentence is not in the chunk verbatim	C-2008 Blanchard Group Corp. Pharmaceuticals 63155 Kathryn Courts Chicago IL 60322 97-565-7333 Net 30
+customers.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+discount_requests.csv	name_not_in_text	3	an extra name is not in the chunk	account 2063
+discount_requests.csv	object_undeclared	8	a statement's object is not a listed thing; written as a value	discount
+discount_requests.csv	quote_not_in_chunk	6	a quoted sentence is not in the chunk verbatim	anthony.day@northstar.example requested a discount of 10.0% on NS-840-SER with a list value of $93,000 on 2026-08-29.
+discount_requests.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+email_sarah_to_michael.md	name_not_in_text	1	an extra name is not in the chunk	document number
+email_sarah_to_michael.md	object_undeclared	1	a statement's object is not a listed thing; written as a value	NS-500 controller
+email_sarah_to_michael.md	quote_not_in_chunk	1	a quoted sentence is not in the chunk verbatim	Gina at Acme confirmed this morning they want to move ahead with the NS-500 controller for the third plant.
+email_sarah_to_michael.md	unknown_ref	2	a statement's subject is not a listed thing	I
+employees.csv	object_undeclared	7	a statement's object is not a listed thing; written as a value	Customer Success Manager
+employees.csv	quote_not_in_chunk	8	a quoted sentence is not in the chunk verbatim	Zachary Brown is an Enterprise Account Executive in Sales, reporting to Michael Torres.
+erp_orders.csv	malformed_item	1	9 items in the open reply were malformed	
+erp_orders.csv	name_not_in_text	33	an extra name is not in the chunk	customer 1001
+erp_orders.csv	object_undeclared	1	a statement's object is not a listed thing; written as a value	C-2001
+erp_orders.csv	unknown_ref	1	a name's thing is not a listed thing	C-2001
+organization_chart.md	object_undeclared	1	a statement's object is not a listed thing; written as a value	reporting lines
+pricing_policy_2025.md	name_not_in_text	2	an extra name is not in the chunk	Vice President of Sales
+pricing_policy_2025.md	object_missing	1	a statement has neither an object nor a value	must be reviewed
+pricing_policy_2025.md	object_undeclared	2	a statement's object is not a listed thing; written as a value	discounts
+pricing_policy_2025.md	unknown_ref	2	a statement's subject is not a listed thing	discounts
+pricing_policy_2026.md	object_undeclared	4	a statement's object is not a listed thing; written as a value	operational reference
+pricing_policy_2026.md	unknown_ref	2	a statement's subject is not a listed thing	discounts
+products.csv	quote_not_in_chunk	9	a quoted sentence is not in the chunk verbatim	NS-830 I/O Module has a list price of $203000.
+products.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+sales_discount_sop.md	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+service_ticket_acme_industrial.md	unknown_ref	3	a statement's subject is not a listed thing	No change to commercial terms
+(34 rows)

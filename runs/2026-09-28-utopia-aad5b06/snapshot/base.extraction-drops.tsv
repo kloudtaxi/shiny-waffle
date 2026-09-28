@@ -1,0 +1,46 @@
+filename	reason	count	detail	example
+acme_account_strategy.md	name_not_in_text	1	an extra name is not in the chunk	cloud service
+acme_account_strategy.md	object_undeclared	2	a statement's object is not a listed thing; written as a value	preferential NS-500 pricing
+acme_account_strategy.md	quote_not_in_chunk	3	a quoted sentence is not in the chunk verbatim	Acme negotiated preferential NS-500 pricing in the 2025 agreement.
+acme_account_strategy.md	unknown_ref	3	a statement's subject is not a listed thing	preferential NS-500 pricing
+acme_master_supply_agreement.md	object_undeclared	5	a statement's object is not a listed thing; written as a value	2025-03-22
+acme_master_supply_agreement.md	quote_not_in_chunk	3	a quoted sentence is not in the chunk verbatim	Customer's contractual pricing eligibility does not modify Northstar's internal approval authority. Each discount remains subject to approval under Northstar's internal policies.
+acme_pricing_exception_2023.md	quote_not_in_chunk	1	a quoted sentence is not in the chunk verbatim	Acme Manufacturing may receive up to **10%** off list price on the NS-500 Industrial Controller (NS-500) for orders placed from 2023-04-01 to 2025-03-31.
+acme_pricing_exception.md	name_not_in_text	1	an extra name is not in the chunk	NS-500 Exception
+acme_pricing_exception.md	object_undeclared	2	a statement's object is not a listed thing; written as a value	commercial eligibility
+acme_pricing_exception.md	quote_not_in_chunk	1	a quoted sentence is not in the chunk verbatim	This exception supersedes EXC-ACME-NS500-10 for requests dated on or after 2025-04-01.
+approval_authority_matrix.md	object_undeclared	1	a statement's object is not a listed thing; written as a value	discount requests
+approval_authority_matrix.md	unknown_ref	3	a statement's subject is not a listed thing	Approvals
+crm_accounts.csv	object_undeclared	6	a statement's object is not a listed thing; written as a value	account_id
+crm_accounts.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+customers.csv	object_undeclared	5	a statement's object is not a listed thing; written as a value	Pharmaceuticals
+customers.csv	quote_not_in_chunk	12	a quoted sentence is not in the chunk verbatim	C-2007 Miller LLC Pharmaceuticals 6520 Barbara Bridge Apt. 993 Madison WI 53740 19-566-4602 Net 60
+customers.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+discount_requests.csv	object_missing	3	a statement has neither an object nor a value	requested
+discount_requests.csv	object_undeclared	8	a statement's object is not a listed thing; written as a value	discount
+discount_requests.csv	unknown_ref	3	a name's thing is not a listed thing	request DR-7003
+discount_requests.csv	unknown_ref	6	a statement's subject is not a listed thing	anthony.day@northstar.example
+email_sarah_to_michael.md	name_not_in_text	1	an extra name is not in the chunk	document number
+email_sarah_to_michael.md	object_undeclared	1	a statement's object is not a listed thing; written as a value	NS-500 controller
+email_sarah_to_michael.md	quote_not_in_chunk	1	a quoted sentence is not in the chunk verbatim	Gina at Acme confirmed this morning they want to move ahead with the NS-500 controller for the third plant.
+email_sarah_to_michael.md	unknown_ref	2	a statement's subject is not a listed thing	I
+employees.csv	object_undeclared	7	a statement's object is not a listed thing; written as a value	Customer Success Manager
+employees.csv	quote_not_in_chunk	8	a quoted sentence is not in the chunk verbatim	Zachary Brown is an Enterprise Account Executive in Sales reporting to Michael Torres on zachary.brown@northstar.example located in Indianapolis, IN.
+employees.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+erp_orders.csv	malformed_item	1	10 items in the open reply were malformed	
+erp_orders.csv	name_not_in_text	21	an extra name is not in the chunk	customer 1001
+erp_orders.csv	object_missing	2	a statement has neither an object nor a value	is cancelled
+erp_orders.csv	object_undeclared	10	a statement's object is not a listed thing; written as a value	2025-06-07
+erp_orders.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+organization_chart.md	object_undeclared	1	a statement's object is not a listed thing; written as a value	reporting lines
+pricing_policy_2025.md	name_not_in_text	2	an extra name is not in the chunk	Vice President of Sales
+pricing_policy_2025.md	object_missing	1	a statement has neither an object nor a value	must be reviewed
+pricing_policy_2025.md	object_undeclared	2	a statement's object is not a listed thing; written as a value	discounts
+pricing_policy_2025.md	unknown_ref	2	a statement's subject is not a listed thing	discounts
+pricing_policy_2026.md	object_undeclared	4	a statement's object is not a listed thing; written as a value	these thresholds
+pricing_policy_2026.md	unknown_ref	2	a statement's subject is not a listed thing	discounts
+products.csv	truncated_reply	1	the open reply was cut off; kept up to the last complete item	
+sales_discount_sop.md	object_missing	1	a statement has neither an object nor a value	approves, rejects, or escalates
+sales_discount_sop.md	object_undeclared	9	a statement's object is not a listed thing; written as a value	decision
+service_ticket_acme_industrial.md	unknown_ref	3	a statement's subject is not a listed thing	No change to commercial terms
+(44 rows)

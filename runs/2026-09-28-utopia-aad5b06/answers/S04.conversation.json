@@ -1,0 +1,55 @@
+{
+  "messages": [
+    {
+      "content": "Could Sarah Chen have approved a 15% NS-500 discount for Acme Manufacturing on 2025-09-23?",
+      "created_at": "2026-09-28T10:28:10.955164Z",
+      "id": "01a0e78e-ce4a-7413-83f8-3ed6a4aa45e3",
+      "role": "user",
+      "sources": [],
+      "steps": []
+    },
+    {
+      "content": "As of September 23, 2025, there are no recorded facts regarding Sarah Chen or Acme Manufacturing in the knowledge base. Therefore, I cannot confirm whether Sarah Chen could have approved a 15% discount for Acme Manufacturing on that date.",
+      "created_at": "2026-09-28T10:28:15.680584Z",
+      "id": "01a0e78e-e0bf-7ba2-b6ad-efcfa1074bb9",
+      "role": "assistant",
+      "sources": [],
+      "steps": [
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 matches",
+          "kind": "entity",
+          "label": "Sarah Chen",
+          "status": "ok"
+        },
+        {
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts as of 2025-09-23T00:00:00Z",
+          "kind": "facts",
+          "label": "Sarah Chen",
+          "status": "ok",
+          "valid_at": "2025-09-23T00:00:00Z"
+        },
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 matches",
+          "kind": "entity",
+          "label": "Acme Manufacturing",
+          "status": "ok"
+        },
+        {
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts as of 2025-09-23T00:00:00Z",
+          "kind": "facts",
+          "label": "Acme Mfg. Holdings",
+          "status": "ok",
+          "valid_at": "2025-09-23T00:00:00Z"
+        }
+      ]
+    }
+  ]
+}

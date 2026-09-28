@@ -1,0 +1,49 @@
+{
+  "messages": [
+    {
+      "content": "Can Sarah Chen approve 15% for Acme Manufacturing on the NS-Cloud Operations Suite on 2026-09-23?",
+      "created_at": "2026-09-28T10:28:06.531627Z",
+      "id": "01a0e78e-bd03-7f40-a43c-8fbb37a9849f",
+      "role": "user",
+      "sources": [],
+      "steps": []
+    },
+    {
+      "content": "As of September 23, 2026, there are no records or facts regarding Sarah Chen that indicate she would be able to approve 15% for Acme Manufacturing on the NS-Cloud Operations Suite. Additionally, there have been no recorded changes in the knowledge base regarding her qualifications or roles during that period.",
+      "created_at": "2026-09-28T10:28:10.611864Z",
+      "id": "01a0e78e-ccf3-75e1-af03-98c9988e3710",
+      "role": "assistant",
+      "sources": [],
+      "steps": [
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 matches",
+          "kind": "entity",
+          "label": "Sarah Chen",
+          "status": "ok"
+        },
+        {
+          "as_of": "2023-10-01T00:00:00Z",
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts at 2026-09-23T00:00:00Z, as recorded by 2023-10-01T00:00:00Z",
+          "kind": "facts",
+          "label": "Sarah Chen",
+          "status": "ok",
+          "valid_at": "2026-09-23T00:00:00Z"
+        },
+        {
+          "at": 0,
+          "count": 0,
+          "detail": "0 changes",
+          "kind": "changes",
+          "label": "2023-10-01 → 2026-09-23",
+          "since": "2023-10-01",
+          "status": "ok",
+          "until": "2026-09-23"
+        }
+      ]
+    }
+  ]
+}

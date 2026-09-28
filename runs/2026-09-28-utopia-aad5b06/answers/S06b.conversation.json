@@ -1,0 +1,47 @@
+{
+  "messages": [
+    {
+      "content": "What is Acme Manufacturing's maximum contractual NS-500 discount on 2024-10-01?",
+      "created_at": "2026-09-28T10:28:25.535446Z",
+      "id": "01a0e78f-073f-7af3-b382-4982818f862c",
+      "role": "user",
+      "sources": [],
+      "steps": []
+    },
+    {
+      "content": "As of October 1, 2024, Acme Manufacturing is eligible for a maximum contractual discount of 100% on the NS-500 Industrial Controller, which is valid from April 1, 2023, to March 31, 2025.",
+      "created_at": "2026-09-28T10:28:29.946655Z",
+      "id": "01a0e78f-1878-7523-a83c-bd8930077fad",
+      "role": "assistant",
+      "sources": [],
+      "steps": [
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 matches",
+          "kind": "entity",
+          "label": "Acme Manufacturing",
+          "status": "ok"
+        },
+        {
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts as of 2024-10-01T00:00:00Z",
+          "kind": "facts",
+          "label": "Acme Mfg. Holdings",
+          "status": "ok",
+          "valid_at": "2024-10-01T00:00:00Z"
+        },
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 facts as of 2024-10-01T00:00:00Z",
+          "kind": "facts",
+          "label": "Acme Mfg. Holdings",
+          "status": "ok",
+          "valid_at": "2024-10-01T00:00:00Z"
+        }
+      ]
+    }
+  ]
+}

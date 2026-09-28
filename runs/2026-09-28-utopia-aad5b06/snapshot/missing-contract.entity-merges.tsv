@@ -1,0 +1,10 @@
+target	source	reason	created_at
+kelly.floyd@northstar.example	kelly.floyd@northstar.example	governed|0.90	2026-09-28 10:23:47.631953+00
+Miller LLC	Miller LLC Co.	governed|0.95	2026-09-28 10:21:41.514057+00
+NS-CLOUD	NS-Cloud	governed|0.90	2026-09-28 10:21:34.225315+00
+NS-Edge Monitoring Package	NS-Edge Monitoring Package	governed|0.90	2026-09-28 10:21:40.004549+00
+Sarah Chen	Sarah Chen	governed|0.95	2026-09-28 10:20:49.113484+00
+Sarah Chen	sarah.chen@northstar.example	governed|0.90	2026-09-28 10:21:55.054502+00
+Weiss Ltd	Weiss Ltd Holdings	governed|0.90	2026-09-28 10:21:41.447825+00
+zachary.brown@northstar.example	Zachary Brown	governed|0.95	2026-09-28 10:21:51.091859+00
+(8 rows)

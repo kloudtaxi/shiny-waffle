@@ -1,0 +1,17 @@
+target	source	reason	created_at
+Acme Mfg. Holdings	Acme Manufacturing	governed|0.90	2026-09-28 10:20:33.087067+00
+Chang-James Co.	Chang-James	governed|0.90	2026-09-28 10:21:57.652777+00
+David Morgan	David Morgan	governed|0.90	2026-09-28 10:21:30.770511+00
+Greer and Sons Holdings	Greer and Sons	governed|0.90	2026-09-28 10:21:52.247292+00
+Michael Torres	Michael Torres	governed|0.90	2026-09-28 10:21:30.710865+00
+Miller LLC Co.	Miller LLC	governed|0.90	2026-09-28 10:21:41.619719+00
+Northstar Industrial Systems	Northstar Industrial Systems	governed|0.90	2026-09-28 10:21:49.804141+00
+NS-500 Industrial Controller	Acme NS-500	governed|0.90	2026-09-28 10:21:25.474406+00
+NS-500 Industrial Controller	NS-500 controller	governed|0.95	2026-09-28 10:21:40.081884+00
+NS-500 Industrial Controller	NS-500 Industrial Controller	governed|0.90	2026-09-28 10:21:25.355569+00
+NS-CLOUD	NS-Cloud	governed|0.90	2026-09-28 10:21:25.598533+00
+NS-Edge Monitoring Package	NS-Edge Monitoring Package	governed|0.90	2026-09-28 10:21:45.810961+00
+NS-Edge Monitoring Package	NS-EDGE	governed|0.90	2026-09-28 10:21:45.8764+00
+Sarah Chen	Sarah Chen	governed|0.95	2026-09-28 10:21:25.646066+00
+Weiss Ltd Holdings	Weiss Ltd	governed|0.90	2026-09-28 10:21:41.58206+00
+(15 rows)

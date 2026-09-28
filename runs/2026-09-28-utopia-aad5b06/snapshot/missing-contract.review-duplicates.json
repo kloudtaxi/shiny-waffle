@@ -1,0 +1,171 @@
+{
+  "counts": {
+    "agent": 4,
+    "agent_queue": 0,
+    "agent_rows": 203,
+    "agent_running": false,
+    "alignment": 0,
+    "conflicts": 0,
+    "defects": 0,
+    "duplicates": 4,
+    "duplicates_same_type": 0,
+    "duplicates_type_conflict": 0,
+    "errata": 0,
+    "lowconf": 0,
+    "mappings": 0,
+    "merges": 8,
+    "pending": 0,
+    "unconfirmed": 0,
+    "violations": 0
+  },
+  "items": [
+    {
+      "created_at": "2026-09-28T10:20:41.822226Z",
+      "id": "01a0e787-f3dd-7ba1-9382-ca50c34d17d6",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 2,
+        "disambiguator": null,
+        "id": "01a0e787-f3d0-7bc2-9635-ca5c484e058c",
+        "name": "NS-840-SER",
+        "top_facts": [
+          "also known as: NS-840",
+          "requested ← anthony.day@northstar.example (2026-08 → 2026-08)",
+          "requested ← kelly.floyd@northstar.example (2026-07 → 2026-07)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "keep",
+        "confidence": 0.6000000238418579,
+        "id": "01a0e789-45e9-7241-b64c-3eec62bf69d9",
+        "reason": "The two records have names that are similar but denote different products, with no contradiction in facts."
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e787-bdf3-7740-8ffb-11361bd19ad1",
+        "name": "NS-830 I/O Module",
+        "top_facts": [
+          "has a list price of → ?"
+        ],
+        "type_label": null
+      },
+      "score": 0.6186737418174744,
+      "stage": "human"
+    },
+    {
+      "created_at": "2026-09-28T10:20:41.820133Z",
+      "id": "01a0e787-f3db-70f1-a310-5eed112cc3dd",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 2,
+        "disambiguator": null,
+        "id": "01a0e787-f3d0-7bc2-9635-ca5c484e058c",
+        "name": "NS-840-SER",
+        "top_facts": [
+          "also known as: NS-840",
+          "requested ← anthony.day@northstar.example (2026-08 → 2026-08)",
+          "requested ← kelly.floyd@northstar.example (2026-07 → 2026-07)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "unsure",
+        "confidence": 0.0,
+        "id": "01a0e789-45dc-7861-be59-9e394e78731a",
+        "reason": null
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e787-bdd2-7590-a2d3-c5a56ff1f9b1",
+        "name": "NS-880 Commissioning Service",
+        "top_facts": [
+          "has a list price of → ?"
+        ],
+        "type_label": null
+      },
+      "score": 0.6388984322547913,
+      "stage": "human"
+    },
+    {
+      "created_at": "2026-09-28T10:20:41.818264Z",
+      "id": "01a0e787-f3d9-71f2-b28b-d3ee8e42c051",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 2,
+        "disambiguator": null,
+        "id": "01a0e787-f3d0-7bc2-9635-ca5c484e058c",
+        "name": "NS-840-SER",
+        "top_facts": [
+          "also known as: NS-840",
+          "requested ← anthony.day@northstar.example (2026-08 → 2026-08)",
+          "requested ← kelly.floyd@northstar.example (2026-07 → 2026-07)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "keep",
+        "confidence": 0.699999988079071,
+        "id": "01a0e789-45d0-76b2-b6db-5c4b378e4142",
+        "reason": "NS-840 has distinct requests and context, while NS-500 refers to a different controller with no shared attributes."
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 0,
+        "disambiguator": null,
+        "id": "01a0e787-c0e4-71c0-9c00-d02b5c2b6b26",
+        "name": "NS-500 controller",
+        "top_facts": [
+          "also known as: NS-500"
+        ],
+        "type_label": null
+      },
+      "score": 0.6746611595153809,
+      "stage": "human"
+    },
+    {
+      "created_at": "2026-09-28T10:20:27.981303Z",
+      "id": "01a0e787-bdcd-7991-977f-77cb1fdf248b",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 0,
+        "disambiguator": null,
+        "id": "01a0e787-bdc4-72d2-a64e-ec60ba13f398",
+        "name": "Michael Torres",
+        "top_facts": [],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "keep",
+        "confidence": 0.699999988079071,
+        "id": "01a0e788-107f-7db0-8646-453e04328e59",
+        "reason": "Record A has no facts, and there may be multiple individuals named 'Michael Torres' given Record B's fact presence."
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 10,
+        "disambiguator": "Bryan Rivera",
+        "id": "01a0e787-bc99-7c21-a56c-8b5ba6f7cc0c",
+        "name": "Michael Torres",
+        "top_facts": [
+          "reports to → Bryan Rivera",
+          "reports to → Courtney Barron",
+          "reports to → zachary.brown@northstar.example",
+          "reports to → Sarah Chen"
+        ],
+        "type_label": null
+      },
+      "score": 0.4174903631210327,
+      "stage": "human"
+    }
+  ],
+  "queue": "duplicates"
+}

@@ -1,0 +1,96 @@
+{
+  "counts": {
+    "agent": 4,
+    "agent_queue": 0,
+    "agent_rows": 203,
+    "agent_running": false,
+    "alignment": 0,
+    "conflicts": 0,
+    "defects": 0,
+    "duplicates": 4,
+    "duplicates_same_type": 0,
+    "duplicates_type_conflict": 0,
+    "errata": 0,
+    "lowconf": 0,
+    "mappings": 0,
+    "merges": 8,
+    "pending": 0,
+    "unconfirmed": 0,
+    "violations": 0
+  },
+  "items": [
+    {
+      "created_at": "2026-09-28T10:23:47.631953Z",
+      "id": "01a0e78a-c9bf-77d2-8b1c-607a1b71c1a3",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "kelly.floyd@northstar.example",
+      "target_name": "kelly.floyd@northstar.example"
+    },
+    {
+      "created_at": "2026-09-28T10:21:55.054502Z",
+      "id": "01a0e789-1203-7191-a85b-e85e6ab9f5ca",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "sarah.chen@northstar.example",
+      "target_name": "Sarah Chen"
+    },
+    {
+      "created_at": "2026-09-28T10:21:51.091859Z",
+      "id": "01a0e789-027b-7a73-b4bf-37188fe25a24",
+      "merged_by_name": null,
+      "reason": "governed|0.95",
+      "reverted_at": null,
+      "source_name": "Zachary Brown",
+      "target_name": "zachary.brown@northstar.example"
+    },
+    {
+      "created_at": "2026-09-28T10:21:41.514057Z",
+      "id": "01a0e788-dd18-7380-88e6-94c154e4d838",
+      "merged_by_name": null,
+      "reason": "governed|0.95",
+      "reverted_at": null,
+      "source_name": "Miller LLC Co.",
+      "target_name": "Miller LLC"
+    },
+    {
+      "created_at": "2026-09-28T10:21:41.447825Z",
+      "id": "01a0e788-dcd9-7b80-8a32-eb829226baeb",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "Weiss Ltd Holdings",
+      "target_name": "Weiss Ltd"
+    },
+    {
+      "created_at": "2026-09-28T10:21:40.004549Z",
+      "id": "01a0e788-d736-7fe3-9464-31810109a44d",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "NS-Edge Monitoring Package",
+      "target_name": "NS-Edge Monitoring Package"
+    },
+    {
+      "created_at": "2026-09-28T10:21:34.225315Z",
+      "id": "01a0e788-c0a6-7d21-963d-445f542f6927",
+      "merged_by_name": null,
+      "reason": "governed|0.90",
+      "reverted_at": null,
+      "source_name": "NS-Cloud",
+      "target_name": "NS-CLOUD"
+    },
+    {
+      "created_at": "2026-09-28T10:20:49.113484Z",
+      "id": "01a0e788-1068-72a1-a903-299afa60f991",
+      "merged_by_name": null,
+      "reason": "governed|0.95",
+      "reverted_at": null,
+      "source_name": "Sarah Chen",
+      "target_name": "Sarah Chen"
+    }
+  ],
+  "queue": "merges"
+}

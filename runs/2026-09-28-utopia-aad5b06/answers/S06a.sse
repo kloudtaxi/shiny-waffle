@@ -1,0 +1,96 @@
+event: snapshot
+data: {"content":"","sources":[],"steps":[]}
+
+event: conversation
+data: {"id":"01a0e78e-fa4d-7b11-a941-b23df63337ff"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 matches","kind":"entity","label":"Acme Manufacturing","status":"ok"}
+
+event: step
+data: {"at":0,"count":0,"detail":"0 facts as of 2026-09-23T00:00:00Z","kind":"facts","label":"Acme Mfg. Holdings","status":"ok","valid_at":"2026-09-23T00:00:00Z"}
+
+event: delta
+data: {"text":"There"}
+
+event: delta
+data: {"text":" are"}
+
+event: delta
+data: {"text":" no"}
+
+event: delta
+data: {"text":" recorded"}
+
+event: delta
+data: {"text":" facts"}
+
+event: delta
+data: {"text":" about"}
+
+event: delta
+data: {"text":" Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":" Manufacturing"}
+
+event: delta
+data: {"text":"'s"}
+
+event: delta
+data: {"text":" maximum"}
+
+event: delta
+data: {"text":" contractual"}
+
+event: delta
+data: {"text":" NS"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"500"}
+
+event: delta
+data: {"text":" discount"}
+
+event: delta
+data: {"text":" as"}
+
+event: delta
+data: {"text":" of"}
+
+event: delta
+data: {"text":" September"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"23"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"6"}
+
+event: delta
+data: {"text":"."}
+
+event: sources
+data: []
+
+event: done
+data: {}
+

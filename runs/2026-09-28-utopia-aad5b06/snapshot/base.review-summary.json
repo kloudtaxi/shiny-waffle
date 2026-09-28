@@ -1,0 +1,167 @@
+{
+  "waiting": {
+    "pending": {
+      "count": 0,
+      "oldest_at": null
+    },
+    "duplicates": {
+      "count": 5,
+      "oldest_at": "2026-09-28T10:21:29.180038Z"
+    },
+    "conflicts": {
+      "count": 0,
+      "oldest_at": null
+    },
+    "unconfirmed": {
+      "count": 0,
+      "oldest_at": null
+    },
+    "lowconf": {
+      "count": 0,
+      "oldest_at": null
+    },
+    "violations": {
+      "count": 0,
+      "oldest_at": null
+    },
+    "defects": {
+      "count": 0,
+      "oldest_at": null
+    },
+    "alignment": {
+      "count": 0,
+      "oldest_at": null
+    },
+    "errata": {
+      "count": 0,
+      "oldest_at": null
+    }
+  },
+  "decided": {
+    "last_7d": {
+      "total": 224,
+      "automatic": 224,
+      "by_action": [
+        {
+          "action": "review.keep",
+          "count": 208
+        },
+        {
+          "action": "review.merge",
+          "count": 16
+        }
+      ],
+      "by_actor": [
+        {
+          "actor_id": null,
+          "label": null,
+          "count": 224
+        }
+      ]
+    },
+    "last_30d": {
+      "total": 224,
+      "automatic": 224,
+      "by_action": [
+        {
+          "action": "review.keep",
+          "count": 208
+        },
+        {
+          "action": "review.merge",
+          "count": 16
+        }
+      ],
+      "by_actor": [
+        {
+          "actor_id": null,
+          "label": null,
+          "count": 224
+        }
+      ]
+    },
+    "daily": [
+      {
+        "day": "2026-09-15",
+        "count": 0
+      },
+      {
+        "day": "2026-09-16",
+        "count": 0
+      },
+      {
+        "day": "2026-09-17",
+        "count": 0
+      },
+      {
+        "day": "2026-09-18",
+        "count": 0
+      },
+      {
+        "day": "2026-09-19",
+        "count": 0
+      },
+      {
+        "day": "2026-09-20",
+        "count": 0
+      },
+      {
+        "day": "2026-09-21",
+        "count": 0
+      },
+      {
+        "day": "2026-09-22",
+        "count": 0
+      },
+      {
+        "day": "2026-09-23",
+        "count": 0
+      },
+      {
+        "day": "2026-09-24",
+        "count": 0
+      },
+      {
+        "day": "2026-09-25",
+        "count": 0
+      },
+      {
+        "day": "2026-09-26",
+        "count": 0
+      },
+      {
+        "day": "2026-09-27",
+        "count": 0
+      },
+      {
+        "day": "2026-09-28",
+        "count": 224
+      }
+    ]
+  },
+  "health": {
+    "facts": 268,
+    "low_confidence": 0,
+    "unconfirmed": 0,
+    "contested": 0
+  },
+  "agent": {
+    "running": false,
+    "queue": 0,
+    "open": 5,
+    "last_7d": {
+      "applied": 224,
+      "proposed": 5,
+      "accepted": 0,
+      "overridden": 0,
+      "reverted": 0
+    },
+    "last_30d": {
+      "applied": 224,
+      "proposed": 5,
+      "accepted": 0,
+      "overridden": 0,
+      "reverted": 0
+    }
+  }
+}

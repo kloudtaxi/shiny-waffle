@@ -1,0 +1,55 @@
+{
+  "messages": [
+    {
+      "content": "Can Sarah Chen's 15% NS-500 discount for Acme (DR-9001) be approved on 2026-09-23?",
+      "created_at": "2026-09-28T10:28:16.061550Z",
+      "id": "01a0e78e-e23d-7d51-b4c9-a77be5e64a85",
+      "role": "user",
+      "sources": [],
+      "steps": []
+    },
+    {
+      "content": "There are no recorded facts about Sarah Chen or the NS-500 discount for Acme in the knowledge base as of September 23, 2026. Thus, I cannot determine whether the 15% discount can be approved or not based on the information available.",
+      "created_at": "2026-09-28T10:28:21.854746Z",
+      "id": "01a0e78e-f8dd-7952-8991-557d0e6b2644",
+      "role": "assistant",
+      "sources": [],
+      "steps": [
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 matches",
+          "kind": "entity",
+          "label": "Sarah Chen",
+          "status": "ok"
+        },
+        {
+          "at": 0,
+          "count": 5,
+          "detail": "5 matches",
+          "kind": "entity",
+          "label": "Acme",
+          "status": "ok"
+        },
+        {
+          "as_of": "2026-09-23T00:00:00Z",
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts as recorded by 2026-09-23T00:00:00Z",
+          "kind": "facts",
+          "label": "Sarah Chen",
+          "status": "ok"
+        },
+        {
+          "as_of": "2026-09-23T00:00:00Z",
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts as recorded by 2026-09-23T00:00:00Z",
+          "kind": "facts",
+          "label": "Acme NS-500",
+          "status": "ok"
+        }
+      ]
+    }
+  ]
+}

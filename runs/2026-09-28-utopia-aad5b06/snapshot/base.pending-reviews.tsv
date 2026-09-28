@@ -1,0 +1,7 @@
+left_entity	right_entity	score	status	reason
+NS-830-EQU	NS-830-EQU	0.66071945	pending	proposed
+NS-830-EQU	NS-880 Commissioning Service	0.63147914	pending	proposed
+NS-830-EQU	NS-250-SOF	0.64427847	pending	proposed
+NS-830-EQU	NS-500 Industrial Controller	0.6553273	pending	proposed
+NS-400-EQU	NS-830-EQU	0.640964	pending	proposed
+(5 rows)

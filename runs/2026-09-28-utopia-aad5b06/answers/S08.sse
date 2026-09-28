@@ -1,0 +1,384 @@
+event: snapshot
+data: {"content":"","sources":[],"steps":[]}
+
+event: conversation
+data: {"id":"01a0e78f-385e-7de2-9e4f-1bb869f17936"}
+
+event: step
+data: {"at":0,"count":0,"detail":"0 matches","kind":"entity","label":"CRM-2048","status":"ok"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 matches","kind":"entity","label":"C-1001","status":"ok"}
+
+event: step
+data: {"at":0,"count":0,"detail":"0 matches","kind":"entity","label":"ACME-MFG-2025","status":"ok"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 matches","kind":"entity","label":"Acme Industrial Supply Co.","status":"ok"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 facts","kind":"facts","label":"C-1001","status":"ok"}
+
+event: step
+data: {"at":0,"count":1,"detail":"1 facts","kind":"facts","label":"Acme Industrial Supply Co.","status":"ok"}
+
+event: delta
+data: {"text":"The"}
+
+event: delta
+data: {"text":" entity"}
+
+event: delta
+data: {"text":" \""}
+
+event: delta
+data: {"text":"C"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"100"}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":"\""}
+
+event: delta
+data: {"text":" is"}
+
+event: delta
+data: {"text":" related"}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" \""}
+
+event: delta
+data: {"text":"SO"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"700"}
+
+event: delta
+data: {"text":"2"}
+
+event: delta
+data: {"text":"\""}
+
+event: delta
+data: {"text":" as"}
+
+event: delta
+data: {"text":" of"}
+
+event: delta
+data: {"text":" August"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"18"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"6"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" However"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" there"}
+
+event: delta
+data: {"text":" was"}
+
+event: delta
+data: {"text":" no"}
+
+event: delta
+data: {"text":" specific"}
+
+event: delta
+data: {"text":" customer"}
+
+event: delta
+data: {"text":" linked"}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" \""}
+
+event: delta
+data: {"text":"CRM"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"204"}
+
+event: delta
+data: {"text":"8"}
+
+event: delta
+data: {"text":"\""}
+
+event: delta
+data: {"text":" or"}
+
+event: delta
+data: {"text":" \""}
+
+event: delta
+data: {"text":"AC"}
+
+event: delta
+data: {"text":"ME"}
+
+event: delta
+data: {"text":"-M"}
+
+event: delta
+data: {"text":"FG"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"5"}
+
+event: delta
+data: {"text":"\""}
+
+event: delta
+data: {"text":" found"}
+
+event: delta
+data: {"text":" in"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" knowledge"}
+
+event: delta
+data: {"text":" base"}
+
+event: delta
+data: {"text":".\n\n"}
+
+event: delta
+data: {"text":"\""}
+
+event: delta
+data: {"text":"Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":" Industrial"}
+
+event: delta
+data: {"text":" Supply"}
+
+event: delta
+data: {"text":" Co"}
+
+event: delta
+data: {"text":".\""}
+
+event: delta
+data: {"text":" exists"}
+
+event: delta
+data: {"text":" as"}
+
+event: delta
+data: {"text":" a"}
+
+event: delta
+data: {"text":" separate"}
+
+event: delta
+data: {"text":" entity"}
+
+event: delta
+data: {"text":" and"}
+
+event: delta
+data: {"text":" is"}
+
+event: delta
+data: {"text":" categorized"}
+
+event: delta
+data: {"text":" under"}
+
+event: delta
+data: {"text":" \""}
+
+event: delta
+data: {"text":"Industrial"}
+
+event: delta
+data: {"text":" Distribution"}
+
+event: delta
+data: {"text":",\""}
+
+event: delta
+data: {"text":" but"}
+
+event: delta
+data: {"text":" there"}
+
+event: delta
+data: {"text":" is"}
+
+event: delta
+data: {"text":" no"}
+
+event: delta
+data: {"text":" indication"}
+
+event: delta
+data: {"text":" that"}
+
+event: delta
+data: {"text":" it"}
+
+event: delta
+data: {"text":" is"}
+
+event: delta
+data: {"text":" linked"}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" \""}
+
+event: delta
+data: {"text":"C"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"100"}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":"\""}
+
+event: delta
+data: {"text":" or"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" other"}
+
+event: delta
+data: {"text":" codes"}
+
+event: delta
+data: {"text":" mentioned"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" Thus"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":" Industrial"}
+
+event: delta
+data: {"text":" Supply"}
+
+event: delta
+data: {"text":" Co"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" appears"}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" be"}
+
+event: delta
+data: {"text":" a"}
+
+event: delta
+data: {"text":" different"}
+
+event: delta
+data: {"text":" customer"}
+
+event: delta
+data: {"text":" from"}
+
+event: delta
+data: {"text":" those"}
+
+event: delta
+data: {"text":" listed"}
+
+event: delta
+data: {"text":"."}
+
+event: sources
+data: []
+
+event: done
+data: {}
+

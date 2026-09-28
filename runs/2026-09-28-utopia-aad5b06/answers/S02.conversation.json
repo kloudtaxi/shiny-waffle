@@ -1,0 +1,75 @@
+{
+  "messages": [
+    {
+      "content": "Can we offer Acme Manufacturing 18% on the NS-500 (DR-9001 at 18%) on 2026-09-23?",
+      "created_at": "2026-09-28T10:27:59.984952Z",
+      "id": "01a0e78e-a370-7721-bc23-4c4430087493",
+      "role": "user",
+      "sources": [],
+      "steps": []
+    },
+    {
+      "content": "As of September 23, 2026, there are no valid records for Acme Manufacturing (Acme Mfg. Holdings), the NS-500 Industrial Controller, or the DR-9001 in the knowledge base. Therefore, I cannot determine whether an offer of 18% on the NS-500 (DR-9001 at 18%) can be made on that date.",
+      "created_at": "2026-09-28T10:28:06.161849Z",
+      "id": "01a0e78e-bb91-7813-9923-923c3ee3f699",
+      "role": "assistant",
+      "sources": [],
+      "steps": [
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 matches",
+          "kind": "entity",
+          "label": "Acme Manufacturing",
+          "status": "ok"
+        },
+        {
+          "at": 0,
+          "count": 3,
+          "detail": "3 matches",
+          "kind": "entity",
+          "label": "NS-500",
+          "status": "ok"
+        },
+        {
+          "at": 0,
+          "count": 1,
+          "detail": "1 matches",
+          "kind": "entity",
+          "label": "DR-9001",
+          "status": "ok"
+        },
+        {
+          "as_of": "2023-10-01T00:00:00Z",
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts at 2026-09-23T00:00:00Z, as recorded by 2023-10-01T00:00:00Z",
+          "kind": "facts",
+          "label": "Acme Mfg. Holdings",
+          "status": "ok",
+          "valid_at": "2026-09-23T00:00:00Z"
+        },
+        {
+          "as_of": "2023-10-01T00:00:00Z",
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts at 2026-09-23T00:00:00Z, as recorded by 2023-10-01T00:00:00Z",
+          "kind": "facts",
+          "label": "NS-500 Industrial Controller",
+          "status": "ok",
+          "valid_at": "2026-09-23T00:00:00Z"
+        },
+        {
+          "as_of": "2023-10-01T00:00:00Z",
+          "at": 0,
+          "count": 0,
+          "detail": "0 facts at 2026-09-23T00:00:00Z, as recorded by 2023-10-01T00:00:00Z",
+          "kind": "facts",
+          "label": "DR-9001",
+          "status": "ok",
+          "valid_at": "2026-09-23T00:00:00Z"
+        }
+      ]
+    }
+  ]
+}

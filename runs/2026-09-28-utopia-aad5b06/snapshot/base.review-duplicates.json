@@ -1,0 +1,207 @@
+{
+  "counts": {
+    "agent": 5,
+    "agent_queue": 0,
+    "agent_rows": 229,
+    "agent_running": false,
+    "alignment": 0,
+    "conflicts": 0,
+    "defects": 0,
+    "duplicates": 5,
+    "duplicates_same_type": 0,
+    "duplicates_type_conflict": 0,
+    "errata": 0,
+    "lowconf": 0,
+    "mappings": 0,
+    "merges": 15,
+    "pending": 0,
+    "unconfirmed": 0,
+    "violations": 0
+  },
+  "items": [
+    {
+      "created_at": "2026-09-28T10:21:42.054393Z",
+      "id": "01a0e788-df25-73f0-b62a-933b84f6b3ef",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e788-df10-7623-97fe-c2a2cf7827a0",
+        "name": "NS-400-EQU",
+        "top_facts": [
+          "also known as: NS-400",
+          "requested → ? (2026-09 → 2026-09)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "unsure",
+        "confidence": 0.0,
+        "id": "01a0e78a-ee58-70a1-999a-dd523283238d",
+        "reason": null
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": "CRM-3003",
+        "id": "01a0e788-181e-7200-a45b-5811913f8708",
+        "name": "NS-830-EQU",
+        "top_facts": [
+          "also known as: 830-EQU",
+          "was requested by → CRM-3003 (2025-07 → 2025-07)"
+        ],
+        "type_label": null
+      },
+      "score": 0.6409639716148376,
+      "stage": "human"
+    },
+    {
+      "created_at": "2026-09-28T10:21:29.205024Z",
+      "id": "01a0e788-acf4-7490-a192-0a638a203797",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e788-acbe-77b0-9346-94f13ebb4fbe",
+        "name": "NS-830-EQU",
+        "top_facts": [
+          "requested ← CRM-2051 (2026-02 → 2026-02)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "keep",
+        "confidence": 0.800000011920929,
+        "id": "01a0e78a-ee4d-7d02-b990-45946c7d1a58",
+        "reason": "The two records are different as they have distinct names and unrelated facts, and there are no prior decisions indicating they refer to the same entity."
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e787-9c7b-7c81-a32d-535b4a41e700",
+        "name": "NS-880 Commissioning Service",
+        "top_facts": [
+          "has a list price → ?"
+        ],
+        "type_label": null
+      },
+      "score": 0.6314791440963745,
+      "stage": "human"
+    },
+    {
+      "created_at": "2026-09-28T10:21:29.198102Z",
+      "id": "01a0e788-aced-7161-ab5b-908de121830b",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e788-acbe-77b0-9346-94f13ebb4fbe",
+        "name": "NS-830-EQU",
+        "top_facts": [
+          "requested ← CRM-2051 (2026-02 → 2026-02)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "keep",
+        "confidence": 0.800000011920929,
+        "id": "01a0e78a-ee36-73e1-bac1-ee75564082c5",
+        "reason": "The names are different and represent distinct entities, evidenced by distinct identifiers and the absence of any shared facts."
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e787-d62f-7fb0-9e70-523d4606d270",
+        "name": "NS-250-SOF",
+        "top_facts": [
+          "also known as: NS-250",
+          "requested ← CRM-2063 (2025-11 → 2025-11)"
+        ],
+        "type_label": null
+      },
+      "score": 0.6442784667015076,
+      "stage": "human"
+    },
+    {
+      "created_at": "2026-09-28T10:21:29.190870Z",
+      "id": "01a0e788-ace6-7ed3-bf4d-6ea7987d6e59",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e788-acbe-77b0-9346-94f13ebb4fbe",
+        "name": "NS-830-EQU",
+        "top_facts": [
+          "requested ← CRM-2051 (2026-02 → 2026-02)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "unsure",
+        "confidence": 0.0,
+        "id": "01a0e78a-ee2d-7362-ba74-b5e349f7d939",
+        "reason": null
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 7,
+        "disambiguator": null,
+        "id": "01a0e787-9133-7fc3-9038-7f3a41d88353",
+        "name": "NS-500 Industrial Controller",
+        "top_facts": [
+          "also known as: NS-500, NS-500 controller, Acme NS-500",
+          "requested ← CRM-3004 (2026-07 → 2026-07)",
+          "requested ← CRM-3002 (2026-03 → 2026-03)",
+          "requested → ? (2026-09 → 2026-09)",
+          "has a list price → ?"
+        ],
+        "type_label": null
+      },
+      "score": 0.655327320098877,
+      "stage": "human"
+    },
+    {
+      "created_at": "2026-09-28T10:21:29.180038Z",
+      "id": "01a0e788-acdb-7342-b4d2-3465b689120e",
+      "left": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": null,
+        "id": "01a0e788-acbe-77b0-9346-94f13ebb4fbe",
+        "name": "NS-830-EQU",
+        "top_facts": [
+          "requested ← CRM-2051 (2026-02 → 2026-02)"
+        ],
+        "type_label": null
+      },
+      "proposal": {
+        "action": "merge",
+        "confidence": 0.800000011920929,
+        "id": "01a0e78a-ee24-7742-86b4-53e8205c609e",
+        "reason": "The records refer to the same entity as they share the identifier 'NS-830-EQU', with no contradictions in the associated facts."
+      },
+      "reason": "proposed",
+      "right": {
+        "color": "#94a3b8",
+        "degree": 1,
+        "disambiguator": "CRM-3003",
+        "id": "01a0e788-181e-7200-a45b-5811913f8708",
+        "name": "NS-830-EQU",
+        "top_facts": [
+          "also known as: 830-EQU",
+          "was requested by → CRM-3003 (2025-07 → 2025-07)"
+        ],
+        "type_label": null
+      },
+      "score": 0.6607194542884827,
+      "stage": "human"
+    }
+  ],
+  "queue": "duplicates"
+}
