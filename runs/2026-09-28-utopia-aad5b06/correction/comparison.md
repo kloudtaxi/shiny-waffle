@@ -1,5 +1,12 @@
 # Correction run: before vs after identity review
 
+> **Update (after repeats, `../repeats/notes.md`):** finding 3's conclusion ("the correction
+> didn't hide the quotes; this run just didn't find them") and finding 4 ("variance dominates")
+> are **superseded**. With n = 3, B2c is stable at 4/3/3, 4/3/3 and 4/4/2. On S01, S02 and S04
+> the per-entity `changes` dig went from 8–9 calls (pre-correction, n = 1) to 0 in 9 of 9
+> post-correction runs. The working hypothesis (f13) is that consolidated identity made the
+> graph look complete enough to stop digging.
+
 Same blind Opus 5.5 reader and setup as `../arm-b/` (see `../notes.md`, "Arm B"). The only
 change is the 18 identity corrections applied at 17:25 UTC (see `../notes.md`, "Correction
 run"). Transcripts are in `arm-b/B1`, `arm-b/B2`; the post-correction graph is in `snapshot/`.

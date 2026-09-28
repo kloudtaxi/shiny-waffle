@@ -1,8 +1,8 @@
-> **STATUS: PAUSED 2026-09-28**, after the correction run, by the user's choice. Resume with
-> repeat runs (n=3 per question, B2 first). Single-run variance swamped the correction effect
-> (see `correction/comparison.md`). Still open: steps 7–8 (fact checklist, rubric scoring),
-> the curation arm and the scale arm. Both KBs are mutated by the correction; the
-> pre-correction state is in `snapshot/` and readable through MCP `as_of: 2026-09-28T17:25:00Z`.
+> **STATUS: RESUMED 2026-09-28**. B2 repeats (n=3 on the corrected graph) are done; see
+> `repeats/notes.md`. B2c is stable (4/3/3, 4/3/3, 4/4/2); the pre-correction B2 run is the
+> outlier, which **corrects** the "reader-strategy variance" reading in `correction/comparison.md`.
+> Open decision: pre-correction repeats to test hypothesis f13. Still open: steps 7–8, the
+> curation arm and the scale arm. Pre-correction state: `snapshot/`, MCP `as_of: 2026-09-28T17:25:00Z`.
 
 # Run 2026-09-28 · Utopia baseline (arm A)
 
@@ -388,7 +388,8 @@ came out *keep*, which is correct. Both queues ended empty. The base KB records 
 and 1 accepted; missing-contract records 5 overridden and 1 accepted.
 
 **Resulting identities.** Live facts are 267 (base) and 264 (missing-contract), down one each
-from deduplication. Merges went from 15 to 24 (base) and from 8 to 18 (missing-contract).
+from deduplication. Merges went from 15 to 23 (base) and from 8 to 17 (missing-contract);
+the `*.entity-merges.tsv` line counts include a header and a "(N rows)" footer.
 
 - **base:** Acme Industrial Supply Co. is known as Acme Industrial, C-1044 and CRM-2091. NS-500
   Industrial Controller is known as NS-500 and NS-500 controller (and "Acme NS-500", the
