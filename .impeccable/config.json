@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "tracker/northstar-lab-ledger.html"
+        ],
+        "createdAt": "2026-09-28T18:46:43.779Z",
+        "reason": "Claude triage: only remaining hits are dark-theme-only tokens (#8a95a2 --ink-3, #f1b54f --partial) paired by the detector with the light panel #ffffff, which never renders together. Hand-checked pairs: light ink-3 #626d79/#fff 5.2:1, partial #955800/#fbf0dc 5.0:1; dark ink-3 #8a95a2/#1b232d 5.2:1. Tool offers no per-value ignore for this rule."
+      }
+    ]
+  }
+}
