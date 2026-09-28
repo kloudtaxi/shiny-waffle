@@ -1,3 +1,8 @@
+# Sovera OMM local valut
+.vault/
+
+# Sovera local configuration
+_owm-local/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
