@@ -161,7 +161,7 @@ CONDITIONS = [
         "Opus · graph only",
         "Opus 5.5, blind, headless claude -p",
         "9 MCP tools; search_chunks and get_document hidden",
-        "As ingested",
+        "As ingested (runs 2–3: correction reverted to replay it)",
         "arm-b/B2",
         "What the foundation modelled. Graph tools still return provenance quotes via `changes`.",
     ),
@@ -190,221 +190,20 @@ CONDITIONS = [
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.
-P, H, F = "pass", "partial", "fail"
-PROVISIONAL = {
-    "A": {
-        "S01": (F, "Cannot determine; no approver named."),
-        "S02": (F, "Cannot determine; queried record time 2023-10-01, before ingestion."),
-        "S03": (F, "Cannot determine."),
-        "S04": (F, "Cannot determine; no facts at 2025-09-23."),
-        "S05": (F, "Cannot determine; does not name the missing contract."),
-        "S06a": (F, "No facts."),
-        "S06b": (F, 'Answered "100%": value invented, period right.'),
-        "S06c": (P, "No facts — right, but only because nothing is dated then."),
-        "S07": (P, "Correct basis, cites the exception document (the one text search)."),
-        "S08": (H, "Acme Industrial different ✓; CRM-2048 and ACME-MFG-2025 not found."),
-    },
-    "B1": {
-        "S03": (
-            H,
-            'Doesn\'t transfer the exception ✓, but frames it as "needs VP sign-off" '
-            "rather than review.",
-        )
-    },
-    "B2": {
-        "S01": (H, 'Right "no" and reasoning; VP band absent, approver only "obvious".'),
-        "S03": (H, "No NS-Cloud exception ✓; authority unresolved."),
-        "S05": (H, "Declines to decide ✓, but asks for the authority limits, not the contract."),
-        "S08": (H, "Acme Industrial different ✓; ids not in the graph."),
-    },
-    "B1c": {"S03": (H, 'Same framing as B1: "needs VP sign-off".')},
-    "B2c": {
-        "S01": (F, '"Can\'t confirm"; never found the percentage quotes.'),
-        "S02": (F, 'No verdict; "percentage wasn\'t captured".'),
-        "S03": (H, "No NS-Cloud exception ✓; authority unknown."),
-        "S04": (F, '"Can\'t confirm"; leans toward "unlikely".'),
-        "S05": (H, "Declines ✓; asks for the limits, not the contract."),
-        "S08": (H, 'Ids "not recorded anywhere, not even as an alias" — the merge erased C-1001.'),
-    },
-}
-DEFAULT_PASS_NOTE = "Matches the expected outcome and reasoning."
-
 # Repeat runs of a condition: folder pattern relative to the run, with {n} = 2, 3, ...
-REPEAT_DIRS = {"B1c": "repeats/r{n}/B1", "B2c": "repeats/r{n}/B2"}
-# First-read grades for repeats: {(condition, scenario, repeat): (grade, note)}. A repeat
-# with no entry is left ungraded — unlike run 1, it never defaults to "pass".
-PROVISIONAL_REPEATS: dict[tuple[str, str, int], tuple[str, str]] = {
-    ("B2c", "S01", 2): (
-        F,
-        '"Can\'t confirm", leans "probably not"; no approver. No per-entity `changes`, no '
-        "percentages.",
-    ),
-    ("B2c", "S01", 3): (
-        F,
-        '"Can\'t confirm" she can approve; eligibility vs authority noted, no verdict.',
-    ),
-    ("B2c", "S02", 2): (F, 'No verdict: "percentages were never captured".'),
-    ("B2c", "S02", 3): (
-        H,
-        '"Don\'t offer it until someone checks" — right action, wrong reason (cap unknown, not '
-        "exceeded).",
-    ),
-    ("B2c", "S03", 2): (
-        H,
-        '"No, over her 10% limit" (found the quotes via `changes`); framed as escalation, not '
-        "review.",
-    ),
-    ("B2c", "S03", 3): (
-        H,
-        "No: above her 10% limit and the exception covers a different product; framed as "
-        "escalation.",
-    ),
-    ("B2c", "S04", 2): (
-        F,
-        '"Most of what is recorded points to no" — wrong direction; 2025 limit never found.',
-    ),
-    ("B2c", "S04", 3): (F, '"Points toward no" — wrong direction; limits not found.'),
-    ("B2c", "S05", 2): (H, "Declines ✓; asks for the limits, not the contract."),
-    ("B2c", "S05", 3): (
-        H,
-        "Declines ✓ after 12 `changes` calls on the wrong entities; asks for thresholds, not the "
-        "contract.",
-    ),
-    ("B2c", "S06a", 2): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S06a", 3): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S06b", 2): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S06b", 3): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S06c", 2): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S06c", 3): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S07", 2): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S07", 3): (P, DEFAULT_PASS_NOTE),
-    ("B2c", "S08", 2): (
-        H,
-        "Acme Industrial different ✓; none of the three ids found (searched fragments too).",
-    ),
-    ("B2c", "S08", 3): (H, "Acme Industrial different ✓; ids not found."),
+REPEAT_DIRS = {
+    "B2": "repeats/pre-r{n}/B2",  # graph reverted to pre-correction for these runs
+    "B1c": "repeats/r{n}/B1",
+    "B2c": "repeats/r{n}/B2",
 }
 
-FINDINGS = [
-    (
-        "f01",
-        "agent",
-        "The reader is the largest variable",
-        "On the same graph Utopia's chat got 2 of 10 right and Opus with all tools got 9. Arm A "
-        "measured Utopia's reference chat loop, not the foundation; Utopia's own ADR 0046 says the "
-        "app surface is MCP.",
-        ["comparison.md"],
-    ),
-    (
-        "f02",
-        "owm",
-        "A strong reader did the OWM's work at question time",
-        "B1 composed role + reporting line + policy band into the approver, kept eligibility apart "
-        "from authority, chose policy and exception by date, refused hearsay and matched ids on "
-        "DUNS. The OWM's case must rest on what that lacks: persistence, consistency and audit, "
-        "scale, cost.",
-        ["comparison.md"],
-    ),
-    (
-        "f03",
-        "foundation",
-        "Every reporting line is inverted",
-        "Utopia's MCP serves `Michael Torres —reports to→ Sarah Chen` and `David Morgan —reports "
-        "to→ Michael Torres`, citing organization_chart.md: the indented list was read upside "
-        "down.",
-        ["notes.md"],
-    ),
-    (
-        "f04",
-        "owm",
-        "The reader silently repairs foundation errors",
-        'B2 read the inverted edges and wrote "Sarah reports to Michael" from title priors. Right '
-        "answer, wrong data, nothing in the answer shows it. Candidate OWM capability: structural "
-        "constraints on organizational relations that flag the error.",
-        ["comparison.md"],
-    ),
-    (
-        "f05",
-        "foundation",
-        "Authority and eligibility values never reached the graph",
-        "No VP Sales band (>10% ≤20%), no percentages as values, undated roles. The current 15% "
-        "exception is undated while the stale 10% one is dated, so dated reads find the past and "
-        "miss the present.",
-        ["notes.md", "comparison.md"],
-    ),
-    (
-        "f06",
-        "foundation",
-        "Every CSV lost rows to truncated extraction",
-        "All six CSVs hit `truncated_reply`; rows after the cut produced no facts. Structured "
-        "evidence is the least completely extracted part of the corpus.",
-        ["notes.md"],
-    ),
-    (
-        "f07",
-        "foundation",
-        "Graph tools carry quotes, but only through `changes`",
-        "`entity_facts` returns document ids, not quotes. B2 reached the percentages only by "
-        "calling `changes` per entity since ingestion day, an audit feed used as a quote "
-        "retriever.",
-        ["correction/comparison.md"],
-    ),
-    (
-        "f08",
-        "review",
-        "Identity is decided on names, and the stakes are routed backwards",
-        "The adjudicator never used shared DUNS, SKU or email. It auto-applied the identity calls "
-        "that change answers at 90–95% and sent SKU trivia to humans.",
-        ["notes.md"],
-    ),
-    (
-        "f09",
-        "agent",
-        "Utopia's chat confuses record time with world time",
-        "It passed question dates as `as_of` (record time), before anything was ingested, so every "
-        'lookup was empty. It also invented "100%" for S06b.',
-        ["notes.md"],
-    ),
-    (
-        "f10",
-        "review",
-        "Identity review bought nothing measurable",
-        "B1 was unchanged after 18 corrections. B2's binding gaps are missing facts, which no "
-        "identity decision can supply and the Review queue never surfaces.",
-        ["correction/comparison.md"],
-    ),
-    (
-        "f11",
-        "foundation",
-        "A human merge erased the identifier it connected",
-        "Merging C-1001 and CRM-2048 into Acme dropped them as findable names: the ID entities had "
-        "a canonical name but no name fact. Appears to diverge from Utopia ADR 0041 decision 1.",
-        ["notes.md"],
-    ),
-    (
-        "f12",
-        "method",
-        "The graph-only drop after correction is stable, not variance",
-        "Three B2 runs on the corrected graph grade 4/3/3, 4/3/3 and 4/4/2; the single "
-        'pre-correction run (6/4/0) is the outlier. The earlier "reader-strategy variance" '
-        "reading was wrong: on S01, S02 and S04 the pre-correction reader made 8-9 per-entity "
-        "`changes` calls each and reached the percentage quotes; after correction it made 0 in "
-        "9 of 9 runs.",
-        ["repeats/notes.md", "correction/comparison.md"],
-    ),
-    (
-        "f13",
-        "foundation",
-        "Cleaner identity cut the dig that found the evidence (hypothesis)",
-        "Before correction the reader kept meeting thin, duplicated entities (one fact each) and "
-        "fell back to the `changes` feed, where the quotes carrying the percentages live. After "
-        "correction, consolidated entities returned richer-looking facts, so it stopped and "
-        'answered "can\'t confirm". If this holds, graph-only answers depend on an undocumented '
-        "path, and the fix is quotes on `entity_facts`, not better identity. Test: "
-        "pre-correction repeats.",
-        ["repeats/notes.md"],
-    ),
-]
+
+def annotations(run_name: str) -> dict:
+    """Claude's provisional grades, the findings and the experiment status for one run.
+
+    They live in tracker/annotations/<run>.json: data, edited per run, not code. Human grades
+    are never here; they live only in the ledger's `grades` collection."""
+    return json.loads((LAB / "tracker" / "annotations" / f"{run_name}.json").read_text())
 
 
 def md_section(text: str, head: str) -> str:
@@ -496,6 +295,12 @@ def main(run_dir: str) -> None:
     run = (LAB / run_dir).resolve()
     exp = run.name
     rel = str(run.relative_to(LAB))
+    ann = annotations(exp)
+    first_run = {c: {sid: tuple(v) for sid, v in d.items()} for c, d in ann["provisional"].items()}
+    repeats = {
+        (r["condition"], r["scenario"], r["repeat"]): (r["grade"], r["note"])
+        for r in ann["provisional_repeats"]
+    }
     questions = {}
     for row in (run / "questions.tsv").read_text().splitlines()[1:]:
         sid, kb, q = row.split("\t")
@@ -538,9 +343,10 @@ def main(run_dir: str) -> None:
                 tot_turns += out["turns"] or 0
                 tot_cost += out["cost_usd"] or 0.0
                 if rep == 1:
-                    grade, note = PROVISIONAL.get(cid, {}).get(sid, (P, DEFAULT_PASS_NOTE))
+                    default = tuple(ann["default_first_run"])
+                    grade, note = first_run.get(cid, {}).get(sid, default)
                 else:
-                    grade, note = PROVISIONAL_REPEATS.get((cid, sid, rep), (None, "Not read yet."))
+                    grade, note = repeats.get((cid, sid, rep), (None, "Not read yet."))
                 kb, q = questions[sid]
                 doc_id = f"{exp}~{cid}~{sid}~r{rep}"
                 answers[doc_id] = {
@@ -572,44 +378,30 @@ def main(run_dir: str) -> None:
             "cost_usd": round(tot_cost, 2) if cid != "A" else None,
         }
 
+    meta = ann["experiment"]
+
+    def expand(v: object) -> object:
+        return v.replace("{run}", rel) if isinstance(v, str) else v
+
     experiments = {
         exp: {
             "id": exp,
-            "title": "Northstar × Utopia · boundary run",
-            "date": "2026-09-28",
-            "status": "active",
-            "status_note": "Resumed: B2c repeats (n=3) are stable at 4-3-3 / 4-3-3 / 4-4-2; the "
-            "pre-correction B2 run is the outlier.",
-            "next": [
-                "Decide: pre-correction B2 repeats (revert merges, rerun, re-apply)",
-                "Steps 7–8: fact checklist and rubric scoring",
-                "Curation arm: fix VP band, percentages, reporting direction",
-                "Scale arm: northstar build --scale large",
-            ],
-            "utopia": "dev @ aad5b06",
-            "lab_commit": "976d119",
-            "seed": 20260923,
-            "notes": f"{rel}/notes.md",
-            "docs": [
-                f"{rel}/comparison.md",
-                f"{rel}/correction/comparison.md",
-                "docs/experiment-runbook.md",
-                "docs/tracking-mlflow-review.md",
-            ],
+            **{k: expand(v) for k, v in meta.items() if k != "docs"},
+            "docs": [expand(d) for d in meta.get("docs", [])],
         }
     }
     findings = {
-        f"{exp}~{fid}": {
+        f"{exp}~{f['id']}": {
             "experiment": exp,
             "order": i,
-            "category": cat,
-            "title": title,
-            "body": body,
+            "category": f["category"],
+            "title": f["title"],
+            "body": f["body"],
             "status": "observed",
             "source": "Claude",
-            "evidence": [f"{rel}/{e}" for e in ev],
+            "evidence": [f"{rel}/{e}" for e in f["evidence"]],
         }
-        for i, (fid, cat, title, body, ev) in enumerate(FINDINGS, 1)
+        for i, f in enumerate(ann["findings"], 1)
     }
 
     OUT.mkdir(parents=True, exist_ok=True)

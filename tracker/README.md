@@ -12,7 +12,9 @@ resumes.
 ## Data
 
 `build_seed.py <run folder>` compiles a run into `seed/<collection>.json` plus one file per
-document under `seed/docs/`. Claude writes those into the artifact's database with
+document under `seed/docs/`. Claude's provisional grades, the findings and the experiment status are
+**data** in `annotations/<run>.json`. Edit them there, not in code. Repeat runs are found through
+`REPEAT_DIRS` (for example `repeats/r2/B2`) and appear as `~r2` / `~r3` answers. Claude writes those into the artifact's database with
 `ArtifactData` batch writes (up to 50 per batch).
 
 | Collection | Written by | Shape |

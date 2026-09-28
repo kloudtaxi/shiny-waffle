@@ -1,8 +1,9 @@
-> **STATUS: RESUMED 2026-09-28**. B2 repeats (n=3 on the corrected graph) are done; see
-> `repeats/notes.md`. B2c is stable (4/3/3, 4/3/3, 4/4/2); the pre-correction B2 run is the
-> outlier, which **corrects** the "reader-strategy variance" reading in `correction/comparison.md`.
-> Open decision: pre-correction repeats to test hypothesis f13. Still open: steps 7–8, the
-> curation arm and the scale arm. Pre-correction state: `snapshot/`, MCP `as_of: 2026-09-28T17:25:00Z`.
+> **STATUS: ACTIVE 2026-09-28**. The correction effect is **confirmed**: B2 repeats with n=3 on both
+> sides (`repeats/notes.md`). Pre-correction 6/4/0, 6/4/0, 5/4/1 vs post 4/3/3, 4/3/3, 4/4/2; the
+> `changes` dig on authority questions is 8/9 vs 0/9 (p≈0.0002). The KBs are in the corrected
+> state; the revert/re-apply was verified both ways. Next: the curation arm. Still open: steps 7–8
+> and the scale arm. Upstream asks: quotes on `entity_facts`, `as_of` on `find_entities`, merges
+> that keep identifiers.
 
 # Run 2026-09-28 · Utopia baseline (arm A)
 

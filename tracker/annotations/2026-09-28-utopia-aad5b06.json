@@ -1,0 +1,533 @@
+{
+ "_about": "Per-run annotations for tracker/build_seed.py: Claude's provisional grades, findings and the experiment's status. Edit here, not in code. {run} expands to runs/<run>.",
+ "experiment": {
+  "title": "Northstar × Utopia · boundary run",
+  "date": "2026-09-28",
+  "status": "active",
+  "status_note": "Correction effect confirmed with n=3 each side: pre-correction B2 6-4-0 / 6-4-0 / 5-4-1 vs post 4-3-3 / 4-3-3 / 4-4-2.",
+  "next": [
+   "Curation arm: fix VP band, percentages, reporting direction",
+   "Steps 7–8: fact checklist and rubric scoring",
+   "Scale arm: northstar build --scale large",
+   "Raise upstream: quotes on entity_facts; as_of on find_entities; merge keeps ids"
+  ],
+  "utopia": "dev @ aad5b06",
+  "lab_commit": "976d119",
+  "seed": 20260923,
+  "notes": "{run}/notes.md",
+  "docs": [
+   "{run}/comparison.md",
+   "{run}/correction/comparison.md",
+   "{run}/repeats/notes.md",
+   "docs/experiment-runbook.md",
+   "docs/tracking-mlflow-review.md"
+  ]
+ },
+ "default_first_run": [
+  "pass",
+  "Matches the expected outcome and reasoning."
+ ],
+ "provisional": {
+  "A": {
+   "S01": [
+    "fail",
+    "Cannot determine; no approver named."
+   ],
+   "S02": [
+    "fail",
+    "Cannot determine; queried record time 2023-10-01, before ingestion."
+   ],
+   "S03": [
+    "fail",
+    "Cannot determine."
+   ],
+   "S04": [
+    "fail",
+    "Cannot determine; no facts at 2025-09-23."
+   ],
+   "S05": [
+    "fail",
+    "Cannot determine; does not name the missing contract."
+   ],
+   "S06a": [
+    "fail",
+    "No facts."
+   ],
+   "S06b": [
+    "fail",
+    "Answered \"100%\": value invented, period right."
+   ],
+   "S06c": [
+    "pass",
+    "No facts — right, but only because nothing is dated then."
+   ],
+   "S07": [
+    "pass",
+    "Correct basis, cites the exception document (the one text search)."
+   ],
+   "S08": [
+    "partial",
+    "Acme Industrial different ✓; CRM-2048 and ACME-MFG-2025 not found."
+   ]
+  },
+  "B1": {
+   "S03": [
+    "partial",
+    "Doesn't transfer the exception ✓, but frames it as \"needs VP sign-off\" rather than review."
+   ]
+  },
+  "B2": {
+   "S01": [
+    "partial",
+    "Right \"no\" and reasoning; VP band absent, approver only \"obvious\"."
+   ],
+   "S03": [
+    "partial",
+    "No NS-Cloud exception ✓; authority unresolved."
+   ],
+   "S05": [
+    "partial",
+    "Declines to decide ✓, but asks for the authority limits, not the contract."
+   ],
+   "S08": [
+    "partial",
+    "Acme Industrial different ✓; ids not in the graph."
+   ]
+  },
+  "B1c": {
+   "S03": [
+    "partial",
+    "Same framing as B1: \"needs VP sign-off\"."
+   ]
+  },
+  "B2c": {
+   "S01": [
+    "fail",
+    "\"Can't confirm\"; never found the percentage quotes."
+   ],
+   "S02": [
+    "fail",
+    "No verdict; \"percentage wasn't captured\"."
+   ],
+   "S03": [
+    "partial",
+    "No NS-Cloud exception ✓; authority unknown."
+   ],
+   "S04": [
+    "fail",
+    "\"Can't confirm\"; leans toward \"unlikely\"."
+   ],
+   "S05": [
+    "partial",
+    "Declines ✓; asks for the limits, not the contract."
+   ],
+   "S08": [
+    "partial",
+    "Ids \"not recorded anywhere, not even as an alias\" — the merge erased C-1001."
+   ]
+  }
+ },
+ "provisional_repeats": [
+  {
+   "condition": "B2c",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "\"Can't confirm\", leans \"probably not\"; no approver. No per-entity `changes`, no percentages."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "\"Can't confirm\" she can approve; eligibility vs authority noted, no verdict."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "No verdict: \"percentages were never captured\"."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "\"Don't offer it until someone checks\" — right action, wrong reason (cap unknown, not exceeded)."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "\"No, over her 10% limit\" (found the quotes via `changes`); framed as escalation, not review."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "No: above her 10% limit and the exception covers a different product; framed as escalation."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "\"Most of what is recorded points to no\" — wrong direction; 2025 limit never found."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "\"Points toward no\" — wrong direction; limits not found."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "Declines ✓; asks for the limits, not the contract."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "Declines ✓ after 12 `changes` calls on the wrong entities; asks for thresholds, not the contract."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S06a",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S06a",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S06b",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S06b",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S06c",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S06c",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S07",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S07",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S08",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "Acme Industrial different ✓; none of the three ids found (searched fragments too)."
+  },
+  {
+   "condition": "B2c",
+   "scenario": "S08",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "Acme Industrial different ✓; ids not found."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "No, not herself (10% limit found); Michael only \"the likely next step\"."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "No, not herself; Michael or David Morgan, \"check the matrix\"."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "No: 18% exceeds the 15% cap (quotes the MSA)."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "No: 18% is 3 points over the 15% limit."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "Exception covers NS-500 only ✓; authority limit not found."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "No: 10% limit, exception is NS-500 only; framed as escalation."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Yes: the 2025 policy allowed AEs up to 15% (dug via `changes`)."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "\"Probably not\" — wrong direction; no `changes` dig. Flags the inverted edge."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "Declines ✓; asks for thresholds, not the contract."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "Declines ✓; asks for thresholds; flags the reporting lines as unreliable."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S06a",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S06a",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S06b",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S06b",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S06c",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S06c",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S07",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S07",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Matches the expected outcome and reasoning."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S08",
+   "repeat": 2,
+   "grade": "partial",
+   "note": "Acme Industrial different ✓; ids not linked (\"my inference\")."
+  },
+  {
+   "condition": "B2",
+   "scenario": "S08",
+   "repeat": 3,
+   "grade": "partial",
+   "note": "C-1001 = Acme Mfg. Holdings ✓ (customers.csv quote); CRM-2048, ACME-MFG-2025 missing."
+  }
+ ],
+ "findings": [
+  {
+   "id": "f01",
+   "category": "agent",
+   "title": "The reader is the largest variable",
+   "body": "On the same graph Utopia's chat got 2 of 10 right and Opus with all tools got 9. Arm A measured Utopia's reference chat loop, not the foundation; Utopia's own ADR 0046 says the app surface is MCP.",
+   "evidence": [
+    "comparison.md"
+   ]
+  },
+  {
+   "id": "f02",
+   "category": "owm",
+   "title": "A strong reader did the OWM's work at question time",
+   "body": "B1 composed role + reporting line + policy band into the approver, kept eligibility apart from authority, chose policy and exception by date, refused hearsay and matched ids on DUNS. The OWM's case must rest on what that lacks: persistence, consistency and audit, scale, cost.",
+   "evidence": [
+    "comparison.md"
+   ]
+  },
+  {
+   "id": "f03",
+   "category": "foundation",
+   "title": "Every reporting line is inverted",
+   "body": "Utopia's MCP serves `Michael Torres —reports to→ Sarah Chen` and `David Morgan —reports to→ Michael Torres`, citing organization_chart.md: the indented list was read upside down.",
+   "evidence": [
+    "notes.md"
+   ]
+  },
+  {
+   "id": "f04",
+   "category": "owm",
+   "title": "The reader usually repairs foundation errors silently",
+   "body": "Utopia serves every reporting edge inverted. In most B2 answers the reader wrote \"Sarah reports to Michael\" from title priors without comment; in 3 of 60 it flagged the edge as reversed. Right answer, wrong data, usually invisible. Candidate OWM capability: structural constraints on organizational relations that flag the error.",
+   "evidence": [
+    "comparison.md",
+    "repeats/notes.md"
+   ]
+  },
+  {
+   "id": "f05",
+   "category": "foundation",
+   "title": "Authority and eligibility values never reached the graph",
+   "body": "No VP Sales band (>10% ≤20%), no percentages as values, undated roles. The current 15% exception is undated while the stale 10% one is dated, so dated reads find the past and miss the present.",
+   "evidence": [
+    "notes.md",
+    "comparison.md"
+   ]
+  },
+  {
+   "id": "f06",
+   "category": "foundation",
+   "title": "Every CSV lost rows to truncated extraction",
+   "body": "All six CSVs hit `truncated_reply`; rows after the cut produced no facts. Structured evidence is the least completely extracted part of the corpus.",
+   "evidence": [
+    "notes.md"
+   ]
+  },
+  {
+   "id": "f07",
+   "category": "foundation",
+   "title": "Graph tools carry quotes, but only through `changes`",
+   "body": "`entity_facts` returns document ids, not quotes. B2 reached the percentages only by calling `changes` per entity since ingestion day, an audit feed used as a quote retriever.",
+   "evidence": [
+    "correction/comparison.md"
+   ]
+  },
+  {
+   "id": "f08",
+   "category": "review",
+   "title": "Identity is decided on names, and the stakes are routed backwards",
+   "body": "The adjudicator never used shared DUNS, SKU or email. It auto-applied the identity calls that change answers at 90–95% and sent SKU trivia to humans.",
+   "evidence": [
+    "notes.md"
+   ]
+  },
+  {
+   "id": "f09",
+   "category": "agent",
+   "title": "Utopia's chat confuses record time with world time",
+   "body": "It passed question dates as `as_of` (record time), before anything was ingested, so every lookup was empty. It also invented \"100%\" for S06b.",
+   "evidence": [
+    "notes.md"
+   ]
+  },
+  {
+   "id": "f10",
+   "category": "review",
+   "title": "Identity review bought nothing measurable",
+   "body": "B1 was unchanged after 18 corrections. B2's binding gaps are missing facts, which no identity decision can supply and the Review queue never surfaces.",
+   "evidence": [
+    "correction/comparison.md"
+   ]
+  },
+  {
+   "id": "f11",
+   "category": "foundation",
+   "title": "A human merge erased the identifier it connected",
+   "body": "Merging C-1001 and CRM-2048 into Acme dropped them as findable names: the ID entities had a canonical name but no name fact. Appears to diverge from Utopia ADR 0041 decision 1.",
+   "evidence": [
+    "notes.md"
+   ]
+  },
+  {
+   "id": "f12",
+   "category": "method",
+   "title": "The graph-only drop after correction is real, not variance",
+   "body": "n = 3 on each side, same KBs, reader and questions. Pre-correction B2 grades 6/4/0, 6/4/0, 5/4/1; post-correction 4/3/3, 4/3/3, 4/4/2. The earlier \"reader-strategy variance\" reading was wrong.",
+   "evidence": [
+    "repeats/notes.md"
+   ]
+  },
+  {
+   "id": "f13",
+   "category": "foundation",
+   "title": "Cleaner identity cut the dig that found the evidence",
+   "body": "On S01, S02 and S04 the reader dug through per-entity `changes` in 8 of 9 pre-correction runs and 0 of 9 post-correction (Fisher p ≈ 0.0002). S04 is right exactly when it dug. The correction changed reader behaviour; the \"consolidated entities look complete\" mechanism is inferred from traces. Graph-only answers ride on an undocumented path: the fix is quotes on `entity_facts`, not identity review.",
+   "evidence": [
+    "repeats/notes.md"
+   ]
+  }
+ ]
+}
