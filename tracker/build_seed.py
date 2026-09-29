@@ -234,6 +234,18 @@ CONDITIONS = [
         "The OWM layer (procedure + request record) on the uncurated graph: is curation still "
         "needed when the OWM supplies the decision logic and inputs?",
     ),
+    (
+        "B2kPRa",
+        10,
+        "After fact curation",
+        "Opus · graph only + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "9 MCP tools; search_chunks and get_document hidden",
+        "Curated facts + the agreement's term (one fact)",
+        "agreement/arm-b/r1/B2",
+        "B2kPR with one more curated fact, the agreement's term, to test what split S03. "
+        "S03 only; auto-scored.",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.

@@ -29,17 +29,24 @@
    "order": 4,
    "graph": "Curated facts (bands, exception values, 43 reporting lines); no identity correction",
    "description": "The procedure + request record on the curated scale graph, n = 3. Decision scenarios S01-S05 only; auto-scored."
+  },
+  "B2kPRa": {
+   "folder": "agreement/arm-b/r1/B2",
+   "repeats": "agreement/arm-b/r{n}/B2",
+   "questions": "agreement/questions.tsv",
+   "order": 5,
+   "graph": "Curated facts + the agreement's term (one fact, as the small graph had it)",
+   "description": "B2kPR on the same graph plus one curated fact, \"Master Supply Agreement is effective\" 2025-04-01..2028-03-31, to test what split S03 at scale. S03 only, n = 3; auto-scored."
   }
  },
  "experiment": {
   "title": "Northstar × Utopia · scale (large)",
   "date": "2026-09-28",
   "status": "active",
-  "status_note": "Scale arm done: curated facts + OWM procedure + CRM request record → 13/15 (15/15 at small scale). Both misses are S03 asking for the agreement, which is a name with no facts at scale. Uncurated, the procedure makes the reader ask for evidence on every decision. Text retrieval (B1) is unaffected by the noise.",
+  "status_note": "Scale arm done: curated facts + OWM procedure + CRM request record → 13/15; adding the one agreement fact the scale graph lost turns S03 to 3/3, so 15/15 on the curated scale graph. Uncurated, the procedure makes the reader ask for evidence on every decision. Text retrieval (B1) is unaffected by the noise.",
   "next": [
    "Steps 7–8: human rubric scoring to calibrate Claude's provisional grades",
    "Build the OWM decision service: procedure + record in, decision object out (persisted)",
-   "Optional: curate the agreement's term and re-run S03 to confirm the split closes",
    "File upstream asks (docs/upstream/utopia-read-contract.md)"
   ],
   "utopia": "dev @ aad5b06",
@@ -182,6 +189,12 @@
     "pass",
     "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
    ]
+  },
+  "B2kPRa": {
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. Establishes the agreement as active from the curated term, then finds no NS-Cloud term."
+   ]
   }
  },
  "provisional_repeats": [
@@ -254,6 +267,20 @@
    "repeat": 3,
    "grade": "pass",
    "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRa",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. Establishes the agreement as active from the curated term, then finds no NS-Cloud term."
+  },
+  {
+   "condition": "B2kPRa",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. Establishes the agreement as active from the curated term, then finds no NS-Cloud term."
   }
  ],
  "findings": [
@@ -351,6 +378,16 @@
    "evidence": [
     "notes.md",
     "snapshot/settled/base.extraction-drops.tsv"
+   ]
+  },
+  {
+   "id": "s11",
+   "category": "foundation",
+   "title": "One curated fact closes the S03 split",
+   "body": "Adding the single agreement fact the small graph had (\"Master Supply Agreement is effective\", 2025-04-01..2028-03-31, from §1 of the agreement) to the curated scale graph turns S03 from 1 of 3 to 3 of 3. Every run now establishes the agreement as active, finds no NS-Cloud term, and answers REVIEW_REQUIRED with the right approver. The scale miss was the foundation dropping one fact, not reader noise. With it, the decision scenarios are 15 of 15 on the curated scale graph (S01, S02, S04 and S05 from the B2kPR runs; S03 from this check).",
+   "evidence": [
+    "agreement/notes.md",
+    "agreement/scores.json"
    ]
   }
  ]

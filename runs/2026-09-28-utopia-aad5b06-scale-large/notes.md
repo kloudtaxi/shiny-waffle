@@ -1,8 +1,9 @@
 > **STATUS: DONE 2026-09-29.** Curated facts + OWM procedure + request record: **13/15** at
-> scale (15/15 small). Both misses are S03 asking for the agreement, which the graph holds as a
-> bare name at scale. Governance is **off** on both scale KBs (switched off at 13:31 UTC by the
-> user's call, after it had cleared its backlog). Turn it back on in each KB's settings if
-> wanted. Details: "What the scale arm shows" at the end.
+> scale (15/15 small). Both misses were S03 asking for the agreement, which the scale graph held
+> as a bare name. **Restoring that one fact turns S03 to 3/3** (`agreement/notes.md`), so the
+> curated scale graph reaches 15/15 too. Governance was off 13:31–16:14 UTC for the reader arms
+> and is **on** again. Details: "What the scale arm shows" and "S03 agreement check" at the
+> end.
 
 # Scale run: Northstar at `--scale large` (2026-09-28)
 
@@ -213,3 +214,16 @@ answer **REQUEST_EVIDENCE** where the key says REVIEW_REQUIRED, and the cause is
    Governance needed 23 minutes of gpt-4o to clear 9,000+ pairs and leaves ~200 per KB for a
    human. The base RDF export is refused. Claude reader spend for this run was **$12.70**
    (B1 $1.61, B2 $3.06, B2PR $2.16, B2kPR $5.87). Utopia's OpenAI spend isn't visible here.
+
+## S03 agreement check (2026-09-29)
+
+`agreement/notes.md` has the full record. The base KB got the one agreement fact the small
+graph had: "Master Supply Agreement is effective", 2025-04-01..2028-03-31, from §1 of the
+agreement. It was pushed through the curation source and attached to the existing entity, with
+no review pair. S03 was then re-run 3 times with the B2kPR setup.
+
+**S03: 3 of 3 REVIEW_REQUIRED** (was 1 of 3), right on every scored field. Each run
+establishes the agreement as active, finds no NS-Cloud term, and sends the request to
+commercial review. So the scale miss was one dropped fact, and the curated scale graph matches
+the small run: 15 of 15 on the decision scenarios. Cost $1.12. Governance was switched back on
+(16:14 UTC) before these runs; its round changed nothing.
