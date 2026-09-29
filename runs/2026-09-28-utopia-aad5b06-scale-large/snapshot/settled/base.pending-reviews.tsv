@@ -1,0 +1,234 @@
+left_entity	right_entity	score	status	reason
+CRM-3151	CRM-3153	0.9837815	pending	proposed
+CRM-3159	CRM-3154	0.9830145	pending	proposed
+CRM-3074	CRM-3078	0.9819531	pending	proposed
+CRM-3084	CRM-3082	0.9817302	pending	proposed
+CRM-3151	CRM-3154	0.98085105	pending	proposed
+CRM-3157	CRM-3154	0.97323704	pending	proposed
+CRM-3089	CRM-3082	0.9670492	pending	proposed
+CRM-3087	CRM-3078	0.9597411	pending	proposed
+CRM-3074	CRM-3084	0.9553834	pending	proposed
+CRM-3130	CRM-3140	0.9463866	pending	proposed
+CRM-3098	CRM-3082	0.9438899	pending	proposed
+CRM-3058	CRM-3084	0.9423699	pending	proposed
+CRM-3144	CRM-3154	0.9413652	pending	proposed
+CRM-3098	CRM-3084	0.94016683	pending	proposed
+CRM-3143	CRM-3154	0.9388292	pending	proposed
+CRM-3098	CRM-3078	0.93848664	pending	proposed
+CRM-3038	CRM-3078	0.9376331	pending	proposed
+CRM-3056	CRM-3084	0.93516254	pending	proposed
+CRM-3143	CRM-3175	0.93437845	pending	proposed
+CRM-3067	CRM-3084	0.9333059	pending	proposed
+CRM-3076	CRM-3084	0.9325143	pending	proposed
+CRM-3141	CRM-3158	0.93250483	pending	proposed
+CRM-3150	CRM-3140	0.9320651	pending	proposed
+CRM-3175	CRM-3154	0.9319442	pending	proposed
+CRM-3039	CRM-3078	0.93145764	pending	proposed
+CRM-3141	CRM-3154	0.9299242	pending	proposed
+CRM-3142	CRM-3158	0.9298721	pending	proposed
+CRM-3164	CRM-3158	0.9276127	pending	proposed
+CRM-3174	CRM-3084	0.92670065	pending	proposed
+CRM-3160	CRM-3140	0.9266387	pending	proposed
+CRM-3141	CRM-3153	0.92659384	pending	proposed
+SO-5428 C-2102	SO-5118 C-2102	0.9265352	pending	proposed
+CRM-3115	CRM-3158	0.92624354	pending	proposed
+CRM-3048	CRM-3081	0.9259097	pending	proposed
+CRM-3099	CRM-3078	0.9255369	pending	proposed
+CRM-3148	CRM-3140	0.92528796	pending	proposed
+CRM-3151	CRM-3142	0.9252012	pending	proposed
+CRM-3176	CRM-3154	0.92515343	pending	proposed
+CRM-3143	CRM-3084	0.92486614	pending	proposed
+CRM-3168	CRM-3154	0.9245946	pending	proposed
+CRM-3021	CRM-3082	0.92354804	pending	proposed
+CRM-3151	CRM-3191	0.92281026	pending	proposed
+CRM-3099	CRM-3084	0.92108196	pending	proposed
+CRM-3080	CRM-3082	0.9208794	pending	proposed
+SO-5107 C-2035	SO-5037 C-2034	0.9206342	pending	proposed
+CRM-3065	CRM-3084	0.92049885	pending	proposed
+CRM-3037	CRM-3084	0.9204357	pending	proposed
+CRM-3143	CRM-3081	0.9202567	pending	proposed
+CRM-3133	CRM-3084	0.9201586	pending	proposed
+CRM-3038	CRM-3084	0.91998786	pending	proposed
+CRM-3066	CRM-3084	0.91986996	pending	proposed
+CRM-3142	CRM-3175	0.9196877	pending	proposed
+CRM-3047	CRM-3143	0.9194829	pending	proposed
+CRM-3176	CRM-3158	0.9192838	pending	proposed
+SO-5438 C-2165	SO-5136 C-2169	0.9181458	pending	proposed
+SO-5342 C-2073	SO-5035 C-2072	0.9179816	pending	proposed
+CRM-3196	CRM-3143	0.9172695	pending	proposed
+CRM-3193	CRM-3158	0.916726	pending	proposed
+CRM-3142	CRM-3112	0.91668206	pending	proposed
+CRM-3025	CRM-3082	0.91624725	pending	proposed
+CRM-3104	CRM-3084	0.9161002	pending	proposed
+CRM-3032	CRM-3078	0.9141661	pending	proposed
+CRM-3052	CRM-3084	0.9140245	pending	proposed
+C-2004	SO-5049 C-2004	0.9129931	pending	proposed
+CRM-3166	CRM-3158	0.91265285	pending	proposed
+CRM-3176	CRM-3084	0.9121559	pending	proposed
+CRM-3172	CRM-3084	0.9113945	pending	proposed
+CRM-3186	CRM-3158	0.9094396	pending	proposed
+CRM-3052	CRM-3078	0.9086514	pending	proposed
+CRM-3039	CRM-3084	0.9070173	pending	proposed
+SO-5067 C-2005	C-2007	0.9062465	pending	proposed
+CRM-3142	CRM-3081	0.905574	pending	proposed
+CRM-3199	CRM-3158	0.90415084	pending	proposed
+C-2051	C-2056	0.90344036	pending	proposed|redirected
+CRM-3122	CRM-3143	0.9025988	pending	proposed
+SO-5215 C-2056	C-2059	0.90104747	pending	proposed
+CRM-3181	CRM-3084	0.9008159	pending	proposed
+SO-5316 C-2045	C-2056	0.8997386	pending	proposed
+SO-5245 C-2024	SO-5034 C-2029	0.8981869	pending	proposed
+CRM-3008	CRM-3078	0.898158	pending	proposed
+CRM-3090	CRM-3140	0.895959	pending	proposed
+CRM-3018	CRM-3082	0.89593256	pending	proposed
+CRM-3050	CRM-3140	0.8950105	pending	proposed
+SO-5315 C-2064	SO-5035 C-2072	0.8937161	pending	proposed
+SO-5428 C-2102	SO-5008 C-2107	0.8920519	pending	proposed
+CRM-3194	CRM-3084	0.8903033	pending	proposed
+CRM-3002	CRM-3082	0.8890524	pending	proposed
+SO-5357 C-2106	SO-5008 C-2107	0.88797504	pending	proposed
+SO-5352 C-2109	SO-5008 C-2107	0.8874695	pending	proposed
+SO-5062 C-2175	SO-5028 C-2150	0.886699	pending	proposed
+CRM-3080	CRM-3140	0.88539094	pending	proposed
+SO-5342 C-2073	SO-5036 C-2041	0.8838251	pending	proposed
+SO-5081 C-2168	SO-5012 C-2172	0.88299066	pending	proposed
+C-2028	SO-5034 C-2029	0.88220876	pending	proposed|redirected
+SO-5427 C-2006	C-2001	0.8809813	pending	proposed
+SO-5347 C-2066	SO-5036 C-2041	0.88025075	pending	proposed
+PROD-152	PROD-115	0.8784025	pending	proposed
+PROD-153	PROD-115	0.87741643	pending	proposed
+PROD-146	PROD-115	0.8762795	pending	proposed
+C-2190	SO-5062 C-2175	0.87590206	pending	proposed|redirected
+CRM-3170	CRM-3143	0.87467337	pending	proposed
+SO-5245 C-2024	SO-5051 C-2027	0.8739772	pending	proposed
+SO-5462 C-2110	SO-5118 C-2102	0.8738651	pending	proposed
+PROD-144	PROD-115	0.8723171	pending	proposed
+C-2079	SO-5344 C-2037	0.8714649	pending	proposed|redirected
+CRM-2063	CRM-3078	0.8710641	pending	proposed
+C-2058	SO-5036 C-2041	0.86794573	pending	proposed|redirected
+NS-840-EQU	NS-760-EQU	0.86656576	pending	proposed
+56455	54657	0.86517787	pending	proposed
+C-2028	SO-5051 C-2027	0.8638463	pending	proposed|redirected
+SO-5294 C-2102	SO-5021 C-2040	0.86251074	pending	proposed
+NS-490-EQU	NS-760-EQU	0.85791624	pending	proposed
+SO-5253 C-2063	SO-5217 C-2039	0.8527095	pending	proposed|redirected|redirected
+SO-5264 C-2105	SO-5026 C-2178	0.85266125	pending	proposed
+40767	41868	0.8518317	pending	proposed
+SO-5216 C-2149	SO-5062 C-2175	0.85073906	pending	proposed
+SO-5100 C-2033	SO-5020 C-2061	0.8501262	pending	proposed
+SO-5351 C-2050	SO-5036 C-2041	0.84981513	pending	proposed
+CRM-2063	CRM-3084	0.84958065	pending	proposed
+SO-5188 C-2021	SO-5051 C-2027	0.84878165	pending	proposed
+NS-540-EQU	NS-760-EQU	0.8476351	pending	proposed
+44219	44310	0.8471729	pending	proposed
+NS-160-EQU	NS-760-EQU	0.8455978	pending	proposed
+56731	54721	0.84441185	pending	proposed
+NS-380-EQU	NS-760-EQU	0.8389608	pending	proposed
+C-2058	SO-5217 C-2039	0.83881503	pending	proposed|redirected
+NS-470-EQU	NS-760-EQU	0.83871967	pending	proposed
+56-827-4966	62-954-7822	0.8359039	pending	proposed
+DR-7153	DR-7053	0.83589005	pending	proposed
+DR-7934	DR-7034	0.834478	pending	proposed
+SO-5110 C-2068	C-2028	0.8342053	pending	proposed|redirected
+C-2057	SO-5217 C-2039	0.8337515	pending	proposed|redirected
+54027	46934	0.8332748	pending	proposed
+DR-7107	DR-7027	0.83298653	pending	proposed
+SO-5088 C-2110	SO-5021 C-2040	0.8316103	pending	proposed
+DR-7202	DR-7002	0.8298718	pending	proposed
+SO-5200 C-2156	SO-5062 C-2175	0.8282211	pending	proposed
+C-2064	SO-5217 C-2039	0.82789844	pending	proposed|redirected
+45120	44310	0.82558763	pending	proposed
+SO-5210 C-2062	SO-5217 C-2039	0.82363486	pending	proposed|redirected|redirected
+SO-5274 C-2021	SO-5051 C-2027	0.81951535	pending	proposed
+C-2004	SO-5029 C-2049	0.8140538	pending	proposed
+64050	49384	0.8119987	pending	proposed
+DR-7103	DR-7089	0.81176704	pending	proposed
+C-2055	SO-5217 C-2039	0.8109996	pending	proposed|redirected
+NS-350-EQU	NS-760-EQU	0.80949	pending	proposed
+C-2098	SO-5130 C-2041	0.80852354	pending	proposed
+C-2096	SO-5344 C-2037	0.8068025	pending	proposed|redirected
+C-2094	SO-5344 C-2037	0.8066466	pending	proposed|redirected
+48475	49384	0.80662245	pending	proposed
+48527	54657	0.8045921	pending	proposed
+C-2004	SO-5036 C-2041	0.80436915	pending	proposed
+C-2095	SO-5344 C-2037	0.8023047	pending	proposed|redirected
+C-2119	C-2042	0.799942	pending	proposed
+61411	44310	0.7992948	pending	proposed
+55030	54657	0.7950823	pending	proposed
+48775	49384	0.7946789	pending	proposed
+DR-7781	DR-7028	0.79429406	pending	proposed
+C-2118	C-2042	0.7924855	pending	proposed
+68-758-2394	49-609-8249	0.79227054	pending	proposed
+DR-7424	DR-7004	0.7911558	pending	proposed
+DR-7353	DR-7052	0.79090255	pending	proposed
+C-2184	SO-5130 C-2041	0.7864335	pending	proposed
+C-2117	C-2042	0.7833876	pending	proposed
+50662	54721	0.78204185	pending	proposed
+DR-7120	DR-7027	0.7786914	pending	proposed
+Thompson LLC	Thompson Group	0.7763766	pending	proposed
+48929	54657	0.77517307	pending	proposed
+DR-7455	DR-7045	0.77502906	pending	proposed
+56731	49384	0.77487636	pending	proposed
+51068	46934	0.7741261	pending	proposed
+C-2124	SO-5063 C-2123	0.7731491	pending	proposed
+DR-7842	DR-7044	0.77057207	pending	proposed
+DR-7848	DR-7044	0.770547	pending	proposed
+DR-7187	DR-7042	0.77054113	pending	proposed
+DR-7855	DR-7045	0.76979357	pending	proposed
+SO-5194 C-2115	SO-5344 C-2037	0.7691342	pending	proposed|redirected
+DR-7782	DR-7038	0.7652124	pending	proposed
+61756	54721	0.7641107	pending	proposed
+C-2187	SO-5130 C-2041	0.7628162	pending	proposed
+DR-7776	DR-7028	0.76249826	pending	proposed
+60810	44310	0.7616433	pending	proposed
+C-2188	SO-5011 C-2181	0.7609951	pending	proposed
+C-2102	SO-5008 C-2107	0.7609357	pending	proposed
+61342	54721	0.760436	pending	proposed
+DR-7446	DR-7045	0.7602442	pending	proposed
+C-2123	C-2042	0.7580855	pending	proposed
+DR-7453	DR-7045	0.7560043	pending	proposed
+48828	41868	0.7558762	pending	proposed
+DR-7946	DR-7049	0.75476635	pending	proposed
+54083	41868	0.75428283	pending	proposed
+Smith Inc LLC	Simon LLC	0.75411266	pending	proposed
+DR-7829	DR-7009	0.75300527	pending	proposed
+48444	49384	0.75270015	pending	proposed
+DR-7911	DR-7015	0.7477991	pending	proposed
+DR-7275	DR-7052	0.7458761	pending	proposed
+DR-7168	DR-7042	0.74558043	pending	proposed
+DR-7946	DR-7038	0.74394464	pending	proposed
+55030	49384	0.74175	pending	proposed
+DR-7638	DR-7048	0.7359469	pending	proposed
+DR-7279	DR-7027	0.73493004	pending	proposed
+DR-7951	DR-7049	0.73353815	pending	proposed
+DR-7668	DR-7038	0.72519815	pending	proposed
+DR-7638	DR-7033	0.719016	pending	proposed
+C-2031	C-1001	0.7182476	pending	proposed
+C-2008	C-2007	0.7174595	pending	proposed
+NS-760-EQU	NS-690-SER	0.7168572	pending	proposed
+DR-7809	DR-7009	0.71324736	pending	proposed
+C-2028	SO-5029 C-2049	0.701507	pending	proposed
+DR-7879	DR-7048	0.70019585	pending	proposed
+david.morgan@northstar.example	anthony.day@northstar.example	0.6992208	pending	proposed
+Wilson-Brown Holdings	Wilson-Brown	0.6990121	pending	proposed
+48444	54657	0.69804394	pending	proposed
+17961	41868	0.68841654	pending	proposed
+SO-5069 C-2018	C-2001	0.6809623	pending	proposed|redirected
+C-2021	C-2001	0.67637086	pending	proposed
+NS-480-EQU	NS-840-SER	0.67310864	pending	proposed
+C-2023	C-2001	0.6661974	pending	proposed
+SO-5080 C-2020	C-2001	0.6563608	pending	proposed|redirected
+SO-5372 C-2032	C-1001	0.64112276	pending	proposed|redirected
+Ford-Hamilton Co.	Wilson-Harper	0.63193434	pending	proposed
+SO-5268 C-2017	C-1001	0.6292137	pending	proposed|redirected
+C-2029	SO-5034 C-2029	0.6287047	pending	proposed
+SO-5069 C-2018	C-1001	0.6229268	pending	proposed|redirected
+C-2129	SO-5248 C-2129	0.61932915	pending	proposed
+18539	41868	0.6142446	pending	proposed
+C-2007	SO-5006 C-2014	0.6128941	pending	proposed
+SO-5392 C-2183	C-2183	0.61199266	pending	proposed
+SO-5479 C-2053	C-2053	0.6094889	pending	proposed
+SO-5393 C-2169	C-2169	0.60842013	pending	proposed
+Milwaukee	Milwaukee, WI	0	pending	proposed
+Enterprise Account Executive	Executive	0	pending	proposed
+(232 rows)

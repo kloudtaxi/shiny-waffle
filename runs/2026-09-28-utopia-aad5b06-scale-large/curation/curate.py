@@ -9,9 +9,11 @@ with reporting lines derived from the org chart instead of a fixed list.
 
 What is curated, and only from what each KB's own corpus states:
 
-1. Reporting lines (organization_chart.md). Every `reports to` edge in both KBs is inverted
-   (manager -> report). All 13 are rejected, which is a record-time retraction with no API undo.
-   The correct edges are pushed for people whose names resolve to one entity. Background staff
+1. Reporting lines (organization_chart.md). At small scale every `reports to` edge was
+   inverted (manager -> report); any edge that is the exact reverse of an org-chart pair is
+   rejected, a record-time retraction with no API undo. At scale the org chart yielded no
+   `reports to` edges, so there is nothing to reject. The correct edges are pushed for people
+   whose names resolve to one entity. Background staff
    with duplicate entities are left without an edge: a statement naming an ambiguous entity
    makes Utopia mint a new one and queue adjudication.
 2. Approval bands (pricing_policy_2025.md, pricing_policy_2026.md), as facts on the unique
@@ -360,7 +362,7 @@ def cmd_resolve(apply: bool) -> None:
                 f"or (left_id = '{tid}' and right_id = '{nid}'))"
             )
             why = (
-                "Curation statement (Statements source, 2026-09-28) names this existing "
+                "Curation statement (Statements source, 2026-09-29) names this existing "
                 f"entity ({tname}); the push has no slot for an entity id."
             )
             how = f"review {review[0][0]}" if review else "manual merge"

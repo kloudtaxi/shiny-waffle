@@ -1,0 +1,107 @@
+== base: live facts 13773, live entities 2812
+   Acme Mfg. Holdings —may receive NS-500 Industrial Controller discounts of up to→ 10% of list price  [2023-04-01..2025-03-31]
+   Acme Mfg. Holdings —may receive NS-500 Industrial Controller discounts of up to→ 15% of list price  [2025-04-01..2028-03-31]
+   Acme NS-500 Strategic Account Exception —sets the maximum eligible NS-500 Industrial Controller discount at→ 15% of list price  [2025-04-01..2028-03-31]
+   Anthony Collier —reports to→ Elena Novak
+   Anthony Day —reports to→ Michael Torres
+   Breanna Marshall —reports to→ Elena Novak
+   Brian Nunez —reports to→ Elena Novak
+   Bryan Rivera —reports to→ Michael Torres
+   Bryan Yoder —reports to→ Elena Novak
+   Carlos Weaver —reports to→ Elena Novak
+   Charles Lopez —reports to→ Michael Torres
+   Courtney Barron —reports to→ Michael Torres
+   Darrell Sullivan —reports to→ Michael Torres
+   David Miller —reports to→ Michael Torres
+   EXC-ACME-NS500-10 —sets the maximum eligible NS-500 Industrial Controller discount at→ 10% of list price  [2023-04-01..2025-03-31]
+   Glenn Hayes —reports to→ Michael Torres
+   Jacqueline Riggs —reports to→ Elena Novak
+   Jason Smith —reports to→ Elena Novak
+   Jeremy Le —reports to→ Elena Novak
+   Jerry Davis MD —reports to→ Elena Novak
+   John Schneider —reports to→ Michael Torres
+   Kelly Floyd —reports to→ Michael Torres
+   Kelsey Vega —reports to→ Michael Torres
+   Maria Jones —reports to→ Elena Novak
+   Mary Elliott —reports to→ Michael Torres
+   Matthew Snyder —reports to→ Michael Torres
+   Maurice Garcia —reports to→ Elena Novak
+   Michael Torres —reports to→ David Morgan
+   Michael Wilson —reports to→ Elena Novak
+   Michelle Taylor —reports to→ Michael Torres
+   Michelle Williamson —reports to→ Elena Novak
+   Misty Peterson —reports to→ Michael Torres
+   Mx. Robert Watkins —reports to→ Elena Novak
+   Northstar Pricing Policy 2025 —lets Enterprise Account Executives approve discounts up to and including→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2025 —requires VP Sales approval for discounts greater than→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2026 —lets Enterprise Account Executives approve discounts up to and including→ 10%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —replaces→ Northstar Pricing Policy 2025
+   Northstar Pricing Policy 2026 —requires Chief Revenue Officer approval for discounts greater than→ 20%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —requires VP Sales approval for discounts→ greater than 10% and up to and including 20%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —sets discount approval authority for→ direct enterprise sales
+   Priya Shah —reports to→ Elena Novak
+   Rachel Mendez —reports to→ Michael Torres
+   Robert Hernandez —reports to→ Elena Novak
+   Ryan Rogers —reports to→ Michael Torres
+   Sarah Chen —reports to→ Michael Torres
+   Sarah Jordan —reports to→ Elena Novak
+   Shari Brown —reports to→ Elena Novak
+   Sherry Castillo —reports to→ Elena Novak
+   Sonya Mitchell —reports to→ Elena Novak
+   Stephanie Romero —reports to→ Elena Novak
+   Stephanie Wells —reports to→ Michael Torres
+   Tracy Cantu —reports to→ Michael Torres
+   Zachary Baldwin —reports to→ Elena Novak
+   Zachary Brown —reports to→ Michael Torres
+== missing-contract: live facts 14170, live entities 2344
+   Anthony Collier —reports to→ Elena Novak
+   Anthony Day —reports to→ Michael Torres
+   Breanna Marshall —reports to→ Elena Novak
+   Brian Nunez —reports to→ Elena Novak
+   Bryan Rivera —reports to→ Michael Torres
+   Bryan Yoder —reports to→ Elena Novak
+   Carlos Weaver —reports to→ Elena Novak
+   Charles Lopez —reports to→ Michael Torres
+   Courtney Barron —reports to→ Michael Torres
+   Darrell Sullivan —reports to→ Michael Torres
+   David Miller —reports to→ Michael Torres
+   Glenn Hayes —reports to→ Michael Torres
+   Jacqueline Riggs —reports to→ Elena Novak
+   Jason Smith —reports to→ Elena Novak
+   Jeremy Le —reports to→ Elena Novak
+   Jerry Davis MD —reports to→ Elena Novak
+   John Schneider —reports to→ Michael Torres
+   Kelly Floyd —reports to→ Michael Torres
+   Kelsey Vega —reports to→ Michael Torres
+   Maria Jones —reports to→ Elena Novak
+   Mary Elliott —reports to→ Michael Torres
+   Matthew Snyder —reports to→ Michael Torres
+   Maurice Garcia —reports to→ Elena Novak
+   Michael Torres —reports to→ David Morgan
+   Michael Wilson —reports to→ Elena Novak
+   Michelle Taylor —reports to→ Michael Torres
+   Michelle Williamson —reports to→ Elena Novak
+   Misty Peterson —reports to→ Michael Torres
+   Mx. Robert Watkins —reports to→ Elena Novak
+   Northstar Pricing Policy 2025 —lets Enterprise Account Executives approve discounts up to and including→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2025 —requires VP Sales approval for discounts greater than→ 15%  [2025-01-01..2025-12-31]
+   Northstar Pricing Policy 2025 —sets→ discount approval authority
+   Northstar Pricing Policy 2026 —lets Enterprise Account Executives approve discounts up to and including→ 10%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —replaces→ Northstar Pricing Policy 2025
+   Northstar Pricing Policy 2026 —requires Chief Revenue Officer approval for discounts greater than→ 20%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —requires VP Sales approval for discounts→ greater than 10% and up to and including 20%  [2026-01-01..2026-12-31]
+   Northstar Pricing Policy 2026 —sets discount approval authority for→ direct enterprise sales
+   Priya Shah —reports to→ Elena Novak
+   Rachel Mendez —reports to→ Michael Torres
+   Robert Hernandez —reports to→ Elena Novak
+   Ryan Rogers —reports to→ Michael Torres
+   Sarah Chen —reports to→ Michael Torres
+   Sarah Jordan —reports to→ Elena Novak
+   Shari Brown —reports to→ Elena Novak
+   Sherry Castillo —reports to→ Elena Novak
+   Sonya Mitchell —reports to→ Elena Novak
+   Stephanie Romero —reports to→ Elena Novak
+   Stephanie Wells —reports to→ Michael Torres
+   Tracy Cantu —reports to→ Michael Torres
+   Zachary Baldwin —reports to→ Elena Novak
+   Zachary Brown —reports to→ Michael Torres

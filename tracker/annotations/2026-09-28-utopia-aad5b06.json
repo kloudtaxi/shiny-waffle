@@ -6,7 +6,7 @@
   "status": "active",
   "status_note": "Request-record arm done: curated facts + OWM procedure + CRM request record → S01–S05 match the answer key 15/15 (auto-scored). The boundary is mapped for this corpus.",
   "next": [
-   "Scale arm: northstar build --scale large (does facts + procedure + record hold under noise?)",
+   "Scale arm done: 13/15 with facts + procedure + record (see experiment 2026-09-28-utopia-aad5b06-scale-large)",
    "Steps 7–8: human rubric scoring to calibrate Claude's provisional grades",
    "Build the OWM decision service: procedure + record in, decision object out (persisted)",
    "File upstream asks (docs/upstream/utopia-read-contract.md)"

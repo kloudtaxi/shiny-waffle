@@ -4,38 +4,46 @@
  "conditions": {
   "B1": {
    "folder": "arm-b/B1",
-   "order": 1
+   "order": 1,
+   "graph": "As ingested at scale, settled (governance finished, then switched off)",
+   "description": "Foundation as retrieval plus a strong reader, on the 10× noise corpus."
   },
   "B2": {
    "folder": "arm-b/B2",
-   "order": 2
+   "order": 2,
+   "graph": "As ingested at scale, settled (governance finished, then switched off)",
+   "description": "What the foundation modelled at scale. Graph tools still return provenance quotes via `changes`."
   },
   "B2PR": {
    "folder": "request-uncurated/arm-b/r1/B2",
    "repeats": "request-uncurated/arm-b/r{n}/B2",
    "questions": "request/questions.tsv",
-   "order": 3
+   "order": 3,
+   "graph": "As ingested at scale, settled (governance finished, then switched off); no curation",
+   "description": "The OWM layer (procedure + request record) on the uncurated scale graph. Decision scenarios S01-S05 only; auto-scored."
   },
   "B2kPR": {
    "folder": "request/arm-b/r1/B2",
    "repeats": "request/arm-b/r{n}/B2",
    "questions": "request/questions.tsv",
-   "order": 4
+   "order": 4,
+   "graph": "Curated facts (bands, exception values, 43 reporting lines); no identity correction",
+   "description": "The procedure + request record on the curated scale graph, n = 3. Decision scenarios S01-S05 only; auto-scored."
   }
  },
  "experiment": {
   "title": "Northstar × Utopia · scale (large)",
   "date": "2026-09-28",
   "status": "active",
-  "status_note": "Scale run: 200 customers, 40 employees, 80 products, 500 orders, 1,000 discount requests. Same truth and answer key as the small run.",
+  "status_note": "Scale arm done: curated facts + OWM procedure + CRM request record → 13/15 (15/15 at small scale). Both misses are S03 asking for the agreement, which is a name with no facts at scale. Uncurated, the procedure makes the reader ask for evidence on every decision. Text retrieval (B1) is unaffected by the noise.",
   "next": [
-   "Ingest and measure the foundation at scale",
-   "B1 and B2 references (n=1)",
-   "B2 + procedure + request record, uncurated (n=1)",
-   "Curate, then B2 + procedure + request record (n=3)"
+   "Steps 7–8: human rubric scoring to calibrate Claude's provisional grades",
+   "Build the OWM decision service: procedure + record in, decision object out (persisted)",
+   "Optional: curate the agreement's term and re-run S03 to confirm the split closes",
+   "File upstream asks (docs/upstream/utopia-read-contract.md)"
   ],
   "utopia": "dev @ aad5b06",
-  "lab_commit": "b1c2086",
+  "lab_commit": "9dc9ca9",
   "seed": 20260923,
   "notes": "{run}/notes.md",
   "docs": [
@@ -46,7 +54,304 @@
   null,
   "Not read yet."
  ],
- "provisional": {},
- "provisional_repeats": [],
- "findings": []
+ "provisional": {
+  "B1": {
+   "S01": [
+    "pass",
+    "No: over the 2026 10% AE limit; VP Sales Michael Torres must approve; eligible under the 15% exception."
+   ],
+   "S02": [
+    "pass",
+    "No: 18% exceeds the 15% exception. Also sketches an 18% route (VP + a non-contract reason, check with the CRO)."
+   ],
+   "S03": [
+    "partial",
+    "No NS-Cloud exception ✓ (NS-500 only); framed as VP sign-off, not review. Same as the small run."
+   ],
+   "S04": [
+    "pass",
+    "Yes: the 2025 band let AEs approve up to 15%; exception active from 2025-04-01."
+   ],
+   "S05": [
+    "pass",
+    "No: over her limit, and get the agreement first (the SOP's ask-for-the-document rule)."
+   ],
+   "S06a": [
+    "pass",
+    "15% (MSA §3.2, EXC-ACME-NS500-15); the expired 10% excluded."
+   ],
+   "S06b": [
+    "pass",
+    "10% (EXC-ACME-NS500-10); 15% applies only from 2025-04-01."
+   ],
+   "S06c": [
+    "pass",
+    "None on 2022-10-01; both exceptions start later."
+   ],
+   "S07": [
+    "pass",
+    "MSA §3.2 + Schedule B exception; DR-8104 and the email as context; eligibility is not authority."
+   ],
+   "S08": [
+    "pass",
+    "All three ids are Acme Mfg. Holdings; Acme Industrial is different (C-1044, CRM-2091, DUNS)."
+   ]
+  },
+  "B2": {
+   "S01": [
+    "partial",
+    "No: over the 10% AE limit; VP Sales Michael Torres ✓. The exception's 15% isn't in the graph, so eligibility is left open."
+   ],
+   "S02": [
+    "fail",
+    "Can't confirm; no percentages found; says the contract allowance ended 2025-03-31 (the old exception's dates)."
+   ],
+   "S03": [
+    "partial",
+    "No NS-Cloud exception ✓; says the exception expired 2025-03-31 (wrong); framed as VP sign-off, not review."
+   ],
+   "S04": [
+    "partial",
+    "Hedged yes: quotes the 2025 15% band (via `changes`); the exception's maximum not found, so eligibility is unconfirmed."
+   ],
+   "S05": [
+    "partial",
+    "Declines to decide ✓, but asks for the authority limits, not the contract. Flags DR-9001's \"Acme\" as linked to Acme Industrial (a real mis-attachment)."
+   ],
+   "S06a": [
+    "partial",
+    "Rules out the expired 10% ✓ and names the newer exception; its 15% isn't in the graph."
+   ],
+   "S06b": [
+    "pass",
+    "10% (quoted from the 2023 exception); the newer one applies only from 2025-04-01."
+   ],
+   "S06c": [
+    "pass",
+    "None: the 10% cap starts 2023-04-01."
+   ],
+   "S07": [
+    "partial",
+    "Names the newer exception as the likely basis and keeps the email as context; can't show 15%; MSA terms not in the graph."
+   ],
+   "S08": [
+    "partial",
+    "Acme Industrial different ✓; CRM-2048 and ACME-MFG-2025 not tied to C-1001."
+   ]
+  },
+  "B2PR": {
+   "S01": [
+    "fail",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility, authorized, approver. Fields: outcome ✗, eligibility ✗, authorized ✗, approver ✗, required_role ✗. Safe: asks for the exception's maximum and dates, and the 2026 bands (none in the uncurated graph)."
+   ],
+   "S02": [
+    "fail",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility, authorized. Fields: outcome ✗, eligibility ✗, authorized ✗, approver ✗, required_role ✗. Safe: no percentages in the graph, so it asks for them rather than rejecting."
+   ],
+   "S03": [
+    "fail",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✗, required_role ✗. Safe: asks for the agreement's NS-Cloud term; 10% AE limit found."
+   ],
+   "S04": [
+    "fail",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility, authorized, approver. Fields: outcome ✗, eligibility ✗, authorized ✗, approver ✗, required_role ✗. Safe: no bands or exception values in the uncurated graph."
+   ],
+   "S05": [
+    "partial",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: authorized. Fields: outcome ✓, eligibility ✓, authorized ✗, approver ✗, required_role ✗. Right outcome; requestor-authorized left null (no 2026 band in the uncurated graph)."
+   ]
+  },
+  "B2kPR": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S03": [
+    "fail",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. The graph's \"Master Supply Agreement\" has no facts at scale (1 at small scale), so the procedure's ask-for-the-document rule fires."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S05": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ]
+  }
+ },
+ "provisional_repeats": [
+  {
+   "condition": "B2kPR",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. Same as r1: the agreement is a name with no terms, so it asks for the document."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPR",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  }
+ ],
+ "findings": [
+  {
+   "id": "s01",
+   "category": "owm",
+   "title": "Facts + procedure + request record: 13 of 15 at scale",
+   "body": "On the curated scale graph, the blind graph-only reader with the OWM procedure and the CRM request record matches the answer key on S01, S02, S04 and S05 in 3 of 3 runs, and on S03 in 1 of 3 (15 of 15 at small scale). Both misses answer REQUEST_EVIDENCE instead of REVIEW_REQUIRED: the graph's \"Master Supply Agreement\" is a name with no facts at scale, so the procedure's ask-for-the-document rule fires. Every miss declines to approve; none is an unsafe decision.",
+   "evidence": [
+    "request/scores.json",
+    "notes.md"
+   ]
+  },
+  {
+   "id": "s02",
+   "category": "owm",
+   "title": "Without facts, the procedure makes the reader ask instead of guess",
+   "body": "On the uncurated scale graph, the same reader with the procedure answers REQUEST_EVIDENCE on all five decisions, listing the exception maximum, validity dates and approval bands as missing. By the fixed rule that is 0 pass, 1 partial and 4 fail, but no decision approves or rejects on a guess. Curation is what turns these into correct decisions.",
+   "evidence": [
+    "request-uncurated/scores.json"
+   ]
+  },
+  {
+   "id": "s03",
+   "category": "agent",
+   "title": "Text retrieval is unaffected by 10× noise",
+   "body": "B1 (all tools, uncurated) grades 9 pass and 1 partial, identical to the small run down to the same S03 framing (\"needs VP sign-off\" rather than commercial review).",
+   "evidence": [
+    "arm-b/B1"
+   ]
+  },
+  {
+   "id": "s04",
+   "category": "foundation",
+   "title": "The 15% and the agreement's terms never reached the graph",
+   "body": "At small scale one fact carried the agreement's sentence \"eligible for discounts of up to 15% on the NS-500\" as its quote, and graph-only readers found it by digging `changes`. At scale no fact from the agreement or the 2025 exception carries 15%. The exception came out as structure only, and the agreement entity has no facts (1 at small scale). B2 therefore never finds 15%, and it gives the old exception's dates to the new one: 2 pass, 7 partial and 1 fail, against 6 pass and 4 partial at small scale.",
+   "evidence": [
+    "arm-b/B2",
+    "notes.md"
+   ]
+  },
+  {
+   "id": "s05",
+   "category": "foundation",
+   "title": "A bare \"Acme\" attached to the wrong customer",
+   "body": "In both scale KBs the email's bare \"Acme\" became a name of Acme Industrial Supply Co. In missing-contract, \"asking for 15% off list\" was attached there too. A graph-only reader reported it on S05. The small-run KBs don't have this attachment.",
+   "evidence": [
+    "arm-b/B2/S05.md",
+    "notes.md"
+   ]
+  },
+  {
+   "id": "s06",
+   "category": "review",
+   "title": "Most of the review queue was governance stalled by the spend limit",
+   "body": "The 2,763 and 3,828 pending duplicate pairs at settle were mostly pairs the governance agent never reached: every hourly run failed on the OpenAI spend limit from 01:08. Once the limit was raised, governance cleared the backlog in 23 minutes, and 232 and 203 pairs are left for a human (about 40–46× the small run's 5).",
+   "evidence": [
+    "notes.md",
+    "snapshot/settled/base.review-summary.json"
+   ]
+  },
+  {
+   "id": "s07",
+   "category": "review",
+   "title": "Curation pushes resolved without a human",
+   "body": "The Statements push minted duplicate Sarah Chen and David Morgan entities in base. Utopia's adjudicator merged both into the existing people at 0.90 within 22 seconds, and no review was queued. At small scale the same kind of duplicates waited for a human at 0.52–0.54.",
+   "evidence": [
+    "curation/curation_log.jsonl",
+    "curation/verify.txt"
+   ]
+  },
+  {
+   "id": "s08",
+   "category": "foundation",
+   "title": "The org chart produced no reporting lines at scale",
+   "body": "The org chart's 3 chunks yielded titles, name facts and em-dash phrases, but no `reports to`. At small scale the lines came out inverted; at scale they are missing. Same document, different failure. Curation pushed all 43 lines from the chart.",
+   "evidence": [
+    "notes.md"
+   ]
+  },
+  {
+   "id": "s09",
+   "category": "foundation",
+   "title": "The RDF export is refused at scale",
+   "body": "Base export: 422 unexported_target, fact.object(merged): 152 rows, before and after settling. The declared machine-readable read contract (ADR 0020) is unavailable exactly when a KB is big enough to need it. The missing-contract export works (11.7 MB). Upstream issue 6.",
+   "evidence": [
+    "snapshot/settled/base.export.log"
+   ]
+  },
+  {
+   "id": "s10",
+   "category": "foundation",
+   "title": "No CSV truncation at scale",
+   "body": "Every small-run CSV had a truncated_reply drop; at scale none do, with tables chunked about 3 rows per chunk. DR-9001 keeps its justification in base. In missing-contract it lost the justification anyway (5 fields).",
+   "evidence": [
+    "notes.md",
+    "snapshot/settled/base.extraction-drops.tsv"
+   ]
+  }
+ ]
 }
