@@ -246,6 +246,42 @@ CONDITIONS = [
         "B2kPR with one more curated fact, the agreement's term, to test what split S03. "
         "S03 only; auto-scored.",
     ),
+    (
+        "B1kPR",
+        11,
+        "After fact curation",
+        "Opus · all tools + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "All 11 MCP tools",
+        "Curated facts (bands, exception values, reporting lines, the agreement's term)",
+        "b1/curated/r1/B1",
+        "The OWM layer with text retrieval, on the curated graph. Decision scenarios S01-S05 "
+        "only; auto-scored.",
+    ),
+    (
+        "B1PR",
+        12,
+        "As ingested",
+        "Opus · all tools + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "All 11 MCP tools",
+        "Curation withdrawn (its values still visible as rejected events in `changes`)",
+        "b1/uncurated/r1/B1",
+        "The OWM layer with text retrieval, on the uncurated graph: is curation needed when the "
+        "reader can read the source documents? Decision scenarios S01-S05 only; auto-scored.",
+    ),
+    (
+        "B1nPR",
+        13,
+        "As ingested",
+        "Opus · all tools but changes + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "10 MCP tools; changes hidden",
+        "Curation withdrawn; no route to the withdrawn values",
+        "b1/uncurated/r1/B1n",
+        "B1PR's control: `changes` hidden so the withdrawn curation values can't leak. Decision "
+        "scenarios S01-S05 only; auto-scored.",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.

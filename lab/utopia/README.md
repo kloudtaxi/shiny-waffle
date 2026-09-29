@@ -7,7 +7,7 @@ of the `northstar` package's dependency closure. Run them from the repo root.
 | Script | What it does |
 |---|---|
 | `utopia.py` | REST client and CLI: `create-kb`, `upload`, `export` (RDF Turtle), `get` (any `/api/v1` path), `ask` (arm A: one question to Utopia's in-app chat), `delete-kb` |
-| `blind_reader.py` | Arm B: a blind headless `claude -p` reader over Utopia's MCP. Variants `B1` (all tools) and `B2` (graph only) |
+| `blind_reader.py` | Arm B: a blind headless `claude -p` reader over Utopia's MCP. Variants `B1` (all tools), `B1n` (all but `changes`, for a graph with withdrawn curation) and `B2` (graph only) |
 | `status.sh` | Read-only pipeline state for KB ids: documents, dates, facts by layer, active and failed jobs |
 
 The correction applied on 2026-09-28 is kept with its run:

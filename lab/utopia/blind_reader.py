@@ -40,7 +40,9 @@ import utopia
 DEFAULT_MODEL = "claude-opus-5-5"
 SERVER = "utopia"
 TEXT_TOOLS = {"search_chunks", "get_document"}
-HIDDEN = {"B1": [], "B2": sorted(TEXT_TOOLS)}
+# B1n: all tools except the record-time audit feed. Withdrawn statements stay visible in
+# `changes` as `rejected` events, so a graph that had curation withdrawn is only clean without it.
+HIDDEN = {"B1": [], "B1n": ["changes"], "B2": sorted(TEXT_TOOLS)}
 # Verbatim since 2026-09-28. Changing it changes the experiment.
 SYSTEM_PROMPT = (
     "You answer questions about an organization. Your only source of information is the "

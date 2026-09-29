@@ -37,15 +37,37 @@
    "order": 5,
    "graph": "Curated facts + the agreement's term (one fact, as the small graph had it)",
    "description": "B2kPR on the same graph plus one curated fact, \"Master Supply Agreement is effective\" 2025-04-01..2028-03-31, to test what split S03 at scale. S03 only, n = 3; auto-scored."
+  },
+  "B1kPR": {
+   "folder": "b1/curated/r1/B1",
+   "repeats": "b1/curated/r{n}/B1",
+   "questions": "request/questions.tsv",
+   "order": 6,
+   "graph": "Curated facts (bands, exception values, 43 reporting lines, the agreement's term)"
+  },
+  "B1PR": {
+   "folder": "b1/uncurated/r1/B1",
+   "repeats": "b1/uncurated/r{n}/B1",
+   "questions": "request/questions.tsv",
+   "order": 7,
+   "graph": "Curation withdrawn (live facts = the settled pre-curation counts); withdrawn values still visible as rejected events in `changes`"
+  },
+  "B1nPR": {
+   "folder": "b1/uncurated/r1/B1n",
+   "repeats": "b1/uncurated/r{n}/B1n",
+   "questions": "request/questions.tsv",
+   "order": 8,
+   "graph": "Curation withdrawn; `changes` hidden, so no route to the withdrawn values"
   }
  },
  "experiment": {
   "title": "Northstar × Utopia · scale (large)",
   "date": "2026-09-28",
   "status": "active",
-  "status_note": "Scale arm done: curated facts + OWM procedure + CRM request record → 13/15; adding the one agreement fact the scale graph lost turns S03 to 3/3, so 15/15 on the curated scale graph. Uncurated, the procedure makes the reader ask for evidence on every decision. Text retrieval (B1) is unaffected by the noise.",
+  "status_note": "Scale arm done. Graph-only reader: curated facts + OWM procedure + request record → 13/15, 15/15 once the agreement term is curated. All-tools reader with the same OWM inputs: 15/15 on the curated and the uncurated graph, including a leak-free control. Curation is only needed for graph-only consumers.",
   "next": [
    "Steps 7–8: human rubric scoring to calibrate Claude's provisional grades",
+   "Held-out scenarios the procedure wasn't developed against (truth/scenarios)",
    "Build the OWM decision service: procedure + record in, decision object out (persisted)",
    "File upstream asks (docs/upstream/utopia-read-contract.md)"
   ],
@@ -195,6 +217,72 @@
     "pass",
     "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. Establishes the agreement as active from the curated term, then finds no NS-Cloud term."
    ]
+  },
+  "B1kPR": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S05": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ]
+  },
+  "B1PR": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S05": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ]
+  },
+  "B1nPR": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S05": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ]
   }
  },
  "provisional_repeats": [
@@ -281,6 +369,216 @@
    "repeat": 3,
    "grade": "pass",
    "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. Establishes the agreement as active from the curated term, then finds no NS-Cloud term."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1kPR",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1PR",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPR",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
   }
  ],
  "findings": [
@@ -388,6 +686,25 @@
    "evidence": [
     "agreement/notes.md",
     "agreement/scores.json"
+   ]
+  },
+  {
+   "id": "s12",
+   "category": "owm",
+   "title": "With text retrieval, the OWM layer needs no curation: 15/15 uncurated",
+   "body": "The all-tools reader with the OWM procedure and the request record decides S01–S05 correctly on every scored field in 3 of 3 runs, on the curated graph (B1kPR), with curation withdrawn (B1PR), and in the control with `changes` hidden so no withdrawn value can leak (B1nPR): 45 of 45. It reads the facts from the source documents (96 search_chunks and 33 get_document calls in the control), in 9–25 turns against 21–43 for graph-only. Curation is only needed when the reader is restricted to the graph. For these decisions the foundation's job is evidence retrieval and identity; the OWM supplies the procedure, the request record and the decision record.",
+   "evidence": [
+    "b1/notes.md",
+    "b1/scores-uncurated-nochanges.json"
+   ]
+  },
+  {
+   "id": "s13",
+   "category": "method",
+   "title": "Withdrawn statements stay readable in `changes`",
+   "body": "Withdrawing a Statements push (tombstone + missing-cleanup) retracts its facts and restores the live counts exactly, but the record-time audit feed keeps each retraction as a `rejected` event with the fact's value. 11 of 15 uncurated B1 answers saw withdrawn curation values that way. It's correct audit behaviour, but an experiment that withdraws facts must hide `changes` (the B1n variant) or treat the arm as contaminated.",
+   "evidence": [
+    "b1/notes.md"
    ]
   }
  ]

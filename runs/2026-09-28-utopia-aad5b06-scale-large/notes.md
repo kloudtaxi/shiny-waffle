@@ -1,9 +1,8 @@
-> **STATUS: DONE 2026-09-29.** Curated facts + OWM procedure + request record: **13/15** at
-> scale (15/15 small). Both misses were S03 asking for the agreement, which the scale graph held
-> as a bare name. **Restoring that one fact turns S03 to 3/3** (`agreement/notes.md`), so the
-> curated scale graph reaches 15/15 too. Governance was off 13:31–16:14 UTC for the reader arms
-> and is **on** again. Details: "What the scale arm shows" and "S03 agreement check" at the
-> end.
+> **STATUS: DONE 2026-09-29.** Graph-only reader + curated facts + OWM procedure + request
+> record: **13/15**, 15/15 once the agreement's term is curated (`agreement/notes.md`).
+> **All-tools reader + procedure + request record: 15/15 with or without curation** (45 of 45,
+> including a leak-free control; `b1/notes.md`). Curation is only needed for graph-only
+> consumers. Both scale KBs are curated again and governance is on.
 
 # Scale run: Northstar at `--scale large` (2026-09-28)
 
@@ -227,3 +226,22 @@ establishes the agreement as active, finds no NS-Cloud term, and sends the reque
 commercial review. So the scale miss was one dropped fact, and the curated scale graph matches
 the small run: 15 of 15 on the decision scenarios. Cost $1.12. Governance was switched back on
 (16:14 UTC) before these runs; its round changed nothing.
+
+## B1 arm: text retrieval + procedure + request record (2026-09-29)
+
+`b1/notes.md` has the full record. The all-tools reader (B1) was given the OWM procedure and
+the request record, and run 3 times on each graph state:
+
+| Graph | Reader | S01–S05 ×3 | Claude cost |
+|---|---|---|---|
+| curated | B1 | **15/15** | $5.04 |
+| curation withdrawn | B1 | **15/15** | $5.44 |
+| curation withdrawn | B1n (`changes` hidden, leak-free control) | **15/15** | $4.05 |
+
+`b1/toggle_curation.py` withdrew the curation (tombstone + missing-cleanup; live facts back to
+exactly 13,721 and 14,122), then pushed it back (restored exactly). Withdrawn values stay
+readable as `rejected` events in `changes`, which is why the B1n control exists.
+
+**With text retrieval, curation adds nothing to these decisions.** The foundation's job here
+is evidence retrieval and identity; the OWM supplies the procedure, the request record and the
+decision record. Curation remains the fix only for a consumer that reads the graph alone.

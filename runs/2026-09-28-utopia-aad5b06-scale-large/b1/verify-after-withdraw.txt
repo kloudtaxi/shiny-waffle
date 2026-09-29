@@ -1,0 +1,7 @@
+== base: live facts 13721, live entities 2812
+   Northstar Pricing Policy 2026 —replaces→ Northstar Pricing Policy 2025
+   Northstar Pricing Policy 2026 —sets discount approval authority for→ direct enterprise sales
+== missing-contract: live facts 14122, live entities 2344
+   Northstar Pricing Policy 2025 —sets→ discount approval authority
+   Northstar Pricing Policy 2026 —replaces→ Northstar Pricing Policy 2025
+   Northstar Pricing Policy 2026 —sets discount approval authority for→ direct enterprise sales

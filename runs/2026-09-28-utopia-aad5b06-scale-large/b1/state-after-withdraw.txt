@@ -1,0 +1,10 @@
+== base: live facts 13721, live entities 2812
+   northstar-curation-agreement-term.json  status=ready deleted=true live_facts=1
+   northstar-curation-authority-bands-2025.json  status=ready deleted=true live_facts=1
+   northstar-curation-authority-bands-2026.json  status=ready deleted=true live_facts=1
+   northstar-curation-exception-values.json  status=ready deleted=true live_facts=3
+   northstar-curation-reporting-lines.json  status=ready deleted=true live_facts=43
+== missing-contract: live facts 14122, live entities 2344
+   northstar-curation-authority-bands-2025.json  status=ready deleted=true live_facts=1
+   northstar-curation-authority-bands-2026.json  status=ready deleted=true live_facts=1
+   northstar-curation-reporting-lines.json  status=ready deleted=true live_facts=45
