@@ -1,0 +1,205 @@
+account_id,account_name,account_tier,segment,industry,billing_street,billing_city,billing_state,duns_number,account_owner,owner_email
+CRM-2048,Acme Manufacturing,Strategic,Midwest Enterprise,Industrial Manufacturing,2200 N Industrial Pkwy,Milwaukee,WI,04-812-7730,Sarah Chen,sarah.chen@northstar.example
+CRM-2051,BlueRiver Logistics,Standard,Central Enterprise,Logistics,890 Harbor Way,St. Louis,MO,07-331-9025,Kelly Floyd,kelly.floyd@northstar.example
+CRM-2063,Cedar Health Systems,Standard,Central Enterprise,Healthcare,51 Cedar Crest Blvd,Indianapolis,IN,02-906-4418,Anthony Day,anthony.day@northstar.example
+CRM-2091,Acme Industrial Supply Co.,Standard,Midwest Mid-Market,Industrial Distribution,17 Tallmadge Ave,Akron,OH,09-552-1187,Zachary Brown,zachary.brown@northstar.example
+CRM-3001,Weiss Ltd,Standard,Central Enterprise,Chemicals,906 Richardson Run,Madison,WI,78-557-8304,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3002,Miller LLC,Standard,East Enterprise,Building Materials,1473 Atkinson Mission Suite 740,Fort Wayne,IN,82-869-6184,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3003,"Johnston, Romero and Bruce",Standard,East Enterprise,Automotive Components,3946 David Dam,Madison,WI,00-463-6895,Anthony Day,anthony.day@northstar.example
+CRM-3004,Greer and Sons,Standard,West Mid-Market,Packaging,84690 Lauren Station Apt. 756,Peoria,IL,58-024-0149,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3005,"Rodriguez, Fitzgerald and Brown",Standard,West Mid-Market,Energy & Utilities,5108 Jay Skyway,Fort Wayne,IN,48-311-8908,Charles Lopez,charles.lopez@northstar.example
+CRM-3006,Chang-James,Standard,Central Enterprise,Aerospace,666 Sims Expressway Suite 065,Columbus,OH,34-517-2127,Charles Lopez,charles.lopez@northstar.example
+CRM-3007,"Miller, Santana and Travis",Standard,Central Enterprise,Pharmaceuticals,6520 Barbara Bridge Apt. 993,Madison,WI,19-566-4602,Charles Lopez,charles.lopez@northstar.example
+CRM-3008,Blanchard Group,Standard,Midwest Mid-Market,Pharmaceuticals,63155 Kathryn Courts,Chicago,IL,97-565-7333,Charles Lopez,charles.lopez@northstar.example
+CRM-3009,"Wilson, Bond and Rhodes",Standard,West Mid-Market,Aerospace,947 Tara Junctions,Grand Rapids,MI,76-058-2891,Anthony Day,anthony.day@northstar.example
+CRM-3010,"Simon, Smith and Page",Standard,Central Enterprise,Automotive Components,27978 Beasley Oval Apt. 802,Louisville,KY,87-654-1339,Anthony Day,anthony.day@northstar.example
+CRM-3011,Bond-Cline,Standard,West Mid-Market,Packaging,54817 Jesse Haven,Pittsburgh,PA,13-521-0472,Charles Lopez,charles.lopez@northstar.example
+CRM-3012,Brown-Patterson,Standard,East Enterprise,Automotive Components,7171 Jessica Turnpike Suite 065,Chicago,IL,37-026-5938,Zachary Brown,zachary.brown@northstar.example
+CRM-3013,Reeves Inc,Standard,West Mid-Market,Energy & Utilities,5042 Katherine Square,Kansas City,MO,24-977-7754,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3014,Clark Inc,Standard,Midwest Mid-Market,Automotive Components,9370 Morales Vista,Chicago,IL,50-532-5734,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3015,Hughes PLC,Standard,Midwest Mid-Market,Aerospace,2101 Stanley Locks Suite 891,Detroit,MI,98-182-0725,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3016,Davidson-Chapman,Standard,Central Enterprise,Chemicals,710 Palmer Cliffs Suite 382,Chicago,IL,23-744-2901,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3017,Jackson-Ruiz,Standard,Central Enterprise,Packaging,495 Guerrero Track Suite 519,Rockford,IL,97-122-4409,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3018,"Rogers, Wood and Chavez",Standard,East Enterprise,Energy & Utilities,9636 Torres Extensions,Cleveland,OH,28-824-6100,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3019,Rogers-Taylor,Standard,East Enterprise,Automotive Components,6852 Smith Junctions Apt. 789,Des Moines,IA,74-340-1698,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3020,Fry-Clark,Standard,West Mid-Market,Food & Beverage,737 Smith Summit,Louisville,KY,49-924-4353,Charles Lopez,charles.lopez@northstar.example
+CRM-3021,Wilson Ltd,Standard,West Mid-Market,Packaging,877 Shannon Valley Apt. 620,Fort Wayne,IN,46-906-2243,Charles Lopez,charles.lopez@northstar.example
+CRM-3022,Bentley-Johnson,Standard,Midwest Mid-Market,Packaging,01239 Mia Groves,Minneapolis,MN,54-784-9482,Charles Lopez,charles.lopez@northstar.example
+CRM-3023,"Fox, Melendez and Garcia",Standard,Midwest Mid-Market,Building Materials,533 Gordon Island,Columbus,OH,93-551-6633,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3024,"Brown, Gonzalez and Dickerson",Standard,East Enterprise,Food & Beverage,58486 Lewis Knolls Suite 420,Green Bay,WI,31-792-5739,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3025,Pugh-Daugherty,Standard,Midwest Mid-Market,Packaging,4721 Sullivan Walks Apt. 451,Chicago,IL,76-947-2196,Charles Lopez,charles.lopez@northstar.example
+CRM-3026,Elliott-Byrd,Standard,Midwest Mid-Market,Automotive Components,1429 Reeves Harbors,Cleveland,OH,62-954-7822,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3027,Ramirez and Sons,Standard,West Mid-Market,Packaging,808 Johnson Land,Madison,WI,70-756-9092,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3028,"Mills, Jackson and Franklin",Standard,Midwest Mid-Market,Chemicals,1340 Day Street Suite 671,Des Moines,IA,06-642-4700,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3029,"Owens, Shelton and Ortiz",Standard,Midwest Mid-Market,Pharmaceuticals,66869 William Mount,Louisville,KY,00-009-8695,Charles Lopez,charles.lopez@northstar.example
+CRM-3030,Ewing-House,Standard,East Enterprise,Packaging,255 Victor Divide,Detroit,MI,49-609-8249,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3031,Ramos Inc,Standard,West Mid-Market,Packaging,3777 Albert Parkway,Fort Wayne,IN,68-778-1664,Charles Lopez,charles.lopez@northstar.example
+CRM-3032,Wilson LLC,Standard,Central Enterprise,Energy & Utilities,2793 Abigail Valleys Apt. 103,Detroit,MI,62-880-4263,Anthony Day,anthony.day@northstar.example
+CRM-3033,Farmer-Sanders,Standard,East Enterprise,Automotive Components,79993 Andersen Freeway,Fort Wayne,IN,18-571-5790,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3034,Peterson-Olson,Standard,West Mid-Market,Packaging,1656 Reynolds Gateway,Chicago,IL,33-473-2780,Anthony Day,anthony.day@northstar.example
+CRM-3035,Zuniga and Sons,Standard,Central Enterprise,Chemicals,2488 Thomas Route,Louisville,KY,42-032-9291,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3036,White LLC,Standard,Midwest Mid-Market,Pharmaceuticals,412 Torres Cove Suite 516,Columbus,OH,76-286-1162,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3037,Wilson-Harper,Standard,West Mid-Market,Building Materials,73655 Timothy Expressway Apt. 972,Columbus,OH,54-744-2693,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3038,Anderson LLC,Standard,Midwest Mid-Market,Automotive Components,80924 Ashley Inlet Apt. 573,Pittsburgh,PA,74-412-2680,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3039,"Anderson, Sullivan and White",Standard,Central Enterprise,Aerospace,35108 Christine Creek,Toledo,OH,99-680-4646,Zachary Brown,zachary.brown@northstar.example
+CRM-3040,Turner Inc,Standard,West Mid-Market,Automotive Components,1796 David Prairie Apt. 904,Minneapolis,MN,98-510-1300,Anthony Day,anthony.day@northstar.example
+CRM-3041,"Castaneda, Jackson and Clark",Standard,East Enterprise,Packaging,47906 Richardson Parkways Apt. 949,Peoria,IL,23-212-5982,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3042,"Holt, Smith and Chambers",Standard,West Mid-Market,Energy & Utilities,7905 Garrett Hill Suite 822,Detroit,MI,87-276-1667,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3043,Rivera and Sons,Standard,Central Enterprise,Chemicals,69117 Kevin Stravenue,Rockford,IL,90-723-8712,Zachary Brown,zachary.brown@northstar.example
+CRM-3044,Olson Inc,Standard,Central Enterprise,Chemicals,19841 Larry Estates Apt. 616,Grand Rapids,MI,07-971-9860,Charles Lopez,charles.lopez@northstar.example
+CRM-3045,"Nguyen, Burke and Harris",Standard,West Mid-Market,Pharmaceuticals,33594 Wilson Mountain Suite 549,Green Bay,WI,25-719-3291,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3046,"Perry, Gonzales and Richardson",Standard,Central Enterprise,Building Materials,7502 Schroeder Rapids Suite 786,Peoria,IL,09-975-7384,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3047,Gibson-Thomas,Standard,Central Enterprise,Packaging,29878 Robert Estates Suite 710,Minneapolis,MN,93-769-8522,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3048,Flores and Sons,Standard,Midwest Mid-Market,Automotive Components,38199 Jennifer Trail,Minneapolis,MN,28-637-3705,Charles Lopez,charles.lopez@northstar.example
+CRM-3049,Johnson-Austin,Standard,East Enterprise,Energy & Utilities,00151 Potts Village Apt. 724,Grand Rapids,MI,64-298-8584,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3050,"Schmidt, Acosta and Smith",Standard,East Enterprise,Aerospace,95119 Brandy Tunnel,Green Bay,WI,22-142-1604,Anthony Day,anthony.day@northstar.example
+CRM-3051,Taylor-West,Standard,East Enterprise,Chemicals,018 Jodi Highway Apt. 596,Pittsburgh,PA,05-511-2039,Anthony Day,anthony.day@northstar.example
+CRM-3052,Mcbride-Escobar,Standard,West Mid-Market,Building Materials,70519 Bray River,Madison,WI,47-301-9991,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3053,Newton-Lee,Standard,Midwest Mid-Market,Energy & Utilities,3580 Barbara Cove Apt. 984,Chicago,IL,56-001-5974,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3054,Rodriguez-Robinson,Standard,West Mid-Market,Energy & Utilities,53865 Freeman Ridge,Green Bay,WI,29-061-4772,Zachary Brown,zachary.brown@northstar.example
+CRM-3055,Allen-Hill,Standard,Central Enterprise,Packaging,5920 Patricia Views,Toledo,OH,34-600-4504,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3056,Morales PLC,Standard,West Mid-Market,Packaging,29153 Michael Shore,Green Bay,WI,14-560-7970,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3057,"Walker, Gilbert and Frazier",Standard,West Mid-Market,Automotive Components,219 Chan Plain Apt. 091,Madison,WI,55-511-2286,Zachary Brown,zachary.brown@northstar.example
+CRM-3058,"Weber, Ruiz and Holmes",Standard,Central Enterprise,Food & Beverage,4626 Gilmore Walks Apt. 062,Peoria,IL,14-038-6274,Anthony Day,anthony.day@northstar.example
+CRM-3059,Williams LLC,Standard,West Mid-Market,Pharmaceuticals,98560 Berg Via Suite 064,Minneapolis,MN,92-905-0642,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3060,Molina PLC,Standard,Central Enterprise,Food & Beverage,0036 Randy Crescent,Columbus,OH,78-116-3616,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3061,Martinez-Chavez,Standard,Midwest Mid-Market,Building Materials,70750 Melissa Village,Cleveland,OH,27-353-0270,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3062,Day-Robinson,Standard,East Enterprise,Pharmaceuticals,708 Le Spurs,Fort Wayne,IN,03-874-8505,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3063,Preston Inc,Standard,Midwest Mid-Market,Packaging,425 Fisher Junction,Fort Wayne,IN,63-251-0458,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3064,"Castro, May and Campbell",Standard,Midwest Mid-Market,Chemicals,04343 Thomas Parkways,Pittsburgh,PA,90-520-1732,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3065,Palmer-Lam,Standard,Central Enterprise,Chemicals,8827 Jason Knolls Apt. 562,Columbus,OH,38-008-9790,Zachary Brown,zachary.brown@northstar.example
+CRM-3066,"King, Barnett and Figueroa",Standard,West Mid-Market,Building Materials,78865 Baird Union,Green Bay,WI,84-834-6298,Anthony Day,anthony.day@northstar.example
+CRM-3067,Martinez PLC,Standard,West Mid-Market,Packaging,4223 Timothy Stream,Green Bay,WI,63-529-6476,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3068,Jones PLC,Standard,West Mid-Market,Food & Beverage,391 Jennifer Hill,Columbus,OH,26-529-8795,Zachary Brown,zachary.brown@northstar.example
+CRM-3069,"Moreno, Rivera and Morgan",Standard,Central Enterprise,Aerospace,5757 Young Loaf,Toledo,OH,72-341-2784,Zachary Brown,zachary.brown@northstar.example
+CRM-3070,Carlson and Sons,Standard,East Enterprise,Packaging,77811 Robert Port,Fort Wayne,IN,38-714-2521,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3071,Williams Ltd,Standard,Midwest Mid-Market,Pharmaceuticals,186 Ashley Ville,Des Moines,IA,62-486-7825,Zachary Brown,zachary.brown@northstar.example
+CRM-3072,Swanson Group,Standard,Midwest Mid-Market,Chemicals,9233 Jamie Courts Suite 791,Columbus,OH,55-572-6382,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3073,Castaneda Ltd,Standard,Central Enterprise,Pharmaceuticals,47045 Steele Spur Apt. 924,Rockford,IL,55-942-0694,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3074,Todd-Taylor,Standard,West Mid-Market,Packaging,64671 Gregory Light,Peoria,IL,37-893-3984,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3075,Stephenson-Maldonado,Standard,West Mid-Market,Pharmaceuticals,71578 Christopher Ports,Minneapolis,MN,05-331-3860,Zachary Brown,zachary.brown@northstar.example
+CRM-3076,"Mcconnell, Giles and Barker",Standard,East Enterprise,Automotive Components,2778 William Parks Suite 182,Columbus,OH,04-427-5935,Zachary Brown,zachary.brown@northstar.example
+CRM-3077,"Lee, Hernandez and King",Standard,East Enterprise,Building Materials,90576 Dixon Dam,Cleveland,OH,63-637-0060,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3078,Salazar-Higgins,Standard,Central Enterprise,Automotive Components,268 Robertson Cliff,Kansas City,MO,92-241-0574,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3079,Adams-Jacobs,Standard,Midwest Mid-Market,Packaging,366 Samantha Lock,Cleveland,OH,47-356-3744,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3080,Scott Group,Standard,Midwest Mid-Market,Building Materials,112 Robin Squares,Des Moines,IA,81-364-1841,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3081,"Mccarthy, Watts and Gordon",Standard,Midwest Mid-Market,Aerospace,8460 Vincent Falls,Green Bay,WI,32-229-4721,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3082,"Hinton, Jones and Gomez",Standard,Midwest Mid-Market,Packaging,46625 Farmer Ranch,Grand Rapids,MI,16-619-4605,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3083,"Ballard, Lee and Powers",Standard,West Mid-Market,Packaging,77758 Alicia Ridges Apt. 953,Pittsburgh,PA,68-924-9366,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3084,"Cabrera, Peterson and Moran",Standard,Central Enterprise,Aerospace,624 Paul Hollow,Columbus,OH,15-830-5488,Charles Lopez,charles.lopez@northstar.example
+CRM-3085,Hatfield-Barrera,Standard,West Mid-Market,Aerospace,224 Smith Rapids Apt. 915,Rockford,IL,25-268-6203,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3086,Palmer Inc,Standard,East Enterprise,Chemicals,1631 Gutierrez Groves,Cleveland,OH,75-902-6620,Anthony Day,anthony.day@northstar.example
+CRM-3087,Garcia Group,Standard,Central Enterprise,Packaging,41473 Tracey Stravenue Apt. 160,Columbus,OH,50-007-5161,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3088,May Ltd,Standard,Central Enterprise,Automotive Components,1917 Smith Plaza Suite 842,Grand Rapids,MI,06-487-2042,Anthony Day,anthony.day@northstar.example
+CRM-3089,Edwards-Cisneros,Standard,Central Enterprise,Energy & Utilities,2063 Jennifer Junctions Suite 515,Minneapolis,MN,33-167-8738,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3090,"Reed, Barron and Mccormick",Standard,East Enterprise,Aerospace,593 Aaron Stream Apt. 845,Grand Rapids,MI,54-411-6260,Charles Lopez,charles.lopez@northstar.example
+CRM-3091,"Wallace, Allen and Harris",Standard,Central Enterprise,Food & Beverage,5668 Osborne Trail,Des Moines,IA,55-880-8878,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3092,"Coffey, Smith and Watkins",Standard,East Enterprise,Aerospace,87415 Jerry Gateway,Cleveland,OH,34-977-8104,Anthony Day,anthony.day@northstar.example
+CRM-3093,Hawkins-White,Standard,West Mid-Market,Food & Beverage,346 Gonzales Lodge,Toledo,OH,02-929-8133,Zachary Brown,zachary.brown@northstar.example
+CRM-3094,"Martin, Manning and Burton",Standard,Midwest Mid-Market,Food & Beverage,7600 Jared Shoals,Rockford,IL,35-195-4334,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3095,Jordan-Mcclure,Standard,East Enterprise,Chemicals,674 Christopher Union,Madison,WI,88-592-2351,Zachary Brown,zachary.brown@northstar.example
+CRM-3096,Ford-Hamilton,Standard,Midwest Mid-Market,Packaging,487 Valdez Walks Apt. 196,Des Moines,IA,51-248-3646,Charles Lopez,charles.lopez@northstar.example
+CRM-3097,Garcia-Floyd,Standard,Midwest Mid-Market,Aerospace,327 Burns Camp Suite 048,Cleveland,OH,43-415-1079,Charles Lopez,charles.lopez@northstar.example
+CRM-3098,"Hamilton, Willis and Jefferson",Standard,East Enterprise,Chemicals,6348 Herman Ford Apt. 520,Cleveland,OH,71-198-3331,Charles Lopez,charles.lopez@northstar.example
+CRM-3099,"Bartlett, Montoya and Craig",Standard,West Mid-Market,Building Materials,377 Tiffany Mountains,Green Bay,WI,98-725-7905,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3100,Miller-Coleman,Standard,Central Enterprise,Chemicals,6716 Hernandez Heights,Louisville,KY,49-139-1245,Charles Lopez,charles.lopez@northstar.example
+CRM-3101,"Lawrence, Rice and Shaw",Standard,East Enterprise,Food & Beverage,5232 Fuller Islands,Peoria,IL,46-942-2339,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3102,"Rodriguez, Johnson and Collins",Standard,West Mid-Market,Aerospace,4191 Christopher Forks Suite 775,Columbus,OH,64-342-4169,Charles Lopez,charles.lopez@northstar.example
+CRM-3103,Wilson-Brown,Standard,Midwest Mid-Market,Pharmaceuticals,57181 Wesley Lodge,Madison,WI,36-876-6180,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3104,Mcknight Inc,Standard,West Mid-Market,Packaging,394 Castillo Stream,Pittsburgh,PA,38-026-5046,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3105,"Mcclain, Williams and Morrison",Standard,West Mid-Market,Chemicals,6381 Montes Plains,Madison,WI,10-262-8415,Zachary Brown,zachary.brown@northstar.example
+CRM-3106,Long Group,Standard,East Enterprise,Packaging,621 Williams Light,Grand Rapids,MI,15-999-7635,Anthony Day,anthony.day@northstar.example
+CRM-3107,"Mayo, Choi and Dalton",Standard,Midwest Mid-Market,Chemicals,666 Kelly Islands Suite 965,Columbus,OH,26-291-9806,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3108,Williams-Wolf,Standard,West Mid-Market,Automotive Components,8856 Sullivan Loop,Cleveland,OH,57-138-5623,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3109,Brown Group,Standard,Central Enterprise,Building Materials,98011 Robertson Rapid Suite 427,Fort Wayne,IN,07-708-7193,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3110,Johnson LLC,Standard,Central Enterprise,Pharmaceuticals,54084 Burnett Loaf,Grand Rapids,MI,73-768-1894,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3111,"Martin, Evans and Smith",Standard,Midwest Mid-Market,Energy & Utilities,916 Perez Wells Apt. 761,Rockford,IL,74-946-8342,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3112,Dunn-Rivera,Standard,West Mid-Market,Aerospace,315 Holt Stravenue Apt. 369,Toledo,OH,44-836-4944,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3113,"Taylor, Jackson and Sanchez",Standard,Central Enterprise,Pharmaceuticals,69994 Berry Ramp,Madison,WI,11-201-0317,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3114,Rodriguez Group,Standard,Central Enterprise,Food & Beverage,8645 Smith River,Louisville,KY,20-514-2743,Charles Lopez,charles.lopez@northstar.example
+CRM-3115,Merritt-Morgan,Standard,East Enterprise,Chemicals,5559 Golden Pass,Rockford,IL,54-851-6075,Zachary Brown,zachary.brown@northstar.example
+CRM-3116,Thomas-Martin,Standard,West Mid-Market,Aerospace,827 Brandon Mountain Suite 632,Louisville,KY,85-117-2820,Charles Lopez,charles.lopez@northstar.example
+CRM-3117,"Jennings, Stewart and Wallace",Standard,West Mid-Market,Energy & Utilities,96566 Julie Alley,Kansas City,MO,72-395-0740,Anthony Day,anthony.day@northstar.example
+CRM-3118,Davis-Harris,Standard,West Mid-Market,Aerospace,5223 Michael Unions,Rockford,IL,65-700-6680,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3119,Ramsey-Hamilton,Standard,Central Enterprise,Automotive Components,3808 Brittany Pass,Louisville,KY,05-945-0027,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3120,Gill Group,Standard,East Enterprise,Packaging,3711 Cherry Plaza Apt. 345,Fort Wayne,IN,12-558-9050,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3121,"Gonzalez, Johnson and Zimmerman",Standard,Central Enterprise,Aerospace,586 Angela Curve Suite 372,Columbus,OH,37-841-1318,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3122,"Bauer, Steele and Meadows",Standard,West Mid-Market,Food & Beverage,409 Parks Forges,Grand Rapids,MI,09-440-4836,Zachary Brown,zachary.brown@northstar.example
+CRM-3123,"Vance, Martinez and Gay",Standard,Central Enterprise,Pharmaceuticals,349 Kyle Shoals,Columbus,OH,40-069-1192,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3124,"Cox, Rodriguez and Parrish",Standard,Midwest Mid-Market,Aerospace,124 Mcdonald Field Apt. 418,Peoria,IL,93-677-2370,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3125,Mills PLC,Standard,West Mid-Market,Energy & Utilities,7976 Kristin Rest,Fort Wayne,IN,43-635-6288,Zachary Brown,zachary.brown@northstar.example
+CRM-3126,Kennedy-Johnson,Standard,West Mid-Market,Energy & Utilities,742 Blake Plaza,Fort Wayne,IN,88-752-8031,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3127,Wright PLC,Standard,West Mid-Market,Food & Beverage,5204 Brandon Ports Suite 243,Green Bay,WI,83-645-8502,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3128,"Pugh, Wright and Stanley",Standard,Central Enterprise,Chemicals,64968 Patrick Branch,Detroit,MI,04-373-0942,Zachary Brown,zachary.brown@northstar.example
+CRM-3129,Riley-Norton,Standard,East Enterprise,Building Materials,28432 Joseph Plains Apt. 989,Fort Wayne,IN,62-323-7630,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3130,White-Trujillo,Standard,Central Enterprise,Energy & Utilities,28616 Kevin Stravenue Suite 672,Detroit,MI,82-973-7465,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3131,"Chapman, Campbell and Cruz",Standard,Midwest Mid-Market,Automotive Components,5018 Brittany Lane Suite 142,Grand Rapids,MI,89-853-9609,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3132,Kim-Richardson,Standard,East Enterprise,Automotive Components,74629 Carlos Crossing Suite 681,Kansas City,MO,96-295-0297,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3133,Roman-Butler,Standard,West Mid-Market,Building Materials,05515 Madeline Parkways,Detroit,MI,32-643-6520,Zachary Brown,zachary.brown@northstar.example
+CRM-3134,"Grimes, Smith and White",Standard,Midwest Mid-Market,Building Materials,146 Parker Neck,Minneapolis,MN,22-294-8336,Charles Lopez,charles.lopez@northstar.example
+CRM-3135,Roberts-Avery,Standard,West Mid-Market,Packaging,44161 Richards Pine Apt. 405,Rockford,IL,10-185-8650,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3136,Kim-Rodriguez,Standard,West Mid-Market,Automotive Components,1370 Michelle Locks Suite 948,Pittsburgh,PA,75-726-5530,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3137,Barnes-Vance,Standard,East Enterprise,Energy & Utilities,1297 Kevin Island Suite 406,Detroit,MI,87-095-3764,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3138,Wilson-Wilson,Standard,East Enterprise,Pharmaceuticals,385 Don Islands Apt. 735,Toledo,OH,25-241-4672,Zachary Brown,zachary.brown@northstar.example
+CRM-3139,"Shaw, Gordon and Mcdonald",Standard,West Mid-Market,Aerospace,11810 Katherine Centers Apt. 499,Columbus,OH,02-034-9435,Anthony Day,anthony.day@northstar.example
+CRM-3140,"Wong, Gonzalez and Hoffman",Standard,East Enterprise,Automotive Components,699 Obrien Island Apt. 820,Detroit,MI,50-596-5044,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3141,Freeman LLC,Standard,East Enterprise,Food & Beverage,5969 Obrien Plaza Apt. 443,Madison,WI,07-163-3864,Anthony Day,anthony.day@northstar.example
+CRM-3142,Smith Inc,Standard,Midwest Mid-Market,Pharmaceuticals,95367 Romero Road Apt. 512,Madison,WI,51-912-4282,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3143,"Sweeney, Gonzalez and Mccall",Standard,Midwest Mid-Market,Energy & Utilities,24155 Christopher Curve,Grand Rapids,MI,82-418-5681,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3144,Barnes Inc,Standard,Central Enterprise,Building Materials,1205 Kelly Lock,Minneapolis,MN,34-270-8879,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3145,Beasley-Wilcox,Standard,Central Enterprise,Aerospace,5140 Dorsey Prairie,Grand Rapids,MI,44-087-0043,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3146,Barker-Soto,Standard,West Mid-Market,Food & Beverage,7624 Richardson Manors Apt. 470,Detroit,MI,98-866-1915,Zachary Brown,zachary.brown@northstar.example
+CRM-3147,Castillo-Townsend,Standard,West Mid-Market,Building Materials,7122 Theresa Wall,Louisville,KY,54-296-0880,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3148,May and Sons,Standard,Midwest Mid-Market,Pharmaceuticals,38106 Washington Alley Apt. 674,Minneapolis,MN,53-121-9921,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3149,Thompson Group,Standard,East Enterprise,Pharmaceuticals,719 Tina Pine Apt. 770,Pittsburgh,PA,57-503-4478,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3150,Saunders LLC,Standard,East Enterprise,Packaging,5015 Jeffrey Mills Suite 308,Pittsburgh,PA,79-318-3951,Charles Lopez,charles.lopez@northstar.example
+CRM-3151,Anderson PLC,Standard,West Mid-Market,Automotive Components,6550 Micheal Pike,Des Moines,IA,95-435-2551,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3152,Garcia Inc,Standard,East Enterprise,Aerospace,526 Misty View,Louisville,KY,04-555-1837,Charles Lopez,charles.lopez@northstar.example
+CRM-3153,Wilson-Kelly,Standard,East Enterprise,Automotive Components,482 Shaffer Ranch Apt. 042,Detroit,MI,62-479-1842,Anthony Day,anthony.day@northstar.example
+CRM-3154,Burns LLC,Standard,East Enterprise,Packaging,565 Randy Courts,Chicago,IL,86-919-0277,Charles Lopez,charles.lopez@northstar.example
+CRM-3155,"Collins, Thompson and Estrada",Standard,East Enterprise,Chemicals,92239 Nathaniel Plains Suite 769,Green Bay,WI,18-322-5647,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3156,Richardson-Dixon,Standard,West Mid-Market,Packaging,24926 Michael Inlet Apt. 099,Pittsburgh,PA,11-227-6282,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3157,"Bright, Moran and Guerrero",Standard,Midwest Mid-Market,Food & Beverage,3372 Price Estate Suite 989,Louisville,KY,83-659-7226,Zachary Brown,zachary.brown@northstar.example
+CRM-3158,"Santana, Wallace and Bennett",Standard,West Mid-Market,Packaging,8529 Kelly Burg Apt. 478,Grand Rapids,MI,78-844-5938,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3159,Cline-Thomas,Standard,Midwest Mid-Market,Energy & Utilities,34726 Cortez Rapid,Toledo,OH,01-973-2623,Charles Lopez,charles.lopez@northstar.example
+CRM-3160,Cook-Smith,Standard,East Enterprise,Energy & Utilities,68562 Heidi Mall,Detroit,MI,32-960-2547,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3161,"Long, Hill and Simpson",Standard,Central Enterprise,Chemicals,615 Tony Field,Louisville,KY,28-741-2636,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3162,Ramos-Diaz,Standard,East Enterprise,Automotive Components,90959 Gibbs Freeway,Madison,WI,72-545-0059,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3163,"Davis, Nunez and Hill",Standard,Central Enterprise,Automotive Components,8069 Frances Shoal Apt. 004,Green Bay,WI,00-272-6994,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3164,Gaines Group,Standard,West Mid-Market,Building Materials,701 Amanda Run Suite 936,Pittsburgh,PA,70-218-3324,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3165,Knox-Griffin,Standard,Midwest Mid-Market,Automotive Components,07450 Michael Flats Suite 485,Columbus,OH,78-258-0064,Charles Lopez,charles.lopez@northstar.example
+CRM-3166,Velez PLC,Standard,East Enterprise,Aerospace,2754 Tina Cape Suite 602,Chicago,IL,51-318-3120,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3167,"Thompson, Taylor and Perez",Standard,East Enterprise,Automotive Components,96494 Mcgee Flat,Columbus,OH,27-337-3190,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3168,Snyder Ltd,Standard,Midwest Mid-Market,Building Materials,6374 Diane Spring Apt. 990,Pittsburgh,PA,15-276-3131,Charles Lopez,charles.lopez@northstar.example
+CRM-3169,Williams-Davenport,Standard,West Mid-Market,Pharmaceuticals,1004 James Park Apt. 638,Minneapolis,MN,15-962-4594,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3170,Arnold PLC,Standard,East Enterprise,Energy & Utilities,3605 Cervantes Burgs Suite 460,Columbus,OH,69-926-9145,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3171,Young PLC,Standard,Midwest Mid-Market,Food & Beverage,46766 Daniel Park,Columbus,OH,83-759-9450,Anthony Day,anthony.day@northstar.example
+CRM-3172,Black-Salazar,Standard,Central Enterprise,Aerospace,372 Murphy Station,Pittsburgh,PA,59-930-5472,Zachary Brown,zachary.brown@northstar.example
+CRM-3173,"Owens, Phillips and Little",Standard,Central Enterprise,Building Materials,514 Barrett Highway Suite 213,Kansas City,MO,13-405-7382,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3174,"Turner, Hodges and White",Standard,Midwest Mid-Market,Pharmaceuticals,345 Buck Forge,Pittsburgh,PA,21-686-8240,Zachary Brown,zachary.brown@northstar.example
+CRM-3175,Tran-Brooks,Standard,Central Enterprise,Pharmaceuticals,2753 Lori Well Apt. 676,Louisville,KY,23-111-8849,Charles Lopez,charles.lopez@northstar.example
+CRM-3176,"Morris, Wagner and Powell",Standard,Midwest Mid-Market,Pharmaceuticals,4108 David Ports,Fort Wayne,IN,53-887-5251,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3177,"Herrera, Rush and Martinez",Standard,Midwest Mid-Market,Automotive Components,306 Joshua Forks Apt. 264,Louisville,KY,84-211-6713,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3178,Thompson-Cox,Standard,West Mid-Market,Food & Beverage,279 Seth Forks Suite 672,Detroit,MI,47-542-5589,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3179,Esparza-Carson,Standard,West Mid-Market,Automotive Components,76636 Matthews Cape,Columbus,OH,55-715-1118,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3180,Simpson and Sons,Standard,Central Enterprise,Building Materials,51408 Barnes Viaduct Apt. 475,Grand Rapids,MI,18-777-0571,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3181,Williams-Foster,Standard,Midwest Mid-Market,Food & Beverage,515 Tammy Brooks Apt. 934,Chicago,IL,07-554-6776,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3182,"Patton, Carroll and Leon",Standard,Midwest Mid-Market,Packaging,7640 Joseph Drive,Madison,WI,92-206-5605,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3183,"Hansen, Meyer and Martinez",Standard,West Mid-Market,Aerospace,8066 Morris Garden,Detroit,MI,50-262-1322,Anthony Day,anthony.day@northstar.example
+CRM-3184,"Cruz, Harris and Montgomery",Standard,West Mid-Market,Food & Beverage,89594 Margaret Brooks,Chicago,IL,10-868-0907,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3185,Gonzalez-Stevenson,Standard,Central Enterprise,Building Materials,040 Leblanc Stravenue Suite 859,Louisville,KY,82-599-1444,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3186,Payne-Krause,Standard,East Enterprise,Packaging,4200 Martinez Brooks,Fort Wayne,IN,37-841-9542,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3187,"Edwards, Briggs and Ferguson",Standard,Central Enterprise,Packaging,87865 Green Forks Apt. 821,Cleveland,OH,55-111-4692,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3188,"Martinez, Bond and Watson",Standard,East Enterprise,Aerospace,2649 David Glens Apt. 488,Grand Rapids,MI,21-875-9190,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3189,"Todd, Clark and Espinoza",Standard,East Enterprise,Packaging,71969 Vargas Wells,Columbus,OH,41-315-7333,Charles Lopez,charles.lopez@northstar.example
+CRM-3190,Pitts-Johnson,Standard,Midwest Mid-Market,Food & Beverage,9647 Eric Dale,Detroit,MI,62-059-9064,Charles Lopez,charles.lopez@northstar.example
+CRM-3191,Schultz-Clay,Standard,West Mid-Market,Pharmaceuticals,55881 Latoya Vista Suite 927,Des Moines,IA,66-088-5689,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3192,Goodwin-Young,Standard,West Mid-Market,Building Materials,0045 Sonia Road,Minneapolis,MN,03-111-9123,Rachel Mendez,rachel.mendez@northstar.example
+CRM-3193,Donovan-Massey,Standard,Central Enterprise,Aerospace,856 Alicia Estates Suite 248,Kansas City,MO,52-979-3520,Anthony Day,anthony.day@northstar.example
+CRM-3194,Kelly-Soto,Standard,Central Enterprise,Pharmaceuticals,667 Parker Villages Apt. 879,Pittsburgh,PA,43-965-8741,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3195,Taylor and Sons,Standard,East Enterprise,Energy & Utilities,295 Williams Street Apt. 496,Grand Rapids,MI,78-088-1603,Charles Lopez,charles.lopez@northstar.example
+CRM-3196,"Bell, Duarte and Shaw",Standard,Midwest Mid-Market,Food & Beverage,9806 Connie Station Suite 518,Green Bay,WI,57-455-6269,Charles Lopez,charles.lopez@northstar.example
+CRM-3197,Rollins Group,Standard,Central Enterprise,Building Materials,74072 Kathryn Curve Apt. 804,Peoria,IL,84-335-6564,Anthony Day,anthony.day@northstar.example
+CRM-3198,Bennett Inc,Standard,West Mid-Market,Building Materials,648 Monique Radial Suite 117,Chicago,IL,68-758-2394,Stephanie Wells,stephanie.wells@northstar.example
+CRM-3199,Hughes-Williams,Standard,West Mid-Market,Energy & Utilities,784 Bush Rapid,Des Moines,IA,56-827-4966,Michelle Taylor,michelle.taylor@northstar.example
+CRM-3200,"Mclaughlin, Parks and Mack",Standard,East Enterprise,Chemicals,30389 Gonzales Ports Apt. 002,Minneapolis,MN,72-813-5061,Rachel Mendez,rachel.mendez@northstar.example

@@ -1,0 +1,52 @@
+{
+ "_about": "Annotations for the scale run (tracker/build_seed.py). Same truth and answer key as the small run; only the background noise is larger. {run} expands to runs/<run>.",
+ "namespace_conditions": true,
+ "conditions": {
+  "B1": {
+   "folder": "arm-b/B1",
+   "order": 1
+  },
+  "B2": {
+   "folder": "arm-b/B2",
+   "order": 2
+  },
+  "B2PR": {
+   "folder": "request-uncurated/arm-b/r1/B2",
+   "repeats": "request-uncurated/arm-b/r{n}/B2",
+   "questions": "request/questions.tsv",
+   "order": 3
+  },
+  "B2kPR": {
+   "folder": "request/arm-b/r1/B2",
+   "repeats": "request/arm-b/r{n}/B2",
+   "questions": "request/questions.tsv",
+   "order": 4
+  }
+ },
+ "experiment": {
+  "title": "Northstar × Utopia · scale (large)",
+  "date": "2026-09-28",
+  "status": "active",
+  "status_note": "Scale run: 200 customers, 40 employees, 80 products, 500 orders, 1,000 discount requests. Same truth and answer key as the small run.",
+  "next": [
+   "Ingest and measure the foundation at scale",
+   "B1 and B2 references (n=1)",
+   "B2 + procedure + request record, uncurated (n=1)",
+   "Curate, then B2 + procedure + request record (n=3)"
+  ],
+  "utopia": "dev @ aad5b06",
+  "lab_commit": "b1c2086",
+  "seed": 20260923,
+  "notes": "{run}/notes.md",
+  "docs": [
+   "runs/2026-09-28-utopia-aad5b06/request/notes.md"
+  ]
+ },
+ "default_first_run": [
+  null,
+  "Not read yet."
+ ],
+ "provisional": {},
+ "provisional_repeats": [],
+ "findings": []
+}

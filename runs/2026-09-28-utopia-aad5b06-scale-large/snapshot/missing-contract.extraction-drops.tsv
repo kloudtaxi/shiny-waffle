@@ -1,0 +1,32 @@
+filename	reason	count	detail
+acme_account_strategy.md	unknown_ref	4	a statement's subject is not a listed thing
+approval_authority_matrix.md	object_undeclared	1	a statement's object is not a listed thing; written as a value
+approval_authority_matrix.md	unknown_ref	1	a statement's subject is not a listed thing
+crm_accounts.csv	object_missing	5	a statement has neither an object nor a value
+crm_accounts.csv	object_undeclared	20	a statement's object is not a listed thing; written as a value
+crm_accounts.csv	unknown_ref	47	a statement's subject is not a listed thing
+customers.csv	malformed_item	3	3 items in the open reply were malformed
+customers.csv	malformed_item	1	1 items in the open reply were malformed
+customers.csv	malformed_item	1	5 items in the open reply were malformed
+customers.csv	object_undeclared	12	a statement's object is not a listed thing; written as a value
+discount_requests.csv	chunk_unextracted	46	调用失败，这一块没有进图
+discount_requests.csv	object_undeclared	2	a statement's object is not a listed thing; written as a value
+email_sarah_to_michael.md	object_undeclared	1	a statement's object is not a listed thing; written as a value
+email_sarah_to_michael.md	quote_not_in_chunk	2	a quoted sentence is not in the chunk verbatim
+email_sarah_to_michael.md	unknown_ref	1	a statement's subject is not a listed thing
+erp_orders.csv	malformed_item	2	1 items in the open reply were malformed
+erp_orders.csv	unknown_ref	1	a name's thing is not a listed thing
+erp_orders.csv	unknown_ref	44	a statement's subject is not a listed thing
+organization_chart.md	object_missing	1	a statement has neither an object nor a value
+organization_chart.md	quote_not_in_chunk	45	a quoted sentence is not in the chunk verbatim
+pricing_policy_2025.md	object_missing	2	a statement has neither an object nor a value
+pricing_policy_2025.md	object_undeclared	2	a statement's object is not a listed thing; written as a value
+pricing_policy_2026.md	object_missing	2	a statement has neither an object nor a value
+pricing_policy_2026.md	object_undeclared	1	a statement's object is not a listed thing; written as a value
+products.csv	malformed_item	1	11 items in the open reply were malformed
+products.csv	object_undeclared	13	a statement's object is not a listed thing; written as a value
+sales_discount_sop.md	object_missing	5	a statement has neither an object nor a value
+sales_discount_sop.md	unknown_ref	5	a statement's subject is not a listed thing
+service_ticket_acme_industrial.md	object_missing	1	a statement has neither an object nor a value
+service_ticket_acme_industrial.md	unknown_ref	1	a statement's subject is not a listed thing
+(30 rows)

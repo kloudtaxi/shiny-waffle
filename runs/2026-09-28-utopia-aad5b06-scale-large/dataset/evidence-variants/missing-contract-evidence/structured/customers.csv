@@ -1,0 +1,205 @@
+erp_customer_id,customer_name,industry,bill_to_street,bill_to_city,bill_to_state,bill_to_postal_code,duns_number,payment_terms
+C-1001,Acme Mfg. Holdings,Industrial Manufacturing,2200 N Industrial Pkwy,Milwaukee,WI,53209,04-812-7730,Net 45
+C-1002,Blue River Logistics LLC,Logistics,890 Harbor Way,St. Louis,MO,63102,07-331-9025,Net 45
+C-1003,Cedar Health Systems Inc.,Healthcare,51 Cedar Crest Blvd,Indianapolis,IN,46204,02-906-4418,Net 45
+C-1044,Acme Industrial Supply Co.,Industrial Distribution,17 Tallmadge Ave,Akron,OH,44310,09-552-1187,Net 45
+C-2001,Weiss Ltd Holdings,Chemicals,906 Richardson Run,Madison,WI,54721,78-557-8304,Net 45
+C-2002,Miller LLC Co.,Building Materials,1473 Atkinson Mission Suite 740,Fort Wayne,IN,46934,82-869-6184,Net 45
+C-2003,Johnston Inc.,Automotive Components,3946 David Dam,Madison,WI,53994,00-463-6895,Net 30
+C-2004,Greer and Sons Holdings,Packaging,84690 Lauren Station Apt. 756,Peoria,IL,62668,58-024-0149,Net 45
+C-2005,Rodriguez Corp.,Energy & Utilities,5108 Jay Skyway,Fort Wayne,IN,46023,48-311-8908,Net 45
+C-2006,Chang-James Co.,Aerospace,666 Sims Expressway Suite 065,Columbus,OH,45340,34-517-2127,Net 60
+C-2007,Miller LLC,Pharmaceuticals,6520 Barbara Bridge Apt. 993,Madison,WI,53740,19-566-4602,Net 60
+C-2008,Blanchard Group Corp.,Pharmaceuticals,63155 Kathryn Courts,Chicago,IL,60322,97-565-7333,Net 30
+C-2009,Wilson Corp.,Aerospace,947 Tara Junctions,Grand Rapids,MI,49407,76-058-2891,Net 30
+C-2010,Simon LLC,Automotive Components,27978 Beasley Oval Apt. 802,Louisville,KY,41662,87-654-1339,Net 45
+C-2011,Bond-Cline LLC,Packaging,54817 Jesse Haven,Pittsburgh,PA,16219,13-521-0472,Net 30
+C-2012,Brown-Patterson Inc.,Automotive Components,7171 Jessica Turnpike Suite 065,Chicago,IL,62556,37-026-5938,Net 45
+C-2013,Reeves Inc Holdings,Energy & Utilities,5042 Katherine Square,Kansas City,MO,63809,24-977-7754,Net 45
+C-2014,Clark Inc Inc.,Automotive Components,9370 Morales Vista,Chicago,IL,61270,50-532-5734,Net 45
+C-2015,Hughes PLC Co.,Aerospace,2101 Stanley Locks Suite 891,Detroit,MI,49895,98-182-0725,Net 60
+C-2016,Davidson-Chapman Holdings,Chemicals,710 Palmer Cliffs Suite 382,Chicago,IL,62853,23-744-2901,Net 60
+C-2017,Jackson-Ruiz Co.,Packaging,495 Guerrero Track Suite 519,Rockford,IL,62046,97-122-4409,Net 60
+C-2018,Rogers Inc.,Energy & Utilities,9636 Torres Extensions,Cleveland,OH,44331,28-824-6100,Net 60
+C-2019,Rogers-Taylor Corp.,Automotive Components,6852 Smith Junctions Apt. 789,Des Moines,IA,50647,74-340-1698,Net 30
+C-2020,Fry-Clark Corp.,Food & Beverage,737 Smith Summit,Louisville,KY,40615,49-924-4353,Net 60
+C-2021,Wilson Ltd Inc.,Packaging,877 Shannon Valley Apt. 620,Fort Wayne,IN,47286,46-906-2243,Net 30
+C-2022,Bentley-Johnson Inc.,Packaging,01239 Mia Groves,Minneapolis,MN,56714,54-784-9482,Net 45
+C-2023,Fox Corp.,Building Materials,533 Gordon Island,Columbus,OH,45572,93-551-6633,Net 30
+C-2024,Brown Holdings,Food & Beverage,58486 Lewis Knolls Suite 420,Green Bay,WI,54284,31-792-5739,Net 45
+C-2025,Pugh-Daugherty Co.,Packaging,4721 Sullivan Walks Apt. 451,Chicago,IL,61125,76-947-2196,Net 30
+C-2026,Elliott-Byrd Inc.,Automotive Components,1429 Reeves Harbors,Cleveland,OH,43681,62-954-7822,Net 60
+C-2027,Ramirez and Sons Corp.,Packaging,808 Johnson Land,Madison,WI,54657,70-756-9092,Net 45
+C-2028,Mills LLC,Chemicals,1340 Day Street Suite 671,Des Moines,IA,51068,06-642-4700,Net 30
+C-2029,Owens LLC,Pharmaceuticals,66869 William Mount,Louisville,KY,41868,00-009-8695,Net 30
+C-2030,Ewing-House Co.,Packaging,255 Victor Divide,Detroit,MI,49384,49-609-8249,Net 30
+C-2031,Ramos Inc LLC,Packaging,3777 Albert Parkway,Fort Wayne,IN,46326,68-778-1664,Net 45
+C-2032,Wilson LLC Corp.,Energy & Utilities,2793 Abigail Valleys Apt. 103,Detroit,MI,49670,62-880-4263,Net 60
+C-2033,Farmer-Sanders Inc.,Automotive Components,79993 Andersen Freeway,Fort Wayne,IN,46042,18-571-5790,Net 60
+C-2034,Peterson-Olson Holdings,Packaging,1656 Reynolds Gateway,Chicago,IL,60328,33-473-2780,Net 45
+C-2035,Zuniga and Sons Inc.,Chemicals,2488 Thomas Route,Louisville,KY,41990,42-032-9291,Net 30
+C-2036,White LLC Corp.,Pharmaceuticals,412 Torres Cove Suite 516,Columbus,OH,44380,76-286-1162,Net 60
+C-2037,Wilson-Harper Co.,Building Materials,73655 Timothy Expressway Apt. 972,Columbus,OH,45054,54-744-2693,Net 45
+C-2038,Anderson LLC Corp.,Automotive Components,80924 Ashley Inlet Apt. 573,Pittsburgh,PA,15742,74-412-2680,Net 60
+C-2039,Anderson Co.,Aerospace,35108 Christine Creek,Toledo,OH,43485,99-680-4646,Net 30
+C-2040,Turner Inc Inc.,Automotive Components,1796 David Prairie Apt. 904,Minneapolis,MN,55107,98-510-1300,Net 45
+C-2041,Castaneda Corp.,Packaging,47906 Richardson Parkways Apt. 949,Peoria,IL,61234,23-212-5982,Net 60
+C-2042,Holt LLC,Energy & Utilities,7905 Garrett Hill Suite 822,Detroit,MI,48818,87-276-1667,Net 45
+C-2043,Rivera and Sons Holdings,Chemicals,69117 Kevin Stravenue,Rockford,IL,60341,90-723-8712,Net 60
+C-2044,Olson Inc Corp.,Chemicals,19841 Larry Estates Apt. 616,Grand Rapids,MI,48652,07-971-9860,Net 60
+C-2045,Nguyen Holdings,Pharmaceuticals,33594 Wilson Mountain Suite 549,Green Bay,WI,54027,25-719-3291,Net 60
+C-2046,Perry Inc.,Building Materials,7502 Schroeder Rapids Suite 786,Peoria,IL,60584,09-975-7384,Net 45
+C-2047,Gibson-Thomas LLC,Packaging,29878 Robert Estates Suite 710,Minneapolis,MN,55629,93-769-8522,Net 45
+C-2048,Flores and Sons Co.,Automotive Components,38199 Jennifer Trail,Minneapolis,MN,56349,28-637-3705,Net 45
+C-2049,Johnson-Austin Inc.,Energy & Utilities,00151 Potts Village Apt. 724,Grand Rapids,MI,49351,64-298-8584,Net 60
+C-2050,Schmidt LLC,Aerospace,95119 Brandy Tunnel,Green Bay,WI,53666,22-142-1604,Net 30
+C-2051,Taylor-West Corp.,Chemicals,018 Jodi Highway Apt. 596,Pittsburgh,PA,19088,05-511-2039,Net 60
+C-2052,Mcbride-Escobar Corp.,Building Materials,70519 Bray River,Madison,WI,54319,47-301-9991,Net 45
+C-2053,Newton-Lee Inc.,Energy & Utilities,3580 Barbara Cove Apt. 984,Chicago,IL,62019,56-001-5974,Net 30
+C-2054,Rodriguez-Robinson Corp.,Energy & Utilities,53865 Freeman Ridge,Green Bay,WI,53073,29-061-4772,Net 30
+C-2055,Allen-Hill LLC,Packaging,5920 Patricia Views,Toledo,OH,45438,34-600-4504,Net 45
+C-2056,Morales PLC Holdings,Packaging,29153 Michael Shore,Green Bay,WI,53331,14-560-7970,Net 30
+C-2057,Walker Holdings,Automotive Components,219 Chan Plain Apt. 091,Madison,WI,54901,55-511-2286,Net 60
+C-2058,Weber Co.,Food & Beverage,4626 Gilmore Walks Apt. 062,Peoria,IL,62442,14-038-6274,Net 60
+C-2059,Williams LLC Co.,Pharmaceuticals,98560 Berg Via Suite 064,Minneapolis,MN,55249,92-905-0642,Net 45
+C-2060,Molina PLC Inc.,Food & Beverage,0036 Randy Crescent,Columbus,OH,44302,78-116-3616,Net 60
+C-2061,Martinez-Chavez Corp.,Building Materials,70750 Melissa Village,Cleveland,OH,43703,27-353-0270,Net 45
+C-2062,Day-Robinson Inc.,Pharmaceuticals,708 Le Spurs,Fort Wayne,IN,47418,03-874-8505,Net 45
+C-2063,Preston Inc LLC,Packaging,425 Fisher Junction,Fort Wayne,IN,46791,63-251-0458,Net 30
+C-2064,Castro Holdings,Chemicals,04343 Thomas Parkways,Pittsburgh,PA,15225,90-520-1732,Net 30
+C-2065,Palmer-Lam Corp.,Chemicals,8827 Jason Knolls Apt. 562,Columbus,OH,45496,38-008-9790,Net 30
+C-2066,King Holdings,Building Materials,78865 Baird Union,Green Bay,WI,53499,84-834-6298,Net 60
+C-2067,Martinez PLC Corp.,Packaging,4223 Timothy Stream,Green Bay,WI,53576,63-529-6476,Net 60
+C-2068,Jones PLC LLC,Food & Beverage,391 Jennifer Hill,Columbus,OH,44864,26-529-8795,Net 30
+C-2069,Moreno Corp.,Aerospace,5757 Young Loaf,Toledo,OH,44219,72-341-2784,Net 60
+C-2070,Carlson and Sons LLC,Packaging,77811 Robert Port,Fort Wayne,IN,47847,38-714-2521,Net 60
+C-2071,Williams Ltd Holdings,Pharmaceuticals,186 Ashley Ville,Des Moines,IA,51661,62-486-7825,Net 45
+C-2072,Swanson Group Holdings,Chemicals,9233 Jamie Courts Suite 791,Columbus,OH,45120,55-572-6382,Net 60
+C-2073,Castaneda Ltd Inc.,Pharmaceuticals,47045 Steele Spur Apt. 924,Rockford,IL,60810,55-942-0694,Net 30
+C-2074,Todd-Taylor LLC,Packaging,64671 Gregory Light,Peoria,IL,61411,37-893-3984,Net 45
+C-2075,Stephenson-Maldonado LLC,Pharmaceuticals,71578 Christopher Ports,Minneapolis,MN,55645,05-331-3860,Net 45
+C-2076,Mcconnell Corp.,Automotive Components,2778 William Parks Suite 182,Columbus,OH,45428,04-427-5935,Net 60
+C-2077,Lee Holdings,Building Materials,90576 Dixon Dam,Cleveland,OH,45207,63-637-0060,Net 60
+C-2078,Salazar-Higgins Co.,Automotive Components,268 Robertson Cliff,Kansas City,MO,65060,92-241-0574,Net 60
+C-2079,Adams-Jacobs Co.,Packaging,366 Samantha Lock,Cleveland,OH,45438,47-356-3744,Net 45
+C-2080,Scott Group Inc.,Building Materials,112 Robin Squares,Des Moines,IA,52320,81-364-1841,Net 45
+C-2081,Mccarthy LLC,Aerospace,8460 Vincent Falls,Green Bay,WI,54837,32-229-4721,Net 45
+C-2082,Hinton Inc.,Packaging,46625 Farmer Ranch,Grand Rapids,MI,49591,16-619-4605,Net 60
+C-2083,Ballard LLC,Packaging,77758 Alicia Ridges Apt. 953,Pittsburgh,PA,17252,68-924-9366,Net 60
+C-2084,Cabrera Inc.,Aerospace,624 Paul Hollow,Columbus,OH,45791,15-830-5488,Net 45
+C-2085,Hatfield-Barrera Corp.,Aerospace,224 Smith Rapids Apt. 915,Rockford,IL,61737,25-268-6203,Net 60
+C-2086,Palmer Inc Inc.,Chemicals,1631 Gutierrez Groves,Cleveland,OH,44665,75-902-6620,Net 60
+C-2087,Garcia Group Co.,Packaging,41473 Tracey Stravenue Apt. 160,Columbus,OH,44773,50-007-5161,Net 30
+C-2088,May Ltd LLC,Automotive Components,1917 Smith Plaza Suite 842,Grand Rapids,MI,48368,06-487-2042,Net 30
+C-2089,Edwards-Cisneros Holdings,Energy & Utilities,2063 Jennifer Junctions Suite 515,Minneapolis,MN,55855,33-167-8738,Net 45
+C-2090,Reed Co.,Aerospace,593 Aaron Stream Apt. 845,Grand Rapids,MI,48951,54-411-6260,Net 60
+C-2091,Wallace LLC,Food & Beverage,5668 Osborne Trail,Des Moines,IA,50772,55-880-8878,Net 30
+C-2092,Coffey Holdings,Aerospace,87415 Jerry Gateway,Cleveland,OH,44093,34-977-8104,Net 60
+C-2093,Hawkins-White LLC,Food & Beverage,346 Gonzales Lodge,Toledo,OH,44182,02-929-8133,Net 45
+C-2094,Martin Holdings,Food & Beverage,7600 Jared Shoals,Rockford,IL,62976,35-195-4334,Net 30
+C-2095,Jordan-Mcclure Co.,Chemicals,674 Christopher Union,Madison,WI,53877,88-592-2351,Net 60
+C-2096,Ford-Hamilton Co.,Packaging,487 Valdez Walks Apt. 196,Des Moines,IA,52482,51-248-3646,Net 45
+C-2097,Garcia-Floyd Inc.,Aerospace,327 Burns Camp Suite 048,Cleveland,OH,44191,43-415-1079,Net 30
+C-2098,Hamilton Co.,Chemicals,6348 Herman Ford Apt. 520,Cleveland,OH,45177,71-198-3331,Net 45
+C-2099,Bartlett Holdings,Building Materials,377 Tiffany Mountains,Green Bay,WI,54128,98-725-7905,Net 45
+C-2100,Miller-Coleman Corp.,Chemicals,6716 Hernandez Heights,Louisville,KY,41138,49-139-1245,Net 60
+C-2101,Lawrence Corp.,Food & Beverage,5232 Fuller Islands,Peoria,IL,62129,46-942-2339,Net 45
+C-2102,Rodriguez Inc.,Aerospace,4191 Christopher Forks Suite 775,Columbus,OH,43993,64-342-4169,Net 60
+C-2103,Wilson-Brown Holdings,Pharmaceuticals,57181 Wesley Lodge,Madison,WI,54317,36-876-6180,Net 60
+C-2104,Mcknight Inc Inc.,Packaging,394 Castillo Stream,Pittsburgh,PA,16008,38-026-5046,Net 30
+C-2105,Mcclain Corp.,Chemicals,6381 Montes Plains,Madison,WI,53872,10-262-8415,Net 60
+C-2106,Long Group LLC,Packaging,621 Williams Light,Grand Rapids,MI,48081,15-999-7635,Net 45
+C-2107,Mayo LLC,Chemicals,666 Kelly Islands Suite 965,Columbus,OH,44993,26-291-9806,Net 45
+C-2108,Williams-Wolf Holdings,Automotive Components,8856 Sullivan Loop,Cleveland,OH,44993,57-138-5623,Net 30
+C-2109,Brown Group Holdings,Building Materials,98011 Robertson Rapid Suite 427,Fort Wayne,IN,46717,07-708-7193,Net 60
+C-2110,Johnson LLC Holdings,Pharmaceuticals,54084 Burnett Loaf,Grand Rapids,MI,49611,73-768-1894,Net 60
+C-2111,Martin Co.,Energy & Utilities,916 Perez Wells Apt. 761,Rockford,IL,61827,74-946-8342,Net 30
+C-2112,Dunn-Rivera Holdings,Aerospace,315 Holt Stravenue Apt. 369,Toledo,OH,43923,44-836-4944,Net 30
+C-2113,Taylor Corp.,Pharmaceuticals,69994 Berry Ramp,Madison,WI,54875,11-201-0317,Net 60
+C-2114,Rodriguez Group Corp.,Food & Beverage,8645 Smith River,Louisville,KY,40931,20-514-2743,Net 60
+C-2115,Merritt-Morgan Inc.,Chemicals,5559 Golden Pass,Rockford,IL,62881,54-851-6075,Net 45
+C-2116,Thomas-Martin Holdings,Aerospace,827 Brandon Mountain Suite 632,Louisville,KY,40204,85-117-2820,Net 60
+C-2117,Jennings Co.,Energy & Utilities,96566 Julie Alley,Kansas City,MO,63197,72-395-0740,Net 45
+C-2118,Davis-Harris Inc.,Aerospace,5223 Michael Unions,Rockford,IL,61770,65-700-6680,Net 60
+C-2119,Ramsey-Hamilton Co.,Automotive Components,3808 Brittany Pass,Louisville,KY,41060,05-945-0027,Net 60
+C-2120,Gill Group Corp.,Packaging,3711 Cherry Plaza Apt. 345,Fort Wayne,IN,47339,12-558-9050,Net 30
+C-2121,Gonzalez Holdings,Aerospace,586 Angela Curve Suite 372,Columbus,OH,45171,37-841-1318,Net 60
+C-2122,Bauer Holdings,Food & Beverage,409 Parks Forges,Grand Rapids,MI,49165,09-440-4836,Net 60
+C-2123,Vance Holdings,Pharmaceuticals,349 Kyle Shoals,Columbus,OH,44598,40-069-1192,Net 60
+C-2124,Cox LLC,Aerospace,124 Mcdonald Field Apt. 418,Peoria,IL,62680,93-677-2370,Net 45
+C-2125,Mills PLC LLC,Energy & Utilities,7976 Kristin Rest,Fort Wayne,IN,46092,43-635-6288,Net 45
+C-2126,Kennedy-Johnson Corp.,Energy & Utilities,742 Blake Plaza,Fort Wayne,IN,47389,88-752-8031,Net 60
+C-2127,Wright PLC Holdings,Food & Beverage,5204 Brandon Ports Suite 243,Green Bay,WI,54820,83-645-8502,Net 45
+C-2128,Pugh Holdings,Chemicals,64968 Patrick Branch,Detroit,MI,48878,04-373-0942,Net 30
+C-2129,Riley-Norton Co.,Building Materials,28432 Joseph Plains Apt. 989,Fort Wayne,IN,46018,62-323-7630,Net 30
+C-2130,White-Trujillo Inc.,Energy & Utilities,28616 Kevin Stravenue Suite 672,Detroit,MI,48797,82-973-7465,Net 60
+C-2131,Chapman Co.,Automotive Components,5018 Brittany Lane Suite 142,Grand Rapids,MI,48775,89-853-9609,Net 45
+C-2132,Kim-Richardson LLC,Automotive Components,74629 Carlos Crossing Suite 681,Kansas City,MO,64050,96-295-0297,Net 30
+C-2133,Roman-Butler LLC,Building Materials,05515 Madeline Parkways,Detroit,MI,48444,32-643-6520,Net 60
+C-2134,Grimes Corp.,Building Materials,146 Parker Neck,Minneapolis,MN,55030,22-294-8336,Net 30
+C-2135,Roberts-Avery LLC,Packaging,44161 Richards Pine Apt. 405,Rockford,IL,61902,10-185-8650,Net 60
+C-2136,Kim-Rodriguez Co.,Automotive Components,1370 Michelle Locks Suite 948,Pittsburgh,PA,16978,75-726-5530,Net 45
+C-2137,Barnes-Vance Corp.,Energy & Utilities,1297 Kevin Island Suite 406,Detroit,MI,48117,87-095-3764,Net 60
+C-2138,Wilson-Wilson LLC,Pharmaceuticals,385 Don Islands Apt. 735,Toledo,OH,45542,25-241-4672,Net 45
+C-2139,Shaw Corp.,Aerospace,11810 Katherine Centers Apt. 499,Columbus,OH,45495,02-034-9435,Net 30
+C-2140,Wong Co.,Automotive Components,699 Obrien Island Apt. 820,Detroit,MI,48470,50-596-5044,Net 30
+C-2141,Freeman LLC Co.,Food & Beverage,5969 Obrien Plaza Apt. 443,Madison,WI,53345,07-163-3864,Net 30
+C-2142,Smith Inc LLC,Pharmaceuticals,95367 Romero Road Apt. 512,Madison,WI,54083,51-912-4282,Net 60
+C-2143,Sweeney Co.,Energy & Utilities,24155 Christopher Curve,Grand Rapids,MI,49185,82-418-5681,Net 60
+C-2144,Barnes Inc Corp.,Building Materials,1205 Kelly Lock,Minneapolis,MN,56455,34-270-8879,Net 30
+C-2145,Beasley-Wilcox Holdings,Aerospace,5140 Dorsey Prairie,Grand Rapids,MI,48527,44-087-0043,Net 60
+C-2146,Barker-Soto Corp.,Food & Beverage,7624 Richardson Manors Apt. 470,Detroit,MI,48929,98-866-1915,Net 45
+C-2147,Castillo-Townsend Inc.,Building Materials,7122 Theresa Wall,Louisville,KY,40767,54-296-0880,Net 30
+C-2148,May and Sons Corp.,Pharmaceuticals,38106 Washington Alley Apt. 674,Minneapolis,MN,55690,53-121-9921,Net 30
+C-2149,Thompson Group LLC,Pharmaceuticals,719 Tina Pine Apt. 770,Pittsburgh,PA,18549,57-503-4478,Net 30
+C-2150,Saunders LLC LLC,Packaging,5015 Jeffrey Mills Suite 308,Pittsburgh,PA,18723,79-318-3951,Net 30
+C-2151,Anderson PLC Holdings,Automotive Components,6550 Micheal Pike,Des Moines,IA,51301,95-435-2551,Net 30
+C-2152,Garcia Inc Co.,Aerospace,526 Misty View,Louisville,KY,41102,04-555-1837,Net 30
+C-2153,Wilson-Kelly LLC,Automotive Components,482 Shaffer Ranch Apt. 042,Detroit,MI,48110,62-479-1842,Net 60
+C-2154,Burns LLC Co.,Packaging,565 Randy Courts,Chicago,IL,62755,86-919-0277,Net 30
+C-2155,Collins Co.,Chemicals,92239 Nathaniel Plains Suite 769,Green Bay,WI,54144,18-322-5647,Net 30
+C-2156,Richardson-Dixon Holdings,Packaging,24926 Michael Inlet Apt. 099,Pittsburgh,PA,18539,11-227-6282,Net 30
+C-2157,Bright Co.,Food & Beverage,3372 Price Estate Suite 989,Louisville,KY,41062,83-659-7226,Net 30
+C-2158,Santana Co.,Packaging,8529 Kelly Burg Apt. 478,Grand Rapids,MI,49021,78-844-5938,Net 30
+C-2159,Cline-Thomas Inc.,Energy & Utilities,34726 Cortez Rapid,Toledo,OH,44254,01-973-2623,Net 60
+C-2160,Cook-Smith Inc.,Energy & Utilities,68562 Heidi Mall,Detroit,MI,48828,32-960-2547,Net 60
+C-2161,Long Co.,Chemicals,615 Tony Field,Louisville,KY,41966,28-741-2636,Net 60
+C-2162,Ramos-Diaz Corp.,Automotive Components,90959 Gibbs Freeway,Madison,WI,54290,72-545-0059,Net 45
+C-2163,Davis Inc.,Automotive Components,8069 Frances Shoal Apt. 004,Green Bay,WI,54266,00-272-6994,Net 30
+C-2164,Gaines Group Co.,Building Materials,701 Amanda Run Suite 936,Pittsburgh,PA,15082,70-218-3324,Net 30
+C-2165,Knox-Griffin Co.,Automotive Components,07450 Michael Flats Suite 485,Columbus,OH,44801,78-258-0064,Net 60
+C-2166,Velez PLC Inc.,Aerospace,2754 Tina Cape Suite 602,Chicago,IL,62429,51-318-3120,Net 30
+C-2167,Thompson LLC,Automotive Components,96494 Mcgee Flat,Columbus,OH,45829,27-337-3190,Net 30
+C-2168,Snyder Ltd Co.,Building Materials,6374 Diane Spring Apt. 990,Pittsburgh,PA,19007,15-276-3131,Net 45
+C-2169,Williams-Davenport Co.,Pharmaceuticals,1004 James Park Apt. 638,Minneapolis,MN,55370,15-962-4594,Net 45
+C-2170,Arnold PLC LLC,Energy & Utilities,3605 Cervantes Burgs Suite 460,Columbus,OH,44694,69-926-9145,Net 60
+C-2171,Young PLC Co.,Food & Beverage,46766 Daniel Park,Columbus,OH,43252,83-759-9450,Net 45
+C-2172,Black-Salazar Corp.,Aerospace,372 Murphy Station,Pittsburgh,PA,16948,59-930-5472,Net 60
+C-2173,Owens Inc.,Building Materials,514 Barrett Highway Suite 213,Kansas City,MO,65731,13-405-7382,Net 45
+C-2174,Turner LLC,Pharmaceuticals,345 Buck Forge,Pittsburgh,PA,15438,21-686-8240,Net 30
+C-2175,Tran-Brooks Corp.,Pharmaceuticals,2753 Lori Well Apt. 676,Louisville,KY,40567,23-111-8849,Net 45
+C-2176,Morris LLC,Pharmaceuticals,4108 David Ports,Fort Wayne,IN,47700,53-887-5251,Net 45
+C-2177,Herrera Co.,Automotive Components,306 Joshua Forks Apt. 264,Louisville,KY,41272,84-211-6713,Net 60
+C-2178,Thompson-Cox Holdings,Food & Beverage,279 Seth Forks Suite 672,Detroit,MI,48141,47-542-5589,Net 60
+C-2179,Esparza-Carson LLC,Automotive Components,76636 Matthews Cape,Columbus,OH,44090,55-715-1118,Net 60
+C-2180,Simpson and Sons LLC,Building Materials,51408 Barnes Viaduct Apt. 475,Grand Rapids,MI,49211,18-777-0571,Net 60
+C-2181,Williams-Foster Co.,Food & Beverage,515 Tammy Brooks Apt. 934,Chicago,IL,61001,07-554-6776,Net 45
+C-2182,Patton Inc.,Packaging,7640 Joseph Drive,Madison,WI,53761,92-206-5605,Net 30
+C-2183,Hansen Corp.,Aerospace,8066 Morris Garden,Detroit,MI,49889,50-262-1322,Net 30
+C-2184,Cruz Corp.,Food & Beverage,89594 Margaret Brooks,Chicago,IL,60349,10-868-0907,Net 60
+C-2185,Gonzalez-Stevenson Inc.,Building Materials,040 Leblanc Stravenue Suite 859,Louisville,KY,42324,82-599-1444,Net 60
+C-2186,Payne-Krause LLC,Packaging,4200 Martinez Brooks,Fort Wayne,IN,47876,37-841-9542,Net 45
+C-2187,Edwards Holdings,Packaging,87865 Green Forks Apt. 821,Cleveland,OH,43732,55-111-4692,Net 30
+C-2188,Martinez Corp.,Aerospace,2649 David Glens Apt. 488,Grand Rapids,MI,49348,21-875-9190,Net 30
+C-2189,Todd Holdings,Packaging,71969 Vargas Wells,Columbus,OH,44883,41-315-7333,Net 60
+C-2190,Pitts-Johnson LLC,Food & Beverage,9647 Eric Dale,Detroit,MI,49960,62-059-9064,Net 30
+C-2191,Schultz-Clay LLC,Pharmaceuticals,55881 Latoya Vista Suite 927,Des Moines,IA,51689,66-088-5689,Net 45
+C-2192,Goodwin-Young Inc.,Building Materials,0045 Sonia Road,Minneapolis,MN,56116,03-111-9123,Net 45
+C-2193,Donovan-Massey Corp.,Aerospace,856 Alicia Estates Suite 248,Kansas City,MO,65651,52-979-3520,Net 60
+C-2194,Kelly-Soto Holdings,Pharmaceuticals,667 Parker Villages Apt. 879,Pittsburgh,PA,17961,43-965-8741,Net 60
+C-2195,Taylor and Sons Corp.,Energy & Utilities,295 Williams Street Apt. 496,Grand Rapids,MI,48475,78-088-1603,Net 60
+C-2196,Bell Inc.,Food & Beverage,9806 Connie Station Suite 518,Green Bay,WI,54830,57-455-6269,Net 45
+C-2197,Rollins Group LLC,Building Materials,74072 Kathryn Curve Apt. 804,Peoria,IL,61756,84-335-6564,Net 45
+C-2198,Bennett Inc Co.,Building Materials,648 Monique Radial Suite 117,Chicago,IL,61342,68-758-2394,Net 30
+C-2199,Hughes-Williams LLC,Energy & Utilities,784 Bush Rapid,Des Moines,IA,50662,56-827-4966,Net 45
+C-2200,Mclaughlin LLC,Chemicals,30389 Gonzales Ports Apt. 002,Minneapolis,MN,56731,72-813-5061,Net 30

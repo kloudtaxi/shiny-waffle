@@ -1,0 +1,84 @@
+product_id,sku,product_name,category,list_price_usd
+PROD-001,NS-500,NS-500 Industrial Controller,Equipment,250000
+PROD-002,NS-CLOUD,NS-Cloud Operations Suite,Software,120000
+PROD-003,NS-EDGE,NS-Edge Monitoring Package,Software,85000
+PROD-101,NS-250-SOF,NS-250 Safety Module,Software,308000
+PROD-102,NS-880-SER,NS-880 Commissioning Service,Service,320000
+PROD-103,NS-760-SER,NS-760 Premium Support Plan,Service,38000
+PROD-104,NS-400-EQU,NS-400 Gateway,Equipment,9000
+PROD-105,NS-840-SER,NS-840 Commissioning Service,Service,93000
+PROD-106,NS-830-EQU,NS-830 I/O Module,Equipment,203000
+PROD-107,NS-390-SOF,NS-390 Safety Module,Software,96000
+PROD-108,NS-190-SOF,NS-190 Analytics Add-on,Software,182000
+PROD-109,NS-950-SOF,NS-950 Safety Module,Software,116000
+PROD-110,NS-650-SOF,NS-650 Safety Module,Software,346000
+PROD-111,NS-780-SER,NS-780 Training Package,Service,198000
+PROD-112,NS-760-EQU,NS-760 Motion Controller,Equipment,208000
+PROD-113,NS-550-SER,NS-550 Premium Support Plan,Service,338000
+PROD-114,NS-740-EQU,NS-740 Motion Controller,Equipment,276000
+PROD-115,NS-380-SOF,NS-380 Safety Module,Software,347000
+PROD-116,NS-320-SOF,NS-320 Historian,Software,179000
+PROD-117,NS-160-SOF,NS-160 Historian,Software,369000
+PROD-118,NS-160-SOF,NS-160 Analytics Add-on,Software,288000
+PROD-119,NS-400-EQU,NS-400 Drive Unit,Equipment,338000
+PROD-120,NS-740-SER,NS-740 Training Package,Service,171000
+PROD-121,NS-250-EQU,NS-250 Sensor Array,Equipment,279000
+PROD-122,NS-930-SOF,NS-930 Fleet Manager,Software,175000
+PROD-123,NS-930-EQU,NS-930 Drive Unit,Equipment,83000
+PROD-124,NS-130-SER,NS-130 Commissioning Service,Service,241000
+PROD-125,NS-730-EQU,NS-730 Motion Controller,Equipment,69000
+PROD-126,NS-860-EQU,NS-860 I/O Module,Equipment,17000
+PROD-127,NS-710-SOF,NS-710 Historian,Software,62000
+PROD-128,NS-500-EQU,NS-500 I/O Module,Equipment,326000
+PROD-129,NS-580-EQU,NS-580 Sensor Array,Equipment,47000
+PROD-130,NS-640-SER,NS-640 Premium Support Plan,Service,348000
+PROD-131,NS-130-EQU,NS-130 Gateway,Equipment,121000
+PROD-132,NS-750-SOF,NS-750 Fleet Manager,Software,77000
+PROD-133,NS-510-SOF,NS-510 Safety Module,Software,327000
+PROD-134,NS-240-EQU,NS-240 I/O Module,Equipment,88000
+PROD-135,NS-620-SER,NS-620 Training Package,Service,33000
+PROD-136,NS-730-SOF,NS-730 Analytics Add-on,Software,233000
+PROD-137,NS-610-SER,NS-610 Training Package,Service,282000
+PROD-138,NS-760-SOF,NS-760 Safety Module,Software,128000
+PROD-139,NS-140-EQU,NS-140 Sensor Array,Equipment,121000
+PROD-140,NS-500-SOF,NS-500 Historian,Software,372000
+PROD-141,NS-800-EQU,NS-800 Motion Controller,Equipment,136000
+PROD-142,NS-370-SOF,NS-370 Historian,Software,169000
+PROD-143,NS-170-EQU,NS-170 Drive Unit,Equipment,337000
+PROD-144,NS-490-SOF,NS-490 Fleet Manager,Software,190000
+PROD-145,NS-560-SOF,NS-560 Safety Module,Software,233000
+PROD-146,NS-400-SOF,NS-400 Analytics Add-on,Software,23000
+PROD-147,NS-220-SOF,NS-220 Safety Module,Software,5000
+PROD-148,NS-190-SER,NS-190 Commissioning Service,Service,228000
+PROD-149,NS-890-EQU,NS-890 Drive Unit,Equipment,236000
+PROD-150,NS-480-EQU,NS-480 Drive Unit,Equipment,235000
+PROD-151,NS-170-SOF,NS-170 Fleet Manager,Software,42000
+PROD-152,NS-260-SER,NS-260 Commissioning Service,Service,140000
+PROD-153,NS-230-SOF,NS-230 Historian,Software,171000
+PROD-154,NS-690-SER,NS-690 Commissioning Service,Service,22000
+PROD-155,NS-420-SOF,NS-420 Analytics Add-on,Software,12000
+PROD-156,NS-170-EQU,NS-170 Motion Controller,Equipment,25000
+PROD-157,NS-860-SOF,NS-860 Fleet Manager,Software,173000
+PROD-158,NS-220-SOF,NS-220 Historian,Software,107000
+PROD-159,NS-840-EQU,NS-840 I/O Module,Equipment,339000
+PROD-160,NS-350-SER,NS-350 Premium Support Plan,Service,190000
+PROD-161,NS-710-SER,NS-710 Training Package,Service,203000
+PROD-162,NS-970-EQU,NS-970 Sensor Array,Equipment,24000
+PROD-163,NS-350-EQU,NS-350 Drive Unit,Equipment,347000
+PROD-164,NS-150-SOF,NS-150 Analytics Add-on,Software,149000
+PROD-165,NS-560-SOF,NS-560 Analytics Add-on,Software,56000
+PROD-166,NS-330-SOF,NS-330 Fleet Manager,Software,38000
+PROD-167,NS-490-SER,NS-490 Commissioning Service,Service,230000
+PROD-168,NS-490-EQU,NS-490 Gateway,Equipment,37000
+PROD-169,NS-820-SER,NS-820 Commissioning Service,Service,113000
+PROD-170,NS-540-EQU,NS-540 Drive Unit,Equipment,211000
+PROD-171,NS-710-EQU,NS-710 Drive Unit,Equipment,128000
+PROD-172,NS-460-SOF,NS-460 Fleet Manager,Software,191000
+PROD-173,NS-670-SER,NS-670 Commissioning Service,Service,258000
+PROD-174,NS-870-SOF,NS-870 Fleet Manager,Software,293000
+PROD-175,NS-380-EQU,NS-380 Gateway,Equipment,400000
+PROD-176,NS-160-EQU,NS-160 Drive Unit,Equipment,163000
+PROD-177,NS-610-SOF,NS-610 Analytics Add-on,Software,126000
+PROD-178,NS-470-EQU,NS-470 Motion Controller,Equipment,219000
+PROD-179,NS-170-SOF,NS-170 Analytics Add-on,Software,352000
+PROD-180,NS-410-SOF,NS-410 Analytics Add-on,Software,381000

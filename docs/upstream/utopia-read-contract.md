@@ -86,3 +86,17 @@ request relies on a contract (`procedure/notes.md`).
 
 **Ask.** Chunk tables by row count rather than characters, or re-ask for the remainder when
 a reply is truncated, so structured sources extract completely.
+
+## 6. The RDF export refuses a KB with facts pointing at merged-away entities
+
+**What happens.** On a large KB (12,895 live facts, 222 merges),
+`GET /kbs/{id}/export?format=turtle` returns
+`422 unexported_target — "export refused: a reference points at a row that is not in this KB's
+exported set", detail "fact.object(merged): 152 row(s)"`. A smaller KB from the same corpus
+exported fine. (`runs/2026-09-28-utopia-aad5b06-scale-large/notes.md`, finding 5)
+
+**Effect.** The declared machine-readable read contract (ADR 0020) becomes unavailable
+exactly when a KB is big enough to need it.
+
+**Ask.** Re-point fact objects to the merge target when merging, or export the reference to
+the merged entity (it keeps its IRI) instead of refusing.

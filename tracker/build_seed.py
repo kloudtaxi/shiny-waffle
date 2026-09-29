@@ -222,6 +222,18 @@ CONDITIONS = [
         "B2kP plus the request as recorded in the CRM (the DR-9001 row, varied per scenario), "
         "as the OWM would receive it. Decision scenarios S01-S05 only; auto-scored.",
     ),
+    (
+        "B2PR",
+        9,
+        "As ingested",
+        "Opus · graph only + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "9 MCP tools; search_chunks and get_document hidden",
+        "As ingested (no identity correction, no curation)",
+        "request-uncurated/arm-b/r1/B2",
+        "The OWM layer (procedure + request record) on the uncurated graph: is curation still "
+        "needed when the OWM supplies the decision logic and inputs?",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.
@@ -350,9 +362,10 @@ def main(run_dir: str) -> None:
         return out
 
     questions = read_questions(run / "questions.tsv")
-    per_condition = {
-        c: read_questions(run / f) for c, f in QUESTION_FILES.items() if (run / f).exists()
-    }
+    # A run's annotations may pick its own conditions (and their folders, repeat patterns,
+    # question files, labels). Otherwise every condition in CONDITIONS applies.
+    selected: dict[str, dict] | None = ann.get("conditions")
+    namespaced = bool(ann.get("namespace_conditions"))
 
     scenarios = {}
     for sid, order, title, as_of, corpus, outcome, detail, traps in SCENARIOS:
@@ -370,17 +383,31 @@ def main(run_dir: str) -> None:
 
     conditions, answers = {}, {}
     for cid, order, group, label, reader, tools, graph, folder, desc in CONDITIONS:
+        if selected is not None and cid not in selected:
+            continue
+        ov = (selected or {}).get(cid, {})
+        folder, group, graph = (
+            ov.get("folder", folder),
+            ov.get("group", group),
+            ov.get("graph", graph),
+        )
+        desc, order = ov.get("description", desc), ov.get("order", order)
+        pattern = ov.get("repeats", REPEAT_DIRS.get(cid))
+        qfile = ov.get("questions", QUESTION_FILES.get(cid))
+        cond_questions = read_questions(run / qfile) if qfile and (run / qfile).exists() else {}
         tot_cost, tot_turns, n = 0.0, 0, 0
         folders = [(1, folder)]
-        if cid in REPEAT_DIRS:
+        if pattern:
             rep = 2
-            while (run / REPEAT_DIRS[cid].format(n=rep)).is_dir():
-                folders.append((rep, REPEAT_DIRS[cid].format(n=rep)))
+            while (run / pattern.format(n=rep)).is_dir():
+                folders.append((rep, pattern.format(n=rep)))
                 rep += 1
         for rep, fdir in folders:
             for sid in scenarios:
                 if cid == "A":
                     src = run / fdir / f"{sid}.md"
+                    if not src.exists():
+                        continue
                     out = arm_a_answer(src)
                 else:
                     src = run / fdir / f"{sid}.jsonl"
@@ -395,7 +422,7 @@ def main(run_dir: str) -> None:
                     grade, note = first_run.get(cid, {}).get(sid, default)
                 else:
                     grade, note = repeats.get((cid, sid, rep), (None, "Not read yet."))
-                kb, q = per_condition.get(cid, questions).get(sid, questions[sid])
+                kb, q = cond_questions.get(sid, questions[sid])
                 doc_id = f"{exp}~{cid}~{sid}~r{rep}"
                 answers[doc_id] = {
                     "experiment": exp,
@@ -411,7 +438,9 @@ def main(run_dir: str) -> None:
                     "provisional": {"grade": grade, "note": note, "by": "Claude (first read)"},
                     "source": str(src.relative_to(LAB)),
                 }
-        conditions[cid] = {
+        if n == 0:
+            continue  # nothing ran under this condition in this run
+        conditions[f"{exp}~{cid}" if namespaced else cid] = {
             "id": cid,
             "experiment": exp,
             "order": order,
