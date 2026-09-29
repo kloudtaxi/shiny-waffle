@@ -1,0 +1,971 @@
+{
+ "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r1/B2": {
+  "S09": {
+   "expected": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "eligibility": "exceeded",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   },
+   "got": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "request": {
+     "id": "DR-9101",
+     "customer": "Acme Manufacturing (CRM CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+     "product": "NS-500 (NS-500 Industrial Controller)",
+     "requested_discount": "15%",
+     "date": "2025-03-31",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "contract_exception"
+    },
+    "commercial_eligibility": {
+     "status": "exceeded",
+     "maximum_discount": "10%",
+     "basis": "EXC-ACME-NS500-10 (NS-500 max 10% of list, valid 2023-04-01 to 2025-03-31); the Master Supply Agreement and the Acme NS-500 Strategic Account Exception (15%) only take effect 2025-04-01"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2025",
+     "requestor_limit": "15% (Enterprise Account Executive, up to and including)",
+     "requestor_authorized": true,
+     "required_role": "Enterprise Account Executive (VP Sales only above 15%)",
+     "approver": "Sarah Chen"
+    },
+    "evidence": [
+     "EXC-ACME-NS500-10: maximum eligible NS-500 discount 10% of list, 2023-04-01 to 2025-03-31",
+     "Acme NS-500 Strategic Account Exception: maximum 15% of list, 2025-04-01 to 2028-03-31; applies only to NS-500; supersedes EXC-ACME-NS500-10; does not grant approval authority",
+     "Master Supply Agreement effective from April 1, 2025 to March 31, 2028",
+     "Acme Mfg. Holdings (ERP C-1001): NS-500 up to 10% (2023-04-01 to 2025-03-31), up to 15% (2025-04-01 to 2028-03-31)",
+     "Northstar Pricing Policy 2025 (2025-01-01 to 2025-12-31): Enterprise AEs approve up to and including 15%; VP Sales above 15%",
+     "Sarah Chen is an Enterprise Account Executive and the account owner for Acme Manufacturing"
+    ],
+    "missing_evidence": [
+     "No record in the knowledge base links CRM account ID CRM-2048 to Acme Manufacturing / ERP C-1001; the link is inferred from matching names and eligibility"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome REJECT_OR_ESCALATE"
+  },
+  "S10": {
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   },
+   "got": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "request": {
+     "id": "DR-9102",
+     "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "25%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing (justification: Competitive). Acme's only pricing exception (Acme NS-500 Strategic Account Exception, 15%, 2025-04-01 to 2028-03-31) applies only to the NS-500 Industrial Controller and does not cover NS-EDGE."
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026 (2026-01-01 to 2026-12-31)",
+     "requestor_limit": "10% (Enterprise Account Executive)",
+     "requestor_authorized": false,
+     "required_role": "Chief Revenue Officer (discounts greater than 20%)",
+     "approver": "David Morgan"
+    },
+    "evidence": [
+     "CRM request DR-9102: 25% on NS-EDGE, list $85,000, requested by Sarah Chen on 2026-09-23, justification Competitive, status Pending Approval",
+     "Sarah Chen is an Enterprise Account Executive and the account owner for Acme Manufacturing",
+     "Northstar Pricing Policy 2026: Enterprise Account Executives can approve up to and including 10%; over 10% up to 20% needs VP Sales; over 20% needs the Chief Revenue Officer",
+     "The 2026 policy replaces the Northstar Pricing Policy 2025 (Enterprise Account Executive limit 15%)",
+     "David Morgan is Chief Revenue Officer",
+     "The Acme NS-500 Strategic Account Exception applies only to the NS-500 Industrial Controller (15%, 2025-04-01 to 2028-03-31), replaces EXC-ACME-NS500-10, and gives no approval authority",
+     "ERP customer C-1001 = Acme Mfg. Holdings"
+    ],
+    "missing_evidence": [
+     "No direct graph link between CRM-2048 / Acme Manufacturing and ERP customer C-1001 / Acme Mfg. Holdings; the match rests on the two names appearing in the same source document"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE_WITH_AUTHORIZATION"
+  },
+  "S11": {
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "request": {
+     "id": "DR-9103",
+     "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "22%",
+     "date": "2025-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing; justification 'Competitive'. The only Acme exception (Acme NS-500 Strategic Account Exception, 15%, 2025-04-01 to 2028-03-31) applies only to the NS-500 Industrial Controller and does not cover NS-EDGE."
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2025 (2025-01-01 to 2025-12-31)",
+     "requestor_limit": "15%",
+     "requestor_authorized": false,
+     "required_role": "VP Sales",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "CRM request DR-9103 as supplied (22%, NS-EDGE, 2025-09-23, requested by Sarah Chen, justification 'Competitive')",
+     "Sarah Chen is an Enterprise Account Executive and account owner of Acme Manufacturing",
+     "ERP customer C-1001 = Acme Mfg. Holdings",
+     "Northstar Pricing Policy 2025: Enterprise Account Executives may approve discounts up to and including 15%; discounts above 15% need VP Sales approval (valid 2025-01-01 to 2025-12-31)",
+     "Acme NS-500 Strategic Account Exception: applies only to the NS-500 Industrial Controller, max 15% from 2025-04-01 to 2028-03-31, gives no employee approval authority",
+     "Michael Torres is VP Sales"
+    ],
+    "missing_evidence": [
+     "Dated confirmation that Michael Torres held VP Sales on 2025-09-23 (role is undated in the records)",
+     "Confirmation that the 2025 policy has no approval tier above VP Sales for a 22% discount"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE_WITH_AUTHORIZATION"
+  },
+  "S12": {
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "APPROVE",
+    "request": {
+     "id": "DR-9104",
+     "customer": "BlueRiver Logistics (CRM-2051; ERP likely C-1002 Blue River Logistics LLC)",
+     "product": "NS-CLOUD (NS-Cloud Operations Suite)",
+     "requested_discount": "18.0%",
+     "date": "2026-09-23",
+     "requestor": "Michael Torres (michael.torres@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing (justification: Competitive); no contract term or pricing exception relied on"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026 (2026-01-01 to 2026-12-31)",
+     "requestor_limit": "20% (VP Sales band: >10% up to and including 20%)",
+     "requestor_authorized": true,
+     "required_role": "VP Sales",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "Northstar Pricing Policy 2026: Enterprise AEs approve up to and including 10%; VP Sales approval for >10% up to and including 20%; CRO approval for >20%; valid 2026-01-01 to 2026-12-31; replaces 2025 policy",
+     "Michael Torres is VP Sales (undated, current); reports to David Morgan from 2026-09-01",
+     "BlueRiver Logistics account owner Kelly Floyd; ERP customer C-1002 Blue River Logistics LLC",
+     "No pricing exception found for BlueRiver/NS-CLOUD (only exception on record: Acme NS-500 Strategic Account Exception)",
+     "Request details as provided from Northstar CRM (DR-9104 not modeled in the graph)"
+    ],
+    "missing_evidence": [
+     "Sales Discount SOP text: whether a requestor may approve their own request",
+     "Confirmed mapping of CRM-2051 to ERP customer C-1002"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE"
+  },
+  "S13": {
+   "expected": {
+    "outcome": "REQUEST_EVIDENCE",
+    "eligibility": "unknown",
+    "authorized": false,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "REVIEW_REQUIRED",
+    "request": {
+     "id": "DR-9105",
+     "customer": "Acme Industrial Supply Co. (CRM-2091 as recorded; ERP C-1044)",
+     "product": "NS-500 Industrial Controller (NS-500)",
+     "requested_discount": "15%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "contract_exception"
+    },
+    "commercial_eligibility": {
+     "status": "not_covered",
+     "maximum_discount": null,
+     "basis": "The Acme Master Supply Agreement (2025-04-01 to 2028-03-31) and the Acme NS-500 Strategic Account Exception (15% max, 2025-04-01 to 2028-03-31) belong to Acme Mfg. Holdings / Acme Manufacturing (C-1001, Milwaukee, DUNS 04-812-7730), not Acme Industrial Supply Co. (C-1044, Akron, DUNS 09-552-1187, Standard segment), which has no contract or exception on record"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026",
+     "requestor_limit": "10%",
+     "requestor_authorized": false,
+     "required_role": "VP Sales (>10% to 20%)",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "discount_requests: DR-9105, 15% NS-500, requested by sarah.chen@northstar.example on 2026-09-23, justification 'Contract pricing per Acme Master Supply Agreement'",
+     "crm_accounts.csv: Acme Industrial Supply Co., Standard, Akron OH, DUNS 09-552-1187, owner Zachary Brown",
+     "crm_accounts.csv: Acme Manufacturing, Strategic, Milwaukee WI, DUNS 04-812-7730, owner Sarah Chen",
+     "customers.csv: C-1044 = Acme Industrial Supply Co.; C-1001 = Acme Mfg. Holdings (same address/DUNS as Acme Manufacturing)",
+     "Acme NS-500 Strategic Account Exception: max 15% on NS-500, 2025-04-01 to 2028-03-31, for Acme Mfg. Holdings; supersedes EXC-ACME-NS500-10 (10%, 2023-04-01 to 2025-03-31); does not grant approval authority",
+     "Master Supply Agreement effective 2025-04-01 to 2028-03-31",
+     "Northstar Pricing Policy 2026: EAE up to 10%; VP Sales >10% to 20%; CRO >20%",
+     "Sarah Chen is an Enterprise Account Executive and reports to Michael Torres (VP Sales)",
+     "email_sarah_to_michael.md: 'Gina at Acme confirmed ... NS-500 controller for the third plant' (2026-09-23)"
+    ],
+    "missing_evidence": [
+     "Which company CRM-2091 is (Acme Industrial Supply Co. vs Acme Manufacturing); the knowledge base has no link for this ID",
+     "Any contract or pricing exception covering Acme Industrial Supply Co. for NS-500"
+    ]
+   },
+   "grade": "fail",
+   "fields": {
+    "outcome": false,
+    "eligibility": false,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome REVIEW_REQUIRED; mismatched: outcome, eligibility"
+  },
+  "S14": {
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   },
+   "got": {
+    "outcome": "APPROVE",
+    "request": {
+     "id": "DR-9106",
+     "customer": "Acme Manufacturing (CRM-2048)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "8.0%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing (justification: Competitive); no contract term or exception relied upon"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026",
+     "requestor_limit": "10%",
+     "requestor_authorized": true,
+     "required_role": "Enterprise Account Executive",
+     "approver": "Sarah Chen"
+    },
+    "evidence": [
+     "Northstar Pricing Policy 2026 (valid 2026-01-01 to 2026-12-31): Enterprise Account Executives may approve discounts up to and including 10%; >10% to 20% requires VP Sales; >20% requires CRO",
+     "Northstar Pricing Policy 2026 replaces Northstar Pricing Policy 2025",
+     "Sarah Chen is an Enterprise Account Executive",
+     "Sarah Chen is account owner of Acme Manufacturing",
+     "Acme NS-500 Strategic Account Exception applies only to NS-500 Industrial Controller (not relied upon; does not cover NS-EDGE)",
+     "No corrections or withdrawals found in September 2026 affecting Sarah Chen's role or the 2026 policy"
+    ],
+    "missing_evidence": []
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE"
+  }
+ },
+ "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r2/B2": {
+  "S09": {
+   "expected": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "eligibility": "exceeded",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   },
+   "got": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "request": {
+     "id": "DR-9101",
+     "customer": "Acme Manufacturing (CRM-2048; ERP: Acme Mfg. Holdings, C-1001)",
+     "product": "NS-500 Industrial Controller (NS-500)",
+     "requested_discount": "15%",
+     "date": "2025-03-31",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example), Enterprise Account Executive",
+     "basis": "contract_exception"
+    },
+    "commercial_eligibility": {
+     "status": "exceeded",
+     "maximum_discount": "10%",
+     "basis": "EXC-ACME-NS500-10, valid 2023-04-01 to 2025-03-31 (10% of list on NS-500). The Master Supply Agreement and the Acme NS-500 Strategic Account Exception (15%) only start on 2025-04-01."
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2025",
+     "requestor_limit": "15% (Enterprise Account Executive, up to and including)",
+     "requestor_authorized": true,
+     "required_role": null,
+     "approver": null
+    },
+    "evidence": [
+     "EXC-ACME-NS500-10: maximum eligible NS-500 discount 10% of list price, valid 2023-04-01 to 2025-03-31",
+     "Acme Manufacturing may receive up to the stated discount off NS-500 list price, 2023-04-01 to 2025-03-31",
+     "Acme NS-500 Strategic Account Exception: maximum 15% of list price, valid 2025-04-01 to 2028-03-31; replaces EXC-ACME-NS500-10; applies only to NS-500; approved by David Morgan 2025-03-20; does not grant approval authority to employees",
+     "Master Supply Agreement: effective from April 1, 2025 to March 31, 2028",
+     "Northstar Pricing Policy 2025 (2025-01-01 to 2025-12-31): Enterprise Account Executives may approve discounts up to and including 15%; VP Sales approval required above 15%",
+     "Sarah Chen: Enterprise Account Executive; account owner of Acme Manufacturing"
+    ],
+    "missing_evidence": [
+     "CRM-2048 is not linked to Acme Manufacturing in the knowledge base; the match rests on the request record"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": false,
+    "required_role": false
+   },
+   "note": "outcome REJECT_OR_ESCALATE"
+  },
+  "S10": {
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   },
+   "got": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "request": {
+     "id": "DR-9102",
+     "customer": "Acme Manufacturing (CRM-2048); ERP: Acme Mfg. Holdings (C-1001)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "25%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing (justification: Competitive); no contract term or exception invoked. Acme NS-500 Strategic Account Exception (15%) applies only to NS-500 and does not cover NS-EDGE."
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026 (2026-01-01 to 2026-12-31)",
+     "requestor_limit": "10%",
+     "requestor_authorized": false,
+     "required_role": "Chief Revenue Officer (discounts > 20%)",
+     "approver": "David Morgan"
+    },
+    "evidence": [
+     "Northstar Pricing Policy 2026: Enterprise Account Executives may approve discounts up to and including 10%; VP Sales for >10% up to 20%; CRO for >20%",
+     "Sarah Chen is an Enterprise Account Executive and account owner of Acme Manufacturing",
+     "David Morgan is Chief Revenue Officer",
+     "Acme NS-500 Strategic Account Exception: max 15%, 2025-04-01 to 2028-03-31, applies only to NS-500 Industrial Controller, does not grant approval authority",
+     "ERP customer C-1001 = Acme Mfg. Holdings",
+     "Request record DR-9102 as supplied from Northstar CRM"
+    ],
+    "missing_evidence": [
+     "Sales Discount SOP document not available in the knowledge graph",
+     "Graph does not explicitly link CRM-2048 to ERP C-1001"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE_WITH_AUTHORIZATION"
+  },
+  "S11": {
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "request": {
+     "id": "DR-9103",
+     "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "22%",
+     "date": "2025-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing ('Competitive' justification); Acme NS-500 Strategic Account Exception covers NS-500 only, not NS-EDGE"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2025",
+     "requestor_limit": "15%",
+     "requestor_authorized": false,
+     "required_role": "VP Sales",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "CRM request DR-9103 as supplied: 22% on NS-EDGE, requested by sarah.chen@northstar.example on 2025-09-23, justification 'Competitive'",
+     "Sarah Chen is Enterprise Account Executive and account owner of Acme Manufacturing",
+     "Northstar Pricing Policy 2025 (2025-01-01 to 2025-12-31): Enterprise Account Executives may approve up to and including 15%; VP Sales approval required above 15%",
+     "Acme NS-500 Strategic Account Exception (2025-04-01 to 2028-03-31, max 15%) applies only to NS-500 Industrial Controller and grants no employee approval authority",
+     "Michael Torres is VP Sales"
+    ],
+    "missing_evidence": [
+     "Confirmation that Michael Torres held the VP Sales role on 2025-09-23 (role fact is undated)",
+     "Confirmation that CRM-2048 is the Acme Manufacturing account (CRM account id not in the knowledge base)"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE_WITH_AUTHORIZATION"
+  },
+  "S12": {
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "APPROVE",
+    "request": {
+     "id": "DR-9104",
+     "customer": "BlueRiver Logistics (CRM-2051)",
+     "product": "NS-Cloud Operations Suite (NS-CLOUD)",
+     "requested_discount": "18.0%",
+     "date": "2026-09-23",
+     "requestor": "Michael Torres (michael.torres@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing; justification 'Competitive'; no contract or pricing exception relied on or found"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026 (valid 2026-01-01 to 2026-12-31)",
+     "requestor_limit": "20% (VP Sales band: >10% up to and including 20%)",
+     "requestor_authorized": true,
+     "required_role": "VP Sales",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "DR-9104 CRM record supplied in the question (18%, NS-CLOUD, requested 2026-09-23 by michael.torres@northstar.example, justification Competitive)",
+     "Northstar Pricing Policy 2026: Enterprise AEs approve up to and including 10%; VP Sales approval for >10% up to and including 20%; CRO approval for >20%; valid 2026-01-01 to 2026-12-31; replaces 2025 policy",
+     "Michael Torres is VP Sales; reports to David Morgan (Chief Revenue Officer) since 2026-09-01",
+     "BlueRiver Logistics: account owner Kelly Floyd; no contract or pricing exception on record",
+     "ERP customer C-1002 'Blue River Logistics LLC' (probable match by name only; not linked to CRM-2051 in the graph)"
+    ],
+    "missing_evidence": [
+     "Text of the Sales Discount SOP to confirm whether a VP Sales may approve their own request (if not, route to David Morgan, CRO)",
+     "Confirmed CRM-2051 to ERP customer mapping"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE"
+  },
+  "S13": {
+   "expected": {
+    "outcome": "REQUEST_EVIDENCE",
+    "eligibility": "unknown",
+    "authorized": false,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "REVIEW_REQUIRED",
+    "request": {
+     "id": "DR-9105",
+     "customer": "Acme Industrial Supply Co. (CRM-2091; ERP C-1044)",
+     "product": "NS-500 (NS-500 Industrial Controller)",
+     "requested_discount": "15%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (Enterprise Account Executive)",
+     "basis": "contract_exception"
+    },
+    "commercial_eligibility": {
+     "status": "not_covered",
+     "maximum_discount": null,
+     "basis": "Acme NS-500 Strategic Account Exception / Master Supply Agreement (15% max, 2025-04-01 to 2028-03-31) is recorded only for Acme Mfg. Holdings (ERP C-1001), a different customer from Acme Industrial Supply Co. (ERP C-1044); no link from Acme Industrial Supply Co. to either"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026",
+     "requestor_limit": "10%",
+     "requestor_authorized": false,
+     "required_role": "VP Sales",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "DR-9105 CRM record: 15% on NS-500, justification 'Contract pricing per Acme Master Supply Agreement'",
+     "ERP C-1044 = Acme Industrial Supply Co. (Akron OH, DUNS 09-552-1187, account owner Zachary Brown)",
+     "ERP C-1001 = Acme Mfg. Holdings (Milwaukee WI, DUNS 04-812-7730), may receive NS-500 discounts up to 15% from 2025-04-01 to 2028-03-31",
+     "Acme NS-500 Strategic Account Exception: applies only to NS-500 Industrial Controller, max 15%, 2025-04-01 to 2028-03-31, supersedes EXC-ACME-NS500-10 (10%), approved by David Morgan; does not grant approval authority to employees",
+     "Master Supply Agreement effective 2025-04-01 to 2028-03-31",
+     "Northstar Pricing Policy 2026: Enterprise AEs up to 10%; VP Sales >10% to 20%; CRO >20%",
+     "Sarah Chen is an Enterprise Account Executive and reports to Michael Torres (VP Sales)"
+    ],
+    "missing_evidence": [
+     "Link between CRM account CRM-2091 and an ERP customer",
+     "Any contract or pricing exception naming Acme Industrial Supply Co. (C-1044) for NS-500"
+    ]
+   },
+   "grade": "fail",
+   "fields": {
+    "outcome": false,
+    "eligibility": false,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome REVIEW_REQUIRED; mismatched: outcome, eligibility"
+  },
+  "S14": {
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   },
+   "got": {
+    "outcome": "APPROVE",
+    "request": {
+     "id": "DR-9106",
+     "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "8.0%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing (justification: Competitive); Acme's only exception covers NS-500 only and is not relied on"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026",
+     "requestor_limit": "10%",
+     "requestor_authorized": true,
+     "required_role": "Enterprise Account Executive",
+     "approver": "Sarah Chen"
+    },
+    "evidence": [
+     "Northstar Pricing Policy 2026 (valid 2026-01-01 to 2026-12-31): Enterprise Account Executives approve up to and including 10%; over 10% up to 20% needs VP Sales; over 20% needs CRO",
+     "Northstar Pricing Policy 2026 replaces Northstar Pricing Policy 2025",
+     "Sarah Chen is an Enterprise Account Executive and reports to Michael Torres (VP Sales)",
+     "Sarah Chen is account owner of Acme Manufacturing; ERP customer C-1001 = Acme Mfg. Holdings",
+     "Acme NS-500 Strategic Account Exception (up to 15%, 2025-04-01 to 2028-03-31) applies only to NS-500 Industrial Controller; not to NS-EDGE"
+    ],
+    "missing_evidence": [
+     "Knowledge graph does not link CRM account ID CRM-2048 to Acme Manufacturing"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE"
+  }
+ },
+ "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r3/B2": {
+  "S09": {
+   "expected": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "eligibility": "exceeded",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   },
+   "got": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "request": {
+     "id": "DR-9101",
+     "customer": "Acme Manufacturing (CRM-2048; ERP: Acme Mfg. Holdings, C-1001)",
+     "product": "NS-500 Industrial Controller (NS-500)",
+     "requested_discount": "15%",
+     "date": "2025-03-31",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "contract_exception"
+    },
+    "commercial_eligibility": {
+     "status": "exceeded",
+     "maximum_discount": "10%",
+     "basis": "EXC-ACME-NS500-10 and prior Acme agreement, valid 2023-04-01 to 2025-03-31; the Master Supply Agreement and 15% Acme NS-500 Strategic Account Exception take effect only from 2025-04-01"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2025",
+     "requestor_limit": "15%",
+     "requestor_authorized": true,
+     "required_role": null,
+     "approver": null
+    },
+    "evidence": [
+     "EXC-ACME-NS500-10: sets maximum NS-500 discount at 10% of list, valid 2023-04-01 to 2025-03-31",
+     "Acme NS-500 Strategic Account Exception: sets maximum at 15% of list, valid 2025-04-01 to 2028-03-31; supersedes EXC-ACME-NS500-10; approved by David Morgan 2025-03-20; applies only to NS-500 Industrial Controller; does not grant approval authority to employees",
+     "Master Supply Agreement: effective 2025-04-01 to 2028-03-31",
+     "Acme Mfg. Holdings: may receive NS-500 discounts up to 10% (2023-04-01 to 2025-03-31), up to 15% (2025-04-01 to 2028-03-31)",
+     "Northstar Pricing Policy 2025 (2025-01-01 to 2025-12-31): Enterprise Account Executives may approve up to and including 15%; VP Sales approval required above 15%",
+     "Sarah Chen: Enterprise Account Executive; account owner of Acme Manufacturing"
+    ],
+    "missing_evidence": [
+     "DR-9101 not present in the knowledge graph; request details taken from the supplied CRM record",
+     "No recorded link confirming CRM-2048 maps to Acme Manufacturing / Acme Mfg. Holdings (C-1001)"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": false,
+    "required_role": false
+   },
+   "note": "outcome REJECT_OR_ESCALATE"
+  },
+  "S10": {
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   },
+   "got": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "request": {
+     "id": "DR-9102",
+     "customer": "Acme Manufacturing (CRM-2048); ERP likely C-1001 Acme Mfg. Holdings",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "25.0%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Justification 'Competitive' cites no contract term or exception; the Acme NS-500 Strategic Account Exception (max 15%, 2025-04-01 to 2028-03-31) applies only to NS-500 and does not cover NS-EDGE"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026 (2026-01-01 to 2026-12-31)",
+     "requestor_limit": "10% (Enterprise Account Executive)",
+     "requestor_authorized": false,
+     "required_role": "Chief Revenue Officer (discounts > 20%)",
+     "approver": "David Morgan"
+    },
+    "evidence": [
+     "CRM request DR-9102: 25% on NS-EDGE, list $85,000, requested by Sarah Chen 2026-09-23, justification 'Competitive'",
+     "Sarah Chen is account owner of Acme Manufacturing and an Enterprise Account Executive; reports to Michael Torres (VP Sales)",
+     "Northstar Pricing Policy 2026: EAE up to and including 10%; VP Sales >10% to 20%; CRO >20%",
+     "David Morgan is Chief Revenue Officer",
+     "Acme NS-500 Strategic Account Exception applies only to NS-500 Industrial Controller, max 15%, and grants no employee approval authority",
+     "Master Supply Agreement effective 2025-04-01 to 2028-03-31"
+    ],
+    "missing_evidence": [
+     "No explicit link in the graph between CRM-2048 / Acme Manufacturing and ERP customer C-1001 Acme Mfg. Holdings",
+     "No explicit link in the graph between the Master Supply Agreement and Acme"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE_WITH_AUTHORIZATION"
+  },
+  "S11": {
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "request": {
+     "id": "DR-9103",
+     "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "22%",
+     "date": "2025-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "No special terms relied on; Acme NS-500 Strategic Account Exception (15%, 2025-04-01 to 2028-03-31) covers only NS-500 Industrial Controller, not NS-EDGE"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2025 (2025-01-01 to 2025-12-31)",
+     "requestor_limit": "15%",
+     "requestor_authorized": false,
+     "required_role": "VP Sales",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "CRM request DR-9103: 22% on NS-EDGE, requested by Sarah Chen 2025-09-23, justification Competitive",
+     "Sarah Chen is Enterprise Account Executive and account owner of Acme Manufacturing",
+     "Northstar Pricing Policy 2025: Enterprise AEs approve up to and including 15%; VP Sales approval required above 15%",
+     "Acme NS-500 Strategic Account Exception applies only to NS-500 Industrial Controller; does not grant approval authority",
+     "Master Supply Agreement effective 2025-04-01 to 2028-03-31",
+     "Michael Torres is VP Sales"
+    ],
+    "missing_evidence": [
+     "Dated confirmation that Michael Torres held VP Sales on 2025-09-23"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE_WITH_AUTHORIZATION"
+  },
+  "S12": {
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "APPROVE",
+    "request": {
+     "id": "DR-9104",
+     "customer": "BlueRiver Logistics (CRM-2051); ERP likely Blue River Logistics LLC (C-1002)",
+     "product": "NS-CLOUD (NS-Cloud Operations Suite)",
+     "requested_discount": "18.0%",
+     "date": "2026-09-23",
+     "requestor": "Michael Torres (michael.torres@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing ('Competitive' justification); no contract or pricing exception covers BlueRiver or NS-CLOUD"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026 (effective 2026-01-01 to 2026-12-31)",
+     "requestor_limit": "20% (VP Sales band: >10% up to and including 20%)",
+     "requestor_authorized": true,
+     "required_role": "VP Sales",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "Northstar Pricing Policy 2026: Enterprise AEs up to and including 10%; VP Sales approval for >10% up to and including 20%; CRO approval for >20%",
+     "Policy 2026 replaces Northstar Pricing Policy 2025",
+     "Michael Torres is VP Sales (org records; undated)",
+     "Michael Torres reports to David Morgan (CRO) from 2026-09-01",
+     "BlueRiver Logistics CRM account owner: Kelly Floyd; ERP customer C-1002 Blue River Logistics LLC",
+     "Only pricing exception on record (Acme NS-500 Strategic Account Exception) applies only to NS-500 and not to this customer or product"
+    ],
+    "missing_evidence": [
+     "Dated confirmation that Michael Torres held the VP Sales role on 2026-09-23",
+     "Confirmation that self-approval by the requestor is allowed under the Sales Discount SOP"
+    ]
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE"
+  },
+  "S13": {
+   "expected": {
+    "outcome": "REQUEST_EVIDENCE",
+    "eligibility": "unknown",
+    "authorized": false,
+    "required_role": "VP Sales",
+    "approver": "Michael Torres"
+   },
+   "got": {
+    "outcome": "REVIEW_REQUIRED",
+    "request": {
+     "id": "DR-9105",
+     "customer": "Acme Industrial Supply Co. (CRM-2091 / ERP C-1044)",
+     "product": "NS-500 Industrial Controller (NS-500)",
+     "requested_discount": "15%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen",
+     "basis": "contract_exception"
+    },
+    "commercial_eligibility": {
+     "status": "not_covered",
+     "maximum_discount": null,
+     "basis": "Cited Acme Master Supply Agreement and Acme NS-500 Strategic Account Exception (15% max, 2025-04-01 to 2028-03-31) belong to Acme Manufacturing / Acme Mfg. Holdings (ERP C-1001), not Acme Industrial Supply Co. (ERP C-1044); no graph link between the two customers"
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026",
+     "requestor_limit": "10%",
+     "requestor_authorized": false,
+     "required_role": "VP Sales (>10% to 20%)",
+     "approver": "Michael Torres"
+    },
+    "evidence": [
+     "Acme Industrial Supply Co. = ERP C-1044 (Akron OH, Industrial Distribution), account owner Zachary Brown",
+     "Acme Mfg. Holdings = ERP C-1001; Acme Manufacturing account owner Sarah Chen",
+     "Acme Mfg. Holdings may receive NS-500 discounts up to 15% of list, 2025-04-01 to 2028-03-31",
+     "Acme NS-500 Strategic Account Exception: max 15% on NS-500 Industrial Controller, 2025-04-01 to 2028-03-31; supersedes EXC-ACME-NS500-10 (10%); approved by David Morgan 2025-03-20; does not grant approval authority to employees",
+     "Master Supply Agreement effective 2025-04-01 to 2028-03-31; no link to Acme Industrial Supply Co.",
+     "Northstar Pricing Policy 2026 (2026-01-01 to 2026-12-31): Enterprise AE up to 10%; VP Sales >10% to 20%; CRO >20%",
+     "Sarah Chen is an Enterprise Account Executive and reports to Michael Torres",
+     "Michael Torres is VP Sales"
+    ],
+    "missing_evidence": [
+     "Any contract or pricing exception covering Acme Industrial Supply Co. (C-1044) for NS-500",
+     "CRM-2091 is not linked to an ERP customer in the knowledge base; confirm whether the request's account is correct"
+    ]
+   },
+   "grade": "fail",
+   "fields": {
+    "outcome": false,
+    "eligibility": false,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome REVIEW_REQUIRED; mismatched: outcome, eligibility"
+  },
+  "S14": {
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   },
+   "got": {
+    "outcome": "APPROVE",
+    "request": {
+     "id": "DR-9106",
+     "customer": "Acme Manufacturing (CRM-2048)",
+     "product": "NS-EDGE (NS-Edge Monitoring Package)",
+     "requested_discount": "8.0%",
+     "date": "2026-09-23",
+     "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+     "basis": "standard"
+    },
+    "commercial_eligibility": {
+     "status": "standard",
+     "maximum_discount": null,
+     "basis": "Standard pricing, competitive justification; no special terms relied on. Acme's NS-500 Strategic Account Exception (15%, 2025-04-01 to 2028-03-31) covers only NS-500 and does not apply to NS-EDGE."
+    },
+    "authority": {
+     "policy": "Northstar Pricing Policy 2026 (2026-01-01 to 2026-12-31)",
+     "requestor_limit": "10% (Enterprise Account Executive, up to and including)",
+     "requestor_authorized": true,
+     "required_role": "Enterprise Account Executive (within own authority)",
+     "approver": "Sarah Chen"
+    },
+    "evidence": [
+     "DR-9106 CRM record: 8.0% on NS-EDGE, requested by sarah.chen@northstar.example on 2026-09-23, justification Competitive, status Pending Approval",
+     "Sarah Chen is an Enterprise Account Executive and account owner of Acme Manufacturing; reports to Michael Torres from 2026-09-01",
+     "Northstar Pricing Policy 2026: EAEs approve up to and including 10%; >10% to 20% VP Sales; >20% CRO; replaces 2025 policy",
+     "Acme NS-500 Strategic Account Exception applies only to NS-500 Industrial Controller and does not grant approval authority",
+     "No 2026 corrections or rejections affecting Sarah Chen, the 2026 policy or Acme"
+    ],
+    "missing_evidence": []
+   },
+   "grade": "pass",
+   "fields": {
+    "outcome": true,
+    "eligibility": true,
+    "authorized": true,
+    "approver": true,
+    "required_role": true
+   },
+   "note": "outcome APPROVE"
+  }
+ }
+}

@@ -98,13 +98,23 @@ boundary, restated:
 Weaknesses 3–6 still stand: five scenarios about one request, one ingestion per scale,
 provisional grades, and the OWM being a reader with a prompt.
 
+## Update: held-out decisions (same day)
+
+`runs/2026-09-28-utopia-aad5b06-scale-large/heldout/notes.md`. Six decisions were written
+after the procedure was frozen and pre-registered before any run. Both the retrieval reader
+(uncurated) and the graph-only reader (curated) matched the key on 15 of 18, with no unsafe
+miss. The five new decision types generalize: an exception boundary, the CRO band, 2025's
+bands, a VP requestor and another customer, and a request within authority. The one
+systematic miss (S13, 0 of 6) exposed a gap in the **procedure itself**: no rule for terms
+that belong to another customer. Weakness 3 (small, circular sample) is now weaker, and it
+produced something to fix in the OWM.
+
 ## What I'd do next, in order
 
-1. **Held-out scenarios:** add 3–5 decisions the procedure wasn't developed against, through
-   `truth/scenarios/`. Ideas: a different customer, a delegation memo, an expired exception, a
-   CRO-band request. This is now the biggest open question. New documents would be extracted
-   into the *small* KBs only, which costs little.
+1. ~~Held-out scenarios~~. Done: 15/18, see the update above.
 2. **Human grading (steps 7–8)** in the ledger.
+2a. **Procedure v2:** a rule for terms that belong to another customer, tested on *fresh*
+    held-out scenarios rather than a re-run of S13.
 3. **Split the OWM inputs for B1:** procedure without the record, and record without the
    procedure. It's cheap and shows what each contributes when retrieval is available.
 4. **Then** build the persisted OWM decision service, retrieval-based.

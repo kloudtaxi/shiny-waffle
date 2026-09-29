@@ -50,6 +50,56 @@ majority of the 18 decisions, and no miss is an unsafe approval: approving when 
 says don't, or naming the wrong approver for an approval. Predicted hardest: S13 (identity)
 and S09 (a one-day validity boundary).
 
-## Results
+## Results (appended after the runs)
 
-*(appended after the runs)*
+Both conditions ran exactly as registered. The graph-only runs came first, on the curated
+graph. Then the curation was withdrawn (live facts back to exactly 13,721 and 14,122) for the
+B1n runs, and restored afterwards (exactly 13,774 and 14,170; 86 reporting lines; the
+agreement's term). In the B1n runs no tool result mentions a curation document. The two `as_of`
+calls (S12, `search_chunks`) are dated 2026-09-28 and 2026-09-29T00:00, before any curation
+existed. Every run saw its expected tools with 0 denials, and every token was revoked.
+
+| Scenario | Expected | B1n + procedure + record, uncurated (×3) | B2 + procedure + record, curated (×3) |
+|---|---|---|---|
+| S09 boundary | REJECT_OR_ESCALATE | ✓✓✓ | ✓✓✓ |
+| S10 CRO band | APPROVE_WITH_AUTHORIZATION (David Morgan) | ✓✓✓ | ✓✓✓ |
+| S11 2025 bands | APPROVE_WITH_AUTHORIZATION (Michael Torres) | ✓✓✓ | ✓✓✓ |
+| S12 VP requestor | APPROVE (Michael) | ✓✓✓ | ✓✓✓ |
+| S13 similar customer | REQUEST_EVIDENCE | ✗✗✗ REVIEW_REQUIRED | ✗✗✗ REVIEW_REQUIRED |
+| S14 within authority | APPROVE (Sarah) | ✓✓✓ | ✓✓✓ |
+| **Total** | | **15 / 18** | **15 / 18** |
+| Claude cost / turns per answer | | $4.74 / 9–18 | $6.30 / 15–39 |
+
+Scores: `scores-b1n-uncurated.json`, `scores-b2-curated.json`. Every B1n pass matches on
+every field. In the graph-only condition, two S09 passes (r2, r3) left the required role and
+approver empty (`null`). For a rejection the rule doesn't score them, and no approver acts;
+r1 filled them in correctly (AE band, Sarah Chen).
+
+### S13: a gap in the procedure, not a reader error
+
+All six S13 runs resolve the identity correctly. The cited Acme Master Supply Agreement and
+the 15% exception belong to Acme Mfg. Holdings (Milwaukee, C-1001). Acme Industrial Supply
+(Akron, C-1044, account owner Zachary Brown) is a separate legal entity, and nothing gives it a
+contract or exception. None applies Acme's 15%, and all name the right approver. They then
+choose **REVIEW_REQUIRED** ("special terms do not transfer") and list the missing contract as
+missing evidence. The oracle's canonical process says **REQUEST_EVIDENCE**: no evidence
+establishes a contract for *this* customer.
+
+The procedure's outcome table scopes REVIEW_REQUIRED to "none covers this product or date",
+and REQUEST_EVIDENCE to "a contract term … that no available evidence establishes". It says
+nothing about terms that belong to another customer. Six of six readers read that gap the
+same way. By the registered rule these stay **fails**. The fix belongs in a new procedure
+version, tested on fresh held-out scenarios; re-running S13 with a patched procedure would be
+tuning to the test.
+
+### Against the registration
+
+- **Generalizing:** 15 of 18 in the primary condition, and no unsafe miss. Nothing was
+  approved that the key says not to approve, and no approval named the wrong approver. The
+  registered bar is met.
+- **The predicted hard cases:** S09 (a one-day validity boundary) passed 6 of 6, including the
+  trap that the request cites an agreement that starts the next day. S13 failed 6 of 6, as
+  predicted, but for a reason in the procedure, not in identity resolution.
+- **Graph-only generalizes too, given its curation.** The curated graph carried the 2025 and
+  2026 bands (including the CRO band) and both exceptions' dates, which is what S09–S12 needed.
+  It cost more ($6.30 against $4.74) and took about twice the turns.

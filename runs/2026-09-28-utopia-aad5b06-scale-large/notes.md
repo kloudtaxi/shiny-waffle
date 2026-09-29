@@ -1,8 +1,8 @@
-> **STATUS: DONE 2026-09-29.** Graph-only reader + curated facts + OWM procedure + request
-> record: **13/15**, 15/15 once the agreement's term is curated (`agreement/notes.md`).
-> **All-tools reader + procedure + request record: 15/15 with or without curation** (45 of 45,
-> including a leak-free control; `b1/notes.md`). Curation is only needed for graph-only
-> consumers. Both scale KBs are curated again and governance is on.
+> **STATUS: DONE 2026-09-29.** On S01–S05, the all-tools reader + procedure + request record
+> gets 15/15 with or without curation (`b1/notes.md`). **Held-out decisions S09–S14,
+> pre-registered:** 15/18 for both the retrieval reader (uncurated) and the graph-only reader
+> (curated). Every miss is S13, where the procedure has no rule for another customer's terms
+> (`heldout/notes.md`). Both scale KBs are curated and governance is on.
 
 # Scale run: Northstar at `--scale large` (2026-09-28)
 
@@ -245,3 +245,19 @@ readable as `rejected` events in `changes`, which is why the B1n control exists.
 **With text retrieval, curation adds nothing to these decisions.** The foundation's job here
 is evidence retrieval and identity; the OWM supplies the procedure, the request record and the
 decision record. Curation remains the fix only for a consumer that reads the graph alone.
+
+## Held-out decisions S09–S14 (2026-09-29)
+
+`heldout/notes.md` has the pre-registration (commit `fa32ee7`, before any run) and the
+results. The six decisions were written after the procedure was frozen. They test an exception
+boundary, the CRO band, 2025's missing CRO band, a VP requestor for another customer, contract
+pricing claimed for the similar-name customer, and a request within authority.
+
+| Condition | S09 | S10 | S11 | S12 | S13 | S14 | Total |
+|---|---|---|---|---|---|---|---|
+| B1n + procedure + record, uncurated | 3/3 | 3/3 | 3/3 | 3/3 | 0/3 | 3/3 | **15/18** |
+| B2 + procedure + record, curated | 3/3 | 3/3 | 3/3 | 3/3 | 0/3 | 3/3 | **15/18** |
+
+S13's misses are REVIEW_REQUIRED where the key says REQUEST_EVIDENCE. Every run resolved the
+identity correctly and named the right approver. The procedure's outcome table has no rule for
+terms that belong to another customer. No miss approved anything. Claude cost $11.04.

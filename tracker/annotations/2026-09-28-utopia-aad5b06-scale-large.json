@@ -58,16 +58,30 @@
    "questions": "request/questions.tsv",
    "order": 8,
    "graph": "Curation withdrawn; `changes` hidden, so no route to the withdrawn values"
+  },
+  "B1nPRh": {
+   "folder": "heldout/uncurated/r1/B1n",
+   "repeats": "heldout/uncurated/r{n}/B1n",
+   "questions": "heldout/questions.tsv",
+   "order": 9,
+   "graph": "Curation withdrawn (live facts = the settled pre-curation counts); `changes` hidden"
+  },
+  "B2kPRh": {
+   "folder": "heldout/curated/r1/B2",
+   "repeats": "heldout/curated/r{n}/B2",
+   "questions": "heldout/questions.tsv",
+   "order": 10,
+   "graph": "Curated facts (bands, exception values, 43 reporting lines, the agreement's term)"
   }
  },
  "experiment": {
   "title": "Northstar × Utopia · scale (large)",
   "date": "2026-09-28",
   "status": "active",
-  "status_note": "Scale arm done. Graph-only reader: curated facts + OWM procedure + request record → 13/15, 15/15 once the agreement term is curated. All-tools reader with the same OWM inputs: 15/15 on the curated and the uncurated graph, including a leak-free control. Curation is only needed for graph-only consumers.",
+  "status_note": "Held-out decisions S09–S14 (pre-registered): 15/18 for both the retrieval reader (uncurated) and the graph-only reader (curated); every miss is S13, where the procedure has no rule for another customer's terms. On S01–S05: all-tools reader 15/15 even uncurated.",
   "next": [
-   "Steps 7–8: human rubric scoring to calibrate Claude's provisional grades",
-   "Held-out scenarios the procedure wasn't developed against (truth/scenarios)",
+   "Your grading pass in the ledger (steps 7–8): calibrate Claude's provisional grades",
+   "Procedure v2: a rule for terms that belong to another customer; test it on fresh held-out scenarios",
    "Build the OWM decision service: procedure + record in, decision object out (persisted)",
    "File upstream asks (docs/upstream/utopia-read-contract.md)"
   ],
@@ -282,6 +296,58 @@
    "S05": [
     "pass",
     "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ]
+  },
+  "B1nPRh": {
+   "S09": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S10": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S11": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S12": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S13": [
+    "fail",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. Identity resolved correctly (the agreement is Acme Mfg. Holdings'; Acme Industrial has none), but chose REVIEW_REQUIRED where the oracle says REQUEST_EVIDENCE. The procedure's outcome table doesn't say how to treat terms that belong to another customer. Safe: no approval."
+   ],
+   "S14": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ]
+  },
+  "B2kPRh": {
+   "S09": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S10": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S11": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S12": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+   ],
+   "S13": [
+    "fail",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. Identity resolved correctly (the agreement is Acme Mfg. Holdings'; Acme Industrial has none), but chose REVIEW_REQUIRED where the oracle says REQUEST_EVIDENCE. The procedure's outcome table doesn't say how to treat terms that belong to another customer. Safe: no approval."
+   ],
+   "S14": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
    ]
   }
  },
@@ -579,6 +645,174 @@
    "repeat": 3,
    "grade": "pass",
    "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S09",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S10",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S11",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S12",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S13",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. Identity resolved correctly (the agreement is Acme Mfg. Holdings'; Acme Industrial has none), but chose REVIEW_REQUIRED where the oracle says REQUEST_EVIDENCE. The procedure's outcome table doesn't say how to treat terms that belong to another customer. Safe: no approval."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S14",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S09",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S10",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S11",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S12",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S13",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. Identity resolved correctly (the agreement is Acme Mfg. Holdings'; Acme Industrial has none), but chose REVIEW_REQUIRED where the oracle says REQUEST_EVIDENCE. The procedure's outcome table doesn't say how to treat terms that belong to another customer. Safe: no approval."
+  },
+  {
+   "condition": "B1nPRh",
+   "scenario": "S14",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S09",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✗, required_role ✗."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S10",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S11",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S12",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S13",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. Identity resolved correctly (the agreement is Acme Mfg. Holdings'; Acme Industrial has none), but chose REVIEW_REQUIRED where the oracle says REQUEST_EVIDENCE. The procedure's outcome table doesn't say how to treat terms that belong to another customer. Safe: no approval."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S14",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S09",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✗, required_role ✗."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S10",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S11",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S12",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S13",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. Identity resolved correctly (the agreement is Acme Mfg. Holdings'; Acme Industrial has none), but chose REVIEW_REQUIRED where the oracle says REQUEST_EVIDENCE. The procedure's outcome table doesn't say how to treat terms that belong to another customer. Safe: no approval."
+  },
+  {
+   "condition": "B2kPRh",
+   "scenario": "S14",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓."
   }
  ],
  "findings": [
@@ -705,6 +939,26 @@
    "body": "Withdrawing a Statements push (tombstone + missing-cleanup) retracts its facts and restores the live counts exactly, but the record-time audit feed keeps each retraction as a `rejected` event with the fact's value. 11 of 15 uncurated B1 answers saw withdrawn curation values that way. It's correct audit behaviour, but an experiment that withdraws facts must hide `changes` (the B1n variant) or treat the arm as contaminated.",
    "evidence": [
     "b1/notes.md"
+   ]
+  },
+  {
+   "id": "s14",
+   "category": "owm",
+   "title": "Held-out decisions: 15 of 18 in both configurations",
+   "body": "Six decisions written after the procedure was frozen and pre-registered before any run (fa32ee7): a one-day exception boundary, the CRO band, 2025's missing CRO band, a VP requestor for another customer, contract pricing claimed for the similar-name customer, and a request within authority. The retrieval reader on the uncurated graph (B1nPRh) and the graph-only reader on the curated graph (B2kPRh) each match the key on S09, S10, S11, S12 and S14 in 3 of 3 runs, and miss S13 in 3 of 3, in the same way. No miss approves anything, and every run names the right approver.",
+   "evidence": [
+    "heldout/notes.md",
+    "heldout/scores-b1n-uncurated.json",
+    "heldout/scores-b2-curated.json"
+   ]
+  },
+  {
+   "id": "s15",
+   "category": "owm",
+   "title": "The procedure has no rule for terms that belong to another customer",
+   "body": "On S13 all six runs resolve the identity correctly: the cited Acme agreement and exception belong to Acme Mfg. Holdings, not Acme Industrial Supply. All then choose REVIEW_REQUIRED (special terms don't transfer), where the oracle's canonical process says REQUEST_EVIDENCE (nothing establishes a contract for this customer). The procedure's outcome table scopes REVIEW_REQUIRED to product and date and REQUEST_EVIDENCE to missing evidence, and is silent on customer. A held-out test found a gap in the OWM's own procedure; the fix belongs in a new procedure version tested on fresh scenarios, not a re-run of S13.",
+   "evidence": [
+    "heldout/notes.md"
    ]
   }
  ]

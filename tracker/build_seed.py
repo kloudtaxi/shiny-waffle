@@ -128,6 +128,74 @@ SCENARIOS = [
         "(CRM-2091 / C-1044) is a separate customer.",
         ["identity drift", "similar name"],
     ),
+    # Held-out decisions: added after the OWM procedure was frozen (truth/scenarios/09-14).
+    (
+        "S09",
+        11,
+        "15% on the last day of the 10% exception (held-out)",
+        "2025-03-31",
+        "base",
+        "REJECT_OR_ESCALATE",
+        "On 2025-03-31 the 10% exception was still in force; 15% exceeds it although Sarah had "
+        "2025 authority to 15%. Approver in the band: Sarah herself.",
+        [
+            "one-day validity boundary",
+            "authority ≠ eligibility",
+            "agreement cited before it starts",
+        ],
+    ),
+    (
+        "S10",
+        12,
+        "25% standard-pricing request (held-out)",
+        "2026-09-23",
+        "base",
+        "APPROVE_WITH_AUTHORIZATION",
+        "Standard pricing, so authority alone decides; above 20% in 2026 needs the CRO, "
+        "David Morgan.",
+        ["CRO band", "no special terms"],
+    ),
+    (
+        "S11",
+        13,
+        "22% standard-pricing request in 2025 (held-out)",
+        "2025-09-23",
+        "base",
+        "APPROVE_WITH_AUTHORIZATION",
+        "The 2025 policy has no CRO band: above 15% goes to VP Sales, Michael Torres.",
+        ["policy version", "2026 CRO band does not apply"],
+    ),
+    (
+        "S12",
+        14,
+        "VP Sales requests 18% for BlueRiver (held-out)",
+        "2026-09-23",
+        "base",
+        "APPROVE",
+        "Standard pricing; 18% is within VP Sales authority (to 20%), so Michael approves his own.",
+        ["non-AE requestor", "another customer"],
+    ),
+    (
+        "S13",
+        15,
+        "Contract pricing claimed for Acme Industrial Supply (held-out)",
+        "2026-09-23",
+        "base",
+        "REQUEST_EVIDENCE",
+        "The cited agreement is Acme Manufacturing's; nothing establishes a contract for Acme "
+        "Industrial Supply, so ask for the document. VP Sales would approve.",
+        ["similar name", "terms of another customer"],
+    ),
+    (
+        "S14",
+        16,
+        "8% standard-pricing request (held-out)",
+        "2026-09-23",
+        "base",
+        "APPROVE",
+        "Standard pricing; 8% is within Sarah's 10% authority. No escalation.",
+        ["over-escalation"],
+    ),
 ]
 
 CONDITIONS = [
@@ -282,6 +350,29 @@ CONDITIONS = [
         "B1PR's control: `changes` hidden so the withdrawn curation values can't leak. Decision "
         "scenarios S01-S05 only; auto-scored.",
     ),
+    (
+        "B1nPRh",
+        14,
+        "Held-out decisions",
+        "Opus · all tools but changes + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "10 MCP tools; changes hidden",
+        "Curation withdrawn; no route to the withdrawn values",
+        "heldout/uncurated/r1/B1n",
+        "The primary OWM configuration on decisions S09-S14, written after the procedure was "
+        "frozen and pre-registered before any run. Auto-scored.",
+    ),
+    (
+        "B2kPRh",
+        15,
+        "Held-out decisions",
+        "Opus · graph only + procedure + request record",
+        "Opus 5.5, blind, headless claude -p; system prompt + owm/procedures/discount-approval.md",
+        "9 MCP tools; search_chunks and get_document hidden",
+        "Curated facts (bands, exception values, reporting lines, the agreement's term)",
+        "heldout/curated/r1/B2",
+        "The graph-only OWM configuration on the held-out decisions S09-S14. Auto-scored.",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.
@@ -410,6 +501,13 @@ def main(run_dir: str) -> None:
         return out
 
     questions = read_questions(run / "questions.tsv")
+    # Scenarios added after a run (the held-out S09+) take their question from the truth file.
+    for f in sorted((LAB / "truth" / "scenarios").glob("*.yaml")):
+        text = f.read_text()
+        sid_m = re.search(r"^id: (\S+)$", text, re.M)
+        q_m = re.search(r"^question: (.+)$", text, re.M)
+        if sid_m and q_m and sid_m.group(1) not in questions:
+            questions[sid_m.group(1)] = ("", q_m.group(1).strip())
     # A run's annotations may pick its own conditions (and their folders, repeat patterns,
     # question files, labels). Otherwise every condition in CONDITIONS applies.
     selected: dict[str, dict] | None = ann.get("conditions")
