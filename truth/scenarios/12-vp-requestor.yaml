@@ -1,0 +1,20 @@
+id: S12
+slug: vp-requestor
+title: VP Sales requests 18% for another customer (held-out)
+kind: discount_decision
+question: Can Michael Torres approve an 18% discount for BlueRiver Logistics on the NS-Cloud Operations Suite on 2026-09-23?
+teaches: [authority-by-role, standard-pricing]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001, id: DR-9104, customer: CUST-1002, product: PROD-002, list_value_usd: 120000, requested_discount: 0.18, requestor: EMP-200, basis: standard, basis_ref: null }
+expected:
+  outcome: APPROVE
+  commercial_eligibility: standard
+  eligibility_basis: null
+  requestor_authorized: true
+  required_role: VP_SALES
+  approver: EMP-200
+  evidence: [pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9104]
+reasoning:
+  - Standard pricing; no special terms to verify.
+  - Under the 2026 policy, VP Sales approves discounts above 10% up to 20%; 18% is within Michael's own authority.

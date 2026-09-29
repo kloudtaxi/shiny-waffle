@@ -130,6 +130,19 @@ grants eligibility but never authority. Tests enforce all of this.
 | S07 | Why is Acme eligible for 15%? | base | EXC-ACME-NS500-15 under MSA-ACME-2025, not hearsay |
 | S08 | Do CRM-2048 / C-1001 / ACME-MFG-2025 match, and is Acme Industrial the same customer? | base | yes / no |
 
+**Held-out decisions (S09–S14).** Added on 2026-09-29, after the OWM decision procedure
+(`owm/procedures/discount-approval.md`) was frozen, to test whether it generalizes. They vary
+DR-9001 into new requests (DR-9101…DR-9106) and add no evidence, so the corpus is unchanged.
+
+| # | Question | Corpus | Expected |
+|---|---|---|---|
+| S09 | Could Sarah approve Acme's 15% on NS-500 on 2025-03-31? | base | `REJECT_OR_ESCALATE` (the 10% exception was still in force) |
+| S10 | Can Sarah approve 25% on NS-Edge (standard pricing), 2026-09-23? | base | `APPROVE_WITH_AUTHORIZATION` by David Morgan (CRO band) |
+| S11 | Could Sarah approve 22% on NS-Edge (standard pricing), 2025-09-23? | base | `APPROVE_WITH_AUTHORIZATION` by Michael Torres (no CRO band in 2025) |
+| S12 | Can Michael approve 18% for BlueRiver on NS-Cloud (standard), 2026-09-23? | base | `APPROVE` (within VP Sales authority) |
+| S13 | Can Sarah's 15% NS-500 contract-pricing request for Acme Industrial Supply be approved? | base | `REQUEST_EVIDENCE` (the Acme agreement is another customer's) |
+| S14 | Can Sarah approve 8% on NS-Edge (standard), 2026-09-23? | base | `APPROVE` (within AE authority) |
+
 S01 reproduces the canonical decision object from doc 03 §21 field for field
 (see `dataset/answer-key/expected-results.yaml`).
 

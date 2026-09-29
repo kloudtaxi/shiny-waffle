@@ -1,0 +1,21 @@
+id: S10
+slug: cro-band
+title: 25% standard-pricing request (held-out)
+kind: discount_decision
+question: Can Sarah Chen approve a 25% discount for Acme Manufacturing on the NS-Edge Monitoring Package on 2026-09-23?
+teaches: [authority-bands, standard-pricing]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001, id: DR-9102, product: PROD-003, list_value_usd: 85000, requested_discount: 0.25, basis: standard, basis_ref: null }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  commercial_eligibility: standard
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: CRO
+  approver: EMP-300
+  evidence: [CRM-2048, C-1001, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9102]
+reasoning:
+  - No special terms are claimed; the request is standard pricing, so only authority decides.
+  - Under the 2026 policy, discounts above 20% need the Chief Revenue Officer.
+  - David Morgan holds CRO authority; neither Sarah (10%) nor Michael (20%) can approve it.

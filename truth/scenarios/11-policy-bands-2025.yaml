@@ -1,0 +1,21 @@
+id: S11
+slug: policy-bands-2025
+title: 22% standard-pricing request in 2025 (held-out)
+kind: discount_decision
+question: Could Sarah Chen have approved a 22% discount for Acme Manufacturing on the NS-Edge Monitoring Package on 2025-09-23?
+teaches: [temporal-organizational-state, authority-bands]
+corpus: base
+as_of: 2025-09-23
+request: { base: DR-9001, id: DR-9103, product: PROD-003, list_value_usd: 85000, requested_discount: 0.22, request_date: 2025-09-23, basis: standard, basis_ref: null }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  commercial_eligibility: standard
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: VP_SALES
+  approver: EMP-200
+  evidence: [CRM-2048, C-1001, pricing_policy_2025, organization_chart, DR-9103]
+reasoning:
+  - The 2025 policy applies; it has two bands, Enterprise AE up to 15% and VP Sales above 15%.
+  - There is no CRO band in 2025; the 2026 policy's 20% CRO threshold does not apply to this date.
+  - Michael Torres, VP Sales, must approve.

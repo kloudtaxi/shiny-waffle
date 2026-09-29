@@ -1,0 +1,21 @@
+id: S13
+slug: similar-customer
+title: Contract pricing claimed for Acme Industrial Supply (held-out)
+kind: discount_decision
+question: Can Sarah Chen's 15% NS-500 discount for Acme Industrial Supply be approved on 2026-09-23?
+teaches: [entity-resolution, missing-evidence-handling]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001, id: DR-9105, customer: CUST-1044 }
+expected:
+  outcome: REQUEST_EVIDENCE
+  commercial_eligibility: unknown
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: VP_SALES
+  approver: EMP-200
+  evidence: [C-1044, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9105]
+reasoning:
+  - The request cites the Acme Master Supply Agreement, but that agreement is with Acme Mfg. Holdings (Acme Manufacturing), a different customer.
+  - No evidence establishes any contract or exception for Acme Industrial Supply Co.; ask for the document before deciding.
+  - 15% is also above Sarah's 10% authority; VP Sales would approve.

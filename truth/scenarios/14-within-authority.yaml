@@ -1,0 +1,20 @@
+id: S14
+slug: within-authority
+title: 8% standard-pricing request (held-out)
+kind: discount_decision
+question: Can Sarah Chen approve an 8% discount for Acme Manufacturing on the NS-Edge Monitoring Package on 2026-09-23?
+teaches: [standard-pricing, authority-bands]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001, id: DR-9106, product: PROD-003, list_value_usd: 85000, requested_discount: 0.08, basis: standard, basis_ref: null }
+expected:
+  outcome: APPROVE
+  commercial_eligibility: standard
+  eligibility_basis: null
+  requestor_authorized: true
+  required_role: ENTERPRISE_AE
+  approver: EMP-101
+  evidence: [CRM-2048, C-1001, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9106]
+reasoning:
+  - Standard pricing; 8% is within the 10% the 2026 policy gives Enterprise Account Executives.
+  - No escalation is needed.

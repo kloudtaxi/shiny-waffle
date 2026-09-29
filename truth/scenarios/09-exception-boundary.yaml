@@ -1,0 +1,21 @@
+id: S09
+slug: exception-boundary
+title: 15% on the last day of the 10% exception (held-out)
+kind: discount_decision
+question: Could Sarah Chen have approved a 15% NS-500 discount for Acme Manufacturing on 2025-03-31?
+teaches: [exception-validity-boundary, eligibility-vs-authority]
+corpus: base
+as_of: 2025-03-31
+request: { base: DR-9001, id: DR-9101, request_date: 2025-03-31 }
+expected:
+  outcome: REJECT_OR_ESCALATE
+  commercial_eligibility: exceeded
+  eligibility_basis: EXC-ACME-NS500-10
+  requestor_authorized: true
+  required_role: ENTERPRISE_AE
+  approver: EMP-101
+  evidence: [CRM-2048, C-1001, SA-ACME-2023, EXC-ACME-NS500-10, pricing_policy_2025, organization_chart, DR-9101]
+reasoning:
+  - On 2025-03-31 the 2023 supply agreement and its 10% NS-500 exception were still in force; the 15% exception starts 2025-04-01.
+  - 15% exceeds the 10% the customer was eligible for, although the 2025 policy let Sarah approve up to 15%.
+  - Authority does not create eligibility; the request needs new terms, not a higher approver.

@@ -21,6 +21,13 @@ def test_all_scenarios_coherent(ds: Dataset) -> None:
         "S06": None,
         "S07": None,
         "S08": None,
+        # held-out decisions (added 2026-09-29, after the OWM procedure was frozen)
+        "S09": "REJECT_OR_ESCALATE",
+        "S10": "APPROVE_WITH_AUTHORIZATION",
+        "S11": "APPROVE_WITH_AUTHORIZATION",
+        "S12": "APPROVE",
+        "S13": "REQUEST_EVIDENCE",
+        "S14": "APPROVE",
     }
 
 
