@@ -1,0 +1,20 @@
+id: S20
+slug: vp-exceeds-eligibility
+title: VP Sales requests above the exception (fresh held-out)
+kind: discount_decision
+question: Can Michael Torres approve an 18% NS-500 discount for Acme Manufacturing on 2026-09-23?
+teaches: [exception-as-constraint, authority-by-role]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001, id: DR-9112, requested_discount: 0.18, requestor: EMP-200 }
+expected:
+  outcome: REJECT_OR_ESCALATE
+  commercial_eligibility: exceeded
+  eligibility_basis: EXC-ACME-NS500-15
+  requestor_authorized: true
+  required_role: VP_SALES
+  approver: EMP-200
+  evidence: [CRM-2048, C-1001, MSA-ACME-2025, EXC-ACME-NS500-15, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9112]
+reasoning:
+  - Acme's exception caps the NS-500 at 15%; 18% exceeds it.
+  - Michael holds VP Sales authority up to 20%, but authority does not create eligibility.

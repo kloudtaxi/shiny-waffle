@@ -143,6 +143,19 @@ DR-9001 into new requests (DR-9101…DR-9106) and add no evidence, so the corpus
 | S13 | Can Sarah's 15% NS-500 contract-pricing request for Acme Industrial Supply be approved? | base | `REQUEST_EVIDENCE` (the Acme agreement is another customer's) |
 | S14 | Can Sarah approve 8% on NS-Edge (standard), 2026-09-23? | base | `APPROVE` (within AE authority) |
 
+**Fresh held-out decisions (S15–S20).** Added on 2026-09-30 together with procedure v2
+(`owm/procedures/discount-approval-v2.md`, which adds a customer-applicability rule) and committed
+before any reader run. Held-out, not blind: they were written after v2. No evidence is added.
+
+| # | Question | Corpus | Expected |
+|---|---|---|---|
+| S15 | Can Michael approve 12% NS-500 for BlueRiver, citing the Acme agreement? | base | `REQUEST_EVIDENCE` (no BlueRiver contract) |
+| S16 | Can Sarah approve 8% NS-Edge for Acme Industrial Supply (standard)? | base | `APPROVE` (standard pricing needs no contract) |
+| S17 | Can Sarah approve 12% NS-Edge for Acme Manufacturing (contract pricing)? | base | `REVIEW_REQUIRED` (agreement active, no NS-Edge exception) |
+| S18 | Could Sarah approve 8% NS-500 on 2025-03-31? | base | `APPROVE` (within the 10% exception) |
+| S19 | Can Sarah approve 6% NS-Cloud (standard) where the contract documents are missing? | missing-contract-evidence | `APPROVE` |
+| S20 | Can Michael approve 18% NS-500 for Acme Manufacturing? | base | `REJECT_OR_ESCALATE` (above the 15% exception) |
+
 S01 reproduces the canonical decision object from doc 03 §21 field for field
 (see `dataset/answer-key/expected-results.yaml`).
 

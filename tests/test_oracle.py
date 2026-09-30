@@ -28,6 +28,13 @@ def test_all_scenarios_coherent(ds: Dataset) -> None:
         "S12": "APPROVE",
         "S13": "REQUEST_EVIDENCE",
         "S14": "APPROVE",
+        # fresh held-out decisions (added 2026-09-30 with procedure v2, before any reader run)
+        "S15": "REQUEST_EVIDENCE",
+        "S16": "APPROVE",
+        "S17": "REVIEW_REQUIRED",
+        "S18": "APPROVE",
+        "S19": "APPROVE",
+        "S20": "REJECT_OR_ESCALATE",
     }
 
 

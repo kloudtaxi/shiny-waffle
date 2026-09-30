@@ -506,3 +506,253 @@
   - approval_authority_matrix
   - organization_chart
   - DR-9106
+- decision_id: DEC-S15
+  scenario: S15
+  type: discount_approval
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1002
+    product: PROD-001
+  request:
+    id: DR-9107
+    requested_discount: 0.12
+    requestor: EMP-200
+  commercial_eligibility:
+    status: unknown
+    maximum_discount: null
+    basis: null
+    missing_evidence:
+    - active customer contract
+    - pricing exception
+  authority:
+    policy: pricing_policy_2026
+    requestor:
+      employee: EMP-200
+      maximum_discount: 0.2
+      authorized: true
+    required:
+      role: VP_SALES
+      maximum_discount: 0.2
+    approver:
+      employee: EMP-200
+      name: Michael Torres
+      authorized: true
+  decision:
+    outcome: REQUEST_EVIDENCE
+  reason:
+  - request relies on a contract term that no available evidence establishes
+  - requestor holds authority
+  evidence:
+  - pricing_policy_2026
+  - approval_authority_matrix
+  - organization_chart
+  - DR-9107
+- decision_id: DEC-S16
+  scenario: S16
+  type: discount_approval
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1044
+    product: PROD-003
+  request:
+    id: DR-9108
+    requested_discount: 0.08
+    requestor: EMP-101
+  commercial_eligibility:
+    status: standard
+    maximum_discount: null
+    basis: null
+  authority:
+    policy: pricing_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_discount: 0.1
+      authorized: true
+    required:
+      role: ENTERPRISE_AE
+      maximum_discount: 0.1
+    approver:
+      employee: EMP-101
+      name: Sarah Chen
+      authorized: true
+  decision:
+    outcome: APPROVE
+  reason:
+  - requestor holds authority
+  evidence:
+  - C-1044
+  - pricing_policy_2026
+  - approval_authority_matrix
+  - organization_chart
+  - DR-9108
+- decision_id: DEC-S17
+  scenario: S17
+  type: discount_approval
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+    product: PROD-003
+  request:
+    id: DR-9109
+    requested_discount: 0.12
+    requestor: EMP-101
+  commercial_eligibility:
+    status: not_covered
+    maximum_discount: null
+    basis: null
+  authority:
+    policy: pricing_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_discount: 0.1
+      authorized: false
+    required:
+      role: VP_SALES
+      maximum_discount: 0.2
+    approver:
+      employee: EMP-200
+      name: Michael Torres
+      authorized: true
+  decision:
+    outcome: REVIEW_REQUIRED
+  reason:
+  - no pricing exception covers this product on this date
+  - requestor lacks authority
+  - VP Sales approval is required
+  - Michael Torres holds VP Sales authority
+  evidence:
+  - CRM-2048
+  - C-1001
+  - MSA-ACME-2025
+  - pricing_policy_2026
+  - approval_authority_matrix
+  - organization_chart
+  - DR-9109
+- decision_id: DEC-S18
+  scenario: S18
+  type: discount_approval
+  as_of: 2025-03-31
+  corpus: base
+  subject:
+    customer: CUST-1001
+    product: PROD-001
+  request:
+    id: DR-9110
+    requested_discount: 0.08
+    requestor: EMP-101
+  commercial_eligibility:
+    status: eligible
+    maximum_discount: 0.1
+    basis: EXC-ACME-NS500-10
+  authority:
+    policy: pricing_policy_2025
+    requestor:
+      employee: EMP-101
+      maximum_discount: 0.15
+      authorized: true
+    required:
+      role: ENTERPRISE_AE
+      maximum_discount: 0.15
+    approver:
+      employee: EMP-101
+      name: Sarah Chen
+      authorized: true
+  decision:
+    outcome: APPROVE
+  reason:
+  - customer exception permits requested discount
+  - requestor holds authority
+  evidence:
+  - CRM-2048
+  - C-1001
+  - SA-ACME-2023
+  - EXC-ACME-NS500-10
+  - pricing_policy_2025
+  - organization_chart
+  - DR-9110
+- decision_id: DEC-S19
+  scenario: S19
+  type: discount_approval
+  as_of: 2026-09-23
+  corpus: missing-contract-evidence
+  subject:
+    customer: CUST-1001
+    product: PROD-002
+  request:
+    id: DR-9111
+    requested_discount: 0.06
+    requestor: EMP-101
+  commercial_eligibility:
+    status: standard
+    maximum_discount: null
+    basis: null
+  authority:
+    policy: pricing_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_discount: 0.1
+      authorized: true
+    required:
+      role: ENTERPRISE_AE
+      maximum_discount: 0.1
+    approver:
+      employee: EMP-101
+      name: Sarah Chen
+      authorized: true
+  decision:
+    outcome: APPROVE
+  reason:
+  - requestor holds authority
+  evidence:
+  - CRM-2048
+  - C-1001
+  - pricing_policy_2026
+  - approval_authority_matrix
+  - organization_chart
+  - DR-9111
+- decision_id: DEC-S20
+  scenario: S20
+  type: discount_approval
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+    product: PROD-001
+  request:
+    id: DR-9112
+    requested_discount: 0.18
+    requestor: EMP-200
+  commercial_eligibility:
+    status: exceeded
+    maximum_discount: 0.15
+    basis: EXC-ACME-NS500-15
+  authority:
+    policy: pricing_policy_2026
+    requestor:
+      employee: EMP-200
+      maximum_discount: 0.2
+      authorized: true
+    required:
+      role: VP_SALES
+      maximum_discount: 0.2
+    approver:
+      employee: EMP-200
+      name: Michael Torres
+      authorized: true
+  decision:
+    outcome: REJECT_OR_ESCALATE
+  reason:
+  - requested discount exceeds the customer's contractual exception
+  - requestor holds authority
+  evidence:
+  - CRM-2048
+  - C-1001
+  - MSA-ACME-2025
+  - EXC-ACME-NS500-15
+  - pricing_policy_2026
+  - approval_authority_matrix
+  - organization_chart
+  - DR-9112

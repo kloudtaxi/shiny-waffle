@@ -18,6 +18,12 @@ Token: each invocation mints a personal token (read scope, only the KBs named in
 config expands it), never writes it to disk, and revokes it when the invocation ends.
 
 A finished question (its .jsonl exists) is never asked again, so a crashed run can resume.
+
+OWM stand-in (optional): `--standin-procedure KIND=PATH` / `--standin-decisions PATH` attach a
+second, local MCP server (`lab/owm_standin/server.py`, server name `owm`) that serves governed
+procedures and recorded decisions as tools the reader calls. The system prompt stays the fixed
+one; what was served
+(paths, sha256, tool list) is recorded in the setup file and every stand-in call is logged.
 """
 
 from __future__ import annotations
@@ -29,6 +35,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 import urllib.request
@@ -39,6 +46,8 @@ import utopia
 
 DEFAULT_MODEL = "claude-opus-5-5"
 SERVER = "utopia"
+STANDIN = "owm"
+STANDIN_SERVER = Path(__file__).resolve().parents[1] / "owm_standin" / "server.py"
 TEXT_TOOLS = {"search_chunks", "get_document"}
 # B1n: all tools except the record-time audit feed. Withdrawn statements stay visible in
 # `changes` as `rejected` events, so a graph that had curation withdrawn is only clean without it.
@@ -90,13 +99,50 @@ def mcp_names(tools: list[str]) -> str:
     return ",".join(f"mcp__{SERVER}__{t}" for t in tools)
 
 
-def mcp_config(kb: str) -> str:
+def standin_args(standin: dict[str, Any]) -> list[str]:
+    args = [str(STANDIN_SERVER)]
+    for kind, path in standin.get("procedures", {}).items():
+        args += ["--procedure", f"{kind}={Path(path).resolve()}"]
+    if standin.get("decisions"):
+        args += ["--decisions", str(Path(standin["decisions"]).resolve())]
+    if standin.get("log"):
+        args += ["--log", str(Path(standin["log"]).resolve())]
+    return args
+
+
+def standin_tools(standin: dict[str, Any]) -> list[str]:
+    """Ask the stand-in for its tool list, exactly as the reader's client will."""
+    msgs = [
+        {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},
+        {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
+    ]
+    stdin = "".join(json.dumps(m) + "\n" for m in msgs)
+    no_log = {k: v for k, v in standin.items() if k != "log"}
+    out = subprocess.run(
+        [sys.executable, *standin_args(no_log)],
+        input=stdin,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    listing = [json.loads(ln) for ln in out.splitlines() if ln.strip()][-1]
+    return [t["name"] for t in listing["result"]["tools"]]
+
+
+def mcp_config(kb: str, standin: dict[str, Any] | None = None) -> str:
     server = {
         "type": "http",
         "url": f"{utopia.API}/kbs/{kb}/mcp",
         "headers": {"Authorization": "Bearer ${UTOPIA_MCP_TOKEN}"},
     }
-    return json.dumps({"mcpServers": {SERVER: server}})
+    servers: dict[str, Any] = {SERVER: server}
+    if standin:
+        servers[STANDIN] = {
+            "type": "stdio",
+            "command": sys.executable,
+            "args": standin_args(standin),
+        }
+    return json.dumps({"mcpServers": servers})
 
 
 def reader(
@@ -108,6 +154,7 @@ def reader(
     model: str,
     max_turns: int = 40,
     system_prompt: str = SYSTEM_PROMPT,
+    standin: dict[str, Any] | None = None,
 ) -> str:
     blind = Path(tempfile.mkdtemp(prefix="northstar-blind-"))
     if blind.resolve().is_relative_to(utopia.LAB):
@@ -125,11 +172,14 @@ def reader(
         system_prompt,
         "--strict-mcp-config",
         "--mcp-config",
-        mcp_config(kb),
+        mcp_config(kb, standin),
         "--tools",
         "",
         "--allowedTools",
-        mcp_names(allowed),
+        ",".join(
+            [mcp_names(allowed)]
+            + [f"mcp__{STANDIN}__{t}" for t in (standin or {}).get("tools", [])]
+        ),
         "--setting-sources",
         "project",
         "--no-session-persistence",
@@ -179,6 +229,9 @@ def summarize(
                     bool(block.get("is_error", False)),
                 )
     used = [c["name"].split("__")[-1] for c in calls]
+    standin_used = [
+        u for c, u in zip(calls, used, strict=True) if c["name"].startswith(f"mcp__{STANDIN}__")
+    ]
     counts = ", ".join(f"{t}×{used.count(t)}" for t in dict.fromkeys(used))
     md = [
         f"# {variant} · {sid}",
@@ -189,6 +242,7 @@ def summarize(
         f"cost: {result.get('total_cost_usd')} · stop: {result.get('subtype')}",
         f"- Tool calls: {len(calls)} ({counts})",
         f"- Text tools used: {sorted(set(used) & TEXT_TOOLS) or 'none'}",
+        f"- Stand-in tools used: {sorted(set(standin_used)) or 'none'}",
         f"- Tools in reader context: {len(init.get('tools') or [])} · "
         f"permission denials: {len(denied)}",
         "",
@@ -219,6 +273,15 @@ def main() -> None:
         p.add_argument("--run", type=Path, required=True, help="run folder with questions.tsv")
         p.add_argument("--model", default=DEFAULT_MODEL)
         p.add_argument("--token-name", default=None)
+        p.add_argument(
+            "--standin-procedure",
+            action="append",
+            default=[],
+            help="KIND=PATH: serve this procedure through the OWM stand-in's get_procedure",
+        )
+        p.add_argument(
+            "--standin-decisions", type=Path, default=None, help="decision records (JSON)"
+        )
     sub.choices["probe"].add_argument("--variant", choices=sorted(HIDDEN), default="B1")
     run_p = sub.choices["run"]
     run_p.add_argument("--out", type=Path, required=True, help="e.g. runs/<run>/arm-b")
@@ -239,9 +302,23 @@ def main() -> None:
     try:
         tools = [t["name"] for t in mcp_tools(token, kbs[0])]
         allowed = {v: [t for t in tools if t not in HIDDEN[v]] for v in HIDDEN}
+        standin: dict[str, Any] | None = None
+        if a.standin_procedure or a.standin_decisions:
+            standin = {
+                "procedures": dict(sp.split("=", 1) for sp in a.standin_procedure),
+                "decisions": str(a.standin_decisions) if a.standin_decisions else None,
+            }
+            standin["tools"] = standin_tools(standin)
         if a.cmd == "probe":
             out = reader(
-                token, kbs[0], PROBE_PROMPT, allowed[a.variant], HIDDEN[a.variant], a.model, 5
+                token,
+                kbs[0],
+                PROBE_PROMPT,
+                allowed[a.variant],
+                HIDDEN[a.variant],
+                a.model,
+                5,
+                standin=standin,
             )
             print(summarize("probe", a.variant, kbs[0], "(probe)", out, allowed[a.variant]))
             return
@@ -254,10 +331,33 @@ def main() -> None:
             digest = hashlib.sha256(text.encode()).hexdigest()
             procedure = {"path": str(a.procedure), "sha256": digest}
         a.out.mkdir(parents=True, exist_ok=True)
+        standin_record = None
+        if standin:
+            standin["log"] = str(a.out / "standin-calls.jsonl")
+            standin_record = {
+                "server": f"{STANDIN} (lab/owm_standin/server.py)",
+                "tools": standin["tools"],
+                "procedures": {
+                    k: {"path": v, "sha256": hashlib.sha256(Path(v).read_bytes()).hexdigest()}
+                    for k, v in standin["procedures"].items()
+                },
+                "decisions": (
+                    {
+                        "path": standin["decisions"],
+                        "sha256": hashlib.sha256(
+                            Path(standin["decisions"]).read_bytes()
+                        ).hexdigest(),
+                    }
+                    if standin["decisions"]
+                    else None
+                ),
+                "call_log": standin["log"],
+            }
         setup = {
             "model": a.model,
             "system_prompt": system_prompt,
             "procedure": procedure,
+            "standin": standin_record,
             "server": SERVER,
             "variants": {v: allowed[v] for v in a.variants},
             "hidden_via_disallowedTools": {v: HIDDEN[v] for v in a.variants},
@@ -286,6 +386,7 @@ def main() -> None:
                         HIDDEN[variant],
                         a.model,
                         system_prompt=system_prompt,
+                        standin=standin,
                     )
                 except Exception as exc:  # keep going; record the failure
                     (vdir / f"{sid}.error.txt").write_text(str(exc))

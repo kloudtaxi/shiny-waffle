@@ -1,0 +1,864 @@
+[
+ {
+  "snapshot": "small base, as ingested",
+  "kb": "01a0e787-41f4-71b2-83fb-22aefb8dd650",
+  "record_time": "2026-09-28 20:00:00+00",
+  "titled_people": {
+   "Elena Novak": "director of finance",
+   "Kelly Floyd": "enterprise account executive",
+   "Anthony Day": "enterprise account executive",
+   "Michael Torres": "vp sales",
+   "David Morgan": "chief revenue officer",
+   "Priya Shah": "finance manager",
+   "Sarah Chen": "enterprise account executive",
+   "Zachary Brown": "enterprise account executive",
+   "Courtney Barron": "sales engineer",
+   "Robert Hernandez": "accounts receivable specialist",
+   "Glenn Hayes": "customer success manager",
+   "Misty Peterson": "customer success manager",
+   "Bryan Rivera": "sales operations analyst"
+  },
+  "edges": [
+   {
+    "fact_id": "01a0e787-b9c1-7b40-8196-10ef8f29ee7e",
+    "subject": "David Morgan",
+    "manager": "Michael Torres",
+    "doc": "organization_chart.md",
+    "quote": "**Michael Torres** — VP Sales",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9fa-7790-8ee9-2f7acbee12a4",
+    "subject": "Elena Novak",
+    "manager": "Priya Shah",
+    "doc": "organization_chart.md",
+    "quote": "**Priya Shah** — Finance Manager",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9f3-7881-9a0a-a14b736d3cae",
+    "subject": "Elena Novak",
+    "manager": "Robert Hernandez",
+    "doc": "organization_chart.md",
+    "quote": "**Robert Hernandez** — Accounts Receivable Specialist",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9fe-7741-99e0-0d6d4c33ca4d",
+    "subject": "Elena Novak",
+    "manager": "Shari Brown",
+    "doc": "organization_chart.md",
+    "quote": "**Shari Brown** — Financial Analyst",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-ba01-76c1-928c-da0ff7ea8f14",
+    "subject": "Elena Novak",
+    "manager": "Stephanie Romero",
+    "doc": "organization_chart.md",
+    "quote": "**Stephanie Romero** — Financial Analyst",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9d5-7250-bc89-b58b98015fd0",
+    "subject": "Michael Torres",
+    "manager": "Anthony Day",
+    "doc": "organization_chart.md",
+    "quote": "**Anthony Day** — Enterprise Account Executive",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9ec-7f22-bb88-65aac237db2a",
+    "subject": "Michael Torres",
+    "manager": "Bryan Rivera",
+    "doc": "organization_chart.md",
+    "quote": "**Bryan Rivera** — Sales Operations Analyst",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9e9-7930-8ddf-2692e932ea7b",
+    "subject": "Michael Torres",
+    "manager": "Courtney Barron",
+    "doc": "organization_chart.md",
+    "quote": "**Courtney Barron** — Sales Engineer",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9c8-7ad0-98cb-8b55014167ff",
+    "subject": "Michael Torres",
+    "manager": "Glenn Hayes",
+    "doc": "organization_chart.md",
+    "quote": "**Glenn Hayes** — Customer Success Manager",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9da-7131-b03d-e2f1f7d3f0f6",
+    "subject": "Michael Torres",
+    "manager": "Kelly Floyd",
+    "doc": "organization_chart.md",
+    "quote": "**Kelly Floyd** — Enterprise Account Executive",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9ce-7d90-a184-1f911da83f5a",
+    "subject": "Michael Torres",
+    "manager": "Misty Peterson",
+    "doc": "organization_chart.md",
+    "quote": "**Misty Peterson** — Customer Success Manager",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9e0-7b01-a8e6-bcbcd2e9790c",
+    "subject": "Michael Torres",
+    "manager": "Sarah Chen",
+    "doc": "organization_chart.md",
+    "quote": "**Sarah Chen** — Enterprise Account Executive",
+    "truth": "inverted",
+    "flagged": true
+   },
+   {
+    "fact_id": "01a0e787-b9e5-7d21-982e-e34bc6fc9619",
+    "subject": "Michael Torres",
+    "manager": "Zachary Brown",
+    "doc": "organization_chart.md",
+    "quote": "**Zachary Brown** — Enterprise Account Executive",
+    "truth": "inverted",
+    "flagged": true
+   }
+  ],
+  "conflicts": [
+   {
+    "constraint": "C2 one_manager",
+    "people": [
+     "Elena Novak",
+     "Priya Shah",
+     "Robert Hernandez",
+     "Shari Brown",
+     "Stephanie Romero"
+    ],
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C2 one_manager",
+    "people": [
+     "Michael Torres",
+     "Anthony Day",
+     "Bryan Rivera",
+     "Courtney Barron",
+     "Glenn Hayes",
+     "Kelly Floyd",
+     "Misty Peterson",
+     "Sarah Chen",
+     "Zachary Brown"
+    ],
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9c1-7b40-8196-10ef8f29ee7e",
+    "claim": "David Morgan (chief revenue officer) reports to Michael Torres (vp sales)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Michael Torres** — VP Sales"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9fa-7790-8ee9-2f7acbee12a4",
+    "claim": "Elena Novak (director of finance) reports to Priya Shah (finance manager)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Priya Shah** — Finance Manager"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9f3-7881-9a0a-a14b736d3cae",
+    "claim": "Elena Novak (director of finance) reports to Robert Hernandez (accounts receivable specialist)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Robert Hernandez** — Accounts Receivable Specialist"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9d5-7250-bc89-b58b98015fd0",
+    "claim": "Michael Torres (vp sales) reports to Anthony Day (enterprise account executive)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Anthony Day** — Enterprise Account Executive"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9ec-7f22-bb88-65aac237db2a",
+    "claim": "Michael Torres (vp sales) reports to Bryan Rivera (sales operations analyst)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Bryan Rivera** — Sales Operations Analyst"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9e9-7930-8ddf-2692e932ea7b",
+    "claim": "Michael Torres (vp sales) reports to Courtney Barron (sales engineer)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Courtney Barron** — Sales Engineer"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9c8-7ad0-98cb-8b55014167ff",
+    "claim": "Michael Torres (vp sales) reports to Glenn Hayes (customer success manager)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Glenn Hayes** — Customer Success Manager"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9da-7131-b03d-e2f1f7d3f0f6",
+    "claim": "Michael Torres (vp sales) reports to Kelly Floyd (enterprise account executive)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Kelly Floyd** — Enterprise Account Executive"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9ce-7d90-a184-1f911da83f5a",
+    "claim": "Michael Torres (vp sales) reports to Misty Peterson (customer success manager)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Misty Peterson** — Customer Success Manager"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9e0-7b01-a8e6-bcbcd2e9790c",
+    "claim": "Michael Torres (vp sales) reports to Sarah Chen (enterprise account executive)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Sarah Chen** — Enterprise Account Executive"
+    },
+    "status": "REQUIRES_REVIEW"
+   },
+   {
+    "constraint": "C3 rank",
+    "fact_id": "01a0e787-b9e5-7d21-982e-e34bc6fc9619",
+    "claim": "Michael Torres (vp sales) reports to Zachary Brown (enterprise account executive)",
+    "evidence": {
+     "document": "organization_chart.md",
+     "quote": "**Zachary Brown** — Enterprise Account Executive"
+    },
+    "status": "REQUIRES_REVIEW"
+   }
+  ],
+  "no_manager": [
+   "Anthony Day",
+   "Bryan Rivera",
+   "Courtney Barron",
+   "Glenn Hayes",
+   "Kelly Floyd",
+   "Misty Peterson",
+   "Priya Shah",
+   "Robert Hernandez",
+   "Sarah Chen",
+   "Zachary Brown"
+  ]
+ },
+ {
+  "snapshot": "small base, now (corrected + curated)",
+  "kb": "01a0e787-41f4-71b2-83fb-22aefb8dd650",
+  "record_time": null,
+  "titled_people": {
+   "Sarah Chen": "enterprise account executive",
+   "Michael Torres": "vp sales",
+   "David Morgan": "chief revenue officer",
+   "Priya Shah": "finance manager",
+   "Elena Novak": "director of finance",
+   "Kelly Floyd": "enterprise account executive",
+   "Anthony Day": "enterprise account executive",
+   "Zachary Brown": "enterprise account executive",
+   "Bryan Rivera": "sales operations analyst",
+   "Misty Peterson": "customer success manager",
+   "Courtney Barron": "sales engineer",
+   "Robert Hernandez": "accounts receivable specialist",
+   "Glenn Hayes": "customer success manager"
+  },
+  "edges": [
+   {
+    "fact_id": "01a0e9db-8cbc-7a63-a7ba-edda9c319c12",
+    "subject": "Anthony Day",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0e9db-8cb9-7870-8952-6993c24e137c",
+    "subject": "Kelly Floyd",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0e9db-8cc2-7813-a3c5-37135cfc6040",
+    "subject": "Michael Torres",
+    "manager": "David Morgan",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0e9db-8cc4-7143-8570-aa1e67b03b47",
+    "subject": "Priya Shah",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0e9d7-882a-74d0-8d47-8e8275877b1a",
+    "subject": "Sarah Chen",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0e9db-8cbf-7f91-be99-38fa0fb1c5a9",
+    "subject": "Zachary Brown",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   }
+  ],
+  "conflicts": [],
+  "no_manager": [
+   "Bryan Rivera",
+   "Courtney Barron",
+   "Elena Novak",
+   "Glenn Hayes",
+   "Misty Peterson",
+   "Robert Hernandez"
+  ]
+ },
+ {
+  "snapshot": "scale base, as ingested (before curation)",
+  "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a",
+  "record_time": "2026-09-29 13:40:00+00",
+  "titled_people": {
+   "David Morgan": "chief revenue officer",
+   "Michael Torres": "vp sales",
+   "Michelle Taylor": "enterprise account executive",
+   "David Miller": "sales engineer",
+   "Elena Novak": "director of finance",
+   "Zachary Brown": "enterprise account executive",
+   "Misty Peterson": "customer success manager",
+   "Sarah Chen": "enterprise account executive",
+   "Ryan Rogers": "sales engineer",
+   "Breanna Marshall": "accounts receivable specialist",
+   "Glenn Hayes": "customer success manager",
+   "Rachel Mendez": "enterprise account executive",
+   "John Schneider": "sales engineer",
+   "Anthony Collier": "accounts receivable specialist",
+   "Kelly Floyd": "enterprise account executive",
+   "Tracy Cantu": "customer success manager",
+   "Stephanie Wells": "enterprise account executive",
+   "Bryan Rivera": "sales operations analyst",
+   "Priya Shah": "finance manager",
+   "Anthony Day": "enterprise account executive",
+   "Kelsey Vega": "sales operations analyst",
+   "Darrell Sullivan": "sales engineer",
+   "Matthew Snyder": "sales operations analyst",
+   "Charles Lopez": "enterprise account executive",
+   "Courtney Barron": "sales engineer",
+   "Mary Elliott": "sales operations analyst"
+  },
+  "edges": [],
+  "conflicts": [],
+  "no_manager": [
+   "Anthony Collier",
+   "Anthony Day",
+   "Breanna Marshall",
+   "Bryan Rivera",
+   "Charles Lopez",
+   "Courtney Barron",
+   "Darrell Sullivan",
+   "David Miller",
+   "Elena Novak",
+   "Glenn Hayes",
+   "John Schneider",
+   "Kelly Floyd",
+   "Kelsey Vega",
+   "Mary Elliott",
+   "Matthew Snyder",
+   "Michael Torres",
+   "Michelle Taylor",
+   "Misty Peterson",
+   "Priya Shah",
+   "Rachel Mendez",
+   "Ryan Rogers",
+   "Sarah Chen",
+   "Stephanie Wells",
+   "Tracy Cantu",
+   "Zachary Brown"
+  ]
+ },
+ {
+  "snapshot": "scale base, now (curated)",
+  "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a",
+  "record_time": null,
+  "titled_people": {
+   "Sarah Chen": "enterprise account executive",
+   "Kelly Floyd": "enterprise account executive",
+   "Anthony Day": "enterprise account executive",
+   "Zachary Brown": "enterprise account executive",
+   "Michelle Taylor": "enterprise account executive",
+   "David Morgan": "chief revenue officer",
+   "Michael Torres": "vp sales",
+   "Priya Shah": "finance manager",
+   "Elena Novak": "director of finance",
+   "Charles Lopez": "enterprise account executive",
+   "Bryan Rivera": "sales operations analyst",
+   "Misty Peterson": "customer success manager",
+   "Courtney Barron": "sales engineer",
+   "Glenn Hayes": "customer success manager",
+   "Tracy Cantu": "customer success manager",
+   "Rachel Mendez": "enterprise account executive",
+   "Stephanie Wells": "enterprise account executive",
+   "Darrell Sullivan": "sales engineer",
+   "David Miller": "sales engineer",
+   "John Schneider": "sales engineer",
+   "Ryan Rogers": "sales engineer",
+   "Kelsey Vega": "sales operations analyst",
+   "Mary Elliott": "sales operations analyst",
+   "Matthew Snyder": "sales operations analyst",
+   "Anthony Collier": "accounts receivable specialist",
+   "Breanna Marshall": "accounts receivable specialist"
+  },
+  "edges": [
+   {
+    "fact_id": "01a0ed66-4120-7582-a03c-f448ef4e8abd",
+    "subject": "Anthony Collier",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40cb-7753-b410-43da21d4a88e",
+    "subject": "Anthony Day",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4124-7372-a21d-0d815480183e",
+    "subject": "Breanna Marshall",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4139-7130-935e-3a380d2536a9",
+    "subject": "Brian Nunez",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4111-78d3-b49f-7fb2123a572c",
+    "subject": "Bryan Rivera",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4127-7e93-a056-4bc72565f471",
+    "subject": "Bryan Yoder",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-413b-7db3-bfb3-b9c94e10304c",
+    "subject": "Carlos Weaver",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40cf-75c1-be35-906c58287e08",
+    "subject": "Charles Lopez",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40fa-7ff2-a045-b535a4d5e1af",
+    "subject": "Courtney Barron",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40fe-7f30-800b-d8bca64caa3d",
+    "subject": "Darrell Sullivan",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4103-7680-8548-34522013ac85",
+    "subject": "David Miller",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40bc-7643-8b93-be50a6f5923e",
+    "subject": "Glenn Hayes",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-413d-7982-a3cc-7f878c09786c",
+    "subject": "Jacqueline Riggs",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-412b-78c2-bbbd-ba28dbd7a82b",
+    "subject": "Jason Smith",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-412e-73a1-ba0d-ccc631875785",
+    "subject": "Jeremy Le",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-413e-7620-85f0-42eb930b2c08",
+    "subject": "Jerry Davis MD",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4108-7ee0-afb8-9c630bce1e2b",
+    "subject": "John Schneider",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40d3-7c33-8138-ba891dd23f60",
+    "subject": "Kelly Floyd",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4114-7140-b3c7-0e1d81a4bd6d",
+    "subject": "Kelsey Vega",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4140-7d20-a334-86d383f4098f",
+    "subject": "Maria Jones",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4118-78b3-9d45-bf9c133820ba",
+    "subject": "Mary Elliott",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-411c-7db3-ba9f-cc3f95fce7ad",
+    "subject": "Matthew Snyder",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4130-7011-96d1-29fd9d26ae00",
+    "subject": "Maurice Garcia",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40b6-7fb2-b9d9-fbb499617c5f",
+    "subject": "Michael Torres",
+    "manager": "David Morgan",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4142-7432-b286-9019d2404f47",
+    "subject": "Michael Wilson",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40d7-7633-9f8f-74f51253736b",
+    "subject": "Michelle Taylor",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4133-75c2-95f6-5298b6ba8606",
+    "subject": "Michelle Williamson",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40c2-7423-8ea7-075f3a3cef40",
+    "subject": "Misty Peterson",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4145-7530-a98a-b363fe92bdc6",
+    "subject": "Mx. Robert Watkins",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4137-7e52-8cdf-0148128e6a34",
+    "subject": "Priya Shah",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40db-75d2-b6b6-90cd0c3724dc",
+    "subject": "Rachel Mendez",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4135-7a50-a58b-5ad9828b8a49",
+    "subject": "Robert Hernandez",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-410d-7213-a5c0-57dc7bd2bb2b",
+    "subject": "Ryan Rogers",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40e1-72c0-84c3-b4bcd4f46a45",
+    "subject": "Sarah Chen",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4147-7732-9827-034215a2d6d2",
+    "subject": "Sarah Jordan",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4149-78d3-a25c-f679b0a649a2",
+    "subject": "Shari Brown",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-414b-7143-9991-fb8e5921a32c",
+    "subject": "Sherry Castillo",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-414d-7bc2-b172-2fa94f49abcf",
+    "subject": "Sonya Mitchell",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-414f-7233-b184-1dd58b388a30",
+    "subject": "Stephanie Romero",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40f0-7d62-bb90-b5a326efd693",
+    "subject": "Stephanie Wells",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40c7-7bd3-ae66-1aa573426dc7",
+    "subject": "Tracy Cantu",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-4151-7fd2-9257-05948156beeb",
+    "subject": "Zachary Baldwin",
+    "manager": "Elena Novak",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   },
+   {
+    "fact_id": "01a0ed66-40f4-7940-8a96-8d12c6a1ecf1",
+    "subject": "Zachary Brown",
+    "manager": "Michael Torres",
+    "doc": "northstar-curation-reporting-lines.json",
+    "quote": "",
+    "truth": "correct",
+    "flagged": false
+   }
+  ],
+  "conflicts": [],
+  "no_manager": [
+   "Elena Novak"
+  ]
+ }
+]
