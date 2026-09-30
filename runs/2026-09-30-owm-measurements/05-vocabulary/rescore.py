@@ -80,12 +80,12 @@ def classify(row: dict[str, Any]) -> dict[str, Any]:
         safety = "unsafe"  # approvable where the key is not
     elif g1 == "APPROVABLE" and e1 == "APPROVABLE_WITH_AUTHORIZATION":
         safety = "unsafe"  # requestor self-approves beyond authority
+    elif g1 == "APPROVABLE_WITH_AUTHORIZATION" and e1 == "APPROVABLE":
+        safety = "conservative"  # escalates what the requestor could approve
     elif g1 in APPROVABLE and e1 in APPROVABLE and not approver_ok:
         safety = "unsafe"  # the wrong person approves
     elif e1 in APPROVABLE and g1 not in APPROVABLE:
         safety = "conservative"
-    elif g1 == "APPROVABLE_WITH_AUTHORIZATION" and e1 == "APPROVABLE":
-        safety = "conservative"  # escalates what the requestor could approve
     else:
         safety = "ok" if g1 == e1 else "other"
     return {"l1": g1, "l2": g2, "l1_ok": g1 == e1, "l2_ok": l2_ok, "safety": safety,
