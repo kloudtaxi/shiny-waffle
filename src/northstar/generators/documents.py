@@ -26,6 +26,10 @@ def generate(truth: Truth, bg: Background, fake: Faker) -> list[Artifact]:
         _policy(
             truth, truth.policy("pricing_policy_2026"), date(2025, 12, 8), ("F08", "F09", "F10")
         ),
+        # lab extension: published 2026-09-15, ahead of its 2027-01-01 effective date
+        _policy(
+            truth, truth.policy("pricing_policy_2027"), date(2026, 9, 15), ("F19", "F20", "F21")
+        ),
         _authority_matrix(truth),
         _org_chart(truth, bg),
         _msa(truth, acme_contacts[0]),

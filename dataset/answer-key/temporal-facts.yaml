@@ -30,6 +30,24 @@
   max_inclusive: null
   valid_from: *id003
   valid_to: *id004
+- fact: ENTERPRISE_AE discount authority
+  source: pricing_policy_2027
+  min_exclusive: null
+  max_inclusive: 0.05
+  valid_from: &id005 2027-01-01
+  valid_to: &id006 2027-12-31
+- fact: VP_SALES discount authority
+  source: pricing_policy_2027
+  min_exclusive: 0.05
+  max_inclusive: 0.12
+  valid_from: *id005
+  valid_to: *id006
+- fact: CRO discount authority
+  source: pricing_policy_2027
+  min_exclusive: 0.12
+  max_inclusive: null
+  valid_from: *id005
+  valid_to: *id006
 - fact: contract MSA-ACME-2025 in force
   source: MSA-ACME-2025
   valid_from: 2025-04-01

@@ -756,3 +756,47 @@
   - approval_authority_matrix
   - organization_chart
   - DR-9112
+- decision_id: DEC-S21
+  scenario: S21
+  type: discount_approval
+  as_of: 2027-02-01
+  corpus: base
+  subject:
+    customer: CUST-1001
+    product: PROD-001
+  request:
+    id: DR-9113
+    requested_discount: 0.15
+    requestor: EMP-101
+  commercial_eligibility:
+    status: eligible
+    maximum_discount: 0.15
+    basis: EXC-ACME-NS500-15
+  authority:
+    policy: pricing_policy_2027
+    requestor:
+      employee: EMP-101
+      maximum_discount: 0.05
+      authorized: false
+    required:
+      role: CRO
+      maximum_discount: null
+    approver:
+      employee: EMP-300
+      name: David Morgan
+      authorized: true
+  decision:
+    outcome: APPROVE_WITH_AUTHORIZATION
+  reason:
+  - customer exception permits requested discount
+  - requestor lacks authority
+  - Chief Revenue Officer approval is required
+  - David Morgan holds Chief Revenue Officer authority
+  evidence:
+  - CRM-2048
+  - C-1001
+  - MSA-ACME-2025
+  - EXC-ACME-NS500-15
+  - pricing_policy_2027
+  - organization_chart
+  - DR-9113

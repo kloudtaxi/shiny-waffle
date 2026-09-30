@@ -36,6 +36,10 @@ artifacts:
   path: documents/pricing_policy_2026.md
   source_system: Northstar Drive
   description: Northstar Pricing Policy 2026.
+- id: pricing_policy_2027
+  path: documents/pricing_policy_2027.md
+  source_system: Northstar Drive
+  description: Northstar Pricing Policy 2027.
 - id: approval_authority_matrix
   path: documents/approval_authority_matrix.md
   source_system: Northstar Drive

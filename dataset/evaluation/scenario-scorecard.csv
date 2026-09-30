@@ -19,3 +19,4 @@ S17,"The customer's own agreement, no exception for the product (fresh held-out)
 S18,8% on the last day of the 10% exception (fresh held-out),base,Could Sarah Chen have approved an 8% NS-500 discount for Acme Manufacturing on 2025-03-31?,APPROVE,,,
 S19,Standard pricing where the contract documents are missing (fresh held-out),missing-contract-evidence,Can Sarah Chen approve a 6% discount for Acme Manufacturing on the NS-Cloud Operations Suite on 2026-09-23?,APPROVE,,,
 S20,VP Sales requests above the exception (fresh held-out),base,Can Michael Torres approve an 18% NS-500 discount for Acme Manufacturing on 2026-09-23?,REJECT_OR_ESCALATE,,,
+S21,"The DR-9001 request again, under the 2027 policy (decision memory)",base,Can Sarah Chen approve a 15% discount for Acme Manufacturing on an NS-500 Industrial Controller on 2027-02-01?,APPROVE_WITH_AUTHORIZATION,,,

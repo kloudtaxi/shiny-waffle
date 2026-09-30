@@ -30,6 +30,23 @@ policies:
       - Contract-specific pricing exceptions must be reviewed.
       - Discounts greater than 10% require recorded approval evidence.
 
+  # Lab extension (2026-09-30), not in doc 03: a later policy so decision memory can be tested
+  # against a change of rules (OWM measurements, item 4). Published in advance of its effective date.
+  - id: pricing_policy_2027
+    title: Northstar Pricing Policy 2027
+    valid_from: 2027-01-01
+    valid_to: 2027-12-31
+    authority_matrix_document: null   # the 2027 bands live in the policy itself
+    approval_evidence_required_above: 0.05
+    bands:
+      - { role: ENTERPRISE_AE, min_exclusive: null, max_inclusive: 0.05 }
+      - { role: VP_SALES, min_exclusive: 0.05, max_inclusive: 0.12 }
+      - { role: CRO, min_exclusive: 0.12, max_inclusive: null }
+    rules:
+      - Discounts are calculated against the current list price.
+      - Contract-specific pricing exceptions must be reviewed.
+      - Discounts greater than 5% require recorded approval evidence.
+
 principles:
   - Contractual eligibility does not change employee authority.
   - A request must not be approved solely because the requested commercial discount is permitted by a customer contract.

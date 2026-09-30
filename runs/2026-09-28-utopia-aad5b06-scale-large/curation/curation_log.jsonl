@@ -44,3 +44,13 @@
 {"at": "2026-09-29T18:03:40-0400", "op": "push", "kb": "01a0ea56-65d0-73d2-940d-6f1f9da0d800", "external_id": "northstar-curation-authority-bands-2025", "result": {"action": "updated"}}
 {"at": "2026-09-29T18:03:40-0400", "op": "push", "kb": "01a0ea56-65d0-73d2-940d-6f1f9da0d800", "external_id": "northstar-curation-authority-bands-2026", "result": {"action": "updated"}}
 {"at": "2026-09-29T18:03:40-0400", "op": "push", "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a", "external_id": "northstar-curation-agreement-term", "result": {"action": "updated"}}
+{"at": "2026-09-30T07:12:45-0400", "op": "push", "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a", "external_id": "northstar-curation-reporting-lines", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:45-0400", "op": "push", "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a", "external_id": "northstar-curation-authority-bands-2025", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:45-0400", "op": "push", "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a", "external_id": "northstar-curation-authority-bands-2026", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:46-0400", "op": "push", "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a", "external_id": "northstar-curation-exception-values", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:46-0400", "op": "push", "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a", "external_id": "northstar-curation-agreement-term", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:46-0400", "op": "cleanup-missing", "kb": "01a0ea56-61e7-79e3-99d1-e82b5d6af79a", "source": "01a0ed66-1d7c-7ce3-8f57-72c91733f3d9", "result": {"deleted": 5}}
+{"at": "2026-09-30T07:12:46-0400", "op": "push", "kb": "01a0ea56-65d0-73d2-940d-6f1f9da0d800", "external_id": "northstar-curation-reporting-lines", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:46-0400", "op": "push", "kb": "01a0ea56-65d0-73d2-940d-6f1f9da0d800", "external_id": "northstar-curation-authority-bands-2025", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:46-0400", "op": "push", "kb": "01a0ea56-65d0-73d2-940d-6f1f9da0d800", "external_id": "northstar-curation-authority-bands-2026", "result": {"action": "marked_missing"}}
+{"at": "2026-09-30T07:12:46-0400", "op": "cleanup-missing", "kb": "01a0ea56-65d0-73d2-940d-6f1f9da0d800", "source": "01a0ed66-1d93-7c93-a4bf-dfeca9c94d45", "result": {"deleted": 3}}

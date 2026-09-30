@@ -156,6 +156,12 @@ before any reader run. Held-out, not blind: they were written after v2. No evide
 | S19 | Can Sarah approve 6% NS-Cloud (standard) where the contract documents are missing? | missing-contract-evidence | `APPROVE` |
 | S20 | Can Michael approve 18% NS-500 for Acme Manufacturing? | base | `REJECT_OR_ESCALATE` (above the 15% exception) |
 
+**Decision memory (S21).** A lab extension added on 2026-09-30: `pricing_policy_2027` (AE ≤5%,
+VP Sales ≤12%, CRO above), published in advance as a new evidence document. S21 is the DR-9001
+request again on 2027-02-01: `APPROVE_WITH_AUTHORIZATION` by the **CRO**, where in 2026 it was
+Michael Torres's to approve. It anchors the decision-memory measurement in
+`runs/2026-09-30-owm-measurements/04-decision-memory/`.
+
 S01 reproduces the canonical decision object from doc 03 §21 field for field
 (see `dataset/answer-key/expected-results.yaml`).
 

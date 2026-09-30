@@ -35,6 +35,8 @@ def test_all_scenarios_coherent(ds: Dataset) -> None:
         "S18": "APPROVE",
         "S19": "APPROVE",
         "S20": "REJECT_OR_ESCALATE",
+        # the 2027 policy (lab extension, OWM measurements item 4)
+        "S21": "APPROVE_WITH_AUTHORIZATION",
     }
 
 

@@ -1,0 +1,21 @@
+id: S21
+slug: policy-change-2027
+title: The DR-9001 request again, under the 2027 policy (decision memory)
+kind: discount_decision
+question: Can Sarah Chen approve a 15% discount for Acme Manufacturing on an NS-500 Industrial Controller on 2027-02-01?
+teaches: [temporal-organizational-state, authority-bands, decision-memory]
+corpus: base
+as_of: 2027-02-01
+request: { base: DR-9001, id: DR-9113, request_date: 2027-02-01 }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  commercial_eligibility: eligible
+  eligibility_basis: EXC-ACME-NS500-15
+  requestor_authorized: false
+  required_role: CRO
+  approver: EMP-300
+  evidence: [CRM-2048, C-1001, MSA-ACME-2025, EXC-ACME-NS500-15, pricing_policy_2027, organization_chart, DR-9113]
+reasoning:
+  - Acme's agreement and its 15% NS-500 exception are still in force on 2027-02-01.
+  - The 2027 policy cuts VP Sales authority to 12%; above 12% needs the CRO, David Morgan.
+  - The same request that Michael Torres could approve in 2026 now needs the CRO.

@@ -72,6 +72,15 @@
   - F09
   - F10
   mentions: []
+- artifact: pricing_policy_2027
+  path: documents/pricing_policy_2027.md
+  supports:
+  - pricing_policy_2027
+  asserts:
+  - F19
+  - F20
+  - F21
+  mentions: []
 - artifact: approval_authority_matrix
   path: documents/approval_authority_matrix.md
   supports:
