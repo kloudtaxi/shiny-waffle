@@ -1,0 +1,918 @@
+{
+ "_about": "Annotations for the OWM measurements batch (tracker/build_seed.py), written by ledger_annotations.py from the batch's score files. Every grade is the auto-scorer's. {run} expands to runs/<run>.",
+ "namespace_conditions": true,
+ "conditions": {
+  "T1": {
+   "folder": "01-02-procedure/T1/r1/B1n",
+   "repeats": "01-02-procedure/T1/r{n}/B1n",
+   "questions": "01-02-procedure/questions.tsv"
+  },
+  "T2": {
+   "folder": "01-02-procedure/T2/r1/B1n",
+   "repeats": "01-02-procedure/T2/r{n}/B1n",
+   "questions": "01-02-procedure/questions.tsv"
+  },
+  "DMa": {
+   "folder": "04-decision-memory/a/r1/B1n",
+   "repeats": "04-decision-memory/a/r{n}/B1n",
+   "questions": "04-decision-memory/questions.tsv"
+  },
+  "DMb": {
+   "folder": "04-decision-memory/b/r1/B1n",
+   "repeats": "04-decision-memory/b/r{n}/B1n",
+   "questions": "04-decision-memory/questions.tsv"
+  },
+  "DMc": {
+   "folder": "04-decision-memory/c/r1/B1n",
+   "repeats": "04-decision-memory/c/r{n}/B1n",
+   "questions": "04-decision-memory/questions.tsv"
+  }
+ },
+ "experiment": {
+  "title": "OWM measurements · items 1–5",
+  "date": "2026-09-30",
+  "status": "Done",
+  "status_note": "Procedure via tool: called 102/102, accuracy held. v2 fixed S13/S15 but regressed S18. Constraints flag 13/13 inverted lines. Decision memory: both carriers retrieve; the document carrier became evidence. No stale reuse (9/9).",
+  "next": [
+   "Your grading pass in the ledger: calibrate Claude's provisional grades",
+   "Rulings on the amendment candidates (docs/owm-overhaul-reconciliation-2026-09-29.md §3-4)",
+   "Decision memory with many decisions: retrieval among hundreds of records",
+   "Any procedure v3 only with its own fresh held-out scenarios"
+  ],
+  "utopia": "dev @ aad5b06",
+  "lab_commit": "fe41e59",
+  "seed": 20260923,
+  "notes": "{run}/notes.md",
+  "docs": [
+   "{run}/plan.md",
+   "{run}/01-02-procedure/notes.md",
+   "{run}/03-constraints/notes.md",
+   "{run}/04-decision-memory/notes.md",
+   "{run}/05-vocabulary/notes.md",
+   "docs/owm-overhaul-reconciliation-2026-09-29.md"
+  ]
+ },
+ "default_first_run": [
+  null,
+  "Not read yet."
+ ],
+ "provisional": {
+  "DMa": {
+   "M1": [
+    "fail",
+    "Auto-scored (item 4 rule, prereg.md): decided: False; outcome: None; approved_by: None; policy: None."
+   ],
+   "M2": [
+    "fail",
+    "Auto-scored (item 4 rule, prereg.md): decision_found: False; valid_when_made: None; approved_by: None; approver_role_then: None."
+   ],
+   "M3": [
+    "pass",
+    "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan (per org chart ORG-CHART-2026-09; confirm he is still CRO on 2027-02-01)."
+   ]
+  },
+  "DMb": {
+   "M1": [
+    "pass",
+    "Auto-scored (item 4 rule, prereg.md): decided: True; outcome: APPROVE_WITH_AUTHORIZATION; approved_by: Michael Torres (VP Sales); policy: Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026."
+   ],
+   "M2": [
+    "pass",
+    "Auto-scored (item 4 rule, prereg.md): decision_found: True; valid_when_made: True; approved_by: Michael Torres; approver_role_then: VP Sales."
+   ],
+   "M3": [
+    "pass",
+    "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan."
+   ]
+  },
+  "DMc": {
+   "M1": [
+    "fail",
+    "Auto-scored (item 4 rule, prereg.md): decided: True; outcome: APPROVE_WITH_AUTHORIZATION (approved; 15% discount on NS-500); approved_by: Michael Torres (VP Sales), 2026-09-24; policy: Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026."
+   ],
+   "M2": [
+    "pass",
+    "Auto-scored (item 4 rule, prereg.md): decision_found: True; valid_when_made: True; approved_by: Michael Torres; approver_role_then: VP Sales."
+   ],
+   "M3": [
+    "pass",
+    "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan."
+   ]
+  },
+  "T1": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S05": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S09": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S10": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S11": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S12": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S13": [
+    "fail",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S14": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S15": [
+    "fail",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S16": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S17": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S18": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S19": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S20": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ]
+  },
+  "T2": {
+   "S01": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S02": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S03": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S04": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S05": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S09": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S10": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S11": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S12": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S13": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S14": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S15": [
+    "pass",
+    "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S16": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S17": [
+    "pass",
+    "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S18": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S19": [
+    "pass",
+    "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ],
+   "S20": [
+    "pass",
+    "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+   ]
+  }
+ },
+ "provisional_repeats": [
+  {
+   "condition": "DMa",
+   "scenario": "M1",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Auto-scored (item 4 rule, prereg.md): decided: False; outcome: None; approved_by: None; policy: None."
+  },
+  {
+   "condition": "DMa",
+   "scenario": "M1",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored (item 4 rule, prereg.md): decided: False; outcome: None; approved_by: None; policy: None."
+  },
+  {
+   "condition": "DMa",
+   "scenario": "M2",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Auto-scored (item 4 rule, prereg.md): decision_found: False; valid_when_made: None; approved_by: None; approver_role_then: None."
+  },
+  {
+   "condition": "DMa",
+   "scenario": "M2",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored (item 4 rule, prereg.md): decision_found: False; valid_when_made: None; approved_by: None; approver_role_then: None."
+  },
+  {
+   "condition": "DMa",
+   "scenario": "M3",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan (per org chart as of 2026-09-01; confirm current holder)."
+  },
+  {
+   "condition": "DMa",
+   "scenario": "M3",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan (per ORG-CHART-2026-09)."
+  },
+  {
+   "condition": "DMb",
+   "scenario": "M1",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decided: True; outcome: APPROVE_WITH_AUTHORIZATION; approved_by: Michael Torres (VP Sales), 2026-09-24; policy: Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026."
+  },
+  {
+   "condition": "DMb",
+   "scenario": "M1",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decided: True; outcome: APPROVE_WITH_AUTHORIZATION; approved_by: Michael Torres (VP Sales), 2026-09-24; policy: Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026."
+  },
+  {
+   "condition": "DMb",
+   "scenario": "M2",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decision_found: True; valid_when_made: True; approved_by: Michael Torres; approver_role_then: VP Sales."
+  },
+  {
+   "condition": "DMb",
+   "scenario": "M2",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decision_found: True; valid_when_made: True; approved_by: Michael Torres; approver_role_then: VP Sales."
+  },
+  {
+   "condition": "DMb",
+   "scenario": "M3",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan."
+  },
+  {
+   "condition": "DMb",
+   "scenario": "M3",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan."
+  },
+  {
+   "condition": "DMc",
+   "scenario": "M1",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decided: True; outcome: APPROVE_WITH_AUTHORIZATION; approved_by: Michael Torres (VP Sales); policy: Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026."
+  },
+  {
+   "condition": "DMc",
+   "scenario": "M1",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decided: True; outcome: APPROVE_WITH_AUTHORIZATION; approved_by: Michael Torres (VP Sales); policy: Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026."
+  },
+  {
+   "condition": "DMc",
+   "scenario": "M2",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decision_found: True; valid_when_made: True; approved_by: Michael Torres; approver_role_then: VP Sales."
+  },
+  {
+   "condition": "DMc",
+   "scenario": "M2",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored (item 4 rule, prereg.md): decision_found: True; valid_when_made: True; approved_by: Michael Torres; approver_role_then: VP Sales."
+  },
+  {
+   "condition": "DMc",
+   "scenario": "M3",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan."
+  },
+  {
+   "condition": "DMc",
+   "scenario": "M3",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs S21's key (CRO, David Morgan): outcome APPROVE_WITH_AUTHORIZATION, approver David Morgan (per org chart as of 2026-09-01)."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION; mismatched: outcome, authorized, approver. Fields: outcome ✗, eligibility ✓, authorized ✗, approver ✗, required_role ✗. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S09",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S09",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S10",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S10",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S11",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S11",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S12",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S12",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S13",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S13",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S14",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S14",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S15",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S15",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S16",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S16",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S17",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S17",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S18",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S18",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S19",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S19",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S20",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T1",
+   "scenario": "S20",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S01",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S01",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S02",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S02",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S03",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S03",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S04",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S04",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S05",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S05",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S09",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S09",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S10",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S10",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S11",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S11",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE_WITH_AUTHORIZATION. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S12",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S12",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S13",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S13",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S14",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S14",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S15",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S15",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S16",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S16",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S17",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S17",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REVIEW_REQUIRED. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S18",
+   "repeat": 2,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S18",
+   "repeat": 3,
+   "grade": "fail",
+   "note": "Auto-scored vs answer key: outcome REQUEST_EVIDENCE; mismatched: outcome, eligibility. Fields: outcome ✗, eligibility ✗, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S19",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S19",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome APPROVE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S20",
+   "repeat": 2,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  },
+  {
+   "condition": "T2",
+   "scenario": "S20",
+   "repeat": 3,
+   "grade": "pass",
+   "note": "Auto-scored vs answer key: outcome REJECT_OR_ESCALATE. Fields: outcome ✓, eligibility ✓, authorized ✓, approver ✓, required_role ✓. get_procedure called: ✓."
+  }
+ ],
+ "findings": [
+  {
+   "id": "m1",
+   "category": "owm",
+   "title": "Agents call for a procedure served as a governed object",
+   "body": "With the procedure removed from the system prompt and served by the OWM stand-in's get_procedure, 102 of 102 blind readers found and called it unprompted. On S01-S14 accuracy held: 29/33 via the tool against 30/33 with the same procedure in the prompt; the one extra miss is conservative (a 2025 request routed to VP Sales).",
+   "evidence": [
+    "01-02-procedure/notes.md",
+    "01-02-procedure/table.md"
+   ]
+  },
+  {
+   "id": "m2",
+   "category": "owm",
+   "title": "A prose procedure behaves like untested code",
+   "body": "Procedure v2's one-sentence applicability rule fixed S13 and the fresh S15 (0/3 -> 3/3 each) with no over-triggering on S16, S17 or S19, but regressed S18 (3/3 -> 1/3): readers judged the agreement the request cites instead of the terms in force that day. The fix moved the failure to a neighbouring boundary. v2 is not adopted; a governed procedure plausibly needs an executable, test-covered reference beside the prose.",
+   "evidence": [
+    "01-02-procedure/notes.md",
+    "01-02-procedure/scores-T2.json"
+   ]
+  },
+  {
+   "id": "m3",
+   "category": "owm",
+   "title": "Rank constraints flag the inverted org graph, with the evidence attached",
+   "body": "A deterministic check over the foundation's reports_to facts flagged 13 of 13 inverted lines in the small graph as ingested (C2 one manager, C3 rank) and 0 of 49 correct lines. Acyclicity caught nothing: an inverted tree is still a tree. The conflict records keep the extractor's quote, which shows it misread the org chart; a silent fix would have hidden that. At scale, before curation, there were no edges at all: a coverage gap, not a conflict.",
+   "evidence": [
+    "03-constraints/notes.md",
+    "03-constraints/table.md"
+   ]
+  },
+  {
+   "id": "m4",
+   "category": "owm",
+   "title": "A decision stored as a document becomes evidence",
+   "body": "Written back to Utopia as a document, agent A's decision was extracted as graph facts with no validity window (Sarah Chen limit 10%, authorized no), and 2 of 3 later readers cited the decision as a source for the customer identity, one noting it did not recheck the source files. The same decision served as a typed record was consulted as precedent and cited as evidence by none. Decision records need their own provenance class, apart from evidence.",
+   "evidence": [
+    "04-decision-memory/notes.md",
+    "04-decision-memory/extracted-from-decision-log.tsv"
+   ]
+  },
+  {
+   "id": "m5",
+   "category": "agent",
+   "title": "No stale reuse after the policy changed",
+   "body": "On the DR-9001 request again in 2027 (S21), all 9 readers named the CRO, David Morgan, under the 2027 policy, including the 6 that had the 2026 decision (Michael Torres) in memory. They used it as precedent and said the rules had changed. Retrieval on 'was it decided' worked for both carriers; the typed record was cheaper (3.3 vs 5.3 turns, no source reads) but not on 'was it valid when made', where both re-read the 2026 policy.",
+   "evidence": [
+    "04-decision-memory/notes.md",
+    "04-decision-memory/table.md"
+   ]
+  },
+  {
+   "id": "m6",
+   "category": "method",
+   "title": "With procedure and record present, every miss is routing, not decision state",
+   "body": "Re-scoring 134 earlier answers on a split vocabulary (decision state / governance routing / review action): every miss with the procedure and request record present is a COMMERCIAL_REVIEW vs REQUEST_EVIDENCE disagreement with the decision state right. 1 unsafe answer in 134, 0 in 119 once the record is present. Not blind: the answers were known when the rules were written.",
+   "evidence": [
+    "05-vocabulary/notes.md",
+    "05-vocabulary/table.md"
+   ]
+  },
+  {
+   "id": "m7",
+   "category": "foundation",
+   "title": "Deleting a document leaves its name facts live",
+   "body": "Deleting the decision-log fixture invalidated its content facts but left 23 known_as facts live, 15 of them with the deleted document as their only evidence (for example 'Decision record DEC-2026-0001'). Names only, no decision content; disclosed rather than removed by hand.",
+   "evidence": [
+    "04-decision-memory/extracted-from-decision-log.tsv"
+   ]
+  }
+ ]
+}

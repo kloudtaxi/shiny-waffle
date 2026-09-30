@@ -1,0 +1,7 @@
+{"at": "2026-09-30T07:29:44-0400", "tool": "find_decisions", "arguments": {"request_id": "DR-9001"}, "is_error": false}
+{"at": "2026-09-30T07:29:45-0400", "tool": "get_decision", "arguments": {"decision_id": "DEC-2026-0001"}, "is_error": false}
+{"at": "2026-09-30T07:29:55-0400", "tool": "find_decisions", "arguments": {"request_id": "DR-9001"}, "is_error": false}
+{"at": "2026-09-30T07:29:56-0400", "tool": "get_decision", "arguments": {"decision_id": "DEC-2026-0001"}, "is_error": false}
+{"at": "2026-09-30T07:30:35-0400", "tool": "list_procedures", "arguments": {}, "is_error": false}
+{"at": "2026-09-30T07:30:36-0400", "tool": "find_decisions", "arguments": {"request_id": "DR-9113"}, "is_error": false}
+{"at": "2026-09-30T07:30:37-0400", "tool": "get_procedure", "arguments": {"decision_kind": "discount_approval"}, "is_error": false}

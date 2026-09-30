@@ -1,0 +1,4 @@
+{"at": "2026-09-30T07:30:00-0400", "tool": "list_procedures", "arguments": {}, "is_error": false}
+{"at": "2026-09-30T07:30:02-0400", "tool": "get_procedure", "arguments": {"decision_kind": "discount_approval"}, "is_error": false}
+{"at": "2026-09-30T07:30:18-0400", "tool": "list_procedures", "arguments": {}, "is_error": false}
+{"at": "2026-09-30T07:30:20-0400", "tool": "get_procedure", "arguments": {"decision_kind": "discount_approval"}, "is_error": false}

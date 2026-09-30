@@ -1,0 +1,58 @@
+live_after_delete	layer	subject	predicate	object	valid_from	valid_to
+f	open	Michael Torres	approved	discount request DR-9001	2026-09-24	2026-09-24
+f	open	Sarah Chen	authorized	no		
+f	open	discount request DR-9001	basis	Master Supply Agreement ACME-MFG-2025		
+f	open	discount request DR-9001	basis claimed	contract_exception		
+f	open	discount request DR-9001	commercial eligibility status	eligible		
+f	open	discount request DR-9001	customer	Acme Manufacturing		
+f	open	Decision record DEC-2026-0001	decided	2026-09-23		
+f	open	Decision record DEC-2026-0001	decided by	governance agent		
+f	open	Decision record DEC-2026-0001	decision kind	discount approval		
+f	open	Decision record DEC-2026-0001	is about	discount request DR-9001		
+f	typed	Acme Manufacturing	known_as	C-1001 Acme Mfg. Holdings		
+f	typed	Acme Manufacturing	known_as	CRM-2048		
+f	typed	Acme Manufacturing	known_as	Acme Mfg. Holdings		
+f	typed	Acme Manufacturing	known_as	customers.csv		
+f	typed	Acme NS-500 Strategic Account Exception	known_as	Schedule B pricing exception EXC-ACME-NS500-15		
+f	typed	Approval Authority Matrix	known_as	approval_authority_matrix.md		
+f	open	Sarah Chen	limit	10%		
+f	open	discount request DR-9001	maximum discount	15%		
+f	open	discount request DR-9001	outcome	APPROVE_WITH_AUTHORIZATION		
+f	open	discount request DR-9001	product	NS-500 Industrial Controller		
+f	open	acme_account_strategy.md	relied on	Acme Manufacturing		
+f	open	Acme Manufacturing	relied on	Acme Manufacturing		
+f	open	acme_master_supply_agreement.md	relied on	Master Supply Agreement ACME-MFG-2025		
+f	open	acme_pricing_exception_2023.md	relied on	EXC-ACME-NS500-10		
+f	open	acme_pricing_exception.md	relied on	Acme NS-500 Strategic Account Exception		
+f	open	Approval Authority Matrix	relied on	Approval Authority Matrix APP-MATRIX-2026		
+f	open	discount_requests.csv	relied on	discount request DR-9001		
+f	open	employees.csv	relied on	organization_chart.md		
+f	open	pricing_policy_2026.md	relied on	Northstar Pricing Policy 2026		
+f	open	sales_discount_sop.md	relied on	SOP-SALES-014		
+f	open	discount request DR-9001	request date	2026-09-23		
+f	open	discount request DR-9001	requested discount	15%		
+f	open	discount request DR-9001	requestor	Sarah Chen		
+f	open	Decision record DEC-2026-0001	status	approved		
+t	typed	acme_account_strategy.md	known_as	acme_account_strategy.md		
+t	typed	Acme Manufacturing	known_as	Acme Manufacturing		
+t	typed	acme_master_supply_agreement.md	known_as	acme_master_supply_agreement.md		
+t	typed	acme_pricing_exception_2023.md	known_as	acme_pricing_exception_2023.md		
+t	typed	acme_pricing_exception.md	known_as	acme_pricing_exception.md		
+t	typed	Approval Authority Matrix APP-MATRIX-2026	known_as	Approval Authority Matrix APP-MATRIX-2026		
+t	typed	Decision record DEC-2026-0001	known_as	Decision record DEC-2026-0001		
+t	typed	discount-approval procedure version 478c8c81676c	known_as	discount-approval procedure version 478c8c81676c		
+t	typed	discount request DR-9001	known_as	discount request DR-9001		
+t	typed	discount_requests.csv	known_as	discount_requests.csv		
+t	typed	employees.csv	known_as	employees.csv		
+t	typed	EXC-ACME-NS500-10	known_as	EXC-ACME-NS500-10		
+t	typed	Master Supply Agreement ACME-MFG-2025	known_as	Master Supply Agreement ACME-MFG-2025		
+t	typed	Michael Torres	known_as	Michael Torres		
+t	typed	Northstar Pricing Policy 2026	known_as	Northstar Pricing Policy 2026		
+t	typed	NS-500 Industrial Controller	known_as	NS-500 Industrial Controller		
+t	typed	NS-500 Industrial Controller	known_as	NS-500		
+t	typed	organization_chart.md	known_as	organization_chart.md		
+t	typed	pricing_policy_2026.md	known_as	pricing_policy_2026.md		
+t	typed	Revenue Operations	known_as	Revenue Operations		
+t	typed	sales_discount_sop.md	known_as	sales_discount_sop.md		
+t	typed	Sarah Chen	known_as	Sarah Chen		
+t	typed	SOP-SALES-014	known_as	SOP-SALES-014		

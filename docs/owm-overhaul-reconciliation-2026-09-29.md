@@ -74,6 +74,20 @@ In order of cost, all Claude-reader-only unless marked:
 5. **Vocabulary split (row 7).** Re-score the existing answers against a three-layer vocabulary: decision
    state, governance routing, review action. No new runs.
 
+### Results (2026-09-30)
+
+All five ran as pre-registered. The details are in `runs/2026-09-30-owm-measurements/notes.md`.
+Item 4 ran on the scale base KB, not the small KBs as planned above, so that every arm used the
+same reader configuration as items 1 and 2.
+
+| # | Rows | Result |
+|---|---|---|
+| 1 | 4, 5 | The procedure served by a tool was called in **102/102** answers, unprompted. Accuracy on S01–S14 was 29/33, against 30/33 with the procedure in the prompt. **Called, not injected, loses nothing measurable.** |
+| 2 | 5, 7 | v2's applicability clause fixed S13 and S15 (0/3 → 3/3) but **regressed S18** (3/3 → 1/3), moving the failure to the cited agreement vs the one in force. **Prose procedures need tests**: the oracle plus held-out scenarios is the executable half. |
+| 3 | 6 | Rank + single-manager constraints flagged **13/13** inverted lines and **0/49** correct ones. Acyclicity caught nothing. The conflict records keep the extractor's quote, which shows the misreading. **Flag, with evidence.** |
+| 4 | 8, 19 | Both memory carriers answer "was it decided". The typed record is cheaper on the direct question and **no stale reuse** occurred after the policy change (9/9). **The decision as a document became evidence**: Utopia extracted `Sarah Chen limit 10%` with no validity, and 2 of 3 later readers cited the decision as a source. The typed record was never cited. |
+| 5 | 7 | Over 134 answers, every miss with procedure + record present is a **layer-2 routing** disagreement. There is 1 unsafe answer in 134, and 0 in 119 once the record is present. |
+
 ## 4. Amendment candidates the process will need
 
 Rows 1, 2, 9, 10, 14, 15 and 16 are rulings, not experiments. Rows 3–8, 11, 12 and 17 each become an
@@ -81,6 +95,10 @@ amendment once decided. Several touch the **constitution itself**, which is also
 
 - **Principle IV** ("writes go through propose plus human review") must say whether a *decision record*
   is a proposal (HITL-gated), an attributed append-only record, or both.
+  - Item 4 adds a constraint whichever it is: **a decision record is not evidence**.
+  - It needs a provenance class of its own, *derived by agent X under procedure P at version V*.
+  - It must not be ingested by the foundation as a primary source. Stored as a document, it came
+    back as undated facts and was cited as a source.
 - **Principle VI** ("no hard dependency on DocIQ") predates DocIQ becoming a privileged first-party
   component (09-15).
 - **Principle VII's** human-judgment gates will need a rule for **agent deciders**: `DeciderKind.AGENT`

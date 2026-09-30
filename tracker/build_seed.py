@@ -196,6 +196,104 @@ SCENARIOS = [
         "Standard pricing; 8% is within Sarah's 10% authority. No escalation.",
         ["over-escalation"],
     ),
+    (
+        "S15",
+        17,
+        "BlueRiver cites Acme's agreement (fresh held-out)",
+        "2026-09-23",
+        "base",
+        "REQUEST_EVIDENCE",
+        "The cited agreement is Acme Manufacturing's; nothing establishes a contract for BlueRiver "
+        "Logistics, so ask for the document. 12% is within Michael's VP Sales authority.",
+        ["terms of another customer"],
+    ),
+    (
+        "S16",
+        18,
+        "Standard pricing, no contract (fresh held-out)",
+        "2026-09-23",
+        "base",
+        "APPROVE",
+        "Acme Industrial Supply has no agreement and asks for none; 8% is standard pricing within "
+        "Sarah's 10% authority.",
+        ["similar name", "over-triggering the applicability rule"],
+    ),
+    (
+        "S17",
+        19,
+        "Own agreement, product not covered (fresh held-out)",
+        "2026-09-23",
+        "base",
+        "REVIEW_REQUIRED",
+        "Acme Manufacturing's agreement is real, but its exception covers the NS-500 only, not "
+        "NS-Edge: commercial review.",
+        ["product scope"],
+    ),
+    (
+        "S18",
+        20,
+        "8% on the old exception's last day (fresh held-out)",
+        "2025-03-31",
+        "base",
+        "APPROVE",
+        "On 2025-03-31 the 2023 exception (10%, EXC-ACME-NS500-10) is in force and covers 8%; the "
+        "2025 policy lets Sarah approve it. The request cites the 2025 agreement, which starts the "
+        "next day.",
+        ["effective dates", "cited terms vs terms in force"],
+    ),
+    (
+        "S19",
+        21,
+        "Standard pricing, contract documents missing (fresh held-out)",
+        "2026-09-23",
+        "missing-contract-evidence",
+        "APPROVE",
+        "No contract terms are claimed; 6% is standard pricing within Sarah's authority. Missing "
+        "contract evidence is irrelevant.",
+        ["over-triggering REQUEST_EVIDENCE"],
+    ),
+    (
+        "S20",
+        22,
+        "VP Sales asks above the exception (fresh held-out)",
+        "2026-09-23",
+        "base",
+        "REJECT_OR_ESCALATE",
+        "18% exceeds the 15% exception; Michael's own authority does not make it eligible.",
+        ["authority is not eligibility"],
+    ),
+    (
+        "M1",
+        23,
+        "Was DR-9001 decided? (decision memory)",
+        "2026-09-30",
+        "base",
+        "Decided: APPROVE_WITH_AUTHORIZATION",
+        "Approved by Michael Torres (VP Sales) on 2026-09-24 under the 2026 policy, eligible under "
+        "EXC-ACME-NS500-15. The approval is a lab fixture; the corpus says Pending Approval.",
+        ["no memory: the corpus says pending"],
+    ),
+    (
+        "M2",
+        24,
+        "Was it valid when made? (decision memory, 2027)",
+        "2027-02-01",
+        "base",
+        "Valid when made",
+        "Valid under the 2026 policy: VP Sales Michael Torres could approve 10–20%.",
+        ["judging a 2026 decision by 2027 rules"],
+    ),
+    (
+        "M3",
+        25,
+        "The same request in 2027 (decision memory, S21)",
+        "2027-02-01",
+        "base",
+        "APPROVE_WITH_AUTHORIZATION",
+        "Under the 2027 policy (AE ≤5%, VP ≤12%, CRO >12%) the CRO, David Morgan, must approve. "
+        "Reusing the 2026 approver is a fail.",
+        ["stale precedent", "policy change"],
+    ),
 ]
 
 CONDITIONS = [
@@ -373,6 +471,66 @@ CONDITIONS = [
         "heldout/curated/r1/B2",
         "The graph-only OWM configuration on the held-out decisions S09-S14. Auto-scored.",
     ),
+    (
+        "T1",
+        16,
+        "Procedure as a tool",
+        "Opus · procedure v1 via tool + request record",
+        "Opus 5.5, blind, headless claude -p; fixed system prompt, no procedure in it",
+        "10 Utopia MCP tools (changes hidden) + OWM stand-in (list_procedures, get_procedure)",
+        "Curation withdrawn",
+        "01-02-procedure/T1/r1/B1n",
+        "Item 1: the frozen v1 procedure served by the OWM stand-in's get_procedure, which the "
+        "reader must find and call. S01-S05, S09-S20; auto-scored.",
+    ),
+    (
+        "T2",
+        17,
+        "Procedure as a tool",
+        "Opus · procedure v2 via tool + request record",
+        "Opus 5.5, blind, headless claude -p; fixed system prompt, no procedure in it",
+        "10 Utopia MCP tools (changes hidden) + OWM stand-in (list_procedures, get_procedure)",
+        "Curation withdrawn",
+        "01-02-procedure/T2/r1/B1n",
+        "Item 2: procedure v2 (a rule for terms that belong to another customer), tested on fresh "
+        "held-out S15-S20. Auto-scored.",
+    ),
+    (
+        "DMa",
+        18,
+        "Decision memory",
+        "Opus · no decision memory",
+        "Opus 5.5, blind, headless claude -p; procedure v2 via the stand-in",
+        "10 Utopia MCP tools (changes hidden) + OWM stand-in (procedures only)",
+        "Curation withdrawn; the 2027 policy ingested",
+        "04-decision-memory/a/r1/B1n",
+        "Item 4, arm (a): the foundation as it is; DR-9001 is Pending Approval in the CRM. The "
+        "floor, not a competitor. Auto-scored.",
+    ),
+    (
+        "DMb",
+        19,
+        "Decision memory",
+        "Opus · decision as a document in Utopia",
+        "Opus 5.5, blind, headless claude -p; procedure v2 via the stand-in",
+        "10 Utopia MCP tools (changes hidden) + OWM stand-in (procedures only)",
+        "Curation withdrawn; the 2027 policy and decision_log_DEC-2026-0001.md ingested",
+        "04-decision-memory/b/r1/B1n",
+        "Item 4, arm (b), the fair baseline: agent A's decision written back to the foundation as "
+        "a document. Auto-scored.",
+    ),
+    (
+        "DMc",
+        20,
+        "Decision memory",
+        "Opus · typed decision record",
+        "Opus 5.5, blind, headless claude -p; procedure v2 via the stand-in",
+        "10 Utopia MCP tools (changes hidden) + OWM stand-in (procedures, find_decisions, "
+        "get_decision)",
+        "Curation withdrawn; the 2027 policy ingested",
+        "04-decision-memory/c/r1/B1n",
+        "Item 4, arm (c): the same decision as a typed record served by the stand-in. Auto-scored.",
+    ),
 ]
 
 # Provisional first-read grades (Claude), from comparison.md and correction/comparison.md.
@@ -500,7 +658,8 @@ def main(run_dir: str) -> None:
             out[sid] = (kb, q)
         return out
 
-    questions = read_questions(run / "questions.tsv")
+    root_q = run / "questions.tsv"
+    questions = read_questions(root_q) if root_q.exists() else {}
     # Scenarios added after a run (the held-out S09+) take their question from the truth file.
     for f in sorted((LAB / "truth" / "scenarios").glob("*.yaml")):
         text = f.read_text()
@@ -512,9 +671,17 @@ def main(run_dir: str) -> None:
     # question files, labels). Otherwise every condition in CONDITIONS applies.
     selected: dict[str, dict] | None = ann.get("conditions")
     namespaced = bool(ann.get("namespace_conditions"))
+    # Questions no truth file holds (item 4's M1-M3) come from a selected condition's own file.
+    for cid, ov in (selected or {}).items():
+        qfile = ov.get("questions", QUESTION_FILES.get(cid))
+        if qfile and (run / qfile).exists():
+            for sid, kq in read_questions(run / qfile).items():
+                questions.setdefault(sid, kq)
 
     scenarios = {}
     for sid, order, title, as_of, corpus, outcome, detail, traps in SCENARIOS:
+        if sid not in questions:
+            continue  # never asked in this run
         scenarios[sid] = {
             "id": sid,
             "order": order,

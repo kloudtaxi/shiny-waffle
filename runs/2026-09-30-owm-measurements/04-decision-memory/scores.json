@@ -1,0 +1,649 @@
+{
+ "a/r1/M1": {
+  "grade": "fail",
+  "answer": {
+   "decided": false,
+   "outcome": null,
+   "approved_by": null,
+   "policy": null,
+   "eligibility_basis": null
+  },
+  "turns": 6,
+  "cost_usd": 0.1246736,
+  "source_reads": 3,
+  "decision_tool_calls": 0
+ },
+ "a/r1/M2": {
+  "grade": "fail",
+  "answer": {
+   "decision_found": false,
+   "valid_when_made": null,
+   "policy_then": "Northstar Pricing Policy 2026 (PRICING-POLICY-2026, with APP-MATRIX-2026), which requires VP Sales approval for >10% to 20%",
+   "approved_by": null,
+   "approver_role_then": null
+  },
+  "turns": 8,
+  "cost_usd": 0.1807822,
+  "source_reads": 4,
+  "decision_tool_calls": 0
+ },
+ "a/r1/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048; ERP: Acme Mfg. Holdings, C-1001)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "Master Supply Agreement ACME-MFG-2025 §3.2 and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, effective 2025-04-01 to 2028-03-31)"
+   },
+   "authority": {
+    "policy": "PRICING-POLICY-2027 (effective 2027-01-01 to 2027-12-31)",
+    "requestor_limit": "5% (Enterprise Account Executive)",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer (>12%)",
+    "approver": "David Morgan (per org chart ORG-CHART-2026-09; confirm he is still CRO on 2027-02-01)"
+   },
+   "evidence": [
+    "PRICING-POLICY-2027",
+    "ACME-MFG-2025 Master Supply Agreement (parties, term, §3.2, §3.3)",
+    "EXC-ACME-NS500-15 pricing exception",
+    "EXC-ACME-NS500-10 (superseded, expired 2025-03-31)",
+    "ACCT-PLAN-CRM-2048-2026 (CRM-2048 maps to ERP customer Acme Mfg. Holdings C-1001)",
+    "ORG-CHART-2026-09 (Sarah Chen is Enterprise Account Executive; David Morgan is CRO)",
+    "SOP-SALES-014"
+   ],
+   "missing_evidence": [
+    "2027 org chart or other confirmation of who holds the CRO role on 2027-02-01",
+    "2027 Approval Authority Matrix (none on file; bands taken from PRICING-POLICY-2027)"
+   ]
+  },
+  "turns": 18,
+  "cost_usd": 0.2657648,
+  "source_reads": 9,
+  "decision_tool_calls": 0
+ },
+ "a/r2/M1": {
+  "grade": "fail",
+  "answer": {
+   "decided": false,
+   "outcome": null,
+   "approved_by": null,
+   "policy": null,
+   "eligibility_basis": null
+  },
+  "turns": 6,
+  "cost_usd": 0.1283686,
+  "source_reads": 3,
+  "decision_tool_calls": 0
+ },
+ "a/r2/M2": {
+  "grade": "fail",
+  "answer": {
+   "decision_found": false,
+   "valid_when_made": null,
+   "policy_then": "Northstar Pricing Policy 2026",
+   "approved_by": null,
+   "approver_role_then": null
+  },
+  "turns": 7,
+  "cost_usd": 0.1502384,
+  "source_reads": 3,
+  "decision_tool_calls": 0
+ },
+ "a/r2/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048; ERP Acme Mfg. Holdings, C-1001)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "EXC-ACME-NS500-15 (Schedule B to ACME-MFG-2025), effective 2025-04-01 to 2028-03-31, NS-500 only"
+   },
+   "authority": {
+    "policy": "PRICING-POLICY-2027 (effective 2027-01-01 to 2027-12-31)",
+    "requestor_limit": "5% (Enterprise Account Executive)",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer (>12%)",
+    "approver": "David Morgan (per org chart as of 2026-09-01; confirm current holder)"
+   },
+   "evidence": [
+    "discount request DR-9113 as recorded in Northstar CRM",
+    "crm_accounts.csv: CRM-2048 Acme Manufacturing, owner Sarah Chen",
+    "ACCT-PLAN-CRM-2048-2026: ERP bill-to Acme Mfg. Holdings (C-1001)",
+    "ACME-MFG-2025 Master Supply Agreement: Acme Mfg. Holdings d/b/a Acme Manufacturing, 2025-04-01 to 2028-03-31; clause 3.2 (up to 15% on NS-500), clause 3.3 (does not modify internal approval authority)",
+    "EXC-ACME-NS500-15: max 15% on NS-500, 2025-04-01 to 2028-03-31; supersedes EXC-ACME-NS500-10; grants no approval authority",
+    "PRICING-POLICY-2027: EAE <=5%, VP Sales >5% to <=12%, CRO >12%",
+    "ORG-CHART-2026-09: Sarah Chen is an Enterprise Account Executive; David Morgan is Chief Revenue Officer"
+   ],
+   "missing_evidence": [
+    "Confirmation of who holds the Chief Revenue Officer role on 2027-02-01 (latest org chart is dated 2026-09-01)"
+   ]
+  },
+  "turns": 18,
+  "cost_usd": 0.2640944,
+  "source_reads": 8,
+  "decision_tool_calls": 0
+ },
+ "a/r3/M1": {
+  "grade": "fail",
+  "answer": {
+   "decided": false,
+   "outcome": null,
+   "approved_by": null,
+   "policy": null,
+   "eligibility_basis": null
+  },
+  "turns": 6,
+  "cost_usd": 0.1293644,
+  "source_reads": 3,
+  "decision_tool_calls": 0
+ },
+ "a/r3/M2": {
+  "grade": "fail",
+  "answer": {
+   "decision_found": false,
+   "valid_when_made": null,
+   "policy_then": "Northstar Pricing Policy 2026 (PRICING-POLICY-2026, effective 2026-01-01 to 2026-12-31)",
+   "approved_by": null,
+   "approver_role_then": null
+  },
+  "turns": 8,
+  "cost_usd": 0.18178260000000002,
+  "source_reads": 4,
+  "decision_tool_calls": 0
+ },
+ "a/r3/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Mfg. Holdings d/b/a Acme Manufacturing (CRM-2048 / ERP C-1001)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (Enterprise Account Executive)",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "EXC-ACME-NS500-15 (Schedule B to ACME-MFG-2025), NS-500 only, effective 2025-04-01 to 2028-03-31"
+   },
+   "authority": {
+    "policy": "PRICING-POLICY-2027 (effective 2027-01-01 to 2027-12-31)",
+    "requestor_limit": "5%",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer (>12%)",
+    "approver": "David Morgan (per ORG-CHART-2026-09)"
+   },
+   "evidence": [
+    "DR-9113 CRM request record",
+    "ACME-MFG-2025 Master Supply Agreement (Acme Mfg. Holdings d/b/a Acme Manufacturing, 2025-04-01 to 2028-03-31, §3.3)",
+    "EXC-ACME-NS500-15 Acme NS-500 Strategic Account Exception",
+    "EXC-ACME-NS500-10 (superseded, expired 2025-03-31)",
+    "ACCT-PLAN-CRM-2048-2026 (CRM-2048 maps to ERP bill-to Acme Mfg. Holdings C-1001)",
+    "PRICING-POLICY-2027",
+    "ORG-CHART-2026-09 (Sarah Chen = Enterprise Account Executive; David Morgan = CRO)"
+   ],
+   "missing_evidence": [
+    "No 2027 Approval Authority Matrix found (APP-MATRIX-2026 expired 2026-12-31)",
+    "Confirmation that David Morgan still holds the CRO role on 2027-02-01 (latest org chart dated 2026-09-01)"
+   ]
+  },
+  "turns": 16,
+  "cost_usd": 0.2301558,
+  "source_reads": 7,
+  "decision_tool_calls": 0
+ },
+ "b/r1/M1": {
+  "grade": "pass",
+  "answer": {
+   "decided": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approved_by": "Michael Torres (VP Sales)",
+   "policy": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026",
+   "eligibility_basis": "Master Supply Agreement ACME-MFG-2025 §3.2 and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, max 15%, 2025-04-01 to 2028-03-31)"
+  },
+  "turns": 6,
+  "cost_usd": 0.1234458,
+  "source_reads": 2,
+  "decision_tool_calls": 0
+ },
+ "b/r1/M2": {
+  "grade": "pass",
+  "answer": {
+   "decision_found": true,
+   "valid_when_made": true,
+   "policy_then": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026 (effective 2026-01-01 to 2026-12-31): AE ≤10%, VP Sales >10% to ≤20%, CRO >20%",
+   "approved_by": "Michael Torres",
+   "approver_role_then": "VP Sales"
+  },
+  "turns": 9,
+  "cost_usd": 0.17849079999999998,
+  "source_reads": 6,
+  "decision_tool_calls": 0
+ },
+ "b/r1/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "Master Supply Agreement ACME-MFG-2025 (2025-04-01 to 2028-03-31) and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, 2025-04-01 to 2028-03-31)"
+   },
+   "authority": {
+    "policy": "Northstar Pricing Policy 2027 (PRICING-POLICY-2027, effective 2027-01-01 to 2027-12-31)",
+    "requestor_limit": "5%",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   },
+   "evidence": [
+    "DR-9113 request as recorded in Northstar CRM",
+    "acme_master_supply_agreement.md (ACME-MFG-2025, incl. §3.3)",
+    "acme_pricing_exception.md (EXC-ACME-NS500-15)",
+    "acme_pricing_exception_2023.md (EXC-ACME-NS500-10, superseded)",
+    "Acme Manufacturing = Acme Mfg. Holdings / C-1001 (knowledge graph; mapping recorded in DEC-2026-0001 citing customers.csv and acme_account_strategy.md)",
+    "pricing_policy_2027.md",
+    "organization_chart.md (ORG-CHART-2026-09): Sarah Chen = Enterprise Account Executive; David Morgan = Chief Revenue Officer",
+    "sales_discount_sop.md (SOP-SALES-014)",
+    "decision_log_DEC-2026-0001.md (prior DR-9001 decision under 2026 policy)"
+   ],
+   "missing_evidence": [
+    "No record confirming who holds the Chief Revenue Officer role on 2027-02-01; latest org chart is dated 2026-09-01",
+    "No 2027 Approval Authority Matrix found; bands taken from Pricing Policy 2027 §3"
+   ]
+  },
+  "turns": 19,
+  "cost_usd": 0.32747740000000003,
+  "source_reads": 7,
+  "decision_tool_calls": 0
+ },
+ "b/r2/M1": {
+  "grade": "pass",
+  "answer": {
+   "decided": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approved_by": "Michael Torres (VP Sales), 2026-09-24",
+   "policy": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026",
+   "eligibility_basis": "Master Supply Agreement ACME-MFG-2025 §3.2 and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, max 15%, valid 2025-04-01 to 2028-03-31)"
+  },
+  "turns": 5,
+  "cost_usd": 0.0893198,
+  "source_reads": 3,
+  "decision_tool_calls": 0
+ },
+ "b/r2/M2": {
+  "grade": "pass",
+  "answer": {
+   "decision_found": true,
+   "valid_when_made": true,
+   "policy_then": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026 (effective 2026-01-01 to 2026-12-31): AE ≤10%, VP Sales >10% to ≤20%, CRO >20%",
+   "approved_by": "Michael Torres",
+   "approver_role_then": "VP Sales"
+  },
+  "turns": 10,
+  "cost_usd": 0.19213620000000003,
+  "source_reads": 6,
+  "decision_tool_calls": 0
+ },
+ "b/r2/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "Master Supply Agreement ACME-MFG-2025 (2025-04-01 to 2028-03-31) with Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, max 15%, 2025-04-01 to 2028-03-31)"
+   },
+   "authority": {
+    "policy": "Northstar Pricing Policy 2027 (PRICING-POLICY-2027)",
+    "requestor_limit": "5%",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   },
+   "evidence": [
+    "Northstar CRM request DR-9113",
+    "acme_master_supply_agreement.md (ACME-MFG-2025)",
+    "acme_pricing_exception.md (EXC-ACME-NS500-15)",
+    "acme_pricing_exception_2023.md (EXC-ACME-NS500-10, superseded)",
+    "decision_log_DEC-2026-0001.md (CRM-2048 -> C-1001 Acme Mfg. Holdings)",
+    "pricing_policy_2027.md",
+    "employees.csv",
+    "organization_chart.md (as of 2026-09-01)",
+    "sales_discount_sop.md (SOP-SALES-014)"
+   ],
+   "missing_evidence": [
+    "Confirmation that David Morgan still holds the Chief Revenue Officer role on 2027-02-01 (latest org chart is dated 2026-09-01)"
+   ]
+  },
+  "turns": 17,
+  "cost_usd": 0.3124948,
+  "source_reads": 7,
+  "decision_tool_calls": 0
+ },
+ "b/r3/M1": {
+  "grade": "pass",
+  "answer": {
+   "decided": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approved_by": "Michael Torres (VP Sales), 2026-09-24",
+   "policy": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026",
+   "eligibility_basis": "Contract exception: Master Supply Agreement ACME-MFG-2025 §3.2 and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, valid 2025-04-01 to 2028-03-31, max 15%)"
+  },
+  "turns": 5,
+  "cost_usd": 0.1002754,
+  "source_reads": 2,
+  "decision_tool_calls": 0
+ },
+ "b/r3/M2": {
+  "grade": "pass",
+  "answer": {
+   "decision_found": true,
+   "valid_when_made": true,
+   "policy_then": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026 (effective 2026-01-01 to 2026-12-31): AE ≤10%, VP Sales >10% to ≤20%, CRO >20%",
+   "approved_by": "Michael Torres",
+   "approver_role_then": "VP Sales"
+  },
+  "turns": 10,
+  "cost_usd": 0.19890199999999997,
+  "source_reads": 7,
+  "decision_tool_calls": 0
+ },
+ "b/r3/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048; ERP C-1001 Acme Mfg. Holdings)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "EXC-ACME-NS500-15 (Schedule B to ACME-MFG-2025), NS-500 only, effective 2025-04-01 to 2028-03-31"
+   },
+   "authority": {
+    "policy": "Northstar Pricing Policy 2027 (PRICING-POLICY-2027)",
+    "requestor_limit": "5%",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   },
+   "evidence": [
+    "Northstar CRM request DR-9113",
+    "acme_master_supply_agreement.md (ACME-MFG-2025, 2025-04-01 to 2028-03-31, Acme Mfg. Holdings dba Acme Manufacturing, §3.3)",
+    "acme_pricing_exception.md (EXC-ACME-NS500-15, max 15%, NS-500 only)",
+    "acme_pricing_exception_2023.md (EXC-ACME-NS500-10, expired 2025-03-31, superseded)",
+    "customers.csv (C-1001 Acme Mfg. Holdings)",
+    "pricing_policy_2027.md (EAE up to 5%, VP Sales >5% to 12%, CRO >12%)",
+    "approval_authority_matrix.md / pricing_policy_2026.md (expired 2026-12-31, not applicable)",
+    "organization_chart.md (ORG-CHART-2026-09: Sarah Chen EAE, David Morgan CRO)",
+    "sales_discount_sop.md (SOP-SALES-014)"
+   ],
+   "missing_evidence": [
+    "Confirmation that David Morgan still holds the Chief Revenue Officer role on 2027-02-01 (latest org chart is dated 2026-09-01)"
+   ]
+  },
+  "turns": 17,
+  "cost_usd": 0.2840886,
+  "source_reads": 6,
+  "decision_tool_calls": 0
+ },
+ "c/r1/M1": {
+  "grade": "fail",
+  "answer": {
+   "decided": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION (approved; 15% discount on NS-500)",
+   "approved_by": "Michael Torres (VP Sales), 2026-09-24",
+   "policy": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026",
+   "eligibility_basis": "Master Supply Agreement ACME-MFG-2025 §3.2 and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, max 15%, valid 2025-04-01 to 2028-03-31)"
+  },
+  "turns": 4,
+  "cost_usd": 0.07348879999999999,
+  "source_reads": 0,
+  "decision_tool_calls": 2
+ },
+ "c/r1/M2": {
+  "grade": "pass",
+  "answer": {
+   "decision_found": true,
+   "valid_when_made": true,
+   "policy_then": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026 (effective 2026-01-01 to 2026-12-31): AE up to 10%, VP Sales >10% to 20%, CRO >20%",
+   "approved_by": "Michael Torres",
+   "approver_role_then": "VP Sales"
+  },
+  "turns": 10,
+  "cost_usd": 0.1735406,
+  "source_reads": 5,
+  "decision_tool_calls": 2
+ },
+ "c/r1/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048) / Acme Mfg. Holdings (ERP C-1001)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (sarah.chen@northstar.example)",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "EXC-ACME-NS500-15 (Schedule B to ACME-MFG-2025), NS-500 only, effective 2025-04-01 to 2028-03-31"
+   },
+   "authority": {
+    "policy": "PRICING-POLICY-2027 (effective 2027-01-01 to 2027-12-31)",
+    "requestor_limit": "5% (Enterprise Account Executive)",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer (>12%)",
+    "approver": "David Morgan"
+   },
+   "evidence": [
+    "discount_requests / CRM request DR-9113 as provided",
+    "crm_accounts.csv: CRM-2048 Acme Manufacturing, DUNS 04-812-7730, owner Sarah Chen",
+    "customers.csv: C-1001 Acme Mfg. Holdings, same address and DUNS",
+    "ACME-MFG-2025 Master Supply Agreement (Acme Mfg. Holdings dba Acme Manufacturing), term 2025-04-01 to 2028-03-31, s.3.3 eligibility does not modify internal approval authority",
+    "EXC-ACME-NS500-15: max 15% on NS-500 only, 2025-04-01 to 2028-03-31; grants no approval authority",
+    "PRICING-POLICY-2027: AE <=5%, VP Sales >5% to <=12%, CRO >12%",
+    "ORG-CHART-2026-09: Sarah Chen = Enterprise Account Executive; David Morgan = Chief Revenue Officer"
+   ],
+   "missing_evidence": [
+    "No org chart dated 2027 confirming David Morgan still holds the CRO role on 2027-02-01 (latest is as of 2026-09-01)"
+   ]
+  },
+  "turns": 19,
+  "cost_usd": 0.298263,
+  "source_reads": 8,
+  "decision_tool_calls": 1
+ },
+ "c/r2/M1": {
+  "grade": "pass",
+  "answer": {
+   "decided": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approved_by": "Michael Torres (VP Sales)",
+   "policy": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026",
+   "eligibility_basis": "Contract exception: Master Supply Agreement ACME-MFG-2025 §3.2 and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, 2025-04-01 to 2028-03-31), max 15%"
+  },
+  "turns": 3,
+  "cost_usd": 0.06361320000000001,
+  "source_reads": 0,
+  "decision_tool_calls": 2
+ },
+ "c/r2/M2": {
+  "grade": "pass",
+  "answer": {
+   "decision_found": true,
+   "valid_when_made": true,
+   "policy_then": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026 (effective 2026-01-01 to 2026-12-31; VP Sales approves >10% and ≤20%)",
+   "approved_by": "Michael Torres",
+   "approver_role_then": "VP Sales"
+  },
+  "turns": 10,
+  "cost_usd": 0.177932,
+  "source_reads": 5,
+  "decision_tool_calls": 2
+ },
+ "c/r2/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048; ERP: Acme Mfg. Holdings, C-1001)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "EXC-ACME-NS500-15 (Schedule B to ACME-MFG-2025), NS-500 only, effective 2025-04-01 to 2028-03-31"
+   },
+   "authority": {
+    "policy": "PRICING-POLICY-2027 (effective 2027-01-01 to 2027-12-31)",
+    "requestor_limit": "5%",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   },
+   "evidence": [
+    "crm_accounts.csv: CRM-2048 Acme Manufacturing, owner Sarah Chen",
+    "acme_account_strategy.md: CRM-2048 -> ERP bill-to Acme Mfg. Holdings (C-1001)",
+    "ACME-MFG-2025 Master Supply Agreement with Acme Mfg. Holdings dba Acme Manufacturing, 2025-04-01 to 2028-03-31; s.3.3 eligibility does not modify internal authority",
+    "EXC-ACME-NS500-15: max 15% on NS-500 only, 2025-04-01 to 2028-03-31; grants no approval authority",
+    "PRICING-POLICY-2027: AE <=5%, VP Sales >5% to <=12%, CRO >12%",
+    "ORG-CHART-2026-09: Sarah Chen = Enterprise Account Executive; David Morgan = Chief Revenue Officer"
+   ],
+   "missing_evidence": [
+    "Confirmation that David Morgan still holds the Chief Revenue Officer role on 2027-02-01 (org chart dated 2026-09-01)"
+   ]
+  },
+  "turns": 18,
+  "cost_usd": 0.27457679999999995,
+  "source_reads": 8,
+  "decision_tool_calls": 1
+ },
+ "c/r3/M1": {
+  "grade": "pass",
+  "answer": {
+   "decided": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approved_by": "Michael Torres (VP Sales)",
+   "policy": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026",
+   "eligibility_basis": "Master Supply Agreement ACME-MFG-2025 §3.2 and Schedule B pricing exception EXC-ACME-NS500-15 (NS-500 only, max 15%, valid 2025-04-01 to 2028-03-31)"
+  },
+  "turns": 3,
+  "cost_usd": 0.06347,
+  "source_reads": 0,
+  "decision_tool_calls": 2
+ },
+ "c/r3/M2": {
+  "grade": "pass",
+  "answer": {
+   "decision_found": true,
+   "valid_when_made": true,
+   "policy_then": "Northstar Pricing Policy 2026 / Approval Authority Matrix APP-MATRIX-2026 (effective 2026-01-01 to 2026-12-31): >10% and ≤20% requires VP Sales approval",
+   "approved_by": "Michael Torres",
+   "approver_role_then": "VP Sales"
+  },
+  "turns": 11,
+  "cost_usd": 0.20756360000000001,
+  "source_reads": 6,
+  "decision_tool_calls": 2
+ },
+ "c/r3/M3": {
+  "grade": "pass",
+  "answer": {
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "request": {
+    "id": "DR-9113",
+    "customer": "Acme Manufacturing (CRM-2048) = Acme Mfg. Holdings (ERP C-1001)",
+    "product": "NS-500 Industrial Controller (NS-500)",
+    "requested_discount": "15.0%",
+    "date": "2027-02-01",
+    "requestor": "Sarah Chen (sarah.chen@northstar.example), Enterprise Account Executive",
+    "basis": "contract_exception"
+   },
+   "commercial_eligibility": {
+    "status": "eligible",
+    "maximum_discount": "15%",
+    "basis": "EXC-ACME-NS500-15 (Schedule B to Master Supply Agreement ACME-MFG-2025), effective 2025-04-01 to 2028-03-31, NS-500 only"
+   },
+   "authority": {
+    "policy": "PRICING-POLICY-2027 (effective 2027-01-01 to 2027-12-31)",
+    "requestor_limit": "5%",
+    "requestor_authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan (per org chart as of 2026-09-01)"
+   },
+   "evidence": [
+    "discount_requests / Northstar CRM record DR-9113",
+    "crm_accounts.csv: CRM-2048 Acme Manufacturing, DUNS 04-812-7730, owner Sarah Chen",
+    "customers.csv: C-1001 Acme Mfg. Holdings, DUNS 04-812-7730",
+    "ACME-MFG-2025 Master Supply Agreement (Acme Mfg. Holdings dba Acme Manufacturing), 2025-04-01 to 2028-03-31, s.3.3",
+    "EXC-ACME-NS500-15 pricing exception, max 15%, NS-500 only, 2025-04-01 to 2028-03-31",
+    "PRICING-POLICY-2027 approval bands: AE <=5%, VP Sales >5-12%, CRO >12%",
+    "ORG-CHART-2026-09: Sarah Chen = Enterprise Account Executive; David Morgan = Chief Revenue Officer"
+   ],
+   "missing_evidence": [
+    "Confirmation of Chief Revenue Officer role holder as of 2027-02-01 (latest org chart dated 2026-09-01)"
+   ]
+  },
+  "turns": 18,
+  "cost_usd": 0.27336340000000003,
+  "source_reads": 8,
+  "decision_tool_calls": 1
+ }
+}
