@@ -191,6 +191,12 @@
   .answer table { border-collapse: collapse; font-size: 12.5px; }
   .answer th, .answer td { border: 1px solid var(--rule); padding: 4px 8px; text-align: left; vertical-align: top; }
   .answer th { background: var(--panel-2); }
+  .rec { display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border: 1px dashed var(--rule); border-radius: 8px; }
+  .rec dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 14px; margin: 0; font: 400 12.5px/1.45 var(--mono); }
+  .rec dt { color: var(--ink-3); }
+  .rec dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+  .codelabel { margin: 2px 0 5px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  pre.codeblock { margin: 0 0 9px; padding: 10px 12px; background: var(--panel-2); border: 1px solid var(--rule); border-radius: 6px; font: 400 12px/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
   .prov-read { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: var(--ink-2); }
 
   /* grade form */
@@ -299,6 +305,8 @@
     .toollist li { grid-template-columns: 22px minmax(0, 1fr); }
     .toollist .a, .toollist .r { grid-column: 2; }
     .toollist .r { white-space: normal; }
+    .rec dl { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .rec dd { margin-bottom: 6px; }
   }
 
   .state { padding: 40px 20px; text-align: center; color: var(--ink-2); }
@@ -401,6 +409,15 @@
     while (i < lines.length) {
       const l = lines[i];
       if (!l.trim()) { i++; continue; }
+      if (/^\s*```/.test(l)) {
+        const lang = l.trim().slice(3).trim().toLowerCase(); const body = []; i++;
+        while (i < lines.length && !/^\s*```/.test(lines[i])) { body.push(lines[i]); i++; }
+        i++;
+        let txt = body.join("\n");
+        if (lang === "json") { try { txt = JSON.stringify(JSON.parse(txt), null, 2); } catch (e) { /* show it as written */ } }
+        out.push((lang === "json" ? '<div class="codelabel">Structured decision · the part the auto-scorer read</div>' : "") + '<pre class="codeblock">' + esc(txt) + "</pre>");
+        continue;
+      }
       if (/^\s*\|/.test(l)) {
         const rows = [];
         while (i < lines.length && /^\s*\|/.test(lines[i])) { rows.push(lines[i]); i++; }
@@ -426,10 +443,25 @@
         const tag = ordered ? "ol" : "ul";
         out.push("<" + tag + ">" + items.map((t) => "<li>" + inline(t) + "</li>").join("") + "</" + tag + ">"); continue;
       }
-      const p = []; while (i < lines.length && lines[i].trim() && !/^\s*(\||#{1,6}\s|>|[-*]\s|\d+\.\s)/.test(lines[i])) { p.push(lines[i]); i++; }
+      const p = []; while (i < lines.length && lines[i].trim() && !/^\s*(\||#{1,6}\s|>|[-*]\s|\d+\.\s|```)/.test(lines[i])) { p.push(lines[i]); i++; }
       out.push("<p>" + inline(p.join(" ")) + "</p>");
     }
     return out.join("");
+  }
+
+  // A question that ends in a JSON object (the CRM request record the reader was given) shows that record as fields.
+  function questionHtml(q) {
+    const m = /^([\s\S]*?)(\{[\s\S]*\})\s*$/.exec(q || "");
+    if (m) {
+      try {
+        const rec = JSON.parse(m[2]);
+        if (rec && typeof rec === "object" && !Array.isArray(rec)) {
+          return '<blockquote class="q">' + esc(m[1].trim()) + '</blockquote><div class="rec"><span class="eyebrow">The CRM record sent with the question</span><dl>' +
+            Object.entries(rec).map(([k, v]) => "<dt>" + esc(k) + "</dt><dd>" + esc(typeof v === "object" ? JSON.stringify(v) : v) + "</dd>").join("") + "</dl></div>";
+        }
+      } catch (e) { /* not a record: show the question as written */ }
+    }
+    return '<blockquote class="q">' + esc(q) + "</blockquote>";
   }
 
   /* ---------- derived data ---------- */
@@ -568,7 +600,7 @@
       '</span><button class="btn" data-nav="-1" aria-label="Previous answer"' + (idx <= 0 ? " disabled" : "") + '>‹</button><button class="btn" data-nav="1" aria-label="Next answer"' + (hasNext ? "" : " disabled") + ">›</button></div>";
     h += '<div class="detail"><div class="d-head"><div><div class="eyebrow">' + esc(s.id) + (s.as_of ? " · as of " + esc(s.as_of) : "") + " · " + esc(s.corpus || "") + '</div><h2>' + esc(s.title || a.scenario) + '</h2><div class="cond-tag"><span class="code">' + esc(c.id || a.condition) + "</span>" + esc(c.label || "") + " · " + esc(c.graph || "") +
       (reps.length > 1 ? " · run " + esc(a.repeat) + " of " + reps.length : "") + '</div></div><div class="navbtns"><button class="btn" data-nav="-1"' + (idx <= 0 ? " disabled" : "") + '>← Prev</button><button class="btn" data-nav="1"' + (hasNext ? "" : " disabled") + ">Next →</button></div></div>";
-    h += '<div class="sec"><span class="eyebrow">Question, verbatim</span><blockquote class="q">' + esc(a.inputs?.question || s.question) + "</blockquote></div>";
+    h += '<div class="sec"><span class="eyebrow">Question, verbatim</span>' + questionHtml(a.inputs?.question || s.question) + "</div>";
     h += '<div class="sec"><span class="eyebrow">Answer key</span><div class="key"><span class="outcome">' + esc(a.expectations?.expected || s.expected) + "</span><span class=\"muted\">" + esc(a.expectations?.expected_detail || s.expected_detail || "") + "</span>" +
       (s.traps?.length ? '<span class="tags">' + s.traps.map((t) => '<span class="tag">' + esc(t) + "</span>").join("") + "</span>" : "") + "</div></div>";
     h += '<div class="sec"><span class="eyebrow">Answer</span><div class="answer">' + (o.answer ? md(o.answer) : '<p class="muted">No answer text was recorded.</p>') + "</div></div>";
