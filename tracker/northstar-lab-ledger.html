@@ -72,6 +72,7 @@
   }
 
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     background: var(--ground);
     color: var(--ink);
@@ -107,11 +108,13 @@
   .next ol { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; padding: 0; list-style: none; counter-reset: n; }
   .next li { counter-increment: n; }
   .next li::before { content: counter(n) ". "; color: var(--ink-3); font-family: var(--mono); font-size: 12px; }
-  select.exp { border: 1px solid var(--rule); background: var(--panel); border-radius: 6px; padding: 3px 8px; }
+  select.exp { border: 1px solid var(--rule); background: var(--panel); border-radius: 6px; padding: 3px 8px; max-width: 100%; }
 
   /* tabs */
-  nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); }
-  nav.tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px; margin-bottom: -1px; color: var(--ink-2); font-weight: 500; }
+  nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); overflow-x: auto; scrollbar-width: none; }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px; margin-bottom: -1px; color: var(--ink-2); font-weight: 500; white-space: nowrap; }
+  nav.tabs .count { font: 500 11.5px/1 var(--mono); color: var(--ink-3); margin-left: 4px; }
   nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 
   /* grade chips */
@@ -129,6 +132,7 @@
 
   /* matrix + detail layout */
   .split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-items: start; }
+  .pane { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
   @media (min-width: 1100px) { .split { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); } }
   .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; }
   .scroll-x { overflow-x: auto; }
@@ -141,6 +145,8 @@
   .matrix th.cond .code { display: block; font: 600 14px/1.2 var(--mono); color: var(--ink); }
   .matrix th.cond.gstart, .matrix td.gstart { border-left: 1px solid var(--rule); }
   .matrix th.row { min-width: 210px; }
+  .matrix tr > :first-child { position: sticky; left: 0; z-index: 1; background: var(--panel); box-shadow: inset -1px 0 0 var(--rule-2); }
+  .matrix thead tr > :first-child, .matrix tfoot tr > :first-child { background: var(--panel-2); }
   .matrix th.row .sid { font: 500 12.5px/1 var(--mono); color: var(--ink-2); margin-right: 6px; }
   .matrix th.row .t { font-weight: 500; color: var(--ink); }
   .matrix th.row .x { display: block; margin-top: 3px; font: 400 11.5px/1.3 var(--mono); color: var(--ink-3); }
@@ -169,12 +175,12 @@
   .btn:disabled { opacity: .5; cursor: default; }
   .sec { display: flex; flex-direction: column; gap: 7px; }
   .sec > .eyebrow { display: flex; gap: 8px; align-items: center; }
-  blockquote.q { margin: 0; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--panel-2); border-radius: 0 6px 6px 0; font-size: 14.5px; }
+  blockquote.q { margin: 0; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--panel-2); border-radius: 0 6px 6px 0; font-size: 14.5px; overflow-wrap: anywhere; }
   .key { display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 8px; }
   .key .outcome { font: 600 13px/1.3 var(--mono); color: var(--ink); }
   .tags { display: flex; flex-wrap: wrap; gap: 5px; }
   .tag { font-size: 11.5px; padding: 1px 8px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--rule); color: var(--ink-2); }
-  .answer { border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; background: var(--panel); font-size: 14px; line-height: 1.55; max-width: 100%; }
+  .answer { border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; background: var(--panel); font-size: 14px; line-height: 1.55; max-width: 100%; overflow-wrap: anywhere; }
   .answer p, .answer ul, .answer ol, .answer blockquote { margin: 0 0 9px; }
   .answer ul, .answer ol { padding-left: 20px; }
   .answer li { margin: 2px 0; }
@@ -246,6 +252,55 @@
   .conds td.code { font: 600 14px/1.3 var(--mono); }
   .conds td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
+  /* grading list */
+  .qwrap { padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+  .qhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 20px; align-items: flex-end; }
+  .qhead h2 { font-size: 20px; }
+  .qhead p { margin: 4px 0 0; max-width: 62ch; font-size: 13.5px; }
+  .qpart { display: flex; flex-direction: column; gap: 2px; font-size: 16px; line-height: 1.3; }
+  .qlist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-2); }
+  .qitem { width: 100%; display: grid; grid-template-columns: 26px minmax(0, 1fr) max-content; gap: 4px 12px; align-items: center; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--rule-2); padding: 11px 6px; }
+  .qitem:hover { background: var(--panel-2); }
+  .qitem[aria-current="true"] { background: var(--accent-soft); }
+  .qitem:disabled { opacity: .55; cursor: default; }
+  .qn { font: 500 12.5px/1 var(--mono); color: var(--ink-3); text-align: right; font-variant-numeric: tabular-nums; }
+  .qmain { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .qcell { display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: baseline; font: 500 13px/1.3 var(--mono); color: var(--ink); }
+  .qcell .code { font-weight: 600; }
+  .qexp { font: 500 10.5px/1 var(--sans); letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+  .qhint { font-size: 13px; line-height: 1.4; color: var(--ink-2); }
+  .qgrades { display: flex; gap: 4px; }
+
+  /* reading view: one answer at a time on narrow screens */
+  .readbar { display: none; }
+  @media (max-width: 1099px) {
+    body:not(.reading) .detail-wrap { display: none; }
+    body.reading header.top, body.reading .next, body.reading nav.tabs, body.reading .pane { display: none !important; }
+    body.reading .readbar { display: flex; align-items: center; gap: 8px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 3; background: var(--panel); border-bottom: 1px solid var(--rule); border-radius: 10px 10px 0 0; padding: 8px 10px; }
+    body.reading .d-head .navbtns { display: none; }
+    .readbar .rb-pos { flex: 1; min-width: 0; text-align: center; font-size: 12.5px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .readbar .btn { min-height: 38px; }
+    .cellbtn { padding: 6px; }
+    textarea, input[type=text], select, select.exp, select.f, select.status { font-size: 16px; }
+  }
+  @media (max-width: 640px) {
+    .ident h1 { font-size: 25px; }
+    .stats { gap: 16px; }
+    .detail { padding: 14px; gap: 14px; }
+    .d-head h2 { font-size: 19px; }
+    .qwrap { padding: 14px; }
+    .qitem { padding: 12px 2px; gap: 4px 10px; }
+    .matrix th.row { min-width: 150px; max-width: 170px; }
+    .rubric { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .rubric .lbl { margin-top: 6px; }
+    .seg { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); width: 100%; }
+    .seg button { min-height: 42px; font-size: 14px; padding: 4px 2px; }
+    .formrow .btn { min-height: 42px; }
+    .toollist li { grid-template-columns: 22px minmax(0, 1fr); }
+    .toollist .a, .toollist .r { grid-column: 2; }
+    .toollist .r { white-space: normal; }
+  }
+
   .state { padding: 40px 20px; text-align: center; color: var(--ink-2); }
   .state h2 { font-size: 20px; margin-bottom: 6px; color: var(--ink); }
   @media (prefers-reduced-motion: no-preference) { .cellbtn, .btn, .seg button { transition: background-color .12s, border-color .12s; } }
@@ -263,22 +318,26 @@
   <div class="next" id="next" hidden></div>
 
   <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" id="tab-queue" aria-selected="false" data-tab="queue">Grading list<span class="count" id="queue-count"></span></button>
     <button role="tab" id="tab-matrix" aria-selected="true" data-tab="matrix">Results matrix</button>
     <button role="tab" id="tab-findings" aria-selected="false" data-tab="findings">Findings</button>
     <button role="tab" id="tab-conditions" aria-selected="false" data-tab="conditions">Conditions</button>
   </nav>
 
-  <section id="view-matrix">
-    <div class="legend" style="margin-bottom:12px">
+  <section id="view-work" class="split">
+    <div class="pane" id="pane-queue" hidden>
+      <div class="card" id="queue"><div class="state">Loading the grading list…</div></div>
+    </div>
+    <div class="pane" id="pane-matrix">
+    <div class="legend">
       <span><i class="chip human pass">✓</i> your grade</span>
       <span><i class="chip prov pass">✓</i> Claude's first read (provisional)</span>
       <span><i class="chip prov pass">✓</i> pass · <i class="chip prov partial">◐</i> partial · <i class="chip prov fail">✗</i> fail</span>
       <span class="muted">Numbers under a grade are the reader's turns.</span>
     </div>
-    <div class="split">
       <div class="card scroll-x" id="matrix"><div class="state">Loading results…</div></div>
-      <div class="detail-wrap"><div class="card" id="detail"><div class="state"><h2>Pick a result</h2>Select any cell to read the answer, see what the reader did, and grade it.</div></div></div>
     </div>
+    <div class="detail-wrap"><div class="card" id="detail"><div class="state"><h2>Pick a result</h2>Select any cell or list item to read the answer, see what the reader did, and grade it.</div></div></div>
   </section>
 
   <section id="view-findings" hidden>
@@ -319,8 +378,10 @@
   const CATS = { foundation: "Foundation", agent: "Agent", owm: "OWM capability", review: "Review & governance", method: "Method" };
   const STATUSES = ["observed", "confirmed", "needs repeat", "refuted"];
 
-  const S = { db: null, exps: {}, conds: {}, scens: {}, answers: {}, grades: {}, findings: {},
-              exp: null, sel: null, tab: "matrix", catFilter: "all", drafts: {}, dirty: {}, shownDetail: null };
+  const TABS = ["queue", "matrix", "findings", "conditions"];
+  const S = { db: null, exps: {}, conds: {}, scens: {}, answers: {}, grades: {}, findings: {}, queue: {},
+              exp: null, sel: null, from: "matrix", tab: "matrix", catFilter: "all", drafts: {}, dirty: {}, shownDetail: null, listScroll: 0 };
+  const narrow = () => window.matchMedia("(max-width: 1099px)").matches;
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
@@ -388,6 +449,23 @@
     if (!g.grade) return '<i class="chip none ' + extraClass + '">·</i>';
     return '<i class="chip ' + (g.human ? "human " : "prov ") + g.grade + " " + extraClass + '" aria-label="' +
       (g.human ? "Your grade: " : "Provisional: ") + GRADE_WORD[g.grade] + '">' + GRADE_SYM[g.grade] + "</i>";
+  }
+
+  const answerOf = (q) => S.answers[q.experiment + "~" + q.condition + "~" + q.scenario + "~r" + (q.repeat || 1)] || null;
+  const queueItems = () => sorted(S.queue);
+  function provChip(a) {
+    const p = a.provisional?.grade;
+    return p ? '<i class="chip prov ' + p + '" aria-label="Provisional: ' + GRADE_WORD[p] + '">' + GRADE_SYM[p] + "</i>" : '<i class="chip none">·</i>';
+  }
+  function yourChip(a) {
+    const g = S.grades[a._id]?.overall;
+    return g ? '<i class="chip human ' + g + '" aria-label="Your grade: ' + GRADE_WORD[g] + '">' + GRADE_SYM[g] + "</i>" : '<i class="chip none" aria-label="Not graded yet">·</i>';
+  }
+  // The answers Prev / Next walk through: the grading list when the answer was opened from it, else the matrix order.
+  function navList() {
+    if (S.from === "queue") return queueItems().map(answerOf).filter(Boolean);
+    const flat = []; scens().forEach((x) => expConds().forEach((cc) => answersFor(cc.id, x.id).forEach((aa) => flat.push(aa))));
+    return flat;
   }
 
   /* ---------- header ---------- */
@@ -480,11 +558,16 @@
     const prov = a.provisional || {};
     const calls = o.tool_calls || [];
     const order = expConds();
-    const flat = []; scens().forEach((x) => order.forEach((cc) => answersFor(cc.id, x.id).forEach((aa) => flat.push(aa))));
+    const flat = navList();
     const idx = flat.findIndex((x) => x._id === a._id);
     const reps = answersFor(a.condition, a.scenario);
-    let h = '<div class="detail"><div class="d-head"><div><div class="eyebrow">' + esc(s.id) + (s.as_of ? " · as of " + esc(s.as_of) : "") + " · " + esc(s.corpus || "") + '</div><h2>' + esc(s.title || a.scenario) + '</h2><div class="cond-tag"><span class="code">' + esc(c.id || a.condition) + "</span>" + esc(c.label || "") + " · " + esc(c.graph || "") +
-      (reps.length > 1 ? " · run " + esc(a.repeat) + " of " + reps.length : "") + '</div></div><div class="navbtns"><button class="btn" data-nav="-1"' + (idx <= 0 ? " disabled" : "") + '>← Prev</button><button class="btn" data-nav="1"' + (idx >= flat.length - 1 ? " disabled" : "") + ">Next →</button></div></div>";
+    const pos = S.from === "queue" && idx >= 0 ? "Grading list · " + (idx + 1) + " of " + flat.length
+      : esc(a.condition) + " · " + esc(a.scenario) + (reps.length > 1 ? " · run " + (a.repeat || 1) + " of " + reps.length : "");
+    const hasNext = idx >= 0 && idx < flat.length - 1;
+    let h = '<div class="readbar"><button type="button" class="btn" data-back="1">← ' + (S.from === "queue" ? "List" : "Matrix") + '</button><span class="rb-pos">' + esc(pos) +
+      '</span><button class="btn" data-nav="-1" aria-label="Previous answer"' + (idx <= 0 ? " disabled" : "") + '>‹</button><button class="btn" data-nav="1" aria-label="Next answer"' + (hasNext ? "" : " disabled") + ">›</button></div>";
+    h += '<div class="detail"><div class="d-head"><div><div class="eyebrow">' + esc(s.id) + (s.as_of ? " · as of " + esc(s.as_of) : "") + " · " + esc(s.corpus || "") + '</div><h2>' + esc(s.title || a.scenario) + '</h2><div class="cond-tag"><span class="code">' + esc(c.id || a.condition) + "</span>" + esc(c.label || "") + " · " + esc(c.graph || "") +
+      (reps.length > 1 ? " · run " + esc(a.repeat) + " of " + reps.length : "") + '</div></div><div class="navbtns"><button class="btn" data-nav="-1"' + (idx <= 0 ? " disabled" : "") + '>← Prev</button><button class="btn" data-nav="1"' + (hasNext ? "" : " disabled") + ">Next →</button></div></div>";
     h += '<div class="sec"><span class="eyebrow">Question, verbatim</span><blockquote class="q">' + esc(a.inputs?.question || s.question) + "</blockquote></div>";
     h += '<div class="sec"><span class="eyebrow">Answer key</span><div class="key"><span class="outcome">' + esc(a.expectations?.expected || s.expected) + "</span><span class=\"muted\">" + esc(a.expectations?.expected_detail || s.expected_detail || "") + "</span>" +
       (s.traps?.length ? '<span class="tags">' + s.traps.map((t) => '<span class="tag">' + esc(t) + "</span>").join("") + "</span>" : "") + "</div></div>";
@@ -495,7 +578,8 @@
       '<span class="lbl">Overall<small>Shown in the matrix</small></span>' + seg("overall", d.overall, ["pass", "partial", "fail"]) + "</div>" +
       '<textarea id="g-note" aria-label="Grading note" placeholder="Why this grade — what the answer got right or missed">' + esc(d.note) + "</textarea>" +
       '<div class="formrow"><span class="savestate" id="g-state">' + (S.dirty[a._id] ? "Unsaved changes" : g ? "Saved" : "Not graded yet") + '</span><span style="display:flex;gap:6px">' +
-      (g ? '<button type="button" class="btn" id="g-clear">Clear grade</button>' : "") + '<button type="submit" class="btn primary" id="g-save">Save grade</button></span></div></form></div>';
+      (g ? '<button type="button" class="btn" id="g-clear">Clear grade</button>' : "") + '<button type="submit" class="btn' + (hasNext ? "" : " primary") + '" id="g-save">Save grade</button>' +
+      (hasNext ? '<button type="submit" class="btn primary" id="g-save-next" data-next="1">Save &amp; next</button>' : "") + "</span></div></form></div>";
     const textUsed = o.text_tools_used?.length ? o.text_tools_used.join(", ") : "none";
     h += '<details class="tools"><summary>' + calls.length + " tool call" + (calls.length === 1 ? "" : "s") + " · text tools used: " + esc(textUsed) + '</summary><ol class="toollist">' +
       calls.map((t, n) => { const txt = ["search_chunks", "get_document", "search", "document"].includes(t.tool);
@@ -521,6 +605,31 @@
       (f.evidence || []).map((e) => '<span class="ev">' + esc(e) + "</span>").join("") + "</div></article>").join("") : '<div class="state">No findings in this category.</div>';
   }
 
+  /* ---------- grading list ---------- */
+  function renderQueue() {
+    const items = queueItems();
+    const done = items.filter((q) => { const a = answerOf(q); return a && S.grades[a._id]?.overall; }).length;
+    $("queue-count").textContent = items.length ? done + "/" + items.length : "";
+    if (!items.length) { $("queue").innerHTML = '<div class="state"><h2>No grading list yet</h2>Claude adds one when it plans a grading pass.</div>'; return; }
+    const cur = selectedAnswer()?._id;
+    let h = '<div class="qwrap"><div class="qhead"><div><h2>Grading list</h2><p class="muted">The answers where the provisional grades are most likely wrong, in priority order. Tap one to read and grade it. Each row shows the provisional grade (dashed) and yours (solid).</p></div>' +
+      '<div class="stat"><span class="eyebrow">Graded by you</span><b>' + done + '<span class="muted" style="font-size:15px"> / ' + items.length + "</span></b></div></div>";
+    let part = null;
+    for (const q of items) {
+      if (q.part !== part) {
+        if (part !== null) h += "</ol>";
+        part = q.part;
+        h += '<h3 class="qpart"><span class="eyebrow">Part ' + esc(q.part) + "</span>" + esc(q.part_title || "") + '</h3><ol class="qlist">';
+      }
+      const a = answerOf(q);
+      h += '<li><button type="button" class="qitem" data-q="' + esc(q._id) + '"' + (a && a._id === cur ? ' aria-current="true"' : "") + (a ? "" : " disabled") + ">" +
+        '<span class="qn">' + esc(q.order) + '</span><span class="qmain"><span class="qcell"><span><span class="code">' + esc(q.condition) + "</span> · " + esc(q.scenario) + " · r" + esc(q.repeat || 1) +
+        '</span><span class="qexp">' + esc(q.exp_label || q.experiment) + '</span></span><span class="qhint">' + esc(q.hint || "") + "</span></span>" +
+        '<span class="qgrades">' + (a ? provChip(a) + yourChip(a) : '<span class="muted">not found</span>') + "</span></button></li>";
+    }
+    $("queue").innerHTML = h + "</ol></div>";
+  }
+
   /* ---------- conditions ---------- */
   function renderConditions() {
     const cs = expConds();
@@ -535,19 +644,35 @@
     const ids = Object.keys(S.exps).sort().reverse();
     if (!S.exp || !S.exps[S.exp]) S.exp = store("ledger.exp") && S.exps[store("ledger.exp")] ? store("ledger.exp") : ids[0] || null;
     if (!S.exp) return;
-    renderHeader(); renderMatrix(); renderDetail(); renderFindings(); renderConditions();
+    renderHeader(); renderMatrix(); renderQueue(); renderDetail(); renderFindings(); renderConditions();
   }
   const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(renderAll); } };
 
   function setTab(t) {
     S.tab = t;
-    for (const v of ["matrix", "findings", "conditions"]) { $("view-" + v).hidden = v !== t; $("tab-" + v).setAttribute("aria-selected", v === t ? "true" : "false"); }
+    $("view-work").hidden = t !== "queue" && t !== "matrix";
+    $("pane-queue").hidden = t !== "queue";
+    $("pane-matrix").hidden = t !== "matrix";
+    $("view-findings").hidden = t !== "findings";
+    $("view-conditions").hidden = t !== "conditions";
+    for (const v of TABS) $("tab-" + v).setAttribute("aria-selected", v === t ? "true" : "false");
     store("ledger.tab", t);
   }
-  function select(key, scroll) {
+  function select(key, open) {
     S.sel = key; store("ledger.sel", key);
-    renderMatrix(); renderDetail(true);
-    if (scroll && window.matchMedia("(max-width: 1099px)").matches) $("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+    renderMatrix(); renderQueue(); renderDetail(true);
+    if (!narrow()) return;
+    if (open && !document.body.classList.contains("reading")) { S.listScroll = window.scrollY; document.body.classList.add("reading"); }
+    if (document.body.classList.contains("reading")) window.scrollTo(0, 0);
+  }
+  // Open an answer from any experiment: the matrix, findings and conditions follow it.
+  function openAnswer(a, open) {
+    if (S.exp !== a.experiment) { S.exp = a.experiment; store("ledger.exp", a.experiment); renderHeader(); renderFindings(); renderConditions(); }
+    select(a.condition + "|" + a.scenario + "|" + (a.repeat || 1), open);
+  }
+  function leaveReading() {
+    document.body.classList.remove("reading");
+    requestAnimationFrame(() => window.scrollTo(0, S.listScroll || 0));
   }
 
   /* ---------- events ---------- */
@@ -555,12 +680,14 @@
     const t = ev.target.closest("button, select");
     if (!t) return;
     if (t.dataset.tab) return setTab(t.dataset.tab);
-    if (t.dataset.cell) { const reps = answersFor(...t.dataset.cell.split("|")); return select(t.dataset.cell + "|" + (reps[0]?.repeat || 1), true); }
-    if (t.dataset.go) return select(t.dataset.go, false);
+    if (t.dataset.cell) { S.from = "matrix"; const reps = answersFor(...t.dataset.cell.split("|")); return select(t.dataset.cell + "|" + (reps[0]?.repeat || 1), true); }
+    if (t.dataset.q) { const q = S.queue[t.dataset.q]; const a = q && answerOf(q); if (a) { S.from = "queue"; openAnswer(a, true); } return; }
+    if (t.dataset.go) { S.from = "matrix"; return select(t.dataset.go, false); }
+    if (t.dataset.back) return leaveReading();
     if (t.dataset.nav) {
-      const flat = []; scens().forEach((x) => expConds().forEach((cc) => answersFor(cc.id, x.id).forEach((aa) => flat.push(aa))));
+      const flat = navList();
       const i = flat.findIndex((x) => x._id === selectedAnswer()?._id) + Number(t.dataset.nav);
-      if (flat[i]) select(flat[i].condition + "|" + flat[i].scenario + "|" + (flat[i].repeat || 1), false);
+      if (flat[i]) openAnswer(flat[i], false);
       return;
     }
     if (t.dataset.cat) { S.catFilter = t.dataset.cat; return renderFindings(); }
@@ -586,7 +713,7 @@
   });
   document.addEventListener("change", async (ev) => {
     const t = ev.target;
-    if (t.id === "exp-pick") { S.exp = t.value; store("ledger.exp", t.value); S.sel = null; $("detail").innerHTML = '<div class="state"><h2>Pick a result</h2>Select any cell to read the answer and grade it.</div>'; return schedule(); }
+    if (t.id === "exp-pick") { S.exp = t.value; store("ledger.exp", t.value); S.sel = null; S.from = "matrix"; $("detail").innerHTML = '<div class="state"><h2>Pick a result</h2>Select any cell to read the answer and grade it.</div>'; return schedule(); }
     if (t.dataset.fstatus && S.db) {
       try { await S.db.doc("findings/" + t.dataset.fstatus).update({ status: t.value }); }
       catch (e) { t.value = S.findings[t.dataset.fstatus]?.status || STATUSES[0]; }
@@ -601,9 +728,14 @@
       if (!d.overall) { st.textContent = "Pick an overall grade first — it's what the matrix shows."; st.className = "savestate err"; return; }
       const body = { answer_id: a._id, experiment: a.experiment, condition: a.condition, scenario: a.scenario, repeat: a.repeat || 1,
         checks: Object.fromEntries(RUBRIC.map(([k]) => [k, d.checks[k] || null])), overall: d.overall, note: d.note.trim(), graded_at: new Date().toISOString() };
-      $("g-save").disabled = true; st.textContent = "Saving…"; st.className = "savestate";
-      try { await S.db.doc("grades/" + a._id).set(body); S.dirty[a._id] = false; S.grades[a._id] = Object.assign({ _id: a._id }, body); renderMatrix(); renderHeader(); renderDetail(true); }
-      catch (e) { st.textContent = e?.code === "invalid_argument" ? "You can view this ledger but not save grades." : "Couldn't save (" + (e?.code || "error") + "). Try again."; st.className = "savestate err"; $("g-save").disabled = false; }
+      $("g-save").disabled = true; if ($("g-save-next")) $("g-save-next").disabled = true; st.textContent = "Saving…"; st.className = "savestate";
+      const thenNext = ev.submitter?.dataset.next === "1";
+      try {
+        await S.db.doc("grades/" + a._id).set(body); S.dirty[a._id] = false; S.grades[a._id] = Object.assign({ _id: a._id }, body);
+        renderMatrix(); renderHeader(); renderQueue(); renderDetail(true);
+        if (thenNext) { const flat = navList(); const nx = flat[flat.findIndex((x) => x._id === a._id) + 1]; if (nx) openAnswer(nx, false); }
+      }
+      catch (e) { st.textContent = e?.code === "invalid_argument" ? "You can view this ledger but not save grades." : "Couldn't save (" + (e?.code || "error") + "). Try again."; st.className = "savestate err"; $("g-save").disabled = false; if ($("g-save-next")) $("g-save-next").disabled = false; }
     }
     if (ev.target.id === "addf") {
       const title = $("nf-title").value.trim(), body = $("nf-body").value.trim(), st = $("nf-state");
@@ -618,8 +750,8 @@
   });
 
   /* ---------- boot ---------- */
-  const t0 = store("ledger.tab"); if (t0 && ["matrix", "findings", "conditions"].includes(t0)) setTab(t0);
-  const h0 = (location.hash || "").slice(1); if (["matrix", "findings", "conditions"].includes(h0)) setTab(h0);
+  const t0 = store("ledger.tab"); setTab(t0 && TABS.includes(t0) ? t0 : "queue");
+  const h0 = (location.hash || "").slice(1); if (TABS.includes(h0)) setTab(h0);
   S.sel = store("ledger.sel") || null;
 
   function unavailable(msg) {
@@ -638,7 +770,7 @@
       schedule();
     }, (e) => { if (target === "answers") unavailable("Couldn't load results (" + (e?.code || "error") + ")."); });
     bind("experiments", "exps"); bind("conditions", "conds"); bind("scenarios", "scens");
-    bind("answers", "answers"); bind("grades", "grades"); bind("findings", "findings");
+    bind("answers", "answers"); bind("grades", "grades"); bind("findings", "findings"); bind("queue", "queue");
   })();
 })();
 </script>
