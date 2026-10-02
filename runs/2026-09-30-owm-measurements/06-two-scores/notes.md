@@ -141,3 +141,6 @@ Give S02–S04 their own request ids, the way the held-out scenarios do (`id: DR
 - `DR-9002`, `DR-9003` and `DR-9004` are free in the corpus and in `truth/`.
 - It is a one-line change per scenario in `truth/scenarios/`, followed by `northstar build`.
 - Past runs keep their records; only future runs change.
+
+**Applied 2026-10-02** in `90a4c5e`. S02–S04 now use DR-9002–DR-9004; S02's question names DR-9002. The
+evidence is byte-identical (only the answer key and scorecard changed), so no re-ingestion is needed.
