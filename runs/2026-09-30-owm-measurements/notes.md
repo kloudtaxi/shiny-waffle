@@ -75,3 +75,12 @@
 - **Your grading pass** on the ledger is still pending.
 - The amendment candidates these results bear on are listed in
   `docs/owm-overhaul-reconciliation-2026-09-29.md` §3, updated with these results.
+
+## Grading pass (2026-10-01)
+
+The user graded 28 answers; see `docs/grading-pass-2026-10-01.md`.
+- The auto-scorer's passes held: 11/11.
+- Its fails were mostly overturned (7 of 8): routing vocabulary, conservative requests for
+  evidence, formatting, and one lab artifact. The scores above are therefore a floor.
+- Item 1's "one extra miss" (T1 S04 r3) is that lab artifact. See the correction in
+  `01-02-procedure/notes.md`.

@@ -87,3 +87,17 @@ Pre-registered in `../plan.md` (commit `8485d4a`) before any run.
 - The prompt-baseline comparison covers S01–S14 only; S15–S20 have no prompt-injected runs.
 - Under v1, S13's and S15's "fails" are the routing boundary item 5 describes. Their decision
   state (do not approve) was right.
+
+## Correction (2026-10-01, from the user's grading pass)
+
+The "one extra miss" in T1, S04 r3, did **not** apply the 2026 bands to a 2025 request:
+- Its prose answered the 2025 question correctly: Sarah could have approved it herself.
+- It then noticed that DR-9001 is dated 2026-09-23 in the corpus's own `discount_requests.csv`,
+  contradicting the record the lab handed it, and based its decision block on that system-of-record
+  date. The auto-scorer reads only the block.
+- The cause is the scenario's construction: S04 rewrites a real request's date instead of using
+  its own request id.
+- The user graded the answer a pass. On substance, T1 matches the prompt baseline on S01–S14
+  (30/33).
+
+See `docs/grading-pass-2026-10-01.md`. The scores above keep the pre-registered rule.
