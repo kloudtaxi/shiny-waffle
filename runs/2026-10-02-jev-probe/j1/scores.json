@@ -1,0 +1,148 @@
+{
+ "S01": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": []
+ },
+ "S02": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "expected": "REJECT_OR_ESCALATE",
+  "uncertain": []
+ },
+ "S03": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REVIEW_REQUIRED",
+  "gated_outcome": "REVIEW_REQUIRED",
+  "expected": "REVIEW_REQUIRED",
+  "uncertain": []
+ },
+ "S04": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "uncertain": []
+ },
+ "S05": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "expected": "REQUEST_EVIDENCE",
+  "uncertain": []
+ },
+ "S09": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "expected": "REJECT_OR_ESCALATE",
+  "uncertain": []
+ },
+ "S10": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": []
+ },
+ "S11": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": []
+ },
+ "S12": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "uncertain": []
+ },
+ "S13": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "expected": "REQUEST_EVIDENCE",
+  "uncertain": [
+   "party"
+  ]
+ },
+ "S14": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "uncertain": []
+ },
+ "S15": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "expected": "REQUEST_EVIDENCE",
+  "uncertain": []
+ },
+ "S16": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "uncertain": []
+ },
+ "S17": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REVIEW_REQUIRED",
+  "gated_outcome": "REVIEW_REQUIRED",
+  "expected": "REVIEW_REQUIRED",
+  "uncertain": []
+ },
+ "S18": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "uncertain": []
+ },
+ "S19": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "uncertain": []
+ },
+ "S20": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "expected": "REJECT_OR_ESCALATE",
+  "uncertain": []
+ },
+ "S21": {
+  "raw": "pass",
+  "gated": "pass",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": []
+ }
+}
