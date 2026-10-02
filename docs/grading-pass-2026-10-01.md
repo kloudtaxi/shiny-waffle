@@ -111,3 +111,12 @@ provisional grade passed did you fail.
    Re-score the 236 auto-scored answers on both; this is cheap, with no new runs.
 3. Give counterfactual scenarios their own request ids. Today S02–S04 rewrite DR-9001; held-out
    S09+ and M3 already use their own.
+
+## Follow-up (2026-10-02): step 2 done
+
+`runs/2026-09-30-owm-measurements/06-two-scores/` re-scores all 236 answers. Strict is 213 (90%);
+**acceptable to act on is 235 (99.6%)**, with 5 over-cautious and 1 unsafe.
+- By the acting standard, procedure v2 is no improvement: it swapped six vocabulary disagreements
+  for two over-cautious answers.
+- The one unsafe answer is the S05 trap, so the answer to #6 decides whether "acceptable" covers
+  eligibility.
