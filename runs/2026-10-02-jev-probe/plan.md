@@ -122,3 +122,20 @@ changes nothing. The CRM's `discount_requests.csv` is the system of record.
 3. J1 and J2 once the key arrives. Cents of Jev.
 
 No Utopia ingestion, and no OpenAI spend.
+
+## Addendum (2026-10-02, after the J3-R runs and before any Jev call)
+
+- **J2b, added.** The pre-registered J2 grid has only 3 positive party pairs and 2 justifications,
+  too few to measure calibration. J2b adds CRM→ERP identity pairs from the scale corpus (seed
+  20260923): each CRM account with its true ERP customer and its 2 most similar-named decoys, which
+  gives 612 pairs with 204 positives.
+  - It runs in two variants. **J2b-addr** gives the name and address; **J2b-name** gives names only.
+  - DUNS numbers are withheld, because they would turn identity into a join.
+  - Same ECE thresholds as the grid. `j2/calibrate.py` builds all 1,289 questions.
+- **J1 control** (`j1/control.py`): a judge that answers every soft question correctly gets
+  **18/18** through the hybrid pipeline.
+  - Its first run got 16/18 and found a pipeline bug. For the 2023 exception, the party question
+    was given only "Agreement: ACME-SA-2023 · Status: Active", which names no customer.
+  - The fix was to give exceptions without a customer row their full text. It was made before any
+    Jev call.
+  - Any J1 miss is therefore Jev's judgment.

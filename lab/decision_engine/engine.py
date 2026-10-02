@@ -19,6 +19,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -97,6 +98,7 @@ class Recorder:
     def __init__(self, engine: Engine, path: Path) -> None:
         self.engine, self.path, self.model = engine, path, engine.model
         self._seen: dict[str, Json] = {}
+        self._lock = threading.Lock()  # safe to share across worker threads
         if path.exists():
             for line in path.read_text().splitlines():
                 rec = json.loads(line)
@@ -112,10 +114,11 @@ class Recorder:
         rec = {"hash": h, "model": self.model, "at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
                "latency_ms": ms, "request": {"state": state, "questions": questions},
                "response": response}  # fmt: skip
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        with self.path.open("a") as f:
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-        self._seen[h] = response
+        with self._lock:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            with self.path.open("a") as f:
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            self._seen[h] = response
         return response
 
 

@@ -1,0 +1,332 @@
+{
+  "model": "claude-opus-5-5",
+  "system_prompt": "You answer questions about an organization. Your only source of information is the organization's knowledge base, which you can reach through the tools provided. Answer the question you are asked.",
+  "procedure": null,
+  "standin": {
+    "server": "owm (lab/owm_standin/server.py)",
+    "tools": [
+      "list_procedures",
+      "get_procedure"
+    ],
+    "procedures": {
+      "discount_approval": {
+        "path": "owm/procedures/discount-approval.md",
+        "sha256": "6e72951c87e3f20d90a29ebb3435de4e210443b9679e838c47de4c9b1aa9da94"
+      }
+    },
+    "decisions": null,
+    "call_log": "runs/2026-10-02-jev-probe/j3/r1/standin-calls.jsonl"
+  },
+  "server": "utopia",
+  "variants": {
+    "B1n": [
+      "search_chunks",
+      "get_document",
+      "search_docs",
+      "find_entities",
+      "entity_facts",
+      "paths_between",
+      "neighbors",
+      "timeline",
+      "list_rules",
+      "rule_matches"
+    ]
+  },
+  "hidden_via_disallowedTools": {
+    "B1n": [
+      "changes"
+    ]
+  },
+  "tools_list": [
+    {
+      "description": "Full-text + semantic search over the knowledge base documents. Returns numbered source excerpts you can cite as [n], each with the document_id it came from. Excerpts are cut short and only the best-matching sections come back, so when the answer may sit elsewhere in a hit, call get_document with that document_id to read the whole document.",
+      "inputSchema": {
+        "properties": {
+          "as_of": {
+            "description": "Optional RECORD-time moment (YYYY-MM-DD or RFC3339): search only what the knowledge base held at that moment \u2014 earlier versions of documents, documents deleted since. Full-text recall stays current, so hits are correct but may be incomplete. Omit for the current base.",
+            "type": "string"
+          },
+          "query": {
+            "description": "Search query, phrased in the corpus language.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "name": "search_chunks"
+    },
+    {
+      "description": "Read the full text of ONE knowledge base document, all sections in order, by the document_id shown in search_chunks results. Use it whenever a search hit looks like the right document but the excerpt does not contain the answer \u2014 action items, decisions and lists usually sit past the excerpt or in a section that did not match the query.",
+      "inputSchema": {
+        "properties": {
+          "document_id": {
+            "description": "Document id (uuid) from a search_chunks result line.",
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "document_id"
+        ],
+        "type": "object"
+      },
+      "name": "get_document"
+    },
+    {
+      "description": "Search the Utopia product manual (the \"Utopia Charter\") \u2014 how the platform itself works (ingestion and sync, missing markers and versions, the graph and review flow, roles, settings) \u2014 and never the user's own documents, which live in search_chunks.",
+      "inputSchema": {
+        "properties": {
+          "query": {
+            "description": "What to look up in the manual.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "name": "search_docs"
+    },
+    {
+      "description": "Look up entities in the knowledge graph by (partial) name. Returns id, name, type and a disambiguator when several entities share a name.",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "description": "Entity name or a fragment of it.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      },
+      "name": "find_entities"
+    },
+    {
+      "description": "Facts about one entity from the bi-temporal knowledge graph: relations with validity ranges (from \u2192 to; 'now' = still ongoing). The best tool for who/when/history questions. Use after find_entities. Pass `at` to see the world as of that date (server-side filter) \u2014 always do this for \"who was X in <year/month>\" questions. Conclusions a business rule reached about this entity come back too, marked `[rule: <name>]` with the readings that made them true \u2014 take those as given rather than re-deriving them from the readings yourself. Output is grouped by predicate and cut at `limit`; narrow with predicate, object_type, since / until, or use timeline / neighbors / paths_between.",
+      "inputSchema": {
+        "properties": {
+          "as_of": {
+            "description": "Optional RECORD-time moment (YYYY-MM-DD or RFC3339): the facts as the knowledge base held them at that moment, before later corrections, retractions and merges. Use for 'what did we think / know / have on record as of <date>'. Independent of `at`: `at` is when something was true, `as_of` is when we believed it. Omit for today's understanding.",
+            "type": "string"
+          },
+          "at": {
+            "description": "Optional as-of moment on the WORLD axis (YYYY, YYYY-MM, YYYY-MM-DD, or a zoned time). Only facts valid at that moment are returned. Omit for the full history.",
+            "type": "string"
+          },
+          "before": {
+            "description": "Optional RECORD-time instant copied exactly from a changes event: the facts as the knowledge base held them strictly before that change landed. Use it for 'before <correction / memo> arrived' \u2014 paste the event's timestamp, do not compute an earlier as_of yourself. Overrides as_of.",
+            "type": "string"
+          },
+          "entity_id": {
+            "description": "Entity id (uuid) from find_entities, or an entity name (the server picks the best match and says which).",
+            "type": "string"
+          },
+          "limit": {
+            "description": "How many facts to return (default 80, max 300); the reply says when it is cut.",
+            "type": "integer"
+          },
+          "object_type": {
+            "description": "Optional: only facts whose other end is of this type (e.g. 'Person').",
+            "type": "string"
+          },
+          "predicate": {
+            "description": "Optional: only facts whose relation name contains this (e.g. 'founder').",
+            "type": "string"
+          },
+          "since": {
+            "description": "Optional WORLD-time window start: facts still holding after it.",
+            "type": "string"
+          },
+          "until": {
+            "description": "Optional WORLD-time window end: facts that had started by it.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity_id"
+        ],
+        "type": "object"
+      },
+      "name": "entity_facts"
+    },
+    {
+      "description": "How two entities are connected in the knowledge graph: the chains of facts that join them, up to 3 hops, shortest first. THE tool for 'what is the relation between A and B', 'how is X linked to Y', 'who connects A and B'. Both ends take an entity name or an id; with a name the server picks the best match and says which. Pass `at` to require every edge to hold at that moment (world time), `as_of` to read the base as recorded then. Each edge comes with its validity range.",
+      "inputSchema": {
+        "properties": {
+          "as_of": {
+            "description": "Optional RECORD-time moment: the paths as the base held them then.",
+            "type": "string"
+          },
+          "at": {
+            "description": "Optional WORLD-time moment (YYYY, YYYY-MM, YYYY-MM-DD): every edge on a path must hold then.",
+            "type": "string"
+          },
+          "from": {
+            "description": "One end: entity name, or an id from find_entities.",
+            "type": "string"
+          },
+          "max_hops": {
+            "description": "Longest chain to consider, 1-3 (default 3).",
+            "type": "integer"
+          },
+          "to": {
+            "description": "The other end: entity name, or an id.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ],
+        "type": "object"
+      },
+      "name": "paths_between"
+    },
+    {
+      "description": "The entities linked to one entity, grouped by predicate, one hop. Use it to see what surrounds an entity before deciding where to look next (each further hop is another call); narrow with `predicate` (e.g. 'founder', 'employee') or `object_type` (e.g. 'Person'). Attribute values are not neighbors; entity_facts has them.",
+      "inputSchema": {
+        "properties": {
+          "as_of": {
+            "description": "Optional RECORD-time moment.",
+            "type": "string"
+          },
+          "at": {
+            "description": "Optional WORLD-time moment: only links valid then.",
+            "type": "string"
+          },
+          "entity": {
+            "description": "Entity name, or an id from find_entities.",
+            "type": "string"
+          },
+          "limit": {
+            "description": "How many to return (default 40, max 300).",
+            "type": "integer"
+          },
+          "object_type": {
+            "description": "Optional: only neighbors of this type (name contains).",
+            "type": "string"
+          },
+          "predicate": {
+            "description": "Optional: only relations whose name contains this.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity"
+        ],
+        "type": "object"
+      },
+      "name": "neighbors"
+    },
+    {
+      "description": "One entity's dated facts in world-time order: THE tool for 'the timeline of X', 'the history of X', 'what happened to X between <year> and <year>'. Only facts with a stated date appear; narrow with `since` / `until` (world time) or `predicate`.",
+      "inputSchema": {
+        "properties": {
+          "as_of": {
+            "description": "Optional RECORD-time moment: the timeline as the base held it then.",
+            "type": "string"
+          },
+          "entity": {
+            "description": "Entity name, or an id from find_entities.",
+            "type": "string"
+          },
+          "limit": {
+            "description": "How many to return (default 60, max 300).",
+            "type": "integer"
+          },
+          "predicate": {
+            "description": "Optional: only relations whose name contains this.",
+            "type": "string"
+          },
+          "since": {
+            "description": "Optional start of the window (YYYY, YYYY-MM, YYYY-MM-DD).",
+            "type": "string"
+          },
+          "until": {
+            "description": "Optional end of the window.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity"
+        ],
+        "type": "object"
+      },
+      "name": "timeline"
+    },
+    {
+      "description": "The business rules this base runs: what each one concludes and                     the exact conditions it tests, thresholds included. A rule is written by a                     person, and its conclusions are already in the graph \u2014 read the rule to                     explain WHY something was concluded, or to answer \"what counts as X here\".                     Do not re-implement a rule's comparison yourself; ask entity_facts or                     rule_matches for what it actually concluded.",
+      "inputSchema": {
+        "properties": {},
+        "type": "object"
+      },
+      "name": "list_rules"
+    },
+    {
+      "description": "Which entities a business rule currently marks, with the                     readings that made each one true. Use it for \"which wells are gas-bearing\"                     style questions \u2014 one call instead of checking every entity.                     Get the rule id from list_rules.",
+      "inputSchema": {
+        "properties": {
+          "limit": {
+            "description": "How many to return (default 50, max 200).",
+            "type": "integer"
+          },
+          "rule_id": {
+            "description": "Rule id (uuid) from list_rules.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id"
+        ],
+        "type": "object"
+      },
+      "name": "rule_matches"
+    },
+    {
+      "description": "What the graph LEARNED or REVISED in a window of record time \u2014                     the belief axis. Answers \"what changed since X\", \"what did we get wrong\",                     \"what is new this quarter\", and needs no entity, so use it when the                     question names a period rather than a subject.                     Events: asserted (new claim), corrected (a claim replaced by a revised one),                     rejected (a claim withdrawn), merged (folded into another claim) \u2014 each with                     the document it came from.                     NOT the same axis as entity_facts(at): that asks \"what was true on date D\";                     this asks \"what did we change our mind about between D1 and D2\". A fact                     about 2019 can be recorded in 2026 \u2014 this windows on when we recorded it.                     Each event starts with its exact UTC RFC3339 record timestamp, including fractional seconds.                     For 'before a correction arrived', find that event here and pass its timestamp, exactly as printed, to entity_facts as `before`. Keep at for the world date asked about.",
+      "inputSchema": {
+        "properties": {
+          "entity_id": {
+            "description": "Optional entity id from find_entities, to narrow the                                 window to changes touching that one entity.",
+            "type": "string"
+          },
+          "kinds": {
+            "description": "Optional filter. A freshly ingested corpus is nearly                                 all 'asserted'; pass [\"corrected\", \"rejected\"] to isolate                                 the places we actually changed our mind.",
+            "items": {
+              "enum": [
+                "asserted",
+                "corrected",
+                "rejected",
+                "merged"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "since": {
+            "description": "Start of the window (YYYY, YYYY-MM or YYYY-MM-DD), inclusive \u2014 a year or month means its first day.",
+            "type": "string"
+          },
+          "until": {
+            "description": "End of the window (YYYY, YYYY-MM or YYYY-MM-DD), inclusive of that                                 whole day, month or year. Omit for 'up to now'.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "since"
+        ],
+        "type": "object"
+      },
+      "name": "changes"
+    }
+  ],
+  "flags": "--tools '' --strict-mcp-config --setting-sources project --no-session-persistence --max-turns 40; cwd = fresh temp dir outside the repo",
+  "token": "northstar-j3-r1: read scope, kb_ids = ['01a0ea56-61e7-79e3-99d1-e82b5d6af79a'], 2-day expiry, revoked after run",
+  "started": "2026-10-02T12:27:32-0400"
+}

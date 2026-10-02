@@ -1,0 +1,28 @@
+{
+ "S22": {
+  "conflicts": [
+   "requested_discount_pct"
+  ],
+  "decided_on": "system of record",
+  "flagged": true
+ },
+ "S23": {
+  "conflicts": [
+   "request_date"
+  ],
+  "decided_on": "system of record",
+  "flagged": true
+ },
+ "S24": {
+  "conflicts": [
+   "status"
+  ],
+  "decided_on": "system of record",
+  "flagged": true
+ },
+ "S25": {
+  "conflicts": [],
+  "decided_on": "system of record",
+  "flagged": false
+ }
+}

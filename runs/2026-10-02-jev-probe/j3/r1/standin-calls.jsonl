@@ -1,0 +1,8 @@
+{"at": "2026-10-02T12:27:35-0400", "tool": "list_procedures", "arguments": {}, "is_error": false}
+{"at": "2026-10-02T12:27:36-0400", "tool": "get_procedure", "arguments": {"decision_kind": "discount_approval"}, "is_error": false}
+{"at": "2026-10-02T12:28:09-0400", "tool": "list_procedures", "arguments": {}, "is_error": false}
+{"at": "2026-10-02T12:28:10-0400", "tool": "get_procedure", "arguments": {"decision_kind": "discount_approval"}, "is_error": false}
+{"at": "2026-10-02T12:28:44-0400", "tool": "list_procedures", "arguments": {}, "is_error": false}
+{"at": "2026-10-02T12:28:48-0400", "tool": "get_procedure", "arguments": {"decision_kind": "discount_approval"}, "is_error": false}
+{"at": "2026-10-02T12:29:36-0400", "tool": "list_procedures", "arguments": {}, "is_error": false}
+{"at": "2026-10-02T12:29:37-0400", "tool": "get_procedure", "arguments": {"decision_kind": "discount_approval"}, "is_error": false}
