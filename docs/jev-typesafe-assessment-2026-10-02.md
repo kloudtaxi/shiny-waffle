@@ -170,3 +170,26 @@ For TypeSafe:
 - `model-jaggedness/jev-1.13`, `models`, `api`, `legal`, `agent-skill`
 - `introduction/machine-learning-primer`
 - `cookbooks/entity_alignment`, `cookbooks/citation_check`, `cookbooks/consistency_noul_cookbook`
+
+## Rulings (the user, 2026-10-02)
+
+1. **A model in the OWM path is fine for the OWM's own work.** The architecture is hexagonal
+   (ports and adapters), and the OWM can use LLMs or models wherever it works better. The user
+   will amend canon. §4's first point is settled.
+2. **The data boundary does not apply.** The use is internal to the OWM.
+3. **Repeatability:** recording responses is fine for now.
+4. **Calibration:** agreed. Measure it before trusting thresholds (J2).
+
+**laya** (`github.com/NandhaKishorM/laya`, suggested by the user as a self-hosted option):
+- Its README presents it as an independent open-source engine (Apache 2.0) that copies Jev's
+  request and response format, not as the model Jev is built on. Its claims, unverified: an
+  accuracy of 0.766 against Jev's 0.727 on its own benchmark, and a calibration error of 0.081
+  against 0.246.
+- It is built on ModernBERT-large: **512-token context** in English, 1,024–8,192 multilingual. It
+  runs on CUDA, CPU or Apple Silicon, and has an MCP server extra.
+- With the same wire format, it fits as a second adapter on the same port
+  (`lab/decision_engine/engine.py`).
+- The context limit suits short, single-point questions, not whole documents.
+- It is not installed or run without the user's OK.
+
+**Green-lit:** J1–J3 (`runs/2026-10-02-jev-probe/plan.md`).

@@ -36,6 +36,9 @@ class Scenario(BaseModel):
     corpus: str
     as_of: date | None = None
     request: dict[str, Any] | None = None
+    # The request as submitted, where it differs from the system of record (`request`). The oracle
+    # decides on the system of record and reports which fields conflict.
+    submitted: dict[str, Any] | None = None
     subject: dict[str, str] | None = None
     probes: list[Probe] = []
     expected: dict[str, Any]

@@ -20,3 +20,7 @@ S18,8% on the last day of the 10% exception (fresh held-out),base,Could Sarah Ch
 S19,Standard pricing where the contract documents are missing (fresh held-out),missing-contract-evidence,Can Sarah Chen approve a 6% discount for Acme Manufacturing on the NS-Cloud Operations Suite on 2026-09-23?,APPROVE,,,
 S20,VP Sales requests above the exception (fresh held-out),base,Can Michael Torres approve an 18% NS-500 discount for Acme Manufacturing on 2026-09-23?,REJECT_OR_ESCALATE,,,
 S21,"The DR-9001 request again, under the 2027 policy (decision memory)",base,Can Sarah Chen approve a 15% discount for Acme Manufacturing on an NS-500 Industrial Controller on 2027-02-01?,APPROVE_WITH_AUTHORIZATION,,,
+S22,DR-9001 submitted at 8%; the CRM says 15% (record conflict),base,Can Sarah Chen's discount request DR-9001 for Acme Manufacturing be approved?,APPROVE_WITH_AUTHORIZATION,,,
+S23,DR-9001 submitted as dated 2025-09-23; the CRM says 2026-09-23 (record conflict),base,Can Sarah Chen's discount request DR-9001 for Acme Manufacturing be approved?,APPROVE_WITH_AUTHORIZATION,,,
+S24,DR-9001 submitted as already approved; the CRM says pending (record conflict),base,Can Sarah Chen's discount request DR-9001 for Acme Manufacturing be approved?,APPROVE_WITH_AUTHORIZATION,,,
+S25,DR-9001 submitted exactly as the CRM records it (control for S22–S24),base,Can Sarah Chen's discount request DR-9001 for Acme Manufacturing be approved?,APPROVE_WITH_AUTHORIZATION,,,

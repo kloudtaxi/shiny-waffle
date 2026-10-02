@@ -66,6 +66,17 @@ def decide(truth: Truth, scenario: Scenario, available: frozenset[str]) -> dict[
     reasons: list[str] = []
     evidence: list[str] = []
 
+    # -- the submitted record against the system of record ------------------------
+    submitted = dict(scenario.submitted or {})
+    unknown = set(submitted) - set(type(req).model_fields)
+    if unknown:
+        raise ValueError(f"{scenario.id}: submitted fields not on a request: {sorted(unknown)}")
+    conflicts = sorted(k for k, v in submitted.items() if getattr(req, k) != v)
+    if conflicts:
+        reasons.append(
+            "the submitted record conflicts with the system of record on " + ", ".join(conflicts)
+        )
+
     account = truth.account_for(cust.id)
     if account and account.id in available:
         evidence.append(account.id)
@@ -166,6 +177,7 @@ def decide(truth: Truth, scenario: Scenario, available: frozenset[str]) -> dict[
             "approver": {"employee": approver.id, "name": approver.name, "authorized": True},
         },
         "decision": {"outcome": outcome},
+        "input": {"conflicts": conflicts},
         "reason": reasons,
         "evidence": evidence,
     }
@@ -234,6 +246,7 @@ def check(truth: Truth, scenario: Scenario, result: dict[str, Any]) -> list[str]
             "required_role": result["authority"]["required"]["role"],
             "approver": result["authority"]["approver"]["employee"],
             "evidence": result["evidence"],
+            "input_conflicts": result["input"]["conflicts"],
         }
         return [f"{k}: expected {exp[k]!r}, oracle {got[k]!r}" for k in exp if exp[k] != got[k]]
     if scenario.kind == "fact_selection":

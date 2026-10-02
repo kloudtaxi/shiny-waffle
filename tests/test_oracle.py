@@ -37,6 +37,25 @@ def test_all_scenarios_coherent(ds: Dataset) -> None:
         "S20": "REJECT_OR_ESCALATE",
         # the 2027 policy (lab extension, OWM measurements item 4)
         "S21": "APPROVE_WITH_AUTHORIZATION",
+        # a submitted record that conflicts with the CRM (added 2026-10-02, Jev probe J3);
+        # decided on the system of record, with S25 as the no-conflict control
+        "S22": "APPROVE_WITH_AUTHORIZATION",
+        "S23": "APPROVE_WITH_AUTHORIZATION",
+        "S24": "APPROVE_WITH_AUTHORIZATION",
+        "S25": "APPROVE_WITH_AUTHORIZATION",
+    }
+
+
+def test_submitted_record_conflicts_are_reported(ds: Dataset) -> None:
+    conflicts = {
+        sid: ds.results[sid]["input"]["conflicts"] for sid in ("S01", "S22", "S23", "S24", "S25")
+    }
+    assert conflicts == {
+        "S01": [],
+        "S22": ["requested_discount"],
+        "S23": ["request_date"],
+        "S24": ["status"],
+        "S25": [],
     }
 
 

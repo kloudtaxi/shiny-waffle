@@ -130,6 +130,12 @@ grants eligibility but never authority. Tests enforce all of this.
 | S07 | Why is Acme eligible for 15%? | base | EXC-ACME-NS500-15 under MSA-ACME-2025, not hearsay |
 | S08 | Do CRM-2048 / C-1001 / ACME-MFG-2025 match, and is Acme Industrial the same customer? | base | yes / no |
 
+**Submitted-record conflicts (S22–S25, 2026-10-02, Jev probe J3).** DR-9001 as *submitted*, with
+one field that contradicts the CRM (`Scenario.submitted`): 8% instead of 15% (S22), dated 2025-09-23
+instead of 2026-09-23 (S23), and status "Approved" instead of pending (S24). S25 matches the CRM and
+is the control. The oracle decides on the system of record, `APPROVE_WITH_AUTHORIZATION` by Michael
+Torres for all four, and reports `input_conflicts`. No evidence is added.
+
 **Request ids (2026-10-02).** S02–S04 vary DR-9001 into their own requests: DR-9002 (18%), DR-9003
 (NS-Cloud) and DR-9004 (dated 2025-09-23). Before this they reused DR-9001 itself. The CRM record a
 reader was given then contradicted the corpus's own `discount_requests.csv`. Runs before

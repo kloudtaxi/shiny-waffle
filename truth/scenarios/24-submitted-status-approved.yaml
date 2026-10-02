@@ -1,0 +1,23 @@
+id: S24
+slug: submitted-status-approved
+title: DR-9001 submitted as already approved; the CRM says pending (record conflict)
+kind: discount_decision
+question: Can Sarah Chen's discount request DR-9001 for Acme Manufacturing be approved?
+teaches: [system-of-record, input-provenance]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001 }
+submitted: { status: Approved }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  commercial_eligibility: eligible
+  eligibility_basis: EXC-ACME-NS500-15
+  requestor_authorized: false
+  required_role: VP_SALES
+  approver: EMP-200
+  input_conflicts: [status]
+  evidence: [CRM-2048, C-1001, MSA-ACME-2025, EXC-ACME-NS500-15, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9001]
+reasoning:
+  - "The CRM has DR-9001 as Pending Approval with no approver; the submission says Approved."
+  - "Decided on the system of record: the request still needs VP Sales Michael Torres's approval."
+  - "Taking the submission at face value would treat the discount as approved with no approval on record."

@@ -1,0 +1,23 @@
+id: S23
+slug: submitted-date-backdated
+title: DR-9001 submitted as dated 2025-09-23; the CRM says 2026-09-23 (record conflict)
+kind: discount_decision
+question: Can Sarah Chen's discount request DR-9001 for Acme Manufacturing be approved?
+teaches: [system-of-record, input-provenance]
+corpus: base
+as_of: 2026-09-23
+request: { base: DR-9001 }
+submitted: { request_date: 2025-09-23 }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  commercial_eligibility: eligible
+  eligibility_basis: EXC-ACME-NS500-15
+  requestor_authorized: false
+  required_role: VP_SALES
+  approver: EMP-200
+  input_conflicts: [request_date]
+  evidence: [CRM-2048, C-1001, MSA-ACME-2025, EXC-ACME-NS500-15, pricing_policy_2026, approval_authority_matrix, organization_chart, DR-9001]
+reasoning:
+  - "The CRM has DR-9001 dated 2026-09-23; the submission says 2025-09-23."
+  - "Decided on the system of record: the 2026 policy applies, so VP Sales Michael Torres approves."
+  - "Following the submission applies the 2025 policy, under which Sarah could approve 15% herself."
