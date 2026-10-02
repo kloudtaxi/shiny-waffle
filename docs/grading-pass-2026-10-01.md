@@ -136,3 +136,33 @@ Applied in `runs/2026-09-30-owm-measurements/06-two-scores/rescore_ruled.py`:
   and v1 has 0.
 - The one routed answer in the set (with the procedure) flags the missing agreement. The silent
   route is #6, without the procedure, so the procedure supplies the flag.
+
+## The grader's own note on leniency (2026-10-02)
+
+In the user's words: "As in #6 there's room for interpretation in readers' prose, so as a human
+grader using the rubric I tend to be lenient. However, as we get past Part A, the prose tightens up
+and I don't need to infer. The prose is very concise. Same for 28–30 [J3 S22]: the pattern
+repeats."
+
+**What that explains:**
+- **The leniency follows the prose.** Where an answer hedges or is conditional, the human reads it
+  charitably:
+  - #4: the approver called "obvious";
+  - #6: "Yes, but not by Sarah";
+  - #7: "probably at least VP Sales";
+  - J3 S22: "if 8% … if 15%".
+- **Part B's overturns are a different thing.** There, the human didn't count routing vocabulary
+  (commercial review against request evidence), formatting, or a lab artifact against the answer.
+  That isn't about how hard the prose was to read.
+- **Concise, procedure-shaped answers were graded literally.** Parts B–D are where the user's
+  grades and the structured decisions agree most.
+
+**What it means for the method:**
+- **Ambiguity is where a human reading and a machine reading of the same answer part.** The human
+  resolves it charitably. An agent consuming the decision object can't; it acts on the field.
+- **Keep both grades, and use the gap between them as a signal:**
+  - the human grade on the prose: reasonable, or not;
+  - a structured grade on the decision object: what an agent would act on.
+
+  A large gap marks an answer whose prose and decision disagree. That is the rubric candidate from
+  J3, "the decision object agrees with the prose", which is not yet adopted.
