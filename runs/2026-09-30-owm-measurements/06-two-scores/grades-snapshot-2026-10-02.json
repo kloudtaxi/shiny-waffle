@@ -1,0 +1,379 @@
+{
+ "2026-09-28-utopia-aad5b06-scale-large~B1nPR~S05~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1n/S05.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:52:06.254Z"
+ },
+ "2026-09-28-utopia-aad5b06-scale-large~B1nPRh~S12~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S12.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:53:58.976Z"
+ },
+ "2026-09-28-utopia-aad5b06-scale-large~B1nPRh~S13~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S13.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": null
+  },
+  "note": "No. DR-9105 can't be approved as submitted. It needs commercial review, because the contract it relies on belongs to a different company.",
+  "graded_at": "2026-10-02T14:21:24.652Z"
+ },
+ "2026-09-28-utopia-aad5b06-scale-large~B2~S02~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06-scale-large/arm-b/B2/S02.jsonl",
+  "overall": "partial",
+  "checks": {
+   "approver": "na",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": "fail"
+  },
+  "note": "“don't offer 18% on the strength of DR-9001.” & “file a new request and send it to the right approver, probably at least the VP Sales.”",
+  "graded_at": "2026-10-01T16:05:52.271Z"
+ },
+ "2026-09-28-utopia-aad5b06-scale-large~B2PR~S01~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06-scale-large/request-uncurated/arm-b/r1/B2/S01.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "partial",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": "pass"
+  },
+  "note": "gave a definitive answer with next steps",
+  "graded_at": "2026-10-02T14:12:18.120Z"
+ },
+ "2026-09-28-utopia-aad5b06-scale-large~B2kPR~S03~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06-scale-large/request/arm-b/r1/B2/S03.jsonl",
+  "overall": "partial",
+  "checks": {
+   "approver": "na",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": "pass"
+  },
+  "note": "The outcome did not match the answer key \"Review_Required\" however the reader flagged it as \"Request_Evidence\"",
+  "graded_at": "2026-10-02T14:18:16.693Z"
+ },
+ "2026-09-28-utopia-aad5b06-scale-large~B2kPRh~S09~r2": {
+  "source": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r2/B2/S09.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:53:13.381Z"
+ },
+ "2026-09-28-utopia-aad5b06~A~S01~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/answers/S01.md",
+  "overall": "fail",
+  "checks": {
+   "approver": "fail",
+   "basis": "fail",
+   "honesty": "fail",
+   "outcome": "fail",
+   "time": "na"
+  },
+  "note": "did not answer the question even though the facts are available",
+  "graded_at": "2026-09-30T22:00:30.202Z"
+ },
+ "2026-09-28-utopia-aad5b06~A~S06b~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/answers/S06b.md",
+  "overall": "fail",
+  "checks": {
+   "approver": "na",
+   "basis": "fail",
+   "honesty": "fail",
+   "outcome": "fail",
+   "time": "fail"
+  },
+  "note": "Answer gave \"100%\" discount",
+  "graded_at": "2026-10-01T14:39:44.493Z"
+ },
+ "2026-09-28-utopia-aad5b06~A~S07~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/answers/S07.md",
+  "overall": "pass",
+  "checks": {
+   "approver": "na",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "Got everything right",
+  "graded_at": "2026-10-01T15:01:15.254Z"
+ },
+ "2026-09-28-utopia-aad5b06~B1~S01~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/arm-b/B1/S01.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "na",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "AI interpreted the question correctly, got the answers right and provided reasoning for the answer",
+  "graded_at": "2026-09-30T22:04:11.805Z"
+ },
+ "2026-09-28-utopia-aad5b06~B1~S03~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/arm-b/B1/S03.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "The exception: … the 15% strategic pricing (section 3.2 and exception EXC-ACME-NS500-15) applies to \"NS-500 Industrial Controller (NS-500) only… It does not apply to any other Northstar product.\" So on NS-Cloud, 15% is simply a larger-than-usual discount, not something the contract allows for.",
+  "graded_at": "2026-10-01T15:15:10.318Z"
+ },
+ "2026-09-28-utopia-aad5b06~B2~S01~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/arm-b/B2/S01.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "partial",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "Inferred correctly on the escalation path to Michael Torres (VP Sales) but missed that VP Sales has the authority to approve up to 20% discount, but was honest \"but I can't confirm he has the authority, so check the matrix before routing it.\"",
+  "graded_at": "2026-10-01T15:39:17.527Z"
+ },
+ "2026-09-28-utopia-aad5b06~B2c~S02~r3": {
+  "source": "runs/2026-09-28-utopia-aad5b06/repeats/r3/B2/S02.jsonl",
+  "overall": "partial",
+  "checks": {
+   "approver": "fail",
+   "basis": "fail",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-01T15:53:13.086Z"
+ },
+ "2026-09-28-utopia-aad5b06~B2k~S05~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/curation/arm-b/r1/B2/S05.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "Actual response:  Yes, but not by Sarah. At 15%, the discount has to be approved by the VP of Sales, Michael Torres.",
+  "graded_at": "2026-10-01T15:57:12.600Z"
+ },
+ "2026-09-28-utopia-aad5b06~B2kPR~S01~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/request/arm-b/r1/B2/S01.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:48:56.835Z"
+ },
+ "2026-09-28-utopia-aad5b06~B2kPR~S05~r1": {
+  "source": "runs/2026-09-28-utopia-aad5b06/request/arm-b/r1/B2/S05.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": null,
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:51:03.365Z"
+ },
+ "2026-09-30-owm-measurements~DMa~M1~r1": {
+  "source": "runs/2026-09-30-owm-measurements/04-decision-memory/a/r1/B1n/M1.jsonl",
+  "overall": "partial",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": "pass"
+  },
+  "note": "The reader got it's info from discount_request.csv not the lab. the csv status column says \"approval pending\". So the  answer is correct in this context.",
+  "graded_at": "2026-10-02T14:51:49.928Z"
+ },
+ "2026-09-30-owm-measurements~DMa~M2~r1": {
+  "source": "runs/2026-09-30-owm-measurements/04-decision-memory/a/r1/B1n/M2.jsonl",
+  "overall": "fail",
+  "checks": {
+   "approver": "fail",
+   "basis": "fail",
+   "honesty": "fail",
+   "outcome": "fail",
+   "time": "pass"
+  },
+  "note": "did not provide an answer to the question",
+  "graded_at": "2026-10-02T14:52:58.224Z"
+ },
+ "2026-09-30-owm-measurements~DMb~M1~r1": {
+  "source": "runs/2026-09-30-owm-measurements/04-decision-memory/b/r1/B1n/M1.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:59:34.997Z"
+ },
+ "2026-09-30-owm-measurements~DMb~M3~r1": {
+  "source": "runs/2026-09-30-owm-measurements/04-decision-memory/b/r1/B1n/M3.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T03:00:06.198Z"
+ },
+ "2026-09-30-owm-measurements~DMc~M1~r1": {
+  "source": "runs/2026-09-30-owm-measurements/04-decision-memory/c/r1/B1n/M1.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T14:42:46.506Z"
+ },
+ "2026-09-30-owm-measurements~DMc~M3~r1": {
+  "source": "runs/2026-09-30-owm-measurements/04-decision-memory/c/r1/B1n/M3.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T03:00:59.375Z"
+ },
+ "2026-09-30-owm-measurements~T1~S04~r3": {
+  "source": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r3/B1n/S04.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "The Answer Key is wrong, the discount_request.csv lists request_date as \"2026-09-23\" while CRM record sent to the reader says \"2025\" it off my one year. The reader",
+  "graded_at": "2026-10-02T14:32:58.759Z"
+ },
+ "2026-09-30-owm-measurements~T1~S15~r1": {
+  "source": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S15.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T14:34:33.878Z"
+ },
+ "2026-09-30-owm-measurements~T2~S15~r1": {
+  "source": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S15.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:56:42.776Z"
+ },
+ "2026-09-30-owm-measurements~T2~S16~r1": {
+  "source": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S16.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "pass",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "pass",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:59:11.677Z"
+ },
+ "2026-09-30-owm-measurements~T2~S18~r1": {
+  "source": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S18.jsonl",
+  "overall": "pass",
+  "checks": {
+   "approver": "na",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": null
+  },
+  "note": "",
+  "graded_at": "2026-10-02T02:58:36.637Z"
+ },
+ "2026-09-30-owm-measurements~T2~S18~r2": {
+  "source": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r2/B1n/S18.jsonl",
+  "overall": "partial",
+  "checks": {
+   "approver": "na",
+   "basis": "pass",
+   "honesty": "pass",
+   "outcome": "partial",
+   "time": "pass"
+  },
+  "note": "",
+  "graded_at": "2026-10-02T14:42:18.398Z"
+ }
+}

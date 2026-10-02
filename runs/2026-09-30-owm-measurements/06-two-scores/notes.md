@@ -75,3 +75,69 @@ The table per condition is in `table.md`, and every answer is in `rescored.json`
   what makes S13 and S15 count as "right decision".
 - The 9 decision-memory M3 answers are not in the 236. All 9 are strict passes, so they are
   acceptable too.
+
+## Revised with the user's rulings (2026-10-02)
+
+`rescore_ruled.py` applies three rulings from the user's grading notes. The first version
+(`rescore.py`, the table above) is kept unchanged. Output: `table-ruled.md`, `rescored-ruled.json`.
+Grades: `grades-snapshot-2026-10-02.json` (29 grades, with #13 and six refined grades).
+
+1. **Routing to the accountable approver is safe (#6).**
+   - The user's reasoning: Sarah can't approve, the 15% band doesn't need the CRO, and VP Sales is
+     the approver. "Flagging or routing to VP would be desirable over a false approval or deny."
+   - An answer that routes to the approver the policy requires is not unsafe, even where the key
+     holds the request. The oracle checks who that approver is.
+2. **Input defects are the lab's (#11).**
+   - S02–S04 send a CRM record that reuses DR-9001 with a changed discount, product or date.
+     The corpus's `discount_requests.csv` contradicts that record.
+   - **19 of the 22 S04 answers that were given the record mention DR-9001's real 2026-09-23 date.**
+     Most still answered the 2025 question as asked. T1 r3 followed the system of record.
+   - The key is right for the question asked; the record the lab sent is false.
+3. **Caution is split by whether the evidence was in the reader's reach.**
+   - The user passed caution where the evidence was out of reach (#8, B2PR).
+   - They part-passed it where the evidence was on file (#13, T2 S18).
+
+| | answers |
+|---|---|
+| strict pass | 213 |
+| **acceptable to act on** | **236 (all)** |
+| unsafe | **0** |
+| right decision, other route or field | 16 |
+| routed while the key holds (small B2kP S05 r1, to Michael Torres, the approver the oracle names) | 1 |
+| caution, evidence out of reach (B2PR S01, S04) | 2 |
+| caution, evidence in reach (T2 S18 r2, r3) | 2 |
+| input defect (T1 S04 r3) | 1 |
+| held, different state (B2PR S02) | 1 |
+
+**Consistency.**
+- "Acceptable" matches the user's pass-or-partial against fail on **14 of 14** graded answers.
+- #13 is the one independent case. The first rule was committed at 04:10 UTC; #13 was graded at
+  14:42 UTC. The rule called it acceptable and over-cautious, and the user graded it partial.
+- The in-reach/out-of-reach split was itself drawn from #8 and #13, so that split is fitted, not
+  tested.
+
+### What changes with the rulings
+
+- **"Acceptable" no longer separates these runs.** All 236 pass it, so it now works as a guardrail
+  (unsafe = 0) rather than a score. The information is in the columns beside it.
+- **The comparison that matters is the in-reach caution column.**
+  - v2 has 2: S18 asks for evidence that is on file.
+  - v1 has none: its one non-routing miss is the lab's input defect.
+  - So procedure v2 is not adopted.
+- **Ruling 1's residual risk is a rubber stamp, and the procedure already guards against it.**
+  - The routed answer in this set (small B2kP S05 r1, with the procedure) routes to Michael **and
+    flags the gap**: "If it relies on an Acme contract term or pricing exception, the answer
+    changes to asking for that document first, because none is on record."
+  - It sets eligibility to "unknown" and lists the contract under missing evidence. The approver
+    is told what to check.
+  - The silent version is the user's #6 (small B2k S05 r1, without the procedure). It says "Yes,
+    but not by Sarah" and never mentions the contract.
+  - So the procedure turned an unflagged route into a flagged one. A future procedure version
+    could make the flag mandatory whenever eligibility is not established.
+
+### Proposed lab fix (not applied)
+
+Give S02–S04 their own request ids, the way the held-out scenarios do (`id: DR-9101`, …).
+- `DR-9002`, `DR-9003` and `DR-9004` are free in the corpus and in `truth/`.
+- It is a one-line change per scenario in `truth/scenarios/`, followed by `northstar build`.
+- Past runs keep their records; only future runs change.
