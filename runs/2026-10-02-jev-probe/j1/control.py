@@ -39,6 +39,15 @@ class PerfectJudge:
             choice = "same_legal_entity" if mine and names_acme else "different_entity"
             return {"answers": {name: {"choice": choice, "confidence": 1.0,
                                        "probabilities": {choice: 1.0}}}}  # fmt: skip
+        if name == "role":
+            words = state["role"].lower()
+            title = ("Enterprise Account Executive" if "account executive" in words
+                     else "VP Sales" if "vp sales" in words
+                     else "Chief Revenue Officer" if "chief revenue officer" in words
+                     else "none")  # fmt: skip
+            key = hybrid.slug(title)
+            return {"answers": {name: {"choice": key, "confidence": 1.0,
+                                       "probabilities": {key: 1.0}}}}  # fmt: skip
         sku = state["product"].split("(")[-1].rstrip(")")
         return {"answers": {name: {"noul": 1.0 if sku in doc else 0.0}}}
 
@@ -54,7 +63,8 @@ def main() -> None:
     exp = hybrid.scorer.expected()
     passes = 0
     for sid in hybrid.SCENARIOS:
-        d = hybrid.decide(PerfectJudge(), truth, sid, heldout.record(sid))
+        d = hybrid.decide(PerfectJudge(), truth, sid, heldout.record(sid),
+                          authority=sys.argv[1] if len(sys.argv) > 1 else "truth")  # fmt: skip
         g = hybrid.scorer.score(sid, d, exp[sid])
         passes += g["grade"] == "pass"
         flag = "" if g["grade"] == "pass" else f"   <-- {g['note']}"

@@ -5,6 +5,7 @@
 - retrieval sufficient: **102/102**
 - hybrid strict pass: **102/102**, against the readers' own **93/102**
 - unsafe: **0**
+- governing policy found in the set: taken from truth
 - when retrieval was insufficient (0): hybrid outcomes {}
 
 | reader \ hybrid | pass | partial | fail |
@@ -18,6 +19,7 @@
 - retrieval sufficient: **87/102**
 - hybrid strict pass: **94/102**, against the readers' own **93/102**
 - unsafe: **0**
+- governing policy found in the set: taken from truth
 - when retrieval was insufficient (15): hybrid outcomes {'APPROVE_WITH_AUTHORIZATION': 2, 'REJECT_OR_ESCALATE': 3, 'REQUEST_EVIDENCE': 7, 'REVIEW_REQUIRED': 1, 'APPROVE': 2}
 
 | reader \ hybrid | pass | partial | fail |

@@ -43,13 +43,13 @@ def norm(s: str) -> str:
     return " ".join(s.lower().split())
 
 
-def corpus() -> Path:
+def corpus(kb: str = KB) -> Path:
     out = Path(tempfile.mkdtemp(prefix="ns-large-"))
     subprocess.run(["uv", "run", "northstar", "build", "--scale", "large", "--out", str(out)],
                    cwd=LAB, check=True, capture_output=True)  # fmt: skip
     stored = dict(
         sql(f"""select json_agg(json_build_array(filename, sha256)) from documents
-                where kb_id='{KB}' and deleted_at is null
+                where kb_id='{kb}' and deleted_at is null
                 and filename in ({",".join(f"'{c}.csv'" for c in CSVS)})""")
     )
     for c in CSVS:
@@ -111,14 +111,15 @@ class Resolver:
         return (next(iter(objs)) if len(objs) == 1 else None), False
 
 
-def decisions() -> list[dict[str, Any]]:
+def decisions(kb: str = KB) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = sql(f"""
         select json_agg(json_build_object(
             'review_id', r.id, 'decision_id', d.id, 'action', d.action, 'status', d.status,
             'confidence', d.confidence, 'reason', d.reason, 'calls', d.calls,
             -- just before the decision, or before its merge when that was recorded first
             -- (merges are written ~30 ms before their decision row)
-            't', least(d.created_at, coalesce(mg.created_at, d.created_at)) - interval '1 millisecond',
+            't', least(d.created_at, coalesce(mg.created_at, d.created_at))
+                 - interval '1 millisecond',
             'left_id', l.id, 'right_id', rr.id,
             'left_name', l.canonical_name, 'right_name', rr.canonical_name,
             'left_type', coalesce(tl.label, 'untyped'),
@@ -129,11 +130,11 @@ def decisions() -> list[dict[str, Any]]:
         join entities l on l.id = r.left_id join entities rr on rr.id = r.right_id
         left join entity_types tl on tl.id = l.type_id
         left join entity_types tr on tr.id = rr.type_id
-        where r.kb_id = '{KB}'""")  # fmt: skip
+        where r.kb_id = '{kb}'""")  # fmt: skip
     return rows
 
 
-def views(items: list[tuple[str, str]]) -> dict[str, Any]:
+def views(items: list[tuple[str, str]], kb: str = KB) -> dict[str, Any]:
     """Each (entity_id, time) → also-known-as and top four facts as they stood at that time,
     chosen the way `entity_fact_lines` chooses them. Later merges that moved facts are undone."""
     values = ",".join(f"('{e}'::uuid, '{t}'::timestamptz)" for e, t in items)
@@ -142,15 +143,15 @@ def views(items: list[tuple[str, str]]) -> dict[str, Any]:
     attributed as (
       -- facts on the entity now, unless a merge after t moved them in
       select w.e, w.t, f.id, case when f.subject_id = w.e then 'out' else 'in' end as dir
-        from want w join facts f on f.kb_id = '{KB}' and (f.subject_id = w.e or f.object_id = w.e)
+        from want w join facts f on f.kb_id = '{kb}' and (f.subject_id = w.e or f.object_id = w.e)
        where not exists (select 1 from entity_merges m
-                          where m.kb_id = '{KB}' and m.target_id = w.e and m.created_at > w.t
+                          where m.kb_id = '{kb}' and m.target_id = w.e and m.created_at > w.t
                             and (f.id = any(m.moved_subject_facts)
                                  or f.id = any(m.moved_object_facts)))
       union
       -- facts a merge after t moved away from the entity
       select w.e, w.t, x.fid, x.dir from want w join entity_merges m
-          on m.kb_id = '{KB}' and m.source_id = w.e and m.created_at > w.t
+          on m.kb_id = '{kb}' and m.source_id = w.e and m.created_at > w.t
         cross join lateral (select unnest(m.moved_subject_facts) as fid, 'out' as dir
                             union all select unnest(m.moved_object_facts), 'in') x
     ),
@@ -190,6 +191,28 @@ def views(items: list[tuple[str, str]]) -> dict[str, Any]:
                                  where x.e = w.e and x.t = w.t and x.rn <= 4), '[]')))
       from want w"""
     out: dict[str, Any] = sql(q)
+    return out
+
+
+def label_all(kb: str, resolve: Resolver) -> list[dict[str, Any]]:
+    """Every labelled pair in `kb` with both sides' views (part 3, I2: no sampling)."""
+    out = []
+    for r in decisions(kb):
+        (lo, lc), (ro, rc) = resolve(r["left_name"]), resolve(r["right_name"])
+        if lo is None or ro is None:
+            continue
+        r |= {"label": "same" if lo == ro else "different", "left_obj": lo, "right_obj": ro,
+              "composite": lc or rc}  # fmt: skip
+        out.append(r)
+    items = sorted({(r[f"{s}_id"], r["t"]) for r in out for s in ("left", "right")})
+    seen: dict[str, Any] = {}
+    for i in range(0, len(items), 400):
+        seen |= views(items[i : i + 400], kb)
+    for r in out:
+        for s in ("left", "right"):
+            v = seen[f"{r[f'{s}_id']}|{r['t']}"]
+            r[s] = {"name": r[f"{s}_name"], "type": r[f"{s}_type"],
+                    "also_known_as": v["aka"], "facts": v["facts"]}  # fmt: skip
     return out
 
 

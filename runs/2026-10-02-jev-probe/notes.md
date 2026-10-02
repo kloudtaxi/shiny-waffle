@@ -131,3 +131,38 @@ Pre-registered in `plan-2.md` (commit `de1e073`). Details in `j4/notes.md` and `
 - Code is good at rules.
 
 The failures sit where one of the three is doing another's job.
+
+## Part 3 (2026-10-02): A1 and I2
+
+These are experiments 1 and 2 from `docs/next-experiments-2026-10-02.md`. They were pre-registered
+in `plan-3.md` (commit `01f16c8`). Details are in `a1-notes.md` and `i2/notes.md`. All eight
+predictions held.
+
+| | Question | Result |
+|---|---|---|
+| **A1** | Can the hybrid read authority (policy, bands, roles, approver) from the records, with truth used nowhere? | **18/18** on gold evidence, and **102/102** on what agents surfaced, with 0 unsafe. Jev's only task was mapping band roles to HR titles: 50 judgments, all correct at confidence 1.0. |
+| **I2** | Customer matching on every labelled pair (41,617 in two KBs), with a guard and an operating point chosen beforehand? | At **τ = 0.9**: **0 false merges and 0 missed** in both KBs, against gpt-4o's 161 and 158 false merges. 4.4% and 3.8% of pairs are routed to a person. Jev cost about $0.62. |
+
+- **A1: agents surface policies but rarely open them.** The governing policy appeared in search
+  results 102/102 times, but readers opened it in full only 21 times. Limited to opened documents,
+  the hybrid asks for the policy (`REQUEST_EVIDENCE`) rather than guessing. The agent tool should
+  return whole governing documents (experiment 3).
+- **I2: a one-line guard does most of the work.** "An order is never a customer" covers over 90%
+  of gpt-4o's false merges. The cost of zero wrong merges is that almost every true match is routed
+  to a person rather than merged automatically.
+- **I2, exploratory:** most of the routed load is low-confidence "different", which was never a
+  true match on these labels. Lowering the keep bar and ranking the queue by P(same) suggests about
+  1% routed with nothing lost. This needs its own pre-registration.
+
+**Where this leaves the "still assumed" list:**
+- **authority:** closed by A1.
+- **identity sample with no operating point:** closed by I2.
+
+Open: one decision type and one organization, retrieval by Opus readers, trustworthy documents,
+and decision memory at scale (experiments 3–6).
+
+| Part 3 cost | |
+|---|---|
+| Jev, A1 | 3 calls, under $0.001 |
+| Jev, I2 | 29,012 calls, about $0.62 |
+| Claude, Utopia, OpenAI | none |

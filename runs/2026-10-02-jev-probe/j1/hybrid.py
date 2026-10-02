@@ -172,6 +172,82 @@ def is_exception(d: Doc) -> bool:
     return d.owner == "Deal Desk" or "Exception" in d.title
 
 
+# -- authority from evidence (part 3, A1) ---------------------------------------------------
+def is_policy(d: Doc) -> bool:
+    return d.doc_id.startswith("PRICING-POLICY")
+
+
+def policy_bands(doc: Doc) -> list[tuple[str, float, float | None]]:
+    """Section 3's sentences as (role words, lower bound exclusive, upper bound inclusive)."""
+    m = re.search(r"## 3\. Approval authority\n(.*?)(?=\n## |\Z)", doc.body, re.S)
+    out: list[tuple[str, float, float | None]] = []
+    for line in (m[1] if m else "").splitlines():
+        if a := re.match(r"-\s*(.+?) may approve discounts up to and including (\d+)%", line):
+            out.append((a[1], 0.0, int(a[2]) / 100))
+        elif b := re.match(
+            r"-\s*Discounts greater than (\d+)%(?: and up to and including (\d+)%)? "
+            r"require (.+?) approval",
+            line,
+        ):
+            out.append((b[3], int(b[1]) / 100, int(b[2]) / 100 if b[2] else None))
+    return out
+
+
+def slug(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", s.lower()).strip("_")
+
+
+def in_band(d: float, lo: float, hi: float | None) -> bool:
+    return (d <= hi if lo == 0.0 else d > lo) and (hi is None or d <= hi)
+
+
+def authority_from_evidence(
+    eng: Engine, docs: list[Doc], corpus: str, as_of: date, record: dict[str, str],
+    used: list[dict[str, Any]],
+) -> dict[str, Any] | None:  # fmt: skip
+    """The policy in force (code, by its window), its bands (code, from section 3), what HR title
+    each band's role means (Jev), and the requestor, limit and approver (code, employees.csv).
+    None when no policy in `docs` covers the date."""
+
+    def covers(d: Doc) -> bool:
+        w = window(d)
+        return bool(w and w[0] <= as_of <= w[1])
+
+    pol = next((d for d in docs if is_policy(d) and covers(d)), None)
+    if pol is None:
+        return None
+    staff = table(corpus, "employees")
+    titles = sorted({e["title"] for e in staff})
+    by_slug = {slug(x): x for x in titles}
+    q_role = {
+        "type": "choice",
+        "instructions": "Which job title in this company does the role named in `role` refer to?",
+        "criteria": {**by_slug, "none": "None of these job titles"},
+    }
+    bands: list[tuple[str | None, float, float | None]] = []
+    for role, lo, hi in policy_bands(pol):
+        j = judge(eng, {"role": role}, "role", q_role)
+        used.append(j)
+        bands.append((by_slug.get(j["choice"]), lo, hi))
+    d = float(record["requested_discount_pct"]) / 100
+    need = next((x for x, lo, hi in bands if in_band(d, lo, hi)), None)
+    me = next(e for e in staff if e["email"].lower() == record["requested_by"].lower())
+    mine = [hi for x, lo, hi in bands if x == me["title"]]
+    limit = 1.0 if None in mine else max((h for h in mine if h is not None), default=0.0)
+    by_id = {e["employee_id"]: e for e in staff}
+    approver: dict[str, str] | None = me if me["title"] == need else None
+    node: dict[str, str] | None = me
+    while approver is None and node is not None and node.get("manager_id"):
+        node = by_id.get(node["manager_id"])
+        if node is not None and node["title"] == need:
+            approver = node
+    if approver is None:
+        approver = next((e for e in staff if e["title"] == need), None)
+    return {"policy": pol.doc_id, "requestor_limit": limit, "requestor_authorized": d <= limit,
+            "required_role": need,
+            "approver": approver["full_name"] if approver else None}  # fmt: skip
+
+
 # -- judgments --------------------------------------------------------------------------------
 def judge(eng: Engine, state: Any, name: str, q: dict[str, Any]) -> dict[str, Any]:
     ans = eng.ask(state, {name: q})["answers"][name]
@@ -189,10 +265,12 @@ def judge(eng: Engine, state: Any, name: str, q: dict[str, Any]) -> dict[str, An
 
 
 def decide(
-    eng: Engine, truth: Any, sid: str, record: dict[str, str], allowed: set[str] | None = None
-) -> dict[str, Any]:
+    eng: Engine, truth: Any, sid: str, record: dict[str, str], allowed: set[str] | None = None,
+    authority: str = "truth",
+) -> dict[str, Any]:  # fmt: skip
     """`allowed`: when given, only these document filenames are candidates (E2E: what an agent
-    retrieved). None means the scenario's whole corpus (J1)."""
+    retrieved). None means the scenario's whole corpus (J1). `authority`: "truth" (J1, E2E) or
+    "evidence" (part 3, A1: the policy and HR records, see `authority_from_evidence`)."""
     scenario = next(s for s in truth.scenarios if s.id == sid)
     as_of: date = scenario.as_of
     docs = [d for d in load_docs(scenario.corpus) if allowed is None or d.filename in allowed]
@@ -259,17 +337,29 @@ def decide(
             eligibility = {"status": "eligible" if ok else "exceeded",
                            "maximum_discount": exc["max"], "basis": exc["id"]}  # fmt: skip
 
-    # -- authority, held at truth (plan) --------------------------------------------------------
-    req = resolve_request(truth, scenario)
-    requestor = truth.employee(req.requestor)
-    policy = truth.policy_on(as_of)
-    limit = policy.limit_for(requestor.role) or 0.0
-    authorized = req.requested_discount <= limit
-    band = policy.band_for(req.requested_discount)
-    approver = _approver(truth, requestor, band.role)
-    approval = "APPROVE" if authorized else "APPROVE_WITH_AUTHORIZATION"
-    outcome = {"unknown": "REQUEST_EVIDENCE", "not_covered": "REVIEW_REQUIRED",
-               "exceeded": "REJECT_OR_ESCALATE"}.get(eligibility["status"], approval)  # fmt: skip
+    # -- authority ------------------------------------------------------------------------------
+    auth: dict[str, Any] | None
+    if authority == "evidence":
+        auth = authority_from_evidence(eng, docs, scenario.corpus, as_of, record, used)
+    else:  # held at truth (J1, E2E)
+        req = resolve_request(truth, scenario)
+        requestor = truth.employee(req.requestor)
+        policy = truth.policy_on(as_of)
+        limit = policy.limit_for(requestor.role) or 0.0
+        band = policy.band_for(req.requested_discount)
+        auth = {"policy": policy.id, "requestor_limit": limit,
+                "requestor_authorized": req.requested_discount <= limit,
+                "required_role": truth.role_title(band.role),
+                "approver": _approver(truth, requestor, band.role).name}  # fmt: skip
+    if auth is None:  # no policy in force among the evidence: authority unknown
+        outcome = "REQUEST_EVIDENCE"
+        auth = {"policy": None, "requestor_limit": None, "requestor_authorized": None,
+                "required_role": None, "approver": None}  # fmt: skip
+    else:
+        approval = "APPROVE" if auth["requestor_authorized"] else "APPROVE_WITH_AUTHORIZATION"
+        by_status = {"unknown": "REQUEST_EVIDENCE", "not_covered": "REVIEW_REQUIRED",
+                     "exceeded": "REJECT_OR_ESCALATE"}  # fmt: skip
+        outcome = by_status.get(eligibility["status"], approval)
     uncertain = [j["q"] for j in used if j["uncertain"]]
     return {
         "scenario": sid,
@@ -277,17 +367,17 @@ def decide(
         "gated_outcome": "REQUEST_EVIDENCE" if uncertain else outcome,
         "uncertain": uncertain,
         "commercial_eligibility": eligibility,
-        "authority": {"policy": policy.id, "requestor_limit": limit,
-                      "requestor_authorized": authorized,
-                      "required_role": truth.role_title(band.role), "approver": approver.name},
+        "authority": auth,
         "judgments": used,
-    }  # fmt: skip
+    }
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--replay", action="store_true", help="answer only from the recording")
+    ap.add_argument("--authority", choices=["truth", "evidence"], default="truth")
     a = ap.parse_args()
+    tag = "" if a.authority == "truth" else "-a1"
     eng: Engine = Replay(CALLS, MODEL) if a.replay else Recorder(TypeSafe(MODEL), CALLS)
     spec = importlib.util.spec_from_file_location(
         "heldout", LAB / "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/heldout.py"
@@ -299,7 +389,7 @@ def main() -> None:
     exp = scorer.expected()
     decisions, scores = {}, {}
     for sid in SCENARIOS:
-        d = decide(eng, truth, sid, heldout.record(sid))
+        d = decide(eng, truth, sid, heldout.record(sid), authority=a.authority)
         decisions[sid] = d
         raw = scorer.score(sid, d, exp[sid])
         gated = scorer.score(sid, {**d, "outcome": d["gated_outcome"]}, exp[sid])
@@ -309,8 +399,8 @@ def main() -> None:
         unsure = f" · uncertain {','.join(d['uncertain'])}" if d["uncertain"] else ""
         print(f"{sid}: raw {raw['grade']:7s} gated {gated['grade']:7s} {d['outcome']} "
               f"(key {exp[sid]['outcome']}){unsure}")  # fmt: skip
-    (HERE / "decisions.json").write_text(json.dumps(decisions, indent=1, default=str) + "\n")
-    (HERE / "scores.json").write_text(json.dumps(scores, indent=1) + "\n")
+    (HERE / f"decisions{tag}.json").write_text(json.dumps(decisions, indent=1, default=str) + "\n")
+    (HERE / f"scores{tag}.json").write_text(json.dumps(scores, indent=1) + "\n")
     n = len(scores)
     print(
         f"raw strict pass {sum(s['raw'] == 'pass' for s in scores.values())}/{n} · "

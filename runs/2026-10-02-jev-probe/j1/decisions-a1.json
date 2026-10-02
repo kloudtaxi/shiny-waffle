@@ -1,0 +1,2260 @@
+{
+ "S01": {
+  "scenario": "S01",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "eligible",
+   "maximum_discount": 0.15,
+   "basis": "EXC-ACME-NS500-15"
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": false,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S02": {
+  "scenario": "S02",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "exceeded",
+   "maximum_discount": 0.15,
+   "basis": "EXC-ACME-NS500-15"
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": false,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S03": {
+  "scenario": "S03",
+  "outcome": "REVIEW_REQUIRED",
+  "gated_outcome": "REVIEW_REQUIRED",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "not_covered",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": false,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.06,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.02,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.06,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S04": {
+  "scenario": "S04",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "eligible",
+   "maximum_discount": 0.15,
+   "basis": "EXC-ACME-NS500-15"
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2025",
+   "requestor_limit": 0.15,
+   "requestor_authorized": true,
+   "required_role": "Enterprise Account Executive",
+   "approver": "Sarah Chen"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S05": {
+  "scenario": "S05",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "unknown",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": false,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S09": {
+  "scenario": "S09",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "exceeded",
+   "maximum_discount": 0.1,
+   "basis": "EXC-ACME-NS500-10"
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2025",
+   "requestor_limit": 0.15,
+   "requestor_authorized": true,
+   "required_role": "Enterprise Account Executive",
+   "approver": "Sarah Chen"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S10": {
+  "scenario": "S10",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "standard",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": false,
+   "required_role": "Chief Revenue Officer",
+   "approver": "David Morgan"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "standard_pricing",
+    "probabilities": {
+     "standard_pricing": 1.0,
+     "contract_terms": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S11": {
+  "scenario": "S11",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "standard",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2025",
+   "requestor_limit": 0.15,
+   "requestor_authorized": false,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "standard_pricing",
+    "probabilities": {
+     "standard_pricing": 1.0,
+     "contract_terms": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S12": {
+  "scenario": "S12",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "standard",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.2,
+   "requestor_authorized": true,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "standard_pricing",
+    "probabilities": {
+     "standard_pricing": 1.0,
+     "contract_terms": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S13": {
+  "scenario": "S13",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "uncertain": [
+   "party"
+  ],
+  "commercial_eligibility": {
+   "status": "unknown",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": false,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "unclear": 0.04,
+     "different_entity": 0.79,
+     "same_legal_entity": 0.17
+    },
+    "confidence": 0.68,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "same_legal_entity": 0.09,
+     "different_entity": 0.87,
+     "unclear": 0.04
+    },
+    "confidence": 0.81,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "different_entity": 0.4,
+     "same_legal_entity": 0.28,
+     "unclear": 0.32
+    },
+    "confidence": 0.1,
+    "uncertain": true
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "same_legal_entity": 0.09,
+     "different_entity": 0.87,
+     "unclear": 0.04
+    },
+    "confidence": 0.81,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S14": {
+  "scenario": "S14",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "standard",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": true,
+   "required_role": "Enterprise Account Executive",
+   "approver": "Sarah Chen"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "standard_pricing",
+    "probabilities": {
+     "standard_pricing": 1.0,
+     "contract_terms": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S15": {
+  "scenario": "S15",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "unknown",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.2,
+   "requestor_authorized": true,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "same_legal_entity": 0.0,
+     "unclear": 0.01,
+     "different_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "different_entity": 1.0,
+     "same_legal_entity": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "different_entity": 1.0,
+     "unclear": 0.0,
+     "same_legal_entity": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "different_entity": 1.0,
+     "same_legal_entity": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S16": {
+  "scenario": "S16",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "standard",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": true,
+   "required_role": "Enterprise Account Executive",
+   "approver": "Sarah Chen"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "standard_pricing",
+    "probabilities": {
+     "standard_pricing": 1.0,
+     "contract_terms": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S17": {
+  "scenario": "S17",
+  "outcome": "REVIEW_REQUIRED",
+  "gated_outcome": "REVIEW_REQUIRED",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "not_covered",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": false,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.03,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.02,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.03,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S18": {
+  "scenario": "S18",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "eligible",
+   "maximum_discount": 0.1,
+   "basis": "EXC-ACME-NS500-10"
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2025",
+   "requestor_limit": 0.15,
+   "requestor_authorized": true,
+   "required_role": "Enterprise Account Executive",
+   "approver": "Sarah Chen"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S19": {
+  "scenario": "S19",
+  "outcome": "APPROVE",
+  "gated_outcome": "APPROVE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "standard",
+   "maximum_discount": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.1,
+   "requestor_authorized": true,
+   "required_role": "Enterprise Account Executive",
+   "approver": "Sarah Chen"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "standard_pricing",
+    "probabilities": {
+     "standard_pricing": 1.0,
+     "contract_terms": 0.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S20": {
+  "scenario": "S20",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "exceeded",
+   "maximum_discount": 0.15,
+   "basis": "EXC-ACME-NS500-15"
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2026",
+   "requestor_limit": 0.2,
+   "requestor_authorized": true,
+   "required_role": "VP Sales",
+   "approver": "Michael Torres"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ },
+ "S21": {
+  "scenario": "S21",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "commercial_eligibility": {
+   "status": "eligible",
+   "maximum_discount": 0.15,
+   "basis": "EXC-ACME-NS500-15"
+  },
+  "authority": {
+   "policy": "PRICING-POLICY-2027",
+   "requestor_limit": 0.05,
+   "requestor_authorized": false,
+   "required_role": "Chief Revenue Officer",
+   "approver": "David Morgan"
+  },
+  "judgments": [
+   {
+    "q": "basis",
+    "choice": "contract_terms",
+    "probabilities": {
+     "unclear": 0.0,
+     "contract_terms": 1.0,
+     "standard_pricing": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "unclear": 0.01,
+     "different_entity": 0.03,
+     "same_legal_entity": 0.96
+    },
+    "confidence": 0.94,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "same_legal_entity": 0.91,
+     "unclear": 0.09
+    },
+    "confidence": 0.86,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.0,
+     "unclear": 0.01,
+     "same_legal_entity": 0.99
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "covers_product",
+    "noul": 0.98,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "enterprise_account_executive",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 1.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "sales_engineer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 1.0,
+     "financial_analyst": 0.0,
+     "finance_manager": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "director_of_finance": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ]
+ }
+}

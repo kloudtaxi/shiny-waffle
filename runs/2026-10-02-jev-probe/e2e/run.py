@@ -92,7 +92,9 @@ def evidence(jsonl: Path, names: dict[str, str]) -> tuple[set[str], set[str]]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--replay", action="store_true")
+    ap.add_argument("--authority", choices=["truth", "evidence"], default="truth")
     a = ap.parse_args()
+    tag = "" if a.authority == "truth" else "-a1"
     eng = h.Replay(h.CALLS, h.MODEL) if a.replay else h.Recorder(h.TypeSafe(h.MODEL), h.CALLS)
     truth = h.load_truth(LAB / "truth")
     exp = h.scorer.expected()
@@ -123,15 +125,17 @@ def main() -> None:
                 read, seen = evidence(LAB / run_key / f"{sid}.jsonl", names[corpus])
                 needed = {NEEDED[k] for k in key_evidence[sid] if k in NEEDED}
                 for which, docs in (("read", read), ("seen", seen)):
-                    d = h.decide(eng, truth, sid, heldout.record(sid), allowed=docs)
+                    d = h.decide(eng, truth, sid, heldout.record(sid), allowed=docs,
+                                 authority=a.authority)  # fmt: skip
                     g = h.scorer.score(sid, d, exp[sid])
                     c = item5.classify({"expected": exp[sid], "got": d, "fields": g["fields"]})
                     rows.append({"arm": arm, "run": rep, "scenario": sid, "set": which,
                                  "sufficient": needed <= docs, "missing": sorted(needed - docs),
                                  "hybrid": g["grade"], "hybrid_outcome": d["outcome"],
                                  "gated_outcome": d["gated_outcome"], "safety": c["safety"],
-                                 "reader": reader["grade"], "expected": exp[sid]["outcome"]})  # fmt: skip
-    (HERE / "results.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
+                                 "reader": reader["grade"], "expected": exp[sid]["outcome"],
+                                 "policy": d["authority"]["policy"]})  # fmt: skip
+    (HERE / f"results{tag}.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
 
     lines = ["# E2E: the agent retrieves, the hybrid engine decides (T1 + T2 transcripts)", ""]
     for which in ("seen", "read"):
@@ -142,24 +146,27 @@ def main() -> None:
         rp = sum(r["reader"] == "pass" for r in rs)
         unsafe = sum(r["safety"] == "unsafe" for r in rs)
         insuff = [r for r in rs if not r["sufficient"]]
+        found = (f"{sum(r['policy'] is not None for r in rs)}/{n}" if a.authority == "evidence"
+                 else "taken from truth")  # fmt: skip
         lines += [f"## Evidence set: {which}", "",
                   f"- retrieval sufficient: **{suff}/{n}**",
                   f"- hybrid strict pass: **{hp}/{n}**, against the readers' own **{rp}/{n}**",
                   f"- unsafe: **{unsafe}**",
+                  f"- governing policy found in the set: {found}",
                   f"- when retrieval was insufficient ({len(insuff)}): hybrid outcomes "
                   f"{dict(Counter(r['hybrid_outcome'] for r in insuff))}", ""]  # fmt: skip
         both = Counter((r["reader"], r["hybrid"]) for r in rs)
         lines += ["| reader \\ hybrid | pass | partial | fail |", "|---|---|---|---|"]
         for rg in ("pass", "partial", "fail"):
-            lines.append(f"| **{rg}** | " + " | ".join(str(both[(rg, hg)]) for hg in
-                                                        ("pass", "partial", "fail")) + " |")  # fmt: skip
+            cells = " | ".join(str(both[(rg, hg)]) for hg in ("pass", "partial", "fail"))
+            lines.append(f"| **{rg}** | {cells} |")
         lines.append("")
         misses = Counter((r["arm"], r["scenario"], r["hybrid_outcome"], tuple(r["missing"]))
                          for r in rs if r["hybrid"] != "pass")  # fmt: skip
         if misses:
             lines += ["Hybrid misses (arm, scenario, outcome, missing documents) × count:", ""]
             lines += [f"- {k} × {v}" for k, v in sorted(misses.items())] + [""]
-    (HERE / "results.md").write_text("\n".join(lines) + "\n")
+    (HERE / f"results{tag}.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
 
 

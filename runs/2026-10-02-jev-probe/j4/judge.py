@@ -98,7 +98,8 @@ def main() -> None:
                 "jev": jev_call(ans), "jev_choice": ans["choice"],
                 "jev_conf": ans["confidence"], "p_same": ans["probabilities"].get("same", 0.0),
                 "a": r["left_name"], "b": r["right_name"],
-                "prompt_chars": len(utopia_render(r["left"])) + len(utopia_render(r["right"]))}  # fmt: skip
+                "prompt_chars": len(utopia_render(r["left"]))
+                                + len(utopia_render(r["right"]))}  # fmt: skip
 
     with ThreadPoolExecutor(8) as pool:
         out = list(pool.map(judge, rows))
@@ -111,18 +112,22 @@ def main() -> None:
         ("All sampled pairs", lambda o: True),
         ("Excluding composite 'SO-n C-m' names", lambda o: not o["composite"]),
         ("Stratum: pairs gpt-4o merged", lambda o: o["stratum"] == "gpt4o_merge"),
-        ("Stratum: pairs gpt-4o routed (unsure or proposed)", lambda o: o["stratum"] == "gpt4o_route"),
-        ("Stratum: random 1,000 of gpt-4o's applied keeps", lambda o: o["stratum"] == "gpt4o_keep_sample"),
+        ("Stratum: pairs gpt-4o routed (unsure or proposed)",
+         lambda o: o["stratum"] == "gpt4o_route"),
+        ("Stratum: random 1,000 of gpt-4o's applied keeps",
+         lambda o: o["stratum"] == "gpt4o_keep_sample"),
     ]:  # fmt: skip
         rs = [o for o in out if sel(o)]
         g, j = tally(rs, "gpt4o"), tally(rs, "jev")
-        lines += [f"## {title} (n = {len(rs)}, truly same = {sum(o['label'] == 'same' for o in rs)})",
-                  "", "| | merge | keep | routed | false merges | missed merges | right when acting |",
+        same = sum(o["label"] == "same" for o in rs)
+        lines += [f"## {title} (n = {len(rs)}, truly same = {same})", "",
+                  "| | merge | keep | routed | false merges | missed merges | right when acting |",
                   "|---|---|---|---|---|---|---|"]  # fmt: skip
         for name, t in (("gpt-4o", g), ("Jev", j)):
             acted = t.get("merge", 0) + t.get("keep", 0)
-            lines.append(f"| {name} | {t.get('merge', 0)} | {t.get('keep', 0)} | {t.get('route', 0)} | "
-                         f"{t['false_merge']} | {t['missed_merge']} | {t['right']}/{acted} |")  # fmt: skip
+            lines.append(f"| {name} | {t.get('merge', 0)} | {t.get('keep', 0)} | "
+                         f"{t.get('route', 0)} | {t['false_merge']} | {t['missed_merge']} | "
+                         f"{t['right']}/{acted} |")  # fmt: skip
         lines.append("")
 
     # Jev calibration on P(same)
