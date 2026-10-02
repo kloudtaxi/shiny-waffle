@@ -6,7 +6,7 @@ question: Could Sarah Chen have approved a 15% NS-500 discount for Acme Manufact
 teaches: [temporal-organizational-state]
 corpus: base
 as_of: 2025-09-23
-request: { base: DR-9001, request_date: 2025-09-23 }
+request: { base: DR-9001, id: DR-9004, request_date: 2025-09-23 }
 expected:
   outcome: APPROVE
   commercial_eligibility: eligible
@@ -14,7 +14,7 @@ expected:
   requestor_authorized: true
   required_role: ENTERPRISE_AE
   approver: EMP-101
-  evidence: [CRM-2048, C-1001, MSA-ACME-2025, EXC-ACME-NS500-15, pricing_policy_2025, organization_chart, DR-9001]
+  evidence: [CRM-2048, C-1001, MSA-ACME-2025, EXC-ACME-NS500-15, pricing_policy_2025, organization_chart, DR-9004]
 reasoning:
   - The 2025 pricing policy was in effect; Enterprise AE authority extended to 15%.
   - The Acme 15% exception was active and covered the NS-500.

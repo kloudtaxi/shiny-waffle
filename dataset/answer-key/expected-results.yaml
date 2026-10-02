@@ -54,7 +54,7 @@
     customer: CUST-1001
     product: PROD-001
   request:
-    id: DR-9001
+    id: DR-9002
     requested_discount: 0.18
     requestor: EMP-101
   commercial_eligibility:
@@ -89,7 +89,7 @@
   - pricing_policy_2026
   - approval_authority_matrix
   - organization_chart
-  - DR-9001
+  - DR-9002
 - decision_id: DEC-S03
   scenario: S03
   type: discount_approval
@@ -99,7 +99,7 @@
     customer: CUST-1001
     product: PROD-002
   request:
-    id: DR-9001
+    id: DR-9003
     requested_discount: 0.15
     requestor: EMP-101
   commercial_eligibility:
@@ -133,7 +133,7 @@
   - pricing_policy_2026
   - approval_authority_matrix
   - organization_chart
-  - DR-9001
+  - DR-9003
 - decision_id: DEC-S04
   scenario: S04
   type: discount_approval
@@ -143,7 +143,7 @@
     customer: CUST-1001
     product: PROD-001
   request:
-    id: DR-9001
+    id: DR-9004
     requested_discount: 0.15
     requestor: EMP-101
   commercial_eligibility:
@@ -175,7 +175,7 @@
   - EXC-ACME-NS500-15
   - pricing_policy_2025
   - organization_chart
-  - DR-9001
+  - DR-9004
 - decision_id: DEC-S05
   scenario: S05
   type: discount_approval
