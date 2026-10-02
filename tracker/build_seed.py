@@ -294,6 +294,49 @@ SCENARIOS = [
         "Reusing the 2026 approver is a fail.",
         ["stale precedent", "policy change"],
     ),
+    (
+        "S22",
+        26,
+        "Submitted at 8%; the CRM says 15% (J3)",
+        "2026-09-23",
+        "base",
+        "APPROVE_WITH_AUTHORIZATION",
+        "Decide on the system of record: 15% needs VP Sales, Michael Torres. Flag the conflict. "
+        "Approving 8% on Sarah's own authority follows the submission.",
+        ["system of record", "submitted record conflict"],
+    ),
+    (
+        "S23",
+        27,
+        "Submitted as dated 2025; the CRM says 2026 (J3)",
+        "2026-09-23",
+        "base",
+        "APPROVE_WITH_AUTHORIZATION",
+        "Decide on the CRM's 2026 date: the 2026 policy applies, so Michael Torres approves. Flag "
+        "the conflict. The 2025 date would let Sarah approve herself.",
+        ["system of record", "submitted record conflict"],
+    ),
+    (
+        "S24",
+        28,
+        "Submitted as Approved; the CRM says pending (J3)",
+        "2026-09-23",
+        "base",
+        "APPROVE_WITH_AUTHORIZATION",
+        "The CRM shows Pending Approval with no approver, so it still needs Michael Torres. Flag "
+        "the conflict; don't treat it as already approved.",
+        ["system of record", "submitted record conflict"],
+    ),
+    (
+        "S25",
+        29,
+        "Submitted exactly as the CRM records it (J3 control)",
+        "2026-09-23",
+        "base",
+        "APPROVE_WITH_AUTHORIZATION",
+        "No conflict: Michael Torres approves. Claiming a conflict here is a false alarm.",
+        ["false alarm"],
+    ),
 ]
 
 CONDITIONS = [
@@ -530,6 +573,19 @@ CONDITIONS = [
         "Curation withdrawn; the 2027 policy ingested",
         "04-decision-memory/c/r1/B1n",
         "Item 4, arm (c): the same decision as a typed record served by the stand-in. Auto-scored.",
+    ),
+    (
+        "J3R",
+        21,
+        "Submitted record vs CRM",
+        "Opus · procedure v1 via tool + submitted record",
+        "Opus 5.5, blind, headless claude -p; fixed system prompt, no procedure in it",
+        "10 Utopia MCP tools (changes hidden) + OWM stand-in (list_procedures, get_procedure)",
+        "Scale base KB as it stands (curated)",
+        "j3/r1/B1n",
+        "Jev probe J3: DR-9001 as submitted, with one field contradicting the CRM (S22–S24), and a "
+        "control that matches it (S25). Auto-scored with a text rule; Claude's provisional grades "
+        "come from reading every answer.",
     ),
 ]
 
