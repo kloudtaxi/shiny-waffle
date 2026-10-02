@@ -1,0 +1,30 @@
+{
+ "pairs_with_decision": 22759,
+ "labelled": 21661,
+ "by_kind": {
+  "request~request": 7588,
+  "customer~customer": 5302,
+  "product~product": 3134,
+  "order~order": 2972,
+  "unlabelled": 1098,
+  "customer~order": 1070,
+  "literal~literal": 886,
+  "order~customer": 557,
+  "employee~employee": 143,
+  "order~product": 5,
+  "customer~employee": 3,
+  "customer~product": 1
+ },
+ "sample": 1445,
+ "sample_by_decision": {
+  "unsure/proposed": 151,
+  "merge/applied": 215,
+  "keep/proposed": 78,
+  "merge/proposed": 1,
+  "keep/applied": 1000
+ },
+ "sample_by_label": {
+  "different": 1388,
+  "same": 57
+ }
+}

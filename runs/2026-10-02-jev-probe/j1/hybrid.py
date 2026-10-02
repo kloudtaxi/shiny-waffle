@@ -92,6 +92,7 @@ CHOICE_FLOOR, NOUL_BAND = 0.5, (0.30, 0.70)  # an uncertain judgment routes to a
 # -- evidence ---------------------------------------------------------------------------------
 @dataclass
 class Doc:
+    filename: str
     doc_id: str
     title: str
     owner: str
@@ -109,6 +110,7 @@ def load_docs(corpus: str) -> list[Doc]:
             front = yaml.safe_load(fm) or {}
         docs.append(
             Doc(
+                p.name,
                 str(front.get("doc_id", p.stem)),
                 str(front.get("title", "")),
                 str(front.get("owner", "")),
@@ -186,10 +188,14 @@ def judge(eng: Engine, state: Any, name: str, q: dict[str, Any]) -> dict[str, An
             "confidence": conf, "uncertain": conf < CHOICE_FLOOR}  # fmt: skip
 
 
-def decide(eng: Engine, truth: Any, sid: str, record: dict[str, str]) -> dict[str, Any]:
+def decide(
+    eng: Engine, truth: Any, sid: str, record: dict[str, str], allowed: set[str] | None = None
+) -> dict[str, Any]:
+    """`allowed`: when given, only these document filenames are candidates (E2E: what an agent
+    retrieved). None means the scenario's whole corpus (J1)."""
     scenario = next(s for s in truth.scenarios if s.id == sid)
     as_of: date = scenario.as_of
-    docs = load_docs(scenario.corpus)
+    docs = [d for d in load_docs(scenario.corpus) if allowed is None or d.filename in allowed]
     account = next(a for a in table(scenario.corpus, "crm_accounts")
                    if a["account_id"] == record["account_id"])  # fmt: skip
     product = next(

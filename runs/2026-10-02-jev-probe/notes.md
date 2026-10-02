@@ -104,3 +104,30 @@ versions:
 | Jev, J1 + J2 + smoke | about $0.024 |
 | Utopia | none: read-only, no ingestion |
 | OpenAI | none |
+
+## Part 2 (2026-10-02): J4 and E2E
+
+Pre-registered in `plan-2.md` (commit `de1e073`). Details in `j4/notes.md` and `e2e/notes.md`.
+
+| | Question | Result |
+|---|---|---|
+| **J4** | Jev or gpt-4o on Utopia's duplicate queue: 1,445 labelled pairs from 22,759? | **gpt-4o made 161 false merges, Jev 3.** Right when acting: gpt-4o 86.6%, Jev 99.7%. Jev's ECE is 0.043; it routes 19% to a person. It costs $0.030 against about $1.31 for gpt-4o, which is 2.3% (the "under 1%" prediction failed). |
+| **E2E** | The agent retrieves and the hybrid engine decides, on the 102 T1/T2 transcripts? | Retrieval was sufficient in **102/102**. The hybrid on the agents' own evidence scored **102/102**, against the readers' own **93/102**. 0 unsafe. Using only fully-read documents: 94/102, with every miss conservative. |
+
+- **gpt-4o's false merges in J4 are mostly orders merged into customers.** That is 158 of 161:
+  entities named "SO-n C-m", merged into "C-m" on a "prefix removed" rule of thumb. The sample
+  implies the scale graph carries about 160 of them.
+  - A one-line code rule ("an order id never merges with a customer id") would cut gpt-4o's false
+    merges to 12. This is exploratory, not pre-registered.
+- **J4 first ran on wrong inputs,** because of my reconstruction bug: merges are recorded about
+  30 ms before their decision. The bug was found and fixed before reporting, and it is disclosed
+  in `j4/notes.md`.
+- **E2E separates retrieval from deciding.** Agents found everything the decision needed. Every
+  agent miss came in the deciding step, and the hybrid fixes all nine on the same evidence.
+
+**Together:** across decisions (J1, E2E), identity (J2, J4) and inputs (J3), the pattern holds.
+- Agents are good at finding things.
+- Jev is good at single-point judgments, and its confidence can be trusted.
+- Code is good at rules.
+
+The failures sit where one of the three is doing another's job.
