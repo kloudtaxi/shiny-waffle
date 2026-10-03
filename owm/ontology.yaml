@@ -13,14 +13,26 @@ entity_types:
   Account:         { layer: foundation, note: a CRM representation of a Customer }
   Product:         { layer: foundation }
   Contract:        { layer: foundation, temporal: true }
-  PricingException: { layer: owm, temporal: true, note: commercial eligibility, product-scoped }
+  PricingException: { layer: owm, temporal: true, is_a: EligibilityInstrument, note: "commercial eligibility, product-scoped" }
   Policy:          { layer: owm, temporal: true }
-  AuthorityBand:   { layer: owm, temporal: true, note: (min_exclusive, max_inclusive] per role per policy }
+  AuthorityBand:   { layer: owm, temporal: true, note: "(min_exclusive, max_inclusive] per role per policy" }
   Order:           { layer: foundation }
-  DiscountRequest: { layer: foundation }
+  DiscountRequest: { layer: foundation, is_a: Request }
   Approval:        { layer: owm }
   Decision:        { layer: owm, note: first-class, carries evidence }
   Evidence:        { layer: foundation, note: artifact + provenance }
+
+  # experiment 5 (credit-limit increase, 2026-10-03): what a second decision type needed.
+  # Generalizations of existing types:
+  Request:         { layer: foundation, note: "a decision request; Discount and Credit requests are kinds" }
+  EligibilityInstrument: { layer: owm, temporal: true, note: "grants eligibility to the party it names; exception, guarantee" }
+  # New instances of existing types:
+  CreditRequest:   { layer: foundation, is_a: Request }
+  CreditPolicy:    { layer: owm, temporal: true, is_a: Policy }
+  Guarantee:       { layer: owm, temporal: true, is_a: EligibilityInstrument, note: "from a third party; covers only the company it names" }
+  Invoice:         { layer: foundation, note: "a transaction record; eligibility can be computed from records, not only documents" }
+  # New governance concepts:
+  Concurrence:     { layer: owm, note: "a second sign-off from another function, conditioned on amount and account tier" }
 
 relationship_types:
   employee_of:      [Employee, Organization]
@@ -44,6 +56,10 @@ relationship_types:
   authorizes:       [Approval, DiscountRequest]
   evaluates:        [Decision, DiscountRequest]
   supported_by:     [Decision, Evidence]
+  # experiment 5
+  guarantees:       [Guarantee, Customer]
+  concurs_on:       [Approval, Request]
+  billed_to:        [Invoice, Customer]
 
 decision_outcomes:
   - APPROVE
@@ -57,3 +73,6 @@ invariants:
   - A pricing exception applies only to the product and dates it names.
   - Superseded facts are preserved; selection is by validity on the decision date.
   - Hearsay and precedent are not a basis for eligibility.
+  # experiment 5
+  - "Separation of duties: no one approves or concurs on a request they submitted; it passes to their manager."
+  - Authority can sit in a different function from the requestor (credit is Finance's, requested by Sales).
