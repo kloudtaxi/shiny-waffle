@@ -9,8 +9,8 @@ in. The engine then decides all 18 J1 scenarios on that corpus, with authority f
 target scenario is scored against the answer key (held, routed or unsafe). Every other scenario is
 compared with its clean decision (collateral).
 
-The engine is imported unchanged from the J1 run (v1), or from `hybrid_v2.py` in this folder
-(part B). Its corpus table is pointed at the temporary copies. Jev calls are recorded in
+The engine is imported unchanged from the J1 run (v1), or from `hybrid_v2.py` / `hybrid_v3.py`
+(parts B and D). Its corpus table is pointed at the temporary copies. Jev calls are recorded in
 `engine-calls.jsonl`, which is seeded from J1's recording, so clean judgments replay.
 """
 
@@ -33,7 +33,7 @@ HERE = Path(__file__).resolve().parent
 LAB = HERE.parents[1]
 J1 = LAB / "runs/2026-10-02-jev-probe/j1"
 CALLS = HERE / "engine-calls.jsonl"
-SETS = {"A": HERE / "attacks-a", "B": HERE / "set-b"}
+SETS = {"A": HERE / "attacks-a", "B": HERE / "set-b", "C": HERE / "set-c"}
 ROUTES = {"REQUEST_EVIDENCE", "REVIEW_REQUIRED"}
 APPROVALS = {"APPROVE", "APPROVE_WITH_AUTHORIZATION"}
 
@@ -95,11 +95,13 @@ def key(d: dict[str, Any]) -> tuple[Any, ...]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--set", choices=sorted(SETS), required=True)
-    ap.add_argument("--engine", choices=["v1", "v2"], default="v1")
+    ap.add_argument("--engine", choices=["v1", "v2", "v3"], default="v1")
     ap.add_argument("--replay", action="store_true")
     a = ap.parse_args()
 
-    hybrid = load("hybrid", J1 / "hybrid.py" if a.engine == "v1" else HERE / "hybrid_v2.py")
+    hybrid = load(
+        "hybrid", J1 / "hybrid.py" if a.engine == "v1" else HERE / f"hybrid_{a.engine}.py"
+    )
     heldout = load("heldout", LAB / "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/heldout.py")
     if not CALLS.exists():
         shutil.copy(J1 / "engine-calls.jsonl", CALLS)
