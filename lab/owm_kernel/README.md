@@ -20,6 +20,7 @@ Specs import the kernel by module name, so put this folder on the path:
 sys.path.insert(0, "lab/owm_kernel")
 import discount
 from kernel import Evidence
+
 decision = discount.decide(engine, Evidence(corpus_root), as_of, request_record, scenario_id)
 ```
 

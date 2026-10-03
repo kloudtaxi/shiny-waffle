@@ -96,6 +96,14 @@ class Evidence:
             return list(csv.DictReader(f))
 
 
+def linked(
+    row: dict[str, str], rows: list[dict[str, str]], keys: tuple[str, ...]
+) -> dict[str, str] | None:
+    """K-4 (experiment 5): the record in another system that shares every key with ``row``, such
+    as a DUNS number. Identity across systems by a registered identifier, never by name."""
+    return next((r for r in rows if all(r.get(k) and r.get(k) == row.get(k) for k in keys)), None)
+
+
 def window(doc: Doc) -> tuple[date, date] | None:
     f, t = doc.front.get("effective_from"), doc.front.get("effective_to")
     if f and t:
@@ -190,19 +198,47 @@ def consistency(
 
 
 # -- policy, authority and approvers -------------------------------------------------------
+AMOUNT = r"(\$[\d,]+|\d+%)"
+
+
+def amount_of(text: str) -> float:
+    """K-1 (experiment 5): "15%" → 0.15; "$100,000" → 100000.0."""
+    return int(text[:-1]) / 100 if text.endswith("%") else float(text.lstrip("$").replace(",", ""))
+
+
 def policy_bands(doc: Doc) -> list[tuple[str, float, float | None]]:
-    """Section 3's sentences as (role words, lower bound exclusive, upper bound inclusive)."""
+    """Section 3's sentences as (role words, lower bound exclusive, upper bound inclusive).
+    K-1 (experiment 5): any approved object ("discounts", "credit limits"), in % or $."""
     m = re.search(r"## 3\. Approval authority\n(.*?)(?=\n## |\Z)", doc.body, re.S)
     out: list[tuple[str, float, float | None]] = []
     for line in (m[1] if m else "").splitlines():
-        if a := re.match(r"-\s*(.+?) may approve discounts up to and including (\d+)%", line):
-            out.append((a[1], 0.0, int(a[2]) / 100))
+        if a := re.match(rf"-\s*(.+?) may approve [a-z ]+? up to and including {AMOUNT}", line):
+            out.append((a[1], 0.0, amount_of(a[2])))
         elif b := re.match(
-            r"-\s*Discounts greater than (\d+)%(?: and up to and including (\d+)%)? "
+            rf"-\s*[A-Z][a-z ]*? greater than {AMOUNT}(?: and up to and including {AMOUNT})? "
             r"require (.+?) approval",
             line,
         ):
-            out.append((b[3], int(b[1]) / 100, int(b[2]) / 100 if b[2] else None))
+            out.append((b[3], amount_of(b[1]), amount_of(b[2]) if b[2] else None))
+    return out
+
+
+def separation_of_duties(doc: Doc) -> bool:
+    """K-2 (experiment 5): the policy forbids approving or concurring on one's own request."""
+    return bool(re.search(r"may approve or concur on [^.]* they submitted", doc.body, re.I))
+
+
+def policy_concurrence(doc: Doc) -> list[tuple[str, float, tuple[str, ...]]]:
+    """K-3 (experiment 5): "For T accounts, X greater than A also require ROLE concurrence" as
+    (role words, lower bound exclusive, the account tiers it applies to; empty = all)."""
+    out = []
+    for m in re.finditer(
+        rf"-\s*(?:For (.+?) accounts, )?[a-z ]+? greater than {AMOUNT} "
+        r"also require (.+?) concurrence",
+        doc.body,
+    ):
+        tiers = tuple(t.strip() for t in m[1].split(" and ")) if m[1] else ()
+        out.append((m[3], amount_of(m[2]), tiers))
     return out
 
 
@@ -223,21 +259,29 @@ def covering(pols: list[Doc], on: date) -> list[Doc]:
     return out
 
 
-def titled_bands(
-    eng: Engine, pol: Doc, staff: list[dict[str, str]], used: list[dict[str, Any]]
-) -> tuple[Bands, dict[str, str]]:
-    """A policy's bands with each role mapped to an HR title (Jev), as in A1."""
+def map_role(
+    eng: Engine, role: str, staff: list[dict[str, str]], used: list[dict[str, Any]]
+) -> str | None:
+    """The HR title a policy's role words refer to (Jev), as in A1."""
     by_slug = {slug(x): x for x in sorted({e["title"] for e in staff})}
     q_role = {
         "type": "choice",
         "instructions": "Which job title in this company does the role named in `role` refer to?",
         "criteria": {**by_slug, "none": "None of these job titles"},
     }
-    bands: Bands = []
-    for role, lo, hi in policy_bands(pol):
-        j = judge(eng, {"role": role}, "role", q_role)
-        used.append(j)
-        bands.append((by_slug.get(j["choice"]), lo, hi))
+    j = judge(eng, {"role": role}, "role", q_role)
+    used.append(j)
+    return by_slug.get(j["choice"])
+
+
+def titled_bands(
+    eng: Engine, pol: Doc, staff: list[dict[str, str]], used: list[dict[str, Any]]
+) -> tuple[Bands, dict[str, str]]:
+    """A policy's bands with each role mapped to an HR title (Jev), as in A1."""
+    by_slug = {slug(x): x for x in sorted({e["title"] for e in staff})}
+    bands: Bands = [
+        (map_role(eng, role, staff, used), lo, hi) for role, lo, hi in policy_bands(pol)
+    ]
     return bands, by_slug
 
 
@@ -302,10 +346,25 @@ def authority_from_evidence(
     if not inforce:
         return None
     pol = inforce[0]
+    sod = separation_of_duties(pol)  # K-2: False for every discount policy
     bands, _ = titled_bands(eng, pol, staff, used)
     need = next((x for x, lo, hi in bands if in_band(amount, lo, hi)), None)
     me = next(e for e in staff if e["email"].lower() == requested_by.lower())
     limit = limit_for(bands, me["title"])
+    approver = resolve_approver(staff, me, need, sod)
+    return {"policy": pol.doc_id, "requestor_limit": limit,
+            "requestor_authorized": amount <= limit and not sod,
+            "required_role": need,
+            "approver": approver["full_name"] if approver else None,
+            "_doc": pol}  # fmt: skip
+
+
+def resolve_approver(
+    staff: list[dict[str, str]], me: dict[str, str], need: str | None, sod: bool = False
+) -> dict[str, str] | None:
+    """The first holder of the title up the requestor's manager chain (the requestor included),
+    else any holder. K-2 (experiment 5): under separation of duties, a requestor who would be
+    their own approver passes it to their manager."""
     by_id = {e["employee_id"]: e for e in staff}
     approver: dict[str, str] | None = me if me["title"] == need else None
     node: dict[str, str] | None = me
@@ -315,10 +374,26 @@ def authority_from_evidence(
             approver = node
     if approver is None:
         approver = next((e for e in staff if e["title"] == need), None)
-    return {"policy": pol.doc_id, "requestor_limit": limit, "requestor_authorized": amount <= limit,
-            "required_role": need,
-            "approver": approver["full_name"] if approver else None,
-            "_doc": pol}  # fmt: skip
+    if sod and approver is me and me.get("manager_id"):
+        approver = by_id.get(me["manager_id"])
+    return approver
+
+
+def concurrences(
+    eng: Engine, pol: Doc, staff: list[dict[str, str]], amount: float, tier: str,
+    requested_by: str, used: list[dict[str, Any]],
+) -> list[dict[str, str]]:  # fmt: skip
+    """K-3 (experiment 5): the second sign-offs the policy requires for this amount and account
+    tier, each resolved like an approver (separation of duties included)."""
+    me = next(e for e in staff if e["email"].lower() == requested_by.lower())
+    out = []
+    for role, lo, tiers in policy_concurrence(pol):
+        if amount > lo and (not tiers or tier in tiers):
+            who = resolve_approver(staff, me, map_role(eng, role, staff, used),
+                                   separation_of_duties(pol))  # fmt: skip
+            if who is not None:
+                out.append(who)
+    return out
 
 
 # -- judgments --------------------------------------------------------------------------------

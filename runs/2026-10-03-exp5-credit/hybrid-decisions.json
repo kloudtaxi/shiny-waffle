@@ -1,0 +1,1037 @@
+{
+ "S26": {
+  "scenario": "S26",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "eligibility": {
+   "status": "eligible",
+   "maximum_limit": 750000.0,
+   "basis": "cap:Strategic"
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Finance Manager",
+   "approver": "Priya Shah"
+  },
+  "approvers": [
+   {
+    "name": "Priya Shah",
+    "kind": "approval"
+   }
+  ],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "standard",
+    "probabilities": {
+     "guarantee": 0.0,
+     "standard": 1.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S27": {
+  "scenario": "S27",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "eligibility": {
+   "status": "eligible",
+   "maximum_limit": 750000.0,
+   "basis": "cap:Strategic"
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Director of Finance",
+   "approver": "Elena Novak"
+  },
+  "approvers": [
+   {
+    "name": "Elena Novak",
+    "kind": "approval"
+   },
+   {
+    "name": "Michael Torres",
+    "kind": "concurrence"
+   }
+  ],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "standard",
+    "probabilities": {
+     "guarantee": 0.0,
+     "standard": 1.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S28": {
+  "scenario": "S28",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "eligibility": {
+   "status": "eligible",
+   "maximum_limit": 1150000.0,
+   "basis": "GRT-ACME-2026"
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Director of Finance",
+   "approver": "Elena Novak"
+  },
+  "approvers": [
+   {
+    "name": "Elena Novak",
+    "kind": "approval"
+   },
+   {
+    "name": "Michael Torres",
+    "kind": "concurrence"
+   }
+  ],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "guarantee",
+    "probabilities": {
+     "guarantee": 1.0,
+     "unclear": 0.0,
+     "standard": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.01,
+     "same_legal_entity": 0.99,
+     "unclear": 0.0
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S29": {
+  "scenario": "S29",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "uncertain": [],
+  "eligibility": {
+   "status": "exceeded",
+   "maximum_limit": 1150000.0,
+   "basis": "GRT-ACME-2026"
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Director of Finance",
+   "approver": "Elena Novak"
+  },
+  "approvers": [],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "guarantee",
+    "probabilities": {
+     "guarantee": 1.0,
+     "unclear": 0.0,
+     "standard": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "same_legal_entity",
+    "probabilities": {
+     "different_entity": 0.01,
+     "same_legal_entity": 0.99,
+     "unclear": 0.0
+    },
+    "confidence": 0.98,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S30": {
+  "scenario": "S30",
+  "outcome": "REJECT_OR_ESCALATE",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "uncertain": [],
+  "eligibility": {
+   "status": "ineligible",
+   "maximum_limit": null,
+   "basis": null,
+   "late_invoices": [
+    "INV-62147"
+   ]
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Finance Manager",
+   "approver": "Priya Shah"
+  },
+  "approvers": [],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "standard",
+    "probabilities": {
+     "guarantee": 0.0,
+     "unclear": 0.01,
+     "standard": 0.99
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S31": {
+  "scenario": "S31",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "eligibility": {
+   "status": "eligible",
+   "maximum_limit": 300000.0,
+   "basis": "cap:Standard"
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2025",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Finance Manager",
+   "approver": "Priya Shah"
+  },
+  "approvers": [
+   {
+    "name": "Priya Shah",
+    "kind": "approval"
+   }
+  ],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "standard",
+    "probabilities": {
+     "guarantee": 0.0,
+     "unclear": 0.01,
+     "standard": 0.99
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S32": {
+  "scenario": "S32",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "uncertain": [],
+  "eligibility": {
+   "status": "unknown",
+   "maximum_limit": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Finance Manager",
+   "approver": "Priya Shah"
+  },
+  "approvers": [],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "guarantee",
+    "probabilities": {
+     "standard": 0.0,
+     "unclear": 0.0,
+     "guarantee": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "party",
+    "choice": "different_entity",
+    "probabilities": {
+     "same_legal_entity": 0.03,
+     "different_entity": 0.97,
+     "unclear": 0.0
+    },
+    "confidence": 0.95,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S33": {
+  "scenario": "S33",
+  "outcome": "REQUEST_EVIDENCE",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "uncertain": [],
+  "eligibility": {
+   "status": "unknown",
+   "maximum_limit": null,
+   "basis": null
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Director of Finance",
+   "approver": "Elena Novak"
+  },
+  "approvers": [],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "guarantee",
+    "probabilities": {
+     "guarantee": 1.0,
+     "unclear": 0.0,
+     "standard": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S34": {
+  "scenario": "S34",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "eligibility": {
+   "status": "eligible",
+   "maximum_limit": 750000.0,
+   "basis": "cap:Strategic"
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Director of Finance",
+   "approver": "Elena Novak"
+  },
+  "approvers": [
+   {
+    "name": "Elena Novak",
+    "kind": "approval"
+   },
+   {
+    "name": "David Morgan",
+    "kind": "concurrence"
+   }
+  ],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "standard",
+    "probabilities": {
+     "guarantee": 0.0,
+     "standard": 1.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "vp_sales": 1.0,
+     "sales_operations_analyst": 0.0,
+     "none": 0.0,
+     "chief_revenue_officer": 0.0,
+     "customer_success_manager": 0.0,
+     "financial_analyst": 0.0,
+     "accounts_receivable_specialist": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S35": {
+  "scenario": "S35",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "uncertain": [],
+  "eligibility": {
+   "status": "eligible",
+   "maximum_limit": 750000.0,
+   "basis": "cap:Strategic"
+  },
+  "authority": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 0.0,
+   "requestor_authorized": false,
+   "required_role": "Finance Manager",
+   "approver": "Priya Shah"
+  },
+  "approvers": [
+   {
+    "name": "Priya Shah",
+    "kind": "approval"
+   }
+  ],
+  "judgments": [
+   {
+    "q": "relies",
+    "choice": "standard",
+    "probabilities": {
+     "guarantee": 0.0,
+     "standard": 1.0,
+     "unclear": 0.0
+    },
+    "confidence": 0.99,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "accounts_receivable_specialist",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "none": 0.0,
+     "director_of_finance": 0.0,
+     "vp_sales": 0.0,
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 1.0,
+     "sales_engineer": 0.0,
+     "sales_operations_analyst": 0.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "finance_manager",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_engineer": 0.0,
+     "none": 0.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "finance_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_finance",
+    "probabilities": {
+     "financial_analyst": 0.0,
+     "vp_sales": 0.0,
+     "director_of_finance": 1.0,
+     "finance_manager": 0.0,
+     "chief_revenue_officer": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ }
+}
