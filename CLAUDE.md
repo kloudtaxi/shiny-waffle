@@ -106,6 +106,9 @@ conceptual OWM. Every ontology type there is tagged `layer: foundation | owm` as
 - **Adding a corpus variant** (for example, doc 02 Experiment A, which drops
   `organization_chart`): add it to `truth/corpora.yaml` and retarget a scenario with `corpus:`.
 - **Adding a scale**: extend `SCALES` in `factories/background.py`.
+- **`dataset-*` tags are releases consumed by `kloudtaxi/blueleaf-demo`** (the client demo, a
+  separate repo that copies `dataset/evidence/` and the answer key at a tag). Never move or
+  delete such a tag; cut a new one when the demo needs new data. Demo work happens in that repo.
 - Truth entries marked `lab_extension: true` are not in doc 03. They are candidates for
   review, not canon.
 - **Never load `dataset/answer-key/`, `dataset/evaluation/`, `truth/` or `site/` into the
