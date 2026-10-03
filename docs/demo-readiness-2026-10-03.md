@@ -186,3 +186,24 @@ These are worth deciding before the narrative is written.
 3. Pin the environment, set up replay, and fill in the fact checklist.
 4. The S21 evergreen beat, and Experiment A if there is time.
 5. A dry run, recorded takes, and a one-page leave-behind (the CxO doc already covers most of it).
+
+## The user's decisions (2026-10-03)
+
+**Precedence:** docs 01–04 came before shiny-waffle, so they lag it. Where they conflict, this
+repo's corpus and decisions win.
+
+1. **Audience: clients.** The demo has to be a high-fidelity, app-like experience that they can
+   understand and reason about. No visible tech: no JSON, no model names, no confidence numbers,
+   no lab vocabulary.
+2. **Live.** The user drives the demo.
+3. **The brand on screen is BlueLeaf.**
+4. **Utopia doesn't exist as far as the demo is concerned.** It is never named or shown, and
+   nobody from it is in the room. The identity story is shown as a guardrail: BlueLeaf won't merge
+   two customers on a guess, and asks a person instead. It is not shown as another system's
+   errors.
+
+**What this changes in the plan above:**
+- Act 3 ("ask an agent", with recorded failures) and the on-screen answer-key check are dropped.
+  The answer key becomes the demo's regression test, run before every rehearsal.
+- Act 2 becomes BlueLeaf's own view of what it knows about Acme.
+- Act 7 becomes outcomes, not architecture.
