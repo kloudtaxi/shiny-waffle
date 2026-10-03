@@ -1,0 +1,22 @@
+id: S35
+slug: credit-submitted-conflict
+title: CR-9201 submitted at $300,000; the ERP says $400,000 (record conflict)
+kind: credit_decision
+question: Can Sarah Chen's credit request CR-9201 for Acme Manufacturing be approved on 2026-09-23?
+teaches: [system-of-record, input-provenance]
+corpus: base
+as_of: 2026-09-23
+request: { base: CR-9201 }
+submitted: { requested_limit_usd: 300000 }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  eligibility: eligible
+  eligibility_basis: "cap:Strategic"
+  requestor_authorized: false
+  required_role: FINANCE_MANAGER
+  approvers: [[EMP-401, approval]]
+  input_conflicts: [requested_limit_usd]
+  evidence: [CRM-2048, C-1001, erp_credit, erp_invoices, credit_policy_2026, organization_chart, CR-9201]
+reasoning:
+  - "The ERP, the system of record, has CR-9201 at $400,000; the submission says $300,000."
+  - "Decided on the system of record: Finance Manager approval, Priya Shah."

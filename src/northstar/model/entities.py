@@ -73,6 +73,7 @@ class Customer(_Frozen):
     address: Address
     duns: str
     annual_revenue_usd_approx: int | None = None
+    credit_limit_usd: int | None = None  # current limit in the ERP credit master (experiment 5)
     lab_extension: bool = False
 
 
@@ -212,3 +213,80 @@ class Fact(_Frozen):
     kind: Literal["asserted", "derived"]
     owm_needed: bool
     statement: str
+
+
+# -- Credit (experiment 5, lab extension): a second decision type ---------------------------
+
+
+class Guarantee(Temporal):
+    """A third party guarantees a customer's obligations up to an amount."""
+
+    id: str
+    title: str
+    guarantor: str
+    customer: str
+    amount_usd: int
+    lab_extension: bool = True
+
+
+class Invoice(_Frozen):
+    id: str
+    customer: str
+    invoice_date: date
+    due_date: date
+    amount_usd: int
+    paid_date: date | None
+    reference: str
+
+    def days_late(self, as_of: date) -> int:
+        """Days past due as known on ``as_of``: a payment made after ``as_of`` is not yet known."""
+        if self.paid_date is not None and self.paid_date <= as_of:
+            return max(0, (self.paid_date - self.due_date).days)
+        return max(0, (as_of - self.due_date).days)
+
+
+class CreditRequest(_Frozen):
+    id: str
+    customer: str
+    current_limit_usd: int
+    requested_limit_usd: int
+    requestor: str
+    request_date: date
+    basis: Literal["guarantee", "standard"]
+    basis_ref: str | None
+    justification: str
+    status: str
+    lab_extension: bool = True
+
+
+class Concurrence(_Frozen):
+    """A second sign-off, from another function, above an amount for some account tiers."""
+
+    role: str
+    min_exclusive: float
+    tiers: list[str]
+
+
+class CreditPolicy(Temporal):
+    id: str
+    title: str
+    bands: list[Band]
+    concurrence: list[Concurrence]
+    max_days_late: int
+    lookback_days: int
+    caps: dict[str, int]  # account tier → maximum credit limit
+    separation_of_duties: bool
+    rules: list[str]
+    lab_extension: bool = True
+
+    def band_for(self, amount: float) -> Band:
+        for band in self.bands:
+            if band.contains(amount):
+                return band
+        raise ValueError(f"{self.id}: no authority band covers {amount}")
+
+    def limit_for(self, role: str) -> float | None:
+        for band in self.bands:
+            if band.role == role:
+                return band.max_inclusive if band.max_inclusive is not None else float("inf")
+        return None

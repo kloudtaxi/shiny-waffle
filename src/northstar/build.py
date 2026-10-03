@@ -48,6 +48,8 @@ def assemble(truth_dir: Path, seed: int, scale: str) -> Dataset:
         available = oracle.available_keys(corpus)
         if s.kind == "discount_decision":
             result = oracle.decide(truth, s, available)
+        elif s.kind == "credit_decision":
+            result = oracle.decide_credit(truth, s, available)
         elif s.kind == "fact_selection":
             result = oracle.select_facts(truth, s, available)
         elif s.kind == "provenance":
@@ -198,7 +200,7 @@ def _scorecard(ds: Dataset) -> str:
     rows = []
     for s in ds.truth.scenarios:
         r = ds.results[s.id]
-        if s.kind == "discount_decision":
+        if s.kind in ("discount_decision", "credit_decision"):
             expected = r["decision"]["outcome"]
         elif s.kind == "fact_selection":
             expected = "; ".join(f"{p['as_of']}={p['exception']}" for p in r["probes"])
@@ -233,7 +235,9 @@ def _dataset_card(ds: Dataset, seed: int, scale: str) -> str:
         f"- Background: {len(ds.background.customers)} customers, "
         f"{len(ds.background.employees)} employees, {len(ds.background.products)} products, "
         f"{len(ds.background.orders)} orders, "
-        f"{len(ds.background.discount_requests)} discount requests",
+        f"{len(ds.background.discount_requests)} discount requests, "
+        f"{len(ds.background.invoices)} invoices, "
+        f"{len(ds.background.credit_requests)} credit requests",
         "",
         "## Load into the knowledge foundation",
         "",

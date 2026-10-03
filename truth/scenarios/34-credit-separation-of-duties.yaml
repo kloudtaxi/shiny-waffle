@@ -1,0 +1,21 @@
+id: S34
+slug: credit-separation-of-duties
+title: Michael Torres requests $650,000 for Acme (separation of duties)
+kind: credit_decision
+question: Can Michael Torres's request CR-9208 to raise Acme Manufacturing's credit limit to $650,000 be approved on 2026-09-23?
+teaches: [separation-of-duties, concurrence]
+corpus: base
+as_of: 2026-09-23
+request: { base: CR-9201, id: CR-9208, requested_limit_usd: 650000, requestor: EMP-200 }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  eligibility: eligible
+  eligibility_basis: "cap:Strategic"
+  requestor_authorized: false
+  required_role: FINANCE_DIRECTOR
+  approvers: [[EMP-402, approval], [EMP-300, concurrence]]
+  input_conflicts: []
+  evidence: [CRM-2048, C-1001, erp_credit, erp_invoices, credit_policy_2026, organization_chart, CR-9208]
+reasoning:
+  - "Director of Finance approval (Elena Novak), with VP Sales concurrence."
+  - "Michael Torres is the VP Sales but also the requestor, so the concurrence passes to his manager, David Morgan."

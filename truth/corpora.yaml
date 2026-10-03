@@ -14,3 +14,10 @@ corpora:
       - acme_master_supply_agreement
       - acme_pricing_exception
       - acme_pricing_exception_2023
+  missing-guarantee-evidence:
+    description: >-
+      Experiment 5 (credit) — the Acme parent guarantee is removed. The email that mentions it
+      deliberately remains.
+    exclude:
+      - acme_parent_guarantee
+

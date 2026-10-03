@@ -34,3 +34,5 @@ roles:
   - { id: CRO, title: Chief Revenue Officer, department: Executive }
   - { id: FINANCE_MANAGER, title: Finance Manager, department: Finance }
   - { id: FINANCE_DIRECTOR, title: Director of Finance, department: Finance, lab_extension: true }
+  # experiment 5 (credit): the credit policy's lowest band; no truth employee holds it
+  - { id: AR_SPECIALIST, title: Accounts Receivable Specialist, department: Finance, lab_extension: true }

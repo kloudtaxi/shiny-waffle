@@ -56,7 +56,7 @@ northstar-owm-lab/
 │   ├── relationships.yaml        canonical edges (cross-checked against entities)
 │   ├── facts.yaml                the evaluation sheet rows (asserted vs derived)
 │   ├── corpora.yaml              base corpus + variants (e.g. scenario 5)
-│   └── scenarios/01…08.yaml      question, as-of date, corpus, expected result
+│   └── scenarios/01…35.yaml      question, as-of date, corpus, expected result
 ├── owm/                        HAND-AUTHORED conceptual OWM — independent of Utopia
 │   ├── owm-spec.md
 │   └── ontology.yaml             entity/relationship types tagged foundation vs owm
@@ -80,7 +80,7 @@ northstar-owm-lab/
     └── DATASET.md
 ```
 
-## The evidence corpus (17 artifacts)
+## The evidence corpus (25 artifacts)
 
 | Artifact | Source system | What it carries (and what it deliberately doesn't) |
 |---|---|---|
@@ -99,6 +99,11 @@ northstar-owm-lab/
 | `acme_account_strategy.md` | Drive | **hearsay**: "I believe it's 15%" |
 | `email_sarah_to_michael.md` | Email | "Mike", 15%, "what we did last September". No statement of authority |
 | `service_ticket_acme_industrial.md` | Service | **"Acme Industrial"**, a different customer (Experiment F) |
+| `credit_policy_2025.md` / `_2026.md` | Drive | experiment 5: Finance-owned **credit** authority ($ bands) by role, concurrence, eligibility, separation of duties |
+| `acme_parent_guarantee.md` | Drive | experiment 5: Acme Group Holdings guarantees **Acme Mfg. Holdings only**, up to $400,000, 2026–27 |
+| `erp_credit.csv`, `erp_invoices.csv` | ERP | experiment 5: current credit limits; invoices with due and paid dates (BlueRiver paid one 52 days late) |
+| `credit_requests.csv` | ERP | experiment 5: CR-9201 (Acme, $250k → $400k, pending) and policy-consistent background requests |
+| `email_sarah_to_priya.md` | Email | experiment 5: **hearsay**, "the parent guarantee should cover it" |
 
 **No single artifact contains any scenario's answer.** The authority matrix
 never names a person, the org chart never states a percentage, and the contract
@@ -116,6 +121,11 @@ grants eligibility but never authority. Tests enforce all of this.
 | Hearsay | account plan and email assert 15% | treats "I believe" as the contractual basis (S05, S07) |
 | Wrong department | Priya Shah, Finance Manager | routes discount approval to Finance |
 | Product scope | 15% exception is NS-500 only | transfers it to NS-Cloud (S03) |
+| Authority by function | credit approval sits in Finance, not up the requestor's Sales chain | routes a credit limit to the requestor's manager (S26) |
+| Dual sign-off | strategic limits over $500k need VP Sales concurrence | stops at the first approver (S27, S28) |
+| Separation of duties | Michael Torres requests, and is also the VP Sales | lets the requestor concur on his own request (S34) |
+| Eligibility from transactions | BlueRiver's 52-days-late invoice is in 2026, not 2025 | judges payment history on the wrong date (S30, S31) |
+| Whose guarantee | the Acme guarantee names Acme Mfg. Holdings only | applies it to Acme Industrial Supply (S32) |
 
 ## Scenarios
 
@@ -172,6 +182,23 @@ VP Sales ≤12%, CRO above), published in advance as a new evidence document. S2
 request again on 2027-02-01: `APPROVE_WITH_AUTHORIZATION` by the **CRO**, where in 2026 it was
 Michael Torres's to approve. It anchors the decision-memory measurement in
 `runs/2026-09-30-owm-measurements/04-decision-memory/`.
+
+**A second decision type (S26–S35).** A lab extension, added on 2026-10-03 for experiment 5
+(`runs/2026-10-03-exp5-credit/plan.md`): **credit-limit increase**. The engine was frozen before
+these were written. They test whether the decision machinery generalizes beyond discounts.
+
+| # | Question | Corpus | Expected |
+|---|---|---|---|
+| S26 | Can CR-9201 (Acme, $250k → $400k, Sarah) be approved? | base | `APPROVE_WITH_AUTHORIZATION` by Priya Shah (Finance Manager) |
+| S27 | …to $650k? | base | `APPROVE_WITH_AUTHORIZATION` by Elena Novak, VP Sales concurrence by Michael Torres |
+| S28 | …to $1M on the parent guarantee? | base | `APPROVE_WITH_AUTHORIZATION` (cap $750k + guarantee $400k), Elena + Michael |
+| S29 | …to $1.3M? | base | `REJECT_OR_ESCALATE` (over the maximum even with the guarantee) |
+| S30 | BlueRiver to $200k, requested by Michael, 2026-09-23? | base | `REJECT_OR_ESCALATE` (an invoice paid 52 days late) |
+| S31 | …the same, on 2025-09-23? | base | `APPROVE_WITH_AUTHORIZATION` by Priya Shah (2025 policy; the late invoice is in the future) |
+| S32 | Acme Industrial Supply to $500k, citing the Acme guarantee? | base | `REQUEST_EVIDENCE` (the guarantee names another company) |
+| S33 | S28 without the guarantee on file? | missing-guarantee-evidence | `REQUEST_EVIDENCE` |
+| S34 | Acme to $650k, requested by Michael Torres? | base | `APPROVE_WITH_AUTHORIZATION`: Elena + **David Morgan** concurs (separation of duties) |
+| S35 | CR-9201 submitted at $300k; the ERP says $400k? | base | `APPROVE_WITH_AUTHORIZATION` by Priya Shah, on the system of record; input conflict |
 
 S01 reproduces the canonical decision object from doc 03 §21 field for field
 (see `dataset/answer-key/expected-results.yaml`).

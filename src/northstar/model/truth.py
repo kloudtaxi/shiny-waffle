@@ -17,10 +17,14 @@ import yaml
 from northstar.model.entities import (
     Account,
     Contract,
+    CreditPolicy,
+    CreditRequest,
     Customer,
     DiscountRequest,
     Employee,
     Fact,
+    Guarantee,
+    Invoice,
     Order,
     Organization,
     Policy,
@@ -59,6 +63,11 @@ class Truth:
     facts: list[Fact]
     corpora: dict[str, Corpus]
     scenarios: list[Scenario]
+    # credit (experiment 5, lab extension)
+    guarantees: list[Guarantee] = field(default_factory=list)
+    invoices: list[Invoice] = field(default_factory=list)
+    credit_requests: list[CreditRequest] = field(default_factory=list)
+    credit_policies: list[CreditPolicy] = field(default_factory=list)
     _index: dict[str, Any] = field(default_factory=dict, repr=False)
 
     # -- lookups ------------------------------------------------------------
@@ -94,6 +103,12 @@ class Truth:
 
     def account_for(self, customer_id: str) -> Account | None:
         return next((a for a in self.accounts if a.customer == customer_id), None)
+
+    def credit_request(self, rid: str) -> CreditRequest:
+        return _one(self.credit_requests, rid)
+
+    def credit_policy_on(self, when: date) -> CreditPolicy | None:
+        return next((p for p in self.credit_policies if p.active_on(when)), None)
 
 
 class _HasId(Protocol):
@@ -157,6 +172,10 @@ def load_truth(root: Path) -> Truth:
         scenarios=[
             Scenario.model_validate(_read(p)) for p in sorted((root / "scenarios").glob("*.yaml"))
         ],
+        guarantees=[Guarantee.model_validate(g) for g in ent.get("guarantees", [])],
+        invoices=[Invoice.model_validate(i) for i in ent.get("invoices", [])],
+        credit_requests=[CreditRequest.model_validate(c) for c in ent.get("credit_requests", [])],
+        credit_policies=[CreditPolicy.model_validate(c) for c in pol.get("credit_policies", [])],
     )
     _cross_check(truth)
     return truth
@@ -195,6 +214,20 @@ def _cross_check(t: Truth) -> None:
         for band in p.bands:
             if band.role not in role_ids:
                 problems.append(f"{p.id}: band for unknown role {band.role}")
+    for cp in t.credit_policies:
+        roles = [b.role for b in cp.bands] + [c.role for c in cp.concurrence]
+        problems += [f"{cp.id}: unknown role {r}" for r in roles if r not in role_ids]
+    for g in t.guarantees:
+        if g.customer not in cust_ids:
+            problems.append(f"{g.id}: guarantees unknown customer {g.customer}")
+    for i in t.invoices:
+        if i.customer not in cust_ids:
+            problems.append(f"{i.id}: unknown customer {i.customer}")
+    for cr in t.credit_requests:
+        if cr.customer not in cust_ids or cr.requestor not in emp_ids:
+            problems.append(f"{cr.id}: dangling reference")
+        if cr.basis_ref is not None and cr.basis_ref not in {g.id for g in t.guarantees}:
+            problems.append(f"{cr.id}: basis_ref {cr.basis_ref} is not a guarantee")
 
     # Relationships must agree with the attribute form of the same fact.
     reports = {(r.subject, r.object) for r in t.relationships if r.predicate == "reports_to"}

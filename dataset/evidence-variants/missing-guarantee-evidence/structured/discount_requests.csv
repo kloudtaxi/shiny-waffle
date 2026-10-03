@@ -1,0 +1,27 @@
+request_id,account_id,product_sku,requested_discount_pct,list_value_usd,discount_value_usd,net_value_usd,requested_by,request_date,justification,status,approved_by,approved_on
+DR-7001,CRM-3001,NS-400-EQU,5.0,9000,450,8550,kelly.floyd@northstar.example,2025-01-06,Competitive,Approved,kelly.floyd@northstar.example,2025-01-06
+DR-7002,CRM-3007,NS-EDGE,8.0,85000,6800,78200,anthony.day@northstar.example,2025-01-09,Competitive,Approved,anthony.day@northstar.example,2025-01-09
+DR-7003,CRM-3008,NS-CLOUD,10.0,120000,12000,108000,anthony.day@northstar.example,2025-02-15,Competitive,Approved,anthony.day@northstar.example,2025-02-15
+DR-7004,CRM-3008,NS-250-SOF,18.0,308000,55440,252560,anthony.day@northstar.example,2025-04-27,Competitive,Approved,michael.torres@northstar.example,2025-04-27
+DR-7005,CRM-2091,NS-840-SER,8.0,93000,7440,85560,zachary.brown@northstar.example,2025-05-04,Competitive,Approved,zachary.brown@northstar.example,2025-05-04
+DR-7006,CRM-3007,NS-840-SER,5.0,93000,4650,88350,anthony.day@northstar.example,2025-06-27,Competitive,Approved,anthony.day@northstar.example,2025-06-27
+DR-7007,CRM-3006,NS-CLOUD,10.0,120000,12000,108000,anthony.day@northstar.example,2025-07-04,Competitive,Approved,anthony.day@northstar.example,2025-07-04
+DR-7008,CRM-3003,NS-830-EQU,22.0,203000,44660,158340,kelly.floyd@northstar.example,2025-07-15,Competitive,Approved,michael.torres@northstar.example,2025-07-15
+DR-7009,CRM-3004,NS-CLOUD,5.0,120000,6000,114000,kelly.floyd@northstar.example,2025-08-09,Competitive,Approved,kelly.floyd@northstar.example,2025-08-09
+DR-8104,CRM-2048,NS-500,15.0,250000,37500,212500,sarah.chen@northstar.example,2025-09-16,Contract pricing per Acme Master Supply Agreement,Approved,sarah.chen@northstar.example,2025-09-16
+DR-7010,CRM-3002,NS-CLOUD,8.0,120000,9600,110400,zachary.brown@northstar.example,2025-09-26,Competitive,Approved,zachary.brown@northstar.example,2025-09-26
+DR-7011,CRM-2063,NS-CLOUD,5.0,120000,6000,114000,anthony.day@northstar.example,2025-11-02,Competitive,Approved,anthony.day@northstar.example,2025-11-02
+DR-7012,CRM-2063,NS-EDGE,22.0,85000,18700,66300,anthony.day@northstar.example,2025-11-07,Competitive,Approved,michael.torres@northstar.example,2025-11-07
+DR-7013,CRM-2063,NS-250-SOF,5.0,308000,15400,292600,anthony.day@northstar.example,2025-11-13,Competitive,Approved,anthony.day@northstar.example,2025-11-13
+DR-7014,CRM-2051,NS-EDGE,15.0,85000,12750,72250,kelly.floyd@northstar.example,2025-11-23,Competitive,Approved,kelly.floyd@northstar.example,2025-11-23
+DR-7015,CRM-3007,NS-500,18.0,250000,45000,205000,anthony.day@northstar.example,2025-12-05,Competitive,Approved,michael.torres@northstar.example,2025-12-05
+DR-7016,CRM-3005,NS-500,18.0,250000,45000,205000,anthony.day@northstar.example,2026-01-25,Competitive,Approved,michael.torres@northstar.example,2026-01-25
+DR-7017,CRM-3002,NS-760-SER,5.0,38000,1900,36100,zachary.brown@northstar.example,2026-01-29,Competitive,Approved,zachary.brown@northstar.example,2026-01-29
+DR-7018,CRM-2051,NS-830-EQU,8.0,203000,16240,186760,kelly.floyd@northstar.example,2026-02-21,Competitive,Approved,kelly.floyd@northstar.example,2026-02-21
+DR-7019,CRM-3002,NS-500,8.0,250000,20000,230000,zachary.brown@northstar.example,2026-03-04,Competitive,Approved,zachary.brown@northstar.example,2026-03-04
+DR-7020,CRM-3004,NS-500,8.0,250000,20000,230000,kelly.floyd@northstar.example,2026-07-12,Competitive,Approved,kelly.floyd@northstar.example,2026-07-12
+DR-7021,CRM-3001,NS-840-SER,10.0,93000,9300,83700,kelly.floyd@northstar.example,2026-07-23,Competitive,Approved,kelly.floyd@northstar.example,2026-07-23
+DR-7022,CRM-3006,NS-CLOUD,5.0,120000,6000,114000,anthony.day@northstar.example,2026-08-06,Competitive,Approved,anthony.day@northstar.example,2026-08-06
+DR-7023,CRM-3008,NS-840-SER,10.0,93000,9300,83700,anthony.day@northstar.example,2026-08-29,Competitive,Approved,anthony.day@northstar.example,2026-08-29
+DR-7024,CRM-3005,NS-400-EQU,10.0,9000,900,8100,anthony.day@northstar.example,2026-09-15,Competitive,Approved,anthony.day@northstar.example,2026-09-15
+DR-9001,CRM-2048,NS-500,15.0,250000,37500,212500,sarah.chen@northstar.example,2026-09-23,Contract pricing per Acme Master Supply Agreement,Pending Approval,,

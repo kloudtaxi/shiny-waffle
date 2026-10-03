@@ -1,0 +1,13 @@
+account_id,account_name,account_tier,segment,industry,billing_street,billing_city,billing_state,duns_number,account_owner,owner_email
+CRM-2048,Acme Manufacturing,Strategic,Midwest Enterprise,Industrial Manufacturing,2200 N Industrial Pkwy,Milwaukee,WI,04-812-7730,Sarah Chen,sarah.chen@northstar.example
+CRM-2051,BlueRiver Logistics,Standard,Central Enterprise,Logistics,890 Harbor Way,St. Louis,MO,07-331-9025,Kelly Floyd,kelly.floyd@northstar.example
+CRM-2063,Cedar Health Systems,Standard,Central Enterprise,Healthcare,51 Cedar Crest Blvd,Indianapolis,IN,02-906-4418,Anthony Day,anthony.day@northstar.example
+CRM-2091,Acme Industrial Supply Co.,Standard,Midwest Mid-Market,Industrial Distribution,17 Tallmadge Ave,Akron,OH,09-552-1187,Zachary Brown,zachary.brown@northstar.example
+CRM-3001,Weiss Ltd,Standard,Central Enterprise,Chemicals,906 Richardson Run,Madison,WI,78-557-8304,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3002,Miller LLC,Standard,East Enterprise,Building Materials,1473 Atkinson Mission Suite 740,Fort Wayne,IN,82-869-6184,Zachary Brown,zachary.brown@northstar.example
+CRM-3003,"Johnston, Romero and Bruce",Standard,East Enterprise,Automotive Components,3946 David Dam,Madison,WI,00-463-6895,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3004,Greer and Sons,Standard,West Mid-Market,Packaging,84690 Lauren Station Apt. 756,Peoria,IL,58-024-0149,Kelly Floyd,kelly.floyd@northstar.example
+CRM-3005,"Rodriguez, Fitzgerald and Brown",Standard,West Mid-Market,Energy & Utilities,5108 Jay Skyway,Fort Wayne,IN,48-311-8908,Anthony Day,anthony.day@northstar.example
+CRM-3006,Chang-James,Standard,Central Enterprise,Aerospace,666 Sims Expressway Suite 065,Columbus,OH,34-517-2127,Anthony Day,anthony.day@northstar.example
+CRM-3007,"Miller, Santana and Travis",Standard,Central Enterprise,Pharmaceuticals,6520 Barbara Bridge Apt. 993,Madison,WI,19-566-4602,Anthony Day,anthony.day@northstar.example
+CRM-3008,Blanchard Group,Standard,Midwest Mid-Market,Pharmaceuticals,63155 Kathryn Courts,Chicago,IL,97-565-7333,Anthony Day,anthony.day@northstar.example

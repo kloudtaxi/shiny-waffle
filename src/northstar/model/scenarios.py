@@ -30,7 +30,9 @@ class Scenario(BaseModel):
     id: str
     slug: str
     title: str
-    kind: Literal["discount_decision", "fact_selection", "provenance", "identity"]
+    kind: Literal[
+        "discount_decision", "fact_selection", "provenance", "identity", "credit_decision"
+    ]
     question: str
     teaches: list[str]
     corpus: str

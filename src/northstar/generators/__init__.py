@@ -6,7 +6,7 @@ from faker import Faker
 
 from northstar.artifacts import Artifact
 from northstar.factories import Background
-from northstar.generators import crm, documents, emails, erp
+from northstar.generators import crm, documents, emails, erp, finance
 from northstar.model import Truth
 
 
@@ -19,4 +19,5 @@ def generate_evidence(truth: Truth, bg: Background, seed: int) -> list[Artifact]
         *erp.generate(truth, bg),
         *documents.generate(truth, bg, fake),
         *emails.generate(truth, fake),
+        *finance.generate(truth, bg),  # experiment 5: last, no shared randomness
     ]

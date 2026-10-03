@@ -36,7 +36,9 @@ def test_every_asserted_fact_is_stated_somewhere(ds: Dataset) -> None:
 
 def test_authority_is_distributed_across_artifacts(ds: Dataset) -> None:
     people = [e.name for e in ds.truth.employees]
-    for role_doc in ("approval_authority_matrix", "pricing_policy_2025", "pricing_policy_2026"):
+    role_docs = ("approval_authority_matrix", "pricing_policy_2025", "pricing_policy_2026",
+                 "credit_policy_2025", "credit_policy_2026")  # fmt: skip
+    for role_doc in role_docs:
         assert not [p for p in people if p in _text(ds, role_doc)], role_doc
     for people_doc in ("organization_chart", "employees"):
         assert "%" not in _text(ds, people_doc), people_doc
@@ -94,6 +96,9 @@ def test_ids_are_unique_within_every_table(ds: Dataset) -> None:
         ("products", "product_id"),
         ("erp_orders", "order_id"),
         ("discount_requests", "request_id"),
+        ("erp_invoices", "invoice_id"),
+        ("erp_credit", "erp_customer_id"),
+        ("credit_requests", "request_id"),
     ]:
         ids = [r[key] for r in _rows(ds, artifact_id)]
         assert len(ids) == len(set(ids)), artifact_id
@@ -148,3 +153,40 @@ def test_background_ids_follow_dates(ds: Dataset) -> None:
     assert [o.id for o in orders] == sorted(o.id for o in orders)
     assert [r.request_date for r in requests] == sorted(r.request_date for r in requests)
     assert [r.id for r in requests] == sorted(r.id for r in requests)
+
+
+# -- experiment 5: credit ------------------------------------------------------------------------
+
+
+def test_missing_guarantee_corpus_removes_the_guarantee_but_keeps_hearsay(ds: Dataset) -> None:
+    ids = {a.id for a in ds.corpora["missing-guarantee-evidence"]}
+    assert "acme_parent_guarantee" not in ids
+    assert {"email_sarah_to_priya", "credit_requests", "erp_invoices"} <= ids
+
+
+def test_background_invoices_of_truth_customers_are_never_late(ds: Dataset) -> None:
+    """So a truth customer's credit history is decided by the truth's invoices alone."""
+    truth_erp = {c.source_ids["erp"] for c in ds.truth.customers}
+    strictest = min(p.max_days_late for p in ds.truth.credit_policies)
+    for i in ds.background.invoices:
+        if i.erp_customer_id in truth_erp and i.paid_date is not None:
+            assert (i.paid_date - i.due_date).days <= strictest, i.id
+
+
+def test_background_credit_decisions_obey_the_policy_in_force(ds: Dataset) -> None:
+    t = ds.truth
+    for r in ds.background.credit_requests:
+        policy = t.credit_policy_on(r.request_date)
+        assert policy is not None
+        if r.status != "Approved":
+            continue
+        assert r.requested_limit_usd <= policy.caps["Standard"], r.id
+        role = policy.band_for(r.requested_limit_usd).role
+        if role != "AR_SPECIALIST":
+            assert r.approved_by == t.holders_of(role)[0].id, r.id
+        assert r.approved_by != r.requestor, r.id  # separation of duties
+
+
+def test_credit_policies_are_finance_owned_and_name_no_people(ds: Dataset) -> None:
+    for pid in ("credit_policy_2025", "credit_policy_2026"):
+        assert "owner: Finance" in _text(ds, pid)

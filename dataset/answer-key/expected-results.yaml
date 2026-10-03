@@ -1030,3 +1030,483 @@
   - approval_authority_matrix
   - organization_chart
   - DR-9001
+- decision_id: DEC-S26
+  scenario: S26
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+  request:
+    id: CR-9201
+    current_limit: 250000
+    requested_limit: 400000
+    requestor: EMP-101
+  eligibility:
+    status: eligible
+    maximum_limit: 1150000
+    basis: cap:Strategic
+    payment_history:
+      ok: true
+      late_invoices: []
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_MANAGER
+      maximum_limit: 500000.0
+    approvers:
+    - employee: EMP-401
+      name: Priya Shah
+      role: FINANCE_MANAGER
+      kind: approval
+  decision:
+    outcome: APPROVE_WITH_AUTHORIZATION
+  input:
+    conflicts: []
+  reason:
+  - the requested limit is within the customer's maximum
+  - Priya Shah approves as Finance Manager
+  evidence:
+  - CRM-2048
+  - C-1001
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2026
+  - organization_chart
+  - CR-9201
+- decision_id: DEC-S27
+  scenario: S27
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+  request:
+    id: CR-9202
+    current_limit: 250000
+    requested_limit: 650000
+    requestor: EMP-101
+  eligibility:
+    status: eligible
+    maximum_limit: 1150000
+    basis: cap:Strategic
+    payment_history:
+      ok: true
+      late_invoices: []
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_DIRECTOR
+      maximum_limit: null
+    approvers:
+    - employee: EMP-402
+      name: Elena Novak
+      role: FINANCE_DIRECTOR
+      kind: approval
+    - employee: EMP-200
+      name: Michael Torres
+      role: VP_SALES
+      kind: concurrence
+  decision:
+    outcome: APPROVE_WITH_AUTHORIZATION
+  input:
+    conflicts: []
+  reason:
+  - the requested limit is within the customer's maximum
+  - Elena Novak approves as Director of Finance
+  - Michael Torres concurs for VP Sales
+  evidence:
+  - CRM-2048
+  - C-1001
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2026
+  - organization_chart
+  - CR-9202
+- decision_id: DEC-S28
+  scenario: S28
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+  request:
+    id: CR-9203
+    current_limit: 250000
+    requested_limit: 1000000
+    requestor: EMP-101
+  eligibility:
+    status: eligible
+    maximum_limit: 1150000
+    basis: GRT-ACME-2026
+    payment_history:
+      ok: true
+      late_invoices: []
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_DIRECTOR
+      maximum_limit: null
+    approvers:
+    - employee: EMP-402
+      name: Elena Novak
+      role: FINANCE_DIRECTOR
+      kind: approval
+    - employee: EMP-200
+      name: Michael Torres
+      role: VP_SALES
+      kind: concurrence
+  decision:
+    outcome: APPROVE_WITH_AUTHORIZATION
+  input:
+    conflicts: []
+  reason:
+  - the requested limit is within the customer's maximum
+  - Elena Novak approves as Director of Finance
+  - Michael Torres concurs for VP Sales
+  evidence:
+  - CRM-2048
+  - C-1001
+  - erp_credit
+  - erp_invoices
+  - GRT-ACME-2026
+  - credit_policy_2026
+  - organization_chart
+  - CR-9203
+- decision_id: DEC-S29
+  scenario: S29
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+  request:
+    id: CR-9204
+    current_limit: 250000
+    requested_limit: 1300000
+    requestor: EMP-101
+  eligibility:
+    status: exceeded
+    maximum_limit: 1150000
+    basis: GRT-ACME-2026
+    payment_history:
+      ok: true
+      late_invoices: []
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_DIRECTOR
+      maximum_limit: null
+    approvers: []
+  decision:
+    outcome: REJECT_OR_ESCALATE
+  input:
+    conflicts: []
+  reason:
+  - the requested limit exceeds the customer's maximum
+  evidence:
+  - CRM-2048
+  - C-1001
+  - erp_credit
+  - erp_invoices
+  - GRT-ACME-2026
+  - credit_policy_2026
+  - organization_chart
+  - CR-9204
+- decision_id: DEC-S30
+  scenario: S30
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1002
+  request:
+    id: CR-9205
+    current_limit: 100000
+    requested_limit: 200000
+    requestor: EMP-200
+  eligibility:
+    status: ineligible
+    maximum_limit: null
+    basis: null
+    payment_history:
+      ok: false
+      late_invoices:
+      - INV-62147
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-200
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_MANAGER
+      maximum_limit: 500000.0
+    approvers: []
+  decision:
+    outcome: REJECT_OR_ESCALATE
+  input:
+    conflicts: []
+  reason:
+  - an invoice was paid more than the policy allows past its due date
+  evidence:
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2026
+  - organization_chart
+  - CR-9205
+- decision_id: DEC-S31
+  scenario: S31
+  type: credit_limit_increase
+  as_of: 2025-09-23
+  corpus: base
+  subject:
+    customer: CUST-1002
+  request:
+    id: CR-9206
+    current_limit: 100000
+    requested_limit: 200000
+    requestor: EMP-200
+  eligibility:
+    status: eligible
+    maximum_limit: 300000
+    basis: cap:Standard
+    payment_history:
+      ok: true
+      late_invoices: []
+  authority:
+    policy: credit_policy_2025
+    requestor:
+      employee: EMP-200
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_MANAGER
+      maximum_limit: 750000.0
+    approvers:
+    - employee: EMP-401
+      name: Priya Shah
+      role: FINANCE_MANAGER
+      kind: approval
+  decision:
+    outcome: APPROVE_WITH_AUTHORIZATION
+  input:
+    conflicts: []
+  reason:
+  - the requested limit is within the customer's maximum
+  - Priya Shah approves as Finance Manager
+  evidence:
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2025
+  - organization_chart
+  - CR-9206
+- decision_id: DEC-S32
+  scenario: S32
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1044
+  request:
+    id: CR-9207
+    current_limit: 50000
+    requested_limit: 500000
+    requestor: EMP-101
+  eligibility:
+    status: unknown
+    maximum_limit: null
+    basis: null
+    payment_history:
+      ok: true
+      late_invoices: []
+    missing_evidence:
+    - a guarantee covering this customer
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_MANAGER
+      maximum_limit: 500000.0
+    approvers: []
+  decision:
+    outcome: REQUEST_EVIDENCE
+  input:
+    conflicts: []
+  reason:
+  - request relies on a guarantee that no available evidence establishes
+  evidence:
+  - CRM-2091
+  - C-1044
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2026
+  - organization_chart
+  - CR-9207
+- decision_id: DEC-S33
+  scenario: S33
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: missing-guarantee-evidence
+  subject:
+    customer: CUST-1001
+  request:
+    id: CR-9203
+    current_limit: 250000
+    requested_limit: 1000000
+    requestor: EMP-101
+  eligibility:
+    status: unknown
+    maximum_limit: null
+    basis: null
+    payment_history:
+      ok: true
+      late_invoices: []
+    missing_evidence:
+    - a guarantee covering this customer
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_DIRECTOR
+      maximum_limit: null
+    approvers: []
+  decision:
+    outcome: REQUEST_EVIDENCE
+  input:
+    conflicts: []
+  reason:
+  - request relies on a guarantee that no available evidence establishes
+  evidence:
+  - CRM-2048
+  - C-1001
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2026
+  - organization_chart
+  - CR-9203
+- decision_id: DEC-S34
+  scenario: S34
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+  request:
+    id: CR-9208
+    current_limit: 250000
+    requested_limit: 650000
+    requestor: EMP-200
+  eligibility:
+    status: eligible
+    maximum_limit: 1150000
+    basis: cap:Strategic
+    payment_history:
+      ok: true
+      late_invoices: []
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-200
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_DIRECTOR
+      maximum_limit: null
+    approvers:
+    - employee: EMP-402
+      name: Elena Novak
+      role: FINANCE_DIRECTOR
+      kind: approval
+    - employee: EMP-300
+      name: David Morgan
+      role: CRO
+      kind: concurrence
+  decision:
+    outcome: APPROVE_WITH_AUTHORIZATION
+  input:
+    conflicts: []
+  reason:
+  - the requested limit is within the customer's maximum
+  - Elena Novak approves as Director of Finance
+  - David Morgan concurs for VP Sales
+  evidence:
+  - CRM-2048
+  - C-1001
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2026
+  - organization_chart
+  - CR-9208
+- decision_id: DEC-S35
+  scenario: S35
+  type: credit_limit_increase
+  as_of: 2026-09-23
+  corpus: base
+  subject:
+    customer: CUST-1001
+  request:
+    id: CR-9201
+    current_limit: 250000
+    requested_limit: 400000
+    requestor: EMP-101
+  eligibility:
+    status: eligible
+    maximum_limit: 1150000
+    basis: cap:Strategic
+    payment_history:
+      ok: true
+      late_invoices: []
+  authority:
+    policy: credit_policy_2026
+    requestor:
+      employee: EMP-101
+      maximum_limit: 0.0
+      authorized: false
+    required:
+      role: FINANCE_MANAGER
+      maximum_limit: 500000.0
+    approvers:
+    - employee: EMP-401
+      name: Priya Shah
+      role: FINANCE_MANAGER
+      kind: approval
+  decision:
+    outcome: APPROVE_WITH_AUTHORIZATION
+  input:
+    conflicts:
+    - requested_limit_usd
+  reason:
+  - the submitted record conflicts with the system of record on requested_limit_usd
+  - the requested limit is within the customer's maximum
+  - Priya Shah approves as Finance Manager
+  evidence:
+  - CRM-2048
+  - C-1001
+  - erp_credit
+  - erp_invoices
+  - credit_policy_2026
+  - organization_chart
+  - CR-9201

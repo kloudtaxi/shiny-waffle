@@ -43,6 +43,17 @@ def test_all_scenarios_coherent(ds: Dataset) -> None:
         "S23": "APPROVE_WITH_AUTHORIZATION",
         "S24": "APPROVE_WITH_AUTHORIZATION",
         "S25": "APPROVE_WITH_AUTHORIZATION",
+        # experiment 5: a second decision type, credit-limit increase (lab extension)
+        "S26": "APPROVE_WITH_AUTHORIZATION",
+        "S27": "APPROVE_WITH_AUTHORIZATION",
+        "S28": "APPROVE_WITH_AUTHORIZATION",
+        "S29": "REJECT_OR_ESCALATE",
+        "S30": "REJECT_OR_ESCALATE",
+        "S31": "APPROVE_WITH_AUTHORIZATION",
+        "S32": "REQUEST_EVIDENCE",
+        "S33": "REQUEST_EVIDENCE",
+        "S34": "APPROVE_WITH_AUTHORIZATION",
+        "S35": "APPROVE_WITH_AUTHORIZATION",
     }
 
 
@@ -130,3 +141,32 @@ def test_scenario_5_hinges_on_the_corpus_not_the_truth(truth_copy: Path) -> None
     p.write_text(text)
     with pytest.raises(IncoherentTruthError, match="S05 outcome"):
         assemble(truth_copy, SEED, "small")
+
+
+# -- experiment 5: credit-limit increase -------------------------------------------------------
+
+
+def _approvers(ds: Dataset, sid: str) -> list[tuple[str, str]]:
+    return [(a["name"], a["kind"]) for a in ds.results[sid]["authority"]["approvers"]]
+
+
+def test_credit_approval_goes_to_finance_not_up_the_sales_chain(ds: Dataset) -> None:
+    assert _approvers(ds, "S26") == [("Priya Shah", "approval")]
+
+
+def test_credit_concurrence_is_a_second_sign_off(ds: Dataset) -> None:
+    assert _approvers(ds, "S27") == [("Elena Novak", "approval"), ("Michael Torres", "concurrence")]
+
+
+def test_credit_separation_of_duties_passes_concurrence_up(ds: Dataset) -> None:
+    assert _approvers(ds, "S34") == [("Elena Novak", "approval"), ("David Morgan", "concurrence")]
+
+
+def test_credit_payment_history_is_judged_as_of_the_decision_date(ds: Dataset) -> None:
+    assert ds.results["S30"]["eligibility"]["payment_history"]["late_invoices"] == ["INV-62147"]
+    assert ds.results["S31"]["eligibility"]["payment_history"]["ok"] is True
+
+
+def test_credit_guarantee_covers_only_the_customer_it_names(ds: Dataset) -> None:
+    assert ds.results["S28"]["eligibility"]["basis"] == "GRT-ACME-2026"
+    assert ds.results["S32"]["eligibility"]["status"] == "unknown"

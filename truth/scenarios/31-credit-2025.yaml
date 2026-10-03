@@ -1,0 +1,22 @@
+id: S31
+slug: credit-2025
+title: The same BlueRiver request on 2025-09-23 (temporal)
+kind: credit_decision
+question: Could Michael Torres's request to raise BlueRiver Logistics' credit limit from $100,000 to $200,000 have been approved on 2025-09-23 (CR-9206)?
+teaches: [temporal-organizational-state, eligibility-from-transactions]
+corpus: base
+as_of: 2025-09-23
+request: { base: CR-9201, id: CR-9206, customer: CUST-1002, current_limit_usd: 100000, requested_limit_usd: 200000, requestor: EMP-200, request_date: 2025-09-23, justification: "Fleet expansion: larger quarterly NS-Cloud orders" }
+expected:
+  outcome: APPROVE_WITH_AUTHORIZATION
+  eligibility: eligible
+  eligibility_basis: "cap:Standard"
+  requestor_authorized: false
+  required_role: FINANCE_MANAGER
+  approvers: [[EMP-401, approval]]
+  input_conflicts: []
+  evidence: [erp_credit, erp_invoices, credit_policy_2025, organization_chart, CR-9206]
+reasoning:
+  - "In the 12 months before 2025-09-23, BlueRiver's worst invoice was 4 days late; the 2025 policy allows 45."
+  - "The late 2026 invoice wasn't due yet. The Standard maximum in 2025 is $300,000."
+  - "Under the 2025 bands, $200,000 is Finance Manager authority: Priya Shah."

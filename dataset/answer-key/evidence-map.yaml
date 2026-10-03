@@ -161,3 +161,52 @@
   - DR-8104
   - EXC-ACME-NS500-15
   - CUST-1001
+- artifact: credit_policy_2025
+  path: documents/credit_policy_2025.md
+  supports:
+  - credit_policy_2025
+  asserts: []
+  mentions: []
+- artifact: credit_policy_2026
+  path: documents/credit_policy_2026.md
+  supports:
+  - credit_policy_2026
+  asserts:
+  - F22
+  - F23
+  mentions: []
+- artifact: acme_parent_guarantee
+  path: documents/acme_parent_guarantee.md
+  supports:
+  - GRT-ACME-2026
+  asserts:
+  - F24
+  mentions: []
+- artifact: erp_credit
+  path: structured/erp_credit.csv
+  supports:
+  - erp_credit
+  asserts:
+  - F26
+  mentions: []
+- artifact: erp_invoices
+  path: structured/erp_invoices.csv
+  supports:
+  - erp_invoices
+  asserts: []
+  mentions: []
+- artifact: credit_requests
+  path: structured/credit_requests.csv
+  supports:
+  - CR-9201
+  asserts:
+  - F25
+  mentions: []
+- artifact: email_sarah_to_priya
+  path: documents/email_sarah_to_priya.md
+  supports: []
+  asserts: []
+  mentions:
+  - CR-9201
+  - GRT-ACME-2026
+  - CUST-1001

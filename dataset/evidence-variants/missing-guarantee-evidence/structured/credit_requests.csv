@@ -1,0 +1,12 @@
+request_id,erp_customer_id,current_limit_usd,requested_limit_usd,requested_by,request_date,justification,status,approved_by,approved_on
+CR-9201,C-1001,250000,400000,sarah.chen@northstar.example,2026-09-23,Third-plant ramp-up: higher NS-500 order volume through Q1 2027,Pending Approval,,
+CR-7001,C-2008,150000,200000,anthony.day@northstar.example,2025-04-04,Order growth,Approved,priya.shah@northstar.example,2025-04-04
+CR-7002,C-2001,150000,200000,kelly.floyd@northstar.example,2025-05-29,Order growth,Approved,priya.shah@northstar.example,2025-05-29
+CR-7003,C-2008,200000,250000,anthony.day@northstar.example,2025-07-15,Order growth,Approved,priya.shah@northstar.example,2025-07-15
+CR-7004,C-2008,250000,350000,anthony.day@northstar.example,2025-08-19,Order growth,Declined,,
+CR-7005,C-2002,100000,125000,zachary.brown@northstar.example,2025-08-29,Order growth,Approved,priya.shah@northstar.example,2025-08-29
+CR-7006,C-2005,150000,225000,anthony.day@northstar.example,2025-11-15,Order growth,Approved,priya.shah@northstar.example,2025-11-15
+CR-7007,C-2001,200000,250000,kelly.floyd@northstar.example,2026-01-01,Order growth,Approved,priya.shah@northstar.example,2026-01-01
+CR-7008,C-2008,250000,350000,anthony.day@northstar.example,2026-02-22,Order growth,Declined,,
+CR-7009,C-2005,225000,325000,anthony.day@northstar.example,2026-04-07,Order growth,Declined,,
+CR-7010,C-2003,150000,200000,kelly.floyd@northstar.example,2026-05-28,Order growth,Declined,,

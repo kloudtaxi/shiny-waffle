@@ -1,0 +1,21 @@
+id: S32
+slug: credit-guarantee-identity
+title: Acme Industrial Supply cites the Acme parent guarantee
+kind: credit_decision
+question: Can Sarah Chen's request CR-9207 to raise Acme Industrial Supply's credit limit from $50,000 to $500,000, citing the Acme parent guarantee, be approved on 2026-09-23?
+teaches: [entity-resolution, missing-evidence-handling]
+corpus: base
+as_of: 2026-09-23
+request: { base: CR-9201, id: CR-9207, customer: CUST-1044, current_limit_usd: 50000, requested_limit_usd: 500000, basis: guarantee, basis_ref: GRT-ACME-2026, justification: "Covered by the Acme parent guarantee" }
+expected:
+  outcome: REQUEST_EVIDENCE
+  eligibility: unknown
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: FINANCE_MANAGER
+  approvers: []
+  input_conflicts: []
+  evidence: [CRM-2091, C-1044, erp_credit, erp_invoices, credit_policy_2026, organization_chart, CR-9207]
+reasoning:
+  - "The guarantee covers Acme Mfg. Holdings (Acme Manufacturing) and names no other company."
+  - "No evidence establishes a guarantee for Acme Industrial Supply Co.; ask for it before deciding."

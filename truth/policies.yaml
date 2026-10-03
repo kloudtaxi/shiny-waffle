@@ -50,3 +50,40 @@ policies:
 principles:
   - Contractual eligibility does not change employee authority.
   - A request must not be approved solely because the requested commercial discount is permitted by a customer contract.
+
+# -- Credit policies (experiment 5, lab extension) --------------------------------------------
+# Owned by Finance. Bands are on the NEW total credit limit, in USD: (min_exclusive, max_inclusive].
+credit_policies:
+  - id: credit_policy_2025
+    title: Northstar Credit Policy 2025
+    valid_from: 2025-01-01
+    valid_to: 2025-12-31
+    bands:
+      - { role: AR_SPECIALIST, min_exclusive: null, max_inclusive: 50000 }
+      - { role: FINANCE_MANAGER, min_exclusive: 50000, max_inclusive: 750000 }
+      - { role: FINANCE_DIRECTOR, min_exclusive: 750000, max_inclusive: null }
+    concurrence: []
+    max_days_late: 45
+    lookback_days: 365
+    caps: { Strategic: 600000, Standard: 300000 }
+    separation_of_duties: true
+    rules:
+      - A guarantee in force raises the maximum by the guaranteed amount, for the customer it names.
+
+  - id: credit_policy_2026
+    title: Northstar Credit Policy 2026
+    valid_from: 2026-01-01
+    valid_to: 2026-12-31
+    bands:
+      - { role: AR_SPECIALIST, min_exclusive: null, max_inclusive: 100000 }
+      - { role: FINANCE_MANAGER, min_exclusive: 100000, max_inclusive: 500000 }
+      - { role: FINANCE_DIRECTOR, min_exclusive: 500000, max_inclusive: null }
+    concurrence:
+      - { role: VP_SALES, min_exclusive: 500000, tiers: [Strategic] }
+    max_days_late: 30
+    lookback_days: 365
+    caps: { Strategic: 750000, Standard: 250000 }
+    separation_of_duties: true
+    rules:
+      - A guarantee in force raises the maximum by the guaranteed amount, for the customer it names.
+

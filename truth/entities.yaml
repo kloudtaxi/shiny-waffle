@@ -13,6 +13,7 @@ customers:
     erp_name: Acme Mfg. Holdings      # how the ERP bill-to master names it
     address: { street: 2200 N Industrial Pkwy, city: Milwaukee, state: WI, postal_code: "53209" }
     duns: "04-812-7730"
+    credit_limit_usd: 250000   # experiment 5: ERP credit master
 
   - id: CUST-1002
     canonical_name: BlueRiver Logistics
@@ -25,6 +26,7 @@ customers:
     erp_name: Blue River Logistics LLC
     address: { street: 890 Harbor Way, city: St. Louis, state: MO, postal_code: "63102" }
     duns: "07-331-9025"
+    credit_limit_usd: 100000   # experiment 5: ERP credit master
 
   - id: CUST-1003
     canonical_name: Cedar Health Systems
@@ -37,6 +39,7 @@ customers:
     erp_name: Cedar Health Systems Inc.
     address: { street: 51 Cedar Crest Blvd, city: Indianapolis, state: IN, postal_code: "46204" }
     duns: "02-906-4418"
+    credit_limit_usd: 75000   # experiment 5: ERP credit master
 
   # Experiment F (doc 02): a similar-name customer that is NOT Acme Manufacturing.
   - id: CUST-1044
@@ -50,6 +53,7 @@ customers:
     erp_name: Acme Industrial Supply Co.
     address: { street: 17 Tallmadge Ave, city: Akron, state: OH, postal_code: "44310" }
     duns: "09-552-1187"
+    credit_limit_usd: 50000   # experiment 5: ERP credit master
     lab_extension: true
 
 accounts:
@@ -166,3 +170,43 @@ discount_requests:
     status: Approved
     approved_by: EMP-101
     lab_extension: true
+
+# -- Credit (experiment 5, lab extension): a second decision type ----------------------------
+# Not in doc 03. Added so the lab can test whether its decision machinery generalizes beyond
+# discounts (runs/2026-10-03-exp5-credit/plan.md). Candidates for review, not canon.
+
+guarantees:
+  - id: GRT-ACME-2026
+    title: Parent Company Guarantee — Acme Mfg. Holdings
+    guarantor: Acme Group Holdings, Inc.
+    customer: CUST-1001          # covers Acme Mfg. Holdings (dba Acme Manufacturing) only
+    amount_usd: 400000
+    valid_from: 2026-01-01
+    valid_to: 2027-12-31
+
+invoices:
+  # Acme: equipment orders (Net 45), always paid on time.
+  - { id: INV-60412, customer: CUST-1001, invoice_date: 2025-10-14, due_date: 2025-11-28, amount_usd: 85000, paid_date: 2025-11-24, reference: NS-EDGE renewal 2025-26 }
+  - { id: INV-62011, customer: CUST-1001, invoice_date: 2026-06-10, due_date: 2026-07-25, amount_usd: 480000, paid_date: 2026-07-22, reference: SO-7001 }
+  - { id: INV-62305, customer: CUST-1001, invoice_date: 2026-08-18, due_date: 2026-10-02, amount_usd: 720000, paid_date: null, reference: SO-7002 }
+  # BlueRiver: a quarterly NS-Cloud subscription. One invoice was paid 52 days late in 2026.
+  - { id: INV-61005, customer: CUST-1002, invoice_date: 2025-01-15, due_date: 2025-03-01, amount_usd: 30000, paid_date: 2025-02-26, reference: NS-CLOUD subscription 2025-Q1 }
+  - { id: INV-61210, customer: CUST-1002, invoice_date: 2025-04-15, due_date: 2025-05-30, amount_usd: 30000, paid_date: 2025-05-28, reference: NS-CLOUD subscription 2025-Q2 }
+  - { id: INV-61433, customer: CUST-1002, invoice_date: 2025-07-15, due_date: 2025-08-29, amount_usd: 30000, paid_date: 2025-09-02, reference: NS-CLOUD subscription 2025-Q3 }
+  - { id: INV-61688, customer: CUST-1002, invoice_date: 2025-10-15, due_date: 2025-11-29, amount_usd: 30000, paid_date: 2025-12-01, reference: NS-CLOUD subscription 2025-Q4 }
+  - { id: INV-61902, customer: CUST-1002, invoice_date: 2026-01-15, due_date: 2026-03-01, amount_usd: 30000, paid_date: 2026-02-27, reference: NS-CLOUD subscription 2026-Q1 }
+  - { id: INV-62147, customer: CUST-1002, invoice_date: 2026-04-15, due_date: 2026-05-30, amount_usd: 30000, paid_date: 2026-07-21, reference: NS-CLOUD subscription 2026-Q2 }
+  - { id: INV-62391, customer: CUST-1002, invoice_date: 2026-07-15, due_date: 2026-08-29, amount_usd: 30000, paid_date: 2026-08-28, reference: NS-CLOUD subscription 2026-Q3 }
+
+credit_requests:
+  - id: CR-9201
+    customer: CUST-1001
+    current_limit_usd: 250000
+    requested_limit_usd: 400000
+    requestor: EMP-101
+    request_date: 2026-09-23
+    basis: standard
+    basis_ref: null
+    justification: "Third-plant ramp-up: higher NS-500 order volume through Q1 2027"
+    status: Pending Approval
+

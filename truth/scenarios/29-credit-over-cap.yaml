@@ -1,0 +1,20 @@
+id: S29
+slug: credit-over-cap
+title: Acme's credit limit to $1,300,000 (over the maximum)
+kind: credit_decision
+question: Can a request to raise Acme Manufacturing's credit limit to $1,300,000 (CR-9204, Sarah Chen), supported by the parent guarantee, be approved on 2026-09-23?
+teaches: [eligibility-limit]
+corpus: base
+as_of: 2026-09-23
+request: { base: CR-9201, id: CR-9204, requested_limit_usd: 1300000, basis: guarantee, basis_ref: GRT-ACME-2026, justification: "Supported by the Acme Group parent guarantee" }
+expected:
+  outcome: REJECT_OR_ESCALATE
+  eligibility: exceeded
+  eligibility_basis: GRT-ACME-2026
+  requestor_authorized: false
+  required_role: FINANCE_DIRECTOR
+  approvers: []
+  input_conflicts: []
+  evidence: [CRM-2048, C-1001, erp_credit, erp_invoices, GRT-ACME-2026, credit_policy_2026, organization_chart, CR-9204]
+reasoning:
+  - "Even with the guarantee, Acme's maximum is $1,150,000; $1,300,000 exceeds it. No approver can fix that."

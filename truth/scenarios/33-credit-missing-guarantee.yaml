@@ -1,0 +1,20 @@
+id: S33
+slug: credit-missing-guarantee
+title: The guarantee-backed Acme request without the guarantee on file
+kind: credit_decision
+question: Can a request to raise Acme Manufacturing's credit limit to $1,000,000 (CR-9203, Sarah Chen), supported by the parent guarantee, be approved on 2026-09-23?
+teaches: [uncertainty, evidence-requirements]
+corpus: missing-guarantee-evidence
+as_of: 2026-09-23
+request: { base: CR-9201, id: CR-9203, requested_limit_usd: 1000000, basis: guarantee, basis_ref: GRT-ACME-2026, justification: "Supported by the Acme Group parent guarantee" }
+expected:
+  outcome: REQUEST_EVIDENCE
+  eligibility: unknown
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: FINANCE_DIRECTOR
+  approvers: []
+  input_conflicts: []
+  evidence: [CRM-2048, C-1001, erp_credit, erp_invoices, credit_policy_2026, organization_chart, CR-9203]
+reasoning:
+  - "Sarah's email says the guarantee 'should cover it', but a mention isn't the guarantee. Ask for it."

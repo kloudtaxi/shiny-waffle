@@ -64,3 +64,31 @@ artifacts:
   path: documents/email_sarah_to_michael.md
   source_system: Email
   description: Email from the account owner to their manager about DR-9001.
+- id: credit_policy_2025
+  path: documents/credit_policy_2025.md
+  source_system: Northstar Drive
+  description: 'Finance''s credit policy for 2025: authority bands, eligibility, duties.'
+- id: credit_policy_2026
+  path: documents/credit_policy_2026.md
+  source_system: Northstar Drive
+  description: 'Finance''s credit policy for 2026: authority bands, eligibility, duties.'
+- id: acme_parent_guarantee
+  path: documents/acme_parent_guarantee.md
+  source_system: Northstar Drive
+  description: A parent-company guarantee of a customer's payment obligations.
+- id: erp_credit
+  path: structured/erp_credit.csv
+  source_system: Northstar ERP
+  description: 'Credit master: each ERP customer''s current credit limit.'
+- id: erp_invoices
+  path: structured/erp_invoices.csv
+  source_system: Northstar ERP
+  description: 'Accounts receivable: invoices with due and paid dates.'
+- id: credit_requests
+  path: structured/credit_requests.csv
+  source_system: Northstar ERP
+  description: Credit-limit requests and their approval status.
+- id: email_sarah_to_priya
+  path: documents/email_sarah_to_priya.md
+  source_system: Email
+  description: Email from the account owner to Finance about CR-9201.

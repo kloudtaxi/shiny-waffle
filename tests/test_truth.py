@@ -18,7 +18,7 @@ def test_truth_matches_doc_03_anchors() -> None:
     assert t.employee("EMP-101").manager == "EMP-200"
     assert t.employee("EMP-200").role == "VP_SALES"
     assert t.exception("EXC-ACME-NS500-15").maximum_discount == 0.15
-    assert [len(t.scenarios), len(t.holders_of("VP_SALES")), len(t.holders_of("CRO"))] == [25, 1, 1]
+    assert [len(t.scenarios), len(t.holders_of("VP_SALES")), len(t.holders_of("CRO"))] == [35, 1, 1]
 
 
 def test_dangling_reference_is_refused(truth_copy: Path) -> None:

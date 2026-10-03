@@ -2,10 +2,18 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import date, timedelta
 from typing import Any
 
 from northstar.factories._base import SeededFactory, is_reserved
+from northstar.factories.credit import (
+    BgCreditRequest,
+    BgInvoice,
+    CreditRequestFactory,
+    InvoiceFactory,
+    invoice_for,
+)
 from northstar.factories.customer import CITIES, LEGAL_SUFFIXES, BgCustomer, CustomerFactory
 from northstar.factories.discount import BgDiscountRequest, DiscountRequestFactory
 from northstar.factories.employee import (
@@ -20,9 +28,23 @@ from northstar.model import Truth
 
 SCALES: dict[str, dict[str, int]] = {
     # doc 04: "~10 entities + ~20 relationships + ~10 documents" for the first iteration.
-    "small": {"customers": 8, "employees": 10, "products": 6, "orders": 30, "requests": 24},
+    "small": {
+        "customers": 8,
+        "employees": 10,
+        "products": 6,
+        "orders": 30,
+        "requests": 24,
+        "credit_requests": 10,
+    },
     # doc 04: the scale-up target once the boundary is found.
-    "large": {"customers": 200, "employees": 40, "products": 80, "orders": 500, "requests": 1000},
+    "large": {
+        "customers": 200,
+        "employees": 40,
+        "products": 80,
+        "orders": 500,
+        "requests": 1000,
+        "credit_requests": 200,
+    },
 }
 MIN_BACKGROUND_AES = 3
 
@@ -36,6 +58,10 @@ class Background:
     discount_requests: list[BgDiscountRequest]
     # Owners the truth leaves unspecified (BlueRiver, Cedar, Acme Industrial Supply).
     truth_customer_owners: dict[str, str]
+    # credit (experiment 5): generated after everything else, from their own factories
+    invoices: list[BgInvoice] = field(default_factory=list)
+    credit_limits: dict[str, int] = field(default_factory=dict)  # background CUST id → USD
+    credit_requests: list[BgCreditRequest] = field(default_factory=list)
 
 
 def build_background(truth: Truth, seed: int, scale: str = "small") -> Background:
@@ -46,6 +72,8 @@ def build_background(truth: Truth, seed: int, scale: str = "small") -> Backgroun
         ProductFactory,
         OrderFactory,
         DiscountRequestFactory,
+        InvoiceFactory,  # experiment 5: appended, so the streams above don't move
+        CreditRequestFactory,
     )
     for offset, factory in enumerate(factories):
         factory.reseed(seed + offset)
@@ -74,7 +102,89 @@ def build_background(truth: Truth, seed: int, scale: str = "small") -> Backgroun
         for i, o in enumerate(drafts)
     ]
     requests = _requests(truth, counts["requests"], customers, truth_customer_owners, products)
-    return Background(customers, employees, products, orders, requests, truth_customer_owners)
+    invoices = _invoices(truth, orders, customers)
+    limits, credit = _credit(truth, counts["credit_requests"], customers, employees, invoices)
+    return Background(
+        customers, employees, products, orders, requests, truth_customer_owners,
+        invoices, limits, credit,
+    )  # fmt: skip
+
+
+def _invoices(truth: Truth, orders: list[BgOrder], customers: list[BgCustomer]) -> list[BgInvoice]:
+    """One invoice per invoiced or completed order. Truth customers always pay within 10 days of
+    the due date; background customers sometimes pay late."""
+    rnd = InvoiceFactory.__random__
+    terms = {c.erp_id: c.payment_terms for c in customers}
+    truth_erp = {c.source_ids["erp"] for c in truth.customers}
+    out = []
+    for o in orders:
+        if o.status not in ("Invoiced", "Completed"):
+            continue
+        if o.erp_customer_id in truth_erp:
+            delay = rnd.randint(-10, 10)
+        else:
+            delay = rnd.choice((-5, 0, 2, 5, 10, 20, 35, 50))
+        t = terms.get(o.erp_customer_id, "Net 45")
+        out.append(invoice_for(o.id, o.erp_customer_id, o.order_date, o.order_value_usd, t, delay))
+    out.sort(key=lambda i: (i.invoice_date, i.reference))
+    return [i.model_copy(update={"id": f"INV-{30001 + n}"}) for n, i in enumerate(out)]
+
+
+def late_invoices(
+    invoices: list[BgInvoice], erp_id: str, as_of: date, lookback: int, max_late: int
+) -> list[str]:
+    """Invoices due in the lookback window that were paid, or are still unpaid, more than
+    ``max_late`` days after their due date, as known on ``as_of``."""
+    late = []
+    for i in invoices:
+        if i.erp_customer_id != erp_id or not (
+            as_of - timedelta(days=lookback) <= i.due_date <= as_of
+        ):
+            continue
+        known = i.paid_date if i.paid_date is not None and i.paid_date <= as_of else as_of
+        if (known - i.due_date).days > max_late:
+            late.append(i.id)
+    return late
+
+
+def _credit(
+    truth: Truth, n: int, customers: list[BgCustomer], employees: list[BgEmployee],
+    invoices: list[BgInvoice],
+) -> tuple[dict[str, int], list[BgCreditRequest]]:  # fmt: skip
+    """Background customers' credit limits, and credit requests decided by the policy in force, in
+    date order. An approval raises the customer's limit, and the final limits are the credit
+    master's."""
+    rnd = CreditRequestFactory.__random__
+    limits = {c.id: rnd.choice((50000, 75000, 100000, 150000)) for c in customers}
+    ar = sorted(e.id for e in employees if e.title == "Accounts Receivable Specialist")
+    by_id = {c.id: c for c in customers}
+    drafts = []
+    for _ in range(n):
+        cust = by_id[rnd.choice(sorted(by_id))]
+        drafts.append(CreditRequestFactory.build(
+            id="", customer=cust.id, current_limit_usd=0, requestor=cust.owner, approved_by="",
+            status="",
+        ))  # fmt: skip
+    drafts.sort(key=lambda r: r.request_date)
+    out = []
+    for draft in drafts:
+        cust = by_id[draft.customer]
+        r = draft.model_copy(update={"current_limit_usd": limits[cust.id]})
+        policy = truth.credit_policy_on(r.request_date)
+        assert policy is not None, r.request_date  # the window lies inside the policies
+        late = late_invoices(invoices, cust.erp_id, r.request_date, policy.lookback_days,
+                             policy.max_days_late)  # fmt: skip
+        if late or r.requested_limit_usd > policy.caps["Standard"]:
+            out.append(r.model_copy(update={"status": "Declined"}))
+            continue
+        role = policy.band_for(r.requested_limit_usd).role
+        if role == "AR_SPECIALIST":
+            approver = ar[0] if ar else truth.holders_of("FINANCE_MANAGER")[0].id
+        else:
+            approver = truth.holders_of(role)[0].id
+        out.append(r.model_copy(update={"status": "Approved", "approved_by": approver}))
+        limits[cust.id] = r.requested_limit_usd
+    return limits, [r.model_copy(update={"id": f"CR-{7001 + i}"}) for i, r in enumerate(out)]
 
 
 def _employees(truth: Truth, n: int) -> list[BgEmployee]:

@@ -1,0 +1,13 @@
+erp_customer_id,customer_name,industry,bill_to_street,bill_to_city,bill_to_state,bill_to_postal_code,duns_number,payment_terms
+C-1001,Acme Mfg. Holdings,Industrial Manufacturing,2200 N Industrial Pkwy,Milwaukee,WI,53209,04-812-7730,Net 45
+C-1002,Blue River Logistics LLC,Logistics,890 Harbor Way,St. Louis,MO,63102,07-331-9025,Net 45
+C-1003,Cedar Health Systems Inc.,Healthcare,51 Cedar Crest Blvd,Indianapolis,IN,46204,02-906-4418,Net 45
+C-1044,Acme Industrial Supply Co.,Industrial Distribution,17 Tallmadge Ave,Akron,OH,44310,09-552-1187,Net 45
+C-2001,Weiss Ltd Holdings,Chemicals,906 Richardson Run,Madison,WI,54721,78-557-8304,Net 45
+C-2002,Miller LLC Co.,Building Materials,1473 Atkinson Mission Suite 740,Fort Wayne,IN,46934,82-869-6184,Net 45
+C-2003,Johnston Inc.,Automotive Components,3946 David Dam,Madison,WI,53994,00-463-6895,Net 30
+C-2004,Greer and Sons Holdings,Packaging,84690 Lauren Station Apt. 756,Peoria,IL,62668,58-024-0149,Net 45
+C-2005,Rodriguez Corp.,Energy & Utilities,5108 Jay Skyway,Fort Wayne,IN,46023,48-311-8908,Net 45
+C-2006,Chang-James Co.,Aerospace,666 Sims Expressway Suite 065,Columbus,OH,45340,34-517-2127,Net 60
+C-2007,Miller LLC,Pharmaceuticals,6520 Barbara Bridge Apt. 993,Madison,WI,53740,19-566-4602,Net 60
+C-2008,Blanchard Group Corp.,Pharmaceuticals,63155 Kathryn Courts,Chicago,IL,60322,97-565-7333,Net 30

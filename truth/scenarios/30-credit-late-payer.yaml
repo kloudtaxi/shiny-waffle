@@ -1,0 +1,20 @@
+id: S30
+slug: credit-late-payer
+title: BlueRiver's credit limit to $200,000 (payment history)
+kind: credit_decision
+question: Can Michael Torres's request CR-9205 to raise BlueRiver Logistics' credit limit from $100,000 to $200,000 be approved on 2026-09-23?
+teaches: [eligibility-from-transactions]
+corpus: base
+as_of: 2026-09-23
+request: { base: CR-9201, id: CR-9205, customer: CUST-1002, current_limit_usd: 100000, requested_limit_usd: 200000, requestor: EMP-200, justification: "Fleet expansion: larger quarterly NS-Cloud orders" }
+expected:
+  outcome: REJECT_OR_ESCALATE
+  eligibility: ineligible
+  eligibility_basis: null
+  requestor_authorized: false
+  required_role: FINANCE_MANAGER
+  approvers: []
+  input_conflicts: []
+  evidence: [erp_credit, erp_invoices, credit_policy_2026, organization_chart, CR-9205]
+reasoning:
+  - "Invoice INV-62147 (due 2026-05-30) was paid on 2026-07-21, 52 days late; the 2026 policy allows 30."
