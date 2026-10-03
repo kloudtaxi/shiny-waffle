@@ -1,0 +1,9 @@
+{
+ "model": "claude-opus-5-5",
+ "system_prompt": "You answer questions about an organization. Your only source of information is the organization's documents and records, which are given to you below the question. Answer the question you are asked.",
+ "procedure": {
+  "path": "owm/procedures/discount-approval.md",
+  "sha256": "6e72951c87e3f20d90a29ebb3435de4e210443b9679e838c47de4c9b1aa9da94"
+ },
+ "flags": "no tools, empty strict MCP config, fresh temp dir, no session persistence"
+}
