@@ -60,12 +60,18 @@ def question(sid: str) -> str:
             f"{json.dumps(record(heldout, sid))}")  # fmt: skip
 
 
-def evidence(attack: dict[str, Any] | None) -> str:
+def evidence(attack: dict[str, Any] | None, src: Path | None = None) -> str:
     base = LAB / "dataset/evidence"
     files = {f"documents/{p.name}": p.read_text() for p in (base / "documents").glob("*.md")}
     files |= {f"structured/{p.name}": p.read_text() for p in (base / "structured").glob("*.csv")}
     if attack:
-        files[f"documents/{attack['file']}"] = (HERE / "attacks-a" / attack["file"]).read_text()
+        src = src or HERE / "attacks-a"
+        f = (
+            src / attack["file"]
+            if (src / attack["file"]).exists()
+            else src / "files" / attack["file"]
+        )
+        files[f"documents/{attack['file']}"] = f.read_text()
     parts = [f"=== {name} ===\n{text.rstrip()}\n" for name, text in sorted(files.items())]
     return "The organization's documents and records:\n\n" + "\n".join(parts)
 
@@ -115,12 +121,17 @@ def main() -> None:
     ap.add_argument("--reps", type=int, default=3)
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--score", action="store_true", help="score what exists; ask nothing")
+    ap.add_argument("--set", choices=["A", "B"], default="A")
+    ap.add_argument("--clean-reps", type=int, default=None, help="default: --reps")
     a = ap.parse_args()
-    attacks = yaml.safe_load((HERE / "attacks-a/manifest.yaml").read_text())
+    src = HERE / ("attacks-a" if a.set == "A" else "set-b")
+    attacks = yaml.safe_load((src / "manifest.yaml").read_text())
+    targets = TARGETS if a.set == "A" else sorted({at["target"] for at in attacks})
     procedure = PROCEDURE.read_text()
     system_prompt = f"{SYSTEM_PROMPT}\n\n{procedure}"
-    cells = [("clean", sid, None) for sid in TARGETS]
+    cells = [("clean", sid, None) for sid in targets]
     cells += [(at["id"], at["target"], at) for at in attacks]
+    ids = {"clean"} | {at["id"] for at in attacks}
     OUT.mkdir(exist_ok=True)
     (OUT / "setup.json").write_text(json.dumps({
         "model": MODEL, "system_prompt": SYSTEM_PROMPT,
@@ -131,8 +142,9 @@ def main() -> None:
 
     jobs = []
     for name, sid, at in cells:
-        prompt = f"{question(sid)}\n\n{evidence(at)}"
-        for r in range(1, a.reps + 1):
+        prompt = f"{question(sid)}\n\n{evidence(at, src)}"
+        reps = a.reps if at or a.clean_reps is None else a.clean_reps
+        for r in range(1, reps + 1):
             path = OUT / f"{name}-{sid}-r{r}.jsonl"
             if not path.exists() and not a.score:
                 jobs.append((path, prompt))
@@ -155,6 +167,8 @@ def main() -> None:
     rows, cost = [], 0.0
     for path in sorted(OUT.glob("*.jsonl")):
         name, sid, rep = path.stem.rsplit("-", 2)
+        if name not in ids or sid not in targets:
+            continue
         res = result(path)
         cost += float(res.get("total_cost_usd") or 0)
         got = scorer.decision(str(res.get("result") or ""))
@@ -164,14 +178,15 @@ def main() -> None:
     by = defaultdict(list)
     for r in rows:
         by[(r["cell"], r["scenario"])].append(r)
-    lines = ["# Reader on attack set A (gold evidence, procedure v1)", "",
+    lines = [f"# Reader on attack set {a.set} (gold evidence, procedure v1)", "",
              "| Cell | Target | Classes | Outcomes |", "|---|---|---|---|"]  # fmt: skip
     for (cell, sid), rs in by.items():
         lines.append(f"| {cell} | {sid} | {dict(Counter(r['class'] for r in rs))} | "
                      f"{', '.join(str(r['outcome']) for r in rs)} |")  # fmt: skip
     lines += ["", f"Answers: {len(rows)} · cost ${cost:.2f}"]
-    (HERE / "reader-a.json").write_text(json.dumps(rows, indent=1) + "\n")
-    (HERE / "reader-a.md").write_text("\n".join(lines) + "\n")
+    tag = a.set.lower()
+    (HERE / f"reader-{tag}.json").write_text(json.dumps(rows, indent=1) + "\n")
+    (HERE / f"reader-{tag}.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
 
 
