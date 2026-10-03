@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures as cf
 import hashlib
+import importlib.util
 import json
 import sys
 from collections import Counter, defaultdict
@@ -35,9 +36,13 @@ import yaml
 
 HERE = Path(__file__).resolve().parent
 LAB = HERE.parents[1]
-sys.path[:0] = [str(HERE), str(LAB / "runs/2026-10-03-adversarial"),
-                str(LAB / "runs/2026-09-28-utopia-aad5b06/procedure")]  # fmt: skip
-import run_reader as exp4  # noqa: E402
+sys.path[:0] = [str(HERE), str(LAB / "runs/2026-09-28-utopia-aad5b06/procedure")]
+_spec = importlib.util.spec_from_file_location(
+    "exp4_reader", LAB / "runs/2026-10-03-adversarial/run_reader.py"
+)
+assert _spec and _spec.loader
+exp4 = importlib.util.module_from_spec(_spec)  # experiment 4's reader: ask(), result(), prompt
+_spec.loader.exec_module(exp4)
 import score as scorer  # noqa: E402
 from run_hybrid import CORPUS, SCENARIOS, record  # noqa: E402
 
