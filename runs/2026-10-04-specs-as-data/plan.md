@@ -91,3 +91,20 @@ finding. **No decision-specific Python is allowed.**
 | Claude | The phase-2 subagent, about $1–2 |
 | Readers | None |
 | Utopia and OpenAI | None |
+
+## Phase 1 results (recorded before phase 2 starts)
+
+- **D1 ✓.** All three data specs reproduce their code specs exactly:
+  - discount sets A and B, byte for byte (69 rows);
+  - credit S26–S35, identical;
+  - SLA S36–S45, identical, including obligations, flags and the account owner.
+- **D2 ✓, and better than predicted.** There is no decision-specific Python. The YAML is *smaller*
+  than the Python it replaces: discount 142 lines against 210, credit 98 against 207, SLA 248
+  against 456. The runner is 438 generic lines.
+- **D3 ✗.** No new kernel operation was forced; `kernel.py` is byte-identical (sha256 `5bb188e3…`).
+  Instrument selection (live, covering, not superseded, latest, conflict) was expressible with
+  generic pure helpers in the runner (`latest`, `unique_by`, `union`) and comprehensions. The
+  runner gained generic helpers (`latest`, `unique_by`, `intervals`, `union`, `paragraph`,
+  `groups`, `maybe`) and allowed string methods. None of them knows a decision type.
+- `SPEC_FORMAT.md` was written after these specs. It describes sections, expressions and functions
+  only, with no decision logic and no example from the three decision types.
