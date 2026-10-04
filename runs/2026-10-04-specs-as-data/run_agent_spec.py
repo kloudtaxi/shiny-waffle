@@ -1,7 +1,7 @@
 """Specs as data, phase 2: run and score the agent-authored credit spec (`specs/credit_agent.yaml`).
 
     export TYPESAFE_API_KEY_FILE=_owm-local/typesafe.key
-    uv run python runs/2026-10-04-specs-as-data/run_agent_spec.py --errors-only   # for the fix round
+    uv run python runs/2026-10-04-specs-as-data/run_agent_spec.py --errors-only  # the fix round
     uv run python runs/2026-10-04-specs-as-data/run_agent_spec.py                 # scores
 
 - `--errors-only` prints only what the runner rejected (load errors, or exceptions per scenario),
@@ -85,8 +85,8 @@ def main() -> None:
     for sid in x5.SCENARIOS:
         s = next(x for x in truth.scenarios if x.id == sid)
         try:
-            d = flow.run(spec, eng, Evidence(x5.CORPUS[s.corpus]),
-                         {"sid": sid, "record": x5.record(truth, sid), "as_of": s.as_of})  # fmt: skip
+            inputs = {"sid": sid, "record": x5.record(truth, sid), "as_of": s.as_of}
+            d = flow.run(spec, eng, Evidence(x5.CORPUS[s.corpus]), inputs)
         except Exception as e:  # noqa: BLE001
             errors.append(f"{sid}: {type(e).__name__}: {e}")
             continue
@@ -106,7 +106,8 @@ def main() -> None:
         tally["gated"] += g_gated == "strict"
         appr = ", ".join(f"{x.get('name')} ({x.get('kind')})" for x in d.get("approvers") or [])
         lines.append(f"| {sid} | {k['decision']['outcome']} | {d.get('outcome')} / "
-                     f"{d.get('gated_outcome')} | {g_raw} / {g_gated} | {appr or 'none'} |")  # fmt: skip
+                     f"{d.get('gated_outcome')} | {g_raw} / {g_gated} | "
+                     f"{appr or 'none'} |")  # fmt: skip
         out[sid] = d
     lines += [f"| {e.split(':')[0]} | | error | fail / fail | |" for e in errors]
     lines += ["", f"Strict: raw **{tally['raw']}/10**, gated **{tally['gated']}/10**."]
