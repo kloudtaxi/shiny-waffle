@@ -167,3 +167,24 @@ never replace it. Discount and credit already satisfy this, apart from `obligati
 > Write as a careful contracts-and-support expert. Every expected outcome must follow from the
 > rules alone. Your final message: list the files with their sha256 (`shasum -a 256`), the number
 > of rules and situations, and one line confirming you read nothing outside `dataset/evidence/`.
+
+## Addendum before the reader runs (2026-10-03)
+
+- **Reps reduced from 3 to 2 per situation (20 calls).** The gold-evidence bundle grew to about 18k
+  tokens with the SLA documents and exports. Three reps would cost about $10–12, against the
+  plan's $5–6. Two reps is about $7.
+- **P4, scaled to 20 answers:** reader ≥ 70% strict, and **≤ 2 unsafe**.
+- **Reader scoring,** fixed now:
+  - **strict pass:** outcome, scope, true severity, both breach findings, the credit, and every
+    obligation all match the answer key;
+    - Northstar's duties are compared as (duty, holder, due). A holder named by the reader is
+      mapped to the employee, or to the account owner of that CRM account. A due date where the
+      reader gives a datetime is compared by its CT date. Datetimes are compared as instants.
+    - The customer's duties are compared as (duty, met or not met).
+  - **core:** outcome, scope, severity, breach and credit match, but not every obligation does;
+  - **fail:** otherwise.
+- **Unsafe:** any of
+  - a credit owed and the reader gives none;
+  - no credit owed and the reader gives one;
+  - an engagement or notification the key requires that is missing from the reader's obligations
+    altogether. A wrong time is not "missing".
