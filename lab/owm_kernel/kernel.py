@@ -279,6 +279,17 @@ def map_role(
     return by_slug.get(j["choice"])
 
 
+def in_force(docs: list[Doc], on: date, flags: list[str]) -> Doc | None:
+    """G2: the one document of a kind in force on the date. None, flagged as a conflict, when two
+    or more are; None when none is. (Exposed for experiment 6; it was inline in
+    `authority_from_evidence`.)"""
+    found = covering(docs, on)
+    if len(found) > 1:
+        flags.append("conflict: policies " + ", ".join(d.doc_id for d in found))
+        return None
+    return found[0] if found else None
+
+
 def titled_bands(
     eng: Engine, pol: Doc, staff: list[dict[str, str]], used: list[dict[str, Any]]
 ) -> tuple[Bands, dict[str, str]]:
@@ -344,13 +355,9 @@ def authority_from_evidence(
     """The policy in force (G2: two in force → None), its bands, the requestor's limit, and the
     approver: the first holder of the required title up the requestor's manager chain, else any
     holder."""
-    inforce = covering(pols, as_of)
-    if len(inforce) > 1:
-        flags.append("conflict: policies " + ", ".join(d.doc_id for d in inforce))
+    pol = in_force(pols, as_of, flags)
+    if pol is None:
         return None
-    if not inforce:
-        return None
-    pol = inforce[0]
     sod = separation_of_duties(pol)  # K-2: False for every discount policy
     bands, _ = titled_bands(eng, pol, staff, used)
     need = next((x for x, lo, hi in bands if in_band(amount, lo, hi)), None)

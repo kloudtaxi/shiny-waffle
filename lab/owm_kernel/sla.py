@@ -43,6 +43,7 @@ from kernel import (
     covering,
     gate,
     holder,
+    in_force,
     judge,
     linked,
     map_role,
@@ -221,21 +222,23 @@ def decide(
         stamp = cal.local(due).isoformat() if isinstance(due, datetime) else due.isoformat()
         obligations.append(Obligation("organization", duty, role, who, stamp))  # K-6
 
-    scheds = covering(s.pols, opened.date())
+    first_sched = in_force(s.pols, opened.date(), flags)  # G2
     proc = next(iter(s.good["procedure"]), None)
     guide = next(iter(s.good["guide"]), None)
     calendar_doc = next(iter(s.good["calendar"]), None)
-    if len(scheds) != 1 or proc is None or guide is None:
+    if first_sched is not None:
+        terms = schedule_terms(first_sched)
+        cal = Calendar(
+            terms["zone"], terms["opens"], terms["closes"], holidays(calendar_doc)
+        )  # K-5
+        opened = cal.local(opened)
+    # the version is chosen by the open date in the schedule's own zone
+    sched = in_force(s.pols, opened.date(), flags) if first_sched else None
+    if sched is None or proc is None or guide is None:
         flags.append("cannot decide: the schedule in force, the procedure or the guide is missing")
         return _record(sid, ticket_id, t, "CANNOT_DECIDE", None, None, "cannot_decide",
                        "cannot_decide", None, [], used, flags, [])  # fmt: skip
-    sched = scheds[0]
     terms = schedule_terms(sched)
-    cal = Calendar(terms["zone"], terms["opens"], terms["closes"], holidays(calendar_doc))  # K-5
-    opened = cal.local(opened)
-    # the version is chosen by the open date in the schedule's own zone
-    scheds = covering(s.pols, opened.date())
-    sched, terms = scheds[0], schedule_terms(scheds[0])
     relied += [sched, proc, guide]
     nums = procedure_numbers(proc)
     director = "Director of Customer Support"
