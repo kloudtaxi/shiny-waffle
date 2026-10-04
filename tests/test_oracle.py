@@ -54,6 +54,17 @@ def test_all_scenarios_coherent(ds: Dataset) -> None:
         "S33": "REQUEST_EVIDENCE",
         "S34": "APPROVE_WITH_AUTHORIZATION",
         "S35": "APPROVE_WITH_AUTHORIZATION",
+        # experiment 6: SLA breach response, a non-approval decision (rules by a blind subagent)
+        "S36": "BREACH_CREDIT_OWED",
+        "S37": "NO_BREACH",
+        "S38": "NO_BREACH",
+        "S39": "BREACH_CREDIT_OWED",
+        "S40": "BREACH_CREDIT_OWED",
+        "S41": "NO_BREACH",
+        "S42": "BREACH_CREDIT_OWED",
+        "S43": "OUT_OF_SCOPE",
+        "S44": "BREACH_NO_CREDIT",
+        "S45": "CANNOT_DECIDE",
     }
 
 
@@ -170,3 +181,26 @@ def test_credit_payment_history_is_judged_as_of_the_decision_date(ds: Dataset) -
 def test_credit_guarantee_covers_only_the_customer_it_names(ds: Dataset) -> None:
     assert ds.results["S28"]["eligibility"]["basis"] == "GRT-ACME-2026"
     assert ds.results["S32"]["eligibility"]["status"] == "unknown"
+
+
+# -- experiment 6: SLA breach response -----------------------------------------------------------
+
+
+def test_sla_paused_clock_meets_the_target_exactly(ds: Dataset) -> None:
+    """S41: 29 h 30 min on the wall clock, less a 17 h 30 min pause, is exactly 12 hours."""
+    assert ds.results["S41"]["breach"] == {"response": "met", "restoration": "met"}
+
+
+def test_sla_holiday_and_weekend_on_the_business_clock(ds: Dataset) -> None:
+    assert ds.results["S37"]["breach"]["restoration"] == "met"  # Memorial Day is not a business day
+    assert ds.results["S40"]["breach"]["restoration"] == "missed_band1"  # not band 2 by wall clock
+
+
+def test_sla_version_is_chosen_by_open_time_in_ct(ds: Dataset) -> None:
+    assert ds.results["S42"]["remedy"]["credit_usd"] == 630.0  # v1.0 rates and cap
+
+
+def test_sla_account_owner_is_recorded_by_account_not_name(ds: Dataset) -> None:
+    """Background owners' names change with the seed; the record names the CRM account."""
+    holders = {o["holder"] for o in ds.results["S43"]["obligations"] if o["party"] == "northstar"}
+    assert "owner:CRM-2091" in holders

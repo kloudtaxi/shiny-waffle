@@ -56,7 +56,7 @@ northstar-owm-lab/
 │   ├── relationships.yaml        canonical edges (cross-checked against entities)
 │   ├── facts.yaml                the evaluation sheet rows (asserted vs derived)
 │   ├── corpora.yaml              base corpus + variants (e.g. scenario 5)
-│   └── scenarios/01…35.yaml      question, as-of date, corpus, expected result
+│   └── scenarios/01…45.yaml      question, as-of date, corpus, expected result
 ├── owm/                        HAND-AUTHORED conceptual OWM — independent of Utopia
 │   ├── owm-spec.md
 │   └── ontology.yaml             entity/relationship types tagged foundation vs owm
@@ -80,7 +80,7 @@ northstar-owm-lab/
     └── DATASET.md
 ```
 
-## The evidence corpus (25 artifacts)
+## The evidence corpus (38 artifacts)
 
 | Artifact | Source system | What it carries (and what it deliberately doesn't) |
 |---|---|---|
@@ -104,6 +104,10 @@ northstar-owm-lab/
 | `erp_credit.csv`, `erp_invoices.csv` | ERP | experiment 5: current credit limits; invoices with due and paid dates (BlueRiver paid one 52 days late) |
 | `credit_requests.csv` | ERP | experiment 5: CR-9201 (Acme, $250k → $400k, pending) and policy-consistent background requests |
 | `email_sarah_to_priya.md` | Email | experiment 5: **hearsay**, "the parent guarantee should cover it" |
+| `sla_schedule_v1.md` / `_v2.md`, `support_severity_guide.md`, `support_escalation_procedure.md` | Drive | experiment 6: service levels (clocks, business hours, exclusions, credits, caps, claim windows), severity by **business impact**, escalation by **role** |
+| `support_org_chart.md`, `holiday_calendar.md` | Drive | experiment 6: the escalation role holders; the complete holiday list |
+| `acme_support_schedule_c.md`, `blueriver_support_terms.md`, `cedar_support_terms.md` | Drive | experiment 6: plan, covered products, coverage start, monthly fee; **Acme Industrial is not covered** |
+| `service_tickets.csv`, `ticket_events.csv`, `maintenance_notices.csv`, `service_credits.csv` | Service | experiment 6: tickets recorded in the **site's time zone** (EDT for Cedar and Akron), their histories, notices, credits already approved |
 
 **No single artifact contains any scenario's answer.** The authority matrix
 never names a person, the org chart never states a percentage, and the contract
@@ -126,6 +130,10 @@ grants eligibility but never authority. Tests enforce all of this.
 | Separation of duties | Michael Torres requests, and is also the VP Sales | lets the requestor concur on his own request (S34) |
 | Eligibility from transactions | BlueRiver's 52-days-late invoice is in 2026, not 2025 | judges payment history on the wrong date (S30, S31) |
 | Whose guarantee | the Acme guarantee names Acme Mfg. Holdings only | applies it to Acme Industrial Supply (S32) |
+| Reported priority | customers type P1–P4; severity is set by business impact | trusts the customer's P3 (S39) or P1 (S41) |
+| Time zones | Cedar and Akron record in EDT; the system log in UTC | measures in the wrong zone, or picks the wrong schedule version (S42, S44) |
+| Business-hours clock | Memorial Day, nights and weekends don't count | counts wall-clock time (S37, S40) |
+| Exclusions | a maintenance window with timely notice; a customer-caused finding still pending | breaches an excused outage (S38), or decides before the finding (S45) |
 
 ## Scenarios
 
@@ -199,6 +207,24 @@ these were written. They test whether the decision machinery generalizes beyond 
 | S33 | S28 without the guarantee on file? | missing-guarantee-evidence | `REQUEST_EVIDENCE` |
 | S34 | Acme to $650k, requested by Michael Torres? | base | `APPROVE_WITH_AUTHORIZATION`: Elena + **David Morgan** concurs (separation of duties) |
 | S35 | CR-9201 submitted at $300k; the ERP says $400k? | base | `APPROVE_WITH_AUTHORIZATION` by Priya Shah, on the system of record; input conflict |
+
+**A non-approval decision (S36–S45).** A lab extension, added on 2026-10-03 for experiment 6
+(`runs/2026-10-03-exp6-sla/plan.md`): **SLA breach response**. It is event-triggered, with no
+requestor. Its answer is obligations with deadlines. The rules (R1–R55) and these situations were
+written by a subagent that never saw the engine (`runs/2026-10-03-exp6-sla/rules/`).
+
+| # | Ticket | Expected |
+|---|---|---|
+| S36 | Acme line stopped, restored after 8 h 44 min | `BREACH_CREDIT_OWED`: $4,200 (band 2); escalations up to the CRO |
+| S37 | Cedar, two sites off NS-Cloud across Memorial Day | `NO_BREACH`: the business-hours clock skips the holiday |
+| S38 | BlueRiver outage inside a noticed maintenance window | `NO_BREACH`: the clocks start at the window's end |
+| S39 | Cedar reports P3 for a total outage, by portal | `BREACH_CREDIT_OWED`: $320 (Severity 1, but Severity 2 rates without a phone call) |
+| S40 | BlueRiver Silver Severity 2 opened at night | `BREACH_CREDIT_OWED`: $200 (band 1 by business hours, not band 2) |
+| S41 | Acme NS-Edge, reported P1, paused for VPN access | `NO_BREACH`: restored exactly at the 12-hour target, after the pause |
+| S42 | Acme Severity 1 opened at 22:50 the night before v2.0 | `BREACH_CREDIT_OWED`: $630 (v1.0 rates and cap) |
+| S43 | "Acme Industrial" claims the Acme Platinum plan | `OUT_OF_SCOPE`: notify its own account owner |
+| S44 | Cedar claim received one day late (EDT → CT) | `BREACH_NO_CREDIT` |
+| S45 | Acme Severity 1, customer-caused exclusion asserted, finding pending | `CANNOT_DECIDE` (restoration and credit); escalations still due |
 
 S01 reproduces the canonical decision object from doc 03 §21 field for field
 (see `dataset/answer-key/expected-results.yaml`).

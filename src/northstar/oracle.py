@@ -413,6 +413,30 @@ def check(truth: Truth, scenario: Scenario, result: dict[str, Any]) -> list[str]
             "input_conflicts": result["input"]["conflicts"],
         }
         return [f"{k}: expected {exp[k]!r}, oracle {got[k]!r}" for k in exp if exp[k] != got[k]]
+    if scenario.kind == "sla_decision":
+        northstar = sorted(
+            [o["duty"], o["role"], o["holder"], o["due"]]
+            for o in result["obligations"] if o["party"] == "northstar"
+        )  # fmt: skip
+        cust = sorted([o["duty"], o["status"]] for o in result["obligations"]
+                      if o["party"] == "customer")  # fmt: skip
+        got = {
+            "outcome": result["decision"]["outcome"],
+            "scope": result["scope"],
+            "true_severity": result["severity"]["true"],
+            "response": result["breach"]["response"],
+            "restoration": result["breach"]["restoration"],
+            "credit_usd": result["remedy"]["credit_usd"],
+            "northstar": northstar,
+            "customer": cust,
+        }
+        want = dict(exp)
+        for k in ("northstar", "customer"):
+            if k in want:
+                want[k] = sorted([str(x) for x in row] for row in want[k])
+        got = {k: ([[str(x) for x in row] for row in v] if k in ("northstar", "customer") else v)
+               for k, v in got.items()}  # fmt: skip
+        return [f"{k}: expected {want[k]!r}, oracle {got[k]!r}" for k in want if want[k] != got[k]]
     if scenario.kind == "credit_decision":
         got = {
             "outcome": result["decision"]["outcome"],

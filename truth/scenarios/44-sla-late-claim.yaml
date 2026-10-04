@@ -1,0 +1,24 @@
+id: S44
+slug: sla-late-claim
+title: Cedar restoration missed; credit claimed one day late
+kind: sla_decision
+question: "Ticket SR-39690 (Cedar Health Systems, NS-Edge chiller alarms not forwarding): what is its true severity, was a service level breached, what does Northstar owe, who must be engaged or notified and by when, and what must the customer do?"
+teaches: [customer-obligations, time-zones]
+corpus: base
+as_of: 2026-08-30
+ticket: SR-39690
+expected:
+  outcome: BREACH_NO_CREDIT
+  scope: in
+  true_severity: 2
+  response: met
+  restoration: missed_band2
+  credit_usd: 0.0
+  northstar:
+    - [notify, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-07-29T11:30:00-05:00"]
+    - [notify, ACCOUNT_OWNER, "owner:CRM-2063", "2026-07-29T11:30:00-05:00"]
+    - [decide_claim, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-09-29"]
+  customer:
+    - [claim, not_met]
+reasoning:
+  - From the blind subagent's situations.md, S44.

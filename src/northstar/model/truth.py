@@ -24,13 +24,19 @@ from northstar.model.entities import (
     Employee,
     Fact,
     Guarantee,
+    Holiday,
     Invoice,
+    MaintenanceNotice,
     Order,
     Organization,
     Policy,
     PricingException,
     Product,
     Relationship,
+    ServiceCredit,
+    SlaSchedule,
+    SupportAgreement,
+    Ticket,
 )
 from northstar.model.scenarios import Scenario
 
@@ -68,6 +74,13 @@ class Truth:
     invoices: list[Invoice] = field(default_factory=list)
     credit_requests: list[CreditRequest] = field(default_factory=list)
     credit_policies: list[CreditPolicy] = field(default_factory=list)
+    # SLA (experiment 6, lab extension; truth/support.yaml)
+    support_agreements: list[SupportAgreement] = field(default_factory=list)
+    sla_schedules: list[SlaSchedule] = field(default_factory=list)
+    holidays: list[Holiday] = field(default_factory=list)
+    maintenance_notices: list[MaintenanceNotice] = field(default_factory=list)
+    service_credits: list[ServiceCredit] = field(default_factory=list)
+    tickets: list[Ticket] = field(default_factory=list)
     _index: dict[str, Any] = field(default_factory=dict, repr=False)
 
     # -- lookups ------------------------------------------------------------
@@ -109,6 +122,12 @@ class Truth:
 
     def credit_policy_on(self, when: date) -> CreditPolicy | None:
         return next((p for p in self.credit_policies if p.active_on(when)), None)
+
+    def ticket(self, tid: str) -> Ticket:
+        return _one(self.tickets, tid)
+
+    def customer_by_crm(self, crm_id: str) -> Customer | None:
+        return next((c for c in self.customers if c.source_ids.get("crm") == crm_id), None)
 
 
 class _HasId(Protocol):
@@ -177,6 +196,17 @@ def load_truth(root: Path) -> Truth:
         credit_requests=[CreditRequest.model_validate(c) for c in ent.get("credit_requests", [])],
         credit_policies=[CreditPolicy.model_validate(c) for c in pol.get("credit_policies", [])],
     )
+    sup = _read(root / "support.yaml") if (root / "support.yaml").exists() else {}
+    truth.support_agreements = [
+        SupportAgreement.model_validate(a) for a in sup.get("agreements", [])
+    ]
+    truth.sla_schedules = [SlaSchedule.model_validate(x) for x in sup.get("schedules", [])]
+    truth.holidays = [Holiday.model_validate(h) for h in sup.get("holidays", [])]
+    truth.maintenance_notices = [
+        MaintenanceNotice.model_validate(m) for m in sup.get("notices", [])
+    ]
+    truth.service_credits = [ServiceCredit.model_validate(c) for c in sup.get("credits", [])]
+    truth.tickets = [Ticket.model_validate(t) for t in sup.get("tickets", [])]
     _cross_check(truth)
     return truth
 
@@ -261,6 +291,18 @@ def _cross_check(t: Truth) -> None:
             if end not in known:
                 problems.append(f"relationship {r.subject} {r.predicate} {r.object}: unknown {end}")
 
+    for sa in t.support_agreements:
+        if sa.customer not in cust_ids or not set(sa.products) <= prod_ids:
+            problems.append(f"{sa.id}: dangling customer/product")
+    for tk in t.tickets:
+        if tk.product not in prod_ids:
+            problems.append(f"{tk.id}: unknown product {tk.product}")
+    for m in t.maintenance_notices:
+        if m.customer not in cust_ids or not set(m.products) <= prod_ids:
+            problems.append(f"{m.id}: dangling customer/product")
+    for s in t.scenarios:
+        if s.kind == "sla_decision" and s.ticket not in {tk.id for tk in t.tickets}:
+            problems.append(f"{s.id}: unknown ticket {s.ticket}")
     for s in t.scenarios:
         if s.corpus not in t.corpora:
             problems.append(f"{s.id}: unknown corpus {s.corpus}")

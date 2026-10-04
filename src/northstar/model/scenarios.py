@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict
@@ -31,7 +31,12 @@ class Scenario(BaseModel):
     slug: str
     title: str
     kind: Literal[
-        "discount_decision", "fact_selection", "provenance", "identity", "credit_decision"
+        "discount_decision",
+        "fact_selection",
+        "provenance",
+        "identity",
+        "credit_decision",
+        "sla_decision",
     ]
     question: str
     teaches: list[str]
@@ -43,5 +48,9 @@ class Scenario(BaseModel):
     submitted: dict[str, Any] | None = None
     subject: dict[str, str] | None = None
     probes: list[Probe] = []
+    # SLA decisions (experiment 6): the ticket, and the moment to decide as of (None: after all
+    # the listed events)
+    ticket: str | None = None
+    decided_at: datetime | None = None
     expected: dict[str, Any]
     reasoning: list[str] = []

@@ -1,0 +1,22 @@
+id: S37
+slug: sla-target-met-holiday
+title: Cedar NS-Cloud partial outage across Memorial Day; both targets met
+kind: sla_decision
+question: "Ticket SR-39207 (Cedar Health, NS-Cloud unavailable at two facilities): what is its true severity, was a service level breached, what does Northstar owe, who must be engaged or notified and by when, and what must the customer do?"
+teaches: [business-hours-clock, holidays, time-zones]
+corpus: base
+as_of: 2026-06-01
+ticket: SR-39207
+expected:
+  outcome: NO_BREACH
+  scope: in
+  true_severity: 2
+  response: met
+  restoration: met
+  credit_usd: 0.0
+  northstar:
+    - [decide_claim, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-07-01"]
+  customer:
+    - [claim, met]
+reasoning:
+  - From the blind subagent's situations.md, S37.

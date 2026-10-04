@@ -1510,3 +1510,526 @@
   - credit_policy_2026
   - organization_chart
   - CR-9201
+- decision_id: DEC-S36
+  scenario: S36
+  type: sla_response
+  as_of: 2026-06-16
+  corpus: base
+  subject:
+    ticket: SR-39385
+    account: CRM-2048
+    customer: CUST-1001
+    product: PROD-001
+  decision:
+    outcome: BREACH_CREDIT_OWED
+  scope: in
+  severity:
+    'true': 1
+    reported: P1
+  breach:
+    response: met
+    restoration: missed_band2
+  remedy:
+    credit_usd: 4200.0
+  obligations:
+  - party: northstar
+    duty: engage
+    role: SUPPORT_ESCALATION_MANAGER
+    holder: EMP-601
+    due: '2026-06-16T02:29:00-05:00'
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2048
+    due: '2026-06-16T02:44:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-06-16T04:14:00-05:00'
+  - party: northstar
+    duty: notify
+    role: VP_SALES
+    holder: EMP-200
+    due: '2026-06-16T06:14:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CRO
+    holder: EMP-300
+    due: '2026-06-16T06:14:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-07-24'
+  - party: northstar
+    duty: issue_memo
+    role: SUPPORT_BILLING_MANAGER
+    holder: EMP-604
+    due: '2026-07-24'
+  - party: customer
+    duty: phone_report
+    status: met
+  - party: customer
+    duty: claim
+    status: met
+  reason: []
+  evidence:
+  - service_tickets
+  - ticket_events
+  - acme_support_schedule_c
+  - sla_schedule_v2
+- decision_id: DEC-S37
+  scenario: S37
+  type: sla_response
+  as_of: 2026-05-22
+  corpus: base
+  subject:
+    ticket: SR-39207
+    account: CRM-2063
+    customer: CUST-1003
+    product: PROD-002
+  decision:
+    outcome: NO_BREACH
+  scope: in
+  severity:
+    'true': 2
+    reported: P2
+  breach:
+    response: met
+    restoration: met
+  remedy:
+    credit_usd: 0.0
+  obligations:
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-07-01'
+  - party: customer
+    duty: claim
+    status: met
+  reason: []
+  evidence:
+  - service_tickets
+  - ticket_events
+  - cedar_support_terms
+  - sla_schedule_v2
+- decision_id: DEC-S38
+  scenario: S38
+  type: sla_response
+  as_of: 2026-07-11
+  corpus: base
+  subject:
+    ticket: SR-39561
+    account: CRM-2051
+    customer: CUST-1002
+    product: PROD-002
+  decision:
+    outcome: NO_BREACH
+  scope: in
+  severity:
+    'true': 1
+    reported: P1
+  breach:
+    response: met
+    restoration: met
+  remedy:
+    credit_usd: 0.0
+  obligations:
+  - party: northstar
+    duty: engage
+    role: SUPPORT_ESCALATION_MANAGER
+    holder: EMP-601
+    due: '2026-07-12T02:15:00-05:00'
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2051
+    due: '2026-07-12T02:30:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-07-12T04:00:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-08-13'
+  - party: customer
+    duty: phone_report
+    status: met
+  - party: customer
+    duty: claim
+    status: met
+  reason: []
+  evidence:
+  - service_tickets
+  - ticket_events
+  - blueriver_support_terms
+  - sla_schedule_v2
+  - maintenance_notices
+- decision_id: DEC-S39
+  scenario: S39
+  type: sla_response
+  as_of: 2026-06-10
+  corpus: base
+  subject:
+    ticket: SR-39340
+    account: CRM-2063
+    customer: CUST-1003
+    product: PROD-002
+  decision:
+    outcome: BREACH_CREDIT_OWED
+  scope: in
+  severity:
+    'true': 1
+    reported: P3
+  breach:
+    response: missed
+    restoration: missed_band1
+  remedy:
+    credit_usd: 320.0
+  obligations:
+  - party: northstar
+    duty: engage
+    role: SUPPORT_ESCALATION_MANAGER
+    holder: EMP-601
+    due: '2026-06-10T06:20:00-05:00'
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2063
+    due: '2026-06-10T06:35:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-06-10T08:05:00-05:00'
+  - party: northstar
+    duty: notify
+    role: VP_SALES
+    holder: EMP-200
+    due: '2026-06-10T10:05:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-07-29'
+  - party: northstar
+    duty: issue_memo
+    role: SUPPORT_BILLING_MANAGER
+    holder: EMP-604
+    due: '2026-07-29'
+  - party: customer
+    duty: phone_report
+    status: not_met
+  - party: customer
+    duty: claim
+    status: met
+  reason: []
+  evidence:
+  - service_tickets
+  - ticket_events
+  - cedar_support_terms
+  - sla_schedule_v2
+- decision_id: DEC-S40
+  scenario: S40
+  type: sla_response
+  as_of: 2026-08-20
+  corpus: base
+  subject:
+    ticket: SR-39881
+    account: CRM-2051
+    customer: CUST-1002
+    product: PROD-002
+  decision:
+    outcome: BREACH_CREDIT_OWED
+  scope: in
+  severity:
+    'true': 2
+    reported: P2
+  breach:
+    response: missed
+    restoration: missed_band1
+  remedy:
+    credit_usd: 200.0
+  obligations:
+  - party: northstar
+    duty: notify
+    role: SUPPORT_ESCALATION_MANAGER
+    holder: EMP-601
+    due: '2026-08-21T10:00:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-08-24T10:00:00-05:00'
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2051
+    due: '2026-08-24T10:00:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-09-27'
+  - party: northstar
+    duty: issue_memo
+    role: SUPPORT_BILLING_MANAGER
+    holder: EMP-604
+    due: '2026-09-27'
+  - party: customer
+    duty: claim
+    status: met
+  reason: []
+  evidence:
+  - service_tickets
+  - ticket_events
+  - blueriver_support_terms
+  - sla_schedule_v2
+  - maintenance_notices
+- decision_id: DEC-S41
+  scenario: S41
+  type: sla_response
+  as_of: 2026-07-23
+  corpus: base
+  subject:
+    ticket: SR-39644
+    account: CRM-2048
+    customer: CUST-1001
+    product: PROD-003
+  decision:
+    outcome: NO_BREACH
+  scope: in
+  severity:
+    'true': 2
+    reported: P1
+  breach:
+    response: met
+    restoration: met
+  remedy:
+    credit_usd: 0.0
+  obligations: []
+  reason: []
+  evidence:
+  - service_tickets
+  - ticket_events
+  - acme_support_schedule_c
+  - sla_schedule_v2
+- decision_id: DEC-S42
+  scenario: S42
+  type: sla_response
+  as_of: 2026-03-31
+  corpus: base
+  subject:
+    ticket: SR-38862
+    account: CRM-2048
+    customer: CUST-1001
+    product: PROD-001
+  decision:
+    outcome: BREACH_CREDIT_OWED
+  scope: in
+  severity:
+    'true': 1
+    reported: P1
+  breach:
+    response: missed
+    restoration: met
+  remedy:
+    credit_usd: 630.0
+  obligations:
+  - party: northstar
+    duty: engage
+    role: SUPPORT_ESCALATION_MANAGER
+    holder: EMP-601
+    due: '2026-03-31T23:05:00-05:00'
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2048
+    due: '2026-03-31T23:20:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-04-01T02:50:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-06-11'
+  - party: northstar
+    duty: issue_memo
+    role: SUPPORT_BILLING_MANAGER
+    holder: EMP-604
+    due: '2026-06-11'
+  - party: customer
+    duty: phone_report
+    status: met
+  - party: customer
+    duty: claim
+    status: met
+  reason: []
+  evidence:
+  - service_tickets
+  - ticket_events
+  - acme_support_schedule_c
+  - sla_schedule_v1
+  - service_credits
+- decision_id: DEC-S43
+  scenario: S43
+  type: sla_response
+  as_of: 2026-08-10
+  corpus: base
+  subject:
+    ticket: SR-39802
+    account: CRM-2091
+    customer: CUST-1044
+    product: PROD-003
+  decision:
+    outcome: OUT_OF_SCOPE
+  scope: out
+  severity:
+    'true': 1
+    reported: P1
+  breach:
+    response: not_applicable
+    restoration: not_applicable
+  remedy:
+    credit_usd: 0.0
+  obligations:
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2091
+    due: '2026-08-10T18:00:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-09-13'
+  reason:
+  - 'out of scope: no support agreement covers this customer and product'
+  evidence:
+  - service_tickets
+  - ticket_events
+- decision_id: DEC-S44
+  scenario: S44
+  type: sla_response
+  as_of: 2026-07-28
+  corpus: base
+  subject:
+    ticket: SR-39690
+    account: CRM-2063
+    customer: CUST-1003
+    product: PROD-003
+  decision:
+    outcome: BREACH_NO_CREDIT
+  scope: in
+  severity:
+    'true': 2
+    reported: P2
+  breach:
+    response: met
+    restoration: missed_band2
+  remedy:
+    credit_usd: 0.0
+  obligations:
+  - party: northstar
+    duty: notify
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-07-29T11:30:00-05:00'
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2063
+    due: '2026-07-29T11:30:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-09-29'
+  - party: customer
+    duty: claim
+    status: not_met
+  reason:
+  - claim received after the window closed on 2026-08-29
+  evidence:
+  - service_tickets
+  - ticket_events
+  - cedar_support_terms
+  - sla_schedule_v2
+- decision_id: DEC-S45
+  scenario: S45
+  type: sla_response
+  as_of: 2026-08-24
+  corpus: base
+  subject:
+    ticket: SR-39857
+    account: CRM-2048
+    customer: CUST-1001
+    product: PROD-001
+  decision:
+    outcome: CANNOT_DECIDE
+  scope: in
+  severity:
+    'true': 1
+    reported: P1
+  breach:
+    response: met
+    restoration: cannot_decide
+  remedy:
+    credit_usd: null
+  obligations:
+  - party: northstar
+    duty: record_root_cause
+    role: SUPPORT_ENGINEERING_LEAD
+    holder: EMP-603
+    due: '2026-08-31T18:00:00-05:00'
+  - party: northstar
+    duty: engage
+    role: SUPPORT_ESCALATION_MANAGER
+    holder: EMP-601
+    due: '2026-08-17T09:35:00-05:00'
+  - party: northstar
+    duty: notify
+    role: ACCOUNT_OWNER
+    holder: owner:CRM-2048
+    due: '2026-08-17T09:50:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-08-17T11:20:00-05:00'
+  - party: northstar
+    duty: notify
+    role: VP_SALES
+    holder: EMP-200
+    due: '2026-08-17T13:20:00-05:00'
+  - party: northstar
+    duty: notify
+    role: CRO
+    holder: EMP-300
+    due: '2026-08-17T13:20:00-05:00'
+  - party: northstar
+    duty: decide_claim
+    role: CUSTOMER_SUPPORT_DIRECTOR
+    holder: EMP-602
+    due: '2026-09-19'
+  - party: customer
+    duty: phone_report
+    status: met
+  - party: customer
+    duty: claim
+    status: met
+  reason:
+  - 'cannot decide restoration: missing the root-cause finding'
+  evidence:
+  - service_tickets
+  - ticket_events
+  - acme_support_schedule_c
+  - sla_schedule_v2

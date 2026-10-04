@@ -1,0 +1,30 @@
+id: S45
+slug: sla-root-cause-pending
+title: Acme Severity 1 over target; customer-caused exclusion pending a root-cause finding
+kind: sla_decision
+question: "As of 2026-08-24 17:00 CT, ticket SR-39857 (Acme Manufacturing, NS-500 line 2 stopped): what is its true severity, was a service level breached, what does Northstar owe, who must be engaged or notified and by when, and what must the customer do?"
+teaches: [uncertainty, evidence-requirements]
+corpus: base
+as_of: 2026-08-24
+ticket: SR-39857
+decided_at: 2026-08-24T17:00:00-05:00
+expected:
+  outcome: CANNOT_DECIDE
+  scope: in
+  true_severity: 1
+  response: met
+  restoration: cannot_decide
+  credit_usd: null
+  northstar:
+    - [engage, SUPPORT_ESCALATION_MANAGER, EMP-601, "2026-08-17T09:35:00-05:00"]
+    - [notify, ACCOUNT_OWNER, "owner:CRM-2048", "2026-08-17T09:50:00-05:00"]
+    - [notify, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-08-17T11:20:00-05:00"]
+    - [notify, VP_SALES, EMP-200, "2026-08-17T13:20:00-05:00"]
+    - [notify, CRO, EMP-300, "2026-08-17T13:20:00-05:00"]
+    - [record_root_cause, SUPPORT_ENGINEERING_LEAD, EMP-603, "2026-08-31T18:00:00-05:00"]
+    - [decide_claim, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-09-19"]
+  customer:
+    - [phone_report, met]
+    - [claim, met]
+reasoning:
+  - From the blind subagent's situations.md, S45. The conditional credit memo is not listed as an obligation.

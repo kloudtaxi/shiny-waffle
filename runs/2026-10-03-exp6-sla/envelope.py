@@ -26,7 +26,13 @@ APPROVAL = {"APPROVE", "APPROVE_WITH_AUTHORIZATION", "REJECT_OR_ESCALATE", "REVI
 VOCABULARY: dict[str, set[str]] = {
     "discount_approval": APPROVAL,
     "credit_limit_increase": APPROVAL,
-    # "sla_response": declared when the SLA decision is built (step 3)
+    "sla_response": {
+        "BREACH_CREDIT_OWED",
+        "BREACH_NO_CREDIT",
+        "NO_BREACH",
+        "OUT_OF_SCOPE",
+        "CANNOT_DECIDE",
+    },  # declared with the SLA decision (step 3)
 }
 DECISION_TYPES = {"discount_approval", "credit_limit_increase", "sla_response"}
 

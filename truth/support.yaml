@@ -1,0 +1,289 @@
+# Support and service levels (experiment 6, lab extension): SLA breach response, a non-approval
+# decision. HAND-TRANSCRIBED from the blind subagent's rule sheet and situations
+# (runs/2026-10-03-exp6-sla/rules/, commit f998502). The rule numbers (R1–R55) cite that sheet.
+# Not in doc 03: candidates for review, not canon.
+
+agreements:  # R9–R11
+  - id: SUP-ACME-C
+    customer: CUST-1001
+    document: acme_support_schedule_c
+    reference: Schedule C (Support and Service Levels) to ACME-MFG-2025
+    plan: Platinum
+    products: [PROD-001, PROD-003]          # NS-500, NS-Edge. Not NS-Cloud.
+    coverage_start: 2025-04-01
+    fees: [{ from_month: "2025-04", monthly_usd: 18000 }, { from_month: "2026-01", monthly_usd: 21000 }]
+  - id: SUP-BRL-2025
+    customer: CUST-1002
+    document: blueriver_support_terms
+    reference: SUP-BRL-2025
+    plan: Silver
+    products: [PROD-002]                    # NS-Cloud
+    coverage_start: 2025-01-01
+    fees: [{ from_month: "2025-01", monthly_usd: 2500 }]
+  - id: SUP-CHS-2025
+    customer: CUST-1003
+    document: cedar_support_terms
+    reference: SUP-CHS-2025
+    plan: Silver
+    products: [PROD-002, PROD-003]          # NS-Cloud, NS-Edge
+    coverage_start: 2025-12-01
+    fees: [{ from_month: "2025-12", monthly_usd: 4000 }]
+
+schedules:  # R20–R23, R29, R34, R35, R38, R43. Minutes; business-hours targets are business minutes.
+  - id: sla_schedule_v1
+    version: "1.0"
+    title: Northstar Support Service Level Schedule v1.0
+    valid_from: 2025-01-01
+    valid_to: 2026-03-31
+    published: 2025-01-01
+    targets:
+      - { severity: 1, plan: null, response_minutes: 60, restoration_minutes: 480, clock: 24x7 }
+      - { severity: 2, plan: Platinum, response_minutes: 240, restoration_minutes: 1440, clock: 24x7 }
+      - { severity: 2, plan: Silver, response_minutes: 240, restoration_minutes: 1440, clock: business }
+      - { severity: 3, plan: null, response_minutes: 480, restoration_minutes: 3000, clock: business }
+      - { severity: 4, plan: null, response_minutes: 1200, restoration_minutes: null, clock: business }
+    notice_business_days: 3
+    credits:
+      - { severity: 1, target: response, band: null, pct: 0.05 }
+      - { severity: 2, target: response, band: null, pct: 0.02 }
+      - { severity: 1, target: restoration, band: null, pct: 0.10 }
+      - { severity: 2, target: restoration, band: null, pct: 0.05 }
+    cap_pct: 0.20
+    claim_days: 60
+  - id: sla_schedule_v2
+    version: "2.0"
+    title: Northstar Support Service Level Schedule v2.0
+    valid_from: 2026-04-01
+    valid_to: 2027-12-31
+    published: 2026-02-16
+    targets:
+      - { severity: 1, plan: null, response_minutes: 30, restoration_minutes: 240, clock: 24x7 }
+      - { severity: 2, plan: Platinum, response_minutes: 120, restoration_minutes: 720, clock: 24x7 }
+      - { severity: 2, plan: Silver, response_minutes: 120, restoration_minutes: 720, clock: business }
+      - { severity: 3, plan: null, response_minutes: 480, restoration_minutes: 1800, clock: business }
+      - { severity: 4, plan: null, response_minutes: 1200, restoration_minutes: null, clock: business }
+    notice_business_days: 5
+    credits:
+      - { severity: 1, target: response, band: null, pct: 0.05 }
+      - { severity: 2, target: response, band: null, pct: 0.03 }
+      - { severity: 1, target: restoration, band: 1, pct: 0.10 }
+      - { severity: 1, target: restoration, band: 2, pct: 0.20 }
+      - { severity: 2, target: restoration, band: 1, pct: 0.05 }
+      - { severity: 2, target: restoration, band: 2, pct: 0.10 }
+    cap_pct: 0.30
+    claim_days: 30
+
+holidays:  # R3 (complete for the period)
+  - { date: 2025-01-01, name: "New Year's Day" }
+  - { date: 2025-05-26, name: Memorial Day }
+  - { date: 2025-07-04, name: Independence Day }
+  - { date: 2025-09-01, name: Labor Day }
+  - { date: 2025-11-27, name: Thanksgiving Day }
+  - { date: 2025-11-28, name: Day after Thanksgiving }
+  - { date: 2025-12-25, name: Christmas Day }
+  - { date: 2026-01-01, name: "New Year's Day" }
+  - { date: 2026-05-25, name: Memorial Day }
+  - { date: 2026-07-03, name: "Independence Day (observed; July 4 is a Saturday)" }
+  - { date: 2026-09-07, name: Labor Day }
+
+notices:  # R29, R30
+  - id: MN-2607
+    customer: CUST-1002
+    products: [PROD-002]
+    sent: 2026-06-26T11:00:00-05:00
+    window_start: 2026-07-11T22:00:00-05:00
+    window_end: 2026-07-12T02:00:00-05:00
+
+credits:  # credits already approved (R38), from S42
+  - { id: SCR-38655, ticket: SR-38655, customer: CUST-1001, ticket_opened: 2026-03-04, amount_usd: 3150.00, approved_on: 2026-04-02 }
+  - { id: SCR-38790, ticket: SR-38790, customer: CUST-1001, ticket_opened: 2026-03-19, amount_usd: 420.00, approved_on: 2026-04-20 }
+
+tickets:  # S36–S45. Timestamps carry the offset they were recorded in (Cedar and Akron record in EDT).
+  - id: SR-39385   # S36
+    account: CRM-2048
+    label: ACME Mfg — Milwaukee Plant 2
+    site: Milwaukee Plant 2
+    product: PROD-001
+    channel: phone
+    caller: Johnny Johnson, Director of Plant Operations
+    opened: 2026-06-16T02:14:00-05:00
+    reported_priority: P1
+    description: "NS-500 controller on stamping line 4 faulted with a hardware watchdog error at 01:58. Line 4 is stopped. No workaround."
+    impact: production_stopped
+    workaround: false
+    first_response: 2026-06-16T02:31:00-05:00
+    first_response_note: A Northstar engineer phoned Johnny Johnson.
+    restored: 2026-06-16T10:58:00-05:00
+    restored_note: The failed controller was replaced with the on-site spare, and line 4 is running at full rate.
+    claim: { received: 2026-06-24T10:12:00-05:00, channel: email, sender: Edward Floyd, text: "Credit claim for SR-39385." }
+
+  - id: SR-39207   # S37
+    account: CRM-2063
+    label: Cedar Health
+    site: Fishers and Carmel outpatient centers
+    product: PROD-002
+    channel: portal
+    caller: Cedar Health IT service desk
+    opened: 2026-05-22T16:20:00-04:00
+    reported_priority: P2
+    description: "NS-Cloud is unavailable to all users at our Fishers and Carmel outpatient centers (2 of our 14 facilities) since about 16:00. Facility operations at both centers are continuing. The other 12 facilities are working normally."
+    impact: some_users_down
+    workaround: false
+    first_response: 2026-05-22T18:10:00-04:00
+    first_response_note: Engineer's ticket comment.
+    restored: 2026-05-26T18:05:00-04:00
+    restored_note: NS-Cloud access restored at both centers.
+    claim: { received: 2026-06-01T09:30:00-04:00, channel: portal, sender: Cedar Health IT service desk, text: "NS-Cloud was down at two sites for four days." }
+
+  - id: SR-39561   # S38
+    account: CRM-2051
+    label: BlueRiver Logistics
+    site: St. Louis dispatch
+    product: PROD-002
+    channel: phone
+    caller: BlueRiver night dispatch supervisor
+    opened: 2026-07-11T23:20:00-05:00
+    reported_priority: P1
+    description: "NS-Cloud has been down for all our users since about 23:10. Dispatch can't see any shipments. No workaround."
+    impact: all_users_down
+    workaround: false
+    first_response: 2026-07-11T23:35:00-05:00
+    first_response_note: An engineer phoned the supervisor.
+    restored: 2026-07-12T05:05:00-05:00
+    restored_note: NS-Cloud available to all users again.
+    notes:
+      - { at: 2026-07-12T05:20:00-05:00, actor: Northstar support engineer, text: "The outage was caused by the upgrade performed in window MN-2607." }
+    claim: { received: 2026-07-14T08:45:00-05:00, channel: email, sender: BlueRiver Logistics operations, text: "Claiming the Severity 1 restoration credit for a 5 h 45 min outage on SR-39561." }
+
+  - id: SR-39340   # S39
+    account: CRM-2063
+    label: Cedar Health Systems Inc.
+    site: All facilities
+    product: PROD-002
+    channel: portal
+    caller: Cedar Health IT service desk
+    opened: 2026-06-10T07:05:00-04:00
+    reported_priority: P3
+    description: "NS-Cloud won't load for anyone. None of our 14 facilities can see equipment status or alarms since about 06:15. Please look at it today."
+    impact: all_users_down
+    workaround: false
+    first_response: 2026-06-10T09:20:00-04:00
+    first_response_note: "A Northstar engineer phoned Cedar, confirmed that all users were affected and that no workaround existed, and reclassified the ticket as Severity 1."
+    restored: 2026-06-10T12:35:00-04:00
+    restored_note: NS-Cloud available to all users again.
+    claim: { received: 2026-06-29T11:00:00-04:00, channel: email, sender: Cedar Health IT service desk, text: "Credit claim for SR-39340." }
+
+  - id: SR-39881   # S40
+    account: CRM-2051
+    label: Blue River Logistics LLC
+    site: St. Louis and Memphis depots
+    product: PROD-002
+    channel: portal
+    caller: BlueRiver operations manager
+    opened: 2026-08-20T19:45:00-05:00
+    reported_priority: P2
+    description: "Since about 19:00, NS-Cloud shipment-exception alerts and route dashboards have stopped updating for our St. Louis and Memphis depots (2 of our 6). Dispatchers are phoning drivers to track exceptions. The other depots are fine."
+    impact: monitoring_unavailable
+    workaround: false
+    auto_ack: 2026-08-20T19:46:00-05:00
+    first_response: 2026-08-21T10:20:00-05:00
+    first_response_note: Engineer's ticket comment.
+    restored: 2026-08-24T10:40:00-05:00
+    restored_note: Alerts and dashboards updating again at both depots.
+    claim: { received: 2026-08-28T14:05:00-05:00, channel: email, sender: BlueRiver Logistics operations, text: "Credit claim for SR-39881." }
+
+  - id: SR-39644   # S41
+    account: CRM-2048
+    label: Acme Manufacturing
+    site: Milwaukee Plant 2
+    product: PROD-003
+    channel: portal
+    caller: Johnny Johnson
+    opened: 2026-07-23T13:10:00-05:00
+    reported_priority: P1
+    description: "NS-Edge gateways on Plant 2 stopped sending vibration data for presses 1–6 (of 14) at about 12:50. The presses are still running. Maintenance techs are doing manual vibration checks on presses 1–6 every two hours."
+    impact: monitoring_unavailable
+    workaround: false
+    first_response: 2026-07-23T15:00:00-05:00
+    first_response_note: Engineer's ticket comment asking Acme for VPN credentials to reach the Plant 2 gateways remotely.
+    pauses:
+      - { start: 2026-07-23T15:00:00-05:00, end: 2026-07-24T08:30:00-05:00, note: "Awaiting Customer: VPN credentials requested; Kelly Ballard (Acme IT Architecture) provided them." }
+    restored: 2026-07-24T18:40:00-05:00
+    restored_note: Vibration data flowing again for presses 1–6.
+
+  - id: SR-38862   # S42
+    account: CRM-2048
+    label: Acme Mfg. Holdings
+    site: Plant 1
+    product: PROD-001
+    channel: phone
+    caller: Acme Plant 1 shift supervisor
+    opened: 2026-03-31T22:50:00-05:00
+    reported_priority: P1
+    description: "NS-500 controller on the Plant 1 paint line is rebooting in a loop. The paint line is stopped. No workaround."
+    impact: production_stopped
+    workaround: false
+    first_response: 2026-03-31T23:58:00-05:00
+    first_response_note: An engineer phoned the shift supervisor.
+    restored: 2026-04-01T05:35:00-05:00
+    restored_note: A firmware rollback was applied and the paint line is running.
+    notes:
+      - { at: 2026-03-31T22:50:00-05:00, actor: system, text: "System log: ticket created 2026-04-01T03:50Z." }
+    claim: { received: 2026-05-12T09:00:00-05:00, channel: email, sender: Edward Floyd, text: "Credit claim for SR-38862." }
+
+  - id: SR-39802   # S43
+    account: CRM-2091
+    label: Acme Industrial
+    site: Akron, OH
+    product: PROD-003
+    channel: phone
+    caller: Amy Barrett
+    opened: 2026-08-10T06:05:00-04:00
+    reported_priority: P1
+    description: "All NS-Edge gateways at the Akron distribution center have been offline since about 05:30. Conveyor monitoring is dark and picking has halted. No workaround. We're Acme. We have the Acme Platinum support plan."
+    impact: production_stopped
+    workaround: false
+    first_response: 2026-08-10T07:40:00-04:00
+    first_response_note: An engineer phoned Amy Barrett.
+    restored: 2026-08-10T14:20:00-04:00
+    restored_note: Gateways back online; picking resumed.
+    claim: { received: 2026-08-14T10:00:00-04:00, channel: email, sender: Amy Barrett, text: "Please apply the Severity 1 restoration credit under Acme's Platinum plan for SR-39802." }
+
+  - id: SR-39690   # S44
+    account: CRM-2063
+    label: Cedar Health Systems
+    site: Central energy plant
+    product: PROD-003
+    channel: portal
+    caller: Cedar Health facilities engineering
+    opened: 2026-07-28T10:30:00-04:00
+    reported_priority: P2
+    description: "NS-Edge gateways in our central energy plant stopped forwarding chiller alarms at about 10:10. Our engineers are doing hourly manual rounds."
+    impact: monitoring_unavailable
+    workaround: false
+    first_response: 2026-07-28T12:05:00-04:00
+    first_response_note: Engineer's ticket comment.
+    restored: 2026-07-31T00:50:00-04:00
+    restored_note: Chiller alarms forwarding again.
+    claim: { received: 2026-08-30T09:12:00-04:00, channel: email, sender: Cedar Health facilities engineering, text: "Credit claim for SR-39690." }
+
+  - id: SR-39857   # S45
+    account: CRM-2048
+    label: Acme Manufacturing
+    site: Plant 1
+    product: PROD-001
+    channel: phone
+    caller: Kelly Ballard (Acme IT Architecture)
+    opened: 2026-08-17T09:20:00-05:00
+    reported_priority: P1
+    description: "NS-500 controllers on Plant 1 assembly line 2 lost communication with the line HMI at about 09:05. Line 2 is stopped. No workaround."
+    impact: production_stopped
+    workaround: false
+    first_response: 2026-08-17T09:38:00-05:00
+    first_response_note: An engineer phoned Kelly Ballard.
+    restored: 2026-08-17T15:05:00-05:00
+    restored_note: Communication was restored and line 2 is running.
+    notes:
+      - { at: 2026-08-17T15:30:00-05:00, actor: Northstar support engineer, text: "Comms came back after Acme reverted a VLAN change their network contractor made on 2026-08-16. Suspect customer-caused. Asserting the customer-caused exclusion; root-cause finding to follow from Support Engineering." }
+    exclusion_asserted: 2026-08-17T15:30:00-05:00
+    claim: { received: 2026-08-20T08:40:00-05:00, channel: email, sender: Edward Floyd, text: "Credit claim for SR-39857." }

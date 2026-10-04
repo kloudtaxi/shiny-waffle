@@ -92,3 +92,55 @@ artifacts:
   path: documents/email_sarah_to_priya.md
   source_system: Email
   description: Email from the account owner to Finance about CR-9201.
+- id: sla_schedule_v1
+  path: documents/sla_schedule_v1.md
+  source_system: Northstar Drive
+  description: Support service level schedule, version 1.0.
+- id: sla_schedule_v2
+  path: documents/sla_schedule_v2.md
+  source_system: Northstar Drive
+  description: Support service level schedule, version 2.0.
+- id: support_severity_guide
+  path: documents/support_severity_guide.md
+  source_system: Northstar Drive
+  description: How Northstar Support classifies ticket severity.
+- id: support_escalation_procedure
+  path: documents/support_escalation_procedure.md
+  source_system: Northstar Drive
+  description: Support escalation and claim duties, by role.
+- id: support_org_chart
+  path: documents/support_org_chart.md
+  source_system: Northstar Drive
+  description: Who holds each support escalation role.
+- id: holiday_calendar
+  path: documents/holiday_calendar.md
+  source_system: Northstar Drive
+  description: Northstar holidays for 2025 and 2026.
+- id: acme_support_schedule_c
+  path: documents/acme_support_schedule_c.md
+  source_system: Northstar Drive
+  description: Support terms for Acme Manufacturing.
+- id: blueriver_support_terms
+  path: documents/blueriver_support_terms.md
+  source_system: Northstar Drive
+  description: Support terms for BlueRiver Logistics.
+- id: cedar_support_terms
+  path: documents/cedar_support_terms.md
+  source_system: Northstar Drive
+  description: Support terms for Cedar Health Systems.
+- id: service_tickets
+  path: structured/service_tickets.csv
+  source_system: Northstar Service
+  description: 'Support tickets: account, product, channel, open and restoration times.'
+- id: ticket_events
+  path: structured/ticket_events.csv
+  source_system: Northstar Service
+  description: 'Ticket history: responses, status changes, notes, restoration and claims.'
+- id: maintenance_notices
+  path: structured/maintenance_notices.csv
+  source_system: Northstar Service
+  description: Scheduled maintenance notices sent to customers.
+- id: service_credits
+  path: structured/service_credits.csv
+  source_system: Northstar Service
+  description: Service credits already approved.

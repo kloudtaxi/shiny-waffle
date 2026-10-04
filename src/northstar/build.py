@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from northstar import oracle
+from northstar import oracle, sla
 from northstar.artifacts import Artifact
 from northstar.export.csv import to_csv
 from northstar.export.yaml import dump
@@ -50,6 +50,8 @@ def assemble(truth_dir: Path, seed: int, scale: str) -> Dataset:
             result = oracle.decide(truth, s, available)
         elif s.kind == "credit_decision":
             result = oracle.decide_credit(truth, s, available)
+        elif s.kind == "sla_decision":
+            result = sla.decide_sla(truth, s, available)
         elif s.kind == "fact_selection":
             result = oracle.select_facts(truth, s, available)
         elif s.kind == "provenance":
@@ -200,7 +202,7 @@ def _scorecard(ds: Dataset) -> str:
     rows = []
     for s in ds.truth.scenarios:
         r = ds.results[s.id]
-        if s.kind in ("discount_decision", "credit_decision"):
+        if s.kind in ("discount_decision", "credit_decision", "sla_decision"):
             expected = r["decision"]["outcome"]
         elif s.kind == "fact_selection":
             expected = "; ".join(f"{p['as_of']}={p['exception']}" for p in r["probes"])

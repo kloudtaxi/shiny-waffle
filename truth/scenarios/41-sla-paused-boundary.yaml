@@ -1,0 +1,20 @@
+id: S41
+slug: sla-paused-boundary
+title: Acme NS-Edge monitoring loss reported as P1; paused clock, met exactly at the boundary
+kind: sla_decision
+question: "Ticket SR-39644 (Acme Manufacturing, NS-Edge vibration data lost for six presses, reported P1): what is its true severity, was a service level breached, what does Northstar owe, who must be engaged or notified and by when, and what must the customer do?"
+teaches: [paused-clock, time-arithmetic, severity-correction]
+corpus: base
+as_of: 2026-07-24
+ticket: SR-39644
+expected:
+  outcome: NO_BREACH
+  scope: in
+  true_severity: 2
+  response: met
+  restoration: met
+  credit_usd: 0.0
+  northstar: []
+  customer: []
+reasoning:
+  - From the blind subagent's situations.md, S41.

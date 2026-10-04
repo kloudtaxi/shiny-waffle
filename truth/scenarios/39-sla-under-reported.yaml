@@ -1,0 +1,28 @@
+id: S39
+slug: sla-under-reported
+title: Cedar reports P3 for a total NS-Cloud outage, through the portal
+kind: sla_decision
+question: "Ticket SR-39340 (Cedar Health Systems Inc., NS-Cloud won't load for anyone, reported P3): what is its true severity, was a service level breached, what does Northstar owe, who must be engaged or notified and by when, and what must the customer do?"
+teaches: [severity-correction, customer-obligations]
+corpus: base
+as_of: 2026-06-29
+ticket: SR-39340
+expected:
+  outcome: BREACH_CREDIT_OWED
+  scope: in
+  true_severity: 1
+  response: missed
+  restoration: missed_band1
+  credit_usd: 320.0
+  northstar:
+    - [engage, SUPPORT_ESCALATION_MANAGER, EMP-601, "2026-06-10T06:20:00-05:00"]
+    - [notify, ACCOUNT_OWNER, "owner:CRM-2063", "2026-06-10T06:35:00-05:00"]
+    - [notify, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-06-10T08:05:00-05:00"]
+    - [notify, VP_SALES, EMP-200, "2026-06-10T10:05:00-05:00"]
+    - [decide_claim, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-07-29"]
+    - [issue_memo, SUPPORT_BILLING_MANAGER, EMP-604, "2026-07-29"]
+  customer:
+    - [phone_report, not_met]
+    - [claim, met]
+reasoning:
+  - From the blind subagent's situations.md, S39.

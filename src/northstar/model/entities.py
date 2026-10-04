@@ -7,7 +7,7 @@ here is frozen.
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
@@ -290,3 +290,146 @@ class CreditPolicy(Temporal):
             if band.role == role:
                 return band.max_inclusive if band.max_inclusive is not None else float("inf")
         return None
+
+
+# -- SLA breach response (experiment 6, lab extension): a non-approval decision -------------
+# The rules were written by a subagent that never saw the engine
+# (runs/2026-10-03-exp6-sla/rules/rule-sheet.md); these types hold them.
+
+Impact = Literal[
+    "production_stopped",  # R14(a), Severity 1 without a workaround
+    "all_users_down",  # R14(b), NS-Cloud unavailable to all users, Severity 1 without a workaround
+    "degraded",  # R15(a)
+    "monitoring_unavailable",  # R15(b)
+    "some_users_down",  # R15(c)
+    "impaired",  # R16
+    "question",  # R17
+]
+
+
+class SupportFee(_Frozen):
+    from_month: str  # "YYYY-MM"; applies until the next entry
+    monthly_usd: int
+
+
+class SupportAgreement(_Frozen):
+    id: str
+    customer: str
+    document: str  # the evidence artifact that carries it
+    reference: str
+    plan: Literal["Platinum", "Silver"]
+    products: list[str]
+    coverage_start: date  # 00:00 CT
+    fees: list[SupportFee]
+
+    def fee_for(self, month: str) -> int:
+        return [f.monthly_usd for f in self.fees if f.from_month <= month][-1]
+
+
+class Target(_Frozen):
+    severity: int
+    plan: str | None  # None: any plan
+    response_minutes: int
+    restoration_minutes: int | None
+    clock: Literal["24x7", "business"]
+
+
+class CreditRate(_Frozen):
+    severity: int
+    target: Literal["response", "restoration"]
+    band: int | None  # v2.0 restoration bands; None otherwise
+    pct: float
+
+
+class SlaSchedule(Temporal):
+    id: str
+    version: str
+    title: str
+    published: date
+    targets: list[Target]
+    notice_business_days: int
+    credits: list[CreditRate]
+    cap_pct: float
+    claim_days: int
+
+    def target_for(self, severity: int, plan: str) -> Target:
+        return next(t for t in self.targets if t.severity == severity and t.plan in (None, plan))
+
+    def rate(self, severity: int, target: str, band: int | None) -> float:
+        return next(
+            c.pct for c in self.credits
+            if c.severity == severity and c.target == target and c.band == band
+        )  # fmt: skip
+
+
+class MaintenanceNotice(_Frozen):
+    id: str
+    customer: str
+    products: list[str]
+    sent: datetime
+    window_start: datetime
+    window_end: datetime
+
+
+class Pause(_Frozen):
+    start: datetime | None
+    end: datetime | None
+    note: str
+
+
+class Note(_Frozen):
+    at: datetime
+    actor: str
+    text: str
+
+
+class RootCause(_Frozen):
+    at: datetime
+    attributes_to: Literal["customer", "other"]
+    text: str
+
+
+class Claim(_Frozen):
+    received: datetime
+    channel: Literal["email", "portal"]
+    sender: str
+    text: str
+
+
+class Ticket(_Frozen):
+    id: str
+    account: str  # the CRM account id on the ticket
+    label: str  # the customer as named on the ticket
+    site: str
+    product: str
+    channel: Literal["phone", "portal", "email"]
+    caller: str
+    opened: datetime
+    reported_priority: str
+    description: str
+    impact: Impact  # the truth's reading of the description (R13–R17)
+    workaround: bool
+    auto_ack: datetime | None = None
+    first_response: datetime | None
+    first_response_note: str
+    pauses: list[Pause] = []
+    restored: datetime | None
+    restored_note: str = ""
+    notes: list[Note] = []
+    exclusion_asserted: datetime | None = None
+    root_cause: RootCause | None = None
+    claim: Claim | None = None
+
+
+class ServiceCredit(_Frozen):
+    id: str
+    ticket: str
+    customer: str
+    ticket_opened: date
+    amount_usd: float
+    approved_on: date
+
+
+class Holiday(_Frozen):
+    date: date
+    name: str

@@ -1,0 +1,46 @@
+ticket_id,at,event,actor,detail
+SR-39385,2026-06-16T02:14:00-05:00,created,"Johnny Johnson, Director of Plant Operations",Ticket opened by phone; reported priority P1.
+SR-39385,2026-06-16T02:31:00-05:00,engineer_response,Northstar support engineer,A Northstar engineer phoned Johnny Johnson.
+SR-39385,2026-06-16T10:58:00-05:00,restored,Northstar support engineer,"The failed controller was replaced with the on-site spare, and line 4 is running at full rate."
+SR-39385,2026-06-24T10:12:00-05:00,credit_claim,Edward Floyd,Credit claim received by email: Credit claim for SR-39385.
+SR-39207,2026-05-22T16:20:00-04:00,created,Cedar Health IT service desk,Ticket opened by portal; reported priority P2.
+SR-39207,2026-05-22T18:10:00-04:00,engineer_response,Northstar support engineer,Engineer's ticket comment.
+SR-39207,2026-05-26T18:05:00-04:00,restored,Northstar support engineer,NS-Cloud access restored at both centers.
+SR-39207,2026-06-01T09:30:00-04:00,credit_claim,Cedar Health IT service desk,Credit claim received by portal: NS-Cloud was down at two sites for four days.
+SR-39561,2026-07-11T23:20:00-05:00,created,BlueRiver night dispatch supervisor,Ticket opened by phone; reported priority P1.
+SR-39561,2026-07-11T23:35:00-05:00,engineer_response,Northstar support engineer,An engineer phoned the supervisor.
+SR-39561,2026-07-12T05:05:00-05:00,restored,Northstar support engineer,NS-Cloud available to all users again.
+SR-39561,2026-07-12T05:20:00-05:00,note,Northstar support engineer,The outage was caused by the upgrade performed in window MN-2607.
+SR-39561,2026-07-14T08:45:00-05:00,credit_claim,BlueRiver Logistics operations,Credit claim received by email: Claiming the Severity 1 restoration credit for a 5 h 45 min outage on SR-39561.
+SR-39340,2026-06-10T07:05:00-04:00,created,Cedar Health IT service desk,Ticket opened by portal; reported priority P3.
+SR-39340,2026-06-10T09:20:00-04:00,engineer_response,Northstar support engineer,"A Northstar engineer phoned Cedar, confirmed that all users were affected and that no workaround existed, and reclassified the ticket as Severity 1."
+SR-39340,2026-06-10T12:35:00-04:00,restored,Northstar support engineer,NS-Cloud available to all users again.
+SR-39340,2026-06-29T11:00:00-04:00,credit_claim,Cedar Health IT service desk,Credit claim received by email: Credit claim for SR-39340.
+SR-39881,2026-08-20T19:45:00-05:00,created,BlueRiver operations manager,Ticket opened by portal; reported priority P2.
+SR-39881,2026-08-20T19:46:00-05:00,auto_acknowledgment,system,Ticket-creation email sent automatically.
+SR-39881,2026-08-21T10:20:00-05:00,engineer_response,Northstar support engineer,Engineer's ticket comment.
+SR-39881,2026-08-24T10:40:00-05:00,restored,Northstar support engineer,Alerts and dashboards updating again at both depots.
+SR-39881,2026-08-28T14:05:00-05:00,credit_claim,BlueRiver Logistics operations,Credit claim received by email: Credit claim for SR-39881.
+SR-39644,2026-07-23T13:10:00-05:00,created,Johnny Johnson,Ticket opened by portal; reported priority P1.
+SR-39644,2026-07-23T15:00:00-05:00,engineer_response,Northstar support engineer,Engineer's ticket comment asking Acme for VPN credentials to reach the Plant 2 gateways remotely.
+SR-39644,2026-07-23T15:00:00-05:00,status_change,Northstar support engineer,Status set to Awaiting Customer. Awaiting Customer: VPN credentials requested; Kelly Ballard (Acme IT Architecture) provided them.
+SR-39644,2026-07-24T08:30:00-05:00,status_change,Johnny Johnson,Customer provided what was requested; status set to In Progress.
+SR-39644,2026-07-24T18:40:00-05:00,restored,Northstar support engineer,Vibration data flowing again for presses 1–6.
+SR-38862,2026-03-31T22:50:00-05:00,created,Acme Plant 1 shift supervisor,Ticket opened by phone; reported priority P1.
+SR-38862,2026-03-31T22:50:00-05:00,note,system,System log: ticket created 2026-04-01T03:50Z.
+SR-38862,2026-03-31T23:58:00-05:00,engineer_response,Northstar support engineer,An engineer phoned the shift supervisor.
+SR-38862,2026-04-01T05:35:00-05:00,restored,Northstar support engineer,A firmware rollback was applied and the paint line is running.
+SR-38862,2026-05-12T09:00:00-05:00,credit_claim,Edward Floyd,Credit claim received by email: Credit claim for SR-38862.
+SR-39802,2026-08-10T06:05:00-04:00,created,Amy Barrett,Ticket opened by phone; reported priority P1.
+SR-39802,2026-08-10T07:40:00-04:00,engineer_response,Northstar support engineer,An engineer phoned Amy Barrett.
+SR-39802,2026-08-10T14:20:00-04:00,restored,Northstar support engineer,Gateways back online; picking resumed.
+SR-39802,2026-08-14T10:00:00-04:00,credit_claim,Amy Barrett,Credit claim received by email: Please apply the Severity 1 restoration credit under Acme's Platinum plan for SR-39802.
+SR-39690,2026-07-28T10:30:00-04:00,created,Cedar Health facilities engineering,Ticket opened by portal; reported priority P2.
+SR-39690,2026-07-28T12:05:00-04:00,engineer_response,Northstar support engineer,Engineer's ticket comment.
+SR-39690,2026-07-31T00:50:00-04:00,restored,Northstar support engineer,Chiller alarms forwarding again.
+SR-39690,2026-08-30T09:12:00-04:00,credit_claim,Cedar Health facilities engineering,Credit claim received by email: Credit claim for SR-39690.
+SR-39857,2026-08-17T09:20:00-05:00,created,Kelly Ballard (Acme IT Architecture),Ticket opened by phone; reported priority P1.
+SR-39857,2026-08-17T09:38:00-05:00,engineer_response,Northstar support engineer,An engineer phoned Kelly Ballard.
+SR-39857,2026-08-17T15:05:00-05:00,restored,Northstar support engineer,Communication was restored and line 2 is running.
+SR-39857,2026-08-17T15:30:00-05:00,note,Northstar support engineer,Comms came back after Acme reverted a VLAN change their network contractor made on 2026-08-16. Suspect customer-caused. Asserting the customer-caused exclusion; root-cause finding to follow from Support Engineering.
+SR-39857,2026-08-20T08:40:00-05:00,credit_claim,Edward Floyd,Credit claim received by email: Credit claim for SR-39857.

@@ -1,0 +1,26 @@
+id: S40
+slug: sla-night-weekend
+title: BlueRiver Silver Severity 2 opened at night; business-hours clock across the weekend
+kind: sla_decision
+question: "Ticket SR-39881 (Blue River Logistics LLC, NS-Cloud alerts stopped at two depots): what is its true severity, was a service level breached, what does Northstar owe, who must be engaged or notified and by when, and what must the customer do?"
+teaches: [business-hours-clock, time-arithmetic]
+corpus: base
+as_of: 2026-08-28
+ticket: SR-39881
+expected:
+  outcome: BREACH_CREDIT_OWED
+  scope: in
+  true_severity: 2
+  response: missed
+  restoration: missed_band1
+  credit_usd: 200.0
+  northstar:
+    - [notify, SUPPORT_ESCALATION_MANAGER, EMP-601, "2026-08-21T10:00:00-05:00"]
+    - [notify, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-08-24T10:00:00-05:00"]
+    - [notify, ACCOUNT_OWNER, "owner:CRM-2051", "2026-08-24T10:00:00-05:00"]
+    - [decide_claim, CUSTOMER_SUPPORT_DIRECTOR, EMP-602, "2026-09-27"]
+    - [issue_memo, SUPPORT_BILLING_MANAGER, EMP-604, "2026-09-27"]
+  customer:
+    - [claim, met]
+reasoning:
+  - From the blind subagent's situations.md, S40.

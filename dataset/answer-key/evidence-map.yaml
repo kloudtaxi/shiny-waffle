@@ -51,6 +51,10 @@
   - EMP-300
   - EMP-401
   - EMP-402
+  - EMP-601
+  - EMP-602
+  - EMP-603
+  - EMP-604
   asserts:
   - F05
   - F06
@@ -210,3 +214,81 @@
   - CR-9201
   - GRT-ACME-2026
   - CUST-1001
+- artifact: sla_schedule_v1
+  path: documents/sla_schedule_v1.md
+  supports:
+  - sla_schedule_v1
+  asserts: []
+  mentions: []
+- artifact: sla_schedule_v2
+  path: documents/sla_schedule_v2.md
+  supports:
+  - sla_schedule_v2
+  asserts: []
+  mentions: []
+- artifact: support_severity_guide
+  path: documents/support_severity_guide.md
+  supports:
+  - support_severity_guide
+  asserts: []
+  mentions: []
+- artifact: support_escalation_procedure
+  path: documents/support_escalation_procedure.md
+  supports:
+  - support_escalation_procedure
+  asserts: []
+  mentions: []
+- artifact: support_org_chart
+  path: documents/support_org_chart.md
+  supports:
+  - support_org_chart
+  asserts: []
+  mentions: []
+- artifact: holiday_calendar
+  path: documents/holiday_calendar.md
+  supports:
+  - holiday_calendar
+  asserts: []
+  mentions: []
+- artifact: acme_support_schedule_c
+  path: documents/acme_support_schedule_c.md
+  supports:
+  - acme_support_schedule_c
+  asserts: []
+  mentions: []
+- artifact: blueriver_support_terms
+  path: documents/blueriver_support_terms.md
+  supports:
+  - blueriver_support_terms
+  asserts: []
+  mentions: []
+- artifact: cedar_support_terms
+  path: documents/cedar_support_terms.md
+  supports:
+  - cedar_support_terms
+  asserts: []
+  mentions: []
+- artifact: service_tickets
+  path: structured/service_tickets.csv
+  supports:
+  - service_tickets
+  asserts: []
+  mentions: []
+- artifact: ticket_events
+  path: structured/ticket_events.csv
+  supports:
+  - ticket_events
+  asserts: []
+  mentions: []
+- artifact: maintenance_notices
+  path: structured/maintenance_notices.csv
+  supports:
+  - maintenance_notices
+  asserts: []
+  mentions: []
+- artifact: service_credits
+  path: structured/service_credits.csv
+  supports:
+  - service_credits
+  asserts: []
+  mentions: []

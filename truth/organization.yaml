@@ -26,7 +26,7 @@ systems:
   - { id: SERVICE, name: Northstar Service }
   - { id: DRIVE, name: Northstar Drive }
 
-departments: [Sales, Executive, Finance]
+departments: [Sales, Executive, Finance, Customer Support]
 
 roles:
   - { id: ENTERPRISE_AE, title: Enterprise Account Executive, department: Sales }
@@ -36,3 +36,8 @@ roles:
   - { id: FINANCE_DIRECTOR, title: Director of Finance, department: Finance, lab_extension: true }
   # experiment 5 (credit): the credit policy's lowest band; no truth employee holds it
   - { id: AR_SPECIALIST, title: Accounts Receivable Specialist, department: Finance, lab_extension: true }
+  # experiment 6 (SLA): escalation roles from the blind subagent's rule sheet (R45), one holder each
+  - { id: SUPPORT_ESCALATION_MANAGER, title: Support Escalation Manager, department: Customer Support, lab_extension: true }
+  - { id: CUSTOMER_SUPPORT_DIRECTOR, title: Director of Customer Support, department: Customer Support, lab_extension: true }
+  - { id: SUPPORT_ENGINEERING_LEAD, title: Support Engineering Lead, department: Customer Support, lab_extension: true }
+  - { id: SUPPORT_BILLING_MANAGER, title: Support Billing Manager, department: Customer Support, lab_extension: true }

@@ -156,7 +156,9 @@ def _authority_matrix(truth: Truth) -> Artifact:
 
 def _org_chart(truth: Truth, bg: Background) -> Artifact:
     people: dict[str, tuple[str, str, str | None]] = {
-        e.id: (e.name, truth.role_title(e.role), e.manager) for e in truth.employees
+        e.id: (e.name, truth.role_title(e.role), e.manager)
+        for e in truth.employees
+        if e.department != "Customer Support"  # experiment 6: the support org has its own chart
     }
     people |= {e.id: (e.name, e.title, e.manager) for e in bg.employees}
     children: dict[str | None, list[str]] = {}

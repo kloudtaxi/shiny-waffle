@@ -3,6 +3,7 @@
 from northstar.model.entities import (
     Account,
     Band,
+    Claim,
     Concurrence,
     Contract,
     CreditPolicy,
@@ -12,7 +13,9 @@ from northstar.model.entities import (
     Employee,
     Fact,
     Guarantee,
+    Holiday,
     Invoice,
+    MaintenanceNotice,
     Order,
     Organization,
     Policy,
@@ -20,6 +23,10 @@ from northstar.model.entities import (
     Product,
     Relationship,
     Role,
+    ServiceCredit,
+    SlaSchedule,
+    SupportAgreement,
+    Ticket,
 )
 from northstar.model.scenarios import Probe, Scenario
 from northstar.model.truth import Corpus, Truth, load_truth
@@ -27,6 +34,7 @@ from northstar.model.truth import Corpus, Truth, load_truth
 __all__ = [
     "Account",
     "Band",
+    "Claim",
     "Concurrence",
     "Contract",
     "CreditPolicy",
@@ -37,7 +45,9 @@ __all__ = [
     "Employee",
     "Fact",
     "Guarantee",
+    "Holiday",
     "Invoice",
+    "MaintenanceNotice",
     "Order",
     "Organization",
     "Policy",
@@ -47,6 +57,10 @@ __all__ = [
     "Relationship",
     "Role",
     "Scenario",
+    "ServiceCredit",
+    "SlaSchedule",
+    "SupportAgreement",
+    "Ticket",
     "Truth",
     "load_truth",
 ]

@@ -92,6 +92,11 @@ employees:
     department: Finance
     manager: null
     lab_extension: true
+  # experiment 6 (SLA): the support organization from the blind subagent's rule sheet (R45)
+  - { id: EMP-601, name: Hannah Lindqvist, role: SUPPORT_ESCALATION_MANAGER, department: Customer Support, manager: EMP-602, lab_extension: true }
+  - { id: EMP-602, name: Marcus Adeyemi, role: CUSTOMER_SUPPORT_DIRECTOR, department: Customer Support, manager: null, lab_extension: true }
+  - { id: EMP-603, name: Owen Takahashi, role: SUPPORT_ENGINEERING_LEAD, department: Customer Support, manager: EMP-602, lab_extension: true }
+  - { id: EMP-604, name: Paul Brennan, role: SUPPORT_BILLING_MANAGER, department: Customer Support, manager: EMP-602, lab_extension: true }
 
 products:
   - { id: PROD-001, sku: NS-500, name: NS-500 Industrial Controller, category: Equipment, list_price_usd: 250000 }
