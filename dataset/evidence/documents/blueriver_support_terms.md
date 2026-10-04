@@ -3,6 +3,7 @@ doc_id: SUP-BRL-2025
 title: BlueRiver Logistics Support Terms
 owner: Legal
 created: '2025-01-01'
+effective_from: '2025-01-01'
 ---
 
 # BlueRiver Logistics Support Terms

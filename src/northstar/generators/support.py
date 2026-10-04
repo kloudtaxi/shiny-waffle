@@ -498,6 +498,7 @@ unrelated to the Customer's account tier.{extra}
                 "title": title,
                 "owner": "Legal",
                 "created": a.coverage_start.isoformat(),
+                "effective_from": a.coverage_start.isoformat(),  # coverage starts (open-ended)
             },
             body,
         ),  # fmt: skip

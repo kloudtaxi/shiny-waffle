@@ -27,10 +27,11 @@ import csv
 import re
 import sys
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass
-from datetime import date
+from dataclasses import dataclass, field
+from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import yaml
 
@@ -105,9 +106,13 @@ def linked(
 
 
 def window(doc: Doc) -> tuple[date, date] | None:
+    """A document's validity window. K-9 (experiment 6): an `effective_from` with no
+    `effective_to` is open-ended."""
     f, t = doc.front.get("effective_from"), doc.front.get("effective_to")
     if f and t:
         return date.fromisoformat(str(f)), date.fromisoformat(str(t))
+    if f:
+        return date.fromisoformat(str(f)), date.max
     m = re.search(r"from (\d{4}-\d{2}-\d{2}) to\s+(\d{4}-\d{2}-\d{2})", doc.body)
     return (date.fromisoformat(m[1]), date.fromisoformat(m[2])) if m else None
 
@@ -488,13 +493,150 @@ def screen(
 
 def gate(
     outcome: str, relied: list[Doc], inconsistent: set[str], used: list[dict[str, Any]],
-    flags: list[str],
+    flags: list[str], route_to: str = "REQUEST_EVIDENCE",
 ) -> tuple[list[str], str]:  # fmt: skip
     """G3 tamper signs and G5a on what the decision relies on, then confidence gating: the
-    uncertain judgments and the outcome a person should see."""
+    uncertain judgments and the outcome a person should see. K-8 (experiment 6): the routing
+    outcome is the decision type's own (default: an approval type's REQUEST_EVIDENCE)."""
     marked = sorted({d.doc_id for d in relied if tampered(d)})
     if marked:
         flags.append("tamper signs in " + ", ".join(marked))
     bad = sorted({d.doc_id for d in relied if d.doc_id in inconsistent})
     uncertain = [j["q"] for j in used if j["uncertain"]]
-    return uncertain, "REQUEST_EVIDENCE" if uncertain or marked or bad else outcome
+    return uncertain, route_to if uncertain or marked or bad else outcome
+
+
+# -- K-5 (experiment 6): clocks ---------------------------------------------------------------
+Interval = tuple[datetime, datetime]
+
+
+@dataclass(frozen=True)
+class Calendar:
+    """Working time in one time zone: business hours on working days, minus holidays."""
+
+    zone: ZoneInfo
+    opens: time
+    closes: time
+    holidays: frozenset[date] = frozenset()
+
+    def working_day(self, d: date) -> bool:
+        return d.weekday() < 5 and d not in self.holidays
+
+    def local(self, t: datetime) -> datetime:
+        return t.astimezone(self.zone)
+
+    def minutes(self, a: datetime, b: datetime) -> int:
+        """Business minutes in [a, b]."""
+        a, b = self.local(a), self.local(b)
+        total, d = 0, a.date()
+        while d <= b.date():
+            if self.working_day(d):
+                lo = max(a, datetime.combine(d, self.opens, self.zone))
+                hi = min(b, datetime.combine(d, self.closes, self.zone))
+                total += max(0, int((hi - lo).total_seconds() // 60))
+            d += timedelta(days=1)
+        return total
+
+    def next_open(self, t: datetime) -> datetime:
+        """``t`` if inside business hours, else the next opening."""
+        t = self.local(t)
+        d = t.date()
+        if self.working_day(d) and self.opens <= t.time() < self.closes:
+            return t
+        if not (self.working_day(d) and t.time() < self.opens):
+            d += timedelta(days=1)
+            while not self.working_day(d):
+                d += timedelta(days=1)
+        return datetime.combine(d, self.opens, self.zone)
+
+    def add(self, start: datetime, minutes: int) -> datetime:
+        t, left = self.next_open(start), minutes
+        while True:
+            close = datetime.combine(t.date(), self.closes, self.zone)
+            room = int((close - t).total_seconds() // 60)
+            if left <= room:
+                return t + timedelta(minutes=left)
+            left -= room
+            t = self.next_open(close)
+
+    def working_days_after(self, d: date, n: int) -> date:
+        """The n-th working day after ``d``."""
+        while n:
+            d += timedelta(days=1)
+            n -= self.working_day(d)
+        return d
+
+    def working_days_between(self, a: date, b: date) -> int:
+        """Working days after ``a``, up to and including ``b``."""
+        n, d = 0, a
+        while d < b:
+            d += timedelta(days=1)
+            n += self.working_day(d)
+        return n
+
+
+@dataclass
+class Clock:
+    """A clock that runs all the time, or only in business hours, from ``start``, not counting
+    the excluded intervals (pauses, excluded windows)."""
+
+    cal: Calendar
+    business: bool
+    start: datetime
+    excluded: list[Interval] = field(default_factory=list)
+
+    def _span(self, a: datetime, b: datetime) -> int:
+        if b <= a:
+            return 0
+        return self.cal.minutes(a, b) if self.business else int((b - a).total_seconds() // 60)
+
+    def elapsed(self, t: datetime) -> int:
+        if t <= self.start:
+            return 0
+        return self._span(self.start, t) - sum(
+            self._span(max(lo, self.start), min(hi, t)) for lo, hi in self.excluded
+        )
+
+    def moment(self, minutes: int) -> datetime:
+        """When the clock reaches ``minutes``."""
+
+        def step(t: datetime, m: int) -> datetime:
+            return self.cal.add(t, m) if self.business else t + timedelta(minutes=m)
+
+        t = step(self.start, minutes)
+        while (short := minutes - self.elapsed(t)) > 0:
+            t = step(t, short)
+        return t
+
+
+# -- K-6 (experiment 6): obligations ----------------------------------------------------------
+@dataclass(frozen=True)
+class Obligation:
+    """A duty a decision creates: who owes it, what, and by when, or whether it was met."""
+
+    party: str  # "organization" or "counterparty"
+    duty: str
+    role: str | None = None
+    holder: str | None = None
+    due: str | None = None  # ISO date or datetime
+    status: str | None = None  # for a counterparty duty already judged: met | not_met
+
+    def record(self) -> dict[str, Any]:
+        return {k: v for k, v in self.__dict__.items() if v is not None}
+
+
+# -- K-7 (experiment 6): routing without a requestor ------------------------------------------
+def holder(staff: list[dict[str, str]], title: str | None) -> dict[str, str] | None:
+    """The single holder of a title, or None when no one, or more than one person, holds it."""
+    found = [e for e in staff if e["title"] == title]
+    return found[0] if len(found) == 1 else None
+
+
+def owner_of(
+    account: dict[str, str] | None, staff: list[dict[str, str]], email_field: str = "owner_email"
+) -> dict[str, str] | None:
+    """The person a system-of-record row names as its owner, by email."""
+    if not account:
+        return None
+    return next((e for e in staff if e["email"].lower() == account.get(email_field, "").lower()),
+                None)  # fmt: skip

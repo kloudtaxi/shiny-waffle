@@ -1,0 +1,1305 @@
+{
+ "S36": {
+  "scenario": "S36",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39385",
+   "account": "CRM-2048"
+  },
+  "outcome": "BREACH_CREDIT_OWED",
+  "gated_outcome": "BREACH_CREDIT_OWED",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 1,
+  "breach": {
+   "response": "met",
+   "restoration": "missed_band2"
+  },
+  "credit_usd": 4200.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "engage",
+    "role": "SUPPORT_ESCALATION_MANAGER",
+    "holder": "EMP-601",
+    "due": "2026-06-16T02:29:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2048",
+    "due": "2026-06-16T02:44:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-06-16T04:14:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "VP_SALES",
+    "holder": "EMP-200",
+    "due": "2026-06-16T06:14:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CRO",
+    "holder": "EMP-300",
+    "due": "2026-06-16T06:14:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-07-24"
+   },
+   {
+    "party": "organization",
+    "duty": "issue_memo",
+    "role": "SUPPORT_BILLING_MANAGER",
+    "holder": "EMP-604",
+    "due": "2026-07-24"
+   },
+   {
+    "party": "counterparty",
+    "duty": "phone_report",
+    "status": "met"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "met"
+   }
+  ],
+  "account_owner": "Sarah Chen",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_1",
+    "probabilities": {
+     "severity_3": 0.0,
+     "severity_4": 0.0,
+     "severity_2": 0.0,
+     "severity_1": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_escalation_manager",
+    "probabilities": {
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_customer_support": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "vp_sales": 0.0,
+     "support_billing_manager": 0.0,
+     "support_escalation_manager": 1.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "support_engineering_lead": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_customer_support": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "customer_success_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 1.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "financial_analyst": 0.0,
+     "support_escalation_manager": 0.0,
+     "none": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "support_billing_manager": 0.0,
+     "director_of_customer_support": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "financial_analyst": 0.0,
+     "support_engineering_lead": 0.0,
+     "none": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 1.0,
+     "support_escalation_manager": 0.0,
+     "vp_sales": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_billing_manager",
+    "probabilities": {
+     "support_engineering_lead": 0.0,
+     "vp_sales": 0.0,
+     "director_of_customer_support": 0.0,
+     "support_escalation_manager": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "financial_analyst": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S37": {
+  "scenario": "S37",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39207",
+   "account": "CRM-2063"
+  },
+  "outcome": "NO_BREACH",
+  "gated_outcome": "NO_BREACH",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 2,
+  "breach": {
+   "response": "met",
+   "restoration": "met"
+  },
+  "credit_usd": 0.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-07-01"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "met"
+   }
+  ],
+  "account_owner": "Anthony Day",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_2",
+    "probabilities": {
+     "severity_1": 0.0,
+     "severity_2": 1.0,
+     "severity_3": 0.0,
+     "severity_4": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S38": {
+  "scenario": "S38",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39561",
+   "account": "CRM-2051"
+  },
+  "outcome": "NO_BREACH",
+  "gated_outcome": "NO_BREACH",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 1,
+  "breach": {
+   "response": "met",
+   "restoration": "met"
+  },
+  "credit_usd": 0.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "engage",
+    "role": "SUPPORT_ESCALATION_MANAGER",
+    "holder": "EMP-601",
+    "due": "2026-07-12T02:15:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2051",
+    "due": "2026-07-12T02:30:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-07-12T04:00:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-08-13"
+   },
+   {
+    "party": "counterparty",
+    "duty": "phone_report",
+    "status": "met"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "met"
+   }
+  ],
+  "account_owner": "Kelly Floyd",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_1",
+    "probabilities": {
+     "severity_2": 0.0,
+     "severity_1": 1.0,
+     "severity_4": 0.0,
+     "severity_3": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "asserts_exclusion",
+    "noul": 0.17,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_escalation_manager",
+    "probabilities": {
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_customer_support": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "vp_sales": 0.0,
+     "support_billing_manager": 0.0,
+     "support_escalation_manager": 1.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "support_engineering_lead": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S39": {
+  "scenario": "S39",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39340",
+   "account": "CRM-2063"
+  },
+  "outcome": "BREACH_CREDIT_OWED",
+  "gated_outcome": "BREACH_CREDIT_OWED",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 1,
+  "breach": {
+   "response": "missed",
+   "restoration": "missed_band1"
+  },
+  "credit_usd": 320.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "engage",
+    "role": "SUPPORT_ESCALATION_MANAGER",
+    "holder": "EMP-601",
+    "due": "2026-06-10T06:20:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2063",
+    "due": "2026-06-10T06:35:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-06-10T08:05:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "VP_SALES",
+    "holder": "EMP-200",
+    "due": "2026-06-10T10:05:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-07-29"
+   },
+   {
+    "party": "organization",
+    "duty": "issue_memo",
+    "role": "SUPPORT_BILLING_MANAGER",
+    "holder": "EMP-604",
+    "due": "2026-07-29"
+   },
+   {
+    "party": "counterparty",
+    "duty": "phone_report",
+    "status": "not_met"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "met"
+   }
+  ],
+  "account_owner": "Anthony Day",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_1",
+    "probabilities": {
+     "severity_4": 0.0,
+     "severity_1": 0.97,
+     "severity_3": 0.0,
+     "severity_2": 0.03
+    },
+    "confidence": 0.97,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_escalation_manager",
+    "probabilities": {
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_customer_support": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "vp_sales": 0.0,
+     "support_billing_manager": 0.0,
+     "support_escalation_manager": 1.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "support_engineering_lead": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_customer_support": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "customer_success_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 1.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "financial_analyst": 0.0,
+     "support_escalation_manager": 0.0,
+     "none": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_billing_manager",
+    "probabilities": {
+     "support_engineering_lead": 0.0,
+     "vp_sales": 0.0,
+     "director_of_customer_support": 0.0,
+     "support_escalation_manager": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "financial_analyst": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S40": {
+  "scenario": "S40",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39881",
+   "account": "CRM-2051"
+  },
+  "outcome": "BREACH_CREDIT_OWED",
+  "gated_outcome": "BREACH_CREDIT_OWED",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 2,
+  "breach": {
+   "response": "missed",
+   "restoration": "missed_band1"
+  },
+  "credit_usd": 200.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "SUPPORT_ESCALATION_MANAGER",
+    "holder": "EMP-601",
+    "due": "2026-08-21T10:00:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-08-24T10:00:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2051",
+    "due": "2026-08-24T10:00:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-09-27"
+   },
+   {
+    "party": "organization",
+    "duty": "issue_memo",
+    "role": "SUPPORT_BILLING_MANAGER",
+    "holder": "EMP-604",
+    "due": "2026-09-27"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "met"
+   }
+  ],
+  "account_owner": "Kelly Floyd",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_2",
+    "probabilities": {
+     "severity_1": 0.0,
+     "severity_3": 0.0,
+     "severity_4": 0.0,
+     "severity_2": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_escalation_manager",
+    "probabilities": {
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_customer_support": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "vp_sales": 0.0,
+     "support_billing_manager": 0.0,
+     "support_escalation_manager": 1.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "support_engineering_lead": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_billing_manager",
+    "probabilities": {
+     "support_engineering_lead": 0.0,
+     "vp_sales": 0.0,
+     "director_of_customer_support": 0.0,
+     "support_escalation_manager": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "financial_analyst": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S41": {
+  "scenario": "S41",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39644",
+   "account": "CRM-2048"
+  },
+  "outcome": "NO_BREACH",
+  "gated_outcome": "NO_BREACH",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 2,
+  "breach": {
+   "response": "met",
+   "restoration": "met"
+  },
+  "credit_usd": 0.0,
+  "obligations": [],
+  "account_owner": "Sarah Chen",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_2",
+    "probabilities": {
+     "severity_1": 0.0,
+     "severity_2": 1.0,
+     "severity_3": 0.0,
+     "severity_4": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S42": {
+  "scenario": "S42",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-38862",
+   "account": "CRM-2048"
+  },
+  "outcome": "BREACH_CREDIT_OWED",
+  "gated_outcome": "BREACH_CREDIT_OWED",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 1,
+  "breach": {
+   "response": "missed",
+   "restoration": "met"
+  },
+  "credit_usd": 630.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "engage",
+    "role": "SUPPORT_ESCALATION_MANAGER",
+    "holder": "EMP-601",
+    "due": "2026-03-31T23:05:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2048",
+    "due": "2026-03-31T23:20:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-04-01T02:50:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-06-11"
+   },
+   {
+    "party": "organization",
+    "duty": "issue_memo",
+    "role": "SUPPORT_BILLING_MANAGER",
+    "holder": "EMP-604",
+    "due": "2026-06-11"
+   },
+   {
+    "party": "counterparty",
+    "duty": "phone_report",
+    "status": "met"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "met"
+   }
+  ],
+  "account_owner": "Sarah Chen",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_1",
+    "probabilities": {
+     "severity_2": 0.0,
+     "severity_3": 0.0,
+     "severity_4": 0.0,
+     "severity_1": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "asserts_exclusion",
+    "noul": 0.02,
+    "yes": false,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_escalation_manager",
+    "probabilities": {
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_customer_support": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "vp_sales": 0.0,
+     "support_billing_manager": 0.0,
+     "support_escalation_manager": 1.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "support_engineering_lead": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_billing_manager",
+    "probabilities": {
+     "support_engineering_lead": 0.0,
+     "vp_sales": 0.0,
+     "director_of_customer_support": 0.0,
+     "support_escalation_manager": 0.0,
+     "none": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 0.0,
+     "financial_analyst": 0.0,
+     "sales_operations_analyst": 0.0,
+     "enterprise_account_executive": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": []
+ },
+ "S43": {
+  "scenario": "S43",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39802",
+   "account": "CRM-2091"
+  },
+  "outcome": "OUT_OF_SCOPE",
+  "gated_outcome": "OUT_OF_SCOPE",
+  "uncertain": [],
+  "scope": "out",
+  "severity": 1,
+  "breach": {
+   "response": "not_applicable",
+   "restoration": "not_applicable"
+  },
+  "credit_usd": 0.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2091",
+    "due": "2026-08-10T18:00:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-09-13"
+   }
+  ],
+  "account_owner": "Zachary Brown",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_1",
+    "probabilities": {
+     "severity_4": 0.0,
+     "severity_2": 0.0,
+     "severity_3": 0.0,
+     "severity_1": 1.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": [
+   "out of scope: no support terms cover this customer and product"
+  ]
+ },
+ "S44": {
+  "scenario": "S44",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39690",
+   "account": "CRM-2063"
+  },
+  "outcome": "BREACH_NO_CREDIT",
+  "gated_outcome": "BREACH_NO_CREDIT",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 2,
+  "breach": {
+   "response": "met",
+   "restoration": "missed_band2"
+  },
+  "credit_usd": 0.0,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-07-29T11:30:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2063",
+    "due": "2026-07-29T11:30:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-09-29"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "not_met"
+   }
+  ],
+  "account_owner": "Anthony Day",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_2",
+    "probabilities": {
+     "severity_4": 0.0,
+     "severity_2": 1.0,
+     "severity_1": 0.0,
+     "severity_3": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": [
+   "claim received after the window closed on 2026-08-29"
+  ]
+ },
+ "S45": {
+  "scenario": "S45",
+  "type": "sla_response",
+  "subject": {
+   "ticket": "SR-39857",
+   "account": "CRM-2048"
+  },
+  "outcome": "CANNOT_DECIDE",
+  "gated_outcome": "CANNOT_DECIDE",
+  "uncertain": [],
+  "scope": "in",
+  "severity": 1,
+  "breach": {
+   "response": "met",
+   "restoration": "cannot_decide"
+  },
+  "credit_usd": null,
+  "obligations": [
+   {
+    "party": "organization",
+    "duty": "record_root_cause",
+    "role": "SUPPORT_ENGINEERING_LEAD",
+    "holder": "EMP-603",
+    "due": "2026-08-31T18:00:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "engage",
+    "role": "SUPPORT_ESCALATION_MANAGER",
+    "holder": "EMP-601",
+    "due": "2026-08-17T09:35:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "ACCOUNT_OWNER",
+    "holder": "owner:CRM-2048",
+    "due": "2026-08-17T09:50:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-08-17T11:20:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "VP_SALES",
+    "holder": "EMP-200",
+    "due": "2026-08-17T13:20:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "notify",
+    "role": "CRO",
+    "holder": "EMP-300",
+    "due": "2026-08-17T13:20:00-05:00"
+   },
+   {
+    "party": "organization",
+    "duty": "decide_claim",
+    "role": "CUSTOMER_SUPPORT_DIRECTOR",
+    "holder": "EMP-602",
+    "due": "2026-09-19"
+   },
+   {
+    "party": "counterparty",
+    "duty": "phone_report",
+    "status": "met"
+   },
+   {
+    "party": "counterparty",
+    "duty": "claim",
+    "status": "met"
+   }
+  ],
+  "account_owner": "Sarah Chen",
+  "judgments": [
+   {
+    "q": "severity",
+    "choice": "severity_1",
+    "probabilities": {
+     "severity_3": 0.0,
+     "severity_2": 0.0,
+     "severity_1": 1.0,
+     "severity_4": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "asserts_exclusion",
+    "noul": 0.84,
+    "yes": true,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_engineering_lead",
+    "probabilities": {
+     "enterprise_account_executive": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "none": 0.0,
+     "support_engineering_lead": 1.0,
+     "support_billing_manager": 0.0,
+     "finance_manager": 0.0,
+     "sales_engineer": 0.0,
+     "support_escalation_manager": 0.0,
+     "director_of_finance": 0.0,
+     "financial_analyst": 0.0,
+     "chief_revenue_officer": 0.0,
+     "vp_sales": 0.0,
+     "director_of_customer_support": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_operations_analyst": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "support_escalation_manager",
+    "probabilities": {
+     "none": 0.0,
+     "sales_operations_analyst": 0.0,
+     "director_of_customer_support": 0.0,
+     "finance_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "customer_success_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "vp_sales": 0.0,
+     "support_billing_manager": 0.0,
+     "support_escalation_manager": 1.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "sales_engineer": 0.0,
+     "support_engineering_lead": 0.0,
+     "chief_revenue_officer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "director_of_customer_support",
+    "probabilities": {
+     "support_escalation_manager": 0.0,
+     "financial_analyst": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "sales_operations_analyst": 0.0,
+     "customer_success_manager": 0.0,
+     "sales_engineer": 0.0,
+     "director_of_customer_support": 1.0,
+     "vp_sales": 0.0,
+     "chief_revenue_officer": 0.0,
+     "none": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "vp_sales",
+    "probabilities": {
+     "director_of_customer_support": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "customer_success_manager": 0.0,
+     "support_billing_manager": 0.0,
+     "sales_engineer": 0.0,
+     "vp_sales": 1.0,
+     "chief_revenue_officer": 0.0,
+     "enterprise_account_executive": 0.0,
+     "support_engineering_lead": 0.0,
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "financial_analyst": 0.0,
+     "support_escalation_manager": 0.0,
+     "none": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   },
+   {
+    "q": "role",
+    "choice": "chief_revenue_officer",
+    "probabilities": {
+     "director_of_finance": 0.0,
+     "finance_manager": 0.0,
+     "sales_operations_analyst": 0.0,
+     "support_billing_manager": 0.0,
+     "director_of_customer_support": 0.0,
+     "customer_success_manager": 0.0,
+     "enterprise_account_executive": 0.0,
+     "financial_analyst": 0.0,
+     "support_engineering_lead": 0.0,
+     "none": 0.0,
+     "accounts_receivable_specialist": 0.0,
+     "chief_revenue_officer": 1.0,
+     "support_escalation_manager": 0.0,
+     "vp_sales": 0.0,
+     "sales_engineer": 0.0
+    },
+    "confidence": 1.0,
+    "uncertain": false
+   }
+  ],
+  "flags": [
+   "cannot decide restoration: missing the root-cause finding"
+  ]
+ }
+}

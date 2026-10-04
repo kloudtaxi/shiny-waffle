@@ -3,6 +3,7 @@ doc_id: SUP-ACME-C
 title: Schedule C (Support and Service Levels) — Acme Manufacturing
 owner: Legal
 created: '2025-04-01'
+effective_from: '2025-04-01'
 ---
 
 # Schedule C (Support and Service Levels) — Acme Manufacturing

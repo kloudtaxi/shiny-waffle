@@ -3,6 +3,7 @@ doc_id: SUP-CHS-2025
 title: Cedar Health Systems Support Terms
 owner: Legal
 created: '2025-12-01'
+effective_from: '2025-12-01'
 ---
 
 # Cedar Health Systems Support Terms
