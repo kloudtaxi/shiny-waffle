@@ -2,7 +2,7 @@
 
     export TYPESAFE_API_KEY_FILE=_owm-local/typesafe.key
     uv run python runs/2026-10-05-register/run_set.py --check            # K3, K4 (clean, re-save)
-    uv run python runs/2026-10-05-register/run_set.py --set C|D [--replay]
+    uv run python runs/2026-10-05-register/run_set.py --set C|D|E [--replay]
 
 Engines:
 - v1 python / yaml / agent and v2 yaml / agent: frozen, as in the instrument-guards run;
@@ -55,6 +55,7 @@ def load(name: str, path: Path) -> ModuleType:
 
 guards = load("guards_run_set", GUARDS / "run_set.py")  # puts the kernel on sys.path
 setc, x5 = guards.setc, guards.x5
+guards.SETS["E"] = (HERE / "set-e", HERE / "set-e.sha256")  # the user's set E (set-e-plan.md)
 import credit  # noqa: E402
 import flow  # noqa: E402
 from engine import Recorder, Replay, TypeSafe  # noqa: E402
@@ -173,13 +174,15 @@ def main() -> None:
                              "eligibility": d.get("eligibility"), "authority": d.get("authority"),
                              "registered": d.get("registered"),
                              "flags": d.get("flags")})  # fmt: skip
-    # R-e: v1 and v2 reproduce the instrument-guards run's committed rows
-    old = json.loads((GUARDS / f"set-{a.set.lower()}-results.json").read_text())["rows"]
-    pick = lambda rs: {(r["attack"], r["engine"], r["scenario"], r["class"], r["gated_outcome"])  # noqa: E731
-                       for r in rs if r["engine"].startswith(("v1", "v2 "))}  # fmt: skip
-    if pick(rows) != pick(old):
-        sys.exit(f"R-e failed: v1/v2 differ from the committed set {a.set} rows")
-    print(f"R-e: v1 and v2 reproduce the committed set {a.set} rows")
+    # R-e: v1 and v2 reproduce the instrument-guards run's committed rows (sets C and D)
+    old_path = GUARDS / f"set-{a.set.lower()}-results.json"
+    if old_path.exists():
+        old = json.loads(old_path.read_text())["rows"]
+        pick = lambda rs: {(r["attack"], r["engine"], r["scenario"], r["class"], r["gated_outcome"])  # noqa: E731
+                           for r in rs if r["engine"].startswith(("v1", "v2 "))}  # fmt: skip
+        if pick(rows) != pick(old):
+            sys.exit(f"R-e failed: v1/v2 differ from the committed set {a.set} rows")
+        print(f"R-e: v1 and v2 reproduce the committed set {a.set} rows")
     tag = f"set-{a.set.lower()}"
     (HERE / f"{tag}-results.json").write_text(
         json.dumps({"rows": rows}, indent=1, default=str) + "\n"
