@@ -303,15 +303,22 @@ PURE: dict[str, Any] = {
 
 def entry_routes(entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags: list[str]) -> bool:
     """R3: a relied-on register entry whose document on file differs (mismatch) or is gone
-    (missing) routes the decision when `on_mismatch: route` (the default); with `use_registered`
-    the decision stands on the registered terms and the discrepancy is flagged. L3 for entries:
-    relying on two entries of a `single_kinds` kind routes (a conflict)."""
+    (missing). With `on_mismatch: use_registered`, the default (G-01, decided 2026-10-05), the
+    decision stands on the registered terms and an incident is raised to the owning function; with
+    `route` it goes to a person. L3 for entries: relying on two entries of a `single_kinds` kind
+    routes (a conflict)."""
     routed = False
+    mode = docs_cfg.get("on_mismatch", "use_registered")
     for e in {x["doc_id"]: x for x in entries}.values():
         if e["status"] != "verified":
             flags.append(f"{e['doc_id']}: document on file is {e['status']} against registered "
                          f"version {e['version']}")  # fmt: skip
-            routed |= docs_cfg.get("on_mismatch", "route") == "route"
+            if mode == "route":
+                routed = True
+            else:
+                who = ", ".join(docs_cfg.get("owners", {}).get(e["kind"], [])) or "its owner"
+                flags.append(f"incident for {who}: {e['doc_id']} v{e['version']} on file is "
+                             f"{e['status']}; decided on the registered terms")  # fmt: skip
     for k in docs_cfg.get("single_kinds", ()):
         ids = sorted({x["doc_id"] for x in entries if x["kind"] == k})
         if len(ids) > 1:
@@ -388,7 +395,15 @@ def run(
         raise SpecError(f"{spec['spec']}: registered_kinds is declared, but no register was given")
     status = register.status(on_file) if register else {}
     docs_in = (
-        register_screen(on_file, register, reg_kinds, guards.rules, flags)
+        register_screen(
+            on_file,
+            register,
+            reg_kinds,
+            guards.rules,
+            flags,
+            docs_cfg.get("on_mismatch", "use_registered"),
+            docs_cfg.get("owners"),
+        )
         if register and reg_kinds
         else on_file
     )

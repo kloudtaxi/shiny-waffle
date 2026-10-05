@@ -43,6 +43,9 @@ from northstar.model import load_truth  # noqa: E402
 VARIANTS = "dataset/evidence-variants"
 CORPORA = {"base": "dataset/evidence",
            "missing-guarantee-evidence": f"{VARIANTS}/missing-guarantee-evidence"}  # fmt: skip
+STORE: dict[
+    str, str
+] = {}  # sha256 -> the approved text as registered (the content-addressed store)
 FINANCE = ("Priya Shah (EMP-401, Finance Manager)", "Elena Novak (EMP-402, Director of Finance)")
 LEGAL = ("Legal (by function: no Legal staff in the HR export)",) * 2
 
@@ -96,6 +99,7 @@ def entry(
     relations: list[dict[str, str]],
 ) -> dict[str, Any]:  # fmt: skip
     created = str(doc.front.get("created", start))
+    STORE[fingerprint(doc.raw)] = doc.raw
     return {"doc_id": doc.doc_id, "kind": kind, "version": 1, "file": doc.filename,
             "sha256": fingerprint(doc.raw), "effective_from": str(start),
             "effective_to": str(end) if end else None, "relations": relations, "terms": terms,
@@ -130,6 +134,7 @@ def main() -> None:
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
     bad = []
+    store = HERE / "store"
     for corpus in CORPORA:
         text = HEADER + yaml.safe_dump(
             build(corpus), sort_keys=False, allow_unicode=True, width=100
@@ -142,6 +147,16 @@ def main() -> None:
             path.write_text(text)
             n = len(yaml.safe_load(text)["entries"])
             print(f"{corpus}: {n} entries -> {path.relative_to(LAB)}")
+    for sha, raw in sorted(STORE.items()):  # the approved texts, keyed by fingerprint
+        path = store / f"{sha}.md"
+        if a.check:
+            if not path.exists() or path.read_text() != raw:
+                bad.append(f"store/{sha[:12]}")
+        else:
+            store.mkdir(exist_ok=True)
+            path.write_text(raw)
+    if not a.check:
+        print(f"store: {len(STORE)} approved texts -> {store.relative_to(LAB)}")
     if a.check:
         print("register: up to date" if not bad else f"register: STALE for {bad}")
         sys.exit(1 if bad else 0)

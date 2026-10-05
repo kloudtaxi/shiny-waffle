@@ -9,7 +9,12 @@ Engines:
 - **v2+R** yaml / agent: the frozen v2 specs plus one declaration, `registered_kinds: [policy,
   guarantee]` (R1), added here;
 - **v3**: `specs/credit_v3.yaml`, terms from the register (R2), `on_mismatch: route` (R3);
-- **v3u**: v3 with `on_mismatch: use_registered`, set here.
+- **v3u**: v3 with `on_mismatch: use_registered` (since 2026-10-05 the default);
+- **v2+Ru** yaml / agent: v2 plus `registered_kinds` under the default: registered documents are
+  read as their approved versions from the OWM's store, and a differing copy raises an incident.
+
+Each engine's `on_mismatch` mode is explicit here (`route` for v2+R and v3), so results committed
+before the default changed still reproduce.
 
 Register-backed engines get their company's register (`lab/owm_register/<corpus>.yaml`), built
 from the clean corpora. Attacks change documents only; the register is out of reach.
@@ -77,16 +82,20 @@ def engines(eng: Any) -> dict[str, Engine]:
         )  # fmt: skip
 
     r1 = {"registered_kinds": ["policy", "guarantee"]}
+    route = {"on_mismatch": "route"}  # each engine's mode is explicit: the runner's default changed
     return {
         "v1 python": lambda ev, corpus, as_of, rec, sid: credit.decide(eng, ev, as_of, rec, sid),
         "v1 yaml": by_spec("credit.yaml"),
         "v1 agent": by_spec("credit_agent.yaml"),
         "v2 yaml": by_spec("credit_v2.yaml"),
         "v2 agent": by_spec("credit_agent_v2.yaml"),
-        "v2+R yaml": by_spec("credit_v2.yaml", r1, reg=True),
-        "v2+R agent": by_spec("credit_agent_v2.yaml", r1, reg=True),
-        "v3": by_spec("credit_v3.yaml", reg=True),
-        "v3u": by_spec("credit_v3.yaml", {"on_mismatch": "use_registered"}, reg=True),
+        "v2+R yaml": by_spec("credit_v2.yaml", r1 | route, reg=True),
+        "v2+R agent": by_spec("credit_agent_v2.yaml", r1 | route, reg=True),
+        "v3": by_spec("credit_v3.yaml", route, reg=True),
+        "v3u": by_spec("credit_v3.yaml", reg=True),  # the default: use_registered
+        # G-01 (2026-10-05): proceed by default; R1 reads approved texts from the OWM's store
+        "v2+Ru yaml": by_spec("credit_v2.yaml", r1, reg=True),
+        "v2+Ru agent": by_spec("credit_agent_v2.yaml", r1, reg=True),
     }
 
 

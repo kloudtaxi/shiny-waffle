@@ -1,7 +1,7 @@
 # Credit-limit increase, v3: terms from the OWM register (2026-10-05, runs/2026-10-05-register/plan.md).
 # The policy in force and any guarantee are registered entries with structured terms (R2), not
 # text. Documents of those kinds count only as registered versions (R1). A relied-on entry whose
-# document on file differs or is missing routes the decision (R3, on_mismatch). Guarantee coverage
+# document on file differs or is missing raises an incident (R3, on_mismatch). Guarantee coverage
 # is by the entry's registered customer id, so it needs no judgment.
 # Inputs: sid, record (the ERP credit-request row), as_of. Needs the company's register.
 
@@ -18,7 +18,9 @@ documents:
   graded: [guarantee]
   registered_kinds: [policy, guarantee]   # R1: only registered versions count
   single_kinds: [guarantee]               # relying on two registered guarantees routes
-  on_mismatch: route                      # R3: or use_registered (decide on the registered terms)
+  # on_mismatch: use_registered is the default (G-01, decided 2026-10-05): a copy on file that
+  # differs from its registered version raises an incident, and the decision stands on the
+  # registered terms. Declare `on_mismatch: route` to send such decisions to a person instead.
 
 questions:
   relies:

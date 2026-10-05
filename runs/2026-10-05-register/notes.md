@@ -193,6 +193,35 @@ Engines don't need this, because their registered kinds are declared.
 
 The fix works on the case that found it. A fresh set would test it.
 
+## G-01 decided: configurable, proceeding by default (2026-10-05)
+
+**The user's decision:** "make it configurable with proceeding being default".
+
+**What `on_mismatch: use_registered`, now the runner's default, does:**
+- **For terms (R3):** the decision stands on the registered terms, and an **incident is raised to
+  the owning function**, which the record flags.
+- **For documents (R1):** every registered document is read as its **approved version from the
+  OWM's content-addressed store** (`lab/owm_register/store/<fingerprint>.md`), whatever copy is on
+  file. A differing or missing copy raises an incident.
+
+`on_mismatch: route` stays available per spec.
+
+**Why the store matters:** prose-reading specs can now honour "proceed" too. With one declaration
+(`registered_kinds`), the guarded v2 specs (**v2+Ru**) held all 21 attacks of sets C, D and E, with
+no side effects and nothing routed. They are also immune to the CRLF re-save (K4: no decision
+changed), because they read the approved original.
+
+| Engine | Sets C + D + E (21 attacks): unsafe | Routed | Changes on CRLF re-save |
+|---|---|---|---|
+| v2+R (`route`, set aside) | 0 | 3 + 13 side effects | 6/10 |
+| v3 (`route`, terms) | 0 | 3 + 13 | none |
+| **v3u (default, terms)** | 0 | **0** | none |
+| **v2+Ru (default, approved texts)** | 0 | **0** | **none** |
+
+Every engine that existed before reproduces its committed rows exactly; each engine's mode is now
+explicit in `run_set.py`. The re-run is in `set-{c,d,e}-results-proceed-default.*`, and the
+original results are untouched.
+
 ## Next
 
 - **For the user to decide:** `on_mismatch`: route, or decide on the registered terms (finding 2).

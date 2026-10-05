@@ -83,6 +83,22 @@ All keys except `kinds` and `owners` are optional. A guard you don't declare doe
 | `lineage_kinds` | **L1/L2, instrument lineage.** A document of such a kind that names the id of another document of the same kind (by the kind's `id_prefixes`) is a dependent of it: an amendment, an extension, a supplement. **L1:** a dependent whose parent isn't on file and qualifying is dropped; it never stands in for a missing instrument. **L2:** relying (`rely`) on any member of a lineage that has a dependent routes the decision to a person, because amended terms can't be confirmed without a document register. A mention of any other id of the kind counts, including "supersedes X", so a superseding document also routes |
 | `single_kinds` | **L3:** relying on members of two or more separate lineages of such a kind routes (a conflict between instruments) |
 
+| `registered_kinds` | **R1, the OWM's register of approved governing documents.** Documents of these kinds count only as registered versions. A document of such a kind that isn't registered never counts and never conflicts; it waits for registration. Needs the company's register (passed to the runner) |
+| `on_mismatch` | **R3:** what to do when a registered document's copy on file differs from its approved version, or is missing. **`use_registered`, the default:** every registered document is read as its approved version from the OWM's store, the discrepancy is raised as an incident to the owning function, and the decision proceeds. **`route`:** the differing copy is set aside, and a decision that needs it goes to a person |
+
+**Terms from the register** (R2). A spec can read a registered document's structured terms instead
+of its prose. This is the more robust form: no wording to parse, and parties identified by
+registered id.
+
+| Function | What it does |
+|---|---|
+| `registered(kind)` | the register's entries of a kind. Each has `doc_id`, `version`, `effective_from` / `effective_to`, `relations` (for example `supersedes`), `terms`, and `status`: whether its copy on file is `verified`, a `mismatch` or `missing` |
+| `entry_in_force(entries, on)` | the one entry in force on the date, leaving out any that an entry in force supersedes; `None` when none is, or when two or more are (a conflict) |
+| `in_window(entries, on)` | the entries whose window contains the date |
+| `use_entry(e, …)` | marks entries the decision relies on (lists accepted). R3 and `single_kinds` look at these |
+| `authority_terms(entry, amount, requested_by)` | like `authority`, but the bands come from a registered policy's terms (HR titles, so no role judgment is needed) |
+| `concurrences_terms(entry, amount, tier, requested_by)` | like `concurrences`, from the registered terms |
+
 To get the guards, **`rely` on every instrument the decision uses**, not just the first; L2, L3 and
 the tamper check look only at what was relied on. When several documents of a kind could apply,
 judge them all, rather than stopping at the first, so the decision doesn't depend on filename
