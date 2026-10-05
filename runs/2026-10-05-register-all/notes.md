@@ -113,5 +113,5 @@ Predictions A-a (0 unsafe) and A-b (no more routing than the frozen spec) both h
 | `run_all.py` | K3, K5 and sets A and B |
 | `results.md` | All results |
 | `set-{a,b}-results.json` | The attack rows |
-| `engine-calls.jsonl` | The Jev recording, seeded from experiment 6's (no new calls) |
+| `engine-calls.jsonl` | The Jev recording, seeded from experiment 6's; 6 new calls (cents) |
 | `lab/owm_register/` | The registrar, the three registers, the store |
