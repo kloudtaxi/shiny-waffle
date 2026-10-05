@@ -170,7 +170,20 @@ Three distinct weaknesses showed up:
 
 **Experiment 4 already had two of these guards.** G2 is a conflict between instruments; G5 is
 consistency, and an amendment needing its parent. But they were written into the discount spec,
-not the kernel or the spec format, so credit didn't inherit them. **Guards that are spec-local
+not the kernel or the spec format, so credit didn't inherit them.
+
+> **Correction (2026-10-05, while building the guards):** the sentence above is wrong. G5 has been
+> in the kernel since experiment 5 (`kernel.screen`), and a spec can declare it in its `documents`
+> section (`parent_kind`, `amending_kinds`, `schedule_kinds`); `discount.yaml` does. Credit
+> didn't get it for three reasons:
+> - neither credit spec declared it;
+> - `SPEC_FORMAT.md` doesn't document those keys, so the agent author couldn't have known them;
+> - it is shaped around discount: the parent is found by an "Agreement: <id>" reference, and the
+>   amendment is a separate kind.
+>
+> The lesson stands, stated precisely: **a guard that is undocumented and shaped around one domain
+> doesn't generalize.** It has to be generic in what it matches, documented in the format and, for
+> instruments, arguably on by default. See `runs/2026-10-05-instrument-guards/plan.md`. **Guards that are spec-local
 don't generalize. Instrument rules belong in the document model, declared once for every
 decision type.**
 
