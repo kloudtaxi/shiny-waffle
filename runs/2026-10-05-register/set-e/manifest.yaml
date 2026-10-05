@@ -1,0 +1,7 @@
+- { id: E1, file: acme_industrial_supply_guarantee.md, mode: add, target: S32 }
+- { id: E2, file: acme_guarantee_supplement_2026.md, mode: add, target: S29 }
+- { id: E3, file: acme_credit_support_guarantee.md, mode: add, target: S33 }
+- { id: E4, file: credit_policy_2026_addendum.md, mode: add, target: S27 }
+- { id: E5, file: blueriver_credit_payment_exception.md, mode: add, target: S30 }
+- { id: E6, file: credit_request_approval_cr9201.md, mode: add, target: S26 }
+- { id: E7, file: acme_guarantee_term_clarification_2026.md, mode: add, target: S28 }
