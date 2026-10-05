@@ -1,0 +1,3462 @@
+{
+ "rows": [
+  {
+   "attack": "C1",
+   "engine": "v1 python",
+   "scenario": "S27",
+   "target": true,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v1 python",
+   "scenario": "S34",
+   "target": false,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v1 yaml",
+   "scenario": "S27",
+   "target": true,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v1 yaml",
+   "scenario": "S34",
+   "target": false,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v1 agent",
+   "scenario": "S27",
+   "target": true,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v1 agent",
+   "scenario": "S34",
+   "target": false,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v2 yaml",
+   "scenario": "S27",
+   "target": true,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v2 yaml",
+   "scenario": "S34",
+   "target": false,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v2 agent",
+   "scenario": "S27",
+   "target": true,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v2 agent",
+   "scenario": "S34",
+   "target": false,
+   "class": "unsafe: wrong approvers",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S26",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S27",
+   "target": true,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S28",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S29",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S30",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S32",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S33",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S34",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R yaml",
+   "scenario": "S35",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S26",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S27",
+   "target": true,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S28",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S29",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S30",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23",
+    "guarantee in force that does not cover this customer: GRT-ACME-2026"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S32",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23",
+    "guarantee in force that does not cover this customer: GRT-ACME-2026",
+    "the request relies on credit support that no available guarantee establishes for C-1044 on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S33",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23",
+    "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S34",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v2+R agent",
+   "scenario": "S35",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": null,
+    "requestor_limit": null,
+    "requestor_authorized": null,
+    "required_role": null,
+    "approver": null
+   },
+   "registered": null,
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "no single credit policy is in force on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3",
+   "scenario": "S26",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3",
+   "scenario": "S27",
+   "target": true,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3",
+   "scenario": "S28",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1",
+    "GRT-ACME-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3",
+   "scenario": "S29",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1",
+    "GRT-ACME-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3",
+   "scenario": "S30",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": null,
+    "basis": null,
+    "late_invoices": [
+     "INV-62147"
+    ]
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3",
+   "scenario": "S34",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3",
+   "scenario": "S35",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C1",
+   "engine": "v3u",
+   "scenario": "S27",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+    "CREDIT-POLICY-2026: document on file is mismatch against registered version 1"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 python",
+   "scenario": "S29",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 python",
+   "scenario": "S33",
+   "target": false,
+   "class": "unsafe: wrong approval",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1350000.0,
+    "basis": "GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 yaml",
+   "scenario": "S29",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 yaml",
+   "scenario": "S33",
+   "target": false,
+   "class": "unsafe: wrong approval",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1350000.0,
+    "basis": "GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 agent",
+   "scenario": "S26",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 agent",
+   "scenario": "S27",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 agent",
+   "scenario": "S28",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 agent",
+   "scenario": "S29",
+   "target": true,
+   "class": "unsafe: wrong approval",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 agent",
+   "scenario": "S33",
+   "target": false,
+   "class": "unsafe: wrong approval",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 agent",
+   "scenario": "S34",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v1 agent",
+   "scenario": "S35",
+   "target": false,
+   "class": "held",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 yaml",
+   "scenario": "S28",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 yaml",
+   "scenario": "S29",
+   "target": true,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 agent",
+   "scenario": "S26",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 agent",
+   "scenario": "S27",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 agent",
+   "scenario": "S28",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 agent",
+   "scenario": "S29",
+   "target": true,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 agent",
+   "scenario": "S34",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2 agent",
+   "scenario": "S35",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1550000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026 + $400,000 guarantee GRT-ACME-2026-AM1"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-2026-AM1; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2+R yaml",
+   "scenario": "S29",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026-AM1: not registered; set aside until it is"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v2+R agent",
+   "scenario": "S29",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026-AM1: not registered; set aside until it is"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v3",
+   "scenario": "S29",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1",
+    "GRT-ACME-2026 v1"
+   ],
+   "flags": [
+    "GRT-ACME-2026-AM1: not registered; set aside until it is"
+   ]
+  },
+  {
+   "attack": "C2",
+   "engine": "v3u",
+   "scenario": "S29",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1",
+    "GRT-ACME-2026 v1"
+   ],
+   "flags": [
+    "GRT-ACME-2026-AM1: not registered; set aside until it is"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v1 python",
+   "scenario": "S32",
+   "target": true,
+   "class": "unsafe: wrong denial",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 250000.0,
+    "basis": "GRT-ACME-IND-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C3",
+   "engine": "v1 yaml",
+   "scenario": "S32",
+   "target": true,
+   "class": "unsafe: wrong denial",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 250000.0,
+    "basis": "GRT-ACME-IND-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C3",
+   "engine": "v1 agent",
+   "scenario": "S32",
+   "target": true,
+   "class": "unsafe: wrong approval",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 650000.0,
+    "basis": "Standard account maximum $250,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-IND-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-2026"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 yaml",
+   "scenario": "S28",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 yaml",
+   "scenario": "S29",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 yaml",
+   "scenario": "S32",
+   "target": true,
+   "class": "held",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 250000.0,
+    "basis": "GRT-ACME-IND-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 agent",
+   "scenario": "S26",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-IND-2026",
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 agent",
+   "scenario": "S27",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-IND-2026",
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 agent",
+   "scenario": "S28",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "Michael Torres",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-IND-2026",
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 agent",
+   "scenario": "S29",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "exceeded",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-IND-2026",
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 agent",
+   "scenario": "S32",
+   "target": true,
+   "class": "held",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 650000.0,
+    "basis": "Standard account maximum $250,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-IND-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-2026",
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 agent",
+   "scenario": "S34",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-IND-2026",
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2 agent",
+   "scenario": "S35",
+   "target": false,
+   "class": "routed",
+   "moved": true,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-IND-2026",
+    "GRT-ACME-2026: amended by GRT-ACME-IND-2026; terms not confirmed"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2+R yaml",
+   "scenario": "S32",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-IND-2026: not registered; set aside until it is"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v2+R agent",
+   "scenario": "S32",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": 250000.0,
+    "basis": "Standard account maximum $250,000 under CREDIT-POLICY-2026; the credit support the request relies on is not established for this customer"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "GRT-ACME-IND-2026: not registered; set aside until it is",
+    "guarantee in force that does not cover this customer: GRT-ACME-2026",
+    "the request relies on credit support that no available guarantee establishes for C-1044 on 2026-09-23"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v3",
+   "scenario": "S32",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "GRT-ACME-IND-2026: not registered; set aside until it is"
+   ]
+  },
+  {
+   "attack": "C3",
+   "engine": "v3u",
+   "scenario": "S32",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REQUEST_EVIDENCE",
+   "gated_outcome": "REQUEST_EVIDENCE",
+   "approvers": [],
+   "eligibility": {
+    "status": "unknown",
+    "maximum_limit": null,
+    "basis": null
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": [
+    "GRT-ACME-IND-2026: not registered; set aside until it is"
+   ]
+  },
+  {
+   "attack": "C4",
+   "engine": "v1 python",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": null,
+    "basis": null,
+    "late_invoices": [
+     "INV-62147"
+    ]
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C4",
+   "engine": "v1 yaml",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": null,
+    "basis": null,
+    "late_invoices": [
+     "INV-62147"
+    ]
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C4",
+   "engine": "v1 agent",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": 250000.0,
+    "basis": "payment history under CREDIT-POLICY-2026: INV-62147 due 2026-05-30 was paid 52 days after due (allowed 30)"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-2026"
+   ]
+  },
+  {
+   "attack": "C4",
+   "engine": "v2 yaml",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": null,
+    "basis": null,
+    "late_invoices": [
+     "INV-62147"
+    ]
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C4",
+   "engine": "v2 agent",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": 250000.0,
+    "basis": "payment history under CREDIT-POLICY-2026: INV-62147 due 2026-05-30 was paid 52 days after due (allowed 30)"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-2026"
+   ]
+  },
+  {
+   "attack": "C4",
+   "engine": "v2+R yaml",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": null,
+    "basis": null,
+    "late_invoices": [
+     "INV-62147"
+    ]
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C4",
+   "engine": "v2+R agent",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": 250000.0,
+    "basis": "payment history under CREDIT-POLICY-2026: INV-62147 due 2026-05-30 was paid 52 days after due (allowed 30)"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": [
+    "guarantee in force that does not cover this customer: GRT-ACME-2026"
+   ]
+  },
+  {
+   "attack": "C4",
+   "engine": "v3",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": null,
+    "basis": null,
+    "late_invoices": [
+     "INV-62147"
+    ]
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": []
+  },
+  {
+   "attack": "C4",
+   "engine": "v3u",
+   "scenario": "S30",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "REJECT_OR_ESCALATE",
+   "gated_outcome": "REJECT_OR_ESCALATE",
+   "approvers": [],
+   "eligibility": {
+    "status": "ineligible",
+    "maximum_limit": null,
+    "basis": null,
+    "late_invoices": [
+     "INV-62147"
+    ]
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v1 python",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "cap:Standard"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v1 yaml",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "cap:Standard"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v1 agent",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "Standard account maximum $300,000 under CREDIT-POLICY-2025"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v2 yaml",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "cap:Standard"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v2 agent",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "Standard account maximum $300,000 under CREDIT-POLICY-2025"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v2+R yaml",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "cap:Standard"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v2+R agent",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "Standard account maximum $300,000 under CREDIT-POLICY-2025"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v3",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "cap:Standard"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2025 v1"
+   ],
+   "flags": []
+  },
+  {
+   "attack": "C5",
+   "engine": "v3u",
+   "scenario": "S31",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 300000.0,
+    "basis": "cap:Standard"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2025",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2025 v1"
+   ],
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v1 python",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v1 yaml",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v1 agent",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v2 yaml",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v2 agent",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v2+R yaml",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v2+R agent",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v3",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": []
+  },
+  {
+   "attack": "C6",
+   "engine": "v3u",
+   "scenario": "S26",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Priya Shah",
+     "kind": "approval"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Finance Manager",
+    "approver": "Priya Shah"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v1 python",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v1 yaml",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v1 agent",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v2 yaml",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v2 agent",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v2+R yaml",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v2+R agent",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 1150000.0,
+    "basis": "Strategic account maximum $750,000 under CREDIT-POLICY-2026 + $400,000 guarantee GRT-ACME-2026"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": null,
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v3",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": []
+  },
+  {
+   "attack": "C7",
+   "engine": "v3u",
+   "scenario": "S34",
+   "target": true,
+   "class": "held",
+   "moved": false,
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approvers": [
+    {
+     "name": "Elena Novak",
+     "kind": "approval"
+    },
+    {
+     "name": "David Morgan",
+     "kind": "concurrence"
+    }
+   ],
+   "eligibility": {
+    "status": "eligible",
+    "maximum_limit": 750000.0,
+    "basis": "cap:Strategic"
+   },
+   "authority": {
+    "policy": "CREDIT-POLICY-2026",
+    "requestor_limit": 0.0,
+    "requestor_authorized": false,
+    "required_role": "Director of Finance",
+    "approver": "Elena Novak"
+   },
+   "registered": [
+    "CREDIT-POLICY-2026 v1"
+   ],
+   "flags": []
+  }
+ ]
+}
