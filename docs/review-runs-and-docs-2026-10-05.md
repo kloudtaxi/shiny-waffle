@@ -10,8 +10,11 @@ live gap tracker (the Lab Ledger's `gaps` collection, read only), and a health c
 ## 1. The short version
 
 1. **The lab's discipline is unusually good.**
-   - Pre-registration commits precede their results; I checked all twelve cited, from `fa32ee7` to
-     `dec95ae`.
+   - Pre-registration commits precede their results. I checked every cited commit, from `fa32ee7`
+     to `dec95ae`. From 10-03 on, the plan commit lands 5–15 s before the first recorded Jev call
+     or reader message. On 09-30 it was 43 s before the first reader call.
+   - The numbers hold: every outcome, unsafe count and transcript count recomputed from the
+     committed JSON matches the notes (§6a).
    - Failed predictions are reported, not tuned away.
    - Wrong claims are corrected in place, with evidence. Examples: the "reader variance" claim was
      retracted after n = 3 and a Fisher test, and the set C note on G5 was corrected.
@@ -287,6 +290,28 @@ ran on gold evidence.
 
 **Secrets:** `.vault/` and `_owm-local/` are ignored. No secret values were found in tracked
 files; the pattern hits are placeholders, environment variable names and token labels.
+
+## 6a. Numbers audit (recomputed from the committed data)
+
+**No material mismatch.** Every outcome, pass, unsafe and transcript count I recomputed matches
+the notes. That covers:
+- every hybrid cell of sets A–E, collateral included;
+- every reader arm;
+- J1–J4, E2E, A1 and I2;
+- 09-30 items 1, 2 and 5.
+
+Every stated N equals the number of transcript files, and no transcript has an error event.
+
+**Small things worth fixing in the notes:**
+
+| Where | Issue |
+|---|---|
+| Six cost totals (register $19.51, exp 4 $9.19, item 4 $5.08, scale $5.87, $12.70, $5.04) | Summed from figures already rounded to the cent, so each is $0.01 off |
+| `runs/2026-10-03-exp6-sla/notes.md:17,102`, "three fixes … before the reader runs" | The third fix (`735198d`, 20:25:02) landed about a minute after the first reader call (20:23:55). The reader doesn't use the kernel, so its results stand. No committed hybrid output was produced from the final SLA spec; specs-as-data's equivalence check later showed the final spec decides identically (SLA 10/10) |
+| `runs/2026-10-05-register/notes.md`, finding 1 (a CRLF re-save changes 6 of 10 decisions), K3 and K4 | Console output of `--check` only; nothing committed backs it |
+| `runs/2026-10-03-adversarial/notes.md:71`, "A5, A6 and B8 (6 reader runs…)" | There are 9 such runs, all held; B8's 3 were omitted |
+| `runs/2026-10-02-jev-probe/notes.md`, E2E "every miss conservative" | All 8 misses route, but `results.jsonl` labels 4 "conservative" and 4 "other" |
+| `runs/2026-09-30-owm-measurements` `8485d4a` | Item 3's "rules fixed before running" were committed in the same commit as its results, so git can't show the order |
 
 ---
 
