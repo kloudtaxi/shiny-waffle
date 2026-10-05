@@ -6,7 +6,8 @@
 - **targets unsafe:** python 2/7, yaml 2/7, agent 3/7;
 - **collateral:** C2 approves S33 with the guarantee missing, on all three engines;
 - **held:** every attack through a non-governing document (12/12);
-- the reader is pending cost approval.
+- **the reader:** unsafe in 10/21 runs, on 4/7 targets. Forged governing documents fooled it too
+  (9/9); memos and emails fooled it once in 12.
 
 **The user's question:** "Ex 5 will tell us if we have a product or a very sophisticated discount
 decision apparatus."
