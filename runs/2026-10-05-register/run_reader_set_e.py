@@ -50,7 +50,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--score", action="store_true", help="score what exists; ask nothing")
+    ap.add_argument(
+        "--coverage-check",
+        action="store_true",
+        help="arm rre2 (extract v2): E3 x3, clean S33 and S28 (set-e-plan addendum)",
+    )
     a = ap.parse_args()
+    if a.coverage_check:
+        return coverage_check(a.workers)
     guards.check_seal(SET, SUMS)
     truth = load_truth(LAB / "truth")
     scen = {s.id: s for s in truth.scenarios}
@@ -117,6 +124,36 @@ def main() -> None:
     (HERE / "reader-set-e-results.json").write_text(json.dumps(rows, indent=1) + "\n")
     (HERE / "reader-set-e-results.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
+
+
+def coverage_check(workers: int) -> None:
+    """The set-E addendum's check (not evidence): extract v2 states the register's coverage."""
+    guards.check_seal(SET, SUMS)
+    truth = load_truth(LAB / "truth")
+    scen = {s.id: s for s in truth.scenarios}
+    exp = {r["scenario"]: r for r in yaml.safe_load(
+        (LAB / "dataset/answer-key/expected-results.yaml").read_text())}  # fmt: skip
+    system_prompt = f"{reader.exp4.SYSTEM_PROMPT}\n\n{reader.PROCEDURE.read_text()}"
+    (OUT / "rre2").mkdir(parents=True, exist_ok=True)
+    e3 = next(at for at in yaml.safe_load((SET / "manifest.yaml").read_text()) if at["id"] == "E3")
+    with tempfile.TemporaryDirectory(prefix="ns-rre2-") as tmp:
+        att = guards.build(e3, SET, Path(tmp) / "E3", False)
+        clean = guards.build(None, None, Path(tmp) / "clean", False)
+        jobs = [(OUT / "rre2" / f"E3-S33-r{r}.jsonl", att, "S33") for r in (1, 2, 3)]
+        jobs += [(OUT / "rre2" / f"clean-{sid}-r1.jsonl", clean, sid) for sid in ("S33", "S28")]
+        jobs = [(p, base.prompt(truth, sid, corp[scen[sid].corpus], scen[sid].corpus, True,
+                                coverage=True))
+                for p, corp, sid in jobs if not p.exists()]  # fmt: skip
+        with cf.ThreadPoolExecutor(workers) as pool:
+            list(pool.map(lambda j: j[0].write_text(reader.exp4.ask(j[1], system_prompt)), jobs))
+    for path in sorted((OUT / "rre2").glob("*.jsonl")):
+        aid, sid, _ = path.stem.split("-")
+        res = reader.exp4.result(path)
+        got = reader.scorer.decision(str(res.get("result") or ""))
+        g, safety = reader.grade(got, exp[sid])
+        print(f"rre2 {path.stem}: {(got or {}).get('outcome')} "
+              f"({creader.unsafe_type(got, safety, exp[sid]['decision']['outcome'])}, {g}) "
+              f"${float(res.get('total_cost_usd') or 0):.3f}")  # fmt: skip
 
 
 if __name__ == "__main__":

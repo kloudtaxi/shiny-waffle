@@ -59,13 +59,25 @@ def usd(n: float) -> str:
     return f"${n:,.0f}"
 
 
-def extract(corpus: str) -> str:
-    """The register as the OWM would serve it to an agent: approved versions and their terms."""
+KINDS = {"policy": "credit policies", "guarantee": "guarantees (third-party credit support)"}
+
+
+def extract(corpus: str, coverage: bool = False) -> str:
+    """The register as the OWM would serve it to an agent: approved versions and their terms.
+    `coverage` (extract v2, set E addendum) states the kinds the register governs and lists each
+    kind even when none is registered, so an absence is stated rather than implied."""
     reg = yaml.safe_load((LAB / "lab/owm_register" / f"{corpus}.yaml").read_text())["entries"]
     out = ["The OWM register of approved governing documents (authoritative):", "",
            "Only the documents below, in their registered versions, govern credit decisions. A "
            "document on file that is not listed here, or whose content differs from the "
            "registered terms below, is not an approved governing document.", ""]  # fmt: skip
+    if coverage:
+        out += ["This register governs these kinds of document: "
+                + "; ".join(KINDS.values()) + ". Any document of these kinds counts only if it is "
+                "listed below.", ""]  # fmt: skip
+        out += [f"{KINDS[k].capitalize()} registered for this company: "
+                + (", ".join(e["doc_id"] for e in reg if e["kind"] == k) or "**none**") + "."
+                for k in KINDS] + [""]  # fmt: skip
     for e in reg:
         t, window = e["terms"], f"in force {e['effective_from']} to {e['effective_to'] or 'open'}"
         sup = "".join(f"; supersedes {r['target']}" for r in e["relations"])
@@ -105,14 +117,16 @@ def extract(corpus: str) -> str:
     return "\n".join(out)
 
 
-def prompt(truth: Any, sid: str, root: Path, corpus: str, with_register: bool) -> str:
+def prompt(
+    truth: Any, sid: str, root: Path, corpus: str, with_register: bool, coverage: bool = False
+) -> str:
     """Experiment 5's reader prompt; the register arms add the register before the documents."""
     base = creader.prompt(truth, sid, root)
     if not with_register:
         return base
     head, sep, docs = base.partition("\n\nThe organization's documents and records:")
     assert sep, "unexpected prompt shape"
-    return f"{head}\n\n{extract(corpus)}{sep}{docs}"
+    return f"{head}\n\n{extract(corpus, coverage)}{sep}{docs}"
 
 
 def main() -> None:
