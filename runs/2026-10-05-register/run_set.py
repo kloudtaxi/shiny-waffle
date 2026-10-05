@@ -81,7 +81,7 @@ def engines(eng: Any) -> dict[str, Engine]:
             register=REGISTERS[corpus] if reg else None,
         )  # fmt: skip
 
-    r1 = {"registered_kinds": ["policy", "guarantee"]}
+    r1 = {"registered_kinds": {"policy": "credit_policy", "guarantee": "guarantee"}}  # G-30 kinds
     route = {"on_mismatch": "route"}  # each engine's mode is explicit: the runner's default changed
     return {
         "v1 python": lambda ev, corpus, as_of, rec, sid: credit.decide(eng, ev, as_of, rec, sid),

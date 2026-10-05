@@ -301,7 +301,10 @@ PURE: dict[str, Any] = {
 }  # fmt: skip
 
 
-def entry_routes(entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags: list[str]) -> bool:
+def entry_routes(
+    entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags: list[str],
+    reg_kinds: Mapping[str, str] | None = None,
+) -> bool:  # fmt: skip
     """R3: a relied-on register entry whose document on file differs (mismatch) or is gone
     (missing). With `on_mismatch: use_registered`, the default (G-01, decided 2026-10-05), the
     decision stands on the registered terms and an incident is raised to the owning function; with
@@ -316,7 +319,8 @@ def entry_routes(entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags:
             if mode == "route":
                 routed = True
             else:
-                who = ", ".join(docs_cfg.get("owners", {}).get(e["kind"], [])) or "its owner"
+                kind = {v: k for k, v in (reg_kinds or {}).items()}.get(e["kind"], e["kind"])
+                who = ", ".join(docs_cfg.get("owners", {}).get(kind, [])) or "its owner"
                 flags.append(f"incident for {who}: {e['doc_id']} v{e['version']} on file is "
                              f"{e['status']}; decided on the registered terms")  # fmt: skip
     for k in docs_cfg.get("single_kinds", ()):
@@ -390,7 +394,9 @@ def run(
         single_kinds=tuple(docs_cfg.get("single_kinds", ())),
     )  # fmt: skip
     on_file = ev.docs()
-    reg_kinds = tuple(docs_cfg.get("registered_kinds", ()))
+    declared = docs_cfg.get("registered_kinds") or {}
+    # spec kind -> register kind; a list means the same names (R1, G-30: register kinds are global)
+    reg_kinds = dict(declared) if isinstance(declared, dict) else {k: k for k in declared}
     if reg_kinds and register is None:
         raise SpecError(f"{spec['spec']}: registered_kinds is declared, but no register was given")
     status = register.status(on_file) if register else {}
@@ -503,7 +509,7 @@ def run(
 
     if spec.get("gate", True):
         routed = lineage_routes(relied, s, guards, flags)  # L2, L3
-        routed |= entry_routes(relied_entries, docs_cfg, flags)  # R3
+        routed |= entry_routes(relied_entries, docs_cfg, flags, reg_kinds)  # R3
         uncertain, gated = gate(outcome, relied, s.inconsistent, used, flags,
                                 route_to=spec["route_to"])  # fmt: skip
         gated = spec["route_to"] if routed else gated

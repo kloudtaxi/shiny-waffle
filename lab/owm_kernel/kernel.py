@@ -634,7 +634,7 @@ class Register:
 
 
 def register_screen(
-    docs: list[Doc], reg: Register, kinds: tuple[str, ...], rules: tuple[KindRule, ...],
+    docs: list[Doc], reg: Register, kinds: Mapping[str, str], rules: tuple[KindRule, ...],
     flags: list[str], mode: str = "use_registered", owners: Mapping[str, Any] | None = None,
 ) -> list[Doc]:  # fmt: skip
     """R1: documents of a registered kind count only as a registered version; one that isn't
@@ -644,9 +644,11 @@ def register_screen(
       its approved version from the OWM's store, in place of whatever copy is on file. A copy that
       differs, or a registered document with no copy on file, is raised as an incident to the
       owning function, and the decision proceeds on the approved version;
-    - `route`: a copy that differs is set aside, so a decision that needs it lacks its evidence."""
+    - `route`: a copy that differs is set aside, so a decision that needs it lacks its evidence.
+    `kinds` maps the spec's kinds to the register's (global) kinds."""
     prints = {e["sha256"]: e for e in reg.entries}
     ids = reg.by_id()
+    spec_kind = {v: k for k, v in kinds.items()}
     owner = lambda kind: ", ".join((owners or {}).get(kind, [])) or "its owning function"  # noqa: E731
     kept, served = [], set()
     for d in docs:
@@ -672,10 +674,10 @@ def register_screen(
             flags.append(f"{d.doc_id}: not registered; set aside until it is")
     if mode == "use_registered":
         for e in reg.entries:
-            if e["kind"] in kinds and e["doc_id"] not in served:
+            if e["kind"] in spec_kind and e["doc_id"] not in served:
                 approved = f"approved {e['doc_id']} v{e['version']}"
-                flags.append(f"incident for {owner(e['kind'])}: no copy of {approved} on file; "
-                             "decided on the approved version")  # fmt: skip
+                flags.append(f"incident for {owner(spec_kind[e['kind']])}: no copy of {approved} "
+                             "on file; decided on the approved version")  # fmt: skip
                 kept.append(reg.approved(e))
     return kept
 

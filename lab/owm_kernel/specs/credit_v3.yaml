@@ -16,7 +16,7 @@ documents:
   owners: { policy: [Finance], guarantee: [Legal] }
   policy_kind: policy
   graded: [guarantee]
-  registered_kinds: [policy, guarantee]   # R1: only registered versions count
+  registered_kinds: { policy: credit_policy, guarantee: guarantee }   # R1, mapped to the register's kinds
   single_kinds: [guarantee]               # relying on two registered guarantees routes
   # on_mismatch: use_registered is the default (G-01, decided 2026-10-05): a copy on file that
   # differs from its registered version raises an incident, and the decision stands on the
@@ -38,7 +38,7 @@ steps:
   - amount: 'float(record["requested_limit_usd"])'
   - relies: 'use(judge("relies", {"request": {"justification": record["justification"]}}))'
   # the registered policy in force on the date (supersession is explicit in the register)
-  - pol: 'entry_in_force(registered("policy"), as_of)'
+  - pol: 'entry_in_force(registered("credit_policy"), as_of)'
   - _use_pol: 'use_entry(pol) if pol else None'
   - terms: 'pol["terms"] if pol else None'
   - rule: '(round(terms["lookback_months"] * 365 / 12), terms["max_days_late"]) if terms else None'

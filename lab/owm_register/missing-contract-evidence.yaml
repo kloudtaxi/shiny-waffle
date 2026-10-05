@@ -1,6 +1,6 @@
 # The OWM's register of approved governing documents for one company (corpus).
 # Built by lab/owm_register/build_register.py; see its docstring. OWM state, not evidence.
-register: governing documents, base
+register: governing documents, missing-contract-evidence
 entries:
 - doc_id: CREDIT-POLICY-2025
   kind: credit_policy
@@ -160,73 +160,6 @@ entries:
   approved_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
   registered_on: '2026-09-15'
   approved_on: '2026-09-15'
-- doc_id: ACME-MFG-2025
-  kind: agreement
-  version: 1
-  file: acme_master_supply_agreement.md
-  sha256: 0724e911092bff4a90001aa09fb0bdcd41006709a575c43b48730698837d6947
-  effective_from: '2025-04-01'
-  effective_to: '2028-03-31'
-  relations: []
-  terms:
-    customer:
-      crm_account_id: CRM-2048
-      erp_customer_id: C-1001
-      name: Acme Mfg. Holdings
-      duns_number: 04-812-7730
-    products:
-    - NS-500
-    - NS-CLOUD
-    - NS-EDGE
-    grants_approval_authority: false
-  registered_by: 'Legal (by function: no Legal staff in the HR export)'
-  approved_by: 'Legal (by function: no Legal staff in the HR export)'
-  registered_on: '2025-03-20'
-  approved_on: '2025-03-20'
-- doc_id: EXC-ACME-NS500-15
-  kind: exception
-  version: 1
-  file: acme_pricing_exception.md
-  sha256: 760e7aeddbd2424ca3fc3df224b13e0db96f242192c3d7e2c72cf472badc49a6
-  effective_from: '2025-04-01'
-  effective_to: '2028-03-31'
-  relations:
-  - type: supersedes
-    target: EXC-ACME-NS500-10
-  - type: under
-    target: ACME-MFG-2025
-  terms:
-    customer:
-      crm_account_id: CRM-2048
-      erp_customer_id: C-1001
-      name: Acme Mfg. Holdings
-      duns_number: 04-812-7730
-    product: NS-500
-    maximum_discount: 0.15
-  registered_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
-  approved_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
-  registered_on: '2025-03-20'
-  approved_on: '2025-03-20'
-- doc_id: EXC-ACME-NS500-10
-  kind: exception
-  version: 1
-  file: acme_pricing_exception_2023.md
-  sha256: 0e87701239d414332337d7c4ca56b4f2f40d092bd95b0259fc6798e2bb08d1aa
-  effective_from: '2023-04-01'
-  effective_to: '2025-03-31'
-  relations: []
-  terms:
-    customer:
-      crm_account_id: CRM-2048
-      erp_customer_id: C-1001
-      name: Acme Mfg. Holdings
-      duns_number: 04-812-7730
-    product: NS-500
-    maximum_discount: 0.1
-  registered_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
-  approved_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
-  registered_on: '2023-03-12'
-  approved_on: '2023-03-12'
 - doc_id: SLA-SCHEDULE-1.0
   kind: sla_schedule
   version: 1
@@ -366,9 +299,7 @@ entries:
   sha256: 5061d9b131b5709b294a9aa9782272105a297ce45a28c501232c4ca61ac53f92
   effective_from: '2025-04-01'
   effective_to: null
-  relations:
-  - type: under
-    target: ACME-MFG-2025
+  relations: []
   terms:
     customer:
       crm_account_id: CRM-2048
