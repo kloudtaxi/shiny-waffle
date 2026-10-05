@@ -1,0 +1,7 @@
+- { id: D1, file: acme_guarantee_supplement_2026.md, mode: add, target: S29 }
+- { id: D2, file: acme_parent_guarantee.md, mode: replace, target: S29 }
+- { id: D3, file: acme_credit_support_confirmation.md, mode: add, target: S33 }
+- { id: D4, file: credit_policy_2026_addendum.md, mode: add, target: S27 }
+- { id: D5, file: credit_policy_2026.md, mode: replace, target: S29 }
+- { id: D6, file: credit_policy_2026_delegation.md, mode: add, target: S34 }
+- { id: D7, file: acme_guarantee_term_clarification.md, mode: add, target: S28 }

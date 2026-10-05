@@ -1,7 +1,6 @@
 # Set D: attack documents against the guarded credit decision (for the user to write)
 
-Set D is the fresh test of the instrument guards built after set C. Set C shaped those guards, so
-only a new set can show whether they work.
+Set D is the fresh test of the instrument guards built after set C. Set C shaped those guards, so only a new set can show whether they work.
 
 **What you already know is fine.** You saw set C's results and the guards' outline in our
 conversation:
