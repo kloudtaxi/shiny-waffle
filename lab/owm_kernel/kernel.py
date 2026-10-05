@@ -24,8 +24,10 @@ table, and its record.
 from __future__ import annotations
 
 import csv
+import hashlib
 import re
 import sys
+import unicodedata
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from datetime import date, datetime, time, timedelta
@@ -64,6 +66,7 @@ class Doc:
     owner: str
     front: dict[str, Any]
     body: str
+    raw: str = ""  # the whole file, front matter included (R1: fingerprints)
 
 
 class Evidence:
@@ -75,7 +78,7 @@ class Evidence:
     def docs(self) -> list[Doc]:
         docs = []
         for p in sorted((self.root / "documents").glob("*.md")):
-            text = p.read_text()
+            text = raw = p.read_text()
             front: dict[str, Any] = {}
             if text.startswith("---"):
                 _, fm, text = text.split("---", 2)
@@ -88,6 +91,7 @@ class Evidence:
                     str(front.get("owner", "")),
                     front,
                     text.strip(),
+                    raw,
                 )
             )
         return docs
@@ -589,6 +593,119 @@ def gate(
     bad = sorted({d.doc_id for d in relied if d.doc_id in inconsistent})
     uncertain = [j["q"] for j in used if j["uncertain"]]
     return uncertain, route_to if uncertain or marked or bad else outcome
+
+
+# -- R1-R3 (the register, 2026-10-05): registered versions of governing documents ------------
+def fingerprint(text: str) -> str:
+    """sha256 of a document's whole text, normalized: Unicode NFC, LF line endings, trailing
+    whitespace removed from each line and from the end. A re-save that changes only line endings
+    or trailing spaces still matches; a change to any word, number or front matter doesn't."""
+    norm = unicodedata.normalize("NFC", text).replace("\r\n", "\n").replace("\r", "\n")
+    norm = "\n".join(line.rstrip() for line in norm.split("\n")).rstrip()
+    return hashlib.sha256(norm.encode()).hexdigest()
+
+
+@dataclass
+class Register:
+    """The OWM's register of approved governing documents (one per company): each entry is an
+    approved version with its fingerprint, validity window, explicit relations and structured
+    terms, and who registered and approved it. Out of an attacker's reach, like the systems of
+    record."""
+
+    entries: list[dict[str, Any]]
+
+    @classmethod
+    def load(cls, path: Path) -> Register:
+        return cls(list(yaml.safe_load(path.read_text())["entries"]))
+
+    def by_id(self) -> dict[str, dict[str, Any]]:
+        return {e["doc_id"]: e for e in self.entries}
+
+    def status(self, docs: list[Doc]) -> dict[str, str]:
+        """Each entry's document on file: verified (a copy matches), mismatch (a document with its
+        id differs) or missing."""
+        prints = {fingerprint(d.raw) for d in docs}
+        ids = {d.doc_id for d in docs}
+        return {e["doc_id"]: "verified" if e["sha256"] in prints
+                else "mismatch" if e["doc_id"] in ids else "missing"
+                for e in self.entries}  # fmt: skip
+
+
+def register_screen(
+    docs: list[Doc], reg: Register, kinds: tuple[str, ...], rules: tuple[KindRule, ...],
+    flags: list[str],
+) -> list[Doc]:  # fmt: skip
+    """R1: documents of a registered kind count only as a registered version. One with a
+    registered id but different content is set aside (it differs from its approved version); one
+    that isn't registered is set aside until it is (it never counts, and never conflicts)."""
+    prints = {e["sha256"]: e for e in reg.entries}
+    ids = reg.by_id()
+    kept = []
+    for d in docs:
+        if classify(d, rules) not in kinds or fingerprint(d.raw) in prints:
+            kept.append(d)
+        elif d.doc_id in ids:
+            flags.append(f"{d.doc_id}: differs from its registered version "
+                         f"{ids[d.doc_id]['version']}; set aside")  # fmt: skip
+        else:
+            flags.append(f"{d.doc_id}: not registered; set aside until it is")
+    return kept
+
+
+def entry_in_force(
+    entries: list[dict[str, Any]], on: date, flags: list[str]
+) -> dict[str, Any] | None:
+    """R2: the one entry in force on the date, leaving out any that an entry in force supersedes
+    (explicit relations). None when none is, or when two or more are (a conflict)."""
+    live = [e for e in entries if in_window(e, on)]
+    superseded = {r["target"] for e in live for r in e.get("relations", [])
+                  if r["type"] == "supersedes"}  # fmt: skip
+    live = [e for e in live if e["doc_id"] not in superseded]
+    if len(live) > 1:
+        flags.append("conflict: registered " + ", ".join(e["doc_id"] for e in live))
+        return None
+    return live[0] if live else None
+
+
+def in_window(entry: dict[str, Any], on: date) -> bool:
+    end = entry.get("effective_to")
+    start = date.fromisoformat(str(entry["effective_from"]))
+    return start <= on <= (date.fromisoformat(str(end)) if end else date.max)
+
+
+def authority_from_terms(
+    entry: dict[str, Any], staff: list[dict[str, str]], amount: float, requested_by: str
+) -> dict[str, Any]:
+    """R2: authority from a registered policy's structured terms. The bands name HR titles, so no
+    role-mapping judgment is needed; approvers resolve as in `authority_from_evidence`."""
+    t = entry["terms"]
+    bands = [(b["title"], float(b["min_exclusive"] or 0.0),
+              None if b["max_inclusive"] is None else float(b["max_inclusive"]))
+             for b in t["bands"]]  # fmt: skip
+    sod = bool(t.get("separation_of_duties"))
+    need = next((x for x, lo, hi in bands if in_band(amount, lo, hi)), None)
+    me = next(e for e in staff if e["email"].lower() == requested_by.lower())
+    limit = limit_for(bands, me["title"])
+    approver = resolve_approver(staff, me, need, sod)
+    return {"policy": entry["doc_id"], "requestor_limit": limit,
+            "requestor_authorized": amount <= limit and not sod, "required_role": need,
+            "approver": approver["full_name"] if approver else None}  # fmt: skip
+
+
+def concurrences_from_terms(
+    entry: dict[str, Any], staff: list[dict[str, str]], amount: float, tier: str,
+    requested_by: str,
+) -> list[dict[str, str]]:  # fmt: skip
+    """R2: the concurrences a registered policy requires for this amount and account tier."""
+    t = entry["terms"]
+    me = next(e for e in staff if e["email"].lower() == requested_by.lower())
+    out = []
+    for c in t.get("concurrence", []):
+        if amount > float(c["min_exclusive"]) and (not c["tiers"] or tier in c["tiers"]):
+            who = resolve_approver(staff, me, c["title"], bool(t.get("separation_of_duties")))
+            if who is not None:
+                out.append(who)
+    return out
 
 
 # -- K-5 (experiment 6): clocks ---------------------------------------------------------------

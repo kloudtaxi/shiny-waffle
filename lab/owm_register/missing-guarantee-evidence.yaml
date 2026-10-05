@@ -1,0 +1,70 @@
+# The OWM's register of approved governing credit documents for one company (corpus).
+# Built by lab/owm_register/build_register.py; see its docstring. OWM state, not evidence.
+register: credit, missing-guarantee-evidence
+entries:
+- doc_id: CREDIT-POLICY-2025
+  kind: policy
+  version: 1
+  file: credit_policy_2025.md
+  sha256: fc4dec64265f7b4928604f66b79bfdf11a509d9d998e5a701a75f24c3090f92f
+  effective_from: '2025-01-01'
+  effective_to: '2025-12-31'
+  relations: []
+  terms:
+    bands:
+    - title: Accounts Receivable Specialist
+      min_exclusive: null
+      max_inclusive: 50000.0
+    - title: Finance Manager
+      min_exclusive: 50000.0
+      max_inclusive: 750000.0
+    - title: Director of Finance
+      min_exclusive: 750000.0
+      max_inclusive: null
+    concurrence: []
+    lookback_months: 12
+    max_days_late: 45
+    caps:
+      Strategic: 600000
+      Standard: 300000
+    separation_of_duties: true
+  registered_by: Priya Shah (EMP-401, Finance Manager)
+  approved_by: Elena Novak (EMP-402, Director of Finance)
+  registered_on: '2024-12-15'
+  approved_on: '2024-12-15'
+- doc_id: CREDIT-POLICY-2026
+  kind: policy
+  version: 1
+  file: credit_policy_2026.md
+  sha256: ebd41881cd20721466822f9eddfd21f833b8850192d5bba6a4c5e1e87696cc07
+  effective_from: '2026-01-01'
+  effective_to: '2026-12-31'
+  relations:
+  - type: supersedes
+    target: CREDIT-POLICY-2025
+  terms:
+    bands:
+    - title: Accounts Receivable Specialist
+      min_exclusive: null
+      max_inclusive: 100000.0
+    - title: Finance Manager
+      min_exclusive: 100000.0
+      max_inclusive: 500000.0
+    - title: Director of Finance
+      min_exclusive: 500000.0
+      max_inclusive: null
+    concurrence:
+    - title: VP Sales
+      min_exclusive: 500000.0
+      tiers:
+      - Strategic
+    lookback_months: 12
+    max_days_late: 30
+    caps:
+      Strategic: 750000
+      Standard: 250000
+    separation_of_duties: true
+  registered_by: Priya Shah (EMP-401, Finance Manager)
+  approved_by: Elena Novak (EMP-402, Director of Finance)
+  registered_on: '2025-12-15'
+  approved_on: '2025-12-15'

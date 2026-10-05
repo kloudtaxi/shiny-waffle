@@ -39,12 +39,17 @@ from kernel import (
     Guards,
     KindRule,
     Obligation,
+    Register,
     authority_from_evidence,
+    authority_from_terms,
     concurrences,
+    concurrences_from_terms,
     covering,
+    entry_in_force,
     gate,
     holder,
     in_force,
+    in_window,
     judge,
     lineage_routes,
     linked,
@@ -52,6 +57,7 @@ from kernel import (
     owner_of,
     products_in,
     referenced_agreement,
+    register_screen,
     row,
     screen,
     window,
@@ -295,6 +301,25 @@ PURE: dict[str, Any] = {
 }  # fmt: skip
 
 
+def entry_routes(entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags: list[str]) -> bool:
+    """R3: a relied-on register entry whose document on file differs (mismatch) or is gone
+    (missing) routes the decision when `on_mismatch: route` (the default); with `use_registered`
+    the decision stands on the registered terms and the discrepancy is flagged. L3 for entries:
+    relying on two entries of a `single_kinds` kind routes (a conflict)."""
+    routed = False
+    for e in {x["doc_id"]: x for x in entries}.values():
+        if e["status"] != "verified":
+            flags.append(f"{e['doc_id']}: document on file is {e['status']} against registered "
+                         f"version {e['version']}")  # fmt: skip
+            routed |= docs_cfg.get("on_mismatch", "route") == "route"
+    for k in docs_cfg.get("single_kinds", ()):
+        ids = sorted({x["doc_id"] for x in entries if x["kind"] == k})
+        if len(ids) > 1:
+            flags.append(f"conflict: registered {k} " + ", ".join(ids))
+            routed = True
+    return routed
+
+
 # -- the runner -------------------------------------------------------------------------------
 def load(path: Path) -> dict[str, Any]:
     spec = yaml.safe_load(path.read_text())
@@ -318,10 +343,14 @@ def load(path: Path) -> dict[str, Any]:
     return spec
 
 
-def run(spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any]) -> dict[str, Any]:
+def run(
+    spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any],
+    register: Register | None = None,
+) -> dict[str, Any]:  # fmt: skip
     used: list[dict[str, Any]] = []
     flags: list[str] = []
     relied: list[Doc] = []
+    relied_entries: list[dict[str, Any]] = []
     obligations: list[Obligation] = []
     staff, products = ev.table("employees"), ev.table("products")
     docs_cfg = spec["documents"]
@@ -353,7 +382,23 @@ def run(spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any])
         lineage_kinds=tuple(docs_cfg.get("lineage_kinds", ())),
         single_kinds=tuple(docs_cfg.get("single_kinds", ())),
     )  # fmt: skip
-    s = screen(eng, ev.docs(), guards, staff, products, used, flags)
+    on_file = ev.docs()
+    reg_kinds = tuple(docs_cfg.get("registered_kinds", ()))
+    if reg_kinds and register is None:
+        raise SpecError(f"{spec['spec']}: registered_kinds is declared, but no register was given")
+    status = register.status(on_file) if register else {}
+    docs_in = (
+        register_screen(on_file, register, reg_kinds, guards.rules, flags)
+        if register and reg_kinds
+        else on_file
+    )
+    s = screen(eng, docs_in, guards, staff, products, used, flags)
+
+    def registered(kind: str) -> list[dict[str, Any]]:  # R2
+        if register is None:
+            raise SpecError(f"{spec['spec']}: registered() needs a register, but none was given")
+        return [dict(e, status=status[e["doc_id"]]) for e in register.entries if e["kind"] == kind]
+
     roles: dict[str, str | None] = {}
 
     def holder_of(words: str) -> str | None:
@@ -381,6 +426,16 @@ def run(spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any])
             d for x in ds for d in (x if isinstance(x, list | tuple) else [x]) if d is not None
         ) or None,
         "covering": covering,
+        "registered": registered,
+        "entry_in_force": lambda entries, on: entry_in_force(entries, on, flags),
+        "in_window": lambda entries, on: [e for e in entries if in_window(e, on)],
+        "use_entry": lambda *es: relied_entries.extend(
+            e for x in es for e in (x if isinstance(x, list | tuple) else [x]) if e is not None
+        ) or None,
+        "authority_terms": lambda entry, amount, requested_by: authority_from_terms(
+            entry, staff, amount, requested_by),
+        "concurrences_terms": lambda entry, amount, tier, requested_by: concurrences_from_terms(
+            entry, staff, amount, tier, requested_by),
         "in_force": lambda docs, on: in_force(docs, on, flags),
         "linked": linked,
         "authority": lambda pols, on, amount, requested_by: authority_from_evidence(
@@ -433,6 +488,7 @@ def run(spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any])
 
     if spec.get("gate", True):
         routed = lineage_routes(relied, s, guards, flags)  # L2, L3
+        routed |= entry_routes(relied_entries, docs_cfg, flags)  # R3
         uncertain, gated = gate(outcome, relied, s.inconsistent, used, flags,
                                 route_to=spec["route_to"])  # fmt: skip
         gated = spec["route_to"] if routed else gated
