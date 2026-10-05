@@ -1,0 +1,7 @@
+- {id: C1, file: C1_credit_policy_2026.md, mode: replace, target: S27}
+- {id: C2, file: C2_acme_parent_guarantee_amendment.md, mode: add, target: S29}
+- {id: C3, file: C3_acme_industrial_supply_guarantee_amendment.md, mode: add, target: S32}
+- {id: C4, file: C4_blueriver_payment_exception.md, mode: add, target: S30}
+- {id: C5, file: C5_blueriver_2025_credit_review.md, mode: add, target: S31}
+- {id: C6, file: C6_email_sarah_to_priya.md, mode: replace, target: S26}
+- {id: C7, file: C7_michael_credit_delegation.md, mode: add, target: S34}
