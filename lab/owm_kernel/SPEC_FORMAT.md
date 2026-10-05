@@ -67,6 +67,27 @@ record:                            # the decision record: field → expression
    `rely` shows tamper signs, `gated_outcome` becomes `route_to`.
 5. The `record`.
 
+### The `documents` section: every key
+
+All keys except `kinds` and `owners` are optional. A guard you don't declare doesn't run.
+
+| Key | What it does |
+|---|---|
+| `kinds` | Rules that classify a document by `id_prefixes`, `title_words` or `owner_hints`. The first matching rule wins; an unclassified document is never used |
+| `owners` | For each kind, the owners whose documents qualify (**G1, provenance**). Drafts, proposals and pending or unexecuted copies never qualify |
+| `policy_kind` | The kind whose versions govern on a date (`policies()`, `in_force`: two in force at once is a conflict, **G2**) |
+| `graded` | The other kinds that must pass the provenance check to be returned by `docs(kind)` |
+| `approval_kinds`, `value_reader` | G1 for exceptions: the document's recorded approver must hold authority, under the policy, for the value `value_reader` reads |
+| `parent_kind`, `amending_kinds` | **G5b:** a document of an amending kind counts only if the `parent_kind` document it names after "Agreement:" is on file and qualifies |
+| `schedule_kinds`, `product_reader` | **G5a:** a schedule (an exception) must agree with its parent's clause on the maximum and the products; otherwise relying on it routes |
+| `lineage_kinds` | **L1/L2, instrument lineage.** A document of such a kind that names the id of another document of the same kind (by the kind's `id_prefixes`) is a dependent of it: an amendment, an extension, a supplement. **L1:** a dependent whose parent isn't on file and qualifying is dropped; it never stands in for a missing instrument. **L2:** relying (`rely`) on any member of a lineage that has a dependent routes the decision to a person, because amended terms can't be confirmed without a document register. A mention of any other id of the kind counts, including "supersedes X", so a superseding document also routes |
+| `single_kinds` | **L3:** relying on members of two or more separate lineages of such a kind routes (a conflict between instruments) |
+
+To get the guards, **`rely` on every instrument the decision uses**, not just the first; L2, L3 and
+the tamper check look only at what was relied on. When several documents of a kind could apply,
+judge them all, rather than stopping at the first, so the decision doesn't depend on filename
+order.
+
 **Inputs** (the names available from the start) depend on the decision. The task you were given
 says what they are. Always available: `sid`, the scenario id.
 

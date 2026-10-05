@@ -1,0 +1,105 @@
+# Credit-limit increase as a data spec, v2: credit.yaml plus the instrument guards (2026-10-05,
+# runs/2026-10-05-instrument-guards/plan.md). Two changes from v1:
+# - it declares guarantees a lineage kind (L1, L2) and a single kind (L3);
+# - it judges every covering guarantee and relies on all that apply, instead of the first by
+#   filename.
+# Inputs: sid, record (the ERP credit-request row), as_of.
+
+spec: credit_limit_increase
+outcomes: [APPROVE, APPROVE_WITH_AUTHORIZATION, REJECT_OR_ESCALATE, REVIEW_REQUIRED, REQUEST_EVIDENCE]
+route_to: REQUEST_EVIDENCE
+
+documents:
+  kinds:
+    - { kind: policy, id_prefixes: [CREDIT-POLICY], title_words: [Credit Policy] }
+    - { kind: guarantee, id_prefixes: [GRT-], title_words: [Guarantee] }
+  owners: { policy: [Finance], guarantee: [Legal] }
+  policy_kind: policy
+  graded: [guarantee]
+  value_reader: guarantee_amount
+  lineage_kinds: [guarantee]   # L1: an amendment needs its guarantee on file; L2: relying on an amended one routes
+  single_kinds: [guarantee]    # L3: relying on two separate guarantees routes
+
+readers:
+  guarantee_amount: 'maybe(money, search(r"limited to \**\$([\d,]+)", doc.body))'
+  guaranteed_party: 'paragraph(doc.body, "guarantees the payment obligations") or flat(doc.body)'
+  payment_rule: 'groups(r"in the (\d+) months before the request may have been paid more than (\d+) days", flat(doc.body))'
+  caps: '{t: money(a) for a, t in findall(r"\$([\d,]+) for (\w+) accounts", search(r"Maximum credit limit: (.+?)\. ", flat(doc.body)) or "")}'
+
+questions:
+  relies:
+    type: choice
+    instructions: What does the credit request in `request` rely on?
+    criteria:
+      guarantee: A guarantee or other credit support from a third party
+      standard: "The customer's own standing: order volume, growth or payment record"
+      unclear: The request does not say what it relies on
+  party:
+    type: choice
+    instructions: Is the customer in `request_customer` the same legal entity as the company whose obligations are guaranteed in `document`?
+    criteria:
+      same_legal_entity: "Yes: the same company, possibly under a trading name (doing business as) or a shortened or differently spelled name"
+      different_entity: "No: a different company, even if the names look alike"
+      unclear: The information given cannot tell
+
+steps:
+  - erp: 'first(c for c in table("customers") if c["erp_customer_id"] == record["erp_customer_id"])'
+  - account: 'linked(erp, table("crm_accounts"), ("duns_number",))'
+  - tier: 'account["account_tier"] if account else "Standard"'
+  - customer: '{"name": erp["customer_name"], "street": erp["bill_to_street"], "city": erp["bill_to_city"], "state": erp["bill_to_state"]}'
+  - amount: 'float(record["requested_limit_usd"])'
+  - inforce: 'covering(policies(), as_of)'
+  - relies: 'use(judge("relies", {"request": {"justification": record["justification"]}}))'
+  - pol: 'inforce[0] if len(inforce) == 1 else None'
+  - rule_text: 'payment_rule(pol) if pol else None'
+  - rule: '(round(int(rule_text[0]) * 365 / 12), int(rule_text[1])) if rule_text else None'
+  - late: >-
+      [i["invoice_id"] for i in table("erp_invoices")
+       if i["erp_customer_id"] == erp["erp_customer_id"]
+       and as_of - days(rule[0]) <= date(i["due_date"]) <= as_of
+       and ((date(i["paid_date"]) if i["paid_date"] and date(i["paid_date"]) <= as_of else as_of)
+            - date(i["due_date"])).days > rule[1]] if rule else []
+  - cap: 'caps(pol).get(tier) if rule else None'
+  # every guarantee in force whose guaranteed party is the customer (Jev)
+  - applicable: >-
+      [d for d in covering(docs("guarantee"), as_of)
+       if use(judge("party", {"request_customer": customer, "document": guaranteed_party(d)}))["choice"] == "same_legal_entity"]
+      if rule and not late and cap is not None and (relies["choice"] != "standard" or amount > cap) else []
+  - guarantee: 'first(applicable)'
+  - extra: '(guarantee_amount(guarantee) or 0.0) if guarantee else 0.0'
+  - eligibility: >-
+      {"status": "unknown", "maximum_limit": None, "basis": None} if not rule else
+      {"status": "ineligible", "maximum_limit": None, "basis": None, "late_invoices": late} if late else
+      {"status": "unknown", "maximum_limit": None, "basis": None} if cap is None else
+      {"status": "unknown", "maximum_limit": None, "basis": None} if relies["choice"] == "guarantee" and guarantee is None else
+      {"status": "eligible" if amount <= cap + extra else "exceeded", "maximum_limit": cap + extra,
+       "basis": guarantee.doc_id if guarantee and amount > cap else "cap:" + tier}
+  - _rely_guarantee: 'rely(applicable) if eligibility["status"] in ("eligible", "exceeded") else None'
+  - auth: 'authority(policies(), as_of, amount, record["requested_by"])'
+  - _rely_policy: 'rely(auth["_doc"]) if auth else None'
+
+outcome:
+  - { when: 'auth is None', outcome: REQUEST_EVIDENCE }
+  - { when: 'eligibility["status"] == "unknown"', outcome: REQUEST_EVIDENCE }
+  - { when: 'eligibility["status"] in ("ineligible", "exceeded")', outcome: REJECT_OR_ESCALATE }
+  - { when: 'auth["requestor_authorized"]', outcome: APPROVE }
+  - { outcome: APPROVE_WITH_AUTHORIZATION }
+
+then:
+  - approvers: >-
+      [{"name": str(auth["approver"]), "kind": "approval"}]
+      + [{"name": c["full_name"], "kind": "concurrence"} for c in concurrences(auth["_doc"], amount, tier, record["requested_by"])]
+      if outcome in ("APPROVE", "APPROVE_WITH_AUTHORIZATION") else []
+
+record:
+  scenario: sid
+  outcome: outcome
+  gated_outcome: gated_outcome
+  uncertain: uncertain
+  eligibility: eligibility
+  authority: >-
+      {k: v for k, v in auth.items() if k != "_doc"} if auth else
+      {"policy": None, "requestor_limit": None, "requestor_authorized": None, "required_role": None, "approver": None}
+  approvers: approvers
+  judgments: judgments
+  flags: flags

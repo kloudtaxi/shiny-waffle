@@ -439,6 +439,8 @@ class Guards:
     parent_kind: str = "agreement"
     amending_kinds: tuple[str, ...] = ("amendment",)  # G5b: need their parent on file
     schedule_kinds: tuple[str, ...] = ("exception",)  # G5a: must agree with their parent
+    lineage_kinds: tuple[str, ...] = ()  # L1/L2: a document naming another of its kind's ids
+    single_kinds: tuple[str, ...] = ()  # L3: a decision relies on at most one lineage of each
 
 
 @dataclass
@@ -446,6 +448,8 @@ class Screened:
     pols: list[Doc]
     good: dict[str, list[Doc]]
     inconsistent: set[str]
+    lineage: dict[str, tuple[str, str]] = field(default_factory=dict)  # doc id → (kind, root id)
+    amended: dict[str, list[str]] = field(default_factory=dict)  # root id → its dependents' ids
 
 
 def screen(
@@ -495,7 +499,81 @@ def screen(
             if reason:
                 flags.append(reason)
                 inconsistent.add(d.doc_id)
-    return Screened(pols, good, inconsistent)
+    lineage, amended = lineages(g, good, flags)
+    return Screened(pols, good, inconsistent, lineage, amended)
+
+
+# -- L1-L3 (instrument guards, 2026-10-05): lineages of instruments ---------------------------
+def named_ids(d: Doc, prefixes: tuple[str, ...]) -> list[str]:
+    """The ids with one of a kind's prefixes that a document names, other than its own."""
+    if not prefixes:
+        return []
+    alt = "|".join(re.escape(p.rstrip("-")) for p in prefixes)
+    out: list[str] = []
+    for m in re.finditer(rf"(?<![A-Za-z0-9-])(?:{alt})-[A-Z0-9]+(?:-[A-Z0-9]+)*", d.body):
+        if m[0] != d.doc_id and m[0] not in out:
+            out.append(m[0])
+    return out
+
+
+def _root(
+    d: Doc, by_id: Mapping[str, Doc], prefixes: tuple[str, ...], seen: frozenset[str]
+) -> str | None:
+    """The root of a document's lineage, or None if a parent it names is not on file."""
+    named = named_ids(d, prefixes)
+    if not named:
+        return d.doc_id
+    parent = next((i for i in named if i in by_id and i not in seen), None)
+    return _root(by_id[parent], by_id, prefixes, seen | {d.doc_id}) if parent else None
+
+
+def lineages(
+    g: Guards, good: dict[str, list[Doc]], flags: list[str]
+) -> tuple[dict[str, tuple[str, str]], dict[str, list[str]]]:
+    """L1: a document of a lineage kind that names another document of its kind (by the kind's id
+    prefixes) is a dependent of it: an amendment, an extension, a supplement. It counts only if
+    its parent is on file and qualifies; otherwise it is dropped. Returns each qualifying
+    document's (kind, root id), and each root's qualifying dependents."""
+    lineage: dict[str, tuple[str, str]] = {}
+    amended: dict[str, list[str]] = {}
+    for k in dict.fromkeys(g.lineage_kinds + g.single_kinds):
+        docs = good.get(k, [])
+        if k not in g.lineage_kinds:
+            lineage |= {d.doc_id: (k, d.doc_id) for d in docs}
+            continue
+        prefixes = tuple(p for r in g.rules if r.kind == k for p in r.id_prefixes)
+        by_id = {d.doc_id: d for d in docs}
+        kept = []
+        for d in docs:
+            r = _root(d, by_id, prefixes, frozenset())
+            if r is None:
+                flags.append(f"{d.doc_id}: depends on {', '.join(named_ids(d, prefixes))}, "
+                             "which is not on file")  # fmt: skip
+                continue
+            kept.append(d)
+            lineage[d.doc_id] = (k, r)
+            if r != d.doc_id:
+                amended.setdefault(r, []).append(d.doc_id)
+        good[k] = kept
+    return lineage, amended
+
+
+def lineage_routes(relied: list[Doc], s: Screened, g: Guards, flags: list[str]) -> bool:
+    """L2: relying on an instrument whose lineage has a dependent routes to a person (its amended
+    terms aren't confirmed; there is no register). L3: relying on two lineages of a kind declared
+    single routes (a conflict between instruments)."""
+    roots = sorted({s.lineage[d.doc_id] for d in relied if d.doc_id in s.lineage})
+    routed = False
+    for _, r in roots:
+        if r in s.amended:
+            flags.append(f"{r}: amended by {', '.join(s.amended[r])}; terms not confirmed")
+            routed = True
+    for k in g.single_kinds:
+        mine = [r for kk, r in roots if kk == k]
+        if len(mine) > 1:
+            flags.append(f"conflict: {k} " + ", ".join(mine))
+            routed = True
+    return routed
 
 
 def gate(

@@ -46,6 +46,7 @@ from kernel import (
     holder,
     in_force,
     judge,
+    lineage_routes,
     linked,
     map_role,
     owner_of,
@@ -349,6 +350,8 @@ def run(spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any])
         parent_kind=docs_cfg.get("parent_kind", "agreement"),
         amending_kinds=tuple(docs_cfg.get("amending_kinds", ())),
         schedule_kinds=tuple(docs_cfg.get("schedule_kinds", ())),
+        lineage_kinds=tuple(docs_cfg.get("lineage_kinds", ())),
+        single_kinds=tuple(docs_cfg.get("single_kinds", ())),
     )  # fmt: skip
     s = screen(eng, ev.docs(), guards, staff, products, used, flags)
     roles: dict[str, str | None] = {}
@@ -429,8 +432,10 @@ def run(spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any])
                                       fields.get("holder"), due, fields.get("status")))  # fmt: skip
 
     if spec.get("gate", True):
+        routed = lineage_routes(relied, s, guards, flags)  # L2, L3
         uncertain, gated = gate(outcome, relied, s.inconsistent, used, flags,
                                 route_to=spec["route_to"])  # fmt: skip
+        gated = spec["route_to"] if routed else gated
     else:
         uncertain, gated = [j["q"] for j in used if j["uncertain"]], outcome
     env.update({"gated_outcome": gated, "uncertain": uncertain, "judgments": used,

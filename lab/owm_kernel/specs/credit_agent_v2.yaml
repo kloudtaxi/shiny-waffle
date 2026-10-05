@@ -1,0 +1,245 @@
+# Credit-limit increase decision for Northstar Industrial Systems, as data.
+#
+# Follows owm/procedures/credit-limit.md: the request and what it relies on, the customer across
+# ERP and CRM, the credit policy in force on the request date, payment history by that policy's
+# rule, the maximum limit (account tier plus any guarantee covering this customer), the requestor's
+# authority, the required approvers, then exactly one outcome.
+#
+# Inputs: sid, record (one credit_requests.csv row, all strings, possibly hypothetical), as_of.
+# Note: no step is named `on`, because YAML 1.1 reads a bare `on` key as a boolean.
+
+spec: credit_limit_increase
+outcomes: [APPROVE, APPROVE_WITH_AUTHORIZATION, REJECT_OR_ESCALATE, REVIEW_REQUIRED, REQUEST_EVIDENCE]
+route_to: REQUEST_EVIDENCE
+
+# Which documents count. Credit policies are Finance's; guarantees (credit support) are accepted by
+# Legal. The provenance check drops drafts, proposals and unexecuted copies.
+documents:
+  kinds:
+    - { kind: policy, id_prefixes: [CREDIT-POLICY-], title_words: [Credit Policy] }
+    - { kind: guarantee, id_prefixes: [GRT-], title_words: [Guarantee] }
+  owners: { policy: [Finance], guarantee: [Legal] }
+  policy_kind: policy
+  graded: [guarantee]
+  # Instrument guards (2026-10-05): the only lines added to the agent's spec as delivered.
+  lineage_kinds: [guarantee]
+  single_kinds: [guarantee]
+
+helpers:
+  # A dollar amount from a CSV cell or a regex capture ("400000", "$400,000"); blank gives None.
+  usd: 'float(x.replace("$", "").replace(",", "").strip()) if x and x.strip() else None'
+  # Whole dollars, for the readable basis text.
+  dollars: 'f"${x:,.0f}"'
+
+readers:
+  # A guarantee's cap: "liability under this Guarantee is limited to **$400,000**"; else the first
+  # dollar amount in the document.
+  guaranteed_amount: 'usd(search(r"liability[^$]*?\$([\d,]+)", flat(doc.body)) or search(r"\$([\d,]+)", doc.body))'
+
+questions:
+  # Procedure step 1: what the request relies on. A soft reading of the request's free text.
+  relies_on:
+    type: choice
+    instructions: >-
+      `justification` is the business justification written on a request to raise a customer's
+      credit limit. Does the request rely on the customer's own standing (its orders, growth or
+      payment record), or on credit support from a third party, such as a parent-company
+      guarantee? Only support that this request itself relies on counts; a remark that support
+      might be used later does not.
+    criteria:
+      standard: "The customer's own standing; no third-party credit support is relied on"
+      guarantee: "Credit support from a third party, such as a guarantee"
+      unclear: "Cannot tell from the text"
+
+  # Procedure step 5: credit support covers only the company it names.
+  covers_customer:
+    type: choice
+    instructions: >-
+      `guarantee` is the text of a guarantee given to Northstar. `customer` describes the customer
+      on a credit request, as recorded in Northstar ERP and CRM. Is the company whose payment
+      obligations the guarantee covers (the guaranteed party, not the guarantor that gives the
+      guarantee) the same legal entity as the customer in `customer`? A trade name ("doing
+      business as") of the same entity is the same company. A parent, a subsidiary, an affiliate
+      or a company with a similar name is a different company.
+    criteria:
+      same: "Yes, the guarantee covers this customer"
+      different: "No, it covers a different company"
+      unclear: "Cannot tell"
+
+steps:
+  # ---- 1. The request ------------------------------------------------------------------------
+  # The request date governs the policy, payment history and credit support; as_of only if blank.
+  - req_date: 'date(record["request_date"].strip()) if (record.get("request_date") or "").strip() else as_of'
+  - cid: '(record.get("erp_customer_id") or "").strip()'
+  - requested: 'usd(record.get("requested_limit_usd"))'
+  - current: 'usd(record.get("current_limit_usd"))'
+  - requested_by: '(record.get("requested_by") or "").strip().lower()'
+  - requestor: 'first(s for s in staff if s["email"].strip().lower() == requested_by)'
+  # What it relies on: the customer's own standing, or third-party credit support.
+  - basis_j: 'use(judge("relies_on", {"justification": record.get("justification") or ""}))'
+  - basis: '{"standard": "standard", "guarantee": "guarantee"}.get(basis_j["choice"], "unknown")'
+  - relies_on_support: 'basis == "guarantee"'
+
+  # ---- 2. The customer -----------------------------------------------------------------------
+  # ERP master row, then the CRM account by the registered DUNS number (names differ by system).
+  # The account tier is as recorded in CRM.
+  - customer: 'first(c for c in table("customers") if c["erp_customer_id"].strip() == cid)'
+  - account: { when: 'customer is not None', expr: 'linked(customer, table("crm_accounts"), ["duns_number"])' }
+  - tier: '(account["account_tier"].strip() or None) if account is not None else None'
+  # Everything the systems of record say about who the customer is, for the guarantee judgment.
+  - customer_desc:
+      when: 'customer is not None'
+      expr: >-
+        customer["customer_name"] + " (ERP customer " + cid
+        + ((", CRM account " + account["account_name"] + " " + account["account_id"]) if account is not None else "")
+        + "), " + customer["bill_to_street"] + ", " + customer["bill_to_city"] + ", "
+        + customer["bill_to_state"] + " " + customer["bill_to_postal_code"]
+        + ", DUNS " + customer["duns_number"]
+
+  # ---- 3. The policy in force on the request date --------------------------------------------
+  - pol: 'in_force(policies(), req_date)'
+  - _rely_policy: { when: 'pol is not None', expr: 'rely(pol)' }
+  - pol_text: { when: 'pol is not None', expr: 'flat(pol.body)' }
+
+  # ---- 4. Payment history, by the policy's own rule ------------------------------------------
+  # "no invoice due in the 12 months before the request may have been paid more than 30 days
+  # after its due date, or be unpaid more than 30 days after it"
+  - lookback_months: { when: 'pol_text is not None', expr: 'maybe(int, search(r"invoice due in the (\d+) months before", pol_text))' }
+  - paid_days: { when: 'pol_text is not None', expr: 'maybe(int, search(r"been paid more than (\d+) days", pol_text))' }
+  - unpaid_days: { when: 'pol_text is not None', expr: 'maybe(int, search(r"unpaid more than (\d+) days", pol_text))' }
+  # The look-back window opens on the same calendar day N months before the request date.
+  - lookback_index: { when: 'lookback_months is not None', expr: 'req_date.year * 12 + req_date.month - 1 - lookback_months' }
+  - window_start: { when: 'lookback_index is not None', expr: 'date(f"{lookback_index // 12:04d}-{lookback_index % 12 + 1:02d}-01") + days(req_date.day - 1)' }
+  - invoices: '[i for i in table("erp_invoices") if i["erp_customer_id"].strip() == cid]'
+  # Each invoice due in the window, aged as of the request date: days paid after its due date, or
+  # days still unpaid (an invoice paid after the request date was unpaid on it).
+  - aged:
+      when: 'window_start is not None and paid_days is not None and unpaid_days is not None'
+      expr: >-
+        [{"invoice_id": i["invoice_id"], "due_date": i["due_date"], "paid_date": i["paid_date"] or None,
+        "paid_by_request_date": bool(i["paid_date"]) and date(i["paid_date"]) <= req_date,
+        "days_after_due": ((date(i["paid_date"]) if i["paid_date"] and date(i["paid_date"]) <= req_date else req_date) - date(i["due_date"])).days,
+        "allowed_days": paid_days if i["paid_date"] and date(i["paid_date"]) <= req_date else unpaid_days}
+        for i in invoices if i["due_date"] and window_start <= date(i["due_date"]) <= req_date]
+  - late_invoices: { when: 'aged is not None', expr: '[a for a in aged if a["days_after_due"] > a["allowed_days"]]' }
+  - history_ok: 'None if late_invoices is None else not late_invoices'
+
+  # ---- 5. The maximum limit ------------------------------------------------------------------
+  # The policy's maximum for the CRM tier: "$750,000 for Strategic accounts; $250,000 for ...".
+  - max_paragraph: { when: 'pol is not None', expr: 'paragraph(pol.body, "Maximum credit limit")' }
+  - tier_max: { when: 'max_paragraph is not None and tier is not None', expr: 'usd(search(r"\$([\d,]+)\s+for\s+" + tier + r"\s+accounts", max_paragraph))' }
+  # Guarantees in force on the request date, each judged: does it name this customer?
+  - guarantee_checks:
+      when: 'customer_desc is not None'
+      expr: >-
+        [{"doc": g, "id": g.doc_id, "amount": guaranteed_amount(g),
+        "j": judge("covers_customer", {"guarantee": flat(g.body), "customer": customer_desc})}
+        for g in covering(docs("guarantee"), req_date)]
+  - _use_guarantee_checks: { when: 'bool(guarantee_checks)', expr: 'uses([c["j"] for c in guarantee_checks])' }
+  - covering_guarantees: '[c for c in (guarantee_checks or []) if c["j"]["choice"] == "same"]'
+  - _rely_guarantees: { when: 'bool(covering_guarantees)', expr: 'rely([c["doc"] for c in covering_guarantees])' }
+  # A guarantee in force raises the maximum by its amount, for the customer it names.
+  - support_amount: 'sum((c["amount"] or 0) for c in covering_guarantees)'
+  - max_limit: 'tier_max + support_amount if tier_max is not None else None'
+  # The request relies on credit support, but no available evidence establishes any for it.
+  - support_missing: 'relies_on_support and not covering_guarantees'
+
+  # ---- Eligibility ---------------------------------------------------------------------------
+  # Bad payment history makes the customer ineligible whatever the limit or the support. When the
+  # request relies on missing support and needs it, eligibility waits on that evidence.
+  - eligibility_status: >-
+      "ineligible" if history_ok is False
+      else "unknown" if history_ok is None or tier_max is None or requested is None
+      else "unknown" if support_missing and requested > tier_max
+      else "exceeded" if requested > max_limit
+      else "eligible"
+  - late_text:
+      when: 'bool(late_invoices)'
+      expr: >-
+        "; ".join(a["invoice_id"] + " due " + a["due_date"] + " was " + ("paid " if a["paid_by_request_date"] else "unpaid ")
+        + str(a["days_after_due"]) + " days after due (allowed " + str(a["allowed_days"]) + ")" for a in late_invoices)
+  - limit_text:
+      when: 'tier_max is not None'
+      expr: >-
+        tier + " account maximum " + dollars(tier_max) + " under " + pol.doc_id
+        + "".join(" + " + dollars(c["amount"] or 0) + " guarantee " + c["id"] for c in covering_guarantees)
+  - eligibility_basis: >-
+      ("payment history under " + pol.doc_id + ": " + late_text) if history_ok is False
+      else None if limit_text is None
+      else (limit_text + "; the credit support the request relies on is not established for this customer") if support_missing
+      else limit_text
+
+  # ---- 6-7. Authority and the required approvers ---------------------------------------------
+  # Authority applies to the new total limit requested, under the policy in force; eligibility
+  # does not change who may approve. authority() applies the separation-of-duties rule.
+  - auth: { when: 'requested is not None', expr: 'authority(policies(), req_date, requested, requested_by)' }
+  - approver_name:
+      when: 'auth is not None and auth["approver"] is not None'
+      expr: 'first(s["full_name"] for s in staff if auth["approver"] in (s["full_name"], s["employee_id"], s["email"])) or auth["approver"]'
+  # Concurrence the policy requires for this tier and limit (HR rows).
+  - concurring: { when: 'pol is not None and tier is not None and requested is not None', expr: 'concurrences(pol, requested, tier, requested_by) or []' }
+
+  # ---- Notes for the record ------------------------------------------------------------------
+  - _flag_customer: { when: 'customer is None', expr: 'flag("ERP customer " + (cid or "(blank)") + " is not in the customer master")' }
+  - _flag_account: { when: 'customer is not None and account is None', expr: 'flag("no CRM account shares the DUNS number of " + cid + ", so the account tier is unknown")' }
+  - _flag_policy: { when: 'pol is None', expr: 'flag("no single credit policy is in force on " + req_date.isoformat())' }
+  - _flag_rule: { when: 'pol is not None and aged is None', expr: 'flag("could not read the payment-history rule of " + pol.doc_id)' }
+  - _flag_tier: { when: 'pol is not None and tier is not None and tier_max is None', expr: 'flag(pol.doc_id + " states no maximum for " + tier + " accounts")' }
+  - _flag_basis: { when: 'basis == "unknown"', expr: 'flag("cannot tell from the justification what the request relies on")' }
+  - _flag_other_guarantees:
+      when: 'bool(guarantee_checks) and len(covering_guarantees) < len(guarantee_checks)'
+      expr: 'flag("guarantee in force that does not cover this customer: " + ", ".join(c["id"] for c in guarantee_checks if c["j"]["choice"] != "same"))'
+  - _flag_amount_unread: { when: 'any(c["amount"] is None for c in covering_guarantees)', expr: 'flag("a covering guarantee states no readable amount")' }
+  - _flag_support: { when: 'support_missing', expr: 'flag("the request relies on credit support that no available guarantee establishes for " + cid + " on " + req_date.isoformat())' }
+  - _flag_requestor: { when: 'requestor is None', expr: 'flag("requestor " + (requested_by or "(blank)") + " is not in the HR roster")' }
+  - _flag_not_increase: { when: 'requested is not None and current is not None and requested <= current', expr: 'flag("the requested limit is not an increase over the current limit")' }
+
+# ---- 8. Decide: the first rule that holds --------------------------------------------------------
+outcome:
+  - { when: 'pol is None', outcome: REQUEST_EVIDENCE }                          # no single policy governs the date
+  - { when: 'history_ok is False', outcome: REJECT_OR_ESCALATE }                # payment history fails the policy rule
+  - { when: 'support_missing', outcome: REQUEST_EVIDENCE }                      # relied-on credit support not established
+  - { when: 'eligibility_status == "unknown"', outcome: REQUEST_EVIDENCE }      # tier, rule or limit unknown
+  - { when: 'eligibility_status == "exceeded"', outcome: REJECT_OR_ESCALATE }   # above the maximum; no approver fixes it
+  - { when: 'auth is None', outcome: REQUEST_EVIDENCE }                         # authority bands unreadable
+  - { when: 'auth["requestor_authorized"] and not concurring', outcome: APPROVE }
+  - { outcome: APPROVE_WITH_AUTHORIZATION }
+
+then:
+  # Who signs. APPROVE: the requestor alone. APPROVE_WITH_AUTHORIZATION: the policy's approver (or
+  # the requestor, if authorized and only a concurrence is missing) plus each concurring person.
+  - signer: >-
+      (requestor["full_name"] if requestor is not None else None) if outcome == "APPROVE"
+      else approver_name if approver_name is not None
+      else (requestor["full_name"] if requestor is not None and auth is not None and auth["requestor_authorized"] else None)
+  - approvers: >-
+      ([{"name": signer, "kind": "approval"}] + [{"name": c["full_name"], "kind": "concurrence"} for c in (concurring or [])])
+      if outcome in ("APPROVE", "APPROVE_WITH_AUTHORIZATION") else []
+  - _flag_no_signer: { when: 'outcome == "APPROVE_WITH_AUTHORIZATION" and signer is None', expr: 'flag("no holder of the required approver role was found")' }
+
+# ---- 9. The decision record ----------------------------------------------------------------------
+record:
+  scenario: sid
+  outcome: outcome
+  gated_outcome: gated_outcome
+  uncertain: uncertain
+  judgments: judgments
+  flags: flags
+  eligibility: '{"status": eligibility_status, "maximum_limit": max_limit, "basis": eligibility_basis}'
+  authority: >-
+    {"policy": auth["policy"], "requestor_limit": auth["requestor_limit"],
+    "requestor_authorized": auth["requestor_authorized"], "required_role": auth["required_role"],
+    "approver": approver_name}
+    if auth is not None else
+    {"policy": pol.doc_id if pol is not None else None, "requestor_limit": None,
+    "requestor_authorized": None, "required_role": None, "approver": None}
+  approvers: approvers
+  # Context from the procedure's record: the request as read, late invoices, evidence relied on.
+  request: >-
+    {"id": record.get("request_id"), "customer": customer["customer_name"] if customer is not None else (cid or None),
+    "current_limit": current, "requested_limit": requested, "date": req_date.isoformat(),
+    "requestor": requestor["full_name"] if requestor is not None else (requested_by or None), "basis": basis}
+  late_invoices: late_invoices
+  evidence: >-
+    ([pol.doc_id] if pol is not None else []) + [c["id"] for c in covering_guarantees]
+    + ["structured/customers.csv", "structured/crm_accounts.csv", "structured/erp_invoices.csv", "structured/employees.csv"]
