@@ -1,7 +1,12 @@
 # Experiment 5: a second decision type, credit-limit increase (2026-10-03)
 
-**STATUS: DONE** (set C, the user's attack documents against credit, is still to come).
-Pre-registered in `plan.md` (`a34a15a`).
+**STATUS: DONE.** Pre-registered in `plan.md` (`a34a15a`).
+
+**Set C** (2026-10-05), the user's seven attack documents against credit, is in `set-c-notes.md`:
+- **targets unsafe:** python 2/7, yaml 2/7, agent 3/7;
+- **collateral:** C2 approves S33 with the guarantee missing, on all three engines;
+- **held:** every attack through a non-governing document (12/12);
+- the reader is pending cost approval.
 
 **The user's question:** "Ex 5 will tell us if we have a product or a very sophisticated discount
 decision apparatus."
@@ -101,8 +106,9 @@ not unsafe. Your call.
   - The product answer is the same as experiment 4's: policies and instruments as **structured,
     registered objects**, not text the engine parses.
 - **One synthetic company, one author,** gold evidence. No retrieval or Utopia arm for credit.
-- **No adversarial test for credit yet.** That is set C, which the user will write against the
-  credit documents without seeing the guards.
+- **The adversarial test came later,** as set C (`set-c-notes.md`). Forged governing documents
+  of the right kind and owner moved all three engines. Experiment 4's instrument guards (G2, G5)
+  were spec-local and didn't carry over to credit.
 
 ## For BlueLeaf
 
@@ -138,5 +144,8 @@ not unsafe. Your call.
 | `run_hybrid.py`, `hybrid-results.md`, `hybrid-decisions.json` | The credit hybrid |
 | `run_reader.py`, `reader-results.{md,json}`, `reader/` | The reader, with transcripts |
 | `engine-calls.jsonl` | The Jev recording (replay with `--replay`) |
+| `set-c-brief.md`, `set-c/`, `set-c.sha256`, `set-c-plan.md` | Set C: the brief, the sealed attacks, the pre-registration |
+| `run_set_c.py`, `set-c-results.*`, `set-c-literal-results.*`, `set-c-notes.md` | Set C: the harness, results and analysis |
+| `set-c-engine-calls.jsonl` | Set C's Jev recording |
 | `lab/owm_kernel/` | `kernel.py`, `discount.py`, `credit.py` |
 | `owm/procedures/credit-limit.md`, `owm/ontology.yaml` | The procedure, and the concepts credit added |
