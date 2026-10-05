@@ -137,8 +137,11 @@ filenames contain an em dash, so quote paths:
   questions, answers, reader transcripts, snapshots. Runs are results: add to them, never rewrite them.
 - `lab/utopia/`: the stdlib scripts that drive Utopia and the blind Opus reader. Its README lists the
   controls that define the experiment (blindness, hidden tools, fixed prompt, revoked tokens).
-- `tracker/`: the Northstar Lab Ledger artifact (results matrix, human grades, findings). Human grades
-  live in the artifact's `grades` collection; read them before scoring and never overwrite them.
+- `tracker/`: the Northstar Lab Ledger artifact (results matrix, human grades, findings, gaps). Human
+  grades live in the artifact's `grades` collection; read them before scoring and never overwrite them.
+  The gap tracker is the `gaps` collection (Gaps tab): read it before planning a build, update a gap
+  with a pinned `ArtifactData` update that appends to its `log`, and never overwrite the user's
+  status changes or decisions.
 
 ## Local-only context (gitignored)
 

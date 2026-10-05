@@ -5,7 +5,8 @@ The experiment tracker, published at <https://claude.ai/artifact/FsSXn3ADwvDgBzG
 
 It shows a grading list (the calibration answers from `docs/grading-guide.md`) and a results matrix (scenario × condition) with grade chips. On a phone, an opened answer fills the screen, with Back, Prev / Next and Save & next. Pick any cell to read
 the answer, the answer key and the reader's tool calls, and to grade it against the runbook
-step 8 rubric. There's also a findings log and a conditions table. Your grades and findings
+step 8 rubric. There's also a findings log, a **Gaps** tab (the lab's gap tracker, moved here from
+`docs/gap-tracker.md` on 2026-10-05) and a conditions table. Your grades and findings
 are stored in the artifact's database, so Claude can read them back when the experiment
 resumes.
 
@@ -26,12 +27,13 @@ document under `seed/docs/`. Claude's provisional grades, the findings and the e
 | `grades` | the page | human rubric (outcome, approver, basis, time, honesty), overall, note — keyed by answer id; **never reseeded** |
 | `findings` | seed + the page | category, title, body, status, evidence paths |
 | `queue` | Claude (`ArtifactData`) | the grading list: order, part, experiment, condition, scenario, repeat, hint (from `docs/grading-guide.md`) |
+| `gaps` | `seed_gaps.py` once, then the page and Claude | the gap tracker: id, title, area, owner, priority, status + note, `body` (markdown), `decisions` (options, recommendation, the user's choice), `log` ([{at, by, text}]). **The page is the source of truth; never reseeded** |
 
 Answer ids are `<experiment>~<condition>~<scenario>~r<repeat>`. A repeat run adds `~r2`,
 `~r3` documents and the matrix shows one chip per repeat, with no page change.
 
 Access rules: everyone who can open the page reads everything; only editors write the run
-data; contributors can write `grades` and `findings`.
+data; contributors can write `grades`, `findings` and `gaps`.
 
 ## Moving to MLflow later
 
