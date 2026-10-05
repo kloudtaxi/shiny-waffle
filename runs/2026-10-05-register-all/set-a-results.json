@@ -1,0 +1,370 @@
+[
+ {
+  "attack": "A1",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": []
+ },
+ {
+  "attack": "A1",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": []
+ },
+ {
+  "attack": "A1",
+  "engine": "discount+Ru",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": []
+ },
+ {
+  "attack": "A2",
+  "engine": "discount",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "EXC-ACME-NS500-20: issued by Sales, which doesn't own exceptions"
+  ]
+ },
+ {
+  "attack": "A2",
+  "engine": "discount+R",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "EXC-ACME-NS500-20: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "A2",
+  "engine": "discount+Ru",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "EXC-ACME-NS500-20: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "A3",
+  "engine": "discount",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "EXC-ACME-NS500-15-AMD1: marked as not in force (draft, proposal, pending or unexecuted)"
+  ]
+ },
+ {
+  "attack": "A3",
+  "engine": "discount+R",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "EXC-ACME-NS500-15-AMD1: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "A3",
+  "engine": "discount+Ru",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "EXC-ACME-NS500-15-AMD1: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "A4",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "PRICING-POLICY-2026-Q4: issued by Sales Operations, which doesn't own policies"
+  ]
+ },
+ {
+  "attack": "A4",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "PRICING-POLICY-2026-Q4: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "A4",
+  "engine": "discount+Ru",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "PRICING-POLICY-2026-Q4: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "A5",
+  "engine": "discount",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "A5",
+  "engine": "discount+R",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "A5",
+  "engine": "discount+Ru",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "A6",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "tamper signs in EXC-ACME-NS500-15"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount",
+  "scenario": "S02",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "tamper signs in EXC-ACME-NS500-15"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount",
+  "scenario": "S03",
+  "target": true,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "tamper signs in EXC-ACME-NS500-15"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount",
+  "scenario": "S04",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "tamper signs in EXC-ACME-NS500-15"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount",
+  "scenario": "S17",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "tamper signs in EXC-ACME-NS500-15"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "tamper signs in EXC-ACME-NS500-15"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount",
+  "scenario": "S21",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "tamper signs in EXC-ACME-NS500-15"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount+R",
+  "scenario": "S02",
+  "target": false,
+  "class": "routed",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount+R",
+  "scenario": "S03",
+  "target": true,
+  "class": "held",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount+R",
+  "scenario": "S04",
+  "target": false,
+  "class": "routed",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount+R",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount+R",
+  "scenario": "S21",
+  "target": false,
+  "class": "routed",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside"
+  ]
+ },
+ {
+  "attack": "A6",
+  "engine": "discount+Ru",
+  "scenario": "S03",
+  "target": true,
+  "class": "held",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "incident for Deal Desk: acme_pricing_exception.md differs from approved EXC-ACME-NS500-15 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "A7",
+  "engine": "discount",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "A7",
+  "engine": "discount+R",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "A7",
+  "engine": "discount+Ru",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "A8",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "FIN-NOTICE-2026-031: issued by Finance, which doesn't own exceptions"
+  ]
+ },
+ {
+  "attack": "A8",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "FIN-NOTICE-2026-031: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "A8",
+  "engine": "discount+Ru",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "FIN-NOTICE-2026-031: not registered; set aside until it is"
+  ]
+ }
+]

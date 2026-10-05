@@ -87,6 +87,18 @@ def resave(root: Path) -> None:
             p.write_bytes(("  \r\n".join(p.read_text().split("\n")) + "\r\n").encode())
 
 
+def safe_run(*args: Any, **kwargs: Any) -> dict[str, Any]:
+    """K5 feeds engines malformed text, so an engine may fail; that is recorded as an outcome."""
+    try:
+        return dict(flow.run(*args, **kwargs))
+    except Exception as e:  # noqa: BLE001
+        return {
+            "outcome": "ERROR",
+            "gated_outcome": "ERROR",
+            "error": f"{type(e).__name__}: {e}"[:200],
+        }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--replay", action="store_true")
@@ -114,7 +126,7 @@ def main() -> None:
             roots = rh.build(attack, src, Path(tmp))
             if saved:
                 resave(Path(tmp))
-            return {name: {sid: flow.run(spec, eng, Evidence(roots[scen[sid].corpus]),
+            return {name: {sid: safe_run(spec, eng, Evidence(roots[scen[sid].corpus]),
                                          {"sid": sid, "record": rh.record(heldout, sid),
                                           "as_of": scen[sid].as_of},
                                          register=REG[scen[sid].corpus] if reg else None)
@@ -127,7 +139,7 @@ def main() -> None:
             shutil.copytree(LAB / "dataset/evidence", root)
             if saved:
                 resave(Path(tmp))
-            return {name: {sid: plain(flow.run(spec, eng, Evidence(root),
+            return {name: {sid: plain(safe_run(spec, eng, Evidence(root),
                                                {"sid": sid, "ticket_id": scen[sid].ticket,
                                                 "decided_at": scen[sid].decided_at},
                                                register=REG["base"] if reg else None))
