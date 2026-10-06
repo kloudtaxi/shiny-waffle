@@ -367,14 +367,70 @@ steps:
        or (m_st is not None and (rest_t is None or rest_t > m_st)))
 
   # ---- Reliance: only the instruments that feed this decision (G-06) -----------------------------
-  - span_dt: >-
-      [x for x in (([start, resp_t, rest_t, m_rt, m_st] if measurable and business else [])
-                   + (([datetime(m["sent_at"]) for m in mn_rows] + [datetime(m["window_start"]) for m in mn_rows])
-                      if measurable else [])
-                   + ([opened, oos_due] if oos_due is not None else []))
-       if x is not None]
-  - span_d: '([x.astimezone(ct).date() for x in span_dt] + ([rest_date, rc_day] if rc_day is not None else []))'
-  - hol_hit: '(len(span_d) > 0 and any(min(span_d) <= h and h <= max(span_d) for h in holidays))'
+  # The holiday calendar feeds the outcome only if the measurement differs without its holidays:
+  # re-measure on a calendar with no holidays (notices, clock start, clocks, root-cause deadline).
+  - cal0:
+      when: 'measurable and len(holidays) > 0'
+      expr: 'calendar(ct, clock_time(int(bh[0]), int(bh[1])), clock_time(int(bh[2]), int(bh[3])), [])'
+  - mw0:
+      when: 'cal0 is not None'
+      expr: >-
+        [(datetime(m["window_start"]), datetime(m["window_end"])) for m in mn_rows
+         if notice_days is not None
+         and cal0.working_days_after(datetime(m["sent_at"]).astimezone(ct).date(), notice_days)
+         <= datetime(m["window_start"]).astimezone(ct).date()]
+  - start0: { when: 'cal0 is not None', expr: 'max([opened] + [we for ws, we in mw0 if ws <= opened and opened < we])' }
+  - mw_ex0: { when: 'cal0 is not None', expr: '[(max(ws, start0), we) for ws, we in mw0 if we > start0]' }
+  - pauses0:
+      when: 'cal0 is not None'
+      expr: >-
+        [(max(ps, start0), pe) for ps, pe in intervals(p_starts, p_ends)
+         if ps is not None and pe is not None and pe > ps and pe > start0]
+  - resp_clk0: { when: 'cal0 is not None', expr: 'clock(cal0, business, start0, mw_ex0)' }
+  - rest_clk0: { when: 'cal0 is not None', expr: 'clock(cal0, business, start0, mw_ex0 + pauses0)' }
+  - r_el0: { when: 'cal0 is not None and resp_t is not None', expr: '(0 if resp_t <= start0 else resp_clk0.elapsed(resp_t))' }
+  - s_el0: { when: 'cal0 is not None and rest_t is not None', expr: '(0 if rest_t <= start0 else rest_clk0.elapsed(rest_t))' }
+  - r_now0: { when: 'cal0 is not None and t_dec is not None', expr: '(0 if t_dec <= start0 else resp_clk0.elapsed(t_dec))' }
+  - s_now0: { when: 'cal0 is not None and t_dec is not None', expr: '(0 if t_dec <= start0 else rest_clk0.elapsed(t_dec))' }
+  - rc_day0: { when: 'cal0 is not None and rc_day is not None', expr: 'cal0.working_days_after(rest_date, rc_bdays)' }
+  - rc_off0: { when: 'rc_day0 is not None', expr: 'datetime(rc_day0.isoformat() + "T12:00:00+00:00").astimezone(ct).strftime("%z")' }
+  - rc_deadline0:
+      when: 'rc_off0 is not None and rc_hm is not None'
+      expr: 'datetime(rc_day0.isoformat() + "T" + ("0" + rc_hm[0])[-2:] + ":" + rc_hm[1] + ":00" + rc_off0[:3] + ":" + rc_off0[3:])'
+  - rc_found0:
+      when: 'cal0 is not None and cc_asserted'
+      expr: >-
+        first(e for e in evs if e["event"] != "credit_claim"
+              and ((sel_name is not None and e["actor"].strip() == sel_name)
+                   or "support engineering lead" in e["actor"].lower())
+              and ("root" in e["detail"].lower() or "root" in e["event"].lower() or "finding" in e["event"].lower())
+              and (rc_deadline0 is None or datetime(e["at"]) <= rc_deadline0))
+  - cc_applies0: '(cc_applies and rc_found0 is not None)'
+  - cc_unclear0: '(cc_unclear and rc_found0 is not None)'
+  - cc_pending0: >-
+      (cc_asserted and rc_found0 is None
+       and (rc_deadline0 is None or now_eff is None or now_eff <= rc_deadline0))
+  - resp_status0:
+      when: 'cal0 is not None'
+      expr: >-
+        ("met" if r_el0 is not None and r_el0 <= t_resp
+         else "missed" if r_el0 is not None
+         else "missed" if r_now0 is not None and r_now0 > t_resp
+         else "cannot_decide")
+  - rest_status0:
+      when: 'cal0 is not None'
+      expr: >-
+        ("not_applicable" if t_rest is None or cc_applies0
+         else "cannot_decide" if cc_pending0 or cc_unclear0
+         else "met" if s_el0 is not None and s_el0 <= t_rest
+         else ("missed_band2" if s_el0 > band_mult * t_rest else "missed_band1")
+              if s_el0 is not None and banded and band_mult is not None
+         else "missed" if s_el0 is not None and not banded
+         else "cannot_decide" if s_el0 is not None
+         else "missed_band2" if s_now0 is not None and banded and band_mult is not None and s_now0 > band_mult * t_rest
+         else "missed" if s_now0 is not None and s_now0 > t_rest
+         else "cannot_decide")
+  - hol_hit: '(cal0 is not None and (resp_status0 != resp_status or rest_status0 != rest_status))'
   - _rely_terms: { when: 'scope is not None and terms is not None', expr: 'rely(terms)' }
   - _use_terms: { when: 'scope is not None and terms_e is not None', expr: 'use_entry(terms_e)' }
   - _rely_sched:
