@@ -118,3 +118,53 @@ This one provokes the substitution, and it is also behind round one's S04 holds.
   - but never substitute another record for a request that is missing.
 - **Round two's fix was tuned on these same 8 scenarios.** The third sentence should be tested on
   fresh ones.
+
+## Addendum 3: the third sentence, on fresh scenarios (pre-registered in `566170f`; harness fixed in `ff38d9d`)
+
+- **The added sentence:** "Never substitute another record. If the request isn't in the system of
+  record, decide on it as given, with 'confirm the request exists' as a blocking condition".
+- **The run:** `procedures-v3/`, scenarios not used before (hold-prone S12, S13, S18, S23, S24, S28,
+  S34; controls S10, S11, S14), × 3: 30 calls, $9.23.
+- **The reads:** `reads-v3.jsonl`.
+- **A false start:** the first launch failed on an argument the harness didn't yet have. It made no
+  calls.
+
+| # | Prediction | Result |
+|---|---|---|
+| F1 | 0 of 30 hold only in prose | **Holds:** 26 of 26 holds are blocking conditions (one borderline: S34 r3's "CR-9201 should also be reconciled", read as advice and marked non-blocking in the block) |
+| F2 | Restated approvals at most 1 of 30 | **Holds:** 0 |
+| F3 | Substituted records 0 of 30 | **Holds:** 0. Every answer decided on the request it was asked about |
+| F4 | Unsafe 0 of 30 | **Holds:** 0. Everything held, except S13's 3 routed (REVIEW_REQUIRED where the key says REQUEST_EVIDENCE: routing vocabulary) |
+| F5 | Controls: a blocking condition on at most 1 of 9 | **Missed:** 9 of 9, each "confirm DR-9102 / 9103 / 9106 exists in CRM" |
+
+**Why F5 missed: the controls weren't controls.** Their requests aren't in the CRM export.
+
+### A systemic lab input defect (not only S04)
+
+The reader prompts present each request "as recorded in Northstar CRM" (experiment 4's builder)
+or "as recorded in Northstar ERP" (experiment 5's). But the exports contain almost none of them:
+
+| Type | Question records absent from the export | In the export |
+|---|---|---|
+| Discount (experiment 4's 18) | **16:** DR-9002–9004, DR-9101–9113 | DR-9001 only (S01, S05) |
+| Credit (S26–S35) | **8:** CR-9202–9208 | CR-9201 only (S26, S35) |
+
+- **Duration:** this has held for every reader experiment since the request-record arm
+  (2026-09-28/29).
+- **Engines are not affected:** they take the request as an input.
+- **Readers met a contradiction on most scenarios.** Some of G-16's 59 holds ("confirm CR-9202
+  exists in ERP", "DR-9104 isn't in the discount requests") were correct reactions to it. The
+  agreement finding stands: the hold lived in the prose. But part of its cause is the lab.
+- **The S04 call is withdrawn.** Claude's earlier call, to leave S04's input as it is, assumed one
+  scenario. The defect spans 24 of 28, so its fix goes to the user (G-36).
+
+## Where G-35 stands (final)
+
+- **The `conditions` field, with the three-sentence rule, does what it should:**
+  - every hold reaches the block: 12/12, 13/13, 26/26;
+  - no restated approvals and no record substitution;
+  - no unsafe answer on fresh scenarios.
+- **The open question was over-holding.** It can't be measured cleanly until the inputs are
+  consistent (G-36).
+- **Readers cost $33.46 across the four arms** (control $7.32, treatment $7.38, v2 $7.53,
+  v3 $9.23).
