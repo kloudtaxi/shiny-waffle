@@ -59,7 +59,7 @@ v3 = rh.load("hybrid", RUNS / "2026-10-03-adversarial/hybrid_v3.py")
 heldout = rh.load("heldout", RUNS / "2026-09-28-utopia-aad5b06-scale-large/heldout/heldout.py")
 flow = ra.flow
 from engine import Recorder, TypeSafe  # noqa: E402
-from kernel import Evidence, Register  # noqa: E402
+from kernel import Evidence, Register, fingerprint  # noqa: E402
 
 from northstar.model import load_truth  # noqa: E402
 
@@ -70,7 +70,8 @@ class Layered:
     def __init__(self, calls: Path, live: bool, cap: int) -> None:
         self.model, self.cap, self.live_calls = "jev-1.13.0", cap, 0
         self._seen: dict[str, Any] = {}
-        files = sorted(RUNS.rglob("*engine-calls*.jsonl")) + ([calls] if calls.exists() else [])
+        files = sorted({*RUNS.rglob("*engine-calls*.jsonl"), *RUNS.rglob("*jev-calls*.jsonl")})
+        files += [calls] if calls.exists() and calls not in files else []
         for p in files:  # the --calls file too, so only real network calls are counted live
             for line in p.read_text().splitlines():
                 rec = json.loads(line)
@@ -257,6 +258,7 @@ class Gate:
                         idle.append({"scenario": sid, "document": doc_id})
                     shutil.rmtree(ab, ignore_errors=True)
         return {"spec": str(path.relative_to(LAB)), "type": kind, "notes": notes,
+                "sha256": fingerprint(path.read_text()),
                 "A": {"held": sum(gate_a.values()), "of": len(gate_a),
                       "missed": [s for s, ok in gate_a.items() if not ok],
                       "clean_outcomes": {s: clean[s].get("gated_outcome") for s in sids}},

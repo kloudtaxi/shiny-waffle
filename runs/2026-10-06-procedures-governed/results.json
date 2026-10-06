@@ -1,0 +1,66 @@
+{
+ "P1": {
+  "versions": 4,
+  "stable": true,
+  "refusals": {
+   "credit_agent.yaml (not admitted)": "refused: credit_agent.yaml: not admitted (failed gate C)",
+   "sla_agent_v1.yaml (not admitted)": "refused: sla_agent.yaml: not admitted (failed gate C)",
+   "approver = registrar": "refused: sla.yaml: the approver is the registrar",
+   "an agent approves": "refused: 'the SLA author (an agent)' is not an employee; an agent may propose a registration but never approve one"
+  },
+  "holds": true
+ },
+ "P2": {
+  "discount": {
+   "scenarios": 18,
+   "equal": 18,
+   "stamped": 18
+  },
+  "credit": {
+   "scenarios": 10,
+   "equal": 10,
+   "stamped": 10
+  },
+  "sla": {
+   "scenarios": 10,
+   "equal": 10,
+   "stamped": 10
+  },
+  "holds": true
+ },
+ "P3": {
+  "clean_versions": {
+   "S36": 1,
+   "S37": 1,
+   "S38": 1,
+   "S39": 1,
+   "S40": 1,
+   "S41": 1,
+   "S42": 1,
+   "S43": 1,
+   "S44": 1,
+   "S45": 1
+  },
+  "at_2026_10_07": {
+   "id": "PROC-SLA",
+   "version": 2,
+   "sha256": "71ff8a9ddb26a14183bc5b9c3215bfd46152749b93c33b63ef7f15715482ff96"
+  },
+  "equals_sla_agent": true,
+  "holds": true
+ },
+ "P4": {
+  "scenarios": 10,
+  "unchanged": 10,
+  "flagged": 10,
+  "ungoverned_tampered_moved": [
+   "S29: APPROVE_WITH_AUTHORIZATION",
+   "S30: APPROVE_WITH_AUTHORIZATION"
+  ],
+  "holds": true
+ },
+ "P5": {
+  "result": "refused: no discount procedure is in force on 2024-06-01",
+  "holds": true
+ }
+}

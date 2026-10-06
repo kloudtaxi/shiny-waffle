@@ -333,7 +333,13 @@ def entry_routes(
 
 # -- the runner -------------------------------------------------------------------------------
 def load(path: Path) -> dict[str, Any]:
-    spec = yaml.safe_load(path.read_text())
+    return loads(path.read_text(), path.name)
+
+
+def loads(text: str, name: str) -> dict[str, Any]:
+    """A spec from its text (G-13: a registered procedure runs from the approved text)."""
+    path = Path(name)  # for error messages only
+    spec = yaml.safe_load(text)
     for key in ("spec", "outcomes", "route_to", "documents", "steps", "outcome", "record"):
         if key not in spec:
             raise SpecError(f"{path.name}: missing section {key!r}")

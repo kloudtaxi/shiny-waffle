@@ -1,0 +1,94 @@
+# Credit-limit increase, v3: terms from the OWM register (2026-10-05, runs/2026-10-05-register/plan.md).
+# The policy in force and any guarantee are registered entries with structured terms (R2), not
+# text. Documents of those kinds count only as registered versions (R1). A relied-on entry whose
+# document on file differs or is missing raises an incident (R3, on_mismatch). Guarantee coverage
+# is by the entry's registered customer id, so it needs no judgment.
+# Inputs: sid, record (the ERP credit-request row), as_of. Needs the company's register.
+
+spec: credit_limit_increase
+outcomes: [APPROVE, APPROVE_WITH_AUTHORIZATION, REJECT_OR_ESCALATE, REVIEW_REQUIRED, REQUEST_EVIDENCE]
+route_to: REQUEST_EVIDENCE
+
+documents:
+  kinds:
+    - { kind: policy, id_prefixes: [CREDIT-POLICY], title_words: [Credit Policy] }
+    - { kind: guarantee, id_prefixes: [GRT-], title_words: [Guarantee] }
+  owners: { policy: [Finance], guarantee: [Legal] }
+  policy_kind: policy
+  graded: [guarantee]
+  registered_kinds: { policy: credit_policy, guarantee: guarantee }   # R1, mapped to the register's kinds
+  single_kinds: [guarantee]               # relying on two registered guarantees routes
+  # on_mismatch: use_registered is the default (G-01, decided 2026-10-05): a copy on file that
+  # differs from its registered version raises an incident, and the decision stands on the
+  # registered terms. Declare `on_mismatch: route` to send such decisions to a person instead.
+
+questions:
+  relies:
+    type: choice
+    instructions: What does the credit request in `request` rely on?
+    criteria:
+      guarantee: A guarantee or other credit support from a third party
+      standard: "The customer's own standing: order volume, growth or payment record"
+      unclear: The request does not say what it relies on
+
+steps:
+  - erp: 'first(c for c in table("customers") if c["erp_customer_id"] == record["erp_customer_id"])'
+  - account: 'linked(erp, table("crm_accounts"), ("duns_number",))'
+  - tier: 'account["account_tier"] if account else "Standard"'
+  - amount: 'float(record["requested_limit_usd"])'
+  - relies: 'use(judge("relies", {"request": {"justification": record["justification"]}}))'
+  # the registered policy in force on the date (supersession is explicit in the register)
+  - pol: 'entry_in_force(registered("credit_policy"), as_of)'
+  - _use_pol: 'use_entry(pol) if pol else None'
+  - terms: 'pol["terms"] if pol else None'
+  - rule: '(round(terms["lookback_months"] * 365 / 12), terms["max_days_late"]) if terms else None'
+  - late: >-
+      [i["invoice_id"] for i in table("erp_invoices")
+       if i["erp_customer_id"] == erp["erp_customer_id"]
+       and as_of - days(rule[0]) <= date(i["due_date"]) <= as_of
+       and ((date(i["paid_date"]) if i["paid_date"] and date(i["paid_date"]) <= as_of else as_of)
+            - date(i["due_date"])).days > rule[1]] if rule else []
+  - cap: 'float(terms["caps"][tier]) if rule and tier in terms["caps"] else None'
+  # registered guarantees in force whose guaranteed customer is this one, by registered id
+  - applicable: >-
+      [g for g in in_window(registered("guarantee"), as_of)
+       if g["terms"]["customer"]["erp_customer_id"] == erp["erp_customer_id"]]
+      if rule and not late and cap is not None and (relies["choice"] != "standard" or amount > cap) else []
+  - guarantee: 'first(applicable)'
+  - extra: 'float(guarantee["terms"]["amount"]) if guarantee else 0.0'
+  - eligibility: >-
+      {"status": "unknown", "maximum_limit": None, "basis": None} if not rule else
+      {"status": "ineligible", "maximum_limit": None, "basis": None, "late_invoices": late} if late else
+      {"status": "unknown", "maximum_limit": None, "basis": None} if cap is None else
+      {"status": "unknown", "maximum_limit": None, "basis": None} if relies["choice"] == "guarantee" and guarantee is None else
+      {"status": "eligible" if amount <= cap + extra else "exceeded", "maximum_limit": cap + extra,
+       "basis": guarantee["doc_id"] if guarantee and amount > cap else "cap:" + tier}
+  - _use_guarantee: 'use_entry(applicable) if eligibility["status"] in ("eligible", "exceeded") else None'
+  - auth: 'authority_terms(pol, amount, record["requested_by"]) if pol else None'
+
+outcome:
+  - { when: 'auth is None', outcome: REQUEST_EVIDENCE }
+  - { when: 'eligibility["status"] == "unknown"', outcome: REQUEST_EVIDENCE }
+  - { when: 'eligibility["status"] in ("ineligible", "exceeded")', outcome: REJECT_OR_ESCALATE }
+  - { when: 'auth["requestor_authorized"]', outcome: APPROVE }
+  - { outcome: APPROVE_WITH_AUTHORIZATION }
+
+then:
+  - approvers: >-
+      [{"name": str(auth["approver"]), "kind": "approval"}]
+      + [{"name": c["full_name"], "kind": "concurrence"} for c in concurrences_terms(pol, amount, tier, record["requested_by"])]
+      if outcome in ("APPROVE", "APPROVE_WITH_AUTHORIZATION") else []
+
+record:
+  scenario: sid
+  outcome: outcome
+  gated_outcome: gated_outcome
+  uncertain: uncertain
+  eligibility: eligibility
+  authority: >-
+      auth if auth else
+      {"policy": None, "requestor_limit": None, "requestor_authorized": None, "required_role": None, "approver": None}
+  approvers: approvers
+  registered: '[e["doc_id"] + " v" + str(e["version"]) for e in ([pol] if pol else []) + applicable]'
+  judgments: judgments
+  flags: flags
