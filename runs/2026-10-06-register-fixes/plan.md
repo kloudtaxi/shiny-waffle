@@ -46,3 +46,36 @@ in prose. Then:
 
 **No reader calls now.** The fresh test of the served register is bundled into the next attack set,
 as the user chose.
+
+## Addendum (2026-10-06, after the G-32 results, before the check): a forced route withholds its findings
+
+**What the results showed** (`notes.md`): P-32a was missed on S45, under F7–F10. The 4 rows split
+two ways:
+- F7, F8 and F10 route and claim nothing;
+- **F9's route still carries findings worked out without Schedule C** ("out of scope", $0). That can
+  happen on any forced route, and someone receiving it could believe those findings.
+
+**The user decided (2026-10-06):** drop them, and check now.
+
+**The change** (`flow.py`): on a forced route (G-32), the runner withholds every record field whose
+expression reads anything the spec computed from the documents. Inputs and the runner's own route
+fields are kept (`gated_outcome`, `uncertain`, `judgments`, `flags`). A withheld field is emptied
+but keeps its type: a mapping becomes `{}`, a list becomes `[]`, anything else becomes null. The
+emptied form keeps consumers working. A flag `withheld: <fields> (computed without <docs>)` names
+what was dropped. The default mode and routes for other reasons are unchanged. (A product would
+route before computing anything. Here the decision is still computed, then withheld, so replay
+works.)
+
+**The scoring rule, clarified:** a decision that carries a `withheld:` flag counts as **routed**,
+in every family, including where the key's outcome is the route's own outcome (S45). It decided
+nothing, and a person decides. The check harness (`check_withhold.py`) applies the rule by wrapping
+each family's classifier. Committed harnesses are not edited. The counts under the original
+classifier are reported too.
+
+**Predictions** (by replay; no spend):
+- **P-32c:** route-mode engines (v2+R ×2, v3, discount+R, sla+R) have **0 unsafe** on credit C, D,
+  E, discount A, B and set F, side effects included. S45 under F7–F10 is routed;
+- **P-32d:** every forced route carries a `withheld:` flag. No forced route states a finding: its
+  raw outcome is null, its obligations are `[]`, and SLA scope, breach and credit are empty;
+- **P-32e:** default-mode and frozen engines reproduce their committed rows exactly, and credit K3
+  and K4 pass.
