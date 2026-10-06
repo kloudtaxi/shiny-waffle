@@ -1,7 +1,13 @@
 # Admitting a procedure (G-07 + G-06), and an AI-written SLA procedure through it (G-12)
 
-> **Status:** done. Pre-registered in `plan.md` (`2cff2c6`); its addendum (`b9fe2ac`) moved gate C
-> to the deployed form before any run.
+> **Status:** done, including addendum 2 (the user's decisions, pre-registered in `e8ca7e1`):
+> - **Gate C now scores on the outcome.** Both AI-written credit specs are now refused (6 idle of
+>   16, against the reference's 2 of 12).
+> - **The revision loop worked.** With only the gate's report, the SLA author revised once, and
+>   the revision is **admitted**: 10/10 clean, safe under attack, 0 idle.
+>
+> Below is the first round, then addendum 2. Pre-registered in `plan.md` (`2cff2c6`); the first
+> addendum (`b9fe2ac`) moved gate C to the deployed form before any run.
 > - **The AI-written SLA procedure** held all 10 clean scenarios at its first attempt, with no fix
 >   round, and was safe on every SLA attack. It was **not admitted**: gate C found 2 idle reliances
 >   on the holiday calendar, against the reference's 0.
@@ -115,7 +121,71 @@ As pre-registered, the spec was not fixed after scoring. The failed admission is
    were routed across 24 credit and 4 SLA attacks for every spec. G-06's cost came from guards
    acting without the register. Gate C is now a hygiene check more than a safety check.
 
-## Open for the user
+## Addendum 2: the user's decisions (pre-registered in `e8ca7e1`)
+
+**1. Gate C scores on the outcome** (`--reliance-key outcome`, now the default; `full` reproduces
+the first round). The seven specs were re-run (`calibration-outcome/`):
+
+| Spec | C, idle / relied | Verdict |
+|---|---|---|
+| `discount.yaml` (reference) | 9 / 34 | admitted |
+| `credit_v2.yaml` (reference) | **2 / 12** | admitted |
+| `sla.yaml` (reference) | 0 / 39 | admitted |
+| `credit_v3.yaml` | 0 / 0 | admitted |
+| `credit_agent_v2.yaml` | **6 / 16** | **not admitted** |
+| `credit_agent.yaml` | **6 / 16** | **not admitted** |
+| `sla_agent_v1.yaml` (first version, `46a2d32`) | 2 / 39 | not admitted |
+
+A and B are unchanged for every spec.
+- **Q1 holds:** the exploration reproduces, and both agent credit specs are now refused.
+- **Q2 holds:** discount stays at 9 (at least 9, as expected), and SLA is unchanged.
+
+**2. The revision loop.** The author (the same subagent, with its context) got only the gate's report:
+- A passed, B passed, C failed;
+- the holiday calendar was relied on idly in 2 of 10 clean cases.
+
+It opened no files. It replaced "a holiday falls in the date span" with a counterfactual: measure
+the clocks again on a calendar with no holidays, and rely on the calendar only if the response or
+restoration result differs. The revision was committed as delivered (`8514430`) before gating.
+
+| Gate | Revision 1 |
+|---|---|
+| A, clean | 10/10 held |
+| B, under attack | 0 unsafe or errors in 4 attacks, 0 routed |
+| C, reliance | **0 idle of 37 relied** |
+| **Verdict** | **Admitted** |
+
+- **R1 holds:** admitted after one revision.
+- **R2 holds:** no regression.
+- **Jev:** no new calls.
+
+**Exploratory, not pre-registered: the mirror of gate C** (`explore_unrelied.py`). Each governing
+document the decision did *not* rely on is removed, and the decision is checked for a change.
+
+| Spec | Unwatched dependence |
+|---|---|
+| `sla_agent_v1.yaml` | none |
+| `sla_agent.yaml` (revision 1) | none |
+| `sla.yaml` (reference) | **S37: the holiday calendar changes the decision, but isn't relied on** |
+
+Gate C catches over-reliance only. A spec that relies on *too little* passes it, and the guards
+then never watch that document. The reference SLA spec has one such case. The risk is low in the
+default mode, where registered documents are read as their approved versions anyway. A mirror test
+for the gate is a candidate (G-34).
+
+## What the whole run shows
+
+1. **An agent can author a correct procedure for a type the primitives weren't shaped around**
+   (G-12): 10/10 at the first attempt.
+2. **The gate plus a feedback loop is a workable admission process.** The gate refused a correct
+   but sloppy spec. The author fixed it from the gate's report alone, in one round, without
+   regressions. That is the product flow: agents propose, the gate admits, people approve.
+3. **The measure matters.** The pre-registered reliance key was too coarse for credit. The
+   outcome-level key refuses both agent credit specs, which matches G-06's evidence.
+4. **With the register in default mode, reliance has no observed safety cost** (0 routed, 0 unsafe
+   everywhere). Gate C is about keeping the guards meaningful, not about any attack seen here.
+
+## Open for the user (answered 2026-10-06; see addendum 2)
 
 - **Gate C's measure:** keep the pre-registered key, or adopt the outcome-level key (the outcome
   and approvers; for SLA, the outcome, credit and obligations, as now). The exploratory
@@ -133,6 +203,10 @@ As pre-registered, the spec was not fixed after scoring. The failed admission is
 | `errors_only.py` | The fix-round runner (errors only; not needed) |
 | `sla_agent.json` | The gate's report on the agent's SLA spec |
 | `jev-calls.jsonl` | 10 new Jev calls, made by the errors-only run |
+| `calibration-outcome/*.json` | Addendum 2: the seven specs on the outcome-level key |
+| `sla_agent_v1.yaml` | The first version, snapshotted from `46a2d32`, so it could be gated while the author revised |
+| `sla_agent_r1.json` | The gate's report on revision 1 |
+| `explore_unrelied.py` | Exploratory: the mirror test |
 
 The gate's own counter said "live Jev 10" on the G-12 run. Those 10 came from the errors-only run's
 recording, which the gate didn't load. The counter now loads it (fixed after the run), and the G-12
