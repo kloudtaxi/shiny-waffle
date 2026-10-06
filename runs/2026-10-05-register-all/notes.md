@@ -213,7 +213,7 @@ The engines are unaffected (credit K3 re-checked).
 2. **Structured terms must carry the whole rule (G-33).** A term schema that keeps only "yes" loses
    who takes over. Engines hide the gap, because the hand-off is in code; agents expose it.
 
-**Total cost of set F:** readers **$20.67** (64 calls); Jev, about 28 new calls (cents); Utopia,
+**Total cost of set F:** readers **$20.67** (64 calls); Jev, 22 new calls (cents); Utopia,
 none.
 
 ## Left open
