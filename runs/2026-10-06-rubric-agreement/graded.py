@@ -48,8 +48,10 @@ def main() -> None:
     (HERE / "graded-41.json").write_text(json.dumps(rows, indent=1) + "\n")
     for r in rows:
         mark = "FLAG" if r["flagged"] else "    "
-        print(f"{mark} {r['answer'][-40:]:40} user {r['user_overall']:8} block {r['block_outcome']} "
-              f"exp {r['expected']}")
+        print(
+            f"{mark} {r['answer'][-40:]:40} user {r['user_overall']:8} block {r['block_outcome']} "
+            f"exp {r['expected']}"
+        )
 
 
 if __name__ == "__main__":

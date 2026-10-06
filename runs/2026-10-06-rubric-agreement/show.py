@@ -1,6 +1,6 @@
 """Print one reader answer's final text (for G-16's hand reads).
 
-    uv run python runs/2026-10-06-rubric-agreement/show.py runs/<...>.jsonl
+uv run python runs/2026-10-06-rubric-agreement/show.py runs/<...>.jsonl
 """
 
 from __future__ import annotations
