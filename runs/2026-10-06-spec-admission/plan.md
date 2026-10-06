@@ -85,3 +85,37 @@ any agent spec that declares `registered_kinds`) can't run without one. So gate 
 **deployed form**, like gates A and B. Each relied-on document is removed from **both the corpus
 and the register**, so it is truly absent, and the scenario is decided again. Unchanged means
 idle. The reference for credit is still `credit_v2.yaml`, deployed. Nothing else changes.
+
+## Addendum 2 (2026-10-06, after the results, before any new run): the user's two decisions
+
+The results are in `notes.md` (`8827902`). The user decided:
+
+**1. Gate C scores on the outcome.** Its idle-reliance key becomes outcome-level:
+- **credit:** the gated outcome and the approvers (as in `explore_outcome_idle.py`);
+- **discount:** the gated outcome, the approver and whether the requestor is authorised;
+- **SLA:** unchanged (the gated outcome, the credit and the obligations already are the outcome).
+
+The old key stays available as `--reliance-key full`, so the first run reproduces. All seven specs
+are re-run through the gate, which is now a check: the motivating numbers were seen in exploration.
+
+| # | Expected |
+|---|---|
+| Q1 | It reproduces the exploration for credit: `credit_v2` 2 idle of 12, `credit_agent` 6 of 16, `credit_agent_v2` 6 of 16. **Both agent credit specs are now not admitted.** `credit_v3` is still admitted, with 0 relied |
+| Q2 | The discount reference has at least its 9 idle under the old key (a coarser key can only add idle reliances), and is admitted by definition. The SLA results are unchanged: reference 0 of 39, `sla_agent` 2 of 39, not admitted |
+
+**2. A revision loop for the agent's SLA spec (a new test).** The same author (the subagent, its
+context intact) receives only the gate's report:
+- A passed, B passed, C failed;
+- C's finding: the holiday calendar `HR-HOLIDAYS-2025-26` was relied on in 2 of the 10 clean cases
+  where removing it left the decision unchanged;
+- the definition of an idle reliance.
+
+It gets no outcomes and no case ids. It revises **once**, and the revision is committed as
+delivered before it is gated.
+
+| # | Prediction |
+|---|---|
+| R1 | The revised spec is **admitted**: it passes A, B and C (0 idle on the outcome key) |
+| R2 | No regression: A stays 10/10, and B stays at 0 unsafe |
+
+**Cost:** cents of Jev; the author's tokens; no reader or Utopia spend.
