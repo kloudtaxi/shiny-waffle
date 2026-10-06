@@ -10,8 +10,9 @@ passes:
 - **B, under attack:** no unsafe target, no unsafe side effect and no error on any sealed attack
   set of its type;
 - **C, reliance:** no more idle reliances than its type's reference spec. An idle reliance is a
-  relied-on document whose removal, from the corpus and the register alike, leaves the decision
-  unchanged.
+  relied-on document whose removal, from the corpus and the register alike, leaves what the
+  decision decides unchanged: the outcome and approvers (credit, discount), or the outcome, credit
+  and obligations (SLA). `--reliance-key full` uses the harnesses' scored key instead.
 
 It is a lab instrument: it loads the committed harness pieces (attack builders, classifiers,
 checks) by path, as the harnesses do, so it scores exactly as they did. Jev answers come from every
@@ -93,8 +94,8 @@ class Layered:
 
 
 class Gate:
-    def __init__(self, eng: Layered) -> None:
-        self.eng = eng
+    def __init__(self, eng: Layered, reliance_key: str = "outcome") -> None:
+        self.eng, self.reliance_key = eng, reliance_key
         self.truth = load_truth(LAB / "truth")
         self.scen = {s.id: s for s in self.truth.scenarios}
         self.key = {r["scenario"]: r for r in yaml.safe_load(
@@ -161,6 +162,16 @@ class Gate:
         if kind == "credit":
             return d.get("gated_outcome") != "ERROR" and bool(guards.strict(d, self.key[sid]))
         return self.classify(kind, sid, d) == "held"
+
+    def ckey(self, kind: str, d: dict[str, Any]) -> Any:
+        """Gate C's key. `outcome` (the user's decision, 2026-10-06; plan addendum 2): what the
+        decision decides. `full`: the harnesses' scored key, as first pre-registered."""
+        if self.reliance_key == "full" or kind == "sla" or d.get("gated_outcome") == "ERROR":
+            return self.kkey(kind, d)
+        if kind == "credit":
+            return (d.get("gated_outcome"), tuple(setc.approvers(d)))
+        a = d.get("authority") or {}
+        return (d.get("gated_outcome"), a.get("approver"), a.get("requestor_authorized"))
 
     def kkey(self, kind: str, d: dict[str, Any]) -> Any:
         if d.get("gated_outcome") == "ERROR":
@@ -242,7 +253,7 @@ class Gate:
                     err = str(d.get("error", ""))
                     if "not recorded" in err or "live Jev cap" in err:
                         unknown.append({"scenario": sid, "document": doc_id, "error": d["error"]})
-                    elif self.kkey(kind, d) == self.kkey(kind, clean[sid]):
+                    elif self.ckey(kind, d) == self.ckey(kind, clean[sid]):
                         idle.append({"scenario": sid, "document": doc_id})
                     shutil.rmtree(ab, ignore_errors=True)
         return {"spec": str(path.relative_to(LAB)), "type": kind, "notes": notes,
@@ -277,8 +288,9 @@ def main() -> None:
     ap.add_argument("--max-live", type=int, default=5000)
     ap.add_argument("--json", type=Path)
     ap.add_argument("--no-reference", action="store_true", help="skip running the reference")
+    ap.add_argument("--reliance-key", choices=["outcome", "full"], default="outcome")
     a = ap.parse_args()
-    gate = Gate(Layered(a.calls, live=not a.replay, cap=a.max_live))
+    gate = Gate(Layered(a.calls, live=not a.replay, cap=a.max_live), a.reliance_key)
     spec = a.spec.resolve()
     report = gate.run(spec, a.type)
     ref_path = LAB / "lab/owm_kernel/specs" / REFERENCE[a.type]
