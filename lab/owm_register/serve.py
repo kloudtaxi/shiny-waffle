@@ -77,19 +77,27 @@ def terms(e: dict[str, Any], store: Path) -> list[str]:
                 "submitted" + (f"; the approval or concurrence passes to the "
                                f"{t['separation_of_duties_passes_to']}"
                                if t.get("separation_of_duties_passes_to") else "") + "."
-                if t["separation_of_duties"] else "none.")]  # fmt: skip
+                if t["separation_of_duties"] else "none.")] + (
+            [f"Authority applies to {t['authority_basis']}; account tiers are as recorded in "
+             f"{t['tier_source']}; {t['guarantee_rule']}."]
+            if t.get("guarantee_rule") else [])  # fmt: skip
     if k == "guarantee":
         return [f"{t['guarantor']} guarantees the obligations of {cust(t['customer'])} only, up to "
                 f"{usd(t['amount'])} in aggregate."]  # fmt: skip
     if k == "pricing_policy":
         ev = t.get("approval_evidence_required_above")
-        return [f"Approval authority, on the discount: {bands(t, pct)}."] + (
-            [f"Discounts over {pct(ev)} require recorded approval evidence."] if ev else []
+        return (
+            [f"Approval authority, on the discount: {bands(t, pct)}."]
+            + ([f"Discounts over {pct(ev)} require recorded approval evidence."] if ev else [])
+            + (["Rules: " + " ".join(t["rules"])] if t.get("rules") else [])
         )
     if k == "agreement":
-        return [f"Customer: {cust(t['customer'])}. Products covered: {', '.join(t['products'])}. "
-                "It grants no approval authority." if not t.get("grants_approval_authority")
-                else ""]  # fmt: skip
+        price = "; ".join(f"up to {pct(x['maximum_discount'])} on {x['product']} (set out in "
+                          f"{x['set_out_in']})" for x in t.get("pricing", []))  # fmt: skip
+        return [f"Customer: {cust(t['customer'])}. Products covered: {', '.join(t['products'])}."
+                + (f" Pricing: {price}." if price else "")
+                + (" It grants no approval authority."
+                   if not t.get("grants_approval_authority") else "")]  # fmt: skip
     if k == "exception":
         return [f"Customer: {cust(t['customer'])}. Product: {t['product']}. Maximum discount: "
                 f"{pct(t['maximum_discount'])} of list price."]  # fmt: skip
@@ -112,7 +120,11 @@ def terms(e: dict[str, Any], store: Path) -> list[str]:
                 f"{', '.join(t['products'])}. Coverage starts {t['coverage_start']}."]  # fmt: skip
     if k == "holiday_calendar":
         return ["Holidays: " + "; ".join(f"{h['date']} {h['name']}" for h in t["holidays"]) + "."]
-    # prose only: the approved text itself
+    return []
+
+
+def approved_text(e: dict[str, Any], store: Path) -> list[str]:
+    """G-33: the approved document itself, so no rule is lost to an incomplete term schema."""
     text = (store / f"{e['sha256']}.md").read_text().split("---", 2)[-1].strip()
     return ["Approved text (authoritative):", "", *(f"    {line}" for line in text.splitlines())]
 
@@ -137,8 +149,9 @@ def served(corpus: str, decision: str) -> str:
         who = f"Registered by {e['registered_by']}; approved by {e['approved_by']}."
         out.append(f"- **{e['doc_id']}** ({kinds[e['kind']]}, `{e['file']}`), {window}{rel}. "
                    f"{who}")  # fmt: skip
+        lines = [x for x in terms(e, HERE / "store") if x] + approved_text(e, HERE / "store")
         out += [f"  - {line}" if not line.startswith("    ") and line else line
-                for line in terms(e, HERE / "store") if line is not None]  # fmt: skip
+                for line in lines]  # fmt: skip
     return "\n".join(out)
 
 

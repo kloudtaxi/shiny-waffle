@@ -85,11 +85,20 @@ def policy_entry(truth: Any, cp: Any, doc: Doc, previous: str | None) -> dict[st
     }  # fmt: skip
     if cp.separation_of_duties:  # set F: a term must carry the whole rule, not just "yes"
         terms["separation_of_duties_passes_to"] = "requestor's manager"
+    # G-33 review: the policy's other decision rules, each checked against the text below
+    terms |= {"authority_basis": "the new total credit limit requested",
+              "tier_source": "Northstar CRM",
+              "guarantee_rule": "a parent-company guarantee in force raises the maximum by the "
+                                "guaranteed amount, for the customer the guarantee names",
+              "decisions_recorded_in": "Northstar ERP"}  # fmt: skip
     check(doc, [usd(b.max_inclusive) for b in cp.bands if b.max_inclusive]
           + [usd(c.min_exclusive) for c in cp.concurrence]
           + [f"{usd(v)} for {k} accounts" for k, v in cp.caps.items()]
           + [f"{months} months", f"more than {cp.max_days_late} days"]
-          + (["passes to the requestor's manager"] if cp.separation_of_duties else []))  # fmt: skip
+          + (["passes to the requestor's manager"] if cp.separation_of_duties else [])
+          + ["Authority applies to the new total credit limit requested",
+             "as recorded in Northstar CRM", "raises the maximum by the guaranteed amount",
+             "recorded in Northstar ERP"])  # fmt: skip
     return entry(doc, "credit_policy", cp.valid_from, cp.valid_to, terms, FINANCE,
                  [{"type": "supersedes", "target": previous}] if previous else [])  # fmt: skip
 
@@ -124,7 +133,12 @@ def pricing_policy_entry(truth: Any, p: Any, doc: Doc, previous: str | None) -> 
     terms = {"bands": [{"title": truth.role_title(b.role), "min_exclusive": b.min_exclusive,
                         "max_inclusive": b.max_inclusive} for b in p.bands],
              "approval_evidence_required_above": p.approval_evidence_required_above}  # fmt: skip
-    check(doc, [pct(b.max_inclusive) for b in p.bands if b.max_inclusive])
+    terms["rules"] = list(p.rules)  # G-33
+    if p.authority_matrix_document:
+        terms["authority_reference"] = "Approval Authority Matrix (the operational reference)"
+    check(doc, [pct(b.max_inclusive) for b in p.bands if b.max_inclusive]
+          + [r.rstrip(".") for r in p.rules]
+          + (["Approval Authority Matrix"] if p.authority_matrix_document else []))  # fmt: skip
     return entry(doc, "pricing_policy", p.valid_from, p.valid_to, terms,
                  by_function("Revenue Operations"),
                  [{"type": "supersedes", "target": previous}] if previous else [])  # fmt: skip
@@ -135,18 +149,36 @@ def sku(truth: Any, pid: str) -> str:
 
 
 def agreement_entry(truth: Any, c: Any, doc: Doc, root: Path) -> dict[str, Any]:
+    pricing = [{"product": sku(truth, x.product), "maximum_discount": x.maximum_discount,
+                "set_out_in": x.id} for x in truth.exceptions if x.contract == c.id]  # fmt: skip
     terms = {"customer": ids_of(truth, root, c.customer),
              "products": [sku(truth, pid) for pid in c.covers],
+             "pricing": pricing,  # G-33: the agreement's own pricing clause
              "grants_approval_authority": c.grants_approval_authority}  # fmt: skip
-    check(doc, terms["products"])
+    check(
+        doc,
+        terms["products"]
+        + [pct(x["maximum_discount"]) for x in pricing]
+        + (
+            [] if c.grants_approval_authority else ["does not modify Northstar's internal approval"]
+        ),
+    )
     return entry(doc, "agreement", c.valid_from, c.valid_to, terms, LEGAL, [])
 
 
 def exception_entry(truth: Any, x: Any, doc: Doc, root: Path, agreement: str | None
                     ) -> dict[str, Any]:  # fmt: skip
     terms = {"customer": ids_of(truth, root, x.customer), "product": sku(truth, x.product),
-             "maximum_discount": x.maximum_discount}  # fmt: skip
-    check(doc, [pct(x.maximum_discount), terms["product"]])
+             "maximum_discount": x.maximum_discount,
+             "grants_approval_authority": x.grants_approval_authority}  # fmt: skip
+    # G-33: the "grants no authority" clause is checked where the text states it (EXC-15); the
+    # 2023 exception is silent on it, and truth records it as granting none
+    stated = "does not grant approval authority" in " ".join(doc.raw.split())
+    check(
+        doc,
+        [pct(x.maximum_discount), terms["product"]]
+        + (["does not grant approval authority"] if stated else []),
+    )
     rel = ([{"type": "supersedes", "target": x.supersedes}] if x.supersedes else []) + (
         [{"type": "under", "target": agreement}] if agreement else []
     )

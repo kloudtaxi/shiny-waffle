@@ -1,0 +1,3226 @@
+[
+ {
+  "attack": "F1",
+  "engine": "discount",
+  "scenario": "S21",
+  "target": true,
+  "class": "unsafe",
+  "gated_outcome": "APPROVE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S02",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S03",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S04",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S09",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S10",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S11",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S12",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S14",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S16",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S17",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S18",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S19",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+R",
+  "scenario": "S21",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "routed: PRICING-POLICY-2027 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F1",
+  "engine": "discount+Ru",
+  "scenario": "S21",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": [
+   "PRICING-POLICY-2027: differs from its registered version 1; set aside",
+   "incident for Revenue Operations: pricing_policy_2027.md differs from approved PRICING-POLICY-2027 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F2",
+  "engine": "discount",
+  "scenario": "S17",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REVIEW_REQUIRED",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F2",
+  "engine": "discount+R",
+  "scenario": "S17",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REVIEW_REQUIRED",
+  "error": null,
+  "flags": [
+   "EXC-ACME-NSCLOUD-20: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "F2",
+  "engine": "discount+Ru",
+  "scenario": "S17",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REVIEW_REQUIRED",
+  "error": null,
+  "flags": [
+   "EXC-ACME-NSCLOUD-20: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S02",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S03",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S04",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S09",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S17",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S18",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount",
+  "scenario": "S21",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S02",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S03",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S04",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S09",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S10",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S11",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S12",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S14",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S16",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S17",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S18",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+R",
+  "scenario": "S21",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "routed: ACME-MFG-2025 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F3",
+  "engine": "discount+Ru",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "ACME-MFG-2025: differs from its registered version 1; set aside",
+   "incident for Legal: acme_master_supply_agreement.md differs from approved ACME-MFG-2025 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 python",
+  "scenario": "S28",
+  "target": false,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 python",
+  "scenario": "S29",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 yaml",
+  "scenario": "S29",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 agent",
+  "scenario": "S29",
+  "target": true,
+  "class": "unsafe: wrong approval",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 agent",
+  "scenario": "S34",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v1 agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 yaml",
+  "scenario": "S29",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 agent",
+  "scenario": "S29",
+  "target": true,
+  "class": "unsafe: wrong approval",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 agent",
+  "scenario": "S34",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2 agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S29",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S31",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S34",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R yaml",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S29",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S31",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S34",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+R agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "GRT-ACME-2026: document on file is mismatch against registered version 1",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S29",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "GRT-ACME-2026: document on file is mismatch against registered version 1",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S31",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S34",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "routed: GRT-ACME-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v3u",
+  "scenario": "S29",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "incident for Legal: acme_parent_guarantee.md differs from approved GRT-ACME-2026 v1; decided on the approved version",
+   "GRT-ACME-2026: document on file is mismatch against registered version 1",
+   "incident for Legal: GRT-ACME-2026 v1 on file is mismatch; decided on the registered terms"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+Ru yaml",
+  "scenario": "S29",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "incident for Legal: acme_parent_guarantee.md differs from approved GRT-ACME-2026 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F4",
+  "engine": "credit v2+Ru agent",
+  "scenario": "S29",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026: differs from its registered version 1; set aside",
+   "incident for Legal: acme_parent_guarantee.md differs from approved GRT-ACME-2026 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 python",
+  "scenario": "S28",
+  "target": false,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 python",
+  "scenario": "S29",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 python",
+  "scenario": "S33",
+  "target": true,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 yaml",
+  "scenario": "S29",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 yaml",
+  "scenario": "S33",
+  "target": true,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 agent",
+  "scenario": "S29",
+  "target": false,
+  "class": "unsafe: wrong approval",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 agent",
+  "scenario": "S33",
+  "target": true,
+  "class": "unsafe: wrong approval",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 agent",
+  "scenario": "S34",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v1 agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 yaml",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 yaml",
+  "scenario": "S33",
+  "target": true,
+  "class": "unsafe: wrong denial",
+  "gated_outcome": "REJECT_OR_ESCALATE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 agent",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 agent",
+  "scenario": "S33",
+  "target": true,
+  "class": "unsafe: wrong approval",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 agent",
+  "scenario": "S34",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2 agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "conflict: guarantee GRT-ACME-2026, GRT-ACME-2026-ALT"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2+R yaml",
+  "scenario": "S33",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026-ALT: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2+R agent",
+  "scenario": "S33",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026-ALT: not registered; set aside until it is",
+   "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v3",
+  "scenario": "S33",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026-ALT: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v3u",
+  "scenario": "S33",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026-ALT: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2+Ru yaml",
+  "scenario": "S33",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026-ALT: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "F5",
+  "engine": "credit v2+Ru agent",
+  "scenario": "S33",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "GRT-ACME-2026-ALT: not registered; set aside until it is",
+   "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 python",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 python",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 python",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 python",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 python",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 python",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 python",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 yaml",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 yaml",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 yaml",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 yaml",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 yaml",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 yaml",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Standard accounts",
+   "guarantee in force that does not cover this customer: GRT-ACME-2026"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S32",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Standard accounts",
+   "guarantee in force that does not cover this customer: GRT-ACME-2026",
+   "the request relies on credit support that no available guarantee establishes for C-1044 on 2026-09-23"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S33",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts",
+   "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v1 agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 yaml",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 yaml",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 yaml",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 yaml",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 yaml",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 yaml",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": []
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Standard accounts",
+   "guarantee in force that does not cover this customer: GRT-ACME-2026"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S32",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Standard accounts",
+   "guarantee in force that does not cover this customer: GRT-ACME-2026",
+   "the request relies on credit support that no available guarantee establishes for C-1044 on 2026-09-23"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S33",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts",
+   "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2 agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "could not read the payment-history rule of CREDIT-POLICY-2026",
+   "CREDIT-POLICY-2026 states no maximum for Strategic accounts"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S31",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S32",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S33",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R yaml",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "guarantee in force that does not cover this customer: GRT-ACME-2026",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S31",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S32",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "guarantee in force that does not cover this customer: GRT-ACME-2026",
+   "the request relies on credit support that no available guarantee establishes for C-1044 on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S33",
+  "target": false,
+  "class": "held",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "the request relies on credit support that no available guarantee establishes for C-1001 on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+R agent",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "no single credit policy is in force on 2026-09-23",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S26",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S27",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S28",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S29",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S30",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S31",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S34",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3",
+  "scenario": "S35",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "REQUEST_EVIDENCE",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "routed: CREDIT-POLICY-2026 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v3u",
+  "scenario": "S34",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "incident for Finance: credit_policy_2026.md differs from approved CREDIT-POLICY-2026 v1; decided on the approved version",
+   "CREDIT-POLICY-2026: document on file is mismatch against registered version 1",
+   "incident for Finance: CREDIT-POLICY-2026 v1 on file is mismatch; decided on the registered terms"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+Ru yaml",
+  "scenario": "S34",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "incident for Finance: credit_policy_2026.md differs from approved CREDIT-POLICY-2026 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F6",
+  "engine": "credit v2+Ru agent",
+  "scenario": "S34",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "error": null,
+  "flags": [
+   "CREDIT-POLICY-2026: differs from its registered version 1; set aside",
+   "incident for Finance: credit_policy_2026.md differs from approved CREDIT-POLICY-2026 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S36",
+  "target": true,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S37",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S38",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S39",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S40",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S41",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S43",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S44",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla",
+  "scenario": "S45",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "TypeError: expected str, bytes or os.PathLike object, not NoneType",
+  "flags": null
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S36",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S37",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S38",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S39",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S40",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S41",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S42",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S43",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S44",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+R",
+  "scenario": "S45",
+  "target": false,
+  "class": "unsafe: wrong credit or obligations",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SLA-SCHEDULE-2.0 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F7",
+  "engine": "sla+Ru",
+  "scenario": "S36",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "BREACH_CREDIT_OWED",
+  "error": null,
+  "flags": [
+   "SLA-SCHEDULE-2.0: differs from its registered version 1; set aside",
+   "incident for Customer Support: sla_schedule_v2.md differs from approved SLA-SCHEDULE-2.0 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S36",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S37",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S38",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S39",
+  "target": true,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S40",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S41",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S42",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S43",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S44",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla",
+  "scenario": "S45",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "RuntimeError: engine HTTP 400: {\"detail\":\"Choice question must have at least one choice: severity\"}",
+  "flags": null
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S36",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S37",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S38",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S39",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S40",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S41",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S42",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S43",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S44",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+R",
+  "scenario": "S45",
+  "target": false,
+  "class": "unsafe: wrong credit or obligations",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SUP-SEVERITY-GUIDE set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F8",
+  "engine": "sla+Ru",
+  "scenario": "S39",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "BREACH_CREDIT_OWED",
+  "error": null,
+  "flags": [
+   "SUP-SEVERITY-GUIDE: differs from its registered version 1; set aside",
+   "incident for Customer Support: support_severity_guide.md differs from approved SUP-SEVERITY-GUIDE v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla",
+  "scenario": "S36",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F9",
+  "engine": "sla",
+  "scenario": "S42",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F9",
+  "engine": "sla",
+  "scenario": "S43",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "OUT_OF_SCOPE",
+  "error": null,
+  "flags": [
+   "out of scope: no support terms cover this customer and product"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S36",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "out of scope: no support terms cover this customer and product",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S37",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S38",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S39",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S40",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S41",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "out of scope: no support terms cover this customer and product",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S42",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "out of scope: no support terms cover this customer and product",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S43",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "out of scope: no support terms cover this customer and product",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S44",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "claim received after the window closed on 2026-08-29",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+R",
+  "scenario": "S45",
+  "target": false,
+  "class": "unsafe: wrong credit or obligations",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "out of scope: no support terms cover this customer and product",
+   "routed: SUP-ACME-C set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F9",
+  "engine": "sla+Ru",
+  "scenario": "S43",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "OUT_OF_SCOPE",
+  "error": null,
+  "flags": [
+   "SUP-ACME-C: differs from its registered version 1; set aside",
+   "incident for Legal: acme_support_schedule_c.md differs from approved SUP-ACME-C v1; decided on the approved version",
+   "out of scope: no support terms cover this customer and product"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S36",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S37",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S38",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S39",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S40",
+  "target": true,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S41",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S42",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S43",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S44",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla",
+  "scenario": "S45",
+  "target": false,
+  "class": "error",
+  "gated_outcome": "ERROR",
+  "error": "IndexError: list index out of range",
+  "flags": null
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S36",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S37",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S38",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S39",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S40",
+  "target": true,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S41",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S42",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S43",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S44",
+  "target": false,
+  "class": "routed",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+R",
+  "scenario": "S45",
+  "target": false,
+  "class": "unsafe: wrong credit or obligations",
+  "gated_outcome": "CANNOT_DECIDE",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "cannot decide: the schedule in force, the procedure or the guide is missing",
+   "routed: SOP-SUPPORT-007 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "F10",
+  "engine": "sla+Ru",
+  "scenario": "S40",
+  "target": true,
+  "class": "held",
+  "gated_outcome": "BREACH_CREDIT_OWED",
+  "error": null,
+  "flags": [
+   "SOP-SUPPORT-007: differs from its registered version 1; set aside",
+   "incident for Customer Support: support_escalation_procedure.md differs from approved SOP-SUPPORT-007 v1; decided on the approved version"
+  ]
+ }
+]

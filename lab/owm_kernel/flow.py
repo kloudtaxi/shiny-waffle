@@ -400,6 +400,7 @@ def run(
     if reg_kinds and register is None:
         raise SpecError(f"{spec['spec']}: registered_kinds is declared, but no register was given")
     status = register.status(on_file) if register else {}
+    screened_from = len(flags)
     docs_in = (
         register_screen(
             on_file,
@@ -413,6 +414,13 @@ def run(
         if register and reg_kinds
         else on_file
     )
+    # G-32 (2026-10-06): in route mode, a registered document set aside routes the decision
+    # explicitly; going on without it is unsafe when a spec reads absence as meaning (set F, F9)
+    set_aside = [f.split(":")[0] for f in flags[screened_from:]
+                 if "differs from its registered version" in f
+                 and f.endswith("set aside")]  # fmt: skip
+    if docs_cfg.get("on_mismatch", "use_registered") != "route":
+        set_aside = []
     s = screen(eng, docs_in, guards, staff, products, used, flags)
 
     def registered(kind: str) -> list[dict[str, Any]]:  # R2
@@ -510,6 +518,9 @@ def run(
     if spec.get("gate", True):
         routed = lineage_routes(relied, s, guards, flags)  # L2, L3
         routed |= entry_routes(relied_entries, docs_cfg, flags, reg_kinds)  # R3
+        if set_aside:  # G-32
+            flags.append("routed: " + ", ".join(set_aside) + " set aside (on_mismatch: route)")
+            routed = True
         uncertain, gated = gate(outcome, relied, s.inconsistent, used, flags,
                                 route_to=spec["route_to"])  # fmt: skip
         gated = spec["route_to"] if routed else gated

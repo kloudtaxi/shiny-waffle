@@ -29,6 +29,11 @@ entries:
       Standard: 300000
     separation_of_duties: true
     separation_of_duties_passes_to: requestor's manager
+    authority_basis: the new total credit limit requested
+    tier_source: Northstar CRM
+    guarantee_rule: a parent-company guarantee in force raises the maximum by the guaranteed amount, for
+      the customer the guarantee names
+    decisions_recorded_in: Northstar ERP
   registered_by: Priya Shah (EMP-401, Finance Manager)
   approved_by: Elena Novak (EMP-402, Director of Finance)
   registered_on: '2024-12-15'
@@ -66,6 +71,11 @@ entries:
       Standard: 250000
     separation_of_duties: true
     separation_of_duties_passes_to: requestor's manager
+    authority_basis: the new total credit limit requested
+    tier_source: Northstar CRM
+    guarantee_rule: a parent-company guarantee in force raises the maximum by the guaranteed amount, for
+      the customer the guarantee names
+    decisions_recorded_in: Northstar ERP
   registered_by: Priya Shah (EMP-401, Finance Manager)
   approved_by: Elena Novak (EMP-402, Director of Finance)
   registered_on: '2025-12-15'
@@ -87,6 +97,9 @@ entries:
       min_exclusive: 0.15
       max_inclusive: null
     approval_evidence_required_above: null
+    rules:
+    - Discounts must be calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
   registered_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
   approved_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
   registered_on: '2024-12-10'
@@ -113,6 +126,11 @@ entries:
       min_exclusive: 0.2
       max_inclusive: null
     approval_evidence_required_above: 0.1
+    rules:
+    - Discounts are calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
+    - Discounts greater than 10% require recorded approval evidence.
+    authority_reference: Approval Authority Matrix (the operational reference)
   registered_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
   approved_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
   registered_on: '2025-12-08'
@@ -139,6 +157,10 @@ entries:
       min_exclusive: 0.12
       max_inclusive: null
     approval_evidence_required_above: 0.05
+    rules:
+    - Discounts are calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
+    - Discounts greater than 5% require recorded approval evidence.
   registered_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
   approved_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
   registered_on: '2026-09-15'
@@ -161,6 +183,10 @@ entries:
     - NS-500
     - NS-CLOUD
     - NS-EDGE
+    pricing:
+    - product: NS-500
+      maximum_discount: 0.15
+      set_out_in: EXC-ACME-NS500-15
     grants_approval_authority: false
   registered_by: 'Legal (by function: no Legal staff in the HR export)'
   approved_by: 'Legal (by function: no Legal staff in the HR export)'
@@ -186,6 +212,7 @@ entries:
       duns_number: 04-812-7730
     product: NS-500
     maximum_discount: 0.15
+    grants_approval_authority: false
   registered_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
   approved_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
   registered_on: '2025-03-20'
@@ -206,6 +233,7 @@ entries:
       duns_number: 04-812-7730
     product: NS-500
     maximum_discount: 0.1
+    grants_approval_authority: false
   registered_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
   approved_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
   registered_on: '2023-03-12'
