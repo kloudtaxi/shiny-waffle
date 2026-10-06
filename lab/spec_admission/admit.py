@@ -69,7 +69,8 @@ class Layered:
     def __init__(self, calls: Path, live: bool, cap: int) -> None:
         self.model, self.cap, self.live_calls = "jev-1.13.0", cap, 0
         self._seen: dict[str, Any] = {}
-        for p in sorted(RUNS.rglob("*engine-calls*.jsonl")):
+        files = sorted(RUNS.rglob("*engine-calls*.jsonl")) + ([calls] if calls.exists() else [])
+        for p in files:  # the --calls file too, so only real network calls are counted live
             for line in p.read_text().splitlines():
                 rec = json.loads(line)
                 self._seen.setdefault(rec["hash"], rec["response"])

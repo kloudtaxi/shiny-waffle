@@ -1,7 +1,14 @@
 # Admitting a procedure (G-07 + G-06), and an AI-written SLA procedure through it (G-12)
 
-> **Status:** in progress (calibration done; G-12 authoring under way). Pre-registered in `plan.md`
-> (`2cff2c6`); its addendum (`b9fe2ac`) moved gate C to the deployed form before any run.
+> **Status:** done. Pre-registered in `plan.md` (`2cff2c6`); its addendum (`b9fe2ac`) moved gate C
+> to the deployed form before any run.
+> - **The AI-written SLA procedure** held all 10 clean scenarios at its first attempt, with no fix
+>   round, and was safe on every SLA attack. It was **not admitted**: gate C found 2 idle reliances
+>   on the holiday calendar, against the reference's 0.
+> - **Calibration:** the gate admits all three references. It also admits both AI-written credit
+>   specs, because the pre-registered reliance key is too broad to see their over-reliance. An
+>   exploratory outcome-level key does see it.
+> - **Spend:** 10 new Jev calls (under a cent); no reader or Utopia spend.
 
 ## What was built
 
@@ -66,4 +73,67 @@ and nothing waits.
 
 ## G-12: an AI-written SLA procedure
 
-(pending)
+**The author** was a subagent on the same information diet as the 2026-10-04 credit author. It had
+`SPEC_FORMAT.md`, the SLA procedure, `dataset/evidence/` and the input and record contract.
+- It listed the files it read, and all of them are in the allowed set.
+- Its spec, `lab/owm_kernel/specs/sla_agent.yaml` (553 lines), was committed as delivered
+  (`46a2d32`), before scoring.
+- The runner accepted it and ran all 10 clean cases without an error, so **no fix round was
+  needed**.
+- It declares `registered_kinds` itself, mapping every kind to the register.
+
+| Gate | Result |
+|---|---|
+| A, clean | **10/10 held** (outcome, credit, every Northstar obligation, both breach findings) |
+| B, under attack | 0 unsafe or errors on the 4 SLA attacks (F7–F10), 0 routed |
+| C, reliance | **2 idle of 39 relied** (S38 and S40: the holiday calendar), against the reference's 0 of 39 |
+| **Verdict** | **Not admitted** (fails C) |
+
+**Why C failed:** the spec relies on the holiday calendar whenever a holiday falls anywhere in the
+dates its business-day calculations span (`hol_hit`). In S38 and S40, a holiday falls in the span
+but changes no computed time. Removing the calendar leaves the decision unchanged, so the reliance
+is idle. It's G-06's pattern in a mild form: a condition that is broader than "this document
+changed the result". It costs nothing in the default mode, where 0 decisions were routed.
+
+| # | Prediction | Result |
+|---|---|---|
+| P5 | Loads after at most one fix round, and holds **at least 7 of 10** clean scenarios | **Holds, and is beaten:** no fix round, and 10/10 |
+| P6 | **Not admitted** at its first attempt, failing gate A or C | **Holds:** it fails C |
+
+As pre-registered, the spec was not fixed after scoring. The failed admission is the finding.
+
+## What it shows
+
+1. **An agent can author a correct procedure for a type the primitives weren't shaped around**
+   (G-12). Clocks, business hours, holidays, pauses and obligations came out 10/10 at the first
+   attempt. That is stronger than the credit author (10/10 after the format was shaped around
+   credit).
+2. **The gate works as a gate.** It admitted the references and refused a correct-but-sloppy spec.
+   But its reliance measure, as pre-registered, is too coarse for credit: a document that feeds an
+   intermediate field (the eligibility maximum) never counts as idle.
+3. **With the register in default mode, over-reliance has no observed cost:** 0 correct decisions
+   were routed across 24 credit and 4 SLA attacks for every spec. G-06's cost came from guards
+   acting without the register. Gate C is now a hygiene check more than a safety check.
+
+## Open for the user
+
+- **Gate C's measure:** keep the pre-registered key, or adopt the outcome-level key (the outcome
+  and approvers; for SLA, the outcome, credit and obligations, as now). The exploratory
+  measurement is in `explore-outcome-idle.json`.
+- **The SLA spec:** leave it not admitted, or test a revision loop in which the author sees the
+  gate's report. That would be a new, pre-registered test.
+
+## Files
+
+| File | What |
+|---|---|
+| `plan.md` | Pre-registration and addendum |
+| `calibration/*.json` | The gate's reports on the six existing specs |
+| `explore_outcome_idle.py`, `explore-outcome-idle.json` | Exploratory outcome-level reliance |
+| `errors_only.py` | The fix-round runner (errors only; not needed) |
+| `sla_agent.json` | The gate's report on the agent's SLA spec |
+| `jev-calls.jsonl` | 10 new Jev calls, made by the errors-only run |
+
+The gate's own counter said "live Jev 10" on the G-12 run. Those 10 came from the errors-only run's
+recording, which the gate didn't load. The counter now loads it (fixed after the run), and the G-12
+run made no network calls.
