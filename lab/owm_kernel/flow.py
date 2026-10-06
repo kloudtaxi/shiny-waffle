@@ -528,4 +528,27 @@ def run(
         uncertain, gated = [j["q"] for j in used if j["uncertain"]], outcome
     env.update({"gated_outcome": gated, "uncertain": uncertain, "judgments": used,
                 "flags": flags, "obligations": [o.record() for o in obligations]})  # fmt: skip
-    return {field: evaluate(str(src), env) for field, src in spec["record"].items()}
+    record = {field: evaluate(str(src), env) for field, src in spec["record"].items()}
+    if spec.get("gate", True) and set_aside:
+        withhold(record, spec["record"], set(inputs) | ROUTE_FIELDS, set_aside, flags)
+    return record
+
+
+# what a forced route keeps: the runner's own route fields (G-32 addendum, 2026-10-06)
+ROUTE_FIELDS = {"gated_outcome", "uncertain", "judgments", "flags"}
+
+
+def withhold(record: dict[str, Any], sources: Mapping[str, Any], keep: set[str],
+             set_aside: list[str], flags: list[str]) -> None:  # fmt: skip
+    """A forced route decides nothing from an incomplete set of documents. Every field that reads
+    anything but the inputs and the route itself is emptied, keeping its type ({} / [] / None)."""
+    dropped = []
+    for field, src in sources.items():
+        names = {n.id for n in ast.walk(_parse(str(src))) if isinstance(n, ast.Name)}
+        if names <= keep:
+            continue
+        v = record[field]
+        record[field] = {} if isinstance(v, dict) else [] if isinstance(v, (list, tuple)) else None
+        dropped.append(field)
+    if dropped:  # flags is the record's own list, so the record carries this too
+        flags.append(f"withheld: {', '.join(dropped)} (computed without {', '.join(set_aside)})")

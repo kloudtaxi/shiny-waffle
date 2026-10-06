@@ -1,8 +1,10 @@
 # Register fixes G-32 and G-33: results (2026-10-06)
 
-> **Status:** the code and checks are done. G-33 holds on every prediction. G-32 holds on P-32b.
-> **P-32a is missed on its own classifier:** route mode still has 4 "unsafe" side effects, all on
-> S45. The cause is below. No reader or Utopia calls were made, so nothing was spent. Every engine
+> **Status (updated 2026-10-06):** done. G-33 holds on every prediction. G-32 missed P-32a at
+> first: 4 S45 results scored unsafe, and on F9 a forced route still carried findings. The user
+> chose to fix that ("drop them, check now"). With the addendum (a forced route withholds its
+> findings), **route mode has 0 unsafe on every set, and every prediction holds**
+> (`withhold-check.md`). No reader or Utopia calls were made, so nothing was spent. Every engine
 > re-ran by replay.
 
 The plan (`plan.md`, committed `6c56b25`) was written before the code.
@@ -57,7 +59,7 @@ classifier checks the obligations, and they don't match:
   because a route there is scored on its outcome alone. Someone who receives the route could take
   "out of scope, $0" at face value.
 
-**A candidate fix (not built):** a forced route withholds its findings, so it decides nothing from
+**The fix the user chose (built; see the addendum below):** a forced route withholds its findings, so it decides nothing from
 an incomplete set of documents. Separately, the classifier would count a route that claims nothing
 as routed, even where the key's outcome is CANNOT_DECIDE. Both would be pre-registered and checked
 by replay, which costs nothing. This is a decision for the user (route mode is not the default).
@@ -81,13 +83,51 @@ The served register now carries each document's approved text as well as its ter
 
 Also: ruff, mypy (strict) and pytest (40) pass.
 
+## Addendum: a forced route withholds its findings (pre-registered in `plan.md`, commit `28bb6a4`)
+
+**The change** (`flow.py`, `withhold()`): on a forced route, every record field that reads anything
+the spec computed from documents is emptied, keeping its type (`{}`, `[]`, null). A `withheld:` flag
+names those fields and the document set aside. `SPEC_FORMAT.md` documents it.
+
+**The scoring rule:** a decision with a `withheld:` flag counts as routed. `check_withhold.py`
+applies it by wrapping each family's classifier; the committed harnesses are unedited. Outputs are
+in `withhold/`.
+
+| Set | Route-mode unsafe | Forced routes, all withheld | Re-scored by the rule | Default/frozen reproduce | Other route rows unchanged |
+|---|---|---|---|---|---|
+| Credit C | 0 | 30 | 6 (S32, S33: held → routed) | yes | yes |
+| Credit D | 0 | 57 | 9 (S32, S33) | yes | yes |
+| Credit E | 0 | 0 | 0 | yes | yes |
+| Discount A | 0 | 16 | 2 (S13, S15) | yes | yes |
+| Discount B | 0 | 16 | 2 (S13, S15) | yes | yes |
+| Set F | 0 | 131 | 18 (incl. S45 ×4: unsafe → routed) | yes | yes |
+
+- **P-32c holds:** 0 unsafe in route mode, side effects included.
+- **P-32d holds:** every forced route carries `withheld:`. On F9 → S45, sla+R now gives only
+  CANNOT_DECIDE: outcome, scope, severity, credit and owner null, breach `{}`, obligations `[]`.
+  Credit v3's forced routes give empty eligibility, authority and approvers.
+- **P-32e holds:** default-mode and frozen engines reproduce their committed rows. Credit K3, K4 and
+  R-e pass, and G-30's checks pass.
+
+**What the rule changed, said plainly:**
+- Of the rows it re-scored, only S45 (×4) was unsafe before. The others were "held", where the
+  forced route's outcome happened to equal the key's (credit S32, S33; discount S05, S13, S15).
+  They now count as routed, which is the stricter reading.
+- On the original classifier, S45 would still score unsafe (obligations `[]` against 7). The
+  substantive change is that no forced route now states a finding.
+
+**A residue:** the `flags` trace still records notes made while computing (F9 → S45 carries "out of
+scope: no support terms cover this customer and product"). The `withheld:` flag says these were
+computed without SUP-ACME-C. A product would route before computing anything, so it would have no
+such notes.
+
 ## Still open
 
 - The fresh test of the served register (G-31, G-33) is bundled into the user's next attack set, as
   they chose.
-- The S45 / forced-route candidate fix above.
 
 ## Files
 
 - `plan.md`: the pre-registration. `term-review.md`: the G-33 review.
-- `credit-set-{c,d,e}.*`, `discount-sla-*`, `set-f.*`: the re-runs (by replay), with logs.
+- `credit-set-{c,d,e}.*`, `discount-sla-*`, `set-f.*`: the G-32 re-runs (by replay), with logs.
+- `check_withhold.py`, `withhold-check.{md,log}`, `withhold/`: the addendum's check.
