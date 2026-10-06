@@ -73,8 +73,9 @@ def prompt(truth: Any, sid: str) -> str:
 PROCS = {
     "control": LAB / "owm/procedures",
     "treatment": HERE / "procedures",
-    "treatment-v2": HERE / "procedures-v2",
-}  # v2: the plan's addendum, a check
+    "treatment-v2": HERE / "procedures-v2",  # the plan's addendum, a check
+    "treatment-v3": HERE / "procedures-v3",  # addendum 3, on fresh scenarios
+}
 
 
 def system(sid: str, arm: str) -> str:
@@ -93,13 +94,14 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--score", action="store_true", help="score what exists; ask nothing")
     ap.add_argument("--arms", default="control,treatment", help="comma-separated arms")
+    ap.add_argument("--scenarios", default=",".join(HOLD_PRONE + CONTROLS), help="comma-separated")
     a = ap.parse_args()
     truth = load_truth(LAB / "truth")
     jobs = []
     arms = a.arms.split(",")
     for arm in arms:
         (OUT / arm).mkdir(parents=True, exist_ok=True)
-        for sid in HOLD_PRONE + CONTROLS:
+        for sid in a.scenarios.split(","):
             text, sys_prompt = prompt(truth, sid), system(sid, arm)
             jobs += [(OUT / arm / f"{sid}-r{r}.jsonl", text, sys_prompt)
                      for r in range(1, a.reps + 1)]  # fmt: skip
