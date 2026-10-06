@@ -62,6 +62,17 @@ exp5r = load("exp5_reader", LAB / "runs/2026-10-03-exp5-credit/run_reader.py")
 exp6r = load("exp6_reader", LAB / "runs/2026-10-03-exp6-sla/run_reader.py")
 creader = load("set_c_reader", LAB / "runs/2026-10-03-exp5-credit/run_set_c_reader.py")
 serve = load("owm_serve", LAB / "lab/owm_register/serve.py")
+# experiment 4's question builder imports `run_hybrid` by name, which clashes with experiment 5's,
+# so its two lines are reproduced here with experiment 4's modules loaded by path
+rh4 = load("exp4_run_hybrid", LAB / "runs/2026-10-03-adversarial/run_hybrid.py")
+heldout = rh4.load("heldout", LAB / "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/heldout.py")
+
+
+def disc_question(s: Any) -> str:
+    """Experiment 4's `question(sid)`, verbatim in effect."""
+    return (f"{s.question} The request, as recorded in Northstar CRM: "
+            f"{json.dumps(rh4.record(heldout, s.id))}")  # fmt: skip
+
 
 from northstar.model import load_truth  # noqa: E402
 
@@ -74,7 +85,7 @@ def prompt(truth: Any, sid: str, root: Path, corpus: str, with_register: bool) -
     s = next(x for x in truth.scenarios if x.id == sid)
     k = kind(sid)
     if k == "discount":
-        base = f"{exp4r.question(sid)}\n\n{exp5r.evidence(root)}"
+        base = f"{disc_question(s)}\n\n{exp5r.evidence(root)}"
     elif k == "credit":
         base = creader.prompt(truth, sid, root)
     else:
