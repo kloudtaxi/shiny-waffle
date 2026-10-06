@@ -96,6 +96,72 @@ Predictions A-a (0 unsafe) and A-b (no more routing than the frozen spec) both h
    re-save changed every discount and SLA decision of the frozen specs, and crashed one, but none
    with the register declared.
 
+## Set F: the user's attacks on all three decision types (2026-10-05)
+
+**What it was:** the user's 10 attacks, sent as a zip through Google Drive, fetched, checked and
+sealed (`set-f.sha256`). Predictions are in `set-f-plan.md` (`91b9c8b`).
+- **By type:** 3 discount, 3 credit, 4 SLA.
+- **By mode:** **8 in-place edits** of registered documents, two of them prose-only (the severity
+  guide and the escalation procedure), and 2 unregistered additions.
+
+The harness is `run_set_f.py`; the results are in `set-f-results.{md,json}`.
+
+| Attack → target | Frozen (no register) | Route mode (register, `route`) | **Default (register, approved version)** |
+|---|---|---|---|
+| F1 2027 pricing policy raised → S21 | **unsafe** | routed | **held** |
+| F2 unregistered NS-Cloud exception → S17 | held | held | **held** |
+| F3 agreement re-pointed to Acme Industrial → S13 | held (9 Acme decisions routed) | held | **held** |
+| F4 guarantee raised to $600k → S29 | python/yaml held by accident; **agent specs unsafe** | routed | **held** |
+| F5 unregistered standalone guarantee → S33 | **unsafe** (all four) | held | **held** |
+| F6 credit policy condensed, separation of duties reversed → S34 | routed (prose unreadable) | routed | **held** |
+| F7 SLA schedule condensed → S36 | **error** (the spec crashed) | routed | **held** |
+| F8 severity guide altered → S39 | **error** | routed | **held** |
+| F9 Schedule C adds NS-Cloud → S43 | held | held, but **4 unsafe side effects** | **held** |
+| F10 escalation procedure condensed → S40 | **error** | routed | **held** |
+
+| Engine | Targets: unsafe / routed / error | Side effects: unsafe / routed / error |
+|---|---|---|
+| discount (frozen) | 1 / 0 / 0 | 0 / 9 / 0 |
+| credit v1 python / agent | 1 / 1 / 0, 2 / 1 / 0 | 2 / 6 / 0, 1 / 6 / 0 |
+| credit v2 yaml / agent | 1 / 1 / 0, 2 / 1 / 0 | 1 / 8 / 0, 0 / 12 / 0 |
+| sla (frozen) | 0 / 0 / **3** | 0 / 0 / **28** |
+| discount+R, credit v2+R / v3 | 0 / 1–2 / 0 | 0 / 0–7 / 0 |
+| **sla+R** | 0 / 3 / 0 | **7** / 23 / 0 |
+| **discount+Ru, credit v3u, v2+Ru ×2, sla+Ru** | **0 / 0 / 0** | **0 / 0 / 0** |
+
+**Against the predictions:**
+
+| # | Prediction | Result |
+|---|---|---|
+| F-a | Default register engines 10/10 held, nothing routed, no errors, no side effects | **✓** |
+| F-b | Route-mode engines 0 unsafe | **✗ for SLA:** 0 unsafe targets, but 7 unsafe side effects |
+| F-c | Frozen engines unsafe on at least 5 of 10 targets | **✗:** 2–3 unsafe per family. The condensed rewrites mostly made the prose readers *fail loudly*: the SLA spec crashed on 3 targets and 28 side effects, and every prose credit engine routed F6 |
+
+**What set F shows:**
+1. **The register's default is the safe one, across all three decision types.** Every in-place
+   edit was read as its approved version, and every unregistered addition was ignored. No decision
+   moved anywhere: 10/10 targets held, with no side effects. This is the user's chosen default.
+2. **Route mode is not safe as built.** Route mode "sets aside" a tampered document. The SLA spec
+   reads a missing document as meaning something:
+   - with Schedule C set aside (F9), every Acme ticket became **OUT_OF_SCOPE**: four wrong
+     findings that deny credits that are owed;
+   - on S45, setting aside the schedule, guide or procedure dropped obligations those documents
+     define.
+
+   Setting a document aside is only safe if the spec treats absence as missing evidence, and
+   nothing guarantees that. **Recommendation (G-32):** in route mode, a set-aside registered
+   document should explicitly route every decision that reads that kind, rather than silently
+   removing it.
+3. **Unregistered sole instruments still beat the guards** (F5, as E1 and E3 did). Only the register
+   stops them.
+4. **Prose readers fail on rewritten documents in both directions:**
+   - silently wrong (F1, F4 for the agent-written specs);
+   - loudly broken (the SLA crashes, F6 unreadable).
+
+   Neither happens when the approved version is read.
+
+**Reader arms:** running (60 calls).
+
 ## Left open
 
 - **The fresh test for discount and SLA:** no attack set was written against them with the register

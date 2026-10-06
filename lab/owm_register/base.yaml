@@ -28,6 +28,7 @@ entries:
       Strategic: 600000
       Standard: 300000
     separation_of_duties: true
+    separation_of_duties_passes_to: requestor's manager
   registered_by: Priya Shah (EMP-401, Finance Manager)
   approved_by: Elena Novak (EMP-402, Director of Finance)
   registered_on: '2024-12-15'
@@ -64,6 +65,7 @@ entries:
       Strategic: 750000
       Standard: 250000
     separation_of_duties: true
+    separation_of_duties_passes_to: requestor's manager
   registered_by: Priya Shah (EMP-401, Finance Manager)
   approved_by: Elena Novak (EMP-402, Director of Finance)
   registered_on: '2025-12-15'

@@ -83,10 +83,13 @@ def policy_entry(truth: Any, cp: Any, doc: Doc, previous: str | None) -> dict[st
         "caps": dict(cp.caps),
         "separation_of_duties": cp.separation_of_duties,
     }  # fmt: skip
+    if cp.separation_of_duties:  # set F: a term must carry the whole rule, not just "yes"
+        terms["separation_of_duties_passes_to"] = "requestor's manager"
     check(doc, [usd(b.max_inclusive) for b in cp.bands if b.max_inclusive]
           + [usd(c.min_exclusive) for c in cp.concurrence]
           + [f"{usd(v)} for {k} accounts" for k, v in cp.caps.items()]
-          + [f"{months} months", f"more than {cp.max_days_late} days"])  # fmt: skip
+          + [f"{months} months", f"more than {cp.max_days_late} days"]
+          + (["passes to the requestor's manager"] if cp.separation_of_duties else []))  # fmt: skip
     return entry(doc, "credit_policy", cp.valid_from, cp.valid_to, terms, FINANCE,
                  [{"type": "supersedes", "target": previous}] if previous else [])  # fmt: skip
 

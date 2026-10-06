@@ -107,7 +107,14 @@ def main() -> None:
     ap.add_argument("--reps", type=int, default=3)
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--score", action="store_true", help="score what exists; ask nothing")
+    ap.add_argument(
+        "--term-check",
+        action="store_true",
+        help="arm rf2 (set-f-plan addendum): F6 -> S34 x3 and clean S34, full served rule",
+    )
     a = ap.parse_args()
+    if a.term_check:
+        return term_check(a.workers)
     setf.check_seal()
     truth = load_truth(LAB / "truth")
     scen = {s.id: s for s in truth.scenarios}
@@ -188,6 +195,33 @@ def main() -> None:
     (HERE / "reader-set-f-results.json").write_text(json.dumps(rows, indent=1) + "\n")
     (HERE / "reader-set-f-results.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
+
+
+def term_check(workers: int) -> None:
+    """The set-F addendum's check (not evidence): the served rule says where approval passes."""
+    setf.check_seal()
+    truth = load_truth(LAB / "truth")
+    key = {r["scenario"]: r for r in yaml.safe_load(
+        (LAB / "dataset/answer-key/expected-results.yaml").read_text())}  # fmt: skip
+    f6 = next(at for at in yaml.safe_load((setf.SET / "manifest.yaml").read_text())
+              if at["id"] == "F6")  # fmt: skip
+    (OUT / "rf2").mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="ns-rf2-") as tmp:
+        att, clean = setf.build(f6, Path(tmp) / "F6"), setf.build(None, Path(tmp) / "clean")
+        jobs = [(OUT / "rf2" / f"F6-S34-r{r}.jsonl", att) for r in (1, 2, 3)]
+        jobs += [(OUT / "rf2" / "clean-S34-r1.jsonl", clean)]
+        jobs2 = [(p, prompt(truth, "S34", roots["base"], "base", True)) for p, roots in jobs
+                 if not p.exists()]  # fmt: skip
+        with cf.ThreadPoolExecutor(workers) as pool:
+            list(pool.map(lambda j: j[0].write_text(exp4r.ask(j[1], system("S34"))), jobs2))
+    for path in sorted((OUT / "rf2").glob("*.jsonl")):
+        res = exp4r.result(path)
+        got = exp5r.scorer.decision(str(res.get("result") or ""))
+        _, s = exp5r.grade(got, key["S34"])
+        appr = ((got or {}).get("authority") or {}).get("approvers")
+        print(f"rf2 {path.stem}: {creader.unsafe_type(got, s, key['S34']['decision']['outcome'])} "
+              f"{[(x.get('name'), x.get('kind')) for x in appr or []]} "
+              f"${float(res.get('total_cost_usd') or 0):.3f}")  # fmt: skip
 
 
 if __name__ == "__main__":

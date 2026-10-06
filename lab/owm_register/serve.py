@@ -74,7 +74,10 @@ def terms(e: dict[str, Any], store: Path) -> list[str]:
                 f"request paid, or unpaid, more than {t['max_days_late']} days after its due date.",
                 f"Maximum credit limit by account tier: {caps}.",
                 "Separation of duties: " + ("no one may approve or concur on a request they "
-                "submitted." if t["separation_of_duties"] else "none.")]  # fmt: skip
+                "submitted" + (f"; the approval or concurrence passes to the "
+                               f"{t['separation_of_duties_passes_to']}"
+                               if t.get("separation_of_duties_passes_to") else "") + "."
+                if t["separation_of_duties"] else "none.")]  # fmt: skip
     if k == "guarantee":
         return [f"{t['guarantor']} guarantees the obligations of {cust(t['customer'])} only, up to "
                 f"{usd(t['amount'])} in aggregate."]  # fmt: skip
