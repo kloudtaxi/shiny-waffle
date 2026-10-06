@@ -70,10 +70,16 @@ def prompt(truth: Any, sid: str) -> str:
     return f"{q}\n\n{exp5r.evidence(root)}"
 
 
+PROCS = {
+    "control": LAB / "owm/procedures",
+    "treatment": HERE / "procedures",
+    "treatment-v2": HERE / "procedures-v2",
+}  # v2: the plan's addendum, a check
+
+
 def system(sid: str, arm: str) -> str:
     name = "credit-limit.md" if kind(sid) == "credit" else "discount-approval.md"
-    proc = (HERE / "procedures" / name) if arm == "treatment" else (LAB / "owm/procedures" / name)
-    return f"{exp4r.SYSTEM_PROMPT}\n\n{proc.read_text()}"
+    return f"{exp4r.SYSTEM_PROMPT}\n\n{(PROCS[arm] / name).read_text()}"
 
 
 def block(text: str) -> dict[str, Any] | None:
@@ -86,10 +92,12 @@ def main() -> None:
     ap.add_argument("--reps", type=int, default=3)
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--score", action="store_true", help="score what exists; ask nothing")
+    ap.add_argument("--arms", default="control,treatment", help="comma-separated arms")
     a = ap.parse_args()
     truth = load_truth(LAB / "truth")
     jobs = []
-    for arm in ("control", "treatment"):
+    arms = a.arms.split(",")
+    for arm in arms:
         (OUT / arm).mkdir(parents=True, exist_ok=True)
         for sid in HOLD_PRONE + CONTROLS:
             text, sys_prompt = prompt(truth, sid), system(sid, arm)
@@ -115,7 +123,7 @@ def main() -> None:
         (LAB / "dataset/answer-key/expected-results.yaml").read_text())}  # fmt: skip
     exp_disc = exp4r.scorer.expected()
     rows, cost = [], Counter()
-    for arm in ("control", "treatment"):
+    for arm in [x for x in PROCS if (OUT / x).is_dir()]:
         for path in sorted((OUT / arm).glob("*.jsonl")):
             sid, rep = path.stem.split("-")
             res = exp4r.result(path)
@@ -138,7 +146,7 @@ def main() -> None:
                          "blocking": sum(bool(c.get("blocking")) for c in conds),
                          "conditions": conds})  # fmt: skip
     (HERE / "results.json").write_text(json.dumps(rows, indent=1) + "\n")
-    print(f"cost: control ${cost['control']:.2f}, treatment ${cost['treatment']:.2f}")
+    print("cost: " + ", ".join(f"{k} ${v:.2f}" for k, v in cost.items()))
     for r in rows:
         print(
             r["arm"], r["scenario"], r["rep"], r["outcome"], r["safety"], "blocking", r["blocking"]

@@ -61,3 +61,25 @@ call.
 
 **If H2–H4 hold, the user decides on adoption:** the `conditions` field in `owm/procedures/` and in
 the OWM decision record contract, with executors honouring blocking conditions.
+
+## Addendum (2026-10-06, after the results, before any new run): the refined rule, as a check
+
+The user chose "refine and re-check". Round one's results (`notes.md`, `b6f71d3`) shaped these two
+sentences, so this is a **check**, not fresh evidence. They are added to the treatment rule
+(`procedures-v2/`). Only the treatment arm re-runs (`treatment-v2`): 24 calls, about $7.50.
+
+> **Don't list the approval the outcome itself requires.** For APPROVE_WITH_AUTHORIZATION, the
+> approver named in `authority` must approve. `conditions` is for anything else.
+>
+> **Decide on the system of record.** If a submitted figure or date differs from the system of
+> record, decide on the system of record's value and record the difference as a condition. A
+> condition never replaces deciding.
+
+| # | Prediction |
+|---|---|
+| V1 | Holds still reach the block: 0 of 15 hold-prone answers hold only in prose |
+| V2 | Restated approvals fall from 11 of 24 to **at most 2 of 24** |
+| V3 | No conditional approval on a submitted value that the system of record contradicts. S22 is decided on the CRM's 15% in all 3 runs |
+| V4 | Controls: a blocking condition on **at most 1 of 9** |
+
+The reads use the same definitions as round one (one reading subagent).
