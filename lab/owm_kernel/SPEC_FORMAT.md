@@ -104,6 +104,18 @@ the tamper check look only at what was relied on. When several documents of a ki
 judge them all, rather than stopping at the first, so the decision doesn't depend on filename
 order.
 
+**Rely only on documents that feed this decision's outcome** (G-06). The guards act on everything
+relied on. A document relied on but not needed, for example a guarantee for a request within the
+customer's limit without it, makes the guards route correct decisions to a person whenever that
+document changes. Rely on it in the branch that uses it, not up front.
+
+**Admission.** A spec is used only after it passes the admission gate
+(`lab/spec_admission/admit.py`, G-07), in its deployed form, with the company's register:
+- **A:** every clean scenario of its type is right;
+- **B:** no unsafe decision, and no error, on any sealed attack set of its type;
+- **C:** no more *idle reliances* than its type's reference spec. An idle reliance is a
+  relied-on document whose removal leaves the decision unchanged.
+
 **Inputs** (the names available from the start) depend on the decision. The task you were given
 says what they are. Always available: `sid`, the scenario id.
 

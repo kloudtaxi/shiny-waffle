@@ -356,7 +356,7 @@ def load(path: Path) -> dict[str, Any]:
 
 def run(
     spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any],
-    register: Register | None = None,
+    register: Register | None = None, trace: dict[str, Any] | None = None,
 ) -> dict[str, Any]:  # fmt: skip
     used: list[dict[str, Any]] = []
     flags: list[str] = []
@@ -531,6 +531,8 @@ def run(
     record = {field: evaluate(str(src), env) for field, src in spec["record"].items()}
     if spec.get("gate", True) and set_aside:
         withhold(record, spec["record"], set(inputs) | ROUTE_FIELDS, set_aside, flags)
+    if trace is not None:  # G-06 (2026-10-06): what the decision relied on, for the admission check
+        trace["relied"] = [(d.filename, d.doc_id) for d in relied]
     return record
 
 
