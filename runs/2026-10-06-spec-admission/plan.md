@@ -77,3 +77,11 @@ failed admission is the finding.
 - **Jev:** cents (at most 5,000 calls), recorded here.
 - **Claude:** one authoring subagent (about $2 of tokens, in this session).
 - **Readers, Utopia:** none.
+
+## Addendum (2026-10-06, before any run): gate C runs in the deployed form
+
+Reading the code showed that a spec which reads its terms from the register (`credit_v3.yaml`, and
+any agent spec that declares `registered_kinds`) can't run without one. So gate C uses the
+**deployed form**, like gates A and B. Each relied-on document is removed from **both the corpus
+and the register**, so it is truly absent, and the scenario is decided again. Unchanged means
+idle. The reference for credit is still `credit_v2.yaml`, deployed. Nothing else changes.
