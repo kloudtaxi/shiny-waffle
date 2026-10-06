@@ -63,3 +63,14 @@ procedure file can also be edited in place, just as a policy could before the re
 ## Cost
 
 Free: Jev replay. No reader, Utopia or live Jev spend.
+
+## Addendum (2026-10-06, before any code ran): P4's tamper
+
+`credit_v3.yaml` has no separation-of-duties rule in its text, because it reads that from the
+register's terms. So P4's in-place edit is instead **deleting the decision-table line that rejects
+an ineligible or exceeded request** (`eligibility["status"] in ("ineligible", "exceeded")` →
+`REJECT_OR_ESCALATE`): an insider loosening the procedure.
+
+**P4, restated:** governed decisions are unchanged, flagged, and the approved text ran.
+**The contrast, added:** running the tampered file directly, ungoverned, changes at least one
+credit decision. That shows the edit matters.
