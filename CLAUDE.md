@@ -142,6 +142,9 @@ filenames contain an em dash, so quote paths:
   The gap tracker is the `gaps` collection (Gaps tab): read it before planning a build, update a gap
   with a pinned `ArtifactData` update that appends to its `log`, and never overwrite the user's
   status changes or decisions.
+  The **Build** tab (`build` collection) tracks the BlueLeaf MCP build on `skunkworks/blueleaf-mcp`:
+  decisions `D-n` are the user's, and a builder follows the build plan's §5 before and after each
+  task.
 
 ## Local-only context (gitignored)
 

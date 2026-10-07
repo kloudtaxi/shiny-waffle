@@ -342,7 +342,8 @@
   .decision ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; max-width: 78ch; }
   .decision p { margin: 0; font-size: 13.5px; max-width: 78ch; }
   .rec-tag { font: 600 10.5px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--pass); background: var(--pass-soft); padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 1px; }
-  .dchoice { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; font-weight: 500; }
+  .dchoice { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; font-weight: 500; max-width: 100%; }
+  .dchoice select { max-width: 100%; min-width: 0; }
   .gadd { display: flex; flex-wrap: wrap; gap: 8px; }
   .gadd input[type=text] { flex: 1 1 240px; width: auto; }
   .glog { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; font-size: 13px; }
@@ -356,6 +357,39 @@
     .gstatus .snote { text-align: left; max-width: none; }
     .glog li { grid-template-columns: minmax(0, 1fr); gap: 0; }
   }
+
+  /* build: phases as a strip, decisions first, then tasks in plan order */
+  .bphases { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; }
+  .bphase { display: flex; flex-direction: column; gap: 5px; padding: 8px 10px; border: 1px solid var(--rule); border-radius: 8px; background: var(--panel); min-width: 0; }
+  .bphase .pl { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; font-weight: 500; }
+  .bphase .pl b { font: 600 12px/1.4 var(--mono); color: var(--ink-3); margin-right: 4px; }
+  .bphase .pn { font: 500 12px/1.4 var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .bar { display: flex; height: 6px; border-radius: 3px; background: var(--rule-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; }
+  .bar .d { background: var(--pass); } .bar .r { background: var(--partial); } .bar .w { background: var(--accent); }
+  .bsec { display: flex; flex-direction: column; gap: 10px; }
+  .bsec > h3 { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: 16px; padding-top: 6px; }
+  .bsec > h3 .eyebrow { font-family: var(--sans); }
+  .ref { border: 1px solid var(--rule); background: var(--panel-2); border-radius: 4px; padding: 1px 6px; font: 500 11.5px/1.5 var(--mono); color: var(--ink-2); }
+  .ref.ok { color: var(--pass); border-color: var(--pass); background: var(--pass-soft); }
+  .ref.wait { color: var(--partial); border-color: var(--partial); background: var(--partial-soft); }
+  .refs { display: inline-flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .bphase-tag { font: 600 11px/1 var(--mono); padding: 3px 6px; border-radius: 4px; background: var(--rule-2); color: var(--ink-2); }
+  .bnote { font-size: 12px; color: var(--partial); font-weight: 600; }
+  select.status.s-todo { color: var(--ink-2); }
+  select.status.s-doing { color: var(--accent); font-weight: 600; }
+  select.status.s-review { color: var(--partial); font-weight: 600; }
+  select.status.s-done { color: var(--pass); font-weight: 600; }
+  select.status.s-blocked { color: var(--fail); font-weight: 600; }
+  .bkv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; margin: 0; font-size: 13.5px; }
+  .bkv dt { color: var(--ink-3); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; padding-top: 2px; }
+  .bkv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+  .bkv code, .decision code { font-family: var(--mono); font-size: 12.5px; background: var(--panel-2); padding: 1px 4px; border-radius: 3px; }
+  .bkv a, .bhead a { color: var(--accent); }
+  .decision.done { background: var(--panel); }
+  .dhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; align-items: baseline; }
+  .dhead .did { font: 600 13px/1 var(--mono); color: var(--ink-3); margin-right: 8px; }
+  @media (max-width: 640px) { .bkv { grid-template-columns: minmax(0, 1fr); gap: 2px; } .bkv dd { margin-bottom: 6px; } }
 
   .state { padding: 40px 20px; text-align: center; color: var(--ink-2); }
   .state h2 { font-size: 20px; margin-bottom: 6px; color: var(--ink); }
@@ -378,6 +412,7 @@
     <button role="tab" id="tab-matrix" aria-selected="true" data-tab="matrix">Results matrix</button>
     <button role="tab" id="tab-findings" aria-selected="false" data-tab="findings">Findings</button>
     <button role="tab" id="tab-gaps" aria-selected="false" data-tab="gaps">Gaps<span class="count" id="gaps-count"></span></button>
+    <button role="tab" id="tab-build" aria-selected="false" data-tab="build">Build<span class="count" id="build-count"></span></button>
     <button role="tab" id="tab-conditions" aria-selected="false" data-tab="conditions">Conditions</button>
   </nav>
 
@@ -420,6 +455,10 @@
     <div class="gwrap" id="gaps"><div class="card state">Loading the gaps…</div></div>
   </section>
 
+  <section id="view-build" hidden>
+    <div class="gwrap" id="build"><div class="card state"><h2>No build tracked yet</h2>The build plan's decisions and tasks appear here once Claude seeds them.</div></div>
+  </section>
+
   <section id="view-conditions" hidden>
     <div class="card scroll-x" id="conditions"></div>
   </section>
@@ -439,10 +478,11 @@
   const CATS = { foundation: "Foundation", agent: "Agent", owm: "OWM capability", review: "Review & governance", method: "Method" };
   const STATUSES = ["observed", "confirmed", "needs repeat", "refuted"];
 
-  const TABS = ["queue", "matrix", "findings", "gaps", "conditions"];
+  const TABS = ["queue", "matrix", "findings", "gaps", "build", "conditions"];
   const S = { db: null, exps: {}, conds: {}, scens: {}, answers: {}, grades: {}, findings: {}, queue: {},
               exp: null, sel: null, from: "matrix", tab: "matrix", catFilter: "all", drafts: {}, dirty: {}, shownDetail: null, listScroll: 0,
-              gaps: {}, gFilter: "active", gPrio: "all", gOpen: {}, gDraft: {}, gStale: false };
+              gaps: {}, gFilter: "active", gPrio: "all", gOpen: {}, gDraft: {}, gStale: false,
+              build: {}, bFilter: "remaining", bOpen: {}, bDraft: {}, bStale: false, bJump: null };
   const narrow = () => window.matchMedia("(max-width: 1099px)").matches;
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -785,6 +825,105 @@
     }
   }
 
+  /* ---------- build ---------- */
+  const BSTAT = [["todo", "To do"], ["doing", "In progress"], ["review", "In review"], ["done", "Done"], ["blocked", "Blocked"]];
+  const BLABEL = Object.fromEntries(BSTAT);
+  const REPO = "https://github.com/kloudtaxi/shiny-waffle";
+  const bTasks = () => sorted(S.build).filter((d) => d.kind === "task");
+  const bDecs = () => sorted(S.build).filter((d) => d.kind === "decision");
+  // A task can start once every task it depends on is done and every decision it needs is made.
+  function bWaits(t) {
+    return { deps: (t.depends_on || []).filter((id) => S.build[id]?.status !== "done"),
+             decs: (t.decisions || []).filter((id) => !S.build[id]?.choice) };
+  }
+  const bNext = () => bTasks().find((t) => t.status === "todo" && !bWaits(t).deps.length && !bWaits(t).decs.length);
+  const refBtn = (id, ok, title) => '<button type="button" class="ref ' + (ok ? "ok" : "wait") + '" data-bjump="' + esc(id) + '" title="' + esc(title) + '">' + esc(id) + "</button>";
+  const safeUrl = (u) => /^https:\/\/github\.com\//.test(String(u || "")) ? String(u) : null;
+  function bLog(d) {
+    const log = (d.log || []).slice().reverse();
+    return '<div class="sec"><span class="eyebrow">Updates</span><form class="gadd" data-bform="' + esc(d._id) + '" autocomplete="off"><input type="text" id="bnote-' + esc(d._id) + '" data-bnote="' + esc(d._id) +
+      '" placeholder="Add an update: what changed, with a commit or CI run" aria-label="Update for ' + esc(d.id || d._id) + '" value="' + esc(S.bDraft[d._id] || "") + '"><button class="btn" type="submit">Add update</button></form>' +
+      '<span class="savestate" id="bstate-' + esc(d._id) + '"></span><ul class="glog">' +
+      log.map((l) => "<li><time>" + esc(day(l.at)) + "</time><span>" + inline(l.text) + ' <span class="muted">· ' + esc(l.by || "") + "</span></span></li>").join("") + "</ul></div>";
+  }
+  function bDecision(d) {
+    const blocks = (d.blocks || []).map((id) => refBtn(id, S.build[id]?.status === "done", S.build[id]?.title || id)).join("");
+    const differs = d.choice && d.recommended && d.choice !== d.recommended;
+    return '<article class="decision' + (d.choice ? " done" : "") + '" id="' + esc(d._id) + '"><div class="dhead"><h4><span class="did">' + esc(d.id) + "</span>" + esc(d.title) + '</h4><span class="refs"><span class="muted">needed by</span>' + blocks + "</span></div>" +
+      "<p>" + inline(d.question) + '</p><ul>' + (d.options || []).map((o) => "<li><b>" + esc(o.key) + ". " + esc(o.label) + "</b>" + (o.key === d.recommended ? '<span class="rec-tag">Recommended</span>' : "") + "<br>" + inline(o.text) + "</li>").join("") + "</ul>" +
+      "<p><b>Recommendation:</b> " + inline(d.recommendation || "") + ' <span class="muted">(' + esc(d.plan_ref || "") + ")</span></p>" +
+      '<label class="dchoice">Your choice <select class="status" id="bdec-' + esc(d._id) + '" data-bdec="' + esc(d._id) + '"><option value="">Not decided</option>' +
+      (d.options || []).map((o) => '<option value="' + esc(o.key) + '"' + (d.choice === o.key ? " selected" : "") + ">" + esc(o.key + ". " + o.label) + "</option>").join("") + "</select></label>" +
+      (differs ? '<span class="bnote">Not the recommendation: the builder updates the plan before the tasks it blocks.</span>' : "") +
+      '<details data-bid="' + esc(d._id) + '"' + (S.bOpen[d._id] ? " open" : "") + "><summary>Updates · " + (d.log || []).length + "</summary>" + bLog(d) + "</details></article>";
+  }
+  function bTask(t) {
+    const w = bWaits(t), ev = t.evidence || {};
+    const commit = ev.commit ? '<a href="' + esc(REPO + "/commit/" + ev.commit) + '" target="_blank" rel="noopener"><code>' + esc(String(ev.commit).slice(0, 7)) + "</code></a>" : '<span class="muted">none yet</span>';
+    const ci = safeUrl(ev.ci) ? '<a href="' + esc(ev.ci) + '" target="_blank" rel="noopener">CI run</a>' : '<span class="muted">none yet</span>';
+    const unproven = t.status === "done" && !(ev.commit && safeUrl(ev.ci));
+    const waits = [...(t.depends_on || []).map((id) => refBtn(id, !w.deps.includes(id), S.build[id]?.title || id)),
+                   ...(t.decisions || []).map((id) => refBtn(id, !w.decs.includes(id), S.build[id]?.title || id))].join("");
+    return '<article class="card gap" id="' + esc(t._id) + '"><div class="gid"><span>' + esc(t.id) + '</span><span class="bphase-tag">' + esc(t.phase) + "</span></div>" +
+      '<div class="gmain"><h3>' + inline(t.title) + '</h3><div class="gmeta"><span>' + esc(t.plan_ref || "") + "</span><span>" + (t.owner === "you" ? '<span class="gwait">your step</span>' : "builder") + "</span>" +
+      ((t.spec_tests || []).length ? '<span class="refs">' + t.spec_tests.map((x) => '<span class="tag">' + esc(x) + "</span>").join("") + "</span>" : "") +
+      (waits ? '<span class="refs"><span>waits for</span>' + waits + "</span>" : "") + "</div></div>" +
+      '<div class="gstatus"><select class="status s-' + esc(t.status || "todo") + '" id="bstatus-' + esc(t._id) + '" data-bstatus="' + esc(t._id) + '" aria-label="Status of ' + esc(t.id) + '">' +
+      BSTAT.map(([v, l]) => '<option value="' + v + '"' + (t.status === v ? " selected" : "") + ">" + l + "</option>").join("") + "</select>" +
+      (unproven ? '<span class="snote bnote">done without a commit and a CI run</span>' : t.status_note ? '<span class="snote">' + esc(t.status_note) + "</span>" : "") + "</div>" +
+      '<details data-bid="' + esc(t._id) + '"' + (S.bOpen[t._id] ? " open" : "") + "><summary>What it takes, evidence and updates · " + (t.log || []).length + '</summary><div class="gbody"><dl class="bkv">' +
+      "<dt>Files</dt><dd>" + ((t.files || []).length ? t.files.map((f) => "<code>" + esc(f) + "</code>").join(" ") : '<span class="muted">none</span>') + "</dd>" +
+      "<dt>Test first</dt><dd>" + inline(t.test_first || "") + "</dd><dt>Proven by</dt><dd>" + inline(t.prove || "") + "</dd>" +
+      "<dt>Commit</dt><dd>" + commit + "</dd><dt>CI</dt><dd>" + ci + "</dd></dl>" + bLog(t) + "</div></details></article>";
+  }
+  function renderBuild() {
+    const box = $("build");
+    if (box.contains(document.activeElement) && document.activeElement.tagName === "INPUT") { S.bStale = true; return; }
+    S.bStale = false;
+    const tasks = bTasks(), decs = bDecs();
+    if (!tasks.length) { $("build-count").textContent = ""; return; }
+    const done = tasks.filter((t) => t.status === "done").length;
+    const waiting = decs.filter((d) => !d.choice);
+    $("build-count").textContent = done + "/" + tasks.length;
+    const nx = bNext();
+    const stat = (label, n) => '<div class="stat"><span class="eyebrow">' + label + "</span><b>" + n + "</b></div>";
+    let h = '<div class="card ghead bhead"><div><h2>Build: the BlueLeaf lab MCP server</h2><p class="muted">The build plan, task by task. A task can start once the tasks it depends on are done and the decisions it needs are made. It closes only with a commit and a green CI run. Plan: <code class="mono">' +
+      esc(tasks[0].plan || "docs/superpowers/plans/2026-10-06-blueleaf-mcp-plan.md") + '</code> on <a href="' + REPO + '/tree/skunkworks/blueleaf-mcp" target="_blank" rel="noopener"><code class="mono">skunkworks/blueleaf-mcp</code></a>.</p></div>' +
+      '<div class="stats">' + stat("Done", done + '<span class="muted" style="font-size:15px"> / ' + tasks.length + "</span>") + stat("In progress", tasks.filter((t) => t.status === "doing" || t.status === "review").length) +
+      stat("Decisions for you", waiting.length) + '<div class="stat"><span class="eyebrow">Next task</span><b>' + (nx ? refBtn(nx.id, true, nx.title) : '<span class="muted" style="font-size:15px">' + (waiting.length ? "waiting on decisions" : "none") + "</span>") + "</b></div></div></div>";
+    const phases = [];
+    tasks.forEach((t) => { const p = phases[phases.length - 1]; if (p && p.k === t.phase) p.ts.push(t); else phases.push({ k: t.phase, title: t.phase_title, ts: [t] }); });
+    h += '<div class="bphases">' + phases.map((p) => {
+      const n = p.ts.length, c = (st) => p.ts.filter((t) => t.status === st).length, pct = (x) => (100 * x / n).toFixed(1) + "%";
+      return '<div class="bphase" title="' + esc(p.title) + '"><span class="pl"><span><b>' + esc(p.k) + "</b>" + esc(p.title) + '</span><span class="pn">' + c("done") + "/" + n + '</span></span><span class="bar" aria-hidden="true"><i class="d" style="width:' + pct(c("done")) + '"></i><i class="r" style="width:' + pct(c("review")) + '"></i><i class="w" style="width:' + pct(c("doing")) + '"></i></span></div>';
+    }).join("") + "</div>";
+    if (decs.length) h += '<section class="bsec"><h3>Decisions for you <span class="eyebrow">' + waiting.length + " of " + decs.length + ' open</span></h3><div class="decisions">' + decs.map(bDecision).join("") + "</div></section>";
+    const fbtn = (val, label) => '<button type="button" data-bfilter="' + val + '" aria-pressed="' + (S.bFilter === val ? "true" : "false") + '">' + label + "</button>";
+    h += '<section class="bsec"><h3>Tasks</h3><div class="filters gfilters">' + fbtn("remaining", "Remaining · " + (tasks.length - done)) + fbtn("all", "All · " + tasks.length) + fbtn("done", "Done · " + done) + "</div>";
+    const list = tasks.filter((t) => S.bFilter === "all" || (S.bFilter === "done" ? t.status === "done" : t.status !== "done"));
+    let ph = null;
+    h += list.length ? list.map((t) => { const head = t.phase !== ph ? '<h3><span class="eyebrow">Phase ' + esc(t.phase) + "</span>" + esc(t.phase_title) + "</h3>" : ""; ph = t.phase; return head + bTask(t); }).join("") : '<div class="card state">No tasks match this filter.</div>';
+    box.innerHTML = h + "</section>";
+    if (S.bJump) { const el = $(S.bJump); S.bJump = null; if (el) el.scrollIntoView({ block: "start" }); }
+  }
+  async function buildWrite(id, fields, text, st) {
+    const d = S.build[id];
+    if (!d || !S.db) return false;
+    const at = new Date().toISOString();
+    if (st) { st.textContent = "Saving…"; st.className = "savestate"; }
+    try {
+      await S.db.doc("build/" + id).update(Object.assign({}, fields, { updated_at: at, log: (d.log || []).concat([{ at, by: "you", text }]) }));
+      if (st) st.textContent = "Saved.";
+      return true;
+    } catch (e) {
+      if (st) { st.textContent = e?.code === "invalid_argument" ? "You can read the build here but not change it." : "Couldn't save (" + (e?.code || "error") + "). Try again."; st.className = "savestate err"; }
+      return false;
+    }
+  }
+  function jumpTo(id) {
+    setTab("build"); S.bFilter = "all"; S.bOpen[id] = true; S.bJump = id; renderBuild();
+  }
+
   /* ---------- conditions ---------- */
   function renderConditions() {
     const cs = expConds();
@@ -799,7 +938,7 @@
     const ids = Object.keys(S.exps).sort().reverse();
     if (!S.exp || !S.exps[S.exp]) S.exp = store("ledger.exp") && S.exps[store("ledger.exp")] ? store("ledger.exp") : ids[0] || null;
     if (!S.exp) return;
-    renderHeader(); renderMatrix(); renderQueue(); renderDetail(); renderFindings(); renderConditions(); renderGaps();
+    renderHeader(); renderMatrix(); renderQueue(); renderDetail(); renderFindings(); renderConditions(); renderGaps(); renderBuild();
   }
   const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(renderAll); } };
 
@@ -810,6 +949,7 @@
     $("pane-matrix").hidden = t !== "matrix";
     $("view-findings").hidden = t !== "findings";
     $("view-gaps").hidden = t !== "gaps";
+    $("view-build").hidden = t !== "build";
     $("view-conditions").hidden = t !== "conditions";
     for (const v of TABS) $("tab-" + v).setAttribute("aria-selected", v === t ? "true" : "false");
     store("ledger.tab", t);
@@ -849,6 +989,8 @@
     if (t.dataset.cat) { S.catFilter = t.dataset.cat; return renderFindings(); }
     if (t.dataset.gfilter) { S.gFilter = t.dataset.gfilter; return renderGaps(); }
     if (t.dataset.gprio) { S.gPrio = t.dataset.gprio; return renderGaps(); }
+    if (t.dataset.bfilter) { S.bFilter = t.dataset.bfilter; return renderBuild(); }
+    if (t.dataset.bjump) return jumpTo(t.dataset.bjump);
     if (t.dataset.seg) {
       const a = selectedAnswer(); if (!a) return;
       const d = draftFor(a), name = t.dataset.seg, val = t.dataset.val;
@@ -868,6 +1010,7 @@
   });
   document.addEventListener("input", (ev) => {
     if (ev.target.dataset.gnote) { S.gDraft[ev.target.dataset.gnote] = ev.target.value; return; }
+    if (ev.target.dataset.bnote) { S.bDraft[ev.target.dataset.bnote] = ev.target.value; return; }
     if (ev.target.id === "g-note") { const a = selectedAnswer(); if (!a) return; draftFor(a).note = ev.target.value; S.dirty[a._id] = true; $("g-state").textContent = "Unsaved changes"; $("g-state").className = "savestate"; }
   });
   document.addEventListener("change", async (ev) => {
@@ -886,6 +1029,20 @@
       d.choice = t.value || null;
       const label = d.options.find((o) => o.key === d.choice)?.label || "not decided";
       if (!(await gapWrite(id, { decisions: decs }, "Decision: " + d.question + " → " + label + ".", $("gstate-" + id)))) t.value = prev;
+      return;
+    }
+    if (t.dataset.bstatus) {
+      const id = t.dataset.bstatus, prev = S.build[id]?.status, next = t.value;
+      if (!prev || prev === next) return;
+      if (!(await buildWrite(id, { status: next }, "Status: " + (BLABEL[prev] || prev) + " → " + (BLABEL[next] || next) + ".", $("bstate-" + id)))) t.value = prev;
+      return;
+    }
+    if (t.dataset.bdec) {
+      const id = t.dataset.bdec, d = S.build[id];
+      if (!d) return;
+      const prev = d.choice || "", next = t.value || null;
+      const label = (d.options || []).find((o) => o.key === next);
+      if (!(await buildWrite(id, { choice: next }, "Decision: " + (label ? label.key + ". " + label.label : "not decided") + ".", $("bstate-" + id)))) t.value = prev;
       return;
     }
     if (t.dataset.fstatus && S.db) {
@@ -917,6 +1074,12 @@
       if (await gapWrite(id, {}, text, $("gstate-" + id))) { inp.value = ""; delete S.gDraft[id]; inp.blur(); }
       return;
     }
+    if (ev.target.dataset.bform) {
+      const id = ev.target.dataset.bform, inp = $("bnote-" + id), text = inp.value.trim();
+      if (!text) return;
+      if (await buildWrite(id, {}, text, $("bstate-" + id))) { inp.value = ""; delete S.bDraft[id]; inp.blur(); }
+      return;
+    }
     if (ev.target.id === "addf") {
       const title = $("nf-title").value.trim(), body = $("nf-body").value.trim(), st = $("nf-state");
       if (!title) return;
@@ -933,8 +1096,12 @@
   const t0 = store("ledger.tab"); setTab(t0 && TABS.includes(t0) ? t0 : "queue");
   const h0 = (location.hash || "").slice(1); if (TABS.includes(h0)) setTab(h0);
   if (/^G-\d+$/.test(h0)) { setTab("gaps"); S.gFilter = "all"; S.gOpen[h0] = true; }
-  document.addEventListener("toggle", (ev) => { const d = ev.target; if (d?.dataset?.gid) S.gOpen[d.dataset.gid] = d.open; }, true);
-  document.addEventListener("focusout", () => { if (S.gStale) setTimeout(() => { if (S.gStale) renderGaps(); }, 0); });
+  if (/^(B-\d+|D-\d+)$/.test(h0)) { setTab("build"); S.bFilter = "all"; S.bOpen[h0] = true; S.bJump = h0; }
+  document.addEventListener("toggle", (ev) => { const d = ev.target; if (d?.dataset?.gid) S.gOpen[d.dataset.gid] = d.open; if (d?.dataset?.bid) S.bOpen[d.dataset.bid] = d.open; }, true);
+  document.addEventListener("focusout", () => {
+    if (S.gStale) setTimeout(() => { if (S.gStale) renderGaps(); }, 0);
+    if (S.bStale) setTimeout(() => { if (S.bStale) renderBuild(); }, 0);
+  });
   S.sel = store("ledger.sel") || null;
 
   function unavailable(msg) {
@@ -953,7 +1120,7 @@
       schedule();
     }, (e) => { if (target === "answers") unavailable("Couldn't load results (" + (e?.code || "error") + ")."); });
     bind("experiments", "exps"); bind("conditions", "conds"); bind("scenarios", "scens");
-    bind("answers", "answers"); bind("grades", "grades"); bind("findings", "findings"); bind("queue", "queue"); bind("gaps", "gaps");
+    bind("answers", "answers"); bind("grades", "grades"); bind("findings", "findings"); bind("queue", "queue"); bind("gaps", "gaps"); bind("build", "build");
   })();
 })();
 </script>

@@ -1,0 +1,373 @@
+# The build tracker for the BlueLeaf lab MCP server: the source of the Lab Ledger's `build`
+# collection. Seeded once by tracker/seed_build.py; after that the Ledger is the source of truth
+# (statuses, choices, evidence and updates are made on the page or by Claude with pinned
+# ArtifactData updates). Plan: docs/superpowers/plans/2026-10-06-blueleaf-mcp-plan.md.
+build: blueleaf-mcp
+plan: docs/superpowers/plans/2026-10-06-blueleaf-mcp-plan.md
+spec: docs/superpowers/specs/2026-10-06-blueleaf-mcp-design.md
+branch: skunkworks/blueleaf-mcp
+
+phases:
+  A: Walls first
+  B: Sandboxes
+  C: Engines
+  D: Scoring the readers
+  E: The experimenter server
+  F: The subject server
+  G: Records and setup
+  H: Acceptance
+
+decisions:
+  - id: D-1
+    title: How attack sets are applied
+    plan_ref: plan §2 item 1
+    blocks: [B-04]
+    question: Should each attack set be applied by its own rule, as the runs that produced its committed results did?
+    options:
+      - key: A
+        label: Each set by its own rule
+        text: "Set A from its top-level files with pinned seal digests; set C with its `C1_` prefixes stripped; B, D, E and F as sealed. Every committed result reproduces, and `lab/spec_admission/admit.py` already applies the sets this way."
+      - key: B
+        label: One rule for every set (the spec as written)
+        text: "Set F's rule for all six. Simpler, but set C fails to apply (its replacements find nothing to replace) and set A has no seal to check."
+    recommended: A
+    recommendation: "A. It is the only option under which sets A–E reproduce, and it matches the admission gate."
+  - id: D-2
+    title: What a whole-set sandbox runs
+    plan_ref: plan §2 item 2
+    blocks: [B-05, B-06, B-11]
+    question: When a sandbox is seeded with a whole attack set, does it run each attack on its own, or all of them at once?
+    options:
+      - key: A
+        label: One attack at a time
+        text: "Each run applies one attack to the sandbox's documents and reports its target and side effects, as every committed set result does. T5 can pin it. A subject question on a set sandbox names its attack (`F6:S34`)."
+      - key: B
+        label: All attacks at once
+        text: "One combined corpus. A different experiment: no committed result to check it against, and two attacks that replace the same file would collide."
+      - key: C
+        label: Both
+        text: "Attack by attack by default, plus a combined option. More to build and test now."
+    recommended: A
+    recommendation: "A. Add a combined option later if an experiment needs it."
+  - id: D-3
+    title: What a blind subject may read
+    plan_ref: plan §2 item 3
+    blocks: [B-03, B-20]
+    question: Which files may a subject read for a question?
+    options:
+      - key: A
+        label: Only the readers' evidence
+        text: "`documents/*.md` and `structured/*.csv`, exactly what every reader arm saw. Anything else is refused."
+      - key: B
+        label: Anything in the corpus folder (the spec as written)
+        text: "Includes `MANIFEST.yaml`, which names the traps (\"similarly named but different customer\", \"Hearsay … deliberately remains\")."
+    recommended: A
+    recommendation: "A. B would let a blind subject read the trap list."
+  - id: D-4
+    title: How a registration is checked
+    plan_ref: plan §2 item 4
+    blocks: [B-07]
+    question: When you register a document with structured terms in a sandbox, how are the terms checked against its text?
+    options:
+      - key: A
+        label: Checks derived from the terms you give
+        text: "The same needles the registrar checks (amounts, thresholds, periods, parties), computed from your terms. A test pins it: every committed entry passes, and changing any term fails."
+      - key: B
+        label: No text check
+        text: "Terms are stored as given. Faster to build, but a typo in a term silently changes every decision that reads it."
+    recommended: A
+    recommendation: "A. The registrar's own checks can't be reused: `build_register.py` loads the truth, which the blind side must never import."
+  - id: D-5
+    title: Which engine decides for the subject, and what the mismatch mode changes
+    plan_ref: plan §2 item 5
+    blocks: [B-10, B-20]
+    question: What should the subject's `decide` tool run, and what should a sandbox's mismatch mode switch?
+    options:
+      - key: A
+        label: The governed procedure; named engines keep their meaning
+        text: "`decide` runs the procedure in force on the question's date from the procedure register (G-13: discount v1 = discount+Ru, credit v1 = v3u, SLA v1 = sla+Ru). Every named engine keeps its committed declaration, so T5 pins it. The mismatch mode applies to sandbox procedures that don't declare one."
+      - key: B
+        label: The spec as written
+        text: "The mode rewrites the register-backed engines' declarations. `discount+R` would then mean `discount+Ru` under the default, and committed results stop pinning the names."
+    recommended: A
+    recommendation: "A. It uses what main built in G-13 and keeps every engine name comparable with the committed runs."
+  - id: D-6
+    title: Live Jev in subject sessions
+    plan_ref: plan §2 item 6
+    blocks: [B-19, B-20]
+    question: How does a subject session decide whether `decide` may make new (paid) Jev calls?
+    options:
+      - key: A
+        label: An option when you open the session
+        text: "`open_subject_session(…, live_jev=false)`. Off by default, capped at 200 new calls per server."
+      - key: B
+        label: A sandbox setting
+        text: "A new `set_live_jev` tool. One more tool for T8 to pin."
+      - key: C
+        label: Never live for subjects
+        text: "Replay only. A question that needs a new judgment gets `needs_live_jev` from `decide`."
+    recommended: A
+    recommendation: "A."
+  - id: D-7
+    title: Procedures in a sandbox, after G-13 and G-07
+    plan_ref: plan §0.1
+    blocks: [B-05, B-08, B-17]
+    question: How much of the procedure register and the admission gate should a sandbox carry in v1?
+    options:
+      - key: A
+        label: Copy the register; report admission; no new tool
+        text: "Each sandbox copies the procedure register and its store. `write_procedure` validates; `check_procedure` reports the admission gate (A clean, B attacks, C reliance) from `admit.py`. Registering a new procedure version in a sandbox waits for v2."
+      - key: B
+        label: Full registration in the sandbox
+        text: "Add a `register_procedure` tool: admission-gated, with the two-person rule. A new tool, more tests, a bigger build."
+      - key: C
+        label: Leave G-13 out
+        text: "Sandboxes and `decide` use the spec files directly, as the spec was written before G-13."
+    recommended: A
+    recommendation: "A. It keeps v1's tool list and still shows whether a sandbox procedure would be admitted."
+  - id: D-8
+    title: Subject questions and grading, after G-35 and G-36
+    plan_ref: plan §0.1
+    blocks: [B-13, B-19, B-24]
+    question: Should subject sessions use the lab's current reader setup or reproduce set F's?
+    options:
+      - key: A
+        label: The current setup
+        text: "Questions \"as recorded in\" the CRM or ERP see their own request in the export (G-36's overlay); `get_procedure` serves the adopted procedures with the conditions field (G-35); answers are graded for safety and their blocking conditions are counted. The acceptance walk-through compares with the re-baseline (`runs/2026-10-06-baseline`)."
+      - key: B
+        label: Set F's setup
+        text: "The procedures as they were before G-35, and no overlay. Directly comparable with set F's rf2 check, but it brings back the input defect G-36 fixed."
+    recommended: A
+    recommendation: "A."
+
+tasks:
+  - id: B-01
+    phase: A
+    title: Scaffold, config, and the `_lab.py` boundary
+    plan_ref: Task 1
+    files: [pyproject.toml, uv.lock, .gitignore, lab/blueleaf_mcp/service/__init__.py, lab/blueleaf_mcp/service/_lab.py, lab/blueleaf_mcp/service/errors.py, tests/test_blueleaf_layout.py]
+    test_first: "`_lab.load_spec(discount.yaml)['spec'] == 'discount_approval'`; nothing under lab/blueleaf_mcp/ but `_lab.py` mentions `sys.path`."
+    prove: "uv lock --check; the default install's export is unchanged; gate G"
+    spec_tests: []
+    depends_on: []
+  - id: B-02
+    phase: A
+    title: Wall tests T1, T2, T4, T6, T7 as strict xfails
+    plan_ref: Task 2
+    files: [tests/test_blueleaf_walls.py]
+    test_first: "The five wall tests, each `xfail(strict=True)` naming the task that builds its wall."
+    prove: "gate G (all xfail)"
+    spec_tests: [T1, T2, T4, T6, T7]
+    depends_on: [B-01]
+  - id: B-03
+    phase: A
+    title: State root, the file wall, and the secret guard
+    plan_ref: Task 3
+    files: [lab/blueleaf_mcp/service/paths.py, lab/blueleaf_mcp/service/walls.py, lab/blueleaf_mcp/service/guard.py]
+    test_first: "Remove the xfail from T2 and the T7 unit test."
+    prove: "uv run pytest tests/test_blueleaf_walls.py; gate G"
+    spec_tests: [T2, T7]
+    depends_on: [B-02]
+    decisions: [D-3]
+  - id: B-04
+    phase: B
+    title: The six attack sets, their seals and application rules
+    plan_ref: Task 4
+    files: [lab/blueleaf_mcp/service/attacks.py, lab/blueleaf_mcp/seals/set-a.sha256, tests/test_blueleaf_attacks.py]
+    test_first: "Every seal verifies; a changed byte fails; each set's applied corpora equal its own harness builder's (`rh.build`, `guards.build`, `run_set_f.build`)."
+    prove: "gate G"
+    spec_tests: []
+    depends_on: [B-01]
+    decisions: [D-1]
+  - id: B-05
+    phase: B
+    title: Create, list, show and delete sandboxes
+    plan_ref: Task 5
+    files: [lab/blueleaf_mcp/service/sandbox.py, tests/test_blueleaf_sandbox.py]
+    test_first: "Layouts for `clean`, `attack:F6` and `set:F` (corpora, register with its store, procedure register with its store, specs, manifest); bad names refused; dataset untouched."
+    prove: "gate G"
+    spec_tests: [T6]
+    depends_on: [B-03, B-04]
+    decisions: [D-2, D-7]
+  - id: B-06
+    phase: B
+    title: Documents, and per-attack passes
+    plan_ref: Task 6
+    files: [lab/blueleaf_mcp/service/sandbox.py, tests/test_blueleaf_documents.py]
+    test_first: "Plant, edit (no match, ambiguous, one match), remove, diff; the change log; `passes()` per seed."
+    prove: "gate G"
+    spec_tests: []
+    depends_on: [B-05]
+    decisions: [D-2]
+  - id: B-07
+    phase: B
+    title: The register overlay, and `serve.served(root=…)`
+    plan_ref: Task 7
+    files: [lab/blueleaf_mcp/service/register.py, lab/owm_register/serve.py, tests/test_blueleaf_register.py]
+    test_first: "`served` unchanged without `root`; derived term checks pass every committed entry and fail on any changed term; two-person rule; versions."
+    prove: "gate G; build_register.py --check"
+    spec_tests: []
+    depends_on: [B-05]
+    decisions: [D-4]
+  - id: B-08
+    phase: B
+    title: Sandbox procedures, line-numbered validation
+    plan_ref: Task 8
+    files: [lab/blueleaf_mcp/service/procedures.py, tests/test_blueleaf_procedures.py]
+    test_first: "List the 8 specs; `write` validates with `flow.loads` and names the failing line; the decision type comes from `spec:`."
+    prove: "gate G"
+    spec_tests: []
+    depends_on: [B-05]
+    decisions: [D-7]
+  - id: B-09
+    phase: C
+    title: The layered Jev engine and the merged cache
+    plan_ref: Task 9
+    files: [lab/blueleaf_mcp/service/jev.py, tests/test_blueleaf_jev.py]
+    test_first: "Cache built and invalidated by source digests; an unrecorded request raises `NeedsLiveJev`; the live cap; no network in replay."
+    prove: "gate G"
+    spec_tests: [T9]
+    depends_on: [B-03]
+  - id: B-10
+    phase: C
+    title: The engine table and the decision runner
+    plan_ref: Task 10
+    files: [lab/blueleaf_mcp/service/engines.py, tests/test_blueleaf_engines.py]
+    test_first: "Frozen engines reproduce `check_equivalence.py`'s references; register engines match their frozen counterparts on clean; the governed default engine equals discount+Ru, v3u and sla+Ru on clean."
+    prove: "gate G"
+    spec_tests: []
+    depends_on: [B-07, B-08, B-09]
+    decisions: [D-5]
+  - id: B-11
+    phase: C
+    title: Scoring part 1, the classifiers; and T5
+    plan_ref: Task 11
+    files: [lab/blueleaf_mcp/scoring.py, tests/test_blueleaf_t5.py]
+    test_first: "A `set:F` sandbox by replay reproduces `withhold/set-f-results.json` (275 rows) for all 17 engines; clean is held outside credit v1."
+    prove: "uv run --group mcp pytest -m slow tests/test_blueleaf_t5.py; gate G"
+    spec_tests: [T5]
+    depends_on: [B-06, B-10]
+    decisions: [D-2]
+  - id: B-12
+    phase: C
+    title: T9, replay without spend
+    plan_ref: Task 12
+    files: [tests/test_blueleaf_jev.py]
+    test_first: "No connection attempted; a reworded guarantee gives `needs_live_jev`, counted by decision."
+    prove: "gate G"
+    spec_tests: [T9]
+    depends_on: [B-11]
+  - id: B-13
+    phase: D
+    title: Scoring part 2, the reader graders; and T10
+    plan_ref: Task 13
+    files: [lab/blueleaf_mcp/scoring.py, tests/test_blueleaf_t10.py]
+    test_first: "Set F's 60 reader answers and the re-baseline's 84 re-grade to the same safety classes."
+    prove: "gate G"
+    spec_tests: [T10]
+    depends_on: [B-11]
+    decisions: [D-8]
+  - id: B-14
+    phase: E
+    title: Lab server skeleton, session log, seal state, unseal
+    plan_ref: Task 14
+    files: [lab/blueleaf_mcp/lab_server.py, lab/blueleaf_mcp/service/journal.py, tests/test_blueleaf_lab_server.py]
+    test_first: "`seal_status` and `jev_budget` listed; one log line per call; `unseal` from the command line."
+    prove: "gate G"
+    spec_tests: [T8]
+    depends_on: [B-03, B-09]
+  - id: B-15
+    phase: E
+    title: "Lab tools: sandboxes"
+    plan_ref: Tasks 15–19 (15)
+    files: [lab/blueleaf_mcp/lab_server.py, tests/test_blueleaf_lab_server.py]
+    test_first: "One test per tool through the in-memory client; the T8 list grows."
+    prove: "gate G"
+    spec_tests: [T8]
+    depends_on: [B-14, B-05]
+  - id: B-16
+    phase: E
+    title: "Lab tools: documents"
+    plan_ref: Tasks 15–19 (16)
+    files: [lab/blueleaf_mcp/lab_server.py, tests/test_blueleaf_lab_server.py]
+    test_first: "One test per tool; the T8 list grows."
+    prove: "gate G"
+    spec_tests: [T8]
+    depends_on: [B-15, B-06]
+  - id: B-17
+    phase: E
+    title: "Lab tools: register and procedures"
+    plan_ref: Tasks 15–19 (17)
+    files: [lab/blueleaf_mcp/lab_server.py, tests/test_blueleaf_lab_server.py]
+    test_first: "One test per tool; `check_procedure` reports admission gates A, B and C."
+    prove: "gate G"
+    spec_tests: [T8]
+    depends_on: [B-16, B-07, B-08]
+    decisions: [D-7]
+  - id: B-18
+    phase: E
+    title: "Lab tools: decide and score"
+    plan_ref: Tasks 15–19 (18)
+    files: [lab/blueleaf_mcp/lab_server.py, tests/test_blueleaf_lab_server.py]
+    test_first: "`run_scenarios`, `explain_decision`, `scenario_info`; record the `set:F` wall time."
+    prove: "gate G"
+    spec_tests: [T8]
+    depends_on: [B-17, B-11]
+  - id: B-19
+    phase: E
+    title: "Lab tools: subject sessions, predictions"
+    plan_ref: Tasks 15–19 (19)
+    files: [lab/blueleaf_mcp/lab_server.py, tests/test_blueleaf_lab_server.py, tests/test_blueleaf_walls.py]
+    test_first: "`open_subject_session` writes a schema-valid `subject.json` (remove T4's xfail) and overlaid question corpora; `subject_answers`; `predict`."
+    prove: "gate G"
+    spec_tests: [T4, T8]
+    depends_on: [B-18, B-13]
+    decisions: [D-6, D-8]
+  - id: B-20
+    phase: F
+    title: The subject server, three arms
+    plan_ref: Task 20
+    files: [lab/blueleaf_mcp/subject_server.py, tests/test_blueleaf_subject_server.py]
+    test_first: "T8 per arm; no output names a sandbox, corpus, scenario or attack; T2 through the tools; `decide` runs the governed procedure (remove T1's xfail)."
+    prove: "gate G"
+    spec_tests: [T1, T2, T8]
+    depends_on: [B-19]
+    decisions: [D-3, D-5, D-6]
+  - id: B-21
+    phase: F
+    title: The seal lifecycle
+    plan_ref: Task 21
+    files: [lab/blueleaf_mcp/subject_server.py, lab/blueleaf_mcp/service/journal.py, tests/test_blueleaf_seal.py]
+    test_first: "Lab tools refuse while sealed; the seal lifts after the last answer; late and duplicate answers; unseal."
+    prove: "gate G"
+    spec_tests: [T3]
+    depends_on: [B-20]
+  - id: B-22
+    phase: G
+    title: "`promote` writes a new run folder"
+    plan_ref: Task 22
+    files: [lab/blueleaf_mcp/service/journal.py, lab/blueleaf_mcp/lab_server.py, tests/test_blueleaf_promote.py]
+    test_first: "The folder and its contents; refuses an existing folder; no commit, no Ledger write."
+    prove: "gate G"
+    spec_tests: []
+    depends_on: [B-21]
+  - id: B-23
+    phase: G
+    title: README; T6 and T7 end to end
+    plan_ref: Task 23
+    files: [lab/blueleaf_mcp/README.md, tests/test_blueleaf_session.py, tests/test_blueleaf_walls.py]
+    test_first: "A scripted session through both servers leaves `dataset/` byte-identical (remove T6's xfail); the dummy key never appears in any output or log."
+    prove: "gate G"
+    spec_tests: [T6, T7]
+    depends_on: [B-22]
+  - id: B-24
+    phase: H
+    title: Your acceptance walk-through in Claude Desktop
+    plan_ref: Task 24
+    owner: you
+    files: []
+    test_first: "Spec §10: plant F6, run, open a register-arm session, answer Q1 in a subject chat, score it, promote."
+    prove: "The promoted notes.md reads clearly without the chat."
+    spec_tests: []
+    depends_on: [B-23]
+    decisions: [D-8]

@@ -28,12 +28,13 @@ document under `seed/docs/`. Claude's provisional grades, the findings and the e
 | `findings` | seed + the page | category, title, body, status, evidence paths |
 | `queue` | Claude (`ArtifactData`) | the grading list: order, part, experiment, condition, scenario, repeat, hint (from `docs/grading-guide.md`) |
 | `gaps` | `seed_gaps.py` once, then the page and Claude | the gap tracker: id, title, area, owner, priority, status + note, `body` (markdown), `decisions` (options, recommendation, the user's choice), `log` ([{at, by, text}]). **The page is the source of truth; never reseeded** |
+| `build` | `seed_build.py` once (from `builds/blueleaf-mcp.yaml`), then the page and the builders | the BlueLeaf MCP build tracker (**Build** tab): decisions `D-n` (question, options, recommendation, the user's `choice`, the tasks they block) and tasks `B-nn` (phase, files, test first, proof, `depends_on`, `decisions`, `status` todo/doing/review/done/blocked, `evidence` {commit, ci}, `log`). The protocol is the build plan's §5. **The page is the source of truth; never reseeded** |
 
 Answer ids are `<experiment>~<condition>~<scenario>~r<repeat>`. A repeat run adds `~r2`,
 `~r3` documents and the matrix shows one chip per repeat, with no page change.
 
 Access rules: everyone who can open the page reads everything; only editors write the run
-data; contributors can write `grades`, `findings` and `gaps`.
+data; contributors can write `grades`, `findings`, `gaps` and `build`.
 
 ## Moving to MLflow later
 

@@ -1,0 +1,61 @@
+# The gate for the BlueLeaf lab MCP build (docs/superpowers/plans/2026-10-06-blueleaf-mcp-plan.md, §5).
+# A build task counts as done in the Lab Ledger's Build tab only with a green run of this workflow.
+name: blueleaf-mcp gate
+
+on:
+  push:
+    branches: [skunkworks/blueleaf-mcp]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blueleaf-mcp-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv (the version the lab uses)
+        run: python -m pip install "uv==0.8.17"
+
+      - name: Install the default groups from the lock
+        run: uv sync --locked
+
+      - name: Does the mcp group exist yet? (added by build task B-01)
+        id: groups
+        run: |
+          if python -c "import sys, tomllib; sys.exit(0 if 'mcp' in tomllib.load(open('pyproject.toml', 'rb')).get('dependency-groups', {}) else 1)"
+          then echo "mcp=true" >> "$GITHUB_OUTPUT"
+          else echo "mcp=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Truth coherence
+        run: uv run --locked northstar check
+
+      - name: Lint and format
+        run: |
+          uv run --locked ruff check
+          uv run --locked ruff format --check
+
+      - name: Types and tests, default install (MCP tests skip here)
+        run: |
+          uv run --locked mypy
+          uv run --locked pytest -q
+
+      - name: Types and tests with the mcp group (the run that counts once it exists)
+        if: steps.groups.outputs.mcp == 'true'
+        run: |
+          uv run --locked --group mcp mypy
+          uv run --locked --group mcp pytest -q
