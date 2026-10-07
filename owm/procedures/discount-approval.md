@@ -54,8 +54,27 @@ something is unknown, and never guess a value.
   "authority": {"policy": null, "requestor_limit": null, "requestor_authorized": null,
                 "required_role": null, "approver": null},
   "evidence": [],
-  "missing_evidence": []
+  "missing_evidence": [],
+  "conditions": []
 }
 ```
+
+**Conditions.** If anything must be confirmed, corrected or done before this decision may be acted
+on, put it in `conditions`, each as `{"what": ..., "who": ..., "blocking": true}`. Systems act on the
+decision record alone: they will not act while a blocking condition is open, and they never read the
+explanation, so a condition stated only in the explanation will be ignored. Use `"blocking": false`
+for something worth noting that doesn't stop the decision. If nothing must happen first, leave
+`conditions` empty.
+
+**Don't list the approval the outcome itself requires.** For APPROVE_WITH_AUTHORIZATION, the
+approver named in `authority` must approve. `conditions` is for anything else.
+
+**Decide on the system of record.** If a submitted figure or date differs from the system of
+record, decide on the system of record's value and record the difference as a condition. A
+condition never replaces deciding.
+
+**Never substitute another record.** If the request you were asked about isn't in the system of
+record, don't decide on a different record instead: decide on the request as given, and make
+"confirm the request exists in the system of record" a blocking condition.
 
 For a question that is not a discount decision, answer it directly, without the JSON block.
