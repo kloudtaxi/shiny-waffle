@@ -97,6 +97,8 @@ authors, in different domains, report the same mechanisms.
 |---|---|
 | **G-18** (identity operating point) | Add the hybrid-routing test as its next step |
 | **G-23** (cheap-agent pipeline) | Add the decision-scoped context arm |
-| **New: compounding reliability** | Analysis only; P3 |
-| **New: executable ontology constraints** | P3 |
-| **New: standards alignment** (PROV-O, ODRL, a FIBO slice) | Product, P3 |
+| **G-40** (new): compounding reliability | Analysis only; P3 |
+| **G-41** (new): executable ontology constraints | P3 |
+| **G-42** (new): standards alignment (PROV-O, ODRL, a FIBO slice) | Product, P3 |
+
+All five were added to the Lab Ledger on 2026-10-07 at the user's go-ahead.
