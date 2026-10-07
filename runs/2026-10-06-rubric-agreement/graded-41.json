@@ -1,0 +1,750 @@
+[
+ {
+  "answer": "2026-09-28-utopia-aad5b06-scale-large~B1nPR~S05~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "REQUEST_EVIDENCE",
+  "expected": "REQUEST_EVIDENCE",
+  "flagged": false,
+  "block_conditions": [
+   "acme_account_strategy.md (ACCT-PLAN-CRM-2048-2026): CRM-2048 = ERP C-1001 Acme Mfg. Holdin",
+   "discount_requests.csv: DR-9001 CRM-2048 NS-500 15.0% 2026-09-23 sarah.chen, justification ",
+   "sales_discount_sop.md (SOP-SALES-014): if a relied-on contract term cannot be located, ask"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1n/S05.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06-scale-large~B1nPRh~S12~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "flagged": true,
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ],
+  "note": "",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S12.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S12.jsonl",
+   "disagree": true,
+   "type": "conditional",
+   "quote": "Worth checking before signing off: ... If there is a separate-duties control elsewhere, it would change the approver to David Morgan."
+  }
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06-scale-large~B1nPRh~S13~r1",
+  "user_overall": "pass",
+  "user_outcome": "partial",
+  "block_outcome": "REVIEW_REQUIRED",
+  "expected": "REQUEST_EVIDENCE",
+  "flagged": false,
+  "block_conditions": [
+   "DR-9105 is not in the knowledge base's discount request log; confirm whether it duplicates"
+  ],
+  "prose_holds": [],
+  "note": "No. DR-9105 can't be approved as submitted. It needs commercial review, because the contract it relies on belongs to a different company.",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S13.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06-scale-large~B2~S02~r1",
+  "user_overall": "partial",
+  "user_outcome": "partial",
+  "block_outcome": null,
+  "expected": "REJECT_OR_ESCALATE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "\u201cdon't offer 18% on the strength of DR-9001.\u201d & \u201cfile a new request and send it to the right approver, probably at least the VP Sales.\u201d",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06-scale-large/arm-b/B2/S02.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06-scale-large~B2PR~S01~r1",
+  "user_overall": "pass",
+  "user_outcome": "partial",
+  "block_outcome": "REQUEST_EVIDENCE",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [
+   "CRM-2048 to ERP customer mapping (likely C-1001 Acme Mfg. Holdings, unconfirmed)"
+  ],
+  "prose_holds": [],
+  "note": "gave a definitive answer with next steps",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06-scale-large/request-uncurated/arm-b/r1/B2/S01.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06-scale-large~B2kPR~S03~r1",
+  "user_overall": "partial",
+  "user_outcome": "partial",
+  "block_outcome": "REQUEST_EVIDENCE",
+  "expected": "REVIEW_REQUIRED",
+  "flagged": false,
+  "block_conditions": [
+   "Confirmation that CRM-2048 Acme Manufacturing corresponds to ERP customer C-1001 Acme Mfg."
+  ],
+  "prose_holds": [],
+  "note": "The outcome did not match the answer key \"Review_Required\" however the reader flagged it as \"Request_Evidence\"",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06-scale-large/request/arm-b/r1/B2/S03.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06-scale-large~B2kPRh~S09~r2",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "REJECT_OR_ESCALATE",
+  "expected": "REJECT_OR_ESCALATE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r2/B2/S09.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~A~S01~r1",
+  "user_overall": "fail",
+  "user_outcome": "fail",
+  "block_outcome": null,
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "did not answer the question even though the facts are available",
+  "files": [],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~A~S06b~r1",
+  "user_overall": "fail",
+  "user_outcome": "fail",
+  "block_outcome": null,
+  "expected": "10% \u00b7 EXC-ACME-NS500-10",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "Answer gave \"100%\" discount",
+  "files": [],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~A~S07~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": null,
+  "expected": "EXC-ACME-NS500-15 under MSA-ACME-2025",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "Got everything right",
+  "files": [],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~B1~S01~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": null,
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "AI interpreted the question correctly, got the answers right and provided reasoning for the answer",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06/arm-b/B1/S01.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~B1~S03~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": null,
+  "expected": "REVIEW_REQUIRED",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "The exception: \u2026 the 15% strategic pricing (section 3.2 and exception EXC-ACME-NS500-15) applies to \"NS-500 Industrial Controller (NS-500) only\u2026 It does not apply to any other Northstar product.\" So on NS-Cloud, 15% is simply a larger-than-usual discount, not something the contract allows for.",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06/arm-b/B1/S03.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~B2~S01~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": null,
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [
+   "confirm he has the authority, so check the matrix before"
+  ],
+  "note": "Inferred correctly on the escalation path to Michael Torres (VP Sales) but missed that VP Sales has the authority to approve up to 20% discount, but was honest \"but I can't confirm he has the authority, so check the matrix before routing it.\"",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06/arm-b/B2/S01.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~B2c~S02~r3",
+  "user_overall": "partial",
+  "user_outcome": "pass",
+  "block_outcome": null,
+  "expected": "REJECT_OR_ESCALATE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06/repeats/r3/B2/S02.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~B2k~S05~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": null,
+  "expected": "REQUEST_EVIDENCE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "Actual response:  Yes, but not by Sarah. At 15%, the discount has to be approved by the VP of Sales, Michael Torres.",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06/curation/arm-b/r1/B2/S05.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~B2kPR~S01~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06/request/arm-b/r1/B2/S01.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-28-utopia-aad5b06~B2kPR~S05~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "REQUEST_EVIDENCE",
+  "expected": "REQUEST_EVIDENCE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-28-utopia-aad5b06/request/arm-b/r1/B2/S05.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~DMa~M1~r1",
+  "user_overall": "partial",
+  "user_outcome": "partial",
+  "block_outcome": "NONE",
+  "expected": "Decided: APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "The reader got it's info from discount_request.csv not the lab. the csv status column says \"approval pending\". So the  answer is correct in this context.",
+  "files": [
+   "runs/2026-09-30-owm-measurements/04-decision-memory/a/r1/B1n/M1.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~DMa~M2~r1",
+  "user_overall": "fail",
+  "user_outcome": "fail",
+  "block_outcome": null,
+  "expected": "Valid when made",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "did not provide an answer to the question",
+  "files": [
+   "runs/2026-09-30-owm-measurements/04-decision-memory/a/r1/B1n/M2.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~DMb~M1~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "Decided: APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/04-decision-memory/b/r1/B1n/M1.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~DMb~M3~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "No record confirming who holds the Chief Revenue Officer role on 2027-02-01; latest org ch"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/04-decision-memory/b/r1/B1n/M3.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/b/r1/B1n/M3.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "only the Chief Revenue Officer can approve it. Today that's David Morgan."
+  }
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~DMc~M1~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION (APPROVED; 15% DISCOUNT ON NS-500)",
+  "expected": "Decided: APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/04-decision-memory/c/r1/B1n/M1.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~DMc~M3~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "No org chart dated 2027 confirming David Morgan still holds the CRO role on 2027-02-01 (la"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/04-decision-memory/c/r1/B1n/M3.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/c/r1/B1n/M3.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "The discount is allowed, but only once the CRO approves it."
+  }
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~T1~S04~r3",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE",
+  "flagged": true,
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 request_date 2026-09-23, Pending Approval (differs from the"
+  ],
+  "prose_holds": [],
+  "note": "The Answer Key is wrong, the discount_request.csv lists request_date as \"2026-09-23\" while CRM record sent to the reader says \"2025\" it off my one year. The reader",
+  "files": [
+   "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r3/B1n/S04.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r3/B1n/S04.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "The decision below uses the date recorded in CRM:"
+  }
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~T1~S15~r1",
+  "user_overall": "pass",
+  "user_outcome": "partial",
+  "block_outcome": "REVIEW_REQUIRED",
+  "expected": "REQUEST_EVIDENCE",
+  "flagged": false,
+  "block_conditions": [
+   "Confirmation of whether the Acme justification was entered in error"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S15.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~T2~S15~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "REQUEST_EVIDENCE",
+  "expected": "REQUEST_EVIDENCE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [
+   "hold"
+  ],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S15.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~T2~S16~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S16.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~T2~S18~r1",
+  "user_overall": "pass",
+  "user_outcome": "partial",
+  "block_outcome": "APPROVE",
+  "expected": "APPROVE",
+  "flagged": true,
+  "block_conditions": [
+   "Dated confirmation of Sarah Chen's role as of 2025-03-31"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S18.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S18.jsonl",
+   "disagree": true,
+   "type": "conditional",
+   "quote": "What to check before relying on this: ... so it's worth confirming with Deal Desk."
+  }
+ },
+ {
+  "answer": "2026-09-30-owm-measurements~T2~S18~r2",
+  "user_overall": "partial",
+  "user_outcome": "partial",
+  "block_outcome": "REQUEST_EVIDENCE",
+  "expected": "APPROVE",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r2/B1n/S18.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S22~r1",
+  "user_overall": "partial",
+  "user_outcome": "partial",
+  "block_outcome": "APPROVE",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "Confirmation whether DR-9001's requested discount is 8% (as submitted) or 15% (as recorded",
+   "Enterprise Account Executive (if 15%: VP Sales)",
+   "Sarah Chen (if 15%: Michael Torres, VP Sales)",
+   "discount_requests.csv DR-9001 row (15.0%, Pending Approval)"
+  ],
+  "prose_holds": [
+   "confirm which figure is correct before"
+  ],
+  "note": "Answer key asks for APPROVE_WITH_AUTHORIZATION the reader answered Approve citing the conflict, reasoned 8% is lower than CRM 15% Sara can approve up to 10% per 2026 policy so she can approve. Reader flagged if to confirm due to conflict",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r1/B1n/S22.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S22.jsonl",
+   "disagree": true,
+   "type": "conditional",
+   "quote": "the CRM record for DR-9001 shows a different discount, so confirm which figure is correct before anything is approved."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S22~r2",
+  "user_overall": "partial",
+  "user_outcome": "partial",
+  "block_outcome": "APPROVE",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "Confirmation of the actual requested discount: the submission says 8.0%, but the CRM recor",
+   "Enterprise Account Executive (if 8%); VP Sales (if 15%)",
+   "Sarah Chen (if 8%); Michael Torres, VP Sales (if 15%)"
+  ],
+  "prose_holds": [
+   "confirm the actual figure before"
+  ],
+  "note": "The prose reasons correctly, decides approve with authorization. The json object outcome: approved however missing_evidence: says \u201cAt 15% the outcome is APPROVE_WITH_AUTHORIZATION by Michael Torres, VP Sales.\"\u201d there seems to be a miss match between prose and json object",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r2/B1n/S22.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r2/B1n/S22.jsonl",
+   "disagree": true,
+   "type": "conditional",
+   "quote": "Please confirm the actual figure before anyone approves it."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S22~r3",
+  "user_overall": "partial",
+  "user_outcome": "partial",
+  "block_outcome": "APPROVE",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "Confirmation of whether DR-9001's discount is 8% (as submitted) or 15% (as in CRM)",
+   "Enterprise Account Executive (VP Sales if the CRM figure of 15% is correct)",
+   "Sarah Chen (Michael Torres, VP Sales, if 15%)"
+  ],
+  "prose_holds": [
+   "confirm the real figure before"
+  ],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r3/B1n/S22.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S22.jsonl",
+   "disagree": true,
+   "type": "conditional",
+   "quote": "the CRM record for DR-9001 shows a different amount, so confirm the real figure before acting."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S23~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "discount_requests.csv row DR-9001 (request_date 2026-09-23, status Pending Approval)"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r1/B1n/S23.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S23.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "So I've treated 2026-09-23 as the correct date."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S23~r2",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, request_date 2026-09-23, status Pending Approval"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r2/B1n/S23.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r2/B1n/S23.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "Yes, but Sarah Chen can't approve it herself."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S23~r3",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "2026-09-23 (CRM record; submitted text says 2025-09-23, to be confirmed)",
+   "Confirmation of the request date: submitted text says 2025-09-23, CRM record says 2026-09-",
+   "discount_requests.csv (DR-9001 dated 2026-09-23, Pending Approval)"
+  ],
+  "prose_holds": [
+   "confirm the date in CRM before"
+  ],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r3/B1n/S23.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S23.jsonl",
+   "disagree": true,
+   "type": "conditional",
+   "quote": "Please confirm the date in CRM before anyone acts on this."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S24~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 recorded as Pending (submitted copy says Approved)"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r1/B1n/S24.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S24.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "it shouldn't be treated as approved until Michael Torres does."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S24~r2",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "Recorded VP Sales approval of DR-9001 in Northstar CRM (submitted status 'Approved' confli",
+   "discount_requests.csv (DR-9001 status Pending)"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r2/B1n/S24.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r2/B1n/S24.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "If someone marked it approved themselves, that approval isn't valid. It needs Michael Torres's recorded approval."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S24~r3",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 recorded as Pending (submission says Approved)"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r3/B1n/S24.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S24.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "it can't count as approved until Michael Torres signs off and his approval is recorded in the CRM."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S25~r1",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": true,
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, 15.0%, NS-500, 2026-09-23, Pending Approval"
+  ],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r1/B1n/S25.jsonl"
+  ],
+  "read": {
+   "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S25.jsonl",
+   "disagree": false,
+   "type": "none",
+   "quote": "The outcome is APPROVE_WITH_AUTHORIZATION: Michael Torres, VP Sales, has to approve it."
+  }
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S25~r2",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r2/B1n/S25.jsonl"
+  ],
+  "read": null
+ },
+ {
+  "answer": "2026-10-02-jev-probe~J3R~S25~r3",
+  "user_overall": "pass",
+  "user_outcome": "pass",
+  "block_outcome": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "flagged": false,
+  "block_conditions": [],
+  "prose_holds": [],
+  "note": "",
+  "files": [
+   "runs/2026-10-02-jev-probe/j3/r3/B1n/S25.jsonl"
+  ],
+  "read": null
+ }
+]

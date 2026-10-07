@@ -1,0 +1,48 @@
+{"answer": "runs/2026-10-06-holds/answers/control/S01-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S01-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S01-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S04-r1.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "Please confirm the request date and that DR-9004 does not duplicate DR-8104."}
+{"answer": "runs/2026-10-06-holds/answers/control/S04-r2.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "Please confirm the id and date. The answer changes if this is really DR-9001 in 2026"}
+{"answer": "runs/2026-10-06-holds/answers/control/S04-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S22-r1.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "The CRM record needs to be reconciled before anything is approved."}
+{"answer": "runs/2026-10-06-holds/answers/control/S22-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S22-r3.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "One thing must be fixed first ... Before anything is recorded, the 8% version should be reconciled with the CRM record."}
+{"answer": "runs/2026-10-06-holds/answers/control/S25-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S25-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S25-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S26-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S26-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S26-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S27-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S27-r2.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "Check first: CR-9202 does not appear in the credit-requests extract ... Finance should confirm whether CR-9202 replaces CR-9201"}
+{"answer": "runs/2026-10-06-holds/answers/control/S27-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S31-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S31-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S31-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/control/S35-r1.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "The requested amount also needs to be confirmed before anyone signs off. ... Priya should approve only after the amount is confirmed"}
+{"answer": "runs/2026-10-06-holds/answers/control/S35-r2.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "Before she signs, the requested limit has to be confirmed"}
+{"answer": "runs/2026-10-06-holds/answers/control/S35-r3.jsonl", "prose_hold": true, "captured": false, "approval_restated": false, "quote": "Priya should confirm the amount before signing."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S01-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": true, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S01-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": true, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S01-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": true, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S04-r1.jsonl", "prose_hold": true, "captured": true, "approval_restated": false, "quote": "Before anyone acts on it, though, the request record itself needs checking, because DR-9004 does not appear in the CRM extract"}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S04-r2.jsonl", "prose_hold": true, "captured": true, "approval_restated": false, "quote": "The date has to be confirmed before anyone acts on this."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S04-r3.jsonl", "prose_hold": true, "captured": true, "approval_restated": false, "quote": "the record has to be confirmed before anyone acts on this. ... Why this can't be acted on yet"}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S22-r1.jsonl", "prose_hold": true, "captured": true, "approval_restated": true, "quote": "The discrepancy must be resolved before anything is acted on."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S22-r2.jsonl", "prose_hold": true, "captured": true, "approval_restated": true, "quote": "the discount must be reconciled before anyone acts on it. ... Nothing should proceed until the discount figure is confirmed."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S22-r3.jsonl", "prose_hold": true, "captured": true, "approval_restated": false, "quote": "Nothing can be acted on until the actual figure is confirmed."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S25-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": true, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S25-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": true, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S25-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": true, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S26-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S26-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S26-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S27-r1.jsonl", "prose_hold": true, "captured": true, "approval_restated": false, "quote": "Two record problems must be resolved before anyone acts on it."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S27-r2.jsonl", "prose_hold": true, "captured": true, "approval_restated": false, "quote": "Before anyone acts on it, CR-9202 has to be confirmed in ERP and reconciled with CR-9201"}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S27-r3.jsonl", "prose_hold": true, "captured": true, "approval_restated": false, "quote": "Before the new limit is applied, Finance must also resolve CR-9201"}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S31-r1.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S31-r2.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S31-r3.jsonl", "prose_hold": false, "captured": null, "approval_restated": false, "quote": ""}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S35-r1.jsonl", "prose_hold": true, "captured": true, "approval_restated": true, "quote": "First, though, the requested amount must be confirmed, because the records disagree on it."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S35-r2.jsonl", "prose_hold": true, "captured": true, "approval_restated": true, "quote": "the requested amount must be confirmed first. ... nothing should be recorded until the figure is settled."}
+{"answer": "runs/2026-10-06-holds/answers/treatment/S35-r3.jsonl", "prose_hold": true, "captured": true, "approval_restated": true, "quote": "Before anyone acts, the requested amount must be confirmed, because the records disagree."}

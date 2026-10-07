@@ -333,7 +333,13 @@ def entry_routes(
 
 # -- the runner -------------------------------------------------------------------------------
 def load(path: Path) -> dict[str, Any]:
-    spec = yaml.safe_load(path.read_text())
+    return loads(path.read_text(), path.name)
+
+
+def loads(text: str, name: str) -> dict[str, Any]:
+    """A spec from its text (G-13: a registered procedure runs from the approved text)."""
+    path = Path(name)  # for error messages only
+    spec = yaml.safe_load(text)
     for key in ("spec", "outcomes", "route_to", "documents", "steps", "outcome", "record"):
         if key not in spec:
             raise SpecError(f"{path.name}: missing section {key!r}")
@@ -356,7 +362,7 @@ def load(path: Path) -> dict[str, Any]:
 
 def run(
     spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any],
-    register: Register | None = None,
+    register: Register | None = None, trace: dict[str, Any] | None = None,
 ) -> dict[str, Any]:  # fmt: skip
     used: list[dict[str, Any]] = []
     flags: list[str] = []
@@ -531,6 +537,8 @@ def run(
     record = {field: evaluate(str(src), env) for field, src in spec["record"].items()}
     if spec.get("gate", True) and set_aside:
         withhold(record, spec["record"], set(inputs) | ROUTE_FIELDS, set_aside, flags)
+    if trace is not None:  # G-06 (2026-10-06): what the decision relied on, for the admission check
+        trace["relied"] = [(d.filename, d.doc_id) for d in relied]
     return record
 
 

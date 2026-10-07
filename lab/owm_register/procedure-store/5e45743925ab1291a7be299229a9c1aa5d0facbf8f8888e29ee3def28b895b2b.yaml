@@ -1,0 +1,248 @@
+# SLA breach response as a data spec (specs as data, 2026-10-04).
+# It replaces lab/owm_kernel/sla.py. Inputs: sid, ticket_id, decided_at (None: after all events).
+# The rules were written by a blind subagent (runs/2026-10-03-exp6-sla/rules/).
+
+spec: sla_response
+outcomes: [BREACH_CREDIT_OWED, BREACH_NO_CREDIT, NO_BREACH, OUT_OF_SCOPE, CANNOT_DECIDE]
+route_to: CANNOT_DECIDE
+
+documents:
+  kinds:
+    - { kind: schedule, id_prefixes: [SLA-SCHEDULE], title_words: [Service Level Schedule] }
+    - { kind: guide, title_words: [Severity Guide] }
+    - { kind: procedure, title_words: [Escalation Procedure] }
+    - { kind: calendar, title_words: [Holiday Calendar] }
+    - { kind: terms, id_prefixes: [SUP-], title_words: [Support Terms] }
+  owners:
+    schedule: [Customer Support]
+    guide: [Customer Support]
+    procedure: [Customer Support]
+    calendar: [People Operations]
+    terms: [Legal]
+  policy_kind: schedule
+  graded: [guide, procedure, calendar, terms]
+
+helpers:
+  # "30 minutes" → 30; "4 hours" or "12 business hours" → minutes; "No restoration target" → None
+  duration: >-
+      int(search(r"(\d+) minutes", x)) if search(r"(\d+) minutes", x) else
+      int(search(r"(\d+) (?:business )?hours?", x)) * 60 if search(r"(\d+) (?:business )?hours?", x) else None
+  cells: '[c.strip() for c in x.strip().strip("|").split("|")]'
+
+readers:
+  # (severity, plan or None) → (response minutes, restoration minutes, business clock)
+  targets: >-
+      {(int(c[0].partition(",")[0]), c[0].partition(",")[2].replace("plan", "").strip() or None):
+         (duration(c[1]), duration(c[2]), "Business" in c[3])
+       for c in [cells(line) for line in (search(r"## 3\. Targets\n(.*?)(?=\n## )", doc.body) or "").splitlines()]
+       if len(c) == 4 and c[0][:1].isdigit()}
+  # (severity, "response" | "restoration", band or None) → fraction of the monthly fee
+  credit_rates: >-
+      {(sev, "response" if c[0].startswith("Initial response") else "restoration",
+        int(search(r"band (\d)", c[0])) if search(r"band (\d)", c[0]) else None): int(pct.rstrip("%")) / 100
+       for c in [cells(line) for line in (search(r"## 6\. Service credits\n(.*?)(?=\n## )", doc.body) or "").splitlines()]
+       if len(c) == 3 and c[1].endswith("%")
+       for sev, pct in ((1, c[1]), (2, c[2]))}
+  zone_of: 'zone(search(r"\((America/[A-Za-z_]+)\)", flat(doc.body)))'
+  hours_of: 'groups(r"Business hours\*\* are (\d\d):(\d\d) to (\d\d):(\d\d)", flat(doc.body))'
+  notice_days: 'int(search(r"at least \*\*(\d+) business days\*\*", flat(doc.body)))'
+  cap_of: 'int(search(r"may not exceed \*\*(\d+)%\*\*", flat(doc.body))) / 100'
+  claim_days: 'int(search(r"\*\*(\d+) calendar days\*\* after the restoration date", flat(doc.body)))'
+  holidays: '[date(d) for d in findall(r"^\| (\d{4}-\d\d-\d\d) \|", doc.body)]'
+  terms_of: >-
+      {"duns": search(r"DUNS ([\d-]+)", doc.body),
+       "plan": (row(doc, "Support plan") or "").split(": ", 1)[-1],
+       "products": products_in(row(doc, "Covered products") or "", products),
+       "fees": [(mo, money(a)) for a, mo in findall(r"\$([\d,]+) per month from (\d{4}-\d\d)", row(doc, "Monthly support fee") or "")]}
+  severity_question: >-
+      {"type": "choice",
+       "instructions": "Which severity level does the business impact recorded in `ticket` meet? Test the definitions in order; the severity is the first one the impact meets.",
+       "criteria": {"severity_" + n: flat(text) for n, text in findall(r"## Severity (\d): \w+\n\n(.*?)(?=\n## |\Z)", doc.body)}}
+  numbers: >-
+      {"lead": int(findall(r"no later than (\d+) minutes after clock start", flat(doc.body))[0]),
+       "owner": int(findall(r"no later than (\d+) minutes after clock start", flat(doc.body))[1]),
+       "half": int(findall(r"not restored when (\d+)% of the restoration target", flat(doc.body))[0]),
+       "full": int(findall(r"not restored when (\d+)% of the restoration target", flat(doc.body))[1]),
+       "out_of_scope": int(search(r"no later than (\d+) business hours after the open time", flat(doc.body)))}
+
+questions: {}
+
+steps:
+  - t: 'first(r for r in table("service_tickets") if r["ticket_id"] == ticket_id)'
+  - events: '[e for e in table("ticket_events") if e["ticket_id"] == ticket_id]'
+  - recorded_open: 'datetime(t["opened_at"])'
+  - first_sched: 'in_force(policies(), recorded_open.date())'
+  - proc: 'first(docs("procedure"))'
+  - guide: 'first(docs("guide"))'
+  - calendar_doc: 'first(docs("calendar"))'
+  - hours: 'hours_of(first_sched) if first_sched else None'
+  - cal: >-
+      calendar(zone_of(first_sched), clock_time(int(hours[0]), int(hours[1])), clock_time(int(hours[2]), int(hours[3])),
+               holidays(calendar_doc) if calendar_doc else [])
+      if first_sched else None
+  - opened: 'cal.local(recorded_open) if cal else recorded_open'
+  # the version is chosen by the open date in the schedule's own zone
+  - sched: 'in_force(policies(), opened.date()) if first_sched else None'
+  - ready: 'sched is not None and proc is not None and guide is not None'
+  - _missing: 'None if ready else flag("cannot decide: the schedule in force, the procedure or the guide is missing")'
+  - _rely_rules: 'rely(sched, proc, guide) if ready else None'
+  - nums: { when: ready, expr: 'numbers(proc)' }
+  - claims: '[e for e in events if e["event"] == "credit_claim"]'
+  - claim_at: 'cal.local(datetime(claims[0]["at"])) if claims and cal else None'
+  - claim_due: 'claim_at.date() + days(30) if claim_at else None'
+  - severity_j: { when: ready, expr: 'use(ask("severity", severity_question(guide), {"ticket": {"description": t["description"]}}))' }
+  - severity: 'int(severity_j["choice"].split("_")[1]) if ready else None'
+  # scope: identity by registered key (DUNS), then the terms' products and coverage in force
+  - crm: 'first(r for r in table("crm_accounts") if r["account_id"] == t["account_id"])'
+  - sku: 't["product_sku"]'
+  - covered: >-
+      [(d, terms_of(d)) for d in covering(docs("terms"), opened.date())
+       if crm and linked({"duns_number": str(terms_of(d)["duns"])}, [crm], ("duns_number",)) and sku in terms_of(d)["products"]]
+      if ready else []
+  - agreement: 'covered[-1] if covered else None'
+  - in_scope: 'ready and agreement is not None'
+  - owner: 'owner_of(crm)'
+  - owner_key: '"owner:" + t["account_id"]'
+  - _out: 'flag("out of scope: no support terms cover this customer and product") if ready and not in_scope else None'
+  - _rely_terms: 'rely(agreement[0]) if in_scope else None'
+  - tm: 'agreement[1] if in_scope else None'
+  - target: >-
+      (targets(sched).get((severity, tm["plan"])) or targets(sched)[(severity, None)]) if in_scope else None
+  - business: 'target[2] if in_scope else None'
+  # clocks: start, maintenance windows with timely notice, pauses
+  - qualifying: >-
+      [(cal.local(datetime(n["window_start"])), cal.local(datetime(n["window_end"])))
+       for n in table("maintenance_notices")
+       if n["account_id"] == t["account_id"] and sku in n["products"].split(";")
+       and cal.working_days_between(cal.local(datetime(n["sent_at"])).date(), cal.local(datetime(n["window_start"])).date()) >= notice_days(sched)]
+      if in_scope else []
+  - inside: 'first(w for w in qualifying if w[0] <= opened < w[1])'
+  - start: >-
+      ((max(inside[1], cal.next_open(inside[1])) if business else inside[1]) if inside else
+       (cal.next_open(opened) if business else opened)) if in_scope else None
+  - windows: '[w for w in qualifying if not (w[0] <= opened < w[1]) and w[1] > start]'
+  - pauses: >-
+      intervals([datetime(e["at"]) for e in events if e["event"] == "status_change" and "Awaiting Customer" in e["detail"]],
+                [datetime(e["at"]) for e in events if e["event"] == "status_change" and "In Progress" in e["detail"]])
+  - resp_clock: 'clock(cal, business, start, windows) if in_scope else None'
+  - rest_clock: 'clock(cal, business, start, windows + pauses) if in_scope else None'
+  # breach
+  - first_response: 'next((datetime(e["at"]) for e in events if e["event"] == "engineer_response"), None)'
+  - restored: 'datetime(t["restored_at"]) if t["restored_at"] else None'
+  - resp: >-
+      ("cannot_decide" if first_response is None else
+       "met" if first_response <= start or resp_clock.elapsed(first_response) <= target[0] else "missed")
+      if in_scope else ("not_applicable" if ready else "cannot_decide")
+  - asserted: >-
+      [e for e in events if e["event"] == "note"
+       and use(ask("asserts_exclusion", {"type": "noul", "instructions": "The note in `note` asserts that the incident was caused by the customer (it invokes the customer-caused exclusion)."},
+                   {"note": e["detail"]}))["yes"]]
+      if in_scope else []
+  - deadline: 'combine(cal.working_days_after(cal.local(restored).date(), 10), cal.closes, cal.zone) if asserted and restored else None'
+  - finding: >-
+      first(e for e in events if e["event"] == "root_cause_finding"
+            and datetime(e["at"]) <= (min(deadline, decided_at) if decided_at else deadline))
+      if deadline else None
+  - customer_caused: >-
+      use(ask("attributes_customer", {"type": "noul", "instructions": "The root-cause finding in `finding` attributes the incident to the customer."},
+              {"finding": finding["detail"]}))["yes"]
+      if finding else False
+  - pending: 'deadline is not None and finding is None and decided_at is not None and decided_at < deadline'
+  - rest_pre: >-
+      ("not_applicable" if target[1] is None else "cannot_decide" if restored is None else
+       "not_applicable" if customer_caused else "cannot_decide" if pending else "decide")
+      if in_scope else ("not_applicable" if ready else "cannot_decide")
+  - _pending: 'flag("cannot decide restoration: missing the root-cause finding") if rest_pre == "cannot_decide" and pending and restored else None'
+  - elapsed: 'rest_clock.elapsed(restored) if rest_pre == "decide" else None'
+  - banded: 'any(k[2] for k in credit_rates(sched)) if in_scope else False'
+  - band: '((2 if elapsed > 2 * target[1] else 1) if banded else None) if rest_pre == "decide" and elapsed > target[1] else None'
+  - rest: '("met" if elapsed <= target[1] else ("missed_band" + str(band) if band else "missed")) if rest_pre == "decide" else rest_pre'
+  # credit and claim
+  - breach: 'resp == "missed" or rest.startswith("missed")'
+  - phoned: 't["channel"] == "phone"'
+  - month: 'opened.strftime("%Y-%m")'
+  - creditable: 'in_scope and "cannot_decide" not in (resp, rest) and severity in (1, 2) and breach'
+  - rate_sev: '2 if severity == 1 and not phoned else severity'
+  - pct: >-
+      ((credit_rates(sched)[(rate_sev, "response", None)] if resp == "missed" else 0.0)
+       + (credit_rates(sched)[(rate_sev, "restoration", band)] if rest.startswith("missed") else 0.0))
+      if creditable else 0.0
+  - fee: '[a for mo, a in tm["fees"] if mo <= month][-1] if creditable else 0.0'
+  - cap_used: >-
+      sum(float(c["amount_usd"]) for c in table("service_credits")
+          if c["account_id"] == t["account_id"] and c["ticket_opened"][:7] == month) if creditable else 0.0
+  - amount: 'round(min(pct * fee, max(0.0, cap_of(sched) * fee - cap_used)), 2) if creditable else 0.0'
+  - window_end: 'cal.local(restored).date() + days(claim_days(sched)) if in_scope and restored else None'
+  - credit: >-
+      None if not in_scope and not ready else
+      0.0 if not in_scope else
+      None if "cannot_decide" in (resp, rest) else
+      (0.0 if claim_at is None else amount if claim_at.date() <= window_end else 0.0) if creditable else 0.0
+  - _claim_flag: >-
+      (flag(f"no claim yet: {amount:.2f} would be owed if claimed by {window_end}") if claim_at is None else
+       flag(f"claim received after the window closed on {window_end}") if claim_at.date() > window_end else None)
+      if creditable else None
+  # escalation moments, on the ticket's clocks, ignoring the exclusion
+  - lead_at: 'resp_clock.moment(nums["lead"]) if in_scope and severity == 1 and target[1] is not None else None'
+  - owner_at: 'resp_clock.moment(nums["owner"]) if lead_at else None'
+  - half_at: 'rest_clock.moment(target[1] * nums["half"] // 100) if lead_at else None'
+  - full_at: >-
+      rest_clock.moment(target[1] * nums["full"] // 100) if lead_at else
+      rest_clock.moment(target[1]) if in_scope and severity in (2, 3) and target[1] is not None else None
+  - response_at: 'resp_clock.moment(target[0]) if in_scope and severity == 2 and target[1] is not None else None'
+  - open_at_half: 'half_at is not None and (restored is None or restored > half_at)'
+  - open_at_full: 'full_at is not None and (restored is None or restored > full_at)'
+
+outcome:
+  - { when: 'not ready', outcome: CANNOT_DECIDE }
+  - { when: 'not in_scope', outcome: OUT_OF_SCOPE }
+  - { when: 'credit is None', outcome: CANNOT_DECIDE }
+  - { when: 'breach and credit > 0', outcome: BREACH_CREDIT_OWED }
+  - { when: 'breach', outcome: BREACH_NO_CREDIT }
+  - { outcome: NO_BREACH }
+
+obligations:
+  - { when: 'ready and not in_scope', party: organization, duty: notify, role: '"ACCOUNT_OWNER"', holder: owner_key,
+      due: 'cal.add(cal.next_open(opened), nums["out_of_scope"] * 60)' }
+  - { when: 'in_scope and deadline is not None', party: organization, duty: record_root_cause, role: '"SUPPORT_ENGINEERING_LEAD"',
+      holder: 'holder_of("Support Engineering Lead")', due: deadline }
+  - { when: 'lead_at is not None', party: organization, duty: engage, role: '"SUPPORT_ESCALATION_MANAGER"',
+      holder: 'holder_of("Support Escalation Manager")', due: lead_at }
+  - { when: 'lead_at is not None', party: organization, duty: notify, role: '"ACCOUNT_OWNER"', holder: owner_key, due: owner_at }
+  - { when: 'lead_at is not None and open_at_half', party: organization, duty: notify, role: '"CUSTOMER_SUPPORT_DIRECTOR"',
+      holder: 'holder_of("Director of Customer Support")', due: half_at }
+  - { when: 'lead_at is not None and open_at_full', party: organization, duty: notify, role: '"VP_SALES"',
+      holder: 'holder_of("VP Sales")', due: full_at }
+  - { when: 'lead_at is not None and open_at_full and crm and crm.get("account_tier") == "Strategic"', party: organization,
+      duty: notify, role: '"CRO"', holder: 'holder_of("Chief Revenue Officer")', due: full_at }
+  - { when: 'response_at is not None and (first_response is None or first_response > response_at)', party: organization,
+      duty: notify, role: '"SUPPORT_ESCALATION_MANAGER"', holder: 'holder_of("Support Escalation Manager")', due: response_at }
+  - { when: 'in_scope and severity == 2 and open_at_full', party: organization, duty: notify, role: '"CUSTOMER_SUPPORT_DIRECTOR"',
+      holder: 'holder_of("Director of Customer Support")', due: full_at }
+  - { when: 'in_scope and severity == 2 and open_at_full', party: organization, duty: notify, role: '"ACCOUNT_OWNER"',
+      holder: owner_key, due: full_at }
+  - { when: 'in_scope and severity == 3 and open_at_full', party: organization, duty: notify, role: '"SUPPORT_ESCALATION_MANAGER"',
+      holder: 'holder_of("Support Escalation Manager")', due: full_at }
+  - { when: 'ready and claim_due is not None', party: organization, duty: decide_claim, role: '"CUSTOMER_SUPPORT_DIRECTOR"',
+      holder: 'holder_of("Director of Customer Support")', due: claim_due }
+  - { when: 'in_scope and claim_due is not None and credit', party: organization, duty: issue_memo, role: '"SUPPORT_BILLING_MANAGER"',
+      holder: 'holder_of("Support Billing Manager")', due: claim_due }
+  - { when: 'in_scope and severity == 1', party: counterparty, duty: phone_report, status: '"met" if phoned else "not_met"' }
+  - { when: 'in_scope and claim_at is not None and restored is not None', party: counterparty, duty: claim,
+      status: '"met" if claim_at.date() <= window_end else "not_met"' }
+
+record:
+  scenario: sid
+  type: '"sla_response"'
+  subject: '{"ticket": ticket_id, "account": t["account_id"]}'
+  outcome: outcome
+  gated_outcome: gated_outcome
+  uncertain: uncertain
+  scope: '("in" if in_scope else "out") if ready else None'
+  severity: severity
+  breach: '{"response": resp, "restoration": rest}'
+  credit_usd: credit
+  obligations: obligations
+  account_owner: 'owner["full_name"] if owner and ready else None'
+  judgments: judgments
+  flags: flags

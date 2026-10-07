@@ -1,0 +1,2255 @@
+[
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/procedure/arm-b/r1/B2/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [],
+  "prose_holds": [
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/procedure/arm-b/r1/B2/S05.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Any Acme contract or pricing exception covering NS-500 on 2026-09-23, if the request relies on one"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/procedure/arm-b/r2/B2/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Request details for DR-9001 (the graph links it to an email from Sarah Chen to Michael Torres titled 'Acme NS-500 \u2014 DR-9001' but holds no facts about it), so th"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/procedure/arm-b/r3/B2/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that the 2026-09-23 request is DR-9001 (the knowledge base doesn't link the ID to the date or amount)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/procedure/arm-b/r3/B2/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated confirmation that Sarah Chen held the Enterprise Account Executive role on 2025-09-23"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/request/arm-b/r1/B2/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation that the request date is 2025-09-23 (CRM discount-requests data shows an NS-500 request dated 2026-09-23, where the 2026 policy would require VP Sa"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/request/arm-b/r2/B2/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "The recorded DR-9001 row, to confirm the 2025-09-23 request date"
+  ],
+  "prose_holds": [
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r1/B1/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, CRM-2048, NS-500, 15.0%, requested by sarah.chen, 2026-09-23, Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r1/B1/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of the request date: the question says 2025-09-23, the knowledge base CRM record says 2026-09-23. If it is 2026, PRICING-POLICY-2026 applies (Enter"
+  ],
+  "prose_holds": [
+   "confirm the correct date in the CRM before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r2/B1/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 (CRM-2048, NS-500, 15.0%, sarah.chen, 2026-09-23, Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r2/B1/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of the request date: discount_requests.csv records DR-9001 as 2026-09-23, not 2025-09-23; under the 2026 policy (EAE limit 10%) the outcome would b",
+   "Dated confirmation of Sarah Chen's title as of 2025-09-23 (org chart is as of 2026-09-01)"
+  ],
+  "prose_holds": [
+   "confirm the real date before",
+   "not APPROVE",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r3/B1/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, CRM-2048, NS-500, 15.0%, requested 2026-09-23 by sarah.chen, Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r3/B1/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of the request date: discount_requests.csv records DR-9001 as 2026-09-23. Under PRICING-POLICY-2026 / APP-MATRIX-2026 the AE limit is 10%, so 15% w"
+  ],
+  "prose_holds": [
+   "confirm which date is correct before"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, CRM-2048, NS-500, 15.0%, requested by sarah.chen, 2026-09-23, Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of DR-9001's actual request date: CRM export shows 2026-09-23, which would put it under Pricing Policy 2026 (EAE limit 10%) and require VP Sales (M"
+  ],
+  "prose_holds": [
+   "Confirm the real request date before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1n/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of the actual request date: the knowledge base records DR-9001 as 2026-09-23. On that date Pricing Policy 2026 applies (Account Executive limit 10%"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r2/B1/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 (15%, NS-500, CRM-2048, 2026-09-23, Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r2/B1/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of DR-9001's true request date: the question says 2025-09-23, but the CRM extract and Sarah Chen's email both give 2026-09-23",
+   "pricing_policy_2026.md / approval_authority_matrix.md: from 2026-01-01, AE <=10%, VP Sales >10% to <=20% (applies if the request is dated 2026-09-23 \u2192 APPROVE_W"
+  ],
+  "prose_holds": [
+   "confirm which date is correct before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r2/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of DR-9001's true request date: the CRM log shows 2026-09-23, not 2025-09-23. If it is 2026-09-23, PRICING-POLICY-2026 / APP-MATRIX-2026 apply (AE "
+  ],
+  "prose_holds": [
+   "confirm the real request date before",
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r3/B1/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 (CRM-2048, NS-500, 15%, sarah.chen, 2026-09-23, Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r3/B1/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of the request date: the CRM log shows 2026-09-23. On that date Pricing Policy 2026 applies (Enterprise Account Executive limit 10%), and VP Sales ",
+   "discount_requests.csv: DR-9001 is dated 2026-09-23 (Pending Approval), not 2025-09-23; DR-8104 (2025-09-16) is the same 15% NS-500 request, already approved"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r3/B1n/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, CRM-2048, NS-500, 15%, sarah.chen, 2026-09-23, Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r3/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of request date: discount_requests.csv records DR-9001 as 2026-09-23 (Pending Approval); if 2026-09-23, PRICING-POLICY-2026 applies (EAE limit 10%)"
+  ],
+  "prose_holds": [
+   "confirm which date is correct before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r1/B2/S10.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CRM request DR-9102: 25% on NS-EDGE, list $85,000, requested by Sarah Chen on 2026-09-23, justification Competitive, status Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r1/B2/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that the 2025 policy has no approval tier above VP Sales for a 22% discount",
+   "Dated confirmation that Michael Torres held VP Sales on 2025-09-23 (role is undated in the records)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r1/B2/S12.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmed mapping of CRM-2051 to ERP customer C-1002"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r2/B2/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that CRM-2048 is the Acme Manufacturing account (CRM account id not in the knowledge base)",
+   "Confirmation that Michael Torres held the VP Sales role on 2025-09-23 (role fact is undated)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r2/B2/S12.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmed CRM-2051 to ERP customer mapping",
+   "Text of the Sales Discount SOP to confirm whether a VP Sales may approve their own request (if not, route to David Morgan, CRO)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r3/B2/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Dated confirmation that Michael Torres held VP Sales on 2025-09-23"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r3/B2/S12.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation that self-approval by the requestor is allowed under the Sales Discount SOP",
+   "Dated confirmation that Michael Torres held the VP Sales role on 2026-09-23"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r3/B2/S14.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "DR-9106 CRM record: 8.0% on NS-EDGE, requested by sarah.chen@northstar.example on 2026-09-23, justification Competitive, status Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Org chart or role record dated 2025 confirming Michael Torres held VP Sales on 2025-09-23 (inferred from the 2026-09 org chart and his 2025 approvals in CRM)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S12.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S14.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "discount_requests.csv: DR-9106 (CRM-2048, NS-EDGE, 8.0%, 2026-09-23, Competitive, Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r2/B1n/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Dated record confirming Michael Torres held the VP Sales role on 2025-09-23 (employee and org records are undated or as of 2026-09-01)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r3/B1n/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Dated confirmation that Michael Torres held the VP Sales role on 2025-09-23 (org chart is undated)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/request/arm-b/r1/B2/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "DR-9001 (discount_requests.csv): 15.0%, list 250000, discount 37500, justification 'Contract pricing per Acme Master Supply Agreement', status Pending Approval"
+  ],
+  "prose_holds": [
+   "not APPROVE"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/request/arm-b/r2/B2/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [],
+  "prose_holds": [
+   "not APPROVE"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/request/arm-b/r3/B2/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Acme Manufacturing (CRM-2048; ERP C-1001 'Acme Mfg. Holdings' \u2013 link not confirmed in graph)",
+   "Acme Master Supply Agreement: no terms or dates on record to confirm an active contract on the request date",
+   "DR-9001 request_date is recorded as 2026-09-23 in the knowledge base, not 2025-09-23. If 2026-09-23 is correct, Pricing Policy 2026 applies (Enterprise AE limit"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of DR-9001's actual request date: CRM records 2026-09-23, which would require VP Sales (Michael Torres) approval under Pricing Policy 2026"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Dated role history confirming Sarah Chen's and Michael Torres's roles on 2025-09-23"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S18.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Corrected justification: request cites ACME-MFG-2025, which was not yet in force on 2025-03-31"
+  ],
+  "prose_holds": [
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r2/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r2/B1n/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Dated role history confirming Michael Torres held VP Sales on 2025-09-23 (employees.csv is undated)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r2/B1n/S12.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated confirmation that Michael Torres held VP Sales on 2026-09-23 (the employee directory has no dates)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r2/B1n/S18.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated role history confirming Sarah Chen was an Enterprise Account Executive on 2025-03-31"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r3/B1n/S04.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 request_date 2026-09-23, Pending Approval (differs from the 2025-09-23 date in the supplied request)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r3/B1n/S12.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated record confirming Michael Torres held VP Sales on 2026-09-23 (role records are undated)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r3/B1n/S18.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated confirmation of Sarah Chen's role on 2025-03-31 (org chart is undated)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S01.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of the request date: CRM record DR-9001 and email MSG-20260923-0914 show 2026-09-23, not 2025-09-23. If 2026, the Pricing Policy 2026 applies (EAE "
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S12.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated confirmation that Michael Torres held the VP Sales role on 2026-09-23 (employee list and org chart are undated)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S14.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "discount_requests.csv: DR-9106, CRM-2048, NS-EDGE, 8.0%, $85,000 list, 2026-09-23, Competitive, Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S18.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated confirmation of Sarah Chen's role as of 2025-03-31"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r2/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r2/B1n/S11.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Dated role history confirming Sarah Chen's and Michael Torres's titles in September 2025"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r3/B1n/S04.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "discount_requests.csv shows DR-9001 dated 2026-09-23, not 2025-09-23. If 2026, PRICING-POLICY-2026 applies and VP Sales (Michael Torres) approval is required"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r3/B1n/S10.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9102 (CRM-2048, NS-EDGE, 25%, list $85,000, 2026-09-23, Competitive, Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/a/r1/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "2027 org chart or other confirmation of who holds the CRO role on 2027-02-01",
+   "David Morgan (per org chart ORG-CHART-2026-09; confirm he is still CRO on 2027-02-01)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/a/r2/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of who holds the Chief Revenue Officer role on 2027-02-01 (latest org chart is dated 2026-09-01)",
+   "David Morgan (per org chart as of 2026-09-01; confirm current holder)"
+  ],
+  "prose_holds": [
+   "confirming who holds it in February 2027, so check that before"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/a/r3/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that David Morgan still holds the CRO role on 2027-02-01 (latest org chart dated 2026-09-01)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/b/r1/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "No record confirming who holds the Chief Revenue Officer role on 2027-02-01; latest org chart is dated 2026-09-01"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/b/r2/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that David Morgan still holds the Chief Revenue Officer role on 2027-02-01 (latest org chart is dated 2026-09-01)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/b/r3/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that David Morgan still holds the Chief Revenue Officer role on 2027-02-01 (latest org chart is dated 2026-09-01)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/c/r1/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "No org chart dated 2027 confirming David Morgan still holds the CRO role on 2027-02-01 (latest is as of 2026-09-01)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/c/r2/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that David Morgan still holds the Chief Revenue Officer role on 2027-02-01 (org chart dated 2026-09-01)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/04-decision-memory/c/r3/B1n/M3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of Chief Revenue Officer role holder as of 2027-02-01 (latest org chart dated 2026-09-01)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S22.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation whether DR-9001's requested discount is 8% (as submitted) or 15% (as recorded in CRM and in the 2026-09-23 email)",
+   "Enterprise Account Executive (if 15%: VP Sales)",
+   "Sarah Chen (if 15%: Michael Torres, VP Sales)",
+   "discount_requests.csv DR-9001 row (15.0%, Pending Approval)"
+  ],
+  "prose_holds": [
+   "confirm which figure is correct before"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S23.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv row DR-9001 (request_date 2026-09-23, status Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S24.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 recorded as Pending (submitted copy says Approved)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S25.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, 15.0%, NS-500, 2026-09-23, Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r2/B1n/S22.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of the actual requested discount: the submission says 8.0%, but the CRM record and the requestor's email say 15.0%. At 15% the outcome is APPROVE_W",
+   "Enterprise Account Executive (if 8%); VP Sales (if 15%)",
+   "Sarah Chen (if 8%); Michael Torres, VP Sales (if 15%)"
+  ],
+  "prose_holds": [
+   "confirm the actual figure before"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r2/B1n/S23.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001, request_date 2026-09-23, status Pending Approval"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r2/B1n/S24.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Recorded VP Sales approval of DR-9001 in Northstar CRM (submitted status 'Approved' conflicts with CRM 'Pending')",
+   "discount_requests.csv (DR-9001 status Pending)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S22.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of whether DR-9001's discount is 8% (as submitted) or 15% (as in CRM)",
+   "Enterprise Account Executive (VP Sales if the CRM figure of 15% is correct)",
+   "Sarah Chen (Michael Torres, VP Sales, if 15%)"
+  ],
+  "prose_holds": [
+   "confirm the real figure before"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S23.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "2026-09-23 (CRM record; submitted text says 2025-09-23, to be confirmed)",
+   "Confirmation of the request date: submitted text says 2025-09-23, CRM record says 2026-09-23. Under the 2025 policy (AE limit 15%) the outcome would be APPROVE",
+   "discount_requests.csv (DR-9001 dated 2026-09-23, Pending Approval)"
+  ],
+  "prose_holds": [
+   "confirm the date in CRM before"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S24.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "discount_requests.csv: DR-9001 recorded as Pending (submission says Approved)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A1-S01-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A1-S01-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A1-S01-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A4-S01-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A4-S01-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A4-S01-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A7-S13-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation DR-9105 is not a duplicate of DR-9001",
+   "Optional: Legal confirmation that ACME-MFG-2025 extends to subsidiary C-1044"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A7-S13-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation DR-9105 is not a duplicate of pending DR-9001"
+  ],
+  "prose_holds": [
+   "confirm that subsidiary coverage before"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B1-S01-r2.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Dated CRM tier history confirming Strategic tier on 2026-09-23 (current CRM record relied on)",
+   "structured/discount_requests.csv: DR-9001 (15%, NS-500, CRM-2048, 2026-09-23, Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B2-S21-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Clarification of whether DR-9113 supersedes the pending duplicate DR-9001",
+   "Confirmation that Michael Torres holds the VP Sales role on the approval date (org chart dated 2026-09-01)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B2-S21-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Updated effective dates for PRICING-POLICY-2027 and APP-MATRIX-2026 not yet published (email is current reference)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B2-S21-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Updated Drive effective dates for Pricing Policy 2026/2027 and the authority matrix (pending per CRO email)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B3-S03-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Deal Desk/Legal confirmation reconciling MSA \u00a73.2 (NS-500 only) with Schedule B (NS-500 and NS-CLOUD)",
+   "EXC-ACME-NS500-15 (Schedule B to ACME-MFG-2025), lists NS-500 and NS-CLOUD, effective 2025-04-01 to 2028-03-31; note MSA \u00a73.2 body names NS-500 only, so this ne"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B3-S03-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation from Deal Desk/Legal that NS-CLOUD's inclusion in Schedule B is intended, given MSA \u00a73.2 references NS-500 only"
+  ],
+  "prose_holds": [
+   "confirm with Deal Desk or Legal that NS-CLOUD's inclusion was intended before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B3-S03-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "EXC-ACME-NS500-15 (Schedule B to ACME-MFG-2025), effective 2025-04-01 to 2028-03-31, names NS-500 and NS-CLOUD; note MSA \u00a73.2 text references NS-500 only \u2014 conf",
+   "Legal confirmation reconciling MSA \u00a73.2 (NS-500 only) with Schedule B (NS-500 and NS-CLOUD)"
+  ],
+  "prose_holds": [
+   "confirm with Legal that NS-CLOUD was intended to be included before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B4-S13-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "ACME-MFG-2025 Section 3.2 and Schedule B EXC-ACME-NS500-15 (NS-500 only, 2025-04-01 to 2028-03-31); CRM-2091 is an Affiliate under ACME-MFG-2025 Section 5 per L",
+   "Text of ACME-MFG-2025 Section 5 (Affiliates) is not in the corpus; eligibility relies on Legal's confirmation recorded in DS-2026-0418"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B4-S13-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "ACME-MFG-2025 Schedule B, EXC-ACME-NS500-15 (NS-500 only, 2025-04-01 to 2028-03-31), extended to CRM-2091 as an Affiliate per DS-2026-0418 (Legal confirmation, ",
+   "DR-9105 not found in discount_requests.csv; possible duplicate of DR-9001 (CRM-2048, same date/product/discount), so confirm the correct account",
+   "Text of ACME-MFG-2025 Section 5 (Affiliates) or Legal's written confirmation; not present in the available agreement copy"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B5-S02-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "DR-9002 does not appear in the CRM discount_requests extract; relationship to pending DR-9001 (same account/product/date at 15%) should be confirmed to avoid a "
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B5-S02-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "DR-9002 not present in discount_requests.csv extract; confirm relationship to pending DR-9001 (same customer/product/date at 15%) to avoid duplicate discounting"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B5-S02-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "DR-9002 not present in discount_requests.csv extract; confirm relationship to pending DR-9001 (15%, same account/product/date) to avoid duplicate approval"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B7-S14-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B7-S14-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B7-S14-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B8-S01-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B8-S01-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/clean-S01-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/clean-S01-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/clean-S01-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/clean-S04-r1.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "DR-9004 not found in CRM discount_requests extract; confirm it exists and is not a duplicate of DR-8104 (2025-09-16, same terms, already approved)"
+  ],
+  "prose_holds": [
+   "hold",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/clean-S21-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of CRO role-holder as of 2027-02-01 (org records dated 2026-09)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S26-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S26-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in structured/credit_requests.csv; only CR-9201 ($400,000, same date) is recorded. Confirm CR-9202 supersedes CR-9201."
+  ],
+  "prose_holds": [
+   "hold",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S27-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in credit_requests.csv; confirm whether it supersedes CR-9201 ($250,000 to $400,000, pending)",
+   "structured/credit_requests.csv (CR-9201 pending; CR-9202 not recorded)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S27-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not present in structured/credit_requests.csv; only CR-9201 (C-1001, $250,000 to $400,000, same requestor and date, Pending Approval) is recorded. Co"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 not present in credit_requests.csv export; CR-9201 (same customer, $400,000, pending) should be reconciled"
+  ],
+  "prose_holds": [
+   "confirm its status before"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S28-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the credit_requests.csv extract; CR-9201 ($400,000, same customer, same requestor and date) is also pending and should be reconciled"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S28-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the structured/credit_requests.csv extract; CR-9201 (same customer, $400,000, same date) is also pending"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S31-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9206 does not appear in credit_requests.csv; request date 2025-09-23 should be confirmed"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Relationship to pending CR-9201 (same customer, $400,000) to be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 is not in the credit_requests.csv extract; confirm its relationship to pending CR-9201 (same customer, $400,000, Sarah Chen)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 is not present in structured/credit_requests.csv; confirm the ERP record and its relationship to pending request CR-9201 ($250,000 to $400,000, Sarah Ch",
+   "erp_invoices.csv: INV-60412 and INV-62011 paid before due; INV-62305 due 2026-10-02, not yet due on request date"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S35-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of the intended requested limit: the submission provided says $300,000, but the system record and email say $400,000 (same outcome either way)",
+   "documents/email_sarah_to_priya.md: confirms $400,000 requested",
+   "structured/credit_requests.csv: CR-9201, C-1001, $250,000 -> $400,000, 2026-09-23, Pending Approval"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S35-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of the requested limit: the submitted request shows $300,000, while the ERP record and the requestor's email show $400,000 (the outcome and the app"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S35-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of the requested limit: the pasted request says $300,000; the system record and the requestor's email say $400,000 (outcome and approver are the sa"
+  ],
+  "prose_holds": [
+   "confirm the figure before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C1-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in the ERP credit_requests export; confirm whether it supersedes pending CR-9201 ($250,000 to $400,000, same requestor and date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C1-S27-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 does not appear in the credit_requests.csv extract, which shows CR-9201 (C-1001, $250,000 to $400,000, 2026-09-23, Pending Approval); confirm whether CR"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C1-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 does not appear in the credit_requests.csv extract; reconcile with the concurrent pending CR-9201 ($400,000, same customer and date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C1-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 does not appear in the credit_requests.csv extract; confirm the ERP record and resolve the overlapping pending request CR-9201",
+   "structured/credit_requests.csv (CR-9201 pending for same customer)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C1-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 is not in the credit_requests.csv extract; only CR-9201 (Sarah Chen, $250,000 to $400,000, 2026-09-23, pending) appears for C-1001. Confirm the relation"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C2-S29-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 not present in structured/credit_requests.csv; confirm it replaces pending CR-9201 (same customer, same date, $400,000)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C2-S29-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 is not in the credit_requests.csv extract; confirm the ERP record and whether it supersedes pending CR-9201 ($400,000) for the same customer"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C2-S29-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 is not present in the credit_requests.csv extract; overlapping pending request CR-9201 for the same customer should be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C2-S33-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 not present in structured/credit_requests.csv extract (CR-9201 for the same customer is pending)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C2-S33-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C3-S32-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9207 is not present in structured/credit_requests.csv; confirm the ERP record"
+  ],
+  "prose_holds": [
+   "confirm it exists in Northstar ERP before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C3-S32-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C3-S32-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C4-S30-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C5-S31-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C5-S31-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C6-S26-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv (CR-9201, Pending Approval, no approver)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C6-S26-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv (CR-9201, Pending Approval)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C6-S26-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv (CR-9201, Pending Approval, no approver recorded)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C7-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "cannot be approved",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C7-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv CR-9201 (concurrent pending request for same customer)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C7-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv CR-9201 (overlapping pending request)"
+  ],
+  "prose_holds": [
+   "cannot be approved"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D1-S29-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 is not in the credit_requests.csv extract; confirm the ERP record and whether it supersedes CR-9201",
+   "credit_requests.csv (CR-9201 pending for the same customer and date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D1-S29-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 is not recorded in structured/credit_requests.csv; CR-9201 for the same customer is also pending and should be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D1-S29-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv (CR-9201 pending for same customer)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D2-S29-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 is absent from the credit_requests.csv extract; CR-9201 for the same customer is still pending and should be reconciled"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D2-S29-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D2-S29-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D4-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in structured/credit_requests.csv; CR-9201 (same customer and date, 250000 to 400000) is also pending, so its relationship to CR-9202 should be c"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D4-S27-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not present in the credit_requests.csv extract; confirm the ERP record and whether it supersedes pending CR-9201 ($250,000 to $400,000, same customer"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D4-S27-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in structured/credit_requests.csv; only CR-9201 (C-1001, $400,000, 2026-09-23) is recorded. Confirm whether CR-9202 supersedes CR-9201."
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D5-S29-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 is not present in the credit_requests.csv extract; confirm it in Northstar ERP and its relationship to pending CR-9201 for the same customer",
+   "Request record for CR-9204 as supplied (ERP, Pending Approval)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D5-S29-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 does not appear in the credit_requests.csv extract (only CR-9201, $250,000 to $400,000, same date); confirm the relationship between CR-9201 and CR-9204"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D6-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 not present in credit_requests.csv extract; confirm in Northstar ERP",
+   "Finance confirmation of how CREDIT-POLICY-2026-DEL1 interacts with \u00a76",
+   "credit_requests.csv CR-9201 (overlapping pending request)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D6-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 is not present in structured/credit_requests.csv; duplicate pending request CR-9201 for the same customer should be resolved"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D6-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 is not present in the credit_requests.csv extract; confirm the ERP record. Reconcile with pending CR-9201 for the same customer."
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D7-S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the provided credit_requests.csv extract; confirm its relationship to pending CR-9201 ($250,000 to $400,000, same date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D7-S28-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "credit_requests.csv CR-9201 (overlapping pending request)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D7-S28-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "credit_requests.csv CR-9201 (overlapping pending request)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rc0/clean-S26-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rc0/clean-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in credit_requests.csv; only CR-9201 (C-1001, $250,000 to $400,000, same date) appears. Confirm whether CR-9202 replaces CR-9201."
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rc0/clean-S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "cannot be approved",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rc0/clean-S31-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rc0/clean-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 does not appear in the structured/credit_requests.csv extract; confirm the record and its relationship to pending CR-9201 (Sarah Chen, $250,000 to $400,"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rc0/clean-S35-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of the requested limit: the submitted request text says $300,000, while the ERP record and the requestor's email say $400,000 (outcome and approver",
+   "structured/credit_requests.csv: CR-9201, C-1001, 250000 -> 400000, sarah.chen, 2026-09-23, Pending Approval",
+   "structured/erp_invoices.csv: INV-60412 paid 2025-11-24 (due 2025-11-28); INV-62011 paid 2026-07-22 (due 2026-07-25); INV-62305 due 2026-10-02, not yet due on re"
+  ],
+  "prose_holds": [
+   "confirm which figure she is approving before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E1-S32-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E1-S32-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E1-S32-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E2-S29-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9204 does not appear in the credit_requests.csv extract; CR-9201 (C-1001, $400,000, 2026-09-23) is also pending and should be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E3-S33-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 is not in the credit_requests.csv extract; confirm the ERP record and its relationship to pending CR-9201 (same customer, $250,000 to $400,000, 2026-09-"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E3-S33-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the credit_requests.csv extract; confirm its status against pending CR-9201 ($250,000 to $400,000, same customer, same date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E3-S33-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the structured/credit_requests.csv extract; pending CR-9201 for the same customer should be withdrawn or superseded"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E4-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 does not appear in credit_requests.csv; CR-9201 (same customer and date, $400,000) is pending. Confirm which request stands."
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E4-S27-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 does not appear in the credit_requests.csv extract; the related pending request CR-9201 (C-1001, $250,000 to $400,000, same date and requestor) should b"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E4-S27-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in the credit_requests.csv extract; confirm its relationship to pending CR-9201 (same customer, $400,000)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E6-S26-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E6-S26-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E6-S26-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "documents/credit_request_approval_cr9201.md (records Priya Shah approval; ERP still shows Pending Approval)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E7-S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the credit_requests.csv extract; CR-9201 (C-1001, $250,000 to $400,000, same date) is also pending and should be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E7-S28-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that CR-9203 exists in Northstar ERP (not in the credit_requests.csv extract)",
+   "credit_requests.csv CR-9201 (overlapping pending request for C-1001)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/re/E7-S28-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the credit_requests.csv extract; pending CR-9201 for the same customer should be reconciled",
+   "CREDIT-POLICY-2026 Strategic maximum $750,000 plus $400,000 parent guarantee GRT-ACME-2026 (Acme Group Holdings, Inc. for Acme Mfg. Holdings, in force 2026-01-0"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C1-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 does not appear in the ERP credit_requests extract; only CR-9201 (C-1001, $250,000 to $400,000, pending) is recorded. Confirm CR-9202 in ERP and its rel",
+   "erp_invoices.csv: INV-60412 and INV-62011 paid before due date; INV-62305 not yet due"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C1-S27-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 not present in structured/credit_requests.csv; overlapping pending request CR-9201 ($400,000) for C-1001 should be reconciled",
+   "structured/erp_invoices.csv INV-60412, INV-62011 paid on time; INV-62305 not yet due"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C1-S27-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in the credit_requests.csv export; confirm its relationship to pending CR-9201 (same customer, $400,000)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C5-S31-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C5-S31-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9206 is not present in the structured/credit_requests.csv extract; confirm the ERP record"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C6-S26-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CREDIT-POLICY-2026 Strategic tier maximum; no invoice due 2025-09-23 to 2026-09-23 paid or unpaid more than 30 days after due date (INV-60412, INV-62011 paid ea",
+   "structured/credit_requests.csv (CR-9201, Pending Approval, no approver)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C6-S26-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CREDIT-POLICY-2026 Strategic tier maximum; payment history meets 30-day rule (INV-60412, INV-62011 paid on time; INV-62305 not yet due)",
+   "structured/credit_requests.csv (CR-9201, Pending Approval)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C6-S26-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C7-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 is not in the credit_requests.csv extract; overlapping pending request CR-9201 for the same customer should be reconciled"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C7-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 not present in credit_requests.csv extract; overlapping pending request CR-9201 for C-1001 should be reconciled",
+   "CREDIT-POLICY-2026 Strategic tier maximum; 30-day payment rule met (INV-60412, INV-62011 paid on time; INV-62305 not yet due on request date). GRT-ACME-2026 in "
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C7-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CREDIT-POLICY-2026 \u00a75: Strategic tier maximum $750,000 (CRM-2048); payment history clean under 30-day rule (INV-60412, INV-62011 paid before due; INV-62305 not ",
+   "structured/credit_requests.csv (CR-9201 pending for the same customer; CR-9208 absent from extract)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D4-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of CR-9202's relationship to pending CR-9201 (CR-9202 not present in structured/credit_requests.csv)",
+   "structured/credit_requests.csv (CR-9201 pending for same customer; CR-9202 not listed)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D4-S27-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D4-S27-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in credit_requests.csv; confirm its relationship to pending CR-9201 (C-1001, $250,000 to $400,000, same date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D6-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Reconciliation with pending CR-9201 for the same customer"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D6-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "credit_requests.csv CR-9201 (separate pending request, same customer and date)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D6-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 does not appear in structured/credit_requests.csv; overlapping pending request CR-9201 (C-1001, $400,000) should be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D7-S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D7-S28-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the credit_requests.csv extract; reconcile with pending CR-9201 for the same customer"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D7-S28-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 is not in credit_requests.csv; confirm it in Northstar ERP and reconcile it with pending CR-9201 (C-1001, $250,000 to $400,000, same requestor and date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr0/clean-S26-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr0/clean-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv: CR-9202 not present; CR-9201 (C-1001, 250000 -> 400000, 2026-09-23) pending \u2014 confirm whether superseded"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr0/clean-S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in structured/credit_requests.csv; overlapping pending request CR-9201 (C-1001, $400,000) should be reconciled"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr0/clean-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 not found in the credit_requests.csv extract; confirm the ERP record",
+   "Disposition of overlapping pending request CR-9201 (C-1001, $250,000 to $400,000)",
+   "structured/erp_invoices.csv: INV-60412, INV-62011 paid before due; INV-62305 not yet due on 2026-09-23"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr0/clean-S35-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of the requested limit: the request as submitted says $300,000, while the ERP record and requestor email say $400,000 (outcome and approver are the",
+   "documents/email_sarah_to_priya.md (MSG-20260923-1031, confirms $400,000)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E3-S33-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 is not in the credit_requests.csv extract; it should be confirmed in ERP and reconciled with pending CR-9201 for the same customer"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E3-S33-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E3-S33-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E4-S27-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in credit_requests.csv; ERP shows CR-9201 (C-1001, $250,000 to $400,000, same date and justification). Confirm the CR-9202 record before recordin",
+   "erp_invoices.csv C-1001: INV-60412 paid 2025-11-24 (due 2025-11-28); INV-62011 paid 2026-07-22 (due 2026-07-25); INV-62305 due 2026-10-02, not yet due on reques"
+  ],
+  "prose_holds": [
+   "confirm that CR-9202 exists in ERP before",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E4-S27-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "erp_invoices.csv: INV-60412 and INV-62011 paid before due; INV-62305 not yet due"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E4-S27-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9202 is not in the credit_requests.csv extract, which shows CR-9201 for C-1001 at $400,000 on the same date; confirm which request is live before recording",
+   "erp_invoices.csv: INV-60412 and INV-62011 paid before due; INV-62305 due 2026-10-02, not yet due on the request date"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E6-S26-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E6-S26-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv: CR-9201 Pending Approval, no approver recorded",
+   "structured/erp_invoices.csv: INV-60412 and INV-62011 paid before due; INV-62305 not yet due on request date"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E7-S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the credit_requests.csv extract on file; CR-9201 (C-1001, $250,000 to $400,000, Pending Approval) should be withdrawn or superseded"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E7-S28-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 does not appear in the credit_requests.csv extract; confirm it in ERP and its relationship to pending CR-9201 (same customer, $250,000 to $400,000)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E7-S28-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 is not present in the credit_requests.csv export; CR-9201 (to $400,000) is also pending for C-1001"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre2/clean-S28-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "credit_requests.csv CR-9201 (overlapping pending request)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F1-S21-r2.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation that Sarah Chen still holds the Enterprise Account Executive role on 2027-02-01 (latest records date from 2026-09)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F1-S21-r3.jsonl",
+  "outcome": "APPROVE",
+  "block_conditions": [
+   "Confirmation of Sarah Chen's role as of 2027-02-01 (latest org records dated 2026-09)"
+  ],
+  "prose_holds": []
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F4-S29-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F4-S29-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F5-S33-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 is not present in structured/credit_requests.csv; only CR-9201 ($250,000 to $400,000, same date and requestor) is recorded. Confirm CR-9203 in ERP and t"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F5-S33-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9203 is not present in the structured/credit_requests.csv extract; relied on the ERP record supplied. Overlapping pending request CR-9201 (C-1001, $250,000 t"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F5-S33-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "credit_requests.csv CR-9201 (pending, same customer)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F6-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Disposition of overlapping pending request CR-9201 for the same customer"
+  ],
+  "prose_holds": [
+   "hold",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F6-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 not present in the credit_requests.csv extract; confirm in Northstar ERP",
+   "Overlapping pending request CR-9201 (same customer, $400,000) should be withdrawn or reconciled"
+  ],
+  "prose_holds": [
+   "cannot be approved",
+   "hold"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/pf/F6-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv (overlapping CR-9201 pending)"
+  ],
+  "prose_holds": [
+   "hold",
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf/F1-S21-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation that David Morgan holds the Chief Revenue Officer role on 2027-02-01 (HR records predate the request date)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf/F1-S21-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "Confirmation of the Chief Revenue Officer role holder as of 2027-02-01 (current records show David Morgan)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf/F6-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "credit_requests.csv: separate pending CR-9201 (C-1001, $250,000 to $400,000, Sarah Chen)",
+   "erp_invoices.csv: INV-60412, INV-62011 paid on time; INV-62305 not yet due on 2026-09-23"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf/F6-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 is absent from credit_requests.csv; relationship to pending CR-9201 (same customer) needs reconciling"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf/F6-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CREDIT-POLICY-2026 Strategic tier maximum; payment history within 30-day rule (INV-60412, INV-62011 paid before due; INV-62305 not yet due)"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf2/F6-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 not present in credit_requests.csv extract; overlapping pending request CR-9201 for C-1001 to be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf2/F6-S34-r2.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "CR-9208 not present in credit_requests.csv extract; overlapping pending request CR-9201 (same customer, $400,000) should be reconciled"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf2/F6-S34-r3.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [],
+  "prose_holds": [
+   "not approve"
+  ]
+ },
+ {
+  "answer": "runs/2026-10-05-register-all/reader-set-f/rf2/clean-S34-r1.jsonl",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "block_conditions": [
+   "structured/credit_requests.csv CR-9201 pending for same customer"
+  ],
+  "prose_holds": [
+   "not approve"
+  ]
+ }
+]

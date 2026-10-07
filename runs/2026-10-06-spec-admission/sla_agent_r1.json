@@ -1,0 +1,50 @@
+{
+ "report": {
+  "spec": "lab/owm_kernel/specs/sla_agent.yaml",
+  "type": "sla",
+  "notes": [],
+  "A": {
+   "held": 10,
+   "of": 10,
+   "missed": [],
+   "clean_outcomes": {
+    "S36": "BREACH_CREDIT_OWED",
+    "S37": "NO_BREACH",
+    "S38": "NO_BREACH",
+    "S39": "BREACH_CREDIT_OWED",
+    "S40": "BREACH_CREDIT_OWED",
+    "S41": "NO_BREACH",
+    "S42": "BREACH_CREDIT_OWED",
+    "S43": "OUT_OF_SCOPE",
+    "S44": "BREACH_NO_CREDIT",
+    "S45": "CANNOT_DECIDE"
+   }
+  },
+  "B": {
+   "attacks": 4,
+   "unsafe_or_error": [],
+   "routed": 0
+  },
+  "C": {
+   "relied": 37,
+   "idle": [],
+   "unknown": []
+  },
+  "live_jev_calls": 0
+ },
+ "verdict": {
+  "A": true,
+  "B": true,
+  "C": true,
+  "reference_idle": 0,
+  "admitted": true
+ },
+ "reference": {
+  "spec": "lab/owm_kernel/specs/sla.yaml",
+  "C": {
+   "relied": 39,
+   "idle": [],
+   "unknown": []
+  }
+ }
+}
