@@ -179,6 +179,9 @@ run folder.
 option. If the user picks another, the builder first updates the affected section of this plan, in
 a docs commit, before starting any task the decision blocks. None of them is quietly applied.
 
+**Ruled on 2026-10-07: option A on all eight,** the recommendation in every case, so this plan
+stands as written. The Ledger records each choice and its time.
+
 1. **D-1. Attack-set application (spec §3, "as `run_set_f.build` does").** The sets were applied by
    three different harnesses, and one rule can't reproduce them:
    - **Set C's files carry id prefixes** (`C1_credit_policy_2026.md`, mode `replace`). The
