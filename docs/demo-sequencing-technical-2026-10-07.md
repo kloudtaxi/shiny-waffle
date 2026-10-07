@@ -201,6 +201,18 @@ works**, not from controlling what it's asked:
 
 ## Open questions for you
 
-Questions 1–3 are answered above. What's still open:
-1. **Rebranding `web-next`:** to "BlueLeaf" in place, or behind a demo flag?
-2. **Who builds the HTTP layer** for #16–#20 over the lab: your MCP build session, or a lab session?
+Questions 1–3 are answered above. The follow-ups were settled on 2026-10-07:
+
+1. **Rebranding `web-next`:** it will be rebranded in place, after it works. Before any outside
+   showing, every visible "Utopia" string must go.
+2. **Who builds the OWM API for #16–#20:** a lab session, in shiny-waffle. This was Claude's
+   call, at the user's invitation.
+   - **The service:** the OWM endpoints run as a separate service that `web-next` reaches through
+     its own `OWM_API_URL`, apart from the foundation proxy. `ops-api-gaps.md` already says
+     governance is "served by the OWM, not Utopia".
+   - **The contract** is `web-next`'s `lib/types.ts` shapes for #16–#20.
+   - **The code** sits on the same lab modules that the MCP server's `service/` core reuses, so the
+     two can merge later. The product repo never depends on the lab, and a real OWM service later
+     replaces the lab one behind the same endpoints.
+   - **`web-next` needs** an `OWM_API_URL` route for the OWM paths, and a Northstar organization
+     at sign-in (Priya and Elena for Finance, Hannah and Marcus for Support).
