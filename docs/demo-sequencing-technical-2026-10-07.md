@@ -125,11 +125,82 @@ document in Claude Desktop (subject mode is blind to the answer key), plants it,
 sets C–F were exactly this, written by someone who knew the design: the register engines held all
 of them. It is memorable, but run it only after rehearsals give the same result every time.
 
+## Decisions (the user, 2026-10-07)
+
+### 1. Utopia is never named
+
+The intent is to absorb all of Utopia's capabilities, and Utopia stays behind the curtain until our
+own knowledge foundation replaces it.
+- **On stage,** the GraphRAG baseline is "graph retrieval on the knowledge foundation". The RAG
+  baseline doesn't touch Utopia at all: the documents go straight into context.
+- **Nothing visible may leak the name:** transcripts, tool names, API paths, error messages,
+  environment banners. See section 2 for what `web-next` shows today.
+
+### 2. The demo lives in `kloudtaxi/glowing-garbanzo`, branch `v1/use-manage-operate`, folder `web-next`
+
+This was checked read-only on 2026-10-07, at `ad34c11`: "web-next v1.1: fold OWM governance into
+Use / Manage / Operate".
+
+**What's there.** A Next.js 16 Use / Manage / Operate UI that proxies the foundation's API, or runs
+on a built-in demo organization. Governance v1.1 is already designed: the register, mismatch modes,
+procedures with authors (person or agent), registrar and approver, admission gates A/B/C, approvals,
+and decision records with conditions. Its five proposed endpoints map one to one onto lab work that
+is already computed:
+
+| `web-next` proposes (`owm/docs/ops-api-gaps.md`) | The lab already computes |
+|---|---|
+| #16 `GET /register`, with coverage and stated absences | `lab/owm_register/*.yaml` and `serve.py` (G-01, G-31) |
+| #17 approve / return; `settings.mode` = `on_mismatch` | The registrar's rules (the registrar ≠ the approver; agents never approve); `use_registered` / `route` in `flow.py` (G-01, G-32) |
+| #18 `GET /procedures`, with admission reports | `lab/owm_register/procedures.yaml`, `build_procedures.py`, `lab/spec_admission/admit.py` (G-13, G-07) |
+| #19 `GET /approvals` | Pending registrations, plus conditions that name a person (G-35) |
+| #20 the answer's `governance` and `decision` (conditions, procedure stamp, register used) | `lab/owm_kernel/governed.py` + the `conditions` field (G-13, G-35) |
+
+**Two gaps for a technical showing:**
+- **"Utopia" is visible in the UI:** about a dozen strings. They include the page titles, the
+  header wordmark, sign-in, empty states, "Ask Utopia anything", "Loading Utopia…", "The Utopia
+  backend is unreachable", and a procedure author named "Utopia procedure agent". All need
+  rebranding before any audience sees the app.
+- **The governance screens run on a hand-built sample organization** (Bluefin and its people),
+  marked with **Sample** badges. A sharp audience will ask "is this real?". The proof rounds have
+  to be computed.
+
+**Recommendation:** serve endpoints #16–#20 for real, for a Northstar organization, from a thin
+HTTP layer over the lab modules above. The skunkworks MCP server's `service/` layer (spec §2) is
+designed to be exactly that core. `web-next`'s Sample badges then switch to live on the
+Northstar screens, and the proof rounds run in the product UI, not a lab console.
+
+### 3. Predictable, not scripted
+
+The audience is too smart for anything canned. Predictability comes from **how the system
+works**, not from controlling what it's asked:
+
+1. **The OWM side is deterministic by construction.** Register lookups, rules and procedure
+   versions are code. Jev's answers are recorded by request hash: a repeated input replays, and a
+   new one costs cents. The same evidence gives the same decision, every time, whoever chooses the
+   input.
+2. **The audience chooses the inputs, within a bounded sandbox.**
+   - They pick the scenario, the date, which governing document to tamper with, and how
+     (change a number, move a date).
+   - Or, the finale, they write the forgery themselves.
+   - The mechanism is fixed; the inputs aren't.
+3. **The baseline's variance is shown, not hidden.**
+   - Run it ×5 in parallel and show the tally.
+   - Open one transcript at random, not the best one.
+   - Put the rehearsal rate on screen ("in 30 rehearsal runs, the baseline followed this forgery
+     28 times"). The live run is one more sample, not the claim.
+4. **The same model on both sides: Opus 5.5,** the model behind every lab number.
+   - A weaker baseline invites "you nerfed it".
+   - A cheaper OWM agent is unmeasured (experiment 3), so it isn't claimed.
+5. **Show the machinery and its seams.**
+   - Show the JSON record, the YAML procedure, the register entry, timings and cost per run.
+   - Include one case the OWM routes to a person instead of answering: uncertainty handled is
+     more convincing than another win.
+   - State one measured miss.
+6. **The fallback is a labelled replay.** Every run is logged. If the network fails, replay the
+   logged run, marked "replay". Never a mock-up.
+
 ## Open questions for you
 
-1. **Name Utopia on stage, or call it "the knowledge foundation"?** A technical room will ask what
-   the GraphRAG baseline is.
-2. **Where does this demo live?** The client demo repo (`blueleaf-demo`) is built for clients. This
-   one fits the lab, plus the MCP server.
-3. **Live agent tier:** Opus (the lab's numbers) or a cheaper model? Changing it changes the
-   baseline's failure rates, so re-measure before the stage.
+Questions 1–3 are answered above. What's still open:
+1. **Rebranding `web-next`:** to "BlueLeaf" in place, or behind a demo flag?
+2. **Who builds the HTTP layer** for #16–#20 over the lab: your MCP build session, or a lab session?
