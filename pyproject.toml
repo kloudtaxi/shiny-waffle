@@ -18,6 +18,9 @@ northstar = "northstar.cli:main"
 
 [dependency-groups]
 dev = ["pytest>=8.2", "ruff>=0.6", "mypy>=1.11", "types-PyYAML>=6.0"]
+# The BlueLeaf lab MCP server (lab/blueleaf_mcp). Never a default group: the default install
+# stays as it is (docs/superpowers/plans/2026-10-06-blueleaf-mcp-plan.md, §0).
+mcp = ["mcp==2.3.0"]
 
 [build-system]
 requires = ["hatchling"]
@@ -40,14 +43,28 @@ known-first-party = ["northstar"]
 [tool.mypy]
 python_version = "3.11"
 strict = true
-files = ["src", "tests"]
-mypy_path = ["src"]
+files = ["src", "tests", "lab/blueleaf_mcp"]
+mypy_path = ["src", "lab/blueleaf_mcp"]
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
 module = ["faker.*", "polyfactory.*"]
 ignore_missing_imports = true
 
+# The lab modules, reached only through lab/blueleaf_mcp/service/_lab.py, which types what it
+# re-exports (the BlueLeaf MCP spec, §11 B9).
+[[tool.mypy.overrides]]
+module = ["kernel", "flow", "engine", "credit", "serve", "build_register", "governed", "overlay"]
+follow_imports = "skip"
+ignore_missing_imports = true
+
+# So a plain `uv run mypy` passes without the mcp group installed.
+[[tool.mypy.overrides]]
+module = ["mcp", "mcp.*"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["lab/blueleaf_mcp"]
 addopts = "-ra"
+markers = ["slow: replays a whole attack set (minutes)"]

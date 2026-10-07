@@ -114,7 +114,7 @@ Since the plan's base (`bd0fb70`), `main` has gained 22 commits. These five chan
 
 **`sys.path`.**
 - **Only `service/_lab.py`** inserts paths: `lab/owm_kernel`, `lab/decision_engine`,
-  `lab/owm_register`.
+  `lab/owm_register`, `lab/reader_inputs`.
 - `scoring.py` loads the frozen instruments with `importlib`, and those modules do their own path
   setup, as the harnesses always have. That's theirs, not ours.
 - A test (task 1) greps `lab/blueleaf_mcp/**/*.py` and fails if `sys.path` appears outside
@@ -139,9 +139,10 @@ Neither may open files under:
 - Every write is atomic: write a temp file in the same folder, then `os.replace` it (B12).
 
 **Errors.**
-- `service/errors.py` defines `ServiceError(Exception)` and its subclasses: `UnknownSandbox`,
-  `UnknownFile`, `AmbiguousEdit`, `InvalidSpec`, `Sealed`, `JevCap`, `SealMismatch`, `Refused`
-  (a wall refusal) and `NoSession`.
+- `service/errors.py` defines `ServiceError(Exception)` and its subclasses:
+  `UnknownSandboxError`, `UnknownFileError`, `AmbiguousEditError`, `InvalidSpecError`,
+  `SealedError`, `JevCapError`, `SealMismatchError`, `RefusedError` (a wall refusal) and
+  `NoSessionError`. Each ends in `Error`, as ruff's N818 and the lab's own errors do.
 - The servers turn any `ServiceError` into `ToolError(str(e))`: one plain sentence (spec §7).
 - Any other exception becomes `ToolError("internal error: <Type>")`, scrubbed, and the server keeps
   running.
@@ -347,18 +348,23 @@ Before editing `pyproject.toml`, save the default install's closure:
 
 | Wrapper | What it does |
 |---|---|
-| `Evidence(root)`, `Doc` | the evidence port |
-| `Register.load(path)` | a register with its store |
+| `Evidence`, `Doc`, `Register`, `Engine` | Protocols: what the service relies on, for type hints |
+| `evidence(root) -> Evidence` | the evidence port (`kernel.Evidence`) |
+| `load_register(path) -> Register` | a register with its store (`kernel.Register.load`) |
 | `fingerprint(text) -> str` | the register's normalized hash |
 | `load_spec(path) -> dict`, `loads_spec(text, name) -> dict` | `flow.load`, `flow.loads` |
-| `governed_decide(type, eng, ev, inputs, at, register, entries, store, specs) -> dict` | `governed.decide` (G-13), always given the sandbox's register, store and specs |
+| `governed_decide(type, eng, ev, inputs, at, register, *, entries, store, specs) -> dict` | `governed.decide` (G-13); `entries`, `store` and `specs` are required, so it is always given the sandbox's |
+| `procedure_entries(path)`, `NoProcedureError` | `governed.procedures`, and its error |
 | `overlay(src, dst, record, kind) -> Path` | G-36's per-question export |
-| `run_spec(spec, eng, ev, inputs, register) -> dict` | `flow.run` |
+| `run_spec(spec, eng, ev, inputs, register=None, trace=None) -> dict` | `flow.run` |
 | `SpecError` | the spec error class |
 | `credit_decide(eng, ev, as_of, rec, sid) -> dict` | the v1 python engine |
-| `served(corpus, decision, root) -> str` | `serve.served` |
-| `Recorder`, `TypeSafe`, `request_hash` | the Jev engine pieces |
+| `served(corpus, decision, root=None) -> str` | `serve.served`; `root` is passed through only once task 7 adds it |
+| `recorder(inner, path)`, `typesafe(model)`, `request_hash`, `MODEL` | the Jev engine pieces; `typesafe` reads the key when called, so only a live call calls it |
 | `COVERAGE` | `serve.COVERAGE` |
+
+The Protocols and lowercase constructors exist because mypy doesn't follow the lab modules
+(B9): a re-exported class would be `Any`. Later tasks use these names.
 
 `errors.py` holds the classes listed in §1.
 
@@ -384,7 +390,7 @@ removes the marker.
 | **T2** `test_file_wall` | `service.walls.subject_path(root, rel)` refuses `../x`, `/etc/hosts`, `documents/../../truth/x`, `MANIFEST.yaml`, `answer-key/…`, a symlink inside `documents/` pointing outside the corpus, and a non-`.md` in `documents/` or non-`.csv` in `structured/`; it allows `documents/acme_parent_guarantee.md` and `structured/crm_accounts.csv` | task 3 |
 | **T4** `test_subject_json_schema` | See below. | task 19 |
 | **T6** `test_dataset_untouched` | `walls.tree_digest(LAB/"dataset")` (sorted relative path + sha256) is equal before and after `scripted_session()` (task 23 fills it in; until then the helper raises `NotImplementedError`) | task 23 |
-| **T7** `test_secret_guard_unit` | With a dummy key file in `TYPESAFE_API_KEY_FILE`: `guard.scrub("…KEY…")` raises `Refused`, `guard.check_log_line` refuses it, and `guard.scrub` passes clean text through unchanged | task 3 |
+| **T7** `test_secret_guard_unit` | With a dummy key file in `TYPESAFE_API_KEY_FILE`: `guard.scrub("…KEY…")` raises `RefusedError`, `guard.check_log_line` refuses it, and `guard.scrub` passes clean text through unchanged | task 3 |
 
 **T1 in full.**
 - For each arm, start a **subprocess**: `sys.executable -c <script>`, with `BLUELEAF_HOME` set to a
@@ -429,12 +435,13 @@ removes the marker.
     to match `documents/*.md` or `structured/*.csv`. It resolves the path with `strict=True`, and
     requires the result to be relative to `corpus_root.resolve()` **and still to match that
     pattern**, so `documents/x.md` → `../MANIFEST.yaml` is refused. On any failure it raises
-    `Refused("that file is not one of this question's documents")`;
+    `RefusedError("that file is not one of this question's documents")`;
   - `tree_digest(root)`.
 - **`guard.py`:**
   - it loads the key text **once** at start-up: the stripped contents of `TYPESAFE_API_KEY_FILE`
     if that file exists, and `TYPESAFE_API_KEY` if set. It never logs or returns them;
-  - `scrub(text)` raises `Refused("output withheld: it contained the TypeSafe key")` on a match;
+  - `scrub(text)` raises `RefusedError("output withheld: it contained the TypeSafe key")` on a
+    match;
   - `check_log_line` does the same for log lines.
   - **Both servers scrub every tool result, every error message, and every log line before it
     leaves the process** (§0, "Error text").
@@ -454,7 +461,7 @@ removes the marker.
 
 **Test first:**
 - every set's seal verifies (`attacks.check_seal("A".."F")`);
-- a copy of set F with one changed byte raises `SealMismatch`;
+- a copy of set F with one changed byte raises `SealMismatchError`;
 - set C's `C1_credit_policy_2026.md` is installed as `credit_policy_2026.md`;
 - **for every attack in every set, `attacks.apply(...)` produces, for each corpus that set's own
   builder writes, files byte-identical to that builder's.** The builders are exactly the ones
@@ -510,8 +517,8 @@ Seeding uses `attacks.apply` for `attack:`, and copies the set for `set:`. Names
 **Test first:**
 - **`plant`:** adds, or replaces, in every corpus unless one is named.
 - **`edit(find, replace)`:**
-  - zero matches raises `UnknownFile`-style "no match";
-  - two or more matches raise `AmbiguousEdit`;
+  - zero matches raises `UnknownFileError`-style "no match";
+  - two or more matches raise `AmbiguousEditError`;
   - one match changes exactly that text.
 - **`remove`.**
 - **`diff`** against the dataset original: a unified diff, or "unchanged" / "added" / "removed".
@@ -546,7 +553,7 @@ Seeding uses `attacks.apply` for `attack:`, and copies the set for `set:`. Names
 - **`register_document`:**
   - it refuses `registered_by == approved_by`;
   - it refuses an unknown `kind` (the union of `COVERAGE` kinds);
-  - with terms, it runs the kind's check, and a needle missing from the text raises `Refused`,
+  - with terms, it runs the kind's check, and a needle missing from the text raises `RefusedError`,
     naming the needle;
   - with no terms, it registers `terms: {}` (approved text only);
   - it writes the text to `register/store/<fingerprint>.md`;
@@ -568,7 +575,7 @@ Seeding uses `attacks.apply` for `attack:`, and copies the set for `set:`. Names
 - `list` gives the 8 copies;
 - `read`;
 - `write` validates with `flow.loads(text, name)`:
-  - a missing section, a bad expression or bad YAML raises `InvalidSpec`, with a message naming
+  - a missing section, a bad expression or bad YAML raises `InvalidSpecError`, with a message naming
     the **line** (§2, note N4);
   - a valid spec is saved, and its `spec:` value gives its decision type (`discount_approval`,
     `credit_limit_increase` or `sla_response`);
@@ -594,12 +601,12 @@ Seeding uses `attacks.apply` for `attack:`, and copies the set for `set:`. Names
   - a recorded request returns its response;
   - an unrecorded one raises `NeedsLiveJev`. That is its own exception class, **not** a
     `KeyError`, so an engine's own `KeyError` is never mistaken for it. Its message contains
-    `not recorded`, and `JevCap`'s contains `live Jev cap`;
+    `not recorded`, and `JevCapError`'s contains `live Jev cap`;
   - it exposes `.model` and `.live_calls`. `admit.Gate` reads both, and sorts a decision as
     "unknown" (rather than idle) by those two message texts (task 17).
-- **With `live=True` and an injected fake live engine:** new calls go through `Recorder` into the
-  sandbox's `jev-calls.jsonl`, they are counted, and call number 201 raises `JevCap("the live Jev
-  cap of 200 new calls for this session is reached")`.
+- **With `live=True` and an injected fake live engine:** new calls go through `_lab.recorder`
+  into the sandbox's `jev-calls.jsonl`, they are counted, and call number 201 raises
+  `JevCapError("the live Jev cap of 200 new calls for this session is reached")`.
 - **T9 (unit):** with `socket.socket.connect` patched to raise, a replay-only `Layered` answers
   recorded calls and never connects.
 
@@ -609,7 +616,7 @@ Seeding uses `attacks.apply` for `attack:`, and copies the set for `set:`. Names
 - `Layered.ask(state, questions)`:
   - hash it with `request_hash(model, …)`;
   - look in the merged cache, then in the sandbox's recording;
-  - then, only if `live`, build `TypeSafe("jev-1.13.0")` **lazily**. It reads the key from
+  - then, only if `live`, build `_lab.typesafe("jev-1.13.0")` **lazily**. It reads the key from
     `TYPESAFE_API_KEY_FILE` at construction, so never build it in replay mode.
 - `.model = "jev-1.13.0"`.
 
@@ -647,7 +654,7 @@ The kind mappings are copied from `run_all.py`'s `DISCOUNT` and `SLA` and `run_s
 
 **Implement the runner.** `decide(engine, eng, corpus_root, corpus_name, inputs, sid, register)`
 returns the record, made JSON-plain like `check_equivalence.plain`.
-- **Register:** `Register.load(sandbox/register/<corpus_name>.yaml)` when the engine takes one.
+- **Register:** `_lab.load_register(sandbox/register/<corpus_name>.yaml)` when the engine takes one.
 - **`NeedsLiveJev`** gives `{"outcome": "NEEDS_LIVE_JEV", "gated_outcome": "NEEDS_LIVE_JEV"}`.
 - **Any other exception** gives **exactly** the harness's shape, so T5 can match error rows:
   `{"outcome": "ERROR", "gated_outcome": "ERROR", "error": f"{type(e).__name__}: {e}"[:200]}`.
@@ -894,7 +901,7 @@ group separately.
 **Implement:**
 - `build(arm)`, using `add_tool`;
 - every tool reads `subject.json` **on each call** (Desktop starts servers before sessions exist);
-- `NoSession` when there's no session;
+- `NoSessionError` when there's no session;
 - `get_procedure(type)` reads `owm/procedures/{discount-approval,credit-limit,sla-response}.md`;
 - `get_register(type)` gives `served(corpus, type, root=<sandbox register>)`;
 - `decide` uses `engines.governed(…)`, with the question's `as_of`, the sandbox's mismatch mode, and
