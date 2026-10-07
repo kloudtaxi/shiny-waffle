@@ -259,3 +259,14 @@ Model capability doesn't erode either of these. It erodes prompt-based approache
    - FAOS's curated-RAG result as independent support for round 1 ("RAG wins on knowledge").
 5. **Reuse Masood's agency-cost metrics** as BlueLeaf's headline numbers. A buyer's CFO and risk
    committee already think in these terms.
+
+## The user's decisions (2026-10-07)
+
+- **Board:** not now. No new gap and no G-37 note. This file holds the ideas.
+- **Lab order on resume:** **interleave**, alternating one credibility item with one ROI item. One reading of that:
+  1. set G via the MCP server (credibility);
+  2. G-18 hybrid routing (ROI: review load);
+  3. attacks on the register (credibility);
+  4. G-23 cost per decision with the scoped-context arm (ROI);
+  5. G-39 outside validation (credibility).
+- **Naming** ("world model" vs "decision control"): not decided; it's the user's call.
