@@ -62,6 +62,8 @@ def decide(
         spec["documents"].update(entry["deployment"])
     on_disk = specs / entry["file"]
     differs = not on_disk.exists() or fingerprint(on_disk.read_text()) != entry["sha256"]
+    if register is not None:  # a revoked governing document stops counting from its date
+        register = register.as_of(day(at))
     record = flow.run(spec, eng, ev, inputs, register)
     if differs:
         record.setdefault("flags", []).append(

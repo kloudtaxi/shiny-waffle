@@ -623,6 +623,17 @@ class Register:
     def by_id(self) -> dict[str, dict[str, Any]]:
         return {e["doc_id"]: e for e in self.entries}
 
+    def as_of(self, on: date) -> Register:
+        """The register as it governs a decision on `on`: an entry revoked on or before that date
+        no longer counts as registered, for screening as well as for terms (RR-12,
+        `runs/2026-10-08-register-attacks/freeze.md`)."""
+
+        def revoked(e: dict[str, Any]) -> bool:
+            return bool(e.get("revoked_on")) and on >= date.fromisoformat(str(e["revoked_on"]))
+
+        keep = [e for e in self.entries if not revoked(e)]
+        return self if len(keep) == len(self.entries) else Register(keep, self.store)
+
     def status(self, docs: list[Doc]) -> dict[str, str]:
         """Each entry's document on file: verified (a copy matches), mismatch (a document with its
         id differs) or missing."""
