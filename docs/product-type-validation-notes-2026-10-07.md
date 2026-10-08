@@ -238,7 +238,7 @@ Model capability doesn't erode either of these. It erodes prompt-based approache
 | What does it save? | Unmeasured | **G-18** (human review load) and **G-23** (cost per decision), reported as "review minutes per 100 agent decisions" |
 | What does it cost to onboard a decision type? | Unmeasured (the pieces exist: G-12/G-13) | **New:** time and approvals from raw documents to the first governed decision |
 | Why not Microsoft or Palantir? | Not argued yet | Decision control (L4–L5) plus vendor neutrality; a one-page comparison |
-| Any customer? | No | A design partner on one decision type (discount or credit approvals) |
+| Any customer? | **Design partners exist** (corrected 2026-10-07; I had said "no") | Partner-backed use cases on one decision type |
 
 ## Recommendations
 
@@ -269,4 +269,4 @@ Model capability doesn't erode either of these. It erodes prompt-based approache
   3. attacks on the register (credibility);
   4. G-23 cost per decision with the scoped-context arm (ROI);
   5. G-39 outside validation (credibility).
-- **Naming** ("world model" vs "decision control"): not decided; it's the user's call.
+- **Naming:** the user keeps **"Organizational World Model"** and accepts what the name implies (2026-10-07). Recommendation 1's "don't lead with world model" is withdrawn.

@@ -178,3 +178,35 @@ reads as confidence.
 > hands systems a decision they can act on and an auditor can check. In our tests, agents alone
 > got 93 of 102 decisions right and were fooled by 25 of 47 forged documents; with the OWM, 102
 > and 0.
+
+## The user's responses (2026-10-07)
+
+- **Naming inconsistencies: ignore them.** The thesis comes from external models (such as GPT) that
+  work with limited internal knowledge and vocabulary. Their job is market-facing, and they often
+  see commercial value we miss.
+- **Conditions as a named concept: agreed.**
+- **Knowledge foundation: first-party.** Design partners are asking for it. Docling plus
+  langextract give document-specific understanding and fact extraction with **byte-range
+  references**. *My "include it as table stakes" point stands, and it now has a concrete
+  stack.*
+- **Agno: the agent runtime.** BlueLeaf is agent-first and needs a runtime to be useful; the
+  user's research says Agno fits. *My "no evidence" point is withdrawn. It was a judgment about the
+  thesis text, not the choice.*
+- **World Model: keep the name** and its implications.
+- **How the company works now:** product marketing leads engineering, and we sell before it's
+  complete. That will flip later.
+- **Some needs don't need a customer to validate them,** as with energy efficiency. My "no
+  customer" point was also wrong: **design partners exist.**
+- **The value:** enterprises don't trust AI with one chatbot, let alone thousands of agents.
+  **"AI trust with confidence" is ultimately the value.**
+
+**What this changes in my read.** The positioning advice in §1 ("decision control" headline)
+becomes *how* the value is delivered, not the headline. The value is **trust with confidence**,
+and the lab's numbers are trust numbers:
+- 0 of 47 forged documents believed;
+- 0 wrong merges;
+- every decision stamped with its procedure version;
+- conditions in the record.
+
+When marketing leads, the lab's job is to keep every claim either **proven, bounded or on the
+roadmap**, and to say which is which.
