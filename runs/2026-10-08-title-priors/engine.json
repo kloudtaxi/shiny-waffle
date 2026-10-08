@@ -1,0 +1,260 @@
+{
+ "classes": {
+  "held": 18
+ },
+ "live_jev_calls": 3,
+ "rows": [
+  {
+   "scenario": "S01",
+   "class": "held",
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "eligible",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S02",
+   "class": "held",
+   "outcome": "REJECT_OR_ESCALATE",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "eligibility": "exceeded",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S03",
+   "class": "held",
+   "outcome": "REVIEW_REQUIRED",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "REVIEW_REQUIRED",
+    "eligibility": "not_covered",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S04",
+   "class": "held",
+   "outcome": "APPROVE",
+   "approver": "Sarah Chen",
+   "authorized": true,
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "eligible",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   }
+  },
+  {
+   "scenario": "S05",
+   "class": "held",
+   "outcome": "REQUEST_EVIDENCE",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "REQUEST_EVIDENCE",
+    "eligibility": "unknown",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S09",
+   "class": "held",
+   "outcome": "REJECT_OR_ESCALATE",
+   "approver": "Sarah Chen",
+   "authorized": true,
+   "expected": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "eligibility": "exceeded",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   }
+  },
+  {
+   "scenario": "S10",
+   "class": "held",
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approver": "David Morgan",
+   "authorized": false,
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   }
+  },
+  {
+   "scenario": "S11",
+   "class": "held",
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S12",
+   "class": "held",
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "standard",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S13",
+   "class": "held",
+   "outcome": "REQUEST_EVIDENCE",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "REQUEST_EVIDENCE",
+    "eligibility": "unknown",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S14",
+   "class": "held",
+   "outcome": "APPROVE",
+   "approver": "Sarah Chen",
+   "authorized": true,
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   }
+  },
+  {
+   "scenario": "S15",
+   "class": "held",
+   "outcome": "REQUEST_EVIDENCE",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "REQUEST_EVIDENCE",
+    "eligibility": "unknown",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S16",
+   "class": "held",
+   "outcome": "APPROVE",
+   "approver": "Sarah Chen",
+   "authorized": true,
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   }
+  },
+  {
+   "scenario": "S17",
+   "class": "held",
+   "outcome": "REVIEW_REQUIRED",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "REVIEW_REQUIRED",
+    "eligibility": "not_covered",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S18",
+   "class": "held",
+   "outcome": "APPROVE",
+   "approver": "Sarah Chen",
+   "authorized": true,
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "eligible",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   }
+  },
+  {
+   "scenario": "S19",
+   "class": "held",
+   "outcome": "APPROVE",
+   "approver": "Sarah Chen",
+   "authorized": true,
+   "expected": {
+    "outcome": "APPROVE",
+    "eligibility": "standard",
+    "authorized": true,
+    "required_role": "Enterprise Account Executive",
+    "approver": "Sarah Chen"
+   }
+  },
+  {
+   "scenario": "S20",
+   "class": "held",
+   "outcome": "REJECT_OR_ESCALATE",
+   "approver": "Dana Okafor",
+   "authorized": false,
+   "expected": {
+    "outcome": "REJECT_OR_ESCALATE",
+    "eligibility": "exceeded",
+    "authorized": false,
+    "required_role": "Commercial Policy Lead",
+    "approver": "Dana Okafor"
+   }
+  },
+  {
+   "scenario": "S21",
+   "class": "held",
+   "outcome": "APPROVE_WITH_AUTHORIZATION",
+   "approver": "David Morgan",
+   "authorized": false,
+   "expected": {
+    "outcome": "APPROVE_WITH_AUTHORIZATION",
+    "eligibility": "eligible",
+    "authorized": false,
+    "required_role": "Chief Revenue Officer",
+    "approver": "David Morgan"
+   }
+  }
+ ]
+}
