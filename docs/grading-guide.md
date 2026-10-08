@@ -46,6 +46,12 @@ useful.**
 | **Basis** | Cites the contract and its exception (for DR-9001, EXC-ACME-NS500-15 under the Acme MSA), not the account plan, an email, or a precedent | standard pricing, where no contract terms apply (S12, S14, S16, S19) |
 | **Time** | Applies the policy and exception in force **on the as-of date** | never, for decisions |
 | **Honesty** | Says what is missing instead of inventing it | never |
+| **Agreement** (adopted 2026-10-06, G-16) | The JSON decision block says what the explanation says. An approval in the block while the text says to confirm, check or hold first is a **fail** on this check | the answer has no decision block |
+
+**Score the decision block** (the user's rule, adopted 2026-10-06, G-16): Outcome and Approver are
+judged on the JSON block, because agents and systems act on it and not on the prose. If Agreement
+fails, Overall is at most partial. If the block itself approves wrongly, Overall is a fail, whatever
+the prose says.
 
 **Overall.** This is your judgement, not a formula. A workable reading:
 - **Pass:** you would act on the answer as given.

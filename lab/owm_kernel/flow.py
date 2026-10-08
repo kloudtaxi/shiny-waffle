@@ -301,17 +301,28 @@ PURE: dict[str, Any] = {
 }  # fmt: skip
 
 
-def entry_routes(entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags: list[str]) -> bool:
+def entry_routes(
+    entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags: list[str],
+    reg_kinds: Mapping[str, str] | None = None,
+) -> bool:  # fmt: skip
     """R3: a relied-on register entry whose document on file differs (mismatch) or is gone
-    (missing) routes the decision when `on_mismatch: route` (the default); with `use_registered`
-    the decision stands on the registered terms and the discrepancy is flagged. L3 for entries:
-    relying on two entries of a `single_kinds` kind routes (a conflict)."""
+    (missing). With `on_mismatch: use_registered`, the default (G-01, decided 2026-10-05), the
+    decision stands on the registered terms and an incident is raised to the owning function; with
+    `route` it goes to a person. L3 for entries: relying on two entries of a `single_kinds` kind
+    routes (a conflict)."""
     routed = False
+    mode = docs_cfg.get("on_mismatch", "use_registered")
     for e in {x["doc_id"]: x for x in entries}.values():
         if e["status"] != "verified":
             flags.append(f"{e['doc_id']}: document on file is {e['status']} against registered "
                          f"version {e['version']}")  # fmt: skip
-            routed |= docs_cfg.get("on_mismatch", "route") == "route"
+            if mode == "route":
+                routed = True
+            else:
+                kind = {v: k for k, v in (reg_kinds or {}).items()}.get(e["kind"], e["kind"])
+                who = ", ".join(docs_cfg.get("owners", {}).get(kind, [])) or "its owner"
+                flags.append(f"incident for {who}: {e['doc_id']} v{e['version']} on file is "
+                             f"{e['status']}; decided on the registered terms")  # fmt: skip
     for k in docs_cfg.get("single_kinds", ()):
         ids = sorted({x["doc_id"] for x in entries if x["kind"] == k})
         if len(ids) > 1:
@@ -322,7 +333,13 @@ def entry_routes(entries: list[dict[str, Any]], docs_cfg: dict[str, Any], flags:
 
 # -- the runner -------------------------------------------------------------------------------
 def load(path: Path) -> dict[str, Any]:
-    spec = yaml.safe_load(path.read_text())
+    return loads(path.read_text(), path.name)
+
+
+def loads(text: str, name: str) -> dict[str, Any]:
+    """A spec from its text (G-13: a registered procedure runs from the approved text)."""
+    path = Path(name)  # for error messages only
+    spec = yaml.safe_load(text)
     for key in ("spec", "outcomes", "route_to", "documents", "steps", "outcome", "record"):
         if key not in spec:
             raise SpecError(f"{path.name}: missing section {key!r}")
@@ -345,7 +362,7 @@ def load(path: Path) -> dict[str, Any]:
 
 def run(
     spec: dict[str, Any], eng: Engine, ev: Evidence, inputs: dict[str, Any],
-    register: Register | None = None,
+    register: Register | None = None, trace: dict[str, Any] | None = None,
 ) -> dict[str, Any]:  # fmt: skip
     used: list[dict[str, Any]] = []
     flags: list[str] = []
@@ -383,15 +400,33 @@ def run(
         single_kinds=tuple(docs_cfg.get("single_kinds", ())),
     )  # fmt: skip
     on_file = ev.docs()
-    reg_kinds = tuple(docs_cfg.get("registered_kinds", ()))
+    declared = docs_cfg.get("registered_kinds") or {}
+    # spec kind -> register kind; a list means the same names (R1, G-30: register kinds are global)
+    reg_kinds = dict(declared) if isinstance(declared, dict) else {k: k for k in declared}
     if reg_kinds and register is None:
         raise SpecError(f"{spec['spec']}: registered_kinds is declared, but no register was given")
     status = register.status(on_file) if register else {}
+    screened_from = len(flags)
     docs_in = (
-        register_screen(on_file, register, reg_kinds, guards.rules, flags)
+        register_screen(
+            on_file,
+            register,
+            reg_kinds,
+            guards.rules,
+            flags,
+            docs_cfg.get("on_mismatch", "use_registered"),
+            docs_cfg.get("owners"),
+        )
         if register and reg_kinds
         else on_file
     )
+    # G-32 (2026-10-06): in route mode, a registered document set aside routes the decision
+    # explicitly; going on without it is unsafe when a spec reads absence as meaning (set F, F9)
+    set_aside = [f.split(":")[0] for f in flags[screened_from:]
+                 if "differs from its registered version" in f
+                 and f.endswith("set aside")]  # fmt: skip
+    if docs_cfg.get("on_mismatch", "use_registered") != "route":
+        set_aside = []
     s = screen(eng, docs_in, guards, staff, products, used, flags)
 
     def registered(kind: str) -> list[dict[str, Any]]:  # R2
@@ -488,7 +523,10 @@ def run(
 
     if spec.get("gate", True):
         routed = lineage_routes(relied, s, guards, flags)  # L2, L3
-        routed |= entry_routes(relied_entries, docs_cfg, flags)  # R3
+        routed |= entry_routes(relied_entries, docs_cfg, flags, reg_kinds)  # R3
+        if set_aside:  # G-32
+            flags.append("routed: " + ", ".join(set_aside) + " set aside (on_mismatch: route)")
+            routed = True
         uncertain, gated = gate(outcome, relied, s.inconsistent, used, flags,
                                 route_to=spec["route_to"])  # fmt: skip
         gated = spec["route_to"] if routed else gated
@@ -496,4 +534,29 @@ def run(
         uncertain, gated = [j["q"] for j in used if j["uncertain"]], outcome
     env.update({"gated_outcome": gated, "uncertain": uncertain, "judgments": used,
                 "flags": flags, "obligations": [o.record() for o in obligations]})  # fmt: skip
-    return {field: evaluate(str(src), env) for field, src in spec["record"].items()}
+    record = {field: evaluate(str(src), env) for field, src in spec["record"].items()}
+    if spec.get("gate", True) and set_aside:
+        withhold(record, spec["record"], set(inputs) | ROUTE_FIELDS, set_aside, flags)
+    if trace is not None:  # G-06 (2026-10-06): what the decision relied on, for the admission check
+        trace["relied"] = [(d.filename, d.doc_id) for d in relied]
+    return record
+
+
+# what a forced route keeps: the runner's own route fields (G-32 addendum, 2026-10-06)
+ROUTE_FIELDS = {"gated_outcome", "uncertain", "judgments", "flags"}
+
+
+def withhold(record: dict[str, Any], sources: Mapping[str, Any], keep: set[str],
+             set_aside: list[str], flags: list[str]) -> None:  # fmt: skip
+    """A forced route decides nothing from an incomplete set of documents. Every field that reads
+    anything but the inputs and the route itself is emptied, keeping its type ({} / [] / None)."""
+    dropped = []
+    for field, src in sources.items():
+        names = {n.id for n in ast.walk(_parse(str(src))) if isinstance(n, ast.Name)}
+        if names <= keep:
+            continue
+        v = record[field]
+        record[field] = {} if isinstance(v, dict) else [] if isinstance(v, (list, tuple)) else None
+        dropped.append(field)
+    if dropped:  # flags is the record's own list, so the record carries this too
+        flags.append(f"withheld: {', '.join(dropped)} (computed without {', '.join(set_aside)})")

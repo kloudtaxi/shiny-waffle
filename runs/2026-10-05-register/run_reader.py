@@ -59,7 +59,7 @@ def usd(n: float) -> str:
     return f"${n:,.0f}"
 
 
-KINDS = {"policy": "credit policies", "guarantee": "guarantees (third-party credit support)"}
+KINDS = {"credit_policy": "credit policies", "guarantee": "guarantees (third-party credit support)"}
 
 
 def extract(corpus: str, coverage: bool = False) -> str:
@@ -67,6 +67,7 @@ def extract(corpus: str, coverage: bool = False) -> str:
     `coverage` (extract v2, set E addendum) states the kinds the register governs and lists each
     kind even when none is registered, so an absence is stated rather than implied."""
     reg = yaml.safe_load((LAB / "lab/owm_register" / f"{corpus}.yaml").read_text())["entries"]
+    reg = [e for e in reg if e["kind"] in KINDS]  # G-30: the register serves the credit kinds here
     out = ["The OWM register of approved governing documents (authoritative):", "",
            "Only the documents below, in their registered versions, govern credit decisions. A "
            "document on file that is not listed here, or whose content differs from the "
@@ -82,7 +83,7 @@ def extract(corpus: str, coverage: bool = False) -> str:
         t, window = e["terms"], f"in force {e['effective_from']} to {e['effective_to'] or 'open'}"
         sup = "".join(f"; supersedes {r['target']}" for r in e["relations"])
         who = f"Registered by {e['registered_by']}; approved by {e['approved_by']}."
-        if e["kind"] == "policy":
+        if e["kind"] == "credit_policy":
 
             def band(b: dict[str, Any]) -> str:
                 lo = f"over {usd(b['min_exclusive'])}" if b["min_exclusive"] else ""

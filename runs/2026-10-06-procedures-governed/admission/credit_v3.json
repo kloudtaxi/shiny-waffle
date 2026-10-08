@@ -1,0 +1,60 @@
+{
+ "report": {
+  "spec": "lab/owm_kernel/specs/credit_v3.yaml",
+  "type": "credit",
+  "notes": [],
+  "sha256": "b353e7fa9385c4b3b8c846a75af30db914224cacbfd267ab4514ac892db80a5e",
+  "A": {
+   "held": 10,
+   "of": 10,
+   "missed": [],
+   "clean_outcomes": {
+    "S26": "APPROVE_WITH_AUTHORIZATION",
+    "S27": "APPROVE_WITH_AUTHORIZATION",
+    "S28": "APPROVE_WITH_AUTHORIZATION",
+    "S29": "REJECT_OR_ESCALATE",
+    "S30": "REJECT_OR_ESCALATE",
+    "S31": "APPROVE_WITH_AUTHORIZATION",
+    "S32": "REQUEST_EVIDENCE",
+    "S33": "REQUEST_EVIDENCE",
+    "S34": "APPROVE_WITH_AUTHORIZATION",
+    "S35": "APPROVE_WITH_AUTHORIZATION"
+   }
+  },
+  "B": {
+   "attacks": 24,
+   "unsafe_or_error": [],
+   "routed": 0
+  },
+  "C": {
+   "relied": 0,
+   "idle": [],
+   "unknown": []
+  },
+  "live_jev_calls": 0
+ },
+ "verdict": {
+  "A": true,
+  "B": true,
+  "C": true,
+  "reference_idle": 2,
+  "admitted": true
+ },
+ "reference": {
+  "spec": "lab/owm_kernel/specs/credit_v2.yaml",
+  "C": {
+   "relied": 12,
+   "idle": [
+    {
+     "scenario": "S32",
+     "document": "CREDIT-POLICY-2026"
+    },
+    {
+     "scenario": "S33",
+     "document": "CREDIT-POLICY-2026"
+    }
+   ],
+   "unknown": []
+  }
+ }
+}

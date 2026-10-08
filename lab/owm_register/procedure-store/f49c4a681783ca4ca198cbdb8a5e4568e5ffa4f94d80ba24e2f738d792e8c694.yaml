@@ -1,0 +1,142 @@
+# Discount approval as a data spec (specs as data, 2026-10-04).
+# It replaces lab/owm_kernel/discount.py. Inputs: sid, record (the CRM discount-request row), as_of.
+
+spec: discount_approval
+outcomes: [APPROVE, APPROVE_WITH_AUTHORIZATION, REJECT_OR_ESCALATE, REVIEW_REQUIRED, REQUEST_EVIDENCE]
+route_to: REQUEST_EVIDENCE
+
+documents:
+  kinds:
+    - { kind: policy, id_prefixes: [PRICING-POLICY], title_words: [Pricing Policy] }
+    - { kind: amendment, title_words: [Amendment] }
+    - { kind: agreement, title_words: [Agreement] }
+    - { kind: exception, id_prefixes: [EXC-], title_words: [Exception], owner_hints: [Deal Desk] }
+  owners: { policy: [Revenue Operations], agreement: [Legal], amendment: [Legal], exception: [Deal Desk] }
+  policy_kind: policy
+  graded: [agreement, amendment, exception]
+  approval_kinds: [exception]     # G1: an exception's recorded approver must have authority
+  parent_kind: agreement
+  amending_kinds: [amendment]     # G5b: an amendment needs its agreement on file
+  schedule_kinds: [exception]     # G5a: an exception must agree with the clause that creates it
+  value_reader: max_discount
+  product_reader: product_text
+
+readers:
+  max_discount: >-
+      int(search(r"Maximum eligible discount\s*\|\s*(\d+)%", doc.body) or search(r"up to \**(\d+)%", doc.body)) / 100
+      if (search(r"Maximum eligible discount\s*\|\s*(\d+)%", doc.body) or search(r"up to \**(\d+)%", doc.body)) else None
+  party_text: 'paragraph(doc.body, "entered into between") or row(doc, "Customer") or flat(doc.body)'
+  product_text: >-
+      (search(r"## \d+\. Products\n(.*?)(?=\n## )", doc.body) or "").strip()
+      or row(doc, "Product")
+      or "\n\n".join(p for p in paragraphs(doc.body) if search(r"([Pp]roduct|NS-)", p))
+      or doc.body
+
+questions:
+  basis:
+    type: choice
+    instructions: What pricing basis does the request in `request` rely on?
+    criteria:
+      contract_terms: A customer contract, agreement or negotiated pricing exception
+      standard_pricing: Standard pricing, or competitive or commercial reasons; no contract
+      unclear: The request does not say what it relies on
+  party:
+    type: choice
+    instructions: Is the customer in `request_customer` the same legal entity as the customer named in `document`?
+    criteria:
+      same_legal_entity: "Yes: the same company, possibly under a trading name (doing business as) or a shortened or differently spelled name"
+      different_entity: "No: a different company, even if the names look alike"
+      unclear: The information given cannot tell
+  covers_product:
+    type: noul
+    instructions: The document in `document` covers or applies to the product in `product`.
+
+steps:
+  - account: 'first(a for a in table("crm_accounts") if a["account_id"] == record["account_id"])'
+  - product: 'first(p for p in products if p["sku"] == record["product_sku"])'
+  - customer: '{k: account[k] for k in ("account_name", "billing_street", "billing_city", "billing_state")}'
+  - product_name: 'product["product_name"] + " (" + product["sku"] + ")"'
+  - basis: 'use(judge("basis", {"request": {"justification": record["justification"]}}))'
+  - contractual: 'basis["choice"] != "standard_pricing"'
+  # each agreement and exception, with Jev's party and product judgments, in document order
+  - own_agreements:
+      when: contractual
+      expr: >-
+        [{"id": d.doc_id, "window": window(d), "doc": d,
+          "party": judge("party", {"request_customer": customer, "document": party_text(d)}),
+          "covers": judge("covers_product", {"product": product_name, "document": product_text(d)})}
+         for d in docs("agreement")]
+  - exceptions:
+      when: contractual
+      expr: >-
+        [{"id": d.doc_id, "window": window(d), "max": max_discount(d),
+          "agreement": referenced_agreement(d), "doc": d,
+          "supersedes": set(findall(r"Supersedes (EXC-[A-Z0-9-]+)", d.body)),
+          "party": judge("party", {"request_customer": customer, "document": party_text(d)}),
+          "covers": judge("covers_product", {"product": product_name, "document": product_text(d)})}
+         for d in docs("exception") + [d for d in docs("amendment") if max_discount(d)]]
+  # an agreement known only from an exception that names it takes that exception's judgments
+  - agreements:
+      when: contractual
+      expr: >-
+        own_agreements + unique_by(
+          [{"id": x["agreement"], "window": x["window"], "doc": x["doc"], "party": x["party"],
+            "covers": x["covers"]}
+           for x in exceptions if x["agreement"] and x["agreement"] not in {a["id"] for a in own_agreements}],
+          "id")
+  - _judgments:
+      when: contractual
+      expr: >-
+        uses([j for a in agreements for j in (a["party"], a["covers"])]
+             + [j for x in exceptions for j in (x["party"], x["covers"])])
+  - live_agreements:
+      when: contractual
+      expr: >-
+        [a for a in agreements if a["window"] and a["window"][0] <= as_of <= a["window"][1]
+         and a["party"]["choice"] == "same_legal_entity"]
+  - live_exceptions:
+      when: contractual
+      expr: >-
+        [x for x in exceptions if x["window"] and x["window"][0] <= as_of <= x["window"][1]
+         and x["party"]["choice"] == "same_legal_entity"]
+  - contract: { when: contractual, expr: 'latest(live_agreements, "window")' }
+  - covering_exceptions: { when: contractual, expr: '[x for x in live_exceptions if x["covers"]["yes"]]' }
+  # G2: what a live candidate explicitly supersedes drops out; disagreement left over routes
+  - beaten: { when: contractual, expr: 'union([x["supersedes"] for x in covering_exceptions]) if covering_exceptions else set()' }
+  - candidates: { when: contractual, expr: '[x for x in covering_exceptions if x["id"] not in beaten]' }
+  - exc: { when: contractual, expr: 'latest(candidates, "window")' }
+  - conflict: 'contractual and len({x["max"] for x in candidates}) > 1'
+  - _conflict: 'flag("conflict: exceptions " + ", ".join(x["id"] for x in candidates)) if conflict else None'
+  - eligibility: >-
+      {"status": "standard", "maximum_discount": None, "basis": None} if not contractual else
+      {"status": "unknown", "maximum_discount": None, "basis": None} if conflict or contract is None else
+      {"status": "not_covered", "maximum_discount": None, "basis": None}
+        if exc is None or not contract["covers"]["yes"] or exc["max"] is None else
+      {"status": "eligible" if float(record["requested_discount_pct"]) / 100 <= exc["max"] else "exceeded",
+       "maximum_discount": exc["max"], "basis": exc["id"]}
+  - _rely_contract: 'rely(contract["doc"]) if eligibility["status"] in ("not_covered", "eligible", "exceeded") else None'
+  - _rely_exception: 'rely(exc["doc"]) if eligibility["status"] in ("eligible", "exceeded") else None'
+  - _rely_live: 'rely([x["doc"] for x in live_exceptions]) if contractual else None'
+  - amount: 'float(record["requested_discount_pct"]) / 100'
+  - auth: 'authority(policies(), as_of, amount, record["requested_by"])'
+  - _rely_policy: 'rely(auth["_doc"]) if auth else None'
+
+outcome:
+  - { when: 'auth is None', outcome: REQUEST_EVIDENCE }
+  - { when: 'eligibility["status"] == "unknown"', outcome: REQUEST_EVIDENCE }
+  - { when: 'eligibility["status"] == "not_covered"', outcome: REVIEW_REQUIRED }
+  - { when: 'eligibility["status"] == "exceeded"', outcome: REJECT_OR_ESCALATE }
+  - { when: 'auth["requestor_authorized"]', outcome: APPROVE }
+  - { outcome: APPROVE_WITH_AUTHORIZATION }
+
+record:
+  scenario: sid
+  outcome: outcome
+  gated_outcome: gated_outcome
+  uncertain: uncertain
+  commercial_eligibility: eligibility
+  authority: >-
+      {k: v for k, v in auth.items() if k != "_doc"} if auth else
+      {"policy": None, "requestor_limit": None, "requestor_authorized": None, "required_role": None, "approver": None}
+  judgments: judgments
+  flags: flags

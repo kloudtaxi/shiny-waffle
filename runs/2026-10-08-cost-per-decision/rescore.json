@@ -1,0 +1,34 @@
+{
+ "o-full": {
+  "wrong_decisions": 1,
+  "incomplete_or_misformatted": 0,
+  "wrong": [
+   "S32 r2: unsafe: wrong denial"
+  ]
+ },
+ "o-slice": {
+  "wrong_decisions": 1,
+  "incomplete_or_misformatted": 0,
+  "wrong": [
+   "S32 r1: unsafe: wrong denial"
+  ]
+ },
+ "h-full": {
+  "wrong_decisions": 3,
+  "incomplete_or_misformatted": 7,
+  "wrong": [
+   "S32 r1: unsafe: wrong denial",
+   "S32 r2: unsafe: wrong denial",
+   "S32 r3: unsafe: wrong denial"
+  ]
+ },
+ "h-slice": {
+  "wrong_decisions": 3,
+  "incomplete_or_misformatted": 9,
+  "wrong": [
+   "S12 r2: unsafe",
+   "S12 r3: unsafe",
+   "S32 r2: unsafe: wrong denial"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "credit_v2.yaml": {
+  "relied": 12,
+  "idle": [
+   {
+    "scenario": "S32",
+    "document": "CREDIT-POLICY-2026"
+   },
+   {
+    "scenario": "S33",
+    "document": "CREDIT-POLICY-2026"
+   }
+  ],
+  "unknown": 0
+ },
+ "credit_agent.yaml": {
+  "relied": 16,
+  "idle": [
+   {
+    "scenario": "S26",
+    "document": "GRT-ACME-2026"
+   },
+   {
+    "scenario": "S27",
+    "document": "GRT-ACME-2026"
+   },
+   {
+    "scenario": "S32",
+    "document": "CREDIT-POLICY-2026"
+   },
+   {
+    "scenario": "S33",
+    "document": "CREDIT-POLICY-2026"
+   },
+   {
+    "scenario": "S34",
+    "document": "GRT-ACME-2026"
+   },
+   {
+    "scenario": "S35",
+    "document": "GRT-ACME-2026"
+   }
+  ],
+  "unknown": 0
+ },
+ "credit_agent_v2.yaml": {
+  "relied": 16,
+  "idle": [
+   {
+    "scenario": "S26",
+    "document": "GRT-ACME-2026"
+   },
+   {
+    "scenario": "S27",
+    "document": "GRT-ACME-2026"
+   },
+   {
+    "scenario": "S32",
+    "document": "CREDIT-POLICY-2026"
+   },
+   {
+    "scenario": "S33",
+    "document": "CREDIT-POLICY-2026"
+   },
+   {
+    "scenario": "S34",
+    "document": "GRT-ACME-2026"
+   },
+   {
+    "scenario": "S35",
+    "document": "GRT-ACME-2026"
+   }
+  ],
+  "unknown": 0
+ }
+}

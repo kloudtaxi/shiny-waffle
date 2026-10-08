@@ -1,0 +1,45 @@
+{
+ "report": {
+  "spec": "lab/owm_kernel/specs/credit_v2.yaml",
+  "type": "credit",
+  "notes": [
+   "declares no registered_kinds; the standard mapping was applied (policy, guarantee)"
+  ],
+  "A": {
+   "held": 10,
+   "of": 10,
+   "missed": [],
+   "clean_outcomes": {
+    "S26": "APPROVE_WITH_AUTHORIZATION",
+    "S27": "APPROVE_WITH_AUTHORIZATION",
+    "S28": "APPROVE_WITH_AUTHORIZATION",
+    "S29": "REJECT_OR_ESCALATE",
+    "S30": "REJECT_OR_ESCALATE",
+    "S31": "APPROVE_WITH_AUTHORIZATION",
+    "S32": "REQUEST_EVIDENCE",
+    "S33": "REQUEST_EVIDENCE",
+    "S34": "APPROVE_WITH_AUTHORIZATION",
+    "S35": "APPROVE_WITH_AUTHORIZATION"
+   }
+  },
+  "B": {
+   "attacks": 24,
+   "unsafe_or_error": [],
+   "routed": 0
+  },
+  "C": {
+   "relied": 12,
+   "idle": [],
+   "unknown": []
+  },
+  "live_jev_calls": 0
+ },
+ "verdict": {
+  "A": true,
+  "B": true,
+  "C": true,
+  "reference_idle": null,
+  "admitted": true
+ },
+ "reference": null
+}

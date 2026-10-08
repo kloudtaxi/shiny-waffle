@@ -1,0 +1,415 @@
+[
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/procedure/arm-b/r1/B2/S05.jsonl",
+  "scenario": "S05",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REQUEST_EVIDENCE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06/request/arm-b/r1/B2/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r1/B1/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r2/B1/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/curated/r3/B1/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r1/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r2/B1/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r2/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r3/B1/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/b1/uncurated/r3/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r1/B2/S12.jsonl",
+  "scenario": "S12",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r2/B2/S12.jsonl",
+  "scenario": "S12",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/curated/r3/B2/S12.jsonl",
+  "scenario": "S12",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/heldout/uncurated/r1/B1n/S12.jsonl",
+  "scenario": "S12",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/request/arm-b/r1/B2/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-28-utopia-aad5b06-scale-large/request/arm-b/r3/B2/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r1/B1n/S18.jsonl",
+  "scenario": "S18",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r2/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T1/r2/B1n/S18.jsonl",
+  "scenario": "S18",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r1/B1n/S18.jsonl",
+  "scenario": "S18",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r2/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-09-30-owm-measurements/01-02-procedure/T2/r3/B1n/S04.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r1/B1n/S22.jsonl",
+  "scenario": "S22",
+  "block": "APPROVE",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "other: APPROVE vs APPROVE_WITH_AUTHORIZATION"
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r2/B1n/S22.jsonl",
+  "scenario": "S22",
+  "block": "APPROVE",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "other: APPROVE vs APPROVE_WITH_AUTHORIZATION"
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S22.jsonl",
+  "scenario": "S22",
+  "block": "APPROVE",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "other: APPROVE vs APPROVE_WITH_AUTHORIZATION"
+ },
+ {
+  "answer": "runs/2026-10-02-jev-probe/j3/r3/B1n/S23.jsonl",
+  "scenario": "S23",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A7-S13-r1.jsonl",
+  "scenario": "S13",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REQUEST_EVIDENCE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/A7-S13-r3.jsonl",
+  "scenario": "S13",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REQUEST_EVIDENCE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B3-S03-r1.jsonl",
+  "scenario": "S03",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REVIEW_REQUIRED",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B3-S03-r2.jsonl",
+  "scenario": "S03",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REVIEW_REQUIRED",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B3-S03-r3.jsonl",
+  "scenario": "S03",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REVIEW_REQUIRED",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B4-S13-r2.jsonl",
+  "scenario": "S13",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REQUEST_EVIDENCE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B4-S13-r3.jsonl",
+  "scenario": "S13",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REQUEST_EVIDENCE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B5-S02-r1.jsonl",
+  "scenario": "S02",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REJECT_OR_ESCALATE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/B5-S02-r3.jsonl",
+  "scenario": "S02",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REJECT_OR_ESCALATE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-adversarial/reader/clean-S04-r1.jsonl",
+  "scenario": "S04",
+  "block": "APPROVE",
+  "expected": "APPROVE",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S27-r3.jsonl",
+  "scenario": "S27",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S31-r1.jsonl",
+  "scenario": "S31",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S35-r1.jsonl",
+  "scenario": "S35",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S35-r2.jsonl",
+  "scenario": "S35",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/reader/S35-r3.jsonl",
+  "scenario": "S35",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C2-S29-r1.jsonl",
+  "scenario": "S29",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REJECT_OR_ESCALATE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C3-S32-r1.jsonl",
+  "scenario": "S32",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REQUEST_EVIDENCE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C4-S30-r2.jsonl",
+  "scenario": "S30",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "REJECT_OR_ESCALATE",
+  "verdict": "wrong approval"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C5-S31-r1.jsonl",
+  "scenario": "S31",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C5-S31-r3.jsonl",
+  "scenario": "S31",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-03-exp5-credit/set-c-reader/C7-S34-r3.jsonl",
+  "scenario": "S34",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-instrument-guards/set-d-reader/D4-S27-r2.jsonl",
+  "scenario": "S27",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rc0/clean-S35-r1.jsonl",
+  "scenario": "S35",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/C1-S27-r1.jsonl",
+  "scenario": "S27",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr/D7-S28-r3.jsonl",
+  "scenario": "S28",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr0/clean-S27-r1.jsonl",
+  "scenario": "S27",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rr0/clean-S34-r1.jsonl",
+  "scenario": "S34",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E4-S27-r1.jsonl",
+  "scenario": "S27",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E4-S27-r3.jsonl",
+  "scenario": "S27",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ },
+ {
+  "answer": "runs/2026-10-05-register/reader/rre/E7-S28-r1.jsonl",
+  "scenario": "S28",
+  "block": "APPROVE_WITH_AUTHORIZATION",
+  "expected": "APPROVE_WITH_AUTHORIZATION",
+  "verdict": "right block"
+ }
+]

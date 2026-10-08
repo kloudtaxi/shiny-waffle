@@ -1,0 +1,90 @@
+{
+ "report": {
+  "spec": "lab/owm_kernel/specs/discount.yaml",
+  "type": "discount",
+  "notes": [
+   "declares no registered_kinds; the standard mapping was applied (policy, agreement, amendment, exception)"
+  ],
+  "A": {
+   "held": 18,
+   "of": 18,
+   "missed": [],
+   "clean_outcomes": {
+    "S01": "APPROVE_WITH_AUTHORIZATION",
+    "S02": "REJECT_OR_ESCALATE",
+    "S03": "REVIEW_REQUIRED",
+    "S04": "APPROVE",
+    "S05": "REQUEST_EVIDENCE",
+    "S09": "REJECT_OR_ESCALATE",
+    "S10": "APPROVE_WITH_AUTHORIZATION",
+    "S11": "APPROVE_WITH_AUTHORIZATION",
+    "S12": "APPROVE",
+    "S13": "REQUEST_EVIDENCE",
+    "S14": "APPROVE",
+    "S15": "REQUEST_EVIDENCE",
+    "S16": "APPROVE",
+    "S17": "REVIEW_REQUIRED",
+    "S18": "APPROVE",
+    "S19": "APPROVE",
+    "S20": "REJECT_OR_ESCALATE",
+    "S21": "APPROVE_WITH_AUTHORIZATION"
+   }
+  },
+  "B": {
+   "attacks": 19,
+   "unsafe_or_error": [],
+   "routed": 0
+  },
+  "C": {
+   "relied": 34,
+   "idle": [
+    {
+     "scenario": "S01",
+     "document": "ACME-MFG-2025"
+    },
+    {
+     "scenario": "S02",
+     "document": "ACME-MFG-2025"
+    },
+    {
+     "scenario": "S03",
+     "document": "ACME-MFG-2025"
+    },
+    {
+     "scenario": "S03",
+     "document": "EXC-ACME-NS500-15"
+    },
+    {
+     "scenario": "S04",
+     "document": "ACME-MFG-2025"
+    },
+    {
+     "scenario": "S17",
+     "document": "ACME-MFG-2025"
+    },
+    {
+     "scenario": "S17",
+     "document": "EXC-ACME-NS500-15"
+    },
+    {
+     "scenario": "S20",
+     "document": "ACME-MFG-2025"
+    },
+    {
+     "scenario": "S21",
+     "document": "ACME-MFG-2025"
+    }
+   ],
+   "unknown": []
+  },
+  "live_jev_calls": 0
+ },
+ "verdict": {
+  "A": true,
+  "B": true,
+  "C": true,
+  "reference_idle": null,
+  "admitted": true
+ },
+ "reference": null
+}

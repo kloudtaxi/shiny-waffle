@@ -1,9 +1,9 @@
-# The OWM's register of approved governing credit documents for one company (corpus).
+# The OWM's register of approved governing documents for one company (corpus).
 # Built by lab/owm_register/build_register.py; see its docstring. OWM state, not evidence.
-register: credit, missing-guarantee-evidence
+register: governing documents, missing-guarantee-evidence
 entries:
 - doc_id: CREDIT-POLICY-2025
-  kind: policy
+  kind: credit_policy
   version: 1
   file: credit_policy_2025.md
   sha256: fc4dec64265f7b4928604f66b79bfdf11a509d9d998e5a701a75f24c3090f92f
@@ -28,12 +28,18 @@ entries:
       Strategic: 600000
       Standard: 300000
     separation_of_duties: true
+    separation_of_duties_passes_to: requestor's manager
+    authority_basis: the new total credit limit requested
+    tier_source: Northstar CRM
+    guarantee_rule: a parent-company guarantee in force raises the maximum by the guaranteed amount, for
+      the customer the guarantee names
+    decisions_recorded_in: Northstar ERP
   registered_by: Priya Shah (EMP-401, Finance Manager)
   approved_by: Elena Novak (EMP-402, Director of Finance)
   registered_on: '2024-12-15'
   approved_on: '2024-12-15'
 - doc_id: CREDIT-POLICY-2026
-  kind: policy
+  kind: credit_policy
   version: 1
   file: credit_policy_2026.md
   sha256: ebd41881cd20721466822f9eddfd21f833b8850192d5bba6a4c5e1e87696cc07
@@ -64,7 +70,435 @@ entries:
       Strategic: 750000
       Standard: 250000
     separation_of_duties: true
+    separation_of_duties_passes_to: requestor's manager
+    authority_basis: the new total credit limit requested
+    tier_source: Northstar CRM
+    guarantee_rule: a parent-company guarantee in force raises the maximum by the guaranteed amount, for
+      the customer the guarantee names
+    decisions_recorded_in: Northstar ERP
   registered_by: Priya Shah (EMP-401, Finance Manager)
   approved_by: Elena Novak (EMP-402, Director of Finance)
   registered_on: '2025-12-15'
   approved_on: '2025-12-15'
+- doc_id: PRICING-POLICY-2025
+  kind: pricing_policy
+  version: 1
+  file: pricing_policy_2025.md
+  sha256: 099ef9730bb92c672232c79ef4f367b09669dce6cc0904f44ab2a60324bbd5b0
+  effective_from: '2025-01-01'
+  effective_to: '2025-12-31'
+  relations: []
+  terms:
+    bands:
+    - title: Enterprise Account Executive
+      min_exclusive: null
+      max_inclusive: 0.15
+    - title: VP Sales
+      min_exclusive: 0.15
+      max_inclusive: null
+    approval_evidence_required_above: null
+    rules:
+    - Discounts must be calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
+  registered_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
+  approved_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
+  registered_on: '2024-12-10'
+  approved_on: '2024-12-10'
+- doc_id: PRICING-POLICY-2026
+  kind: pricing_policy
+  version: 1
+  file: pricing_policy_2026.md
+  sha256: 661a00bdccd20016ad68c5d8e89a49279be7a6486b36f5ea72c09c38f0a060f8
+  effective_from: '2026-01-01'
+  effective_to: '2026-12-31'
+  relations:
+  - type: supersedes
+    target: PRICING-POLICY-2025
+  terms:
+    bands:
+    - title: Enterprise Account Executive
+      min_exclusive: null
+      max_inclusive: 0.1
+    - title: VP Sales
+      min_exclusive: 0.1
+      max_inclusive: 0.2
+    - title: Chief Revenue Officer
+      min_exclusive: 0.2
+      max_inclusive: null
+    approval_evidence_required_above: 0.1
+    rules:
+    - Discounts are calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
+    - Discounts greater than 10% require recorded approval evidence.
+    authority_reference: Approval Authority Matrix (the operational reference)
+  registered_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
+  approved_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
+  registered_on: '2025-12-08'
+  approved_on: '2025-12-08'
+- doc_id: PRICING-POLICY-2027
+  kind: pricing_policy
+  version: 1
+  file: pricing_policy_2027.md
+  sha256: cf3c6673eabfc4d6faba7460d14ad5365a4bb1ea826753153457cb4ee5908414
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  relations:
+  - type: supersedes
+    target: PRICING-POLICY-2026
+  terms:
+    bands:
+    - title: Enterprise Account Executive
+      min_exclusive: null
+      max_inclusive: 0.05
+    - title: VP Sales
+      min_exclusive: 0.05
+      max_inclusive: 0.12
+    - title: Chief Revenue Officer
+      min_exclusive: 0.12
+      max_inclusive: null
+    approval_evidence_required_above: 0.05
+    rules:
+    - Discounts are calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
+    - Discounts greater than 5% require recorded approval evidence.
+  registered_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
+  approved_by: 'Revenue Operations (by function: no Revenue Operations staff in the HR export)'
+  registered_on: '2026-09-15'
+  approved_on: '2026-09-15'
+- doc_id: ACME-MFG-2025
+  kind: agreement
+  version: 1
+  file: acme_master_supply_agreement.md
+  sha256: 0724e911092bff4a90001aa09fb0bdcd41006709a575c43b48730698837d6947
+  effective_from: '2025-04-01'
+  effective_to: '2028-03-31'
+  relations: []
+  terms:
+    customer:
+      crm_account_id: CRM-2048
+      erp_customer_id: C-1001
+      name: Acme Mfg. Holdings
+      duns_number: 04-812-7730
+    products:
+    - NS-500
+    - NS-CLOUD
+    - NS-EDGE
+    pricing:
+    - product: NS-500
+      maximum_discount: 0.15
+      set_out_in: EXC-ACME-NS500-15
+    grants_approval_authority: false
+  registered_by: 'Legal (by function: no Legal staff in the HR export)'
+  approved_by: 'Legal (by function: no Legal staff in the HR export)'
+  registered_on: '2025-03-20'
+  approved_on: '2025-03-20'
+- doc_id: EXC-ACME-NS500-15
+  kind: exception
+  version: 1
+  file: acme_pricing_exception.md
+  sha256: 760e7aeddbd2424ca3fc3df224b13e0db96f242192c3d7e2c72cf472badc49a6
+  effective_from: '2025-04-01'
+  effective_to: '2028-03-31'
+  relations:
+  - type: supersedes
+    target: EXC-ACME-NS500-10
+  - type: under
+    target: ACME-MFG-2025
+  terms:
+    customer:
+      crm_account_id: CRM-2048
+      erp_customer_id: C-1001
+      name: Acme Mfg. Holdings
+      duns_number: 04-812-7730
+    product: NS-500
+    maximum_discount: 0.15
+    grants_approval_authority: false
+  registered_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
+  approved_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
+  registered_on: '2025-03-20'
+  approved_on: '2025-03-20'
+- doc_id: EXC-ACME-NS500-10
+  kind: exception
+  version: 1
+  file: acme_pricing_exception_2023.md
+  sha256: 0e87701239d414332337d7c4ca56b4f2f40d092bd95b0259fc6798e2bb08d1aa
+  effective_from: '2023-04-01'
+  effective_to: '2025-03-31'
+  relations: []
+  terms:
+    customer:
+      crm_account_id: CRM-2048
+      erp_customer_id: C-1001
+      name: Acme Mfg. Holdings
+      duns_number: 04-812-7730
+    product: NS-500
+    maximum_discount: 0.1
+    grants_approval_authority: false
+  registered_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
+  approved_by: 'Deal Desk (by function: no Deal Desk staff in the HR export)'
+  registered_on: '2023-03-12'
+  approved_on: '2023-03-12'
+- doc_id: SLA-SCHEDULE-1.0
+  kind: sla_schedule
+  version: 1
+  file: sla_schedule_v1.md
+  sha256: c3f18985c003c8ef7453493c49366751b4bb686f56c7c4dac4699bf9c7e365b4
+  effective_from: '2025-01-01'
+  effective_to: '2026-03-31'
+  relations: []
+  terms:
+    version: '1.0'
+    published: '2025-01-01'
+    targets:
+    - severity: 1
+      plan: null
+      response_minutes: 60
+      restoration_minutes: 480
+      clock: 24x7
+    - severity: 2
+      plan: Platinum
+      response_minutes: 240
+      restoration_minutes: 1440
+      clock: 24x7
+    - severity: 2
+      plan: Silver
+      response_minutes: 240
+      restoration_minutes: 1440
+      clock: business
+    - severity: 3
+      plan: null
+      response_minutes: 480
+      restoration_minutes: 3000
+      clock: business
+    - severity: 4
+      plan: null
+      response_minutes: 1200
+      restoration_minutes: null
+      clock: business
+    credits:
+    - severity: 1
+      target: response
+      band: null
+      pct: 0.05
+    - severity: 2
+      target: response
+      band: null
+      pct: 0.02
+    - severity: 1
+      target: restoration
+      band: null
+      pct: 0.1
+    - severity: 2
+      target: restoration
+      band: null
+      pct: 0.05
+    cap_pct: 0.2
+    claim_days: 60
+    notice_business_days: 3
+  registered_by: Hannah Lindqvist (EMP-601, Support Escalation Manager)
+  approved_by: Marcus Adeyemi (EMP-602, Director of Customer Support)
+  registered_on: '2025-01-01'
+  approved_on: '2025-01-01'
+- doc_id: SLA-SCHEDULE-2.0
+  kind: sla_schedule
+  version: 1
+  file: sla_schedule_v2.md
+  sha256: 600b6bcd9c2844c710fd36b07202a7a1b3ae82d1c65912f18d4a2ee535a2bba5
+  effective_from: '2026-04-01'
+  effective_to: '2027-12-31'
+  relations:
+  - type: supersedes
+    target: SLA-SCHEDULE-1.0
+  terms:
+    version: '2.0'
+    published: '2026-02-16'
+    targets:
+    - severity: 1
+      plan: null
+      response_minutes: 30
+      restoration_minutes: 240
+      clock: 24x7
+    - severity: 2
+      plan: Platinum
+      response_minutes: 120
+      restoration_minutes: 720
+      clock: 24x7
+    - severity: 2
+      plan: Silver
+      response_minutes: 120
+      restoration_minutes: 720
+      clock: business
+    - severity: 3
+      plan: null
+      response_minutes: 480
+      restoration_minutes: 1800
+      clock: business
+    - severity: 4
+      plan: null
+      response_minutes: 1200
+      restoration_minutes: null
+      clock: business
+    credits:
+    - severity: 1
+      target: response
+      band: null
+      pct: 0.05
+    - severity: 2
+      target: response
+      band: null
+      pct: 0.03
+    - severity: 1
+      target: restoration
+      band: 1
+      pct: 0.1
+    - severity: 1
+      target: restoration
+      band: 2
+      pct: 0.2
+    - severity: 2
+      target: restoration
+      band: 1
+      pct: 0.05
+    - severity: 2
+      target: restoration
+      band: 2
+      pct: 0.1
+    cap_pct: 0.3
+    claim_days: 30
+    notice_business_days: 5
+  registered_by: Hannah Lindqvist (EMP-601, Support Escalation Manager)
+  approved_by: Marcus Adeyemi (EMP-602, Director of Customer Support)
+  registered_on: '2026-02-16'
+  approved_on: '2026-02-16'
+- doc_id: SUP-ACME-C
+  kind: support_terms
+  version: 1
+  file: acme_support_schedule_c.md
+  sha256: 5061d9b131b5709b294a9aa9782272105a297ce45a28c501232c4ca61ac53f92
+  effective_from: '2025-04-01'
+  effective_to: null
+  relations:
+  - type: under
+    target: ACME-MFG-2025
+  terms:
+    customer:
+      crm_account_id: CRM-2048
+      erp_customer_id: C-1001
+      name: Acme Mfg. Holdings
+      duns_number: 04-812-7730
+    plan: Platinum
+    products:
+    - NS-500
+    - NS-EDGE
+    coverage_start: '2025-04-01'
+  registered_by: 'Legal (by function: no Legal staff in the HR export)'
+  approved_by: 'Legal (by function: no Legal staff in the HR export)'
+  registered_on: '2025-04-01'
+  approved_on: '2025-04-01'
+- doc_id: SUP-BRL-2025
+  kind: support_terms
+  version: 1
+  file: blueriver_support_terms.md
+  sha256: 5cc4e7d5204ccca75ebdf876f39407c505fb8c05ab266b54c9b1279030ab88ab
+  effective_from: '2025-01-01'
+  effective_to: null
+  relations: []
+  terms:
+    customer:
+      crm_account_id: CRM-2051
+      erp_customer_id: C-1002
+      name: Blue River Logistics LLC
+      duns_number: 07-331-9025
+    plan: Silver
+    products:
+    - NS-CLOUD
+    coverage_start: '2025-01-01'
+  registered_by: 'Legal (by function: no Legal staff in the HR export)'
+  approved_by: 'Legal (by function: no Legal staff in the HR export)'
+  registered_on: '2025-01-01'
+  approved_on: '2025-01-01'
+- doc_id: SUP-CHS-2025
+  kind: support_terms
+  version: 1
+  file: cedar_support_terms.md
+  sha256: 2cd0ad72b3491c070e92249a343de69009acdea83a27c5c357edff3c60e5fd6f
+  effective_from: '2025-12-01'
+  effective_to: null
+  relations: []
+  terms:
+    customer:
+      crm_account_id: CRM-2063
+      erp_customer_id: C-1003
+      name: Cedar Health Systems Inc.
+      duns_number: 02-906-4418
+    plan: Silver
+    products:
+    - NS-CLOUD
+    - NS-EDGE
+    coverage_start: '2025-12-01'
+  registered_by: 'Legal (by function: no Legal staff in the HR export)'
+  approved_by: 'Legal (by function: no Legal staff in the HR export)'
+  registered_on: '2025-12-01'
+  approved_on: '2025-12-01'
+- doc_id: HR-HOLIDAYS-2025-26
+  kind: holiday_calendar
+  version: 1
+  file: holiday_calendar.md
+  sha256: 65abe8977b8cd5b5870514f0b55767c6157ff6650768018c0a5de158fbf50aab
+  effective_from: '2025-01-01'
+  effective_to: null
+  relations: []
+  terms:
+    holidays:
+    - date: '2025-01-01'
+      name: New Year's Day
+    - date: '2025-05-26'
+      name: Memorial Day
+    - date: '2025-07-04'
+      name: Independence Day
+    - date: '2025-09-01'
+      name: Labor Day
+    - date: '2025-11-27'
+      name: Thanksgiving Day
+    - date: '2025-11-28'
+      name: Day after Thanksgiving
+    - date: '2025-12-25'
+      name: Christmas Day
+    - date: '2026-01-01'
+      name: New Year's Day
+    - date: '2026-05-25'
+      name: Memorial Day
+    - date: '2026-07-03'
+      name: Independence Day (observed; July 4 is a Saturday)
+    - date: '2026-09-07'
+      name: Labor Day
+  registered_by: 'People Operations (by function: no People Operations staff in the HR export)'
+  approved_by: 'People Operations (by function: no People Operations staff in the HR export)'
+  registered_on: '2024-11-15'
+  approved_on: '2024-11-15'
+- doc_id: SOP-SUPPORT-007
+  kind: escalation_procedure
+  version: 1
+  file: support_escalation_procedure.md
+  sha256: d8545d962efb47ae42d0ac389b83f83af0005166493f5d95b84142d3f8775825
+  effective_from: '2024-12-15'
+  effective_to: null
+  relations: []
+  terms: {}
+  registered_by: Hannah Lindqvist (EMP-601, Support Escalation Manager)
+  approved_by: Marcus Adeyemi (EMP-602, Director of Customer Support)
+  registered_on: '2024-12-15'
+  approved_on: '2024-12-15'
+- doc_id: SUP-SEVERITY-GUIDE
+  kind: severity_guide
+  version: 1
+  file: support_severity_guide.md
+  sha256: 200bd1bf834ee2f9aadf996abca59ea599103bdeaf37107702d5550db1e80bad
+  effective_from: '2024-12-15'
+  effective_to: null
+  relations: []
+  terms: {}
+  registered_by: Hannah Lindqvist (EMP-601, Support Escalation Manager)
+  approved_by: Marcus Adeyemi (EMP-602, Director of Customer Support)
+  registered_on: '2024-12-15'
+  approved_on: '2024-12-15'

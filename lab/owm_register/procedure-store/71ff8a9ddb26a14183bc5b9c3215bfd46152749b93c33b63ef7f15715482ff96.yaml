@@ -1,0 +1,609 @@
+# Service-level (SLA) breach response for a support ticket, written from owm/procedures/sla-response.md,
+# SPEC_FORMAT.md and the company's documents only. Inputs: sid, ticket_id, decided_at (ISO 8601 with
+# offset, or null meaning "after all recorded events").
+#
+# Rules come from the registered documents: the Service Level Schedule version in force at the open
+# time (targets, clocks, credits, cap, claim window, notice period, root-cause and claim deadlines),
+# the severity guide (true severity, a judgment), the escalation procedure (escalation duties), the
+# holiday calendar (business days) and the customer's support terms (scope, plan, monthly fee).
+
+spec: sla_agent
+outcomes: [BREACH_CREDIT_OWED, BREACH_NO_CREDIT, NO_BREACH, OUT_OF_SCOPE, CANNOT_DECIDE]
+route_to: CANNOT_DECIDE
+
+documents:
+  kinds:                                   # first match wins; SUP-SEVERITY- must precede SUP-
+    - { kind: sla_schedule, id_prefixes: [SLA-SCHEDULE-] }
+    - { kind: severity_guide, id_prefixes: [SUP-SEVERITY-] }
+    - { kind: escalation_procedure, id_prefixes: [SOP-SUPPORT-] }
+    - { kind: holiday_calendar, id_prefixes: [HR-HOLIDAYS-] }
+    - { kind: support_terms, id_prefixes: [SUP-] }
+  owners:
+    sla_schedule: [Customer Support]
+    severity_guide: [Customer Support]
+    escalation_procedure: [Customer Support]
+    holiday_calendar: [People Operations]
+    support_terms: [Legal]
+  graded: [sla_schedule, severity_guide, escalation_procedure, holiday_calendar, support_terms]
+  registered_kinds:
+    sla_schedule: sla_schedule
+    severity_guide: severity_guide
+    escalation_procedure: escalation_procedure
+    holiday_calendar: holiday_calendar
+    support_terms: support_terms
+
+questions:
+  severity:
+    type: choice
+    instructions: >-
+      `guide` is Northstar Support's severity guide. `impact` is the business impact the customer
+      recorded when the support ticket was opened, for the product named in `product`. `notes`
+      holds Northstar engineers' later entries in the same ticket, made before restoration. Which
+      severity does the impact recorded at opening meet? Test the guide's definitions in order,
+      Severity 1 first, and choose the first one the recorded impact meets. Use `notes` only where
+      they clarify the impact that already existed at opening. Ignore the customer's reported
+      priority and any statement about who the customer is or which plan or contract it has.
+    criteria:
+      s1: Severity 1 (Critical)
+      s2: Severity 2 (High)
+      s3: Severity 3 (Medium)
+      s4: Severity 4 (Low)
+      unclear: The recorded impact is missing or too vague to classify
+  rc_cause:
+    type: choice
+    instructions: >-
+      `finding` is a root-cause finding recorded in a support ticket by Northstar's Support
+      Engineering Lead. Does the finding attribute the incident to a customer-caused cause, that
+      is, an unapproved customer change to configuration, firmware or network settings,
+      customer-provided infrastructure, or use contrary to Northstar's documentation?
+    criteria:
+      customer: Yes, the finding names a customer-caused cause
+      other: No, the finding attributes the incident to something else
+      unclear: The finding does not say what caused the incident
+
+steps:
+  # ---- The ticket record, as of the decision time ------------------------------------------------
+  - ct: 'zone("America/Chicago")'                       # every schedule version: all times in CT
+  - t_dec: '(datetime(str(decided_at)) if decided_at else None)'
+  - tk: 'first(r for r in table("service_tickets") if r["ticket_id"] == ticket_id)'
+  - evs_all: '[e for e in table("ticket_events") if e["ticket_id"] == ticket_id]'
+  - evs: '[e for e in evs_all if t_dec is None or datetime(e["at"]) <= t_dec]'
+  - created_ts: '[datetime(e["at"]) for e in evs_all if e["event"] == "created"]'
+  - opened: >-
+      (datetime(tk["opened_at"]) if tk is not None and tk["opened_at"]
+       else (min(created_ts) if len(created_ts) > 0 else None))
+  - open_ct: '(opened.astimezone(ct) if opened is not None else None)'
+  - open_date: '(open_ct.date() if open_ct is not None else None)'
+  - open_month: '(open_ct.strftime("%Y-%m") if open_ct is not None else None)'
+  - sku: '(tk["product_sku"].strip() if tk is not None and tk["product_sku"] else None)'
+  - prod_name: '(first(p["product_name"] for p in table("products") if sku is not None and p["sku"] == sku) or sku)'
+  - rest_ev: '[datetime(e["at"]) for e in evs if e["event"] == "restored"]'
+  - rest_t: >-
+      (min(rest_ev) if len(rest_ev) > 0
+       else (datetime(tk["restored_at"]) if tk is not None and tk["restored_at"]
+             and (t_dec is None or datetime(tk["restored_at"]) <= t_dec) else None))
+  - rest_date: '(rest_t.astimezone(ct).date() if rest_t is not None else None)'
+  # Initial response: a Northstar engineer's communication; automated acknowledgments never count.
+  - resp_ev: >-
+      [datetime(e["at"]) for e in evs if e["event"] == "engineer_response" and e["actor"] != "system"
+       and "automat" not in e["detail"].lower() and "auto-repl" not in e["detail"].lower()]
+  - resp_t: '(min(resp_ev) if len(resp_ev) > 0 else None)'
+  - claim_ev: '[e for e in evs if e["event"] == "credit_claim"]'
+  - claim_first: '(min([datetime(e["at"]) for e in claim_ev]) if len(claim_ev) > 0 else None)'
+  # "After all recorded events": the latest event recorded on this ticket.
+  - now_eff: >-
+      (t_dec if t_dec is not None
+       else (max([datetime(e["at"]) for e in evs_all]) if len(evs_all) > 0 else None))
+
+  # ---- 1. The customer, by identifiers (CRM account -> DUNS), never by name -----------------------
+  - acct_id: '(tk["account_id"].strip() if tk is not None and tk["account_id"] else None)'
+  - acct: 'first(a for a in table("crm_accounts") if acct_id is not None and a["account_id"] == acct_id)'
+  - duns: '(acct["duns_number"].strip() if acct is not None and acct["duns_number"] else None)'
+  - acct_ids: '[a["account_id"] for a in table("crm_accounts") if duns is not None and a["duns_number"].strip() == duns]'
+  - owner_hr: >-
+      first(p for p in table("employees") if acct is not None and acct["owner_email"]
+            and p["email"].strip().lower() == acct["owner_email"].strip().lower())
+  - owner_name: >-
+      (owner_hr["full_name"] if owner_hr is not None
+       else (acct["account_owner"] if acct is not None and acct["account_owner"] else None))
+  - strategic: '(acct is not None and acct["account_tier"].strip().lower() == "strategic")'
+
+  # ---- 2. Scope: registered support terms naming this DUNS, in force at the open date -------------
+  - terms_docs: 'docs("support_terms")'
+  - terms_by_id: '{d.doc_id: d for d in terms_docs}'
+  - terms_reg: 'registered("support_terms")'
+  - my_terms: >-
+      [e for e in terms_reg if duns is not None and e["doc_id"] in terms_by_id
+       and search(r"DUNS\s+(\d{2}-\d{3}-\d{4})", terms_by_id[e["doc_id"]].body) == duns]
+  - terms_unreadable: 'any(e["doc_id"] not in terms_by_id for e in terms_reg)'
+  - terms_e: '(entry_in_force(my_terms, open_date) if open_date is not None and len(my_terms) > 0 else None)'
+  - terms_conflict: >-
+      (terms_e is None and open_date is not None and len(my_terms) > 0
+       and len(in_window(my_terms, open_date)) > 1)
+  - terms: '(terms_by_id[terms_e["doc_id"]] if terms_e is not None else None)'
+  - covered: '(products_in(row(terms, "Covered products") or "", products) if terms is not None else [])'
+  - cov_start: '(search(r"(\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?)", row(terms, "Coverage starts") or "") if terms is not None else None)'
+  - plan: >-
+      (row(terms, "Support plan").partition(":")[2].strip()
+       if terms is not None and row(terms, "Support plan") is not None else None)
+  - scope: >-
+      (None if acct is None or duns is None or open_ct is None or sku is None or terms_conflict
+       else "out" if terms is None and not terms_unreadable
+       else None if terms is None
+       else "out" if sku not in covered
+       else None if cov_start is None
+       else "in" if open_ct.strftime("%Y-%m-%d %H:%M")[:len(cov_start)] >= cov_start
+       else "out")
+
+  # ---- 4. The schedule version (by the open time in CT), business hours, holidays -----------------
+  - sched_reg: 'registered("sla_schedule")'
+  - sched_e: '(entry_in_force(sched_reg, open_date) if open_date is not None else None)'
+  - sched: 'first(d for d in docs("sla_schedule") if sched_e is not None and d.doc_id == sched_e["doc_id"])'
+  - sb: '(sched.body if sched is not None else "")'
+  - hol_docs: 'docs("holiday_calendar")'
+  - holidays: '[date(m.strip("| ")) for d in hol_docs for m in findall(r"^\| \d{4}-\d{2}-\d{2} \|", d.body)]'
+  - bh: 'groups(r"Business\s+hours\**\s+are\s+(\d{1,2}):(\d{2})\s+to\s+(\d{1,2}):(\d{2})", sb)'
+  - cal:
+      when: 'bh is not None'
+      expr: 'calendar(ct, clock_time(int(bh[0]), int(bh[1])), clock_time(int(bh[2]), int(bh[3])), holidays)'
+
+  # ---- The severity guide and the escalation procedure (registered) ------------------------------
+  - sg_docs: 'docs("severity_guide")'
+  - sg_e:
+      when: 'len(sg_docs) > 1 and open_date is not None'
+      expr: 'entry_in_force(registered("severity_guide"), open_date)'
+  - sg: '(first(sg_docs) if len(sg_docs) == 1 else first(d for d in sg_docs if sg_e is not None and d.doc_id == sg_e["doc_id"]))'
+  - esc_docs: 'docs("escalation_procedure")'
+  - esc_e:
+      when: 'len(esc_docs) > 1 and open_date is not None'
+      expr: 'entry_in_force(registered("escalation_procedure"), open_date)'
+  - esc: '(first(esc_docs) if len(esc_docs) == 1 else first(d for d in esc_docs if esc_e is not None and d.doc_id == esc_e["doc_id"]))'
+  - eb: '(esc.body if esc is not None else "")'
+  - e_sem: 'maybe(int, search(r"Support\s+Escalation\s+Manager\**\s+as\s+incident\s+lead\s+no\s+later\s+than\s+(\d+)\s+minutes", eb))'
+  - e_own: 'maybe(int, search(r"account\s+owner\**\s+\(as\s+recorded\s+in\s+Northstar\s+CRM\)\s+no\s+later\s+than\s+(\d+)\s+minutes", eb))'
+  - e_dir: 'maybe(float, search(r"when\s+(\d+)%\s+of\s+the\s+restoration\s+target\s+has\s+elapsed,\s+notify\s+the\s+\**Director", eb))'
+  - e_vp: 'maybe(float, search(r"when\s+(\d+)%\s+of\s+the\s+restoration\s+target\s+has\s+elapsed,\s+notify\s+the\s+\**VP\s+Sales", eb))'
+  - e_oos: 'maybe(int, search(r"no\s+later\s+than\s+(\d+)\s+business\s+hours\s+after\s+the\s+open\s+time", eb))'
+  - hid: >-
+      {t: ([p["employee_id"] for p in table("employees") if p["title"].strip() == t][0]
+           if len([p for p in table("employees") if p["title"].strip() == t]) == 1 else None)
+       for t in ["Support Escalation Manager", "Director of Customer Support", "Support Engineering Lead",
+                 "Support Billing Manager", "VP Sales", "Chief Revenue Officer"]}
+  - sel_name: 'first(p["full_name"] for p in table("employees") if p["employee_id"] == hid["Support Engineering Lead"])'
+
+  # ---- 3. True severity, from the business impact recorded (a judgment against the guide) ---------
+  - impact: '(tk["description"].strip() if tk is not None and tk["description"].strip() else None)'
+  - sev_notes: >-
+      "; ".join([e["detail"] for e in evs if e["event"] in ("engineer_response", "note")
+                 and e["actor"] != "system" and (rest_t is None or datetime(e["at"]) < rest_t)])
+  - sev_j:
+      when: 'scope is not None and impact is not None and sg is not None'
+      expr: 'judge("severity", {"guide": sg.body, "impact": impact, "notes": sev_notes or "(none)", "product": prod_name or ""})'
+  - severity: '({"s1": 1, "s2": 2, "s3": 3, "s4": 4}.get(sev_j["choice"]) if sev_j is not None else None)'
+  - _use_sev: { when: 'scope == "in" and sev_j is not None', expr: 'use(sev_j)' }
+
+  # ---- Targets and clock kind (schedule section 3), credits (section 6), other terms --------------
+  - tlabel: >-
+      (None if severity is None
+       else str(severity) + ", " + plan + " plan" if severity == 2 and plan
+       else str(severity))
+  - trow_plan: '(groups(r"\n\| " + tlabel + r" \| ([^|\n]+?) \| ([^|\n]+?) \| ([^|\n]+?) \|", sb) if tlabel is not None else None)'
+  - trow: >-
+      (trow_plan if trow_plan is not None
+       else groups(r"\n\| " + str(severity) + r" \| ([^|\n]+?) \| ([^|\n]+?) \| ([^|\n]+?) \|", sb) if severity is not None
+       else None)
+  - t_resp: >-
+      (int(search(r"(\d+)", trow[0])) * (1 if "minute" in trow[0].lower() else 60)
+       if trow is not None and search(r"(\d+)", trow[0]) is not None else None)
+  - t_rest: >-
+      (int(search(r"(\d+)", trow[1])) * (1 if "minute" in trow[1].lower() else 60)
+       if trow is not None and search(r"(\d+)", trow[1]) is not None else None)
+  - business: '(trow is not None and "business" in trow[2].lower())'
+  - c_resp: 'groups(r"\n\| Initial response \| (\d+(?:\.\d+)?)% \| (\d+(?:\.\d+)?)% \|", sb)'
+  - c_rest: 'groups(r"\n\| Restoration \| (\d+(?:\.\d+)?)% \| (\d+(?:\.\d+)?)% \|", sb)'
+  - c_b1: 'groups(r"\n\| Restoration, band 1[^|\n]*\| (\d+(?:\.\d+)?)% \| (\d+(?:\.\d+)?)% \|", sb)'
+  - c_b2: 'groups(r"\n\| Restoration, band 2[^|\n]*\| (\d+(?:\.\d+)?)% \| (\d+(?:\.\d+)?)% \|", sb)'
+  - banded: '(c_b1 is not None and c_b2 is not None)'
+  - band_mult: 'maybe(float, search(r"no\s+more\s+than\s+(\d+(?:\.\d+)?)×\s+the\s+target", sb))'
+  - cap_pct: 'maybe(float, search(r"may\s+not\s+exceed\s+\**(\d+(?:\.\d+)?)%", sb))'
+  - claim_days: 'maybe(int, search(r"(\d+)\s+calendar\s+days\**\s+after\s+the\s+restoration\s+date", sb))'
+  - notice_days: 'maybe(int, search(r"at\s+least\s+\**(\d+)\s+business\s+days", sb))'
+  - rc_bdays: 'maybe(int, search(r"(\d+)(?:st|nd|rd|th)\s+business\s+day\s+after\s+the\s+restoration\s+date", sb))'
+  - rc_hm: 'groups(r"by\s+(\d{1,2}):(\d{2})\s+CT\s+on\s+the\s+\d+(?:st|nd|rd|th)\s+business\s+day", sb)'
+  - dec_days: 'maybe(int, search(r"no\s+later\s+than\s+the\s+(\d+)(?:st|nd|rd|th)\s+calendar\s+day\s+after\s+the\s+claim", sb))'
+
+  # ---- 5. Clock start, maintenance exclusions (5.1), pauses (4.3) ---------------------------------
+  - mn_rows: >-
+      [m for m in table("maintenance_notices") if m["account_id"] in acct_ids and sku is not None
+       and (sku in products_in(m["products"], products)
+            or sku in [s.strip() for s in m["products"].replace(";", ",").split(",")])
+       and (t_dec is None or datetime(m["sent_at"]) <= t_dec)]
+  - mw: >-
+      [(datetime(m["window_start"]), datetime(m["window_end"])) for m in mn_rows
+       if cal is not None and notice_days is not None
+       and cal.working_days_after(datetime(m["sent_at"]).astimezone(ct).date(), notice_days)
+       <= datetime(m["window_start"]).astimezone(ct).date()]
+  - start: >-
+      (None if opened is None
+       else max([opened] + [we for ws, we in mw if ws <= opened and opened < we]))
+  - mw_ex: '[(max(ws, start), we) for ws, we in mw if start is not None and we > start]'
+  - p_starts: >-
+      sorted([datetime(e["at"]) for e in evs if e["event"] == "status_change"
+              and "set to awaiting customer" in e["detail"].lower()])
+  - p_ends: >-
+      sorted([datetime(e["at"]) for e in evs
+              if (e["event"] == "status_change" and "set to awaiting customer" not in e["detail"].lower())
+              or e["event"] in ("customer_reply", "customer_response")])
+  - pauses: >-
+      [(max(ps, start), pe) for ps, pe in intervals(p_starts, p_ends)
+       if start is not None and ps is not None and pe is not None and pe > ps and pe > start]
+  - measurable: >-
+      (scope == "in" and severity is not None and sched is not None and trow is not None
+       and t_resp is not None and cal is not None and start is not None)
+  - resp_clk: { when: 'measurable', expr: 'clock(cal, business, start, mw_ex)' }
+  - rest_clk: { when: 'measurable', expr: 'clock(cal, business, start, mw_ex + pauses)' }
+
+  # ---- 6. Measure (an event before clock start counts as elapsed zero) ----------------------------
+  - r_el: { when: 'measurable and resp_t is not None', expr: '(0 if resp_t <= start else resp_clk.elapsed(resp_t))' }
+  - s_el: { when: 'measurable and rest_t is not None', expr: '(0 if rest_t <= start else rest_clk.elapsed(rest_t))' }
+  - r_now: { when: 'measurable and t_dec is not None', expr: '(0 if t_dec <= start else resp_clk.elapsed(t_dec))' }
+  - s_now: { when: 'measurable and t_dec is not None', expr: '(0 if t_dec <= start else rest_clk.elapsed(t_dec))' }
+
+  # Customer-caused exclusion (5.2): asserted in the ticket; finding by the Support Engineering Lead
+  - cc_ev: >-
+      [e for e in evs if e["event"] != "credit_claim"
+       and "customer-caused exclusion" in e["detail"].lower()
+       and "assert" in e["detail"].lower() and "withdr" not in e["detail"].lower()]
+  - cc_asserted: 'len(cc_ev) > 0'
+  - rc_day:
+      when: 'cc_asserted and rest_date is not None and cal is not None and rc_bdays is not None'
+      expr: 'cal.working_days_after(rest_date, rc_bdays)'
+  - rc_off: { when: 'rc_day is not None', expr: 'datetime(rc_day.isoformat() + "T12:00:00+00:00").astimezone(ct).strftime("%z")' }
+  - rc_deadline:
+      when: 'rc_off is not None and rc_hm is not None'
+      expr: 'datetime(rc_day.isoformat() + "T" + ("0" + rc_hm[0])[-2:] + ":" + rc_hm[1] + ":00" + rc_off[:3] + ":" + rc_off[3:])'
+  - rc_found: >-
+      first(e for e in evs if e["event"] != "credit_claim"
+            and ((sel_name is not None and e["actor"].strip() == sel_name)
+                 or "support engineering lead" in e["actor"].lower())
+            and ("root" in e["detail"].lower() or "root" in e["event"].lower() or "finding" in e["event"].lower())
+            and (rc_deadline is None or datetime(e["at"]) <= rc_deadline))
+  - rc_j:
+      when: 'cc_asserted and rc_found is not None'
+      expr: 'judge("rc_cause", {"finding": rc_found["detail"]})'
+  - _use_rc: { when: 'scope == "in" and rc_j is not None', expr: 'use(rc_j)' }
+  - cc_applies: '(rc_j is not None and rc_j["choice"] == "customer")'
+  - cc_unclear: '(rc_j is not None and rc_j["choice"] == "unclear")'
+  - cc_pending: >-
+      (cc_asserted and rc_found is None
+       and (rc_deadline is None or now_eff is None or now_eff <= rc_deadline))
+
+  - resp_status: >-
+      (None if not measurable
+       else "met" if r_el is not None and r_el <= t_resp
+       else "missed" if r_el is not None
+       else "missed" if r_now is not None and r_now > t_resp
+       else "cannot_decide")
+  - rest_status: >-
+      (None if not measurable
+       else "not_applicable" if t_rest is None or cc_applies
+       else "cannot_decide" if cc_pending or cc_unclear
+       else "met" if s_el is not None and s_el <= t_rest
+       else ("missed_band2" if s_el > band_mult * t_rest else "missed_band1")
+            if s_el is not None and banded and band_mult is not None
+       else "missed" if s_el is not None and not banded
+       else "cannot_decide" if s_el is not None
+       else "missed_band2" if s_now is not None and banded and band_mult is not None and s_now > band_mult * t_rest
+       else "missed" if s_now is not None and s_now > t_rest
+       else "cannot_decide")
+
+  # ---- 7. Credits: rates (Sev 1 rates only after a hotline report), fee, monthly cap, claim -------
+  - phoned: >-
+      ((tk is not None and tk["channel"].strip().lower() == "phone")
+       or any(e["event"] in ("phone_report", "hotline_call") and (rest_t is None or datetime(e["at"]) < rest_t)
+              for e in evs))
+  - col: '(0 if severity == 1 and phoned else 1)'
+  - p_resp: >-
+      (None if not measurable
+       else 0.0 if severity not in (1, 2) or resp_status in ("met", "not_applicable")
+       else (float(c_resp[col]) if c_resp is not None else None) if resp_status == "missed"
+       else None)
+  - p_rest: >-
+      (None if not measurable
+       else 0.0 if severity not in (1, 2) or rest_status in ("met", "not_applicable")
+       else (float(c_b1[col]) if c_b1 is not None else None) if rest_status == "missed_band1"
+       else (float(c_b2[col]) if c_b2 is not None else None) if rest_status == "missed_band2"
+       else (float(c_rest[col]) if c_rest is not None else None) if rest_status == "missed" and not banded
+       else None)
+  - fee_row: '(row(terms, "Monthly support fee") if terms is not None else None)'
+  - fee_list: >-
+      sorted([(g[1], money("$" + g[0]))
+              for g in [groups(r"\$([\d,]+(?:\.\d+)?)\s+per\s+month\s+from\s+(\d{4}-\d{2})", m)
+                        for m in findall(r"\$[\d,]+(?:\.\d+)?\s+per\s+month\s+from\s+\d{4}-\d{2}", fee_row or "")]
+              if g is not None and open_month is not None and g[1] <= open_month])
+  - fee: '(fee_list[-1][1] if len(fee_list) > 0 else None)'
+  - prior: >-
+      sum([float(c["amount_usd"]) for c in table("service_credits")
+           if c["account_id"] in acct_ids and c["ticket_id"] != ticket_id and c["approved_on"]
+           and open_month is not None and c["ticket_opened"][:7] == open_month
+           and (t_dec is None or c["approved_on"] <= t_dec.astimezone(ct).date().isoformat())])
+  - pct: '(None if p_resp is None or p_rest is None else p_resp + p_rest)'
+  - gross: '(None if pct is None else 0.0 if pct == 0 else None if fee is None else round(fee * pct / 100, 2))'
+  - cap_left: '(None if fee is None or cap_pct is None else max(0.0, round(fee * cap_pct / 100 - prior, 2)))'
+  - would_owe: '(None if gross is None else 0.0 if gross == 0 else None if cap_left is None else round(min(gross, cap_left), 2))'
+  - claim_last: '(rest_date + days(claim_days) if rest_date is not None and claim_days is not None else None)'
+  - valid_claims: >-
+      [datetime(e["at"]) for e in claim_ev
+       if ("by email" in e["detail"].lower() or "by portal" in e["detail"].lower())
+       and (ticket_id in e["detail"] or "by portal" in e["detail"].lower())]
+  - claim_ok: '(len([c for c in valid_claims if claim_last is None or c.astimezone(ct).date() <= claim_last]) > 0)'
+  - credit_owed: '(None if would_owe is None else would_owe if claim_ok else 0.0)'
+  - missed_any: '(measurable and (resp_status == "missed" or rest_status in ("missed", "missed_band1", "missed_band2")))'
+  - undecided_any: '(measurable and (resp_status == "cannot_decide" or rest_status == "cannot_decide"))'
+
+  # ---- 8. Escalation moments (escalation procedure), on the ticket's own clocks -------------------
+  - m_sem: { when: 'measurable and severity == 1 and esc is not None and e_sem is not None', expr: 'resp_clk.moment(e_sem - 1) + minutes(1)' }
+  - m_own: { when: 'measurable and severity == 1 and esc is not None and e_own is not None', expr: 'resp_clk.moment(e_own - 1) + minutes(1)' }
+  - m_dir:
+      when: 'measurable and severity == 1 and esc is not None and e_dir is not None and t_rest is not None'
+      expr: 'rest_clk.moment(int(round(t_rest * e_dir / 100)) - 1) + minutes(1)'
+  - m_vp:
+      when: 'measurable and severity == 1 and esc is not None and e_vp is not None and t_rest is not None'
+      expr: 'rest_clk.moment(int(round(t_rest * e_vp / 100)) - 1) + minutes(1)'
+  - m_rt: { when: 'measurable and severity == 2 and esc is not None', expr: 'resp_clk.moment(t_resp - 1) + minutes(1)' }
+  - m_st:
+      when: 'measurable and severity in (2, 3) and esc is not None and t_rest is not None'
+      expr: 'rest_clk.moment(t_rest - 1) + minutes(1)'
+  - oos_due:
+      when: 'scope == "out" and esc is not None and cal is not None and opened is not None and e_oos is not None'
+      expr: 'clock(cal, True, opened, []).moment(e_oos * 60 - 1) + minutes(1)'
+  - dec_day: '(claim_first.astimezone(ct).date() + days(dec_days) if claim_first is not None and dec_days is not None else None)'
+  - esc_obs: >-
+      ((scope == "out" and esc is not None)
+       or m_sem is not None or m_own is not None
+       or (m_dir is not None and (rest_t is None or rest_t > m_dir))
+       or (m_vp is not None and (rest_t is None or rest_t > m_vp))
+       or (m_rt is not None and (resp_t is None or resp_t > m_rt))
+       or (m_st is not None and (rest_t is None or rest_t > m_st)))
+
+  # ---- Reliance: only the instruments that feed this decision (G-06) -----------------------------
+  # The holiday calendar feeds the outcome only if the measurement differs without its holidays:
+  # re-measure on a calendar with no holidays (notices, clock start, clocks, root-cause deadline).
+  - cal0:
+      when: 'measurable and len(holidays) > 0'
+      expr: 'calendar(ct, clock_time(int(bh[0]), int(bh[1])), clock_time(int(bh[2]), int(bh[3])), [])'
+  - mw0:
+      when: 'cal0 is not None'
+      expr: >-
+        [(datetime(m["window_start"]), datetime(m["window_end"])) for m in mn_rows
+         if notice_days is not None
+         and cal0.working_days_after(datetime(m["sent_at"]).astimezone(ct).date(), notice_days)
+         <= datetime(m["window_start"]).astimezone(ct).date()]
+  - start0: { when: 'cal0 is not None', expr: 'max([opened] + [we for ws, we in mw0 if ws <= opened and opened < we])' }
+  - mw_ex0: { when: 'cal0 is not None', expr: '[(max(ws, start0), we) for ws, we in mw0 if we > start0]' }
+  - pauses0:
+      when: 'cal0 is not None'
+      expr: >-
+        [(max(ps, start0), pe) for ps, pe in intervals(p_starts, p_ends)
+         if ps is not None and pe is not None and pe > ps and pe > start0]
+  - resp_clk0: { when: 'cal0 is not None', expr: 'clock(cal0, business, start0, mw_ex0)' }
+  - rest_clk0: { when: 'cal0 is not None', expr: 'clock(cal0, business, start0, mw_ex0 + pauses0)' }
+  - r_el0: { when: 'cal0 is not None and resp_t is not None', expr: '(0 if resp_t <= start0 else resp_clk0.elapsed(resp_t))' }
+  - s_el0: { when: 'cal0 is not None and rest_t is not None', expr: '(0 if rest_t <= start0 else rest_clk0.elapsed(rest_t))' }
+  - r_now0: { when: 'cal0 is not None and t_dec is not None', expr: '(0 if t_dec <= start0 else resp_clk0.elapsed(t_dec))' }
+  - s_now0: { when: 'cal0 is not None and t_dec is not None', expr: '(0 if t_dec <= start0 else rest_clk0.elapsed(t_dec))' }
+  - rc_day0: { when: 'cal0 is not None and rc_day is not None', expr: 'cal0.working_days_after(rest_date, rc_bdays)' }
+  - rc_off0: { when: 'rc_day0 is not None', expr: 'datetime(rc_day0.isoformat() + "T12:00:00+00:00").astimezone(ct).strftime("%z")' }
+  - rc_deadline0:
+      when: 'rc_off0 is not None and rc_hm is not None'
+      expr: 'datetime(rc_day0.isoformat() + "T" + ("0" + rc_hm[0])[-2:] + ":" + rc_hm[1] + ":00" + rc_off0[:3] + ":" + rc_off0[3:])'
+  - rc_found0:
+      when: 'cal0 is not None and cc_asserted'
+      expr: >-
+        first(e for e in evs if e["event"] != "credit_claim"
+              and ((sel_name is not None and e["actor"].strip() == sel_name)
+                   or "support engineering lead" in e["actor"].lower())
+              and ("root" in e["detail"].lower() or "root" in e["event"].lower() or "finding" in e["event"].lower())
+              and (rc_deadline0 is None or datetime(e["at"]) <= rc_deadline0))
+  - cc_applies0: '(cc_applies and rc_found0 is not None)'
+  - cc_unclear0: '(cc_unclear and rc_found0 is not None)'
+  - cc_pending0: >-
+      (cc_asserted and rc_found0 is None
+       and (rc_deadline0 is None or now_eff is None or now_eff <= rc_deadline0))
+  - resp_status0:
+      when: 'cal0 is not None'
+      expr: >-
+        ("met" if r_el0 is not None and r_el0 <= t_resp
+         else "missed" if r_el0 is not None
+         else "missed" if r_now0 is not None and r_now0 > t_resp
+         else "cannot_decide")
+  - rest_status0:
+      when: 'cal0 is not None'
+      expr: >-
+        ("not_applicable" if t_rest is None or cc_applies0
+         else "cannot_decide" if cc_pending0 or cc_unclear0
+         else "met" if s_el0 is not None and s_el0 <= t_rest
+         else ("missed_band2" if s_el0 > band_mult * t_rest else "missed_band1")
+              if s_el0 is not None and banded and band_mult is not None
+         else "missed" if s_el0 is not None and not banded
+         else "cannot_decide" if s_el0 is not None
+         else "missed_band2" if s_now0 is not None and banded and band_mult is not None and s_now0 > band_mult * t_rest
+         else "missed" if s_now0 is not None and s_now0 > t_rest
+         else "cannot_decide")
+  - hol_hit: '(cal0 is not None and (resp_status0 != resp_status or rest_status0 != rest_status))'
+  - _rely_terms: { when: 'scope is not None and terms is not None', expr: 'rely(terms)' }
+  - _use_terms: { when: 'scope is not None and terms_e is not None', expr: 'use_entry(terms_e)' }
+  - _rely_sched:
+      when: 'sched is not None and (scope == "in" or (scope == "out" and (oos_due is not None or dec_day is not None)))'
+      expr: 'rely(sched)'
+  - _use_sched:
+      when: 'sched_e is not None and sched is not None and (scope == "in" or (scope == "out" and (oos_due is not None or dec_day is not None)))'
+      expr: 'use_entry(sched_e)'
+  - _rely_sg: { when: 'scope == "in" and sev_j is not None', expr: 'rely(sg)' }
+  - _rely_esc: { when: 'esc is not None and esc_obs', expr: 'rely(esc)' }
+  - _rely_hol: { when: 'hol_hit', expr: 'rely(hol_docs)' }
+
+  # ---- Flags: what could not be decided, and why ---------------------------------------------------
+  - _f_tk: { when: 'tk is None', expr: 'flag("cannot decide: missing ticket " + str(ticket_id) + " in Northstar Service")' }
+  - _f_id:
+      when: 'tk is not None and (acct is None or duns is None)'
+      expr: 'flag("cannot decide: missing customer identifiers (CRM account, DUNS) for account " + str(acct_id))'
+  - _f_open: { when: 'tk is not None and opened is None', expr: 'flag("cannot decide: missing open time")' }
+  - _f_conf: { when: 'terms_conflict', expr: 'flag("cannot decide: more than one set of support terms in force for this customer at the open time")' }
+  - _f_unread:
+      when: 'scope is None and terms is None and terms_unreadable and not terms_conflict and duns is not None and open_ct is not None'
+      expr: 'flag("cannot decide: a registered support-terms document could not be read")'
+  - _f_cov: { when: 'scope is None and terms is not None and cov_start is None', expr: 'flag("cannot decide: missing coverage start in the support terms")' }
+  - _f_oos:
+      when: 'scope == "out"'
+      expr: 'flag("out of scope: no support terms in force cover " + str(acct_id) + " (DUNS " + str(duns) + ") for " + str(sku) + " at the open time")'
+  - _f_sev: { when: 'scope == "in" and severity is None', expr: 'flag("cannot decide: missing business-impact description (true severity)")' }
+  - _f_sched: { when: 'scope == "in" and sched is None', expr: 'flag("cannot decide: no single Service Level Schedule version in force at the open time")' }
+  - _f_tgt:
+      when: 'scope == "in" and severity is not None and sched is not None and trow is None'
+      expr: 'flag("cannot decide: no target in the schedule for this severity and support plan")'
+  - _f_resp: { when: 'measurable and resp_status == "cannot_decide"', expr: 'flag("cannot decide: missing initial-response time")' }
+  - _f_rest:
+      when: 'measurable and rest_status == "cannot_decide" and not cc_pending and not cc_unclear'
+      expr: 'flag("cannot decide: missing restoration time")'
+  - _f_cc:
+      when: 'measurable and cc_pending'
+      expr: 'flag("cannot decide: customer-caused exclusion asserted, root-cause finding pending" + (" (due " + rc_deadline.isoformat() + ")" if rc_deadline is not None else ""))'
+  - _f_ccu: { when: 'measurable and cc_unclear', expr: 'flag("cannot decide: the root-cause finding does not say whether the incident was customer-caused")' }
+  - _f_ccx: { when: 'measurable and cc_applies', expr: 'flag("customer-caused exclusion applies: no restoration target, breach or credit")' }
+  - _f_mw:
+      when: 'measurable and len(mw) > 0'
+      expr: 'flag("qualifying maintenance window excluded from the clocks: " + ", ".join([a.astimezone(ct).isoformat() + " to " + b.astimezone(ct).isoformat() for a, b in mw]))'
+  - _f_noclaim:
+      when: 'missed_any and would_owe is not None and would_owe > 0 and not claim_ok and len(claim_ev) == 0'
+      expr: 'flag(f"no claim yet: a credit of {would_owe:.2f} USD would be owed if claimed by {claim_last}")'
+  - _f_late:
+      when: 'missed_any and would_owe is not None and would_owe > 0 and not claim_ok and len(claim_ev) > 0'
+      expr: 'flag(f"no timely claim: the last day to claim was {claim_last}; no credit is owed")'
+
+# ---- 9. Decide -----------------------------------------------------------------------------------
+outcome:
+  - { when: 'scope == "out"', outcome: OUT_OF_SCOPE }
+  - { when: 'not measurable', outcome: CANNOT_DECIDE }
+  - { when: 'missed_any and credit_owed is not None and credit_owed > 0', outcome: BREACH_CREDIT_OWED }
+  - { when: 'missed_any and credit_owed is not None', outcome: BREACH_NO_CREDIT }
+  - { when: 'missed_any or undecided_any', outcome: CANNOT_DECIDE }
+  - { outcome: NO_BREACH }
+
+# ---- 8. Obligations ------------------------------------------------------------------------------
+obligations:
+  # Severity 1
+  - when: 'm_sem is not None'
+    party: organization
+    duty: engage
+    role: '"SUPPORT_ESCALATION_MANAGER"'
+    holder: 'hid["Support Escalation Manager"]'
+    due: 'm_sem.astimezone(ct).isoformat()'
+  - when: 'm_own is not None'
+    party: organization
+    duty: notify
+    role: '"ACCOUNT_OWNER"'
+    holder: '"owner:" + acct_id'
+    due: 'm_own.astimezone(ct).isoformat()'
+  - when: 'm_dir is not None and (rest_t is None or rest_t > m_dir)'
+    party: organization
+    duty: notify
+    role: '"CUSTOMER_SUPPORT_DIRECTOR"'
+    holder: 'hid["Director of Customer Support"]'
+    due: 'm_dir.astimezone(ct).isoformat()'
+  - when: 'm_vp is not None and (rest_t is None or rest_t > m_vp)'
+    party: organization
+    duty: notify
+    role: '"VP_SALES"'
+    holder: 'hid["VP Sales"]'
+    due: 'm_vp.astimezone(ct).isoformat()'
+  - when: 'm_vp is not None and (rest_t is None or rest_t > m_vp) and strategic'
+    party: organization
+    duty: notify
+    role: '"CRO"'
+    holder: 'hid["Chief Revenue Officer"]'
+    due: 'm_vp.astimezone(ct).isoformat()'
+  # Severity 2
+  - when: 'm_rt is not None and (resp_t is None or resp_t > m_rt)'
+    party: organization
+    duty: notify
+    role: '"SUPPORT_ESCALATION_MANAGER"'
+    holder: 'hid["Support Escalation Manager"]'
+    due: 'm_rt.astimezone(ct).isoformat()'
+  - when: 'm_st is not None and severity == 2 and (rest_t is None or rest_t > m_st)'
+    party: organization
+    duty: notify
+    role: '"CUSTOMER_SUPPORT_DIRECTOR"'
+    holder: 'hid["Director of Customer Support"]'
+    due: 'm_st.astimezone(ct).isoformat()'
+  - when: 'm_st is not None and severity == 2 and (rest_t is None or rest_t > m_st)'
+    party: organization
+    duty: notify
+    role: '"ACCOUNT_OWNER"'
+    holder: '"owner:" + acct_id'
+    due: 'm_st.astimezone(ct).isoformat()'
+  # Severity 3
+  - when: 'm_st is not None and severity == 3 and (rest_t is None or rest_t > m_st)'
+    party: organization
+    duty: notify
+    role: '"SUPPORT_ESCALATION_MANAGER"'
+    holder: 'hid["Support Escalation Manager"]'
+    due: 'm_st.astimezone(ct).isoformat()'
+  # Outside a support agreement
+  - when: 'scope == "out" and esc is not None'
+    party: organization
+    duty: notify
+    role: '"ACCOUNT_OWNER"'
+    holder: '"owner:" + acct_id'
+    due: '(oos_due.astimezone(ct).isoformat() if oos_due is not None else None)'
+  # Root cause and claims
+  - when: 'scope == "in" and cc_asserted'
+    party: organization
+    duty: record_root_cause
+    role: '"SUPPORT_ENGINEERING_LEAD"'
+    holder: 'hid["Support Engineering Lead"]'
+    due: '(rc_deadline.isoformat() if rc_deadline is not None else None)'
+  - when: 'claim_first is not None and tk is not None'
+    party: organization
+    duty: decide_claim
+    role: '"CUSTOMER_SUPPORT_DIRECTOR"'
+    holder: 'hid["Director of Customer Support"]'
+    due: '(dec_day.isoformat() if dec_day is not None else None)'
+  - when: 'outcome == "BREACH_CREDIT_OWED" and claim_first is not None'
+    party: organization
+    duty: issue_memo
+    role: '"SUPPORT_BILLING_MANAGER"'
+    holder: 'hid["Support Billing Manager"]'
+    due: '(dec_day.isoformat() if dec_day is not None else None)'
+  # The customer's obligations
+  - when: 'measurable and severity == 1'
+    party: counterparty
+    duty: phone_report
+    status: '("met" if phoned else "not_met")'
+  - when: 'measurable and (len(claim_ev) > 0 or (would_owe is not None and would_owe > 0))'
+    party: counterparty
+    duty: claim
+    status: '("met" if claim_ok else "not_met")'
+
+# ---- 10. Record ----------------------------------------------------------------------------------
+record:
+  scenario: sid
+  type: '"sla_response"'
+  subject: '{"ticket": ticket_id, "account": acct_id}'
+  outcome: outcome
+  gated_outcome: gated_outcome
+  uncertain: uncertain
+  judgments: judgments
+  flags: flags
+  obligations: obligations
+  scope: scope
+  severity: severity
+  breach: >-
+    ({"response": resp_status, "restoration": rest_status} if measurable
+     else {"response": "not_applicable", "restoration": "not_applicable"} if scope == "out"
+     else {"response": "cannot_decide", "restoration": "cannot_decide"})
+  credit_usd: >-
+    (credit_owed if outcome == "BREACH_CREDIT_OWED"
+     else 0.0 if outcome in ("BREACH_NO_CREDIT", "NO_BREACH", "OUT_OF_SCOPE")
+     else None)
+  account_owner: owner_name

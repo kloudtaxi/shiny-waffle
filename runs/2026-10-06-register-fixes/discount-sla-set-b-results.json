@@ -1,0 +1,519 @@
+[
+ {
+  "attack": "B1",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": []
+ },
+ {
+  "attack": "B1",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": []
+ },
+ {
+  "attack": "B1",
+  "engine": "discount+Ru",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": []
+ },
+ {
+  "attack": "B2",
+  "engine": "discount",
+  "scenario": "S21",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "MSG-20260929-1642: issued by no owner, which doesn't own policies"
+  ]
+ },
+ {
+  "attack": "B2",
+  "engine": "discount+R",
+  "scenario": "S21",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "MSG-20260929-1642: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "B2",
+  "engine": "discount+Ru",
+  "scenario": "S21",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "MSG-20260929-1642: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: products ['NS-500', 'NS-CLOUD'] go beyond ACME-MFG-2025 (['NS-500'])"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount",
+  "scenario": "S02",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: products ['NS-500', 'NS-CLOUD'] go beyond ACME-MFG-2025 (['NS-500'])"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount",
+  "scenario": "S03",
+  "target": true,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: products ['NS-500', 'NS-CLOUD'] go beyond ACME-MFG-2025 (['NS-500'])"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount",
+  "scenario": "S04",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: products ['NS-500', 'NS-CLOUD'] go beyond ACME-MFG-2025 (['NS-500'])"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount",
+  "scenario": "S17",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: products ['NS-500', 'NS-CLOUD'] go beyond ACME-MFG-2025 (['NS-500'])"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: products ['NS-500', 'NS-CLOUD'] go beyond ACME-MFG-2025 (['NS-500'])"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount",
+  "scenario": "S21",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: products ['NS-500', 'NS-CLOUD'] go beyond ACME-MFG-2025 (['NS-500'])"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S02",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S03",
+  "target": true,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S04",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S09",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S10",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S11",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S12",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S14",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S16",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S17",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S18",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+R",
+  "scenario": "S21",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "routed: EXC-ACME-NS500-15 set aside (on_mismatch: route)"
+  ]
+ },
+ {
+  "attack": "B3",
+  "engine": "discount+Ru",
+  "scenario": "S03",
+  "target": true,
+  "class": "held",
+  "outcome": "REVIEW_REQUIRED",
+  "flags": [
+   "EXC-ACME-NS500-15: differs from its registered version 1; set aside",
+   "incident for Deal Desk: acme_pricing_exception.md differs from approved EXC-ACME-NS500-15 v1; decided on the approved version"
+  ]
+ },
+ {
+  "attack": "B4",
+  "engine": "discount",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "B4",
+  "engine": "discount+R",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "B4",
+  "engine": "discount+Ru",
+  "scenario": "S13",
+  "target": true,
+  "class": "held",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "B5",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "conflict: exceptions EXC-ACME-NS500-15, ACME-MFG-2025-A1"
+  ]
+ },
+ {
+  "attack": "B5",
+  "engine": "discount",
+  "scenario": "S02",
+  "target": true,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "conflict: exceptions EXC-ACME-NS500-15, ACME-MFG-2025-A1"
+  ]
+ },
+ {
+  "attack": "B5",
+  "engine": "discount",
+  "scenario": "S20",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "conflict: exceptions EXC-ACME-NS500-15, ACME-MFG-2025-A1"
+  ]
+ },
+ {
+  "attack": "B5",
+  "engine": "discount",
+  "scenario": "S21",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": [
+   "conflict: exceptions EXC-ACME-NS500-15, ACME-MFG-2025-A1"
+  ]
+ },
+ {
+  "attack": "B5",
+  "engine": "discount+R",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "ACME-MFG-2025-A1: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "B5",
+  "engine": "discount+Ru",
+  "scenario": "S02",
+  "target": true,
+  "class": "held",
+  "outcome": "REJECT_OR_ESCALATE",
+  "flags": [
+   "ACME-MFG-2025-A1: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "B6",
+  "engine": "discount",
+  "scenario": "S03",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "B6",
+  "engine": "discount",
+  "scenario": "S04",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE",
+  "flags": []
+ },
+ {
+  "attack": "B6",
+  "engine": "discount+R",
+  "scenario": "S04",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE",
+  "flags": [
+   "DD-NOTE-2025-019: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "B6",
+  "engine": "discount+Ru",
+  "scenario": "S04",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE",
+  "flags": [
+   "DD-NOTE-2025-019: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "B7",
+  "engine": "discount",
+  "scenario": "S14",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE",
+  "flags": []
+ },
+ {
+  "attack": "B7",
+  "engine": "discount+R",
+  "scenario": "S14",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE",
+  "flags": []
+ },
+ {
+  "attack": "B7",
+  "engine": "discount+Ru",
+  "scenario": "S14",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE",
+  "flags": []
+ },
+ {
+  "attack": "B8",
+  "engine": "discount",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": []
+ },
+ {
+  "attack": "B8",
+  "engine": "discount",
+  "scenario": "S17",
+  "target": false,
+  "class": "routed",
+  "outcome": "REQUEST_EVIDENCE",
+  "flags": []
+ },
+ {
+  "attack": "B8",
+  "engine": "discount+R",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "DD-MTG-2026-09-22: not registered; set aside until it is"
+  ]
+ },
+ {
+  "attack": "B8",
+  "engine": "discount+Ru",
+  "scenario": "S01",
+  "target": true,
+  "class": "held",
+  "outcome": "APPROVE_WITH_AUTHORIZATION",
+  "flags": [
+   "DD-MTG-2026-09-22: not registered; set aside until it is"
+  ]
+ }
+]

@@ -69,6 +69,17 @@ class Doc:
     raw: str = ""  # the whole file, front matter included (R1: fingerprints)
 
 
+def parse_doc(filename: str, raw: str) -> Doc:
+    """A document from its file text: YAML front matter, then the body."""
+    text = raw
+    front: dict[str, Any] = {}
+    if text.startswith("---"):
+        _, fm, text = text.split("---", 2)
+        front = yaml.safe_load(fm) or {}
+    return Doc(filename, str(front.get("doc_id", Path(filename).stem)), str(front.get("title", "")),
+               str(front.get("owner", "")), front, text.strip(), raw)  # fmt: skip
+
+
 class Evidence:
     """One corpus: its documents and its system-of-record tables."""
 
@@ -76,25 +87,9 @@ class Evidence:
         self.root = root
 
     def docs(self) -> list[Doc]:
-        docs = []
-        for p in sorted((self.root / "documents").glob("*.md")):
-            text = raw = p.read_text()
-            front: dict[str, Any] = {}
-            if text.startswith("---"):
-                _, fm, text = text.split("---", 2)
-                front = yaml.safe_load(fm) or {}
-            docs.append(
-                Doc(
-                    p.name,
-                    str(front.get("doc_id", p.stem)),
-                    str(front.get("title", "")),
-                    str(front.get("owner", "")),
-                    front,
-                    text.strip(),
-                    raw,
-                )
-            )
-        return docs
+        return [
+            parse_doc(p.name, p.read_text()) for p in sorted((self.root / "documents").glob("*.md"))
+        ]
 
     def table(self, name: str) -> list[dict[str, str]]:
         with (self.root / "structured" / f"{name}.csv").open() as f:
@@ -613,13 +608,31 @@ class Register:
     record."""
 
     entries: list[dict[str, Any]]
+    store: Path | None = None  # the approved texts, content-addressed: <store>/<sha256>.md
 
     @classmethod
     def load(cls, path: Path) -> Register:
-        return cls(list(yaml.safe_load(path.read_text())["entries"]))
+        return cls(list(yaml.safe_load(path.read_text())["entries"]), path.parent / "store")
+
+    def approved(self, entry: dict[str, Any]) -> Doc:
+        """The registered version itself, from the OWM's content-addressed store."""
+        if self.store is None:
+            raise ValueError("this register has no store of approved texts")
+        return parse_doc(entry["file"], (self.store / f"{entry['sha256']}.md").read_text())
 
     def by_id(self) -> dict[str, dict[str, Any]]:
         return {e["doc_id"]: e for e in self.entries}
+
+    def as_of(self, on: date) -> Register:
+        """The register as it governs a decision on `on`: an entry revoked on or before that date
+        no longer counts as registered, for screening as well as for terms (RR-12,
+        `runs/2026-10-08-register-attacks/freeze.md`)."""
+
+        def revoked(e: dict[str, Any]) -> bool:
+            return bool(e.get("revoked_on")) and on >= date.fromisoformat(str(e["revoked_on"]))
+
+        keep = [e for e in self.entries if not revoked(e)]
+        return self if len(keep) == len(self.entries) else Register(keep, self.store)
 
     def status(self, docs: list[Doc]) -> dict[str, str]:
         """Each entry's document on file: verified (a copy matches), mismatch (a document with its
@@ -632,23 +645,51 @@ class Register:
 
 
 def register_screen(
-    docs: list[Doc], reg: Register, kinds: tuple[str, ...], rules: tuple[KindRule, ...],
-    flags: list[str],
+    docs: list[Doc], reg: Register, kinds: Mapping[str, str], rules: tuple[KindRule, ...],
+    flags: list[str], mode: str = "use_registered", owners: Mapping[str, Any] | None = None,
 ) -> list[Doc]:  # fmt: skip
-    """R1: documents of a registered kind count only as a registered version. One with a
-    registered id but different content is set aside (it differs from its approved version); one
-    that isn't registered is set aside until it is (it never counts, and never conflicts)."""
+    """R1: documents of a registered kind count only as a registered version; one that isn't
+    registered is set aside until it is (it never counts, and never conflicts). R3 for documents,
+    by `mode` (the spec's `on_mismatch`):
+    - `use_registered` (the default, G-01 decided 2026-10-05): every registered document is read as
+      its approved version from the OWM's store, in place of whatever copy is on file. A copy that
+      differs, or a registered document with no copy on file, is raised as an incident to the
+      owning function, and the decision proceeds on the approved version;
+    - `route`: a copy that differs is set aside, so a decision that needs it lacks its evidence.
+    `kinds` maps the spec's kinds to the register's (global) kinds."""
     prints = {e["sha256"]: e for e in reg.entries}
     ids = reg.by_id()
-    kept = []
+    spec_kind = {v: k for k, v in kinds.items()}
+    owner = lambda kind: ", ".join((owners or {}).get(kind, [])) or "its owning function"  # noqa: E731
+    kept, served = [], set()
     for d in docs:
-        if classify(d, rules) not in kinds or fingerprint(d.raw) in prints:
+        kind = classify(d, rules)
+        e = prints.get(fingerprint(d.raw))
+        if kind not in kinds:
             kept.append(d)
+        elif e is not None:
+            kept.append(d if mode == "route" or reg.store is None else reg.approved(e))
+            served.add(e["doc_id"])
         elif d.doc_id in ids:
-            flags.append(f"{d.doc_id}: differs from its registered version "
-                         f"{ids[d.doc_id]['version']}; set aside")  # fmt: skip
+            e = ids[d.doc_id]
+            flags.append(
+                f"{d.doc_id}: differs from its registered version {e['version']}; set aside"
+            )
+            if mode == "use_registered":
+                approved = f"approved {d.doc_id} v{e['version']}"
+                flags.append(f"incident for {owner(kind)}: {d.filename} differs from {approved}; "
+                             "decided on the approved version")  # fmt: skip
+                kept.append(reg.approved(e))
+                served.add(e["doc_id"])
         else:
             flags.append(f"{d.doc_id}: not registered; set aside until it is")
+    if mode == "use_registered":
+        for e in reg.entries:
+            if e["kind"] in spec_kind and e["doc_id"] not in served:
+                approved = f"approved {e['doc_id']} v{e['version']}"
+                flags.append(f"incident for {owner(spec_kind[e['kind']])}: no copy of {approved} "
+                             "on file; decided on the approved version")  # fmt: skip
+                kept.append(reg.approved(e))
     return kept
 
 
@@ -668,8 +709,13 @@ def entry_in_force(
 
 
 def in_window(entry: dict[str, Any], on: date) -> bool:
+    """In force on the date: inside the window, and not revoked on or before it (the registrar's
+    revocation, `runs/2026-10-08-register-attacks/plan.md`, RR-12)."""
     end = entry.get("effective_to")
     start = date.fromisoformat(str(entry["effective_from"]))
+    revoked = entry.get("revoked_on")
+    if revoked and on >= date.fromisoformat(str(revoked)):
+        return False
     return start <= on <= (date.fromisoformat(str(end)) if end else date.max)
 
 
