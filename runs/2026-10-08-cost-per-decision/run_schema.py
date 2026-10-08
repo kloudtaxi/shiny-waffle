@@ -128,9 +128,9 @@ def run_ask(workers: int, reps: int = 3) -> None:
     truth = load_truth(LAB / "truth")
     OUT.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="ns-g23s-") as tmp:
-        jobs = [(OUT / f"{sid}-r{r}.json", rc.slice_prompt(truth, sid, Path(tmp)),
-                 bl.system(sid), schema(bl.kind(sid)))
-                for sid in bl.SCENARIOS for r in range(1, reps + 1)]  # fmt: skip
+        prompts = {sid: rc.slice_prompt(truth, sid, Path(tmp)) for sid in bl.SCENARIOS}
+    jobs = [(OUT / f"{sid}-r{r}.json", prompts[sid], bl.system(sid), schema(bl.kind(sid)))
+            for sid in bl.SCENARIOS for r in range(1, reps + 1)]  # fmt: skip
     jobs = [j for j in jobs if not j[0].exists()]
 
     def go(job: tuple[Path, str, str, dict[str, Any]]) -> float:
