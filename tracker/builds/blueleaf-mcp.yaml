@@ -139,6 +139,56 @@ decisions:
         text: "The procedures as they were before G-35, and no overlay. Directly comparable with set F's rf2 check, but it brings back the input defect G-36 fixed."
     recommended: A
     recommendation: "A."
+  # Added on 2026-10-08 after merging main (bbdeaeb), straight into the Ledger with ArtifactData
+  # (seed_build.py is never re-run over a live ledger). Plan §2, "Decisions D-9 to D-11".
+  - id: D-9
+    title: Register changes in a sandbox, through main's registrar
+    plan_ref: plan §2 item 9
+    blocks: [B-07, B-17]
+    question: When you register or revoke a governing document in a sandbox, which rules decide whether the change is admitted?
+    options:
+      - key: A
+        label: Main's registrar (RR-1 to RR-14)
+        text: "Register and revoke go through `registrar.apply`, the rules your register attack set tests: authentication, employees only, the owning function, a head or Executive approves and never the submitter, terms and window bound to the text, scope, no backdating, no silent overlap, supersession, revocation, stale base, relations. A refusal names its rule. Experimenter mode also gets a labelled, logged bootstrap edit for scenarios outside the rules' scope. Retires D-4's derived needles."
+      - key: B
+        label: Task 7's own checks
+        text: "Keep the plan's mini-registrar (self-approval, derived needles, version bump, window from front matter). Two rule sets can then drift, and web-next's #17 approve/return would match neither."
+    recommended: A
+    recommendation: "A. The registrar doesn't import the truth, so D-4's reason for building our own checks is gone, and one rule set serves the lab, the attack set and the OWM API. Caveat: its scope check (RR-8) reads the frozen corpus, not a sandbox's CSVs."
+  - id: D-10
+    title: The demo's ×N tallies
+    plan_ref: plan §2 item 10
+    blocks: []
+    question: "The demo wants \"baseline 3 of 5, OWM 0 of 5\". In subject mode Claude Desktop is the agent, so one conversation is one draw. How should the server produce tallies?"
+    options:
+      - key: A
+        label: A baseline phase after v1
+        text: "An experimenter tool run_baseline(question, n): the lab's blind reader harness (Opus 5.5, fixed prompt, the same model on both sides), n draws in parallel, returning the tally and the logged transcripts. About $0.30 a draw on the whole corpus, $0.10 on the OWM-served slice."
+      - key: B
+        label: Separate presenter runner
+        text: "v1 stays as designed; a presenter runner for the demo is built outside this server."
+      - key: C
+        label: Into v1 now
+        text: "Add the baseline arm to v1 before acceptance. It delays set G."
+    recommended: A
+    recommendation: "A. Set G doesn't need tallies, so v1 ships first; the tally tool then reuses its sandboxes, logs and scoring."
+  - id: D-11
+    title: Where the OWM API for web-next (#16–#20) is built
+    plan_ref: plan §2 item 11
+    blocks: []
+    question: The OWM API endpoints #16–#20 for web-next are to be built by a lab session on the same lab modules as this server's service/ core. How should they relate?
+    options:
+      - key: A
+        label: On service/, after phase C
+        text: "A third entry point on service/, once the engines land: a thin HTTP layer whose shapes follow web-next's lib/types.ts. One core serves the lab server, the subject server and the API. Needs read access to kloudtaxi/glowing-garbanzo for the contract."
+      - key: B
+        label: Separately, now
+        text: "Build the API directly on the lab modules now and merge later. Faster to a first endpoint, but two cores in the meantime."
+      - key: C
+        label: After v1
+        text: "Defer the API until this server's v1 is done."
+    recommended: A
+    recommendation: "A. The design doc already says the two should merge; building them on one core from the start avoids the merge."
 
 tasks:
   - id: B-01
@@ -208,7 +258,7 @@ tasks:
     prove: "gate G; build_register.py --check"
     spec_tests: []
     depends_on: [B-05]
-    decisions: [D-4]
+    decisions: [D-4, D-9]
   - id: B-08
     phase: B
     title: Sandbox procedures, line-numbered validation
@@ -303,7 +353,7 @@ tasks:
     prove: "gate G"
     spec_tests: [T8]
     depends_on: [B-16, B-07, B-08]
-    decisions: [D-7]
+    decisions: [D-7, D-9]
   - id: B-18
     phase: E
     title: "Lab tools: decide and score"

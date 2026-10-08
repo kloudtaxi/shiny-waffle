@@ -5,7 +5,8 @@
 first). **Kickoff:** `docs/superpowers/specs/2026-10-06-blueleaf-mcp-plan-kickoff.md`.
 **Branch:** `skunkworks/blueleaf-mcp`, never `main`. Planned against `96a6b41`, then
 **refreshed on 2026-10-07 after merging `main` (`7eaccd1`)**. §0.1 lists what `main` added and how
-the plan now uses it.
+the plan now uses it. **`main` merged again on 2026-10-08 (`bbdeaeb`)**: the document registrar,
+revocation, and `serve.served(root=…)`. §2 has three decisions that merge raised (D-9 to D-11).
 
 **How to use it:** 24 tasks in 8 phases. Each one names:
 - its files;
@@ -19,8 +20,9 @@ Do them in order. Each commit should leave every gate green.
 (<https://claude.ai/artifact/FsSXn3ADwvDgBzG85b3Vyq#B-01>). Its source is
 `tracker/builds/blueleaf-mcp.yaml`. §5 says how a builder uses it, and when a task counts as done.
 
-**Eight decisions for the user, D-1 to D-8.** Each one blocks named tasks. They live in the Build tab,
-where the user picks an option; §2 has the reasoning:
+**Eleven decisions for the user, D-1 to D-11** (D-1 to D-8 ruled on 2026-10-07). Each one blocks
+named tasks or adds a phase. They live in the Build tab, where the user picks an option; §2 has
+the reasoning:
 1. **D-1:** how attack sets are applied, since sets A–E can't use set F's rule;
 2. **D-2:** what a whole-set sandbox runs (attack by attack, or all at once);
 3. **D-3:** what a blind subject may read (`MANIFEST.yaml` names the traps);
@@ -28,7 +30,10 @@ where the user picks an option; §2 has the reasoning:
 5. **D-5:** which engine decides for the subject, and what the mismatch mode switches;
 6. **D-6:** live Jev in subject sessions;
 7. **D-7:** procedures in a sandbox, after G-13 and G-07 (new with the merge);
-8. **D-8:** subject questions and grading, after G-35 and G-36 (new with the merge).
+8. **D-8:** subject questions and grading, after G-35 and G-36 (new with the merge);
+9. **D-9:** register changes in a sandbox go through `main`'s registrar (new, 2026-10-08);
+10. **D-10:** the demo's ×N tallies, which v1's subject mode can't give (new, 2026-10-08);
+11. **D-11:** where the OWM API for `web-next` (#16–#20) is built (new, 2026-10-08).
 
 ---
 
@@ -173,7 +178,7 @@ run folder.
 
 ---
 
-## 2. Decisions D-1 to D-8, and build notes
+## 2. Decisions D-1 to D-11, and build notes
 
 **The decisions are the user's,** made in the Ledger's Build tab
 (<https://claude.ai/artifact/FsSXn3ADwvDgBzG85b3Vyq#D-1>). Each task follows the **recommended**
@@ -287,6 +292,61 @@ stands as written. The Ledger records each choice and its time.
        the re-baseline does;
      - the acceptance walk-through compares with the re-baseline (`runs/2026-10-06-baseline`), not
        with set F's rf2, which predates G-35.
+
+### Decisions D-9 to D-11 (raised by the 2026-10-08 merge, `bbdeaeb`)
+
+What `main` added that bears on them:
+- **`lab/owm_register/registrar.py`** governs every register change after the bootstrap import
+  (register, revoke) by rules RR-1 to RR-14 (`runs/2026-10-08-register-attacks/plan.md`). It
+  imports only `kernel`, never `northstar` or `build_register`.
+- **The kernel:** `in_window` honours `revoked_on`; `Register.as_of(date)` drops revoked entries;
+  `governed.decide` reads the register as of the decision's date.
+- **`serve.served(corpus, decision, root=HERE)`** (G-37) already takes the root that task 7 was
+  going to add. The served register shows revocations.
+- **A freeze:** the registrar, the kernel's `revoked_on` and `serve.py`'s revocation line are not
+  changed until the register-attack results are committed. Nothing in this build edits them.
+- **The demo** (`docs/demo-sequencing-technical-2026-10-07.md`) counts on this server for its
+  side-by-side runner (baseline against the OWM, ×N, with tallies) and the "bring your own
+  forgery" finale. It also has a lab session build the OWM API #16–#20 for `web-next`, "on the
+  same lab modules that the MCP server's `service/` core reuses, so the two can merge later".
+
+9. **D-9. Register changes in a sandbox go through `main`'s registrar** (supersedes D-4's derived
+   needles).
+   - Task 7 planned its own checks: self-approval, derived needles, version bump, window from the
+     front matter. `registrar.apply` now does all of that and more, under the published rules
+     that the register attack set tests. D-4's premise (the checks can't be reused because
+     `build_register.py` loads the truth) doesn't hold for `registrar.py`.
+   - **Recommendation (A):**
+     - `register` and `revoke` in a sandbox call `registrar.apply` on a `State` built from the
+       sandbox's register, with the caller's `acting_as`; a `RefusedError` becomes a tool error
+       that names its rule;
+     - experimenter mode also gets a **bootstrap edit**, labelled and logged in the sandbox's
+       change log, for scenarios outside the rules' scope (a compromised store or import);
+     - D-4's derived needles are retired.
+   - **Caveat:** RR-8 resolves customer ids against the frozen corpus, not the sandbox's CSVs.
+     That holds while the systems of record stay out of an attacker's reach, as they do in v1.
+   - **B:** keep task 7's own checks. Two rule sets can then drift, and `web-next`'s #17
+     (approve / return) would match neither.
+   - Blocks tasks 7 and 17. If A, task 7 is rewritten in a docs commit before it starts.
+10. **D-10. The demo's ×N tallies.** In subject mode, Claude Desktop *is* the agent, so one
+    conversation gives one draw, not "3 of 5". v1 has no headless reader arm (spec §1, "Not in
+    v1").
+    - **Recommendation (A):** a phase after v1: an experimenter tool `run_baseline(question, n)`
+      that runs the lab's blind reader harness (Opus 5.5, the fixed prompt, the same model on
+      both sides) ×n in parallel, and returns the tally and the logged transcripts. About $0.30
+      a draw on the whole corpus, or $0.10 on the OWM-served slice (G-23).
+    - **B:** v1 as it is; a presenter runner is built separately.
+    - **C:** put it in v1 now. This delays set G.
+    - Blocks no v1 task. If A, its tasks are added after task 24.
+11. **D-11. Where the OWM API #16–#20 is built.**
+    - **Recommendation (A):** a third entry point on `service/`, after phase C, as a thin HTTP
+      layer whose shapes follow `web-next`'s `lib/types.ts`. One core then serves the lab server,
+      the subject server and the API. It needs read access to `kloudtaxi/glowing-garbanzo` for
+      the contract.
+    - **B:** build it separately now, directly on the lab modules, and merge later. That's faster
+      to a first endpoint, but it means two cores in the meantime.
+    - **C:** defer it until v1 is done.
+    - Blocks no v1 task. If A, its tasks are added after phase C.
 
 **Build notes** (no decision needed):
 
