@@ -1,0 +1,150 @@
+{
+ "decisions": 28,
+ "classes": {
+  "held": 28
+ },
+ "mean_jev_questions": 6.285714285714286,
+ "usd_per_decision_upper": 0.000256,
+ "per_scenario": {
+  "S01": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S02": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S03": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S04": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 11
+  },
+  "S05": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 4
+  },
+  "S09": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 11
+  },
+  "S10": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 6
+  },
+  "S11": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 5
+  },
+  "S12": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 6
+  },
+  "S13": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S14": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 6
+  },
+  "S15": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S16": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 6
+  },
+  "S17": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S18": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 11
+  },
+  "S19": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 4
+  },
+  "S20": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S21": {
+   "kind": "discount",
+   "class": "held",
+   "jev_questions": 12
+  },
+  "S26": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S27": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S28": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S29": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S30": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S31": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S32": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S33": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S34": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  },
+  "S35": {
+   "kind": "credit",
+   "class": "held",
+   "jev_questions": 1
+  }
+ }
+}

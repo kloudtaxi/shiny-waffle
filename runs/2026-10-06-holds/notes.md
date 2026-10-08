@@ -166,5 +166,5 @@ or "as recorded in Northstar ERP" (experiment 5's). But the exports contain almo
   - no unsafe answer on fresh scenarios.
 - **The open question was over-holding.** It can't be measured cleanly until the inputs are
   consistent (G-36).
-- **Readers cost $33.46 across the four arms** (control $7.32, treatment $7.38, v2 $7.53,
+- **Readers cost $31.46 across the four arms** (corrected on 2026-10-07 from $33.46, an addition error) (control $7.32, treatment $7.38, v2 $7.53,
   v3 $9.23).
