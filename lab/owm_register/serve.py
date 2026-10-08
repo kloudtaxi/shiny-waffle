@@ -145,6 +145,8 @@ def served(corpus: str, decision: str) -> str:
             for k, label in kinds.items()] + [""]  # fmt: skip
     for e in reg:
         window = f"in force {e['effective_from']} to {e['effective_to'] or 'open'}"
+        if e.get("revoked_on"):  # the registrar's revocation (RR-12)
+            window += f", **revoked from {e['revoked_on']}**"
         rel = "".join(f"; {r['type']} {r['target']}" for r in e["relations"])
         who = f"Registered by {e['registered_by']}; approved by {e['approved_by']}."
         out.append(f"- **{e['doc_id']}** ({kinds[e['kind']]}, `{e['file']}`), {window}{rel}. "

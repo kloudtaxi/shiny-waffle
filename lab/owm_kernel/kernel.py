@@ -698,8 +698,13 @@ def entry_in_force(
 
 
 def in_window(entry: dict[str, Any], on: date) -> bool:
+    """In force on the date: inside the window, and not revoked on or before it (the registrar's
+    revocation, `runs/2026-10-08-register-attacks/plan.md`, RR-12)."""
     end = entry.get("effective_to")
     start = date.fromisoformat(str(entry["effective_from"]))
+    revoked = entry.get("revoked_on")
+    if revoked and on >= date.fromisoformat(str(revoked)):
+        return False
     return start <= on <= (date.fromisoformat(str(end)) if end else date.max)
 
 
