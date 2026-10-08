@@ -1,11 +1,10 @@
 # Attacks on the register (2026-10-08)
 
-> **Status: PARKED (the user's call, 2026-10-08), with the controls built, frozen and
-> regression-clean, and no attack set yet.** The blind subagent asked to write the sealed attack
-> set wrote nothing: a safety classifier stopped one of its responses, and it didn't retry. The lab
-> won't reword the request to get around that, and the registrar's author writing its own test
-> would be a self-test, not a blind attack (G-39). To resume, **the user writes the attack set**,
-> as for sets C–F.
+> **Status: waiting for the user's attack set** (the user's call, 2026-10-08; it first read
+> "parked", which the user corrected). The controls are built, frozen and regression-clean. The
+> blind subagent asked to write the sealed attack set wrote nothing: a safety classifier stopped
+> one of its responses, and it didn't retry. The lab won't reword the request to get around that.
+> **The user writes the attack set**, as for sets C–F, from `sealed/BRIEF.md`.
 
 ## What exists
 
