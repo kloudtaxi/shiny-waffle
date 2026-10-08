@@ -1,13 +1,14 @@
-"""BlueLeaf lab MCP server, task B-02: the walls, tested before they are built (spec §9 T1, T2, T4,
-T6 and T7; plan, task 2).
+"""BlueLeaf lab MCP server: the walls (spec §9 T1, T2, T4, T6 and T7; plan, tasks 2 and 3).
 
-Each test is a strict xfail that names the task that builds its wall, and accepts only the
-failure a missing wall gives (a module that doesn't exist yet, or a helper that says which task
-fills it in). Any other failure is a broken test and shows as one. A wall that starts passing
-early fails the run (strict), and its task removes the marker.
+Written in task 2, before the walls existed. A test whose wall isn't built yet is a strict xfail
+that names the task that builds it, and accepts only the failure a missing wall gives (a module
+that doesn't exist yet, or a helper that says which task fills it in). Any other failure is a
+broken test and shows as one. A wall that starts passing early fails the run (strict), and its
+task removes the marker.
 
-The modules under test are imported with `importlib` inside each test, so this file collects and
-type-checks before they exist.
+Live since task 3: T2 (the file wall) and T7's unit test (the secret guard), plus `tree_digest`.
+Still waiting: T1 (task 20), T4 (task 19) and T6 (task 23). Modules that don't exist yet are
+imported with `importlib` inside the test, so this file type-checks before they do.
 """
 
 from __future__ import annotations
@@ -18,11 +19,14 @@ import os
 import re
 import subprocess
 import sys
+from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
 
 import pytest
 import yaml
+from service import guard, walls
+from service.errors import RefusedError
 
 from blueleaf_helpers import open_session, scripted_session
 
@@ -132,6 +136,10 @@ REFUSED = [
     "documents/linked_manifest.md",  # a symlink to a file in the corpus but outside the pattern
     "documents/notes.txt",
     "structured/accounts.json",
+    "documents/missing.md",  # matches the pattern, but there is no such file
+    "documents/sub/deep.md",  # one level only
+    "",
+    "documents\\..\\MANIFEST.yaml",  # a backslash is not a separator here
 ]
 ALLOWED = ["documents/acme_parent_guarantee.md", "structured/crm_accounts.csv"]
 
@@ -145,6 +153,7 @@ def small_corpus(tmp: Path) -> Path:
         "answer-key/S01.json": "{}\n",
         "documents/notes.txt": "notes\n",
         "structured/accounts.json": "{}\n",
+        "documents/sub/deep.md": "deep\n",
     }.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         (root / rel).write_text(text)
@@ -156,22 +165,44 @@ def small_corpus(tmp: Path) -> Path:
     return root
 
 
-@not_built(3)
 @pytest.mark.parametrize("rel", REFUSED)
 def test_file_wall_refuses(rel: str, tmp_path: Path) -> None:
-    walls = importlib.import_module("service.walls")
-    errors = importlib.import_module("service.errors")
     root = small_corpus(tmp_path)
-    with pytest.raises(errors.RefusedError, match="not one of this question's documents"):
+    with pytest.raises(RefusedError, match="not one of this question's documents"):
         walls.subject_path(root, rel)
 
 
-@not_built(3)
 @pytest.mark.parametrize("rel", ALLOWED)
 def test_file_wall_allows(rel: str, tmp_path: Path) -> None:
-    walls = importlib.import_module("service.walls")
     root = small_corpus(tmp_path)
-    assert Path(walls.subject_path(root, rel)) == (root / rel).resolve()
+    assert walls.subject_path(root, rel) == (root / rel).resolve()
+
+
+def test_file_wall_refuses_a_documents_folder_that_links_out(tmp_path: Path) -> None:
+    root = tmp_path / "corpus"
+    root.mkdir()
+    (tmp_path / "elsewhere").mkdir()
+    (tmp_path / "elsewhere/x.md").write_text("x\n")
+    (root / "documents").symlink_to(tmp_path / "elsewhere")
+    with pytest.raises(RefusedError):
+        walls.subject_path(root, "documents/x.md")
+
+
+# -- tree_digest: what T6 compares --------------------------------------------------------------
+def test_tree_digest_tracks_content_and_names_not_order(tmp_path: Path) -> None:
+    a, b = tmp_path / "a", tmp_path / "b"
+    for root, order in ((a, ["x.md", "sub/y.csv"]), (b, ["sub/y.csv", "x.md"])):
+        for rel in order:
+            (root / rel).parent.mkdir(parents=True, exist_ok=True)
+            (root / rel).write_text(rel)
+    assert walls.tree_digest(a) == walls.tree_digest(b)
+    first = walls.tree_digest(a)
+    (a / "x.md").write_text("changed")
+    assert walls.tree_digest(a) != first
+    (a / "x.md").write_text("x.md")
+    assert walls.tree_digest(a) == first
+    (a / "x.md").rename(a / "z.md")
+    assert walls.tree_digest(a) != first
 
 
 # -- T4: subject.json carries no answer -------------------------------------------------------
@@ -223,7 +254,6 @@ def test_subject_json_schema(tmp_path: Path) -> None:
 # -- T6: dataset/ is never written --------------------------------------------------------------
 @not_built(23)
 def test_dataset_untouched(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    walls = importlib.import_module("service.walls")
     monkeypatch.setenv("BLUELEAF_HOME", str(tmp_path / "home"))
     monkeypatch.setenv("BLUELEAF_RUNS", str(tmp_path / "runs"))
     before = walls.tree_digest(LAB / "dataset")
@@ -235,18 +265,49 @@ def test_dataset_untouched(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> N
 DUMMY_KEY = "ts-dummy-" + "5e1f" * 8  # never a real key
 
 
-@not_built(3)
-def test_secret_guard_unit(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.fixture
+def dummy_key(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[str]:
+    """The guard, reloaded to hold a dummy key from a key file; reloaded again afterwards, so no
+    other test sees it."""
     key_file = tmp_path / "typesafe.key"
     key_file.write_text(DUMMY_KEY + "\n")
     monkeypatch.delenv("TYPESAFE_API_KEY", raising=False)
     monkeypatch.setenv("TYPESAFE_API_KEY_FILE", str(key_file))
-    # The guard reads the key once; reload so it reads this test's dummy key.
-    guard = importlib.reload(importlib.import_module("service.guard"))
-    errors = importlib.import_module("service.errors")
-    with pytest.raises(errors.RefusedError, match="output withheld"):
-        guard.scrub(f"the reply was {DUMMY_KEY}.")
-    with pytest.raises(errors.RefusedError):
-        guard.check_log_line(json.dumps({"tool": "read_document", "result": DUMMY_KEY}))
+    importlib.reload(guard)  # the guard reads the key once, at import
+    yield DUMMY_KEY
+    monkeypatch.undo()
+    importlib.reload(guard)
+
+
+def test_secret_guard_unit(dummy_key: str) -> None:
+    with pytest.raises(RefusedError, match="output withheld"):
+        guard.scrub(f"the reply was {dummy_key}.")
+    with pytest.raises(RefusedError, match="log line withheld"):
+        guard.check_log_line(json.dumps({"tool": "read_document", "result": dummy_key}))
     clean = "nothing secret here"
     assert guard.scrub(clean) == clean
+    assert guard.check_log_line(clean) == clean
+
+
+def test_secret_guard_reads_the_variable_too(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("TYPESAFE_API_KEY_FILE", raising=False)
+    monkeypatch.setenv("TYPESAFE_API_KEY", DUMMY_KEY)
+    importlib.reload(guard)
+    try:
+        with pytest.raises(RefusedError):
+            guard.scrub(DUMMY_KEY)
+    finally:
+        monkeypatch.undo()
+        importlib.reload(guard)
+
+
+def test_secret_guard_with_no_key_passes_everything(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("TYPESAFE_API_KEY", raising=False)
+    monkeypatch.setenv("TYPESAFE_API_KEY_FILE", "/nonexistent/typesafe.key")
+    importlib.reload(guard)
+    try:
+        assert guard.scrub("") == ""  # an empty key must never match everything
+        assert guard.scrub(DUMMY_KEY) == DUMMY_KEY
+    finally:
+        monkeypatch.undo()
+        importlib.reload(guard)

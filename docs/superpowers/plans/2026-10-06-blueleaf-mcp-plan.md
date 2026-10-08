@@ -488,7 +488,10 @@ scenarios)` in task 19, and `scripted_session(home, runs)` in task 23.
 #### Task 3: state root, the file wall, and the secret guard
 
 **Files:** `service/paths.py`, `service/walls.py`, `service/guard.py`,
-`tests/test_blueleaf_walls.py` (remove the xfail on T2 and the T7 unit test).
+`tests/test_blueleaf_walls.py` (remove the xfail on T2 and the T7 unit test; as built, T2 also
+refuses a missing file, a nested path, an empty path, a backslash path and a `documents/` folder
+that links out, and `tree_digest` and the guard's other key sources have unit tests),
+`tests/test_blueleaf_paths.py` (`home`, `runs_root`, `atomic_write`).
 
 **Implement:**
 - **`paths.py`:**
