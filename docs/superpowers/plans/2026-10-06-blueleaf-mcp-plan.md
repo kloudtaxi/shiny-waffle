@@ -439,15 +439,20 @@ boundary`.
 
 #### Task 2: the wall tests, committed as strict xfails
 
-**Files:** `tests/test_blueleaf_walls.py`, `tests/fixtures/blueleaf/` (small helpers only).
+**Files:** `tests/test_blueleaf_walls.py`, `tests/blueleaf_helpers.py` (small helpers only: a
+flat module, because `tests/` isn't a package and strict mypy must resolve the import).
 
-**Write these tests now.** Each is `xfail(strict=True, reason="wall not built: task N")`; task N
-removes the marker.
+**Write these tests now.** Each is `xfail(strict=True, raises=(ModuleNotFoundError,
+NotImplementedError), reason="wall not built: task N")`; task N removes the marker. `raises` means a
+test may fail only because its wall is missing; any other failure shows. The modules under test
+are imported with `importlib` inside each test, so the file type-checks before they exist. The
+helpers raise `NotImplementedError` until their task fills them in: `open_session(home, arm,
+scenarios)` in task 19, and `scripted_session(home, runs)` in task 23.
 
 | Test | What it asserts | Built in |
 |---|---|---|
 | **T1** `test_import_wall[plain\|register\|owm]` | See below. | task 20 |
-| **T2** `test_file_wall` | `service.walls.subject_path(root, rel)` refuses `../x`, `/etc/hosts`, `documents/../../truth/x`, `MANIFEST.yaml`, `answer-key/…`, a symlink inside `documents/` pointing outside the corpus, and a non-`.md` in `documents/` or non-`.csv` in `structured/`; it allows `documents/acme_parent_guarantee.md` and `structured/crm_accounts.csv` | task 3 |
+| **T2** `test_file_wall_refuses[rel]`, `test_file_wall_allows[rel]` | `service.walls.subject_path(root, rel)` refuses `../x`, `/etc/hosts`, `documents/../../truth/x`, `MANIFEST.yaml`, `answer-key/…`, a symlink inside `documents/` pointing outside the corpus, a symlink inside `documents/` pointing at `MANIFEST.yaml`, and a non-`.md` in `documents/` or non-`.csv` in `structured/`; it allows `documents/acme_parent_guarantee.md` and `structured/crm_accounts.csv` | task 3 |
 | **T4** `test_subject_json_schema` | See below. | task 19 |
 | **T6** `test_dataset_untouched` | `walls.tree_digest(LAB/"dataset")` (sorted relative path + sha256) is equal before and after `scripted_session()` (task 23 fills it in; until then the helper raises `NotImplementedError`) | task 23 |
 | **T7** `test_secret_guard_unit` | With a dummy key file in `TYPESAFE_API_KEY_FILE`: `guard.scrub("…KEY…")` raises `RefusedError`, `guard.check_log_line` refuses it, and `guard.scrub` passes clean text through unchanged | task 3 |
