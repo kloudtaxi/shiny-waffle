@@ -129,10 +129,11 @@ def approved_text(e: dict[str, Any], store: Path) -> list[str]:
     return ["Approved text (authoritative):", "", *(f"    {line}" for line in text.splitlines())]
 
 
-def served(corpus: str, decision: str) -> str:
-    """The register for one company and one decision type, as served to an agent."""
+def served(corpus: str, decision: str, root: Path = HERE) -> str:
+    """The register for one company and one decision type, as served to an agent. `root` holds
+    `<corpus>.yaml` and `store/` (a variant register can live elsewhere)."""
     kinds = COVERAGE[decision]
-    reg = [e for e in yaml.safe_load((HERE / f"{corpus}.yaml").read_text())["entries"]
+    reg = [e for e in yaml.safe_load((root / f"{corpus}.yaml").read_text())["entries"]
            if e["kind"] in kinds]  # fmt: skip
     out = ["The OWM register of approved governing documents (authoritative):", "",
            "Only the documents below, in their registered versions, govern this decision. A "
@@ -151,7 +152,7 @@ def served(corpus: str, decision: str) -> str:
         who = f"Registered by {e['registered_by']}; approved by {e['approved_by']}."
         out.append(f"- **{e['doc_id']}** ({kinds[e['kind']]}, `{e['file']}`), {window}{rel}. "
                    f"{who}")  # fmt: skip
-        lines = [x for x in terms(e, HERE / "store") if x] + approved_text(e, HERE / "store")
+        lines = [x for x in terms(e, root / "store") if x] + approved_text(e, root / "store")
         out += [f"  - {line}" if not line.startswith("    ") and line else line
                 for line in lines]  # fmt: skip
     return "\n".join(out)
