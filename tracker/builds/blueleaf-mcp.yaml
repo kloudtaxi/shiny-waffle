@@ -154,7 +154,7 @@ decisions:
         label: Task 7's own checks
         text: "Keep the plan's mini-registrar (self-approval, derived needles, version bump, window from front matter). Two rule sets can then drift, and web-next's #17 approve/return would match neither."
     recommended: A
-    recommendation: "A. The registrar doesn't import the truth, so D-4's reason for building our own checks is gone, and one rule set serves the lab, the attack set and the OWM API. Caveat: its scope check (RR-8) reads the frozen corpus, not a sandbox's CSVs."
+    recommendation: "A. The registrar doesn't import the truth, so D-4's reason for building our own checks is gone, and one rule set serves the lab, the attack set and the OWM API. Your attack set (2026-10-09) admitted 0 of 14 attacks; its friction (G-44) would be inherited, and so would G-44's fixes. Caveat: its scope check (RR-8) reads the frozen corpus, not a sandbox's CSVs."
   - id: D-10
     title: The demo's ×N tallies
     plan_ref: plan §2 item 10
@@ -173,22 +173,22 @@ decisions:
     recommended: A
     recommendation: "A. Set G doesn't need tallies, so v1 ships first; the tally tool then reuses its sandboxes, logs and scoring."
   - id: D-11
-    title: Where the OWM API for web-next (#16–#20) is built
+    title: "The demo OWM API: when, and what it shares with this server"
     plan_ref: plan §2 item 11
     blocks: []
-    question: The OWM API endpoints #16–#20 for web-next are to be built by a lab session on the same lab modules as this server's service/ core. How should they relate?
+    question: "You decided on 2026-10-09 that the demo API speaks the future owm-decisions contract from day one (v1.2 is drafted in glowing-garbanzo: #16–#20, clearance #21 with redeem, versions, conditions), and parked the sovera-owm port until the register attacks and the demo API are done. The register attacks are done. When should the lab build the API, relative to this server?"
     options:
       - key: A
-        label: On service/, after phase C
-        text: "A third entry point on service/, once the engines land: a thin HTTP layer whose shapes follow web-next's lib/types.ts. One core serves the lab server, the subject server and the API. Needs read access to kloudtaxi/glowing-garbanzo for the contract."
+        label: The API next
+        text: "Pause this build after phase A (done) and build the demo API as its own service in shiny-waffle, on _lab and the secret guard, to contract v1.2, in the agents-sketch review's order: G-46's ratchet check, then #16–#21 with clearance (G-45). It gets its own plan first. This build resumes at B-04 afterwards and reuses the API's decision and register code where it fits."
       - key: B
-        label: Separately, now
-        text: "Build the API directly on the lab modules now and merge later. Faster to a first endpoint, but two cores in the meantime."
+        label: After phase C, on service/
+        text: "The 2026-10-08 recommendation: the API becomes a third entry point on service/ once sandboxes and engines land. One core, but the demo waits on nine more tasks (B-04 to B-12)."
       - key: C
         label: After v1
-        text: "Defer the API until this server's v1 is done."
+        text: "Finish this server first (set G), then the API."
     recommended: A
-    recommendation: "A. The design doc already says the two should merge; building them on one core from the start avoids the merge."
+    recommendation: "A. Your 2026-10-09 decisions make the demo API the next gate (the port waits on it), its contract is drafted and web-next is building against it, and it shares little with this server beyond _lab and the guard. Set G waits until after."
 
 tasks:
   - id: B-01

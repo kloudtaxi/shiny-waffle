@@ -33,7 +33,8 @@ the reasoning:
 8. **D-8:** subject questions and grading, after G-35 and G-36 (new with the merge);
 9. **D-9:** register changes in a sandbox go through `main`'s registrar (new, 2026-10-08);
 10. **D-10:** the demo's ×N tallies, which v1's subject mode can't give (new, 2026-10-08);
-11. **D-11:** where the OWM API for `web-next` (#16–#20) is built (new, 2026-10-08).
+11. **D-11:** the demo OWM API: when, and what it shares with this server (new 2026-10-08,
+    revised 2026-10-09).
 
 ---
 
@@ -303,8 +304,10 @@ What `main` added that bears on them:
   `governed.decide` reads the register as of the decision's date.
 - **`serve.served(corpus, decision, root=HERE)`** (G-37) already takes the root that task 7 was
   going to add. The served register shows revocations.
-- **A freeze:** the registrar, the kernel's `revoked_on` and `serve.py`'s revocation line are not
-  changed until the register-attack results are committed. Nothing in this build edits them.
+- **A freeze, now lifted:** the registrar, the kernel's `revoked_on` and `serve.py`'s revocation
+  line were frozen until the register-attack results were committed. They were, on 2026-10-09
+  (`ee786a7`). G-44's fixes may now change the registrar; under D-9 A, sandboxes inherit them.
+  Nothing in this build edits those files.
 - **The demo** (`docs/demo-sequencing-technical-2026-10-07.md`) counts on this server for its
   side-by-side runner (baseline against the OWM, ×N, with tallies) and the "bring your own
   forgery" finale. It also has a lab session build the OWM API #16–#20 for `web-next`, "on the
@@ -323,6 +326,10 @@ What `main` added that bears on them:
      - experimenter mode also gets a **bootstrap edit**, labelled and logged in the sandbox's
        change log, for scenarios outside the rules' scope (a compromised store or import);
      - D-4's derived needles are retired.
+   - **Evidence since (your attack set, 2026-10-09):** 0 of 14 attacks admitted. One real false
+     refusal (C08, a paraphrase the phrase list doesn't know) and four RR-10 refusals where the
+     author left out `supersedes` (G-44 proposes term review and offering the supersession). Under
+     A the experimenter meets the same friction, and the tool error names the overlapped document.
    - **Caveat:** RR-8 resolves customer ids against the frozen corpus, not the sandbox's CSVs.
      That holds while the systems of record stay out of an attacker's reach, as they do in v1.
    - **B:** keep task 7's own checks. Two rule sets can then drift, and `web-next`'s #17
@@ -338,15 +345,29 @@ What `main` added that bears on them:
     - **B:** v1 as it is; a presenter runner is built separately.
     - **C:** put it in v1 now. This delays set G.
     - Blocks no v1 task. If A, its tasks are added after task 24.
-11. **D-11. Where the OWM API #16–#20 is built.**
-    - **Recommendation (A):** a third entry point on `service/`, after phase C, as a thin HTTP
-      layer whose shapes follow `web-next`'s `lib/types.ts`. One core then serves the lab server,
-      the subject server and the API. It needs read access to `kloudtaxi/glowing-garbanzo` for
-      the contract.
-    - **B:** build it separately now, directly on the lab modules, and merge later. That's faster
-      to a first endpoint, but it means two cores in the meantime.
-    - **C:** defer it until v1 is done.
-    - Blocks no v1 task. If A, its tasks are added after phase C.
+11. **D-11. The demo OWM API: when, and what it shares with this server** (revised 2026-10-09).
+    - **What changed.** On 2026-10-09 you decided that the demo API speaks the future
+      `owm-decisions` contract from day one, and that the lab service is retired once sovera-owm
+      serves it (`docs/sovera-owm-vs-semantica-and-rebuild-2026-10-09.md`). Who carries the port to
+      sovera-owm is parked "until the register attacks and the demo API are done"; the register
+      attacks are done.
+    - **The contract** is drafted in glowing-garbanzo, v1.2 (`owm/docs/contract-v1.2.md`,
+      `web-next/lib/contract/owm-decisions.ts`): #16–#20, plus clearance #21 with `redeem`,
+      decision versions and re-runs, and conditions. The agents-sketch review
+      (`docs/agents-sketch-review-2026-10-09.md`) sets the lab's order: G-46's ratchet check, then
+      clearance (G-45).
+    - **So the question is mostly order.** The API is product-shaped (decisions, versions,
+      clearance). This server is an experimenter's tool (sandboxes, blindness, scoring). They
+      share the lab modules through `_lab`, and the secret guard; little else.
+    - **Recommendation (A): the API next.** Pause this build after phase A (done). Build the demo
+      API as its own service in shiny-waffle, on `_lab` and the guard, to contract v1.2, in the
+      review's order: G-46, then #16–#21 with G-45. It gets its own plan before any code. This
+      build resumes at task 4 afterwards, reusing the API's decision and register code where it
+      fits.
+    - **B:** the API after phase C, as a third entry point on `service/` (the 2026-10-08
+      recommendation). One core, but the demo waits on nine more tasks (4 to 12).
+    - **C:** finish this server first (set G), then the API.
+    - Blocks no v1 task.
 
 **Build notes** (no decision needed):
 
