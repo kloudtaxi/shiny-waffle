@@ -152,3 +152,10 @@ cited, and its audit trail is trustworthy only as far as the database is.
    - (b) A focused build from this lab's code, against sovera-owm's quality bar, landing as PRs
      (faster, needs MM's rulings first).
 3. **Should the demo API's contract be the `owm-decisions` contract** from day one? Recommended.
+
+## The user's decisions (2026-10-09)
+
+1. **Refactor by extension.** Not a rebuild.
+2. **Who carries the port: not yet.** Parked until the register attacks and the demo API are done.
+3. **The demo API uses the future `owm-decisions` contract from day one.** The lab service is
+   retired once sovera-owm serves that contract.
