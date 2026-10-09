@@ -198,3 +198,16 @@ My v1.1 open questions (glowing-garbanzo, `ux-v1-use-manage-operate.md` §11.6):
    `owm/docs/ux-v1.2-agents-sketch.md` in glowing-garbanzo, branch `v1/use-manage-operate`.
 7. **Proof rounds:** `/present` in web-next, behind a flag.
 8. **The attack set:** done (see above).
+
+### The agents sketch, reviewed and corrected (2026-10-09)
+
+- The lab reviewed it (`docs/agents-sketch-review-2026-10-09.md`).
+- The user decided:
+  - phase 0 (who acted, in the contract) now;
+  - phase 1 (clearance) with the OWM API;
+  - phases 2–3 held until mandates are lab-tested.
+- Three fixes are applied in glowing-garbanzo `3974d2e`:
+  - the re-run ratchet (G-46);
+  - exact match by default;
+  - clearance bound to `{decision_id, decision_version, action, params, actor}` (G-45).
+- **Next:** the v1.2 contract on `owm-decisions`, phase 0 plus clearance.
