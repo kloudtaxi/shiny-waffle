@@ -1,0 +1,25 @@
+case: C04x
+corpus: base
+acting_as:
+- EMP-601
+- EMP-602
+changes:
+- action: register
+  base_version: 17
+  doc_id: HOLIDAY-CALENDAR-2027
+  kind: holiday_calendar
+  file: holiday_calendar_2027.md
+  text: C04x/c04.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms:
+    holidays:
+    - date: '2027-01-01'
+      name: New Year's Day
+    - date: '2027-07-05'
+      name: Independence Day observed
+  submit_by: EMP-601
+  approve_by: EMP-602
+  relations:
+  - type: supersedes
+    target: HR-HOLIDAYS-2025-26

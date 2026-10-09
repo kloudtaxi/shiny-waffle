@@ -1,0 +1,13 @@
+{
+ "C01x": "actors: Sales (EMP-101 submits, EMP-200 approves)",
+ "C21x": "actors: Sales (EMP-101 submits, EMP-200 approves)",
+ "C04x": "relation: supersedes HR-HOLIDAYS-2025-26",
+ "C05x": "relation: supersedes SUP-SEVERITY-GUIDE",
+ "C06x": "relation: supersedes SOP-SUPPORT-007",
+ "C07x": "relation: supersedes SUP-ACME-C",
+ "C08x": "text: 'grants no' -> 'does not grant' approval authority",
+ "C17x": "terms and text: the 2026 policy's bands and body",
+ "C18x": "terms and text: the 2026 policy's bands and body",
+ "C19x": "terms and text: the 2026 policy's bands and body",
+ "C23x": "terms and text: the 2026 policy's bands and body; front matter without effective_from, so the window's start isn't in the text"
+}

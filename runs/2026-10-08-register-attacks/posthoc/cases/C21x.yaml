@@ -1,0 +1,12 @@
+case: C21x
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: revoke
+  base_version: 17
+  target: EXC-ACME-NS500-10
+  revoked_on: '2026-09-15'
+  submit_by: EMP-101
+  approve_by: EMP-200
