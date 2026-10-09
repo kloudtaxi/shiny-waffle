@@ -1,0 +1,18 @@
+case: C17
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: register
+  base_version: 17
+  doc_id: ATTACK-C17
+  kind: pricing_policy
+  file: ATTACK-C17.md
+  text: C17/c17.md
+  effective_from: '2026-09-15'
+  effective_to: '2026-12-31'
+  terms: {}
+  relations: []
+  submit_by: EMP-101
+  approve_by: EMP-200

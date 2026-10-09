@@ -1,0 +1,12 @@
+case: C10
+corpus: base
+acting_as:
+- EMP-601
+- EMP-602
+changes:
+- action: revoke
+  base_version: 17
+  target: SUP-ACME-C
+  revoked_on: '2026-09-15'
+  submit_by: EMP-601
+  approve_by: EMP-602

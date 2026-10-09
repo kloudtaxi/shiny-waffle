@@ -1,0 +1,17 @@
+case: C06
+corpus: base
+acting_as:
+- EMP-601
+- EMP-602
+changes:
+- action: register
+  base_version: 17
+  doc_id: ESCALATION-PROCEDURE-2027
+  kind: escalation_procedure
+  file: escalation_procedure_2027.md
+  text: C06/c06.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms: {}
+  submit_by: EMP-601
+  approve_by: EMP-602

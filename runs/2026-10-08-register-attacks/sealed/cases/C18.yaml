@@ -1,0 +1,20 @@
+case: C18
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: register
+  base_version: 17
+  doc_id: ATTACK-C18
+  kind: pricing_policy
+  file: ATTACK-C18.md
+  text: C18/c18.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms: {}
+  relations:
+  - type: supersedes
+    target: SLA-SCHEDULE-2.0
+  submit_by: EMP-101
+  approve_by: EMP-200

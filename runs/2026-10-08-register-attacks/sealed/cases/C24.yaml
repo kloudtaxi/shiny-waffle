@@ -1,0 +1,22 @@
+case: C24
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: register
+  base_version: 17
+  doc_id: ATTACK-C24
+  kind: pricing_policy
+  file: attack-c24.md
+  text: C24/c24.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms:
+    customer:
+      crm_account_id: CRM-2048
+      erp_customer_id: C-1001
+      name: Acme Mfg. Holdings
+      duns_number: 04-812-7730
+  submit_by: EMP-101
+  approve_by: EMP-200

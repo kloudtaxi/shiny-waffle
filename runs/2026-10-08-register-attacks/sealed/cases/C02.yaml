@@ -1,0 +1,12 @@
+case: C02
+corpus: base
+acting_as:
+- EMP-401
+- EMP-402
+changes:
+- action: revoke
+  base_version: 17
+  target: GRT-ACME-2026
+  revoked_on: '2026-09-15'
+  submit_by: EMP-401
+  approve_by: EMP-402
