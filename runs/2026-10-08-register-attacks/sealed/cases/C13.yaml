@@ -1,0 +1,17 @@
+case: C13
+corpus: base
+acting_as:
+- EMP-401
+changes:
+- action: register
+  base_version: 17
+  doc_id: ATTACK-C13
+  kind: credit_policy
+  file: ATTACK-C13.md
+  text: C13/c13.md
+  effective_from: '2026-09-15'
+  effective_to: '2026-12-31'
+  terms: {}
+  relations: []
+  submit_by: EMP-401
+  approve_by: EMP-401

@@ -1,0 +1,2044 @@
+{
+ "acme_account_strategy.md": [
+  {
+   "predicate": "has_title",
+   "subject": "Edward Floyd",
+   "object": "VP Procurement",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Johnny Johnson",
+   "object": "Director of Plant Operations",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Kelly Ballard",
+   "object": "IT Architecture",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme",
+   "object": "15%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "discount_applies_to",
+   "subject": "Acme",
+   "object": "NS-500",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "account_type",
+   "subject": "Acme",
+   "object": "strategic account",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "headquarters_location",
+   "subject": "ACME Manufacturing",
+   "object": "Milwaukee, WI",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "annual_revenue",
+   "subject": "ACME Manufacturing",
+   "object": "$125,000,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "industry",
+   "subject": "ACME Manufacturing",
+   "object": "Industrial Manufacturing",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "erp_bill_to",
+   "subject": "ACME Manufacturing",
+   "object": "Acme Mfg. Holdings (C-1001)",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "crm_account",
+   "subject": "ACME Manufacturing",
+   "object": "CRM-2048",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "acme_master_supply_agreement.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "ACME-MFG-2025",
+   "object": "April 1, 2025",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "ACME-MFG-2025",
+   "object": "March 31, 2028",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Edward Floyd",
+   "object": "VP Procurement",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme Manufacturing and NS-500 Industrial Controller",
+   "object": "15%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "acme_parent_guarantee.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "This Guarantee",
+   "object": "2026-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "This Guarantee",
+   "object": "2027-12-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_reference",
+   "subject": "This Guarantee",
+   "object": "GRT-ACME-2026",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "guarantee_amount",
+   "subject": "Acme Mfg. Holdings",
+   "object": "$400,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Laura Whitfield",
+   "object": "Chief Financial Officer",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "guarantees",
+   "subject": "Acme Group Holdings, Inc.",
+   "object": "Northstar Industrial Systems",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "is_subsidiary_of",
+   "subject": "Acme Mfg. Holdings",
+   "object": "Acme Group Holdings, Inc.",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "does_business_as",
+   "subject": "Acme Mfg. Holdings",
+   "object": "Acme Manufacturing",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "acme_pricing_exception.md": [
+  {
+   "predicate": "title",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "Pricing Exception \u2014 Acme NS-500 Strategic Account Exception",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "part_of_agreement",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "ACME-MFG-2025",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "customer",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "Acme Manufacturing",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "product",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "NS-500 Industrial Controller (NS-500) only",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "15% of list price",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_from",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "2025-04-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "2028-03-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "supersedes",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "EXC-ACME-NS500-10",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "prepared_by",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "Sarah Chen",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approved_by",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "David Morgan",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_date",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "2025-03-20",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "acme_pricing_exception_2023.md": [
+  {
+   "predicate": "maximum_discount",
+   "subject": "ACME-SA-2023",
+   "object": "10%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "customer",
+   "subject": "ACME-SA-2023",
+   "object": "Acme Manufacturing",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "product",
+   "subject": "ACME-SA-2023",
+   "object": "NS-500 Industrial Controller",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_from",
+   "subject": "ACME-SA-2023",
+   "object": "2023-04-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "ACME-SA-2023",
+   "object": "2025-03-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "acme_support_schedule_c.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Schedule C (Support and Service Levels)",
+   "object": "2025-04-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "covers",
+   "subject": "Schedule C (Support and Service Levels)",
+   "object": "NS-500 Industrial Controller",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "covers",
+   "subject": "Schedule C (Support and Service Levels)",
+   "object": "NS-Edge Monitoring Package",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "support_plan",
+   "subject": "Schedule C (Support and Service Levels)",
+   "object": "Platinum",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "monthly_fee",
+   "subject": "Platinum",
+   "object": "$18,000 per month from 2025-04",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "monthly_fee",
+   "subject": "Platinum",
+   "object": "$21,000 per month from 2026-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "provides_support_to",
+   "subject": "Northstar Industrial Systems",
+   "object": "Acme Mfg. Holdings",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "duns_number",
+   "subject": "Acme Mfg. Holdings",
+   "object": "04-812-7730",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "located_in",
+   "subject": "Acme Mfg. Holdings",
+   "object": "Milwaukee, WI",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "parent_of",
+   "subject": "Acme Group Holdings, Inc.",
+   "object": "Acme Mfg. Holdings",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "not_covered_by",
+   "subject": "NS-Cloud Operations Suite",
+   "object": "Schedule C (Support and Service Levels)",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "not_covered_by",
+   "subject": "Acme Industrial Supply Co.",
+   "object": "Schedule C (Support and Service Levels)",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "not_covered_by",
+   "subject": "Acme Group Holdings, Inc.",
+   "object": "Schedule C (Support and Service Levels)",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "is_unrelated_to",
+   "subject": "support plan",
+   "object": "Customer's account tier",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "part_of",
+   "subject": "Schedule C (Support and Service Levels)",
+   "object": "ACME-MFG-2025",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "approval_authority_matrix.md": [
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executive",
+   "object": "\u226410%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": ">10% and \u226420%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": ">20%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "blueriver_support_terms.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SUP-BRL-2025",
+   "object": "2025-01-01 00:00 CT",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_support_plan",
+   "subject": "Blue River Logistics LLC",
+   "object": "Silver",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "covers_product",
+   "subject": "SUP-BRL-2025",
+   "object": "NS-Cloud Operations Suite (NS-CLOUD)",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "duns_number",
+   "subject": "Blue River Logistics LLC",
+   "object": "07-331-9025",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "location",
+   "subject": "Blue River Logistics LLC",
+   "object": "St. Louis, MO",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "provides_support_to",
+   "subject": "Northstar Industrial Systems",
+   "object": "Blue River Logistics LLC",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "monthly_fee",
+   "subject": "Silver",
+   "object": "$2,500 per month from 2025-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "abbreviated_as",
+   "subject": "NS-Cloud Operations Suite",
+   "object": "NS-CLOUD",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "cedar_support_terms.md": [
+  {
+   "predicate": "reference",
+   "subject": "Cedar Health Systems Support Terms",
+   "object": "SUP-CHS-2025",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_from",
+   "subject": "Cedar Health Systems Support Terms",
+   "object": "2025-12-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_support_plan",
+   "subject": "Cedar Health Systems Inc.",
+   "object": "Silver",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "covers",
+   "subject": "Silver",
+   "object": "NS-Cloud Operations Suite (NS-CLOUD)",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "covers",
+   "subject": "Silver",
+   "object": "NS-Edge Monitoring Package (NS-EDGE)",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "provides_support_to",
+   "subject": "Northstar Industrial Systems",
+   "object": "Cedar Health Systems Inc.",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "monthly_support_fee",
+   "subject": "Cedar Health Systems Inc.",
+   "object": "$4,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "duns_number",
+   "subject": "Cedar Health Systems Inc.",
+   "object": "02-906-4418",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "location",
+   "subject": "Cedar Health Systems Inc.",
+   "object": "Indianapolis, IN",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "credit_policy_2025.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Credit Policy 2025",
+   "object": "2025-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Credit Policy 2025",
+   "object": "2025-12-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Accounts Receivable Specialists",
+   "object": "$50,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Finance Manager",
+   "object": "$750,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Director of Finance",
+   "object": "$750,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Strategic accounts",
+   "object": "$600,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Standard accounts",
+   "object": "$300,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "credit_policy_2026.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Credit Policy 2026",
+   "object": "2026-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Credit Policy 2026",
+   "object": "2026-12-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Accounts Receivable Specialists",
+   "object": "$100,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Finance Manager",
+   "object": "$500,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Director of Finance",
+   "object": "greater than $500,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "concurrence_limit",
+   "subject": "VP Sales",
+   "object": "greater than $500,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Strategic accounts",
+   "object": "$750,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Standard accounts",
+   "object": "$250,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "email_sarah_to_michael.md": [
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme NS-500",
+   "object": "15%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "email_sarah_to_priya.md": [
+  {
+   "predicate": "credit_cap",
+   "subject": "Acme",
+   "object": "$400,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "previous_credit_cap",
+   "subject": "Acme",
+   "object": "$250,000",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "relates_to",
+   "subject": "CR-9201",
+   "object": "Acme credit limit",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_guarantee",
+   "subject": "Acme Group",
+   "object": "parent guarantee",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "holiday_calendar.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Holiday Calendar",
+   "object": "2025-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Holiday Calendar",
+   "object": "2026-09-07",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "New Year's Day",
+   "object": "2025-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Memorial Day",
+   "object": "2025-05-26",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Independence Day",
+   "object": "2025-07-04",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Labor Day",
+   "object": "2025-09-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Thanksgiving Day",
+   "object": "2025-11-27",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Day after Thanksgiving",
+   "object": "2025-11-28",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Christmas Day",
+   "object": "2025-12-25",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "New Year's Day",
+   "object": "2026-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Memorial Day",
+   "object": "2026-05-25",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Independence Day",
+   "object": "2026-07-03",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "occurs_on",
+   "subject": "Labor Day",
+   "object": "2026-09-07",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "organization_chart.md": [
+  {
+   "predicate": "reports_to",
+   "subject": "Michael Torres",
+   "object": "David Morgan",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Elena Novak",
+   "object": "David Morgan",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Glenn Hayes",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Misty Peterson",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Anthony Day",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Kelly Floyd",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Sarah Chen",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Zachary Brown",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Courtney Barron",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Bryan Rivera",
+   "object": "Michael Torres",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Robert Hernandez",
+   "object": "Elena Novak",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Priya Shah",
+   "object": "Elena Novak",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Shari Brown",
+   "object": "Elena Novak",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Stephanie Romero",
+   "object": "Elena Novak",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Michael Torres",
+   "object": "VP Sales",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Glenn Hayes",
+   "object": "Customer Success Manager",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Misty Peterson",
+   "object": "Customer Success Manager",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Anthony Day",
+   "object": "Enterprise Account Executive",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Kelly Floyd",
+   "object": "Enterprise Account Executive",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Sarah Chen",
+   "object": "Enterprise Account Executive",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Zachary Brown",
+   "object": "Enterprise Account Executive",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Courtney Barron",
+   "object": "Sales Engineer",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Bryan Rivera",
+   "object": "Sales Operations Analyst",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Elena Novak",
+   "object": "Director of Finance",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Robert Hernandez",
+   "object": "Accounts Receivable Specialist",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Priya Shah",
+   "object": "Finance Manager",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Shari Brown",
+   "object": "Financial Analyst",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Stephanie Romero",
+   "object": "Financial Analyst",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_from",
+   "subject": "Organization Chart",
+   "object": "2026-09-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "pricing_policy_2025.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Pricing Policy 2025",
+   "object": "2025-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Pricing Policy 2025",
+   "object": "2025-12-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executives",
+   "object": "15%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": "greater than 15%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "pricing_policy_2026.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Pricing Policy 2026",
+   "object": "2026-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Pricing Policy 2026",
+   "object": "2026-12-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executives",
+   "object": "10%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": "20%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": "20%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "pricing_policy_2027.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Pricing Policy 2027",
+   "object": "2027-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Pricing Policy 2027",
+   "object": "2027-12-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "replaces",
+   "subject": "Northstar Pricing Policy 2027",
+   "object": "Northstar Pricing Policy 2026",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executives",
+   "object": "5%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": "12%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": "greater than 12%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "sales_discount_sop.md": [
+  {
+   "predicate": "covers",
+   "subject": "pricing exception",
+   "object": "product",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "processed_in",
+   "subject": "discount request",
+   "object": "Northstar CRM",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "service_ticket_acme_industrial.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SR-40418",
+   "object": "2026-09-14",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "account",
+   "subject": "SR-40418",
+   "object": "Acme Industrial",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_account_id",
+   "subject": "Acme Industrial",
+   "object": "CRM-2091",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "product",
+   "subject": "SR-40418",
+   "object": "NS-Edge Monitoring Package",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_product_code",
+   "subject": "NS-Edge Monitoring Package",
+   "object": "NS-EDGE",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "site",
+   "subject": "SR-40418",
+   "object": "Akron, OH",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "contact",
+   "subject": "SR-40418",
+   "object": "Amy Barrett",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "priority",
+   "subject": "SR-40418",
+   "object": "P3",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "sla_schedule_v1.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Support Service Level Schedule v1.0",
+   "object": "2025-01-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Support Service Level Schedule v1.0",
+   "object": "2026-03-31",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "monthly customer service credits",
+   "object": "20%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 1",
+   "object": "1 hour",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 1",
+   "object": "8 hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 1",
+   "object": "24\u00d77",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "service_credit",
+   "subject": "Severity 1 initial response",
+   "object": "5%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "service_credit",
+   "subject": "Severity 1 restoration",
+   "object": "10%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 2 Platinum plan",
+   "object": "4 hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 2 Platinum plan",
+   "object": "24 hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 2 Platinum plan",
+   "object": "24\u00d77",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 2 Silver plan",
+   "object": "4 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 2 Silver plan",
+   "object": "24 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 2 Silver plan",
+   "object": "Business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "service_credit",
+   "subject": "Severity 2 initial response",
+   "object": "2%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "service_credit",
+   "subject": "Severity 2 restoration",
+   "object": "5%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 3",
+   "object": "8 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 3",
+   "object": "50 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 3",
+   "object": "Business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "service_credit",
+   "subject": "Severity 3",
+   "object": "none",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 4",
+   "object": "20 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 4",
+   "object": "No restoration target",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 4",
+   "object": "Business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "service_credit",
+   "subject": "Severity 4",
+   "object": "none",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "time_range",
+   "subject": "business hours",
+   "object": "08:00 to 18:00 CT",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "duration",
+   "subject": "business day",
+   "object": "10 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "advance_notice_requirement",
+   "subject": "maintenance window notice",
+   "object": "3 business days",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "deadline",
+   "subject": "Support Engineering Lead root-cause finding",
+   "object": "10 business days",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "deadline",
+   "subject": "credit claim decision",
+   "object": "30 calendar days",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "claim_window",
+   "subject": "credit claim",
+   "object": "60 calendar days",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reporting_requirement",
+   "subject": "Severity 1 incident",
+   "object": "telephone",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "phone_number",
+   "subject": "Northstar Support hotline",
+   "object": "(312) 555-0187",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "submission_email",
+   "subject": "credit claim",
+   "object": "support-credits@northstar.example",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "decides",
+   "subject": "Director of Customer Support",
+   "object": "credit claim",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "issues",
+   "subject": "Support Billing Manager",
+   "object": "credit memo",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reclassified_to",
+   "subject": "Severity 1 ticket",
+   "object": "Severity 2",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "sla_schedule_v2.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Support Service Level Schedule v2.0",
+   "object": "2026-04-01",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 1",
+   "object": "30 minutes",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 1",
+   "object": "4 hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 1",
+   "object": "24\u00d77",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 2 Platinum plan",
+   "object": "2 hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 2 Platinum plan",
+   "object": "12 hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 2 Platinum plan",
+   "object": "24\u00d77",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 2 Silver plan",
+   "object": "2 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 2 Silver plan",
+   "object": "12 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 2 Silver plan",
+   "object": "Business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 3",
+   "object": "8 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "restoration_target",
+   "subject": "Severity 3",
+   "object": "30 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 3",
+   "object": "Business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "initial_response_target",
+   "subject": "Severity 4",
+   "object": "20 business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "clock_type",
+   "subject": "Severity 4",
+   "object": "Business hours",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_percentage",
+   "subject": "Severity 1 initial response",
+   "object": "5%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_percentage",
+   "subject": "Severity 2 initial response",
+   "object": "3%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_percentage",
+   "subject": "Severity 1 restoration band 1",
+   "object": "10%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_percentage",
+   "subject": "Severity 2 restoration band 1",
+   "object": "5%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_percentage",
+   "subject": "Severity 1 restoration band 2",
+   "object": "20%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_percentage",
+   "subject": "Severity 2 restoration band 2",
+   "object": "10%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "customer support credits",
+   "object": "30%",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "support_escalation_procedure.md": [
+  {
+   "predicate": "has_role",
+   "subject": "Support Escalation Manager",
+   "object": "incident lead",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "involved_in_escalation",
+   "subject": "Support Escalation Manager",
+   "object": "Severity 1",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "account owner",
+   "object": "Severity 1",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "Director of Customer Support",
+   "object": "Severity 1",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "VP Sales",
+   "object": "Severity 1",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "Chief Revenue Officer",
+   "object": "Severity 1",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_for_account_tier",
+   "subject": "Chief Revenue Officer",
+   "object": "Strategic",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "Support Escalation Manager",
+   "object": "Severity 2",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "Director of Customer Support",
+   "object": "Severity 2",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "account owner",
+   "object": "Severity 2",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in_escalation",
+   "subject": "Support Escalation Manager",
+   "object": "Severity 3",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_escalation",
+   "subject": "Severity 4",
+   "object": "no",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "is_account_tier",
+   "subject": "Strategic",
+   "object": "CRM account tier",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "records",
+   "subject": "Support Engineering Lead",
+   "object": "root-cause finding",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "sends",
+   "subject": "Director of Customer Support",
+   "object": "written decision",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "issues",
+   "subject": "Support Billing Manager",
+   "object": "credit memo",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "notified_in",
+   "subject": "account owner",
+   "object": "Out-of-scope tickets",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "support_org_chart.md": [
+  {
+   "predicate": "has_title",
+   "subject": "Hannah Lindqvist",
+   "object": "Support Escalation Manager",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Marcus Adeyemi",
+   "object": "Director of Customer Support",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Owen Takahashi",
+   "object": "Support Engineering Lead",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Paul Brennan",
+   "object": "Support Billing Manager",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Michael Torres",
+   "object": "VP Sales",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Hannah Lindqvist",
+   "object": "Marcus Adeyemi",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Owen Takahashi",
+   "object": "Marcus Adeyemi",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Paul Brennan",
+   "object": "Marcus Adeyemi",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ],
+ "support_severity_guide.md": [
+  {
+   "predicate": "http://example.org/provides",
+   "subject": "http://example.org/Northstar",
+   "object": "http://example.org/NS-Cloud",
+   "quote": null,
+   "span": null,
+   "meta": {}
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+case: C08
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: register
+  base_version: 17
+  doc_id: EXC-ACME-NS500-2029
+  kind: exception
+  file: acme_exception_2029.md
+  text: C08/c08.md
+  effective_from: '2029-01-01'
+  effective_to: '2029-12-31'
+  terms:
+    customer:
+      crm_account_id: CRM-2048
+      erp_customer_id: C-1001
+      name: Acme Mfg. Holdings
+      duns_number: 04-812-7730
+    product: NS-500
+    maximum_discount: 0.18
+    grants_approval_authority: false
+  relations:
+  - type: supersedes
+    target: EXC-ACME-NS500-15
+  submit_by: EMP-101
+  approve_by: EMP-200

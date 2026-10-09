@@ -1,0 +1,193 @@
+[
+ {
+  "case": "C01x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": [
+   {
+    "scenario": "S01",
+    "kind": "discount",
+    "outcome_level": true,
+    "before": "('APPROVE_WITH_AUTHORIZATION', 'Michael Torres', False)",
+    "after": "('REVIEW_REQUIRED', 'Michael Torres', False)",
+    "before_full": "('APPROVE_WITH_AUTHORIZATION', 'Michael Torres', False, 'eligible', 0.15)",
+    "after_full": "('REVIEW_REQUIRED', 'Michael Torres', False, 'not_covered', None)",
+    "flags_after": [
+     "EXC-ACME-NS500-15: not registered; set aside until it is"
+    ]
+   },
+   {
+    "scenario": "S02",
+    "kind": "discount",
+    "outcome_level": true,
+    "before": "('REJECT_OR_ESCALATE', 'Michael Torres', False)",
+    "after": "('REVIEW_REQUIRED', 'Michael Torres', False)",
+    "before_full": "('REJECT_OR_ESCALATE', 'Michael Torres', False, 'exceeded', 0.15)",
+    "after_full": "('REVIEW_REQUIRED', 'Michael Torres', False, 'not_covered', None)",
+    "flags_after": [
+     "EXC-ACME-NS500-15: not registered; set aside until it is"
+    ]
+   },
+   {
+    "scenario": "S20",
+    "kind": "discount",
+    "outcome_level": true,
+    "before": "('REJECT_OR_ESCALATE', 'Michael Torres', True)",
+    "after": "('REVIEW_REQUIRED', 'Michael Torres', True)",
+    "before_full": "('REJECT_OR_ESCALATE', 'Michael Torres', True, 'exceeded', 0.15)",
+    "after_full": "('REVIEW_REQUIRED', 'Michael Torres', True, 'not_covered', None)",
+    "flags_after": [
+     "EXC-ACME-NS500-15: not registered; set aside until it is"
+    ]
+   },
+   {
+    "scenario": "S21",
+    "kind": "discount",
+    "outcome_level": true,
+    "before": "('APPROVE_WITH_AUTHORIZATION', 'David Morgan', False)",
+    "after": "('REVIEW_REQUIRED', 'David Morgan', False)",
+    "before_full": "('APPROVE_WITH_AUTHORIZATION', 'David Morgan', False, 'eligible', 0.15)",
+    "after_full": "('REVIEW_REQUIRED', 'David Morgan', False, 'not_covered', None)",
+    "flags_after": [
+     "EXC-ACME-NS500-15: not registered; set aside until it is"
+    ]
+   }
+  ]
+ },
+ {
+  "case": "C04x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C05x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C06x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C07x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C08x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C17x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-10",
+    "why": "RR-10: overlaps PRICING-POLICY-2026 (2026-01-01 to 2026-12-31) without superseding it"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C18x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-11",
+    "why": "RR-11: SLA-SCHEDULE-2.0 is a sla_schedule for company; this is a pricing_policy for company"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C19x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-14",
+    "why": "RR-14: relation type 'replaces' isn't allowed"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C21x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "refused",
+    "rule": "RR-12",
+    "why": "RR-12: EXC-ACME-NS500-10 is no longer live on 2026-09-15"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C23x",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-7",
+    "why": "RR-7: effective_from 2026-09-15 is not stated in the text"
+   }
+  ],
+  "decisions_moved": []
+ }
+]

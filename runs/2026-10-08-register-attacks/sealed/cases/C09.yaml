@@ -1,0 +1,36 @@
+case: C09
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: register
+  base_version: 17
+  doc_id: PRICING-POLICY-2028
+  kind: pricing_policy
+  file: pricing_policy_2028.md
+  text: C09/c09.md
+  effective_from: '2028-01-01'
+  effective_to: '2028-12-31'
+  terms:
+    bands:
+    - title: Enterprise Account Executive
+      min_exclusive: null
+      max_inclusive: 0.08
+    - title: VP Sales
+      min_exclusive: 0.08
+      max_inclusive: 0.18
+    - title: Chief Revenue Officer
+      min_exclusive: 0.18
+      max_inclusive: null
+    approval_evidence_required_above: 0.08
+    rules:
+    - Discounts are calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
+    - Discounts greater than 8% require recorded approval evidence.
+    authority_reference: Approval Authority Matrix (the operational reference)
+  relations:
+  - type: supersedes
+    target: PRICING-POLICY-2027
+  submit_by: EMP-101
+  approve_by: EMP-200

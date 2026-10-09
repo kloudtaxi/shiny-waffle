@@ -1,0 +1,20 @@
+case: C19
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: register
+  base_version: 17
+  doc_id: ATTACK-C19
+  kind: pricing_policy
+  file: ATTACK-C19.md
+  text: C19/c19.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms: {}
+  relations:
+  - type: replaces
+    target: PRICING-POLICY-2026
+  submit_by: EMP-101
+  approve_by: EMP-200

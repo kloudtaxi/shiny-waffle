@@ -1,0 +1,20 @@
+case: C05x
+corpus: base
+acting_as:
+- EMP-601
+- EMP-602
+changes:
+- action: register
+  base_version: 17
+  doc_id: SEVERITY-GUIDE-2027
+  kind: severity_guide
+  file: severity_guide_2027.md
+  text: C05x/c05.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms: {}
+  submit_by: EMP-601
+  approve_by: EMP-602
+  relations:
+  - type: supersedes
+    target: SUP-SEVERITY-GUIDE

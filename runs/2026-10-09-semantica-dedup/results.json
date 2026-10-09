@@ -1,0 +1,138 @@
+{
+ "base/D0": {
+  "pairs": 21661,
+  "same": 108,
+  "rule_mismatch": 89,
+  "merge": 18507,
+  "false_merge": 18402,
+  "missed": 3,
+  "sweep": {
+   "0.5": {
+    "false_merges": 19720,
+    "missed": 0
+   },
+   "0.6": {
+    "false_merges": 19401,
+    "missed": 0
+   },
+   "0.7": {
+    "false_merges": 18491,
+    "missed": 3
+   },
+   "0.8": {
+    "false_merges": 11642,
+    "missed": 82
+   },
+   "0.9": {
+    "false_merges": 0,
+    "missed": 104
+   },
+   "0.95": {
+    "false_merges": 0,
+    "missed": 108
+   }
+  }
+ },
+ "base/D1": {
+  "pairs": 21661,
+  "same": 108,
+  "rule_mismatch": 89,
+  "merge": 18507,
+  "false_merge": 18402,
+  "missed": 3,
+  "sweep": {
+   "0.5": {
+    "false_merges": 19285,
+    "missed": 0
+   },
+   "0.6": {
+    "false_merges": 19285,
+    "missed": 0
+   },
+   "0.7": {
+    "false_merges": 18491,
+    "missed": 3
+   },
+   "0.8": {
+    "false_merges": 11642,
+    "missed": 82
+   },
+   "0.9": {
+    "false_merges": 0,
+    "missed": 104
+   },
+   "0.95": {
+    "false_merges": 0,
+    "missed": 108
+   }
+  }
+ },
+ "missing-contract/D0": {
+  "pairs": 19956,
+  "same": 93,
+  "rule_mismatch": 62,
+  "merge": 17656,
+  "false_merge": 17564,
+  "missed": 1,
+  "sweep": {
+   "0.5": {
+    "false_merges": 18640,
+    "missed": 0
+   },
+   "0.6": {
+    "false_merges": 18320,
+    "missed": 0
+   },
+   "0.7": {
+    "false_merges": 17626,
+    "missed": 1
+   },
+   "0.8": {
+    "false_merges": 10423,
+    "missed": 81
+   },
+   "0.9": {
+    "false_merges": 0,
+    "missed": 88
+   },
+   "0.95": {
+    "false_merges": 0,
+    "missed": 93
+   }
+  }
+ },
+ "missing-contract/D1": {
+  "pairs": 19956,
+  "same": 93,
+  "rule_mismatch": 62,
+  "merge": 17656,
+  "false_merge": 17564,
+  "missed": 1,
+  "sweep": {
+   "0.5": {
+    "false_merges": 18179,
+    "missed": 0
+   },
+   "0.6": {
+    "false_merges": 18179,
+    "missed": 0
+   },
+   "0.7": {
+    "false_merges": 17626,
+    "missed": 1
+   },
+   "0.8": {
+    "false_merges": 10423,
+    "missed": 81
+   },
+   "0.9": {
+    "false_merges": 0,
+    "missed": 88
+   },
+   "0.95": {
+    "false_merges": 0,
+    "missed": 93
+   }
+  }
+ }
+}

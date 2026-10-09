@@ -1,0 +1,33 @@
+{
+ "baseline": {
+  "recall": 0.833,
+  "tp": {
+   "effective_from": 13,
+   "effective_to": 9,
+   "guarantee_amount": 1,
+   "maximum_discount": 2,
+   "approval_limit": 17,
+   "credit_cap": 4,
+   "has_title": 21,
+   "reports_to": 3
+  },
+  "precision_on_gold_docs": 0.959,
+  "locatable": 1.0
+ },
+ "langextract": {
+  "recall": 0.833,
+  "tp": {
+   "effective_from": 13,
+   "effective_to": 9,
+   "guarantee_amount": 1,
+   "maximum_discount": 2,
+   "approval_limit": 17,
+   "credit_cap": 4,
+   "has_title": 21,
+   "reports_to": 3
+  },
+  "precision_on_gold_docs": 0.933,
+  "locatable": 1.0
+ },
+ "usd_pdf_extraction": 0.87
+}
