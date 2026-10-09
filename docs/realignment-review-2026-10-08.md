@@ -161,3 +161,28 @@ My v1.1 open questions (glowing-garbanzo, `ux-v1-use-manage-operate.md` §11.6):
   that was never merged. It now carries this review too. Merge it, or leave it on the branch.
 - The client demo (`kloudtaxi/blueleaf-demo`) is pinned at `dataset-2026-10-03`, which predates the
   register and `conditions`. The sequencing feedback already lists the requests to the lab.
+
+## 7. Since this review (2026-10-09)
+
+### The user's decision: blocking conditions (Lab Ledger G-45)
+
+- **Now:** web-next says only what the record does ("marked not ready to act on"). Done in
+  glowing-garbanzo at `cecc8e9`. That covers the three lines G-45 quotes, plus two of the same
+  class.
+- **In the OWM API** (shiny-waffle, on the `owm-decisions` contract), a **clearance check** rather
+  than an "act" endpoint:
+  - `POST /decisions/{id}/clearance {action, actor}` returns either a logged clearance, or a refusal
+    that lists the open conditions;
+  - #19 holds an approval request while a blocking condition is open;
+  - resolving a condition re-runs the decision.
+- **When it ships,** web-next adds a **Try to act** button that shows the refusal, labelled as the
+  OWM's own check. Until then, the reworded copy stays. web-next lists it as endpoint #21
+  (`owm/docs/ops-api-gaps.md`).
+
+### What changed on `main` that this review should note
+
+- **The contract (§2.1):** the demo API uses the future `owm-decisions` contract from day one
+  (`docs/sovera-owm-vs-semantica-and-rebuild-2026-10-09.md`). The v1.2 shapes proposed in §2.1 are
+  therefore written against `owm-decisions`, with web-next adapting to them, not the other way round.
+- **§3 item 8 is done:** the user wrote the sealed attack set, and the run admitted 0 of 14 attacks
+  (`runs/2026-10-08-register-attacks`; follow-up on G-44).
