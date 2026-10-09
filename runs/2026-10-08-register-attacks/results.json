@@ -1,0 +1,355 @@
+[
+ {
+  "case": "C01",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "refused",
+    "rule": "RR-3",
+    "why": "RR-3: EMP-601 is not in Sales, which owns exception"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C02",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": [
+   {
+    "scenario": "S28",
+    "kind": "credit",
+    "outcome_level": true,
+    "before": "('APPROVE_WITH_AUTHORIZATION', (('Elena Novak', 'approval'), ('Michael Torres', 'concurrence')))",
+    "after": "('REQUEST_EVIDENCE', ())",
+    "before_full": "('APPROVE_WITH_AUTHORIZATION', (('Elena Novak', 'approval'), ('Michael Torres', 'concurrence')), False, 'eligible', 1150000.0)",
+    "after_full": "('REQUEST_EVIDENCE', (), False, 'unknown', None)",
+    "flags_after": [
+     "GRT-ACME-2026: not registered; set aside until it is"
+    ]
+   },
+   {
+    "scenario": "S29",
+    "kind": "credit",
+    "outcome_level": true,
+    "before": "('REJECT_OR_ESCALATE', ())",
+    "after": "('REQUEST_EVIDENCE', ())",
+    "before_full": "('REJECT_OR_ESCALATE', (), False, 'exceeded', 1150000.0)",
+    "after_full": "('REQUEST_EVIDENCE', (), False, 'unknown', None)",
+    "flags_after": [
+     "GRT-ACME-2026: not registered; set aside until it is"
+    ]
+   }
+  ]
+ },
+ {
+  "case": "C03",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C04",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-10",
+    "why": "RR-10: overlaps HR-HOLIDAYS-2025-26 (2025-01-01 to open) without superseding it"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C05",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-10",
+    "why": "RR-10: overlaps SUP-SEVERITY-GUIDE (2024-12-15 to open) without superseding it"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C06",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-10",
+    "why": "RR-10: overlaps SOP-SUPPORT-007 (2024-12-15 to open) without superseding it"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C07",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-10",
+    "why": "RR-10: overlaps SUP-ACME-C (2025-04-01 to open) without superseding it"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C08",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-6",
+    "why": "RR-6: terms say it grants no approval authority; the text doesn't"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C09",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C10",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "admitted"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C11",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-1",
+    "why": "RR-1: EMP-200 acted, but the actor doesn't control EMP-200"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C12",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-3",
+    "why": "RR-3: EMP-101 is not in Finance, which owns credit_policy"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C13",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-4",
+    "why": "RR-4: the approver is the submitter"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C14",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-4",
+    "why": "RR-4: EMP-200 may not approve credit_policy (needs the Finance head or an Executive)"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C15",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-5",
+    "why": "RR-5: PRICING-POLICY-2026 is already registered"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C16",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-9",
+    "why": "RR-9: effective 2026-08-01, before the register's clock 2026-09-01"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C17",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-6",
+    "why": "RR-6: required terms missing: ['bands']"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C18",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-6",
+    "why": "RR-6: required terms missing: ['bands']"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C19",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-6",
+    "why": "RR-6: required terms missing: ['bands']"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C20",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-13",
+    "why": "RR-13: prepared against version 16, but the register is at version 17; re-prepare"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C21",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "refused",
+    "rule": "RR-3",
+    "why": "RR-3: EMP-601 is not in Sales, which owns exception"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C22",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "revoke",
+    "result": "refused",
+    "rule": "RR-12",
+    "why": "RR-12: 'DOES-NOT-EXIST' isn't registered"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C23",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-6",
+    "why": "RR-6: required terms missing: ['bands']"
+   }
+  ],
+  "decisions_moved": []
+ },
+ {
+  "case": "C24",
+  "corpus": "base",
+  "steps": [
+   {
+    "change": 1,
+    "action": "register",
+    "result": "refused",
+    "rule": "RR-6",
+    "why": "RR-6: terms not in the pricing_policy schema: ['customer']"
+   }
+  ],
+  "decisions_moved": []
+ }
+]

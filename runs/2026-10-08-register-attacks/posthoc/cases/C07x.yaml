@@ -1,0 +1,30 @@
+case: C07x
+corpus: base
+acting_as:
+- EMP-601
+- EMP-602
+changes:
+- action: register
+  base_version: 17
+  doc_id: SUP-ACME-2027
+  kind: support_terms
+  file: acme_support_2027.md
+  text: C07x/c07.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms:
+    customer:
+      crm_account_id: CRM-2048
+      erp_customer_id: C-1001
+      name: Acme Mfg. Holdings
+      duns_number: 04-812-7730
+    plan: Platinum
+    products:
+    - NS-500
+    - NS-CLOUD
+    coverage_start: '2027-01-01'
+  submit_by: EMP-601
+  approve_by: EMP-602
+  relations:
+  - type: supersedes
+    target: SUP-ACME-C

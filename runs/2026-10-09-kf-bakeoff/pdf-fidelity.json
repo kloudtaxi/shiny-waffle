@@ -1,0 +1,131 @@
+{
+ "surfaces": {
+  "credit_policy_2025.md": [
+   7,
+   7
+  ],
+  "credit_policy_2026.md": [
+   7,
+   7
+  ],
+  "acme_parent_guarantee.md": [
+   3,
+   3
+  ],
+  "pricing_policy_2025.md": [
+   4,
+   4
+  ],
+  "pricing_policy_2026.md": [
+   5,
+   5
+  ],
+  "pricing_policy_2027.md": [
+   5,
+   5
+  ],
+  "acme_pricing_exception.md": [
+   3,
+   3
+  ],
+  "acme_pricing_exception_2023.md": [
+   3,
+   3
+  ],
+  "sla_schedule_v1.md": [
+   2,
+   2
+  ],
+  "sla_schedule_v2.md": [
+   1,
+   1
+  ],
+  "acme_support_schedule_c.md": [
+   1,
+   1
+  ],
+  "blueriver_support_terms.md": [
+   1,
+   1
+  ],
+  "cedar_support_terms.md": [
+   1,
+   1
+  ],
+  "approval_authority_matrix.md": [
+   3,
+   3
+  ],
+  "organization_chart.md": [
+   28,
+   28
+  ],
+  "support_org_chart.md": [
+   10,
+   10
+  ]
+ },
+ "tables": {
+  "acme_master_supply_agreement.md": [
+   2,
+   2
+  ],
+  "acme_parent_guarantee.md": [
+   2,
+   2
+  ],
+  "acme_pricing_exception.md": [
+   6,
+   6
+  ],
+  "acme_support_schedule_c.md": [
+   4,
+   4
+  ],
+  "approval_authority_matrix.md": [
+   3,
+   3
+  ],
+  "blueriver_support_terms.md": [
+   4,
+   4
+  ],
+  "cedar_support_terms.md": [
+   4,
+   4
+  ],
+  "holiday_calendar.md": [
+   11,
+   11
+  ],
+  "service_ticket_acme_industrial.md": [
+   6,
+   6
+  ],
+  "sla_schedule_v1.md": [
+   8,
+   8
+  ],
+  "sla_schedule_v2.md": [
+   9,
+   9
+  ],
+  "support_org_chart.md": [
+   6,
+   6
+  ]
+ },
+ "nesting": {
+  "organization_chart.md": [
+   0,
+   13
+  ],
+  "support_org_chart.md": [
+   0,
+   0
+  ]
+ },
+ "surfaces_kept": 1.0,
+ "table_rows_kept": 1.0,
+ "nested_items_kept": 0.0
+}

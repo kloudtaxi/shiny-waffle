@@ -1,0 +1,989 @@
+{
+ "acme_account_strategy.md": [
+  {
+   "predicate": "has_title",
+   "subject": "Edward Floyd",
+   "object": "VP Procurement",
+   "quote": "Edward Floyd (VP Procurement)",
+   "span": [
+    480,
+    509
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Johnny Johnson",
+   "object": "Director of Plant Operations",
+   "quote": "Johnny Johnson (Director of Plant Operations)",
+   "span": [
+    511,
+    556
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Kelly Ballard",
+   "object": "IT Architecture",
+   "quote": "Kelly Ballard (IT Architecture)",
+   "span": [
+    558,
+    589
+   ]
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme and NS-500",
+   "object": "15%",
+   "quote": "I believe it's 15%",
+   "span": [
+    852,
+    870
+   ]
+  }
+ ],
+ "acme_master_supply_agreement.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Master Supply Agreement",
+   "object": "April 1, 2025",
+   "quote": "This Agreement is effective April 1, 2025",
+   "span": [
+    328,
+    369
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Master Supply Agreement",
+   "object": "March 31, 2028",
+   "quote": "expires March 31, 2028",
+   "span": [
+    374,
+    396
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": "David Morgan, Chief Revenue Officer",
+   "span": [
+    1270,
+    1305
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Edward Floyd",
+   "object": "VP Procurement",
+   "quote": "Edward Floyd, VP Procurement",
+   "span": [
+    1308,
+    1336
+   ]
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme Mfg. Holdings and NS-500 Industrial Controller",
+   "object": "15%",
+   "quote": "Customer is eligible for discounts of up to **15%** on the NS-500 Industrial Controller",
+   "span": null
+  }
+ ],
+ "acme_parent_guarantee.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "this Guarantee",
+   "object": "2026-01-01",
+   "quote": "This Guarantee is effective from 2026-01-01 to 2027-12-31.",
+   "span": [
+    610,
+    668
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "this Guarantee",
+   "object": "2027-12-31",
+   "quote": "This Guarantee is effective from 2026-01-01 to 2027-12-31.",
+   "span": [
+    610,
+    668
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Laura Whitfield",
+   "object": "Chief Financial Officer",
+   "quote": "Laura Whitfield, Chief Financial Officer",
+   "span": [
+    744,
+    784
+   ]
+  },
+  {
+   "predicate": "guarantee_amount",
+   "subject": "Acme Mfg. Holdings",
+   "object": "$400,000",
+   "quote": "The Guarantor's liability under this Guarantee is limited to $400,000 in aggregate.",
+   "span": null
+  }
+ ],
+ "acme_pricing_exception.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Pricing Exception \u2014 Acme NS-500 Strategic Account Exception",
+   "object": "2025-04-01",
+   "quote": "Effective | 2025-04-01",
+   "span": [
+    314,
+    336
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Pricing Exception \u2014 Acme NS-500 Strategic Account Exception",
+   "object": "2028-03-31",
+   "quote": "Expires | 2028-03-31",
+   "span": [
+    341,
+    361
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": "David Morgan, Chief Revenue Officer, 2025-03-20",
+   "span": [
+    781,
+    828
+   ]
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme Manufacturing and NS-500 Industrial Controller",
+   "object": "15% of list price",
+   "quote": "Maximum eligible discount | 15% of list price",
+   "span": [
+    264,
+    309
+   ]
+  }
+ ],
+ "acme_pricing_exception_2023.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "this document",
+   "object": "2023-04-01",
+   "quote": "from 2023-04-01",
+   "span": [
+    219,
+    234
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "this document",
+   "object": "2025-03-31",
+   "quote": "to 2025-03-31",
+   "span": null
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme Manufacturing on NS-500 Industrial Controller",
+   "object": "10%",
+   "quote": "Acme Manufacturing may receive up to **10%** off list price on the NS-500 Industrial Controller (NS-500)",
+   "span": null
+  }
+ ],
+ "acme_support_schedule_c.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Schedule C (Support and Service Levels) to ACME-MFG-2025",
+   "object": "2025-04-01 00:00 CT",
+   "quote": "Coverage starts 2025-04-01 00:00 CT",
+   "span": null
+  }
+ ],
+ "approval_authority_matrix.md": [
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executive",
+   "object": "10%",
+   "quote": "\u226410%",
+   "span": [
+    209,
+    213
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": "20%",
+   "quote": ">10% and \u226420%",
+   "span": [
+    229,
+    242
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": "20%",
+   "quote": ">20%",
+   "span": [
+    271,
+    275
+   ]
+  }
+ ],
+ "blueriver_support_terms.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SUP-BRL-2025",
+   "object": "2025-01-01 00:00 CT",
+   "quote": "Coverage starts | 2025-01-01 00:00 CT",
+   "span": [
+    308,
+    345
+   ]
+  }
+ ],
+ "cedar_support_terms.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Cedar Health Systems Support Terms",
+   "object": "2025-12-01 00:00 CT",
+   "quote": "Coverage starts | 2025-12-01 00:00 CT",
+   "span": [
+    351,
+    388
+   ]
+  }
+ ],
+ "credit_policy_2025.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Credit Policy 2025",
+   "object": "2025-01-01",
+   "quote": "This policy is effective from 2025-01-01 through 2025-12-31.",
+   "span": [
+    184,
+    244
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Credit Policy 2025",
+   "object": "2025-12-31",
+   "quote": "This policy is effective from 2025-01-01 through 2025-12-31.",
+   "span": [
+    184,
+    244
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Accounts Receivable Specialist",
+   "object": "$50,000",
+   "quote": "Accounts Receivable Specialists may approve credit limits up to and including $50,000.",
+   "span": [
+    424,
+    510
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Finance Manager",
+   "object": "$750,000",
+   "quote": "Credit limits greater than $50,000 and up to and including $750,000 require Finance Manager approval.",
+   "span": [
+    513,
+    614
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Director of Finance",
+   "object": "$750,000",
+   "quote": "Credit limits greater than $750,000 require Director of Finance approval.",
+   "span": [
+    617,
+    690
+   ]
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Strategic accounts",
+   "object": "$600,000",
+   "quote": "Maximum credit limit: $600,000 for Strategic accounts",
+   "span": [
+    943,
+    996
+   ]
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Standard accounts",
+   "object": "$300,000",
+   "quote": "$300,000 for Standard accounts.",
+   "span": [
+    998,
+    1029
+   ]
+  }
+ ],
+ "credit_policy_2026.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Credit Policy 2026",
+   "object": "2026-01-01",
+   "quote": "This policy is effective from 2026-01-01 through 2026-12-31.",
+   "span": [
+    184,
+    244
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Credit Policy 2026",
+   "object": "2026-12-31",
+   "quote": "This policy is effective from 2026-01-01 through 2026-12-31.",
+   "span": [
+    184,
+    244
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Accounts Receivable Specialists",
+   "object": "$100,000",
+   "quote": "Accounts Receivable Specialists may approve credit limits up to and including $100,000.",
+   "span": [
+    424,
+    511
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Finance Manager",
+   "object": "$500,000",
+   "quote": "Credit limits greater than $100,000 and up to and including $500,000 require Finance Manager approval.",
+   "span": [
+    514,
+    616
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Director of Finance",
+   "object": "$500,000",
+   "quote": "Credit limits greater than $500,000 require Director of Finance approval.",
+   "span": [
+    619,
+    692
+   ]
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Strategic accounts",
+   "object": "$750,000",
+   "quote": "Maximum credit limit: $750,000 for Strategic accounts; $250,000 for Standard accounts.",
+   "span": [
+    1004,
+    1090
+   ]
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Standard accounts",
+   "object": "$250,000",
+   "quote": "Maximum credit limit: $750,000 for Strategic accounts; $250,000 for Standard accounts.",
+   "span": [
+    1004,
+    1090
+   ]
+  }
+ ],
+ "email_sarah_to_michael.md": [],
+ "email_sarah_to_priya.md": [
+  {
+   "predicate": "credit_cap",
+   "subject": "Acme",
+   "object": "$400,000",
+   "quote": "I've raised CR-9201 to take their credit limit from $250,000 to $400,000.",
+   "span": null
+  }
+ ],
+ "holiday_calendar.md": [],
+ "organization_chart.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "the document",
+   "object": "2026-09-01",
+   "quote": "Reporting lines as of 2026-09-01",
+   "span": [
+    73,
+    105
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": "**David Morgan** \u2014 Chief Revenue Officer",
+   "span": [
+    149,
+    189
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Michael Torres",
+   "object": "VP Sales",
+   "quote": "**Michael Torres** \u2014 VP Sales",
+   "span": [
+    194,
+    223
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Michael Torres",
+   "object": "David Morgan",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Glenn Hayes",
+   "object": "Customer Success Manager",
+   "quote": "**Glenn Hayes** \u2014 Customer Success Manager",
+   "span": [
+    230,
+    272
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Glenn Hayes",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Misty Peterson",
+   "object": "Customer Success Manager",
+   "quote": "**Misty Peterson** \u2014 Customer Success Manager",
+   "span": [
+    279,
+    324
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Misty Peterson",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Anthony Day",
+   "object": "Enterprise Account Executive",
+   "quote": "**Anthony Day** \u2014 Enterprise Account Executive",
+   "span": [
+    331,
+    377
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Anthony Day",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Kelly Floyd",
+   "object": "Enterprise Account Executive",
+   "quote": "**Kelly Floyd** \u2014 Enterprise Account Executive",
+   "span": [
+    384,
+    430
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Kelly Floyd",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Sarah Chen",
+   "object": "Enterprise Account Executive",
+   "quote": "**Sarah Chen** \u2014 Enterprise Account Executive",
+   "span": [
+    437,
+    482
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Sarah Chen",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Zachary Brown",
+   "object": "Enterprise Account Executive",
+   "quote": "**Zachary Brown** \u2014 Enterprise Account Executive",
+   "span": [
+    489,
+    537
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Zachary Brown",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Courtney Barron",
+   "object": "Sales Engineer",
+   "quote": "**Courtney Barron** \u2014 Sales Engineer",
+   "span": [
+    544,
+    580
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Courtney Barron",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Bryan Rivera",
+   "object": "Sales Operations Analyst",
+   "quote": "**Bryan Rivera** \u2014 Sales Operations Analyst",
+   "span": [
+    587,
+    630
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Bryan Rivera",
+   "object": "Michael Torres",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Elena Novak",
+   "object": "Director of Finance",
+   "quote": "**Elena Novak** \u2014 Director of Finance",
+   "span": [
+    633,
+    670
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Elena Novak",
+   "object": "David Morgan",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Robert Hernandez",
+   "object": "Accounts Receivable Specialist",
+   "quote": "**Robert Hernandez** \u2014 Accounts Receivable Specialist",
+   "span": [
+    675,
+    728
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Robert Hernandez",
+   "object": "Elena Novak",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Priya Shah",
+   "object": "Finance Manager",
+   "quote": "**Priya Shah** \u2014 Finance Manager",
+   "span": [
+    733,
+    765
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Priya Shah",
+   "object": "Elena Novak",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Shari Brown",
+   "object": "Financial Analyst",
+   "quote": "**Shari Brown** \u2014 Financial Analyst",
+   "span": [
+    770,
+    805
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Shari Brown",
+   "object": "Elena Novak",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Stephanie Romero",
+   "object": "Financial Analyst",
+   "quote": "**Stephanie Romero** \u2014 Financial Analyst",
+   "span": [
+    810,
+    850
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Stephanie Romero",
+   "object": "Elena Novak",
+   "quote": "Indentation shows who reports to whom",
+   "span": [
+    107,
+    144
+   ]
+  }
+ ],
+ "pricing_policy_2025.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "the policy",
+   "object": "2025-01-01",
+   "quote": "This policy is effective from 2025-01-01 through 2025-12-31.",
+   "span": [
+    153,
+    213
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "the policy",
+   "object": "2025-12-31",
+   "quote": "This policy is effective from 2025-01-01 through 2025-12-31.",
+   "span": [
+    153,
+    213
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executives",
+   "object": "15%",
+   "quote": "Enterprise Account Executives may approve discounts up to and including 15%.",
+   "span": [
+    243,
+    319
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": "15%",
+   "quote": "Discounts greater than 15% require VP Sales approval.",
+   "span": [
+    322,
+    375
+   ]
+  }
+ ],
+ "pricing_policy_2026.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Pricing Policy 2026",
+   "object": "2026-01-01",
+   "quote": "This policy is effective from 2026-01-01",
+   "span": [
+    153,
+    193
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Pricing Policy 2026",
+   "object": "2026-12-31",
+   "quote": "through 2026-12-31",
+   "span": [
+    194,
+    212
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executives",
+   "object": "10%",
+   "quote": "Enterprise Account Executives may approve discounts up to and including 10%",
+   "span": [
+    340,
+    415
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": "20%",
+   "quote": "Discounts greater than 10% and up to and including 20% require VP Sales approval",
+   "span": [
+    419,
+    499
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": "20%",
+   "quote": "Discounts greater than 20% require Chief Revenue Officer approval",
+   "span": [
+    503,
+    568
+   ]
+  }
+ ],
+ "pricing_policy_2027.md": [
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executives",
+   "object": "5%",
+   "quote": "Enterprise Account Executives may approve discounts up to and including 5%.",
+   "span": [
+    340,
+    415
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": "12%",
+   "quote": "Discounts greater than 5% and up to and including 12% require VP Sales approval.",
+   "span": [
+    418,
+    498
+   ]
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": "12%",
+   "quote": "Discounts greater than 12% require Chief Revenue Officer approval.",
+   "span": [
+    501,
+    567
+   ]
+  },
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Pricing Policy 2027",
+   "object": "2027-01-01",
+   "quote": "This policy is effective from 2027-01-01 through 2027-12-31.",
+   "span": [
+    153,
+    213
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "Northstar Pricing Policy 2027",
+   "object": "2027-12-31",
+   "quote": "This policy is effective from 2027-01-01 through 2027-12-31.",
+   "span": [
+    153,
+    213
+   ]
+  }
+ ],
+ "sales_discount_sop.md": [],
+ "service_ticket_acme_industrial.md": [],
+ "sla_schedule_v1.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "the document",
+   "object": "2025-01-01",
+   "quote": "This version applies to tickets opened from 2025-01-01 00:00 CT through 2026-03-31 23:59 CT.",
+   "span": [
+    68,
+    160
+   ]
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "the document",
+   "object": "2026-03-31",
+   "quote": "This version applies to tickets opened from 2025-01-01 00:00 CT through 2026-03-31 23:59 CT.",
+   "span": [
+    68,
+    160
+   ]
+  }
+ ],
+ "sla_schedule_v2.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "Northstar Support Service Level Schedule v2.0",
+   "object": "2026-04-01",
+   "quote": "This version applies to tickets opened on or after 2026-04-01 00:00 CT.",
+   "span": [
+    68,
+    139
+   ]
+  }
+ ],
+ "support_escalation_procedure.md": [],
+ "support_org_chart.md": [
+  {
+   "predicate": "has_title",
+   "subject": "Hannah Lindqvist",
+   "object": "Support Escalation Manager",
+   "quote": "Hannah Lindqvist | Support Escalation Manager",
+   "span": [
+    183,
+    228
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Marcus Adeyemi",
+   "object": "Director of Customer Support",
+   "quote": "Marcus Adeyemi | Director of Customer Support",
+   "span": [
+    270,
+    315
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Owen Takahashi",
+   "object": "Support Engineering Lead",
+   "quote": "Owen Takahashi | Support Engineering Lead",
+   "span": [
+    355,
+    396
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Paul Brennan",
+   "object": "Support Billing Manager",
+   "quote": "Paul Brennan | Support Billing Manager",
+   "span": [
+    436,
+    474
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Michael Torres",
+   "object": "VP Sales",
+   "quote": "Michael Torres | VP Sales",
+   "span": [
+    512,
+    537
+   ]
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "quote": "David Morgan | Chief Revenue Officer",
+   "span": [
+    577,
+    613
+   ]
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Hannah Lindqvist",
+   "object": "Marcus Adeyemi",
+   "quote": "the other support roles report to the Director",
+   "span": null
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Owen Takahashi",
+   "object": "Marcus Adeyemi",
+   "quote": "the other support roles report to the Director",
+   "span": null
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Paul Brennan",
+   "object": "Marcus Adeyemi",
+   "quote": "the other support roles report to the Director",
+   "span": null
+  }
+ ],
+ "support_severity_guide.md": []
+}

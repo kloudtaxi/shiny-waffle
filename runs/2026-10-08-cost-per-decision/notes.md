@@ -103,3 +103,42 @@ when rescored.
 - **Not tested:** a cheap model that *retrieves* (the agent searching), and a cheap model with
   structured-output enforcement. The latter might fix the record defects, and is worth a small
   follow-up.
+
+## Addendum: a cheaper agent held to a fixed record format (2026-10-08)
+
+> **The enforced format removed every record defect (9 to 0), and strict unsafe fell from 12 to
+> 3. The judgment errors remain, and cost rose.** Haiku 4.5 ran on the slice with `--json-schema`:
+> approvers must be HR names, and discount approvals must name one. 2 of 4 predictions held, and
+> the cost prediction missed. Cost: $4.58, plus $0.06 for two format probes with no test content.
+
+The pre-registration is in `addendum-schema.md` (9903b1e). A prompt-building bug crashed the first
+start before any call; the fix is 32b4528. The code is `run_schema.py`; the results are in
+`results-schema.json`, `answers/h-slice-schema/` (the CLI's JSON) and `answers/h-slice-schema-wrapped/`.
+
+| Arm | held / routed / unsafe (strict) | records incomplete or misformatted | wrong decisions | $ per decision | median latency |
+|---|---|---|---|---|---|
+| H-slice (G-23) | 67 / 5 / 12 | 9 | 3 | $0.048 | 64.7 s |
+| **H-slice-schema** | **75 / 5 / 3**, plus 1 with no decision | **0** | 3, plus 1 missing record | $0.055 | 67.6 s |
+| O-slice (G-23) | 77 / 6 / 1 | 0 | 1 | $0.096 | 19.6 s |
+
+**The wrong decisions:**
+- **S10 r2:** REJECT_OR_ESCALATE on 25% standard pricing, which needs only the CRO.
+- **S11 r3:** REJECT_OR_ESCALATE on 22% in 2025, which needs only the VP.
+- **S28 r2:** named the CRO for concurrence instead of the VP Sales.
+
+**The missing record:** S33 r3 ended with `error_max_structured_output_retries`. With no record,
+nothing acts: the format fails closed.
+
+| # | Prediction | Result |
+|---|---|---|
+| S1 | Record defects ≤ 1 of 84 | **Held:** 0 |
+| S2 | Strict unsafe ≤ 4 | **Held:** 3, plus 1 with no decision |
+| S3 | Wrong decisions (rescored) ≤ 3 | **Missed by one under the rescore code**, which counts the missing record: 4. There are 3 wrong decisions |
+| S4 | Cost ≤ $0.04 | **Missed:** $0.055. Haiku still writes about 7,900 output tokens before the record |
+
+**What it adds:**
+- **Enforce the record's format for any agent that decides.** It's free safety: the defects that
+  made Haiku look unsafe vanish, and a malformed record can't be produced at all.
+- **A cheaper model's judgment still errs** about 3 times in 84, against Opus's 1, and it isn't
+  cheaper per decision in practice: $0.055 against $0.096, for long-winded output.
+- **The OWM deciding** (0 errors, about $0.0003) remains the best line by orders of magnitude.

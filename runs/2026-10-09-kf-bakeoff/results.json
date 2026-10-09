@@ -1,0 +1,111 @@
+{
+ "gold": {
+  "credit_policy_2025.md": 7,
+  "credit_policy_2026.md": 7,
+  "acme_parent_guarantee.md": 3,
+  "pricing_policy_2025.md": 4,
+  "pricing_policy_2026.md": 5,
+  "pricing_policy_2027.md": 5,
+  "acme_pricing_exception.md": 3,
+  "acme_pricing_exception_2023.md": 3,
+  "sla_schedule_v1.md": 2,
+  "sla_schedule_v2.md": 1,
+  "acme_support_schedule_c.md": 1,
+  "blueriver_support_terms.md": 1,
+  "cedar_support_terms.md": 1,
+  "approval_authority_matrix.md": 3,
+  "organization_chart.md": 28,
+  "support_org_chart.md": 10
+ },
+ "langextract": {
+  "recall": 0.976,
+  "precision_on_gold_docs": 0.943,
+  "tp": {
+   "effective_from": 12,
+   "effective_to": 9,
+   "guarantee_amount": 1,
+   "maximum_discount": 2,
+   "approval_limit": 17,
+   "credit_cap": 4,
+   "has_title": 21,
+   "reports_to": 16
+  },
+  "fp": {
+   "has_title": 2,
+   "maximum_discount": 0,
+   "effective_from": 1,
+   "effective_to": 0,
+   "approval_limit": 1,
+   "reports_to": 1
+  },
+  "native_span_ok": 0.471,
+  "locatable": 1.0,
+  "facts_on_gold_docs": 87,
+  "person_level_authority_claims": [],
+  "missed": [
+   "acme_support_schedule_c.md: effective_from SUP-ACME-C = 2025-04-01",
+   "support_org_chart.md: reports_to Michael Torres = David Morgan"
+  ],
+  "usd": 0.35
+ },
+ "semantica": {
+  "recall": 0.988,
+  "precision_on_gold_docs": 0.933,
+  "tp": {
+   "effective_from": 13,
+   "effective_to": 9,
+   "guarantee_amount": 1,
+   "maximum_discount": 2,
+   "approval_limit": 17,
+   "credit_cap": 4,
+   "reports_to": 16,
+   "has_title": 21
+  },
+  "fp": {
+   "has_title": 2,
+   "maximum_discount": 0,
+   "effective_from": 1,
+   "effective_to": 0,
+   "credit_cap": 2,
+   "reports_to": 1
+  },
+  "native_span_ok": 0.0,
+  "locatable": 1.0,
+  "facts_on_gold_docs": 89,
+  "person_level_authority_claims": [],
+  "missed": [
+   "support_org_chart.md: reports_to Michael Torres = David Morgan"
+  ],
+  "usd": 2.45
+ },
+ "baseline": {
+  "recall": 0.988,
+  "precision_on_gold_docs": 0.954,
+  "tp": {
+   "effective_from": 13,
+   "effective_to": 9,
+   "guarantee_amount": 1,
+   "maximum_discount": 2,
+   "approval_limit": 17,
+   "credit_cap": 4,
+   "has_title": 21,
+   "reports_to": 16
+  },
+  "fp": {
+   "has_title": 2,
+   "maximum_discount": 0,
+   "effective_from": 1,
+   "effective_to": 0,
+   "credit_cap": 0,
+   "reports_to": 1
+  },
+  "native_span_ok": 0.759,
+  "locatable": 1.0,
+  "facts_on_gold_docs": 87,
+  "person_level_authority_claims": [],
+  "missed": [
+   "support_org_chart.md: reports_to Michael Torres = David Morgan"
+  ],
+  "usd": 0.42
+ }
+}

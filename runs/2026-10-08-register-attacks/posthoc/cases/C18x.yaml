@@ -1,0 +1,36 @@
+case: C18x
+corpus: base
+acting_as:
+- EMP-101
+- EMP-200
+changes:
+- action: register
+  base_version: 17
+  doc_id: ATTACK-C18
+  kind: pricing_policy
+  file: ATTACK-C18.md
+  text: C18x/c18.md
+  effective_from: '2027-01-01'
+  effective_to: '2027-12-31'
+  terms:
+    bands:
+    - title: Enterprise Account Executive
+      min_exclusive: null
+      max_inclusive: 0.1
+    - title: VP Sales
+      min_exclusive: 0.1
+      max_inclusive: 0.2
+    - title: Chief Revenue Officer
+      min_exclusive: 0.2
+      max_inclusive: null
+    approval_evidence_required_above: 0.1
+    rules:
+    - Discounts are calculated against the current list price.
+    - Contract-specific pricing exceptions must be reviewed.
+    - Discounts greater than 10% require recorded approval evidence.
+    authority_reference: Approval Authority Matrix (the operational reference)
+  relations:
+  - type: supersedes
+    target: SLA-SCHEDULE-2.0
+  submit_by: EMP-101
+  approve_by: EMP-200

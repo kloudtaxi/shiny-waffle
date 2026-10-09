@@ -1,0 +1,538 @@
+{
+ "credit_policy_2025.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "CREDIT-POLICY-2025",
+   "object": "2025-01-01",
+   "surface": "2025-01-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "CREDIT-POLICY-2025",
+   "object": "2025-12-31",
+   "surface": "2025-12-31"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Accounts Receivable Specialist",
+   "object": 50000.0,
+   "surface": "$50,000"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Finance Manager",
+   "object": 750000.0,
+   "surface": "$750,000"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Director of Finance",
+   "object": 750000.0,
+   "surface": "$750,000"
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Strategic",
+   "object": 600000,
+   "surface": "$600,000"
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Standard",
+   "object": 300000,
+   "surface": "$300,000"
+  }
+ ],
+ "credit_policy_2026.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "CREDIT-POLICY-2026",
+   "object": "2026-01-01",
+   "surface": "2026-01-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "CREDIT-POLICY-2026",
+   "object": "2026-12-31",
+   "surface": "2026-12-31"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Accounts Receivable Specialist",
+   "object": 100000.0,
+   "surface": "$100,000"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Finance Manager",
+   "object": 500000.0,
+   "surface": "$500,000"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Director of Finance",
+   "object": 500000.0,
+   "surface": "$500,000"
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Strategic",
+   "object": 750000,
+   "surface": "$750,000"
+  },
+  {
+   "predicate": "credit_cap",
+   "subject": "Standard",
+   "object": 250000,
+   "surface": "$250,000"
+  }
+ ],
+ "acme_parent_guarantee.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "GRT-ACME-2026",
+   "object": "2026-01-01",
+   "surface": "2026-01-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "GRT-ACME-2026",
+   "object": "2027-12-31",
+   "surface": "2027-12-31"
+  },
+  {
+   "predicate": "guarantee_amount",
+   "subject": "Acme Mfg. Holdings",
+   "object": 400000,
+   "surface": "$400,000"
+  }
+ ],
+ "pricing_policy_2025.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "PRICING-POLICY-2025",
+   "object": "2025-01-01",
+   "surface": "2025-01-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "PRICING-POLICY-2025",
+   "object": "2025-12-31",
+   "surface": "2025-12-31"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executive",
+   "object": 15.0,
+   "surface": "15%"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": 15.0,
+   "surface": "15%"
+  }
+ ],
+ "pricing_policy_2026.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "PRICING-POLICY-2026",
+   "object": "2026-01-01",
+   "surface": "2026-01-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "PRICING-POLICY-2026",
+   "object": "2026-12-31",
+   "surface": "2026-12-31"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executive",
+   "object": 10.0,
+   "surface": "10%"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": 20.0,
+   "surface": "20%"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": 20.0,
+   "surface": "20%"
+  }
+ ],
+ "pricing_policy_2027.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "PRICING-POLICY-2027",
+   "object": "2027-01-01",
+   "surface": "2027-01-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "PRICING-POLICY-2027",
+   "object": "2027-12-31",
+   "surface": "2027-12-31"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executive",
+   "object": 5.0,
+   "surface": "5%"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": 12.0,
+   "surface": "12%"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": 12.0,
+   "surface": "12%"
+  }
+ ],
+ "acme_pricing_exception.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "2025-04-01",
+   "surface": "2025-04-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "EXC-ACME-NS500-15",
+   "object": "2028-03-31",
+   "surface": "2028-03-31"
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme Mfg. Holdings NS-500",
+   "object": 15.0,
+   "surface": "15%"
+  }
+ ],
+ "acme_pricing_exception_2023.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "EXC-ACME-NS500-10",
+   "object": "2023-04-01",
+   "surface": "2023-04-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "EXC-ACME-NS500-10",
+   "object": "2025-03-31",
+   "surface": "2025-03-31"
+  },
+  {
+   "predicate": "maximum_discount",
+   "subject": "Acme Mfg. Holdings NS-500",
+   "object": 10.0,
+   "surface": "10%"
+  }
+ ],
+ "sla_schedule_v1.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SLA-SCHEDULE-1.0",
+   "object": "2025-01-01",
+   "surface": "2025-01-01"
+  },
+  {
+   "predicate": "effective_to",
+   "subject": "SLA-SCHEDULE-1.0",
+   "object": "2026-03-31",
+   "surface": "2026-03-31"
+  }
+ ],
+ "sla_schedule_v2.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SLA-SCHEDULE-2.0",
+   "object": "2026-04-01",
+   "surface": "2026-04-01"
+  }
+ ],
+ "acme_support_schedule_c.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SUP-ACME-C",
+   "object": "2025-04-01",
+   "surface": "2025-04-01"
+  }
+ ],
+ "blueriver_support_terms.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SUP-BRL-2025",
+   "object": "2025-01-01",
+   "surface": "2025-01-01"
+  }
+ ],
+ "cedar_support_terms.md": [
+  {
+   "predicate": "effective_from",
+   "subject": "SUP-CHS-2025",
+   "object": "2025-12-01",
+   "surface": "2025-12-01"
+  }
+ ],
+ "approval_authority_matrix.md": [
+  {
+   "predicate": "approval_limit",
+   "subject": "Enterprise Account Executive",
+   "object": 10.0,
+   "surface": "10%"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "VP Sales",
+   "object": 20.0,
+   "surface": "20%"
+  },
+  {
+   "predicate": "approval_limit",
+   "subject": "Chief Revenue Officer",
+   "object": 20.0,
+   "surface": "20%"
+  }
+ ],
+ "organization_chart.md": [
+  {
+   "predicate": "has_title",
+   "subject": "Sarah Chen",
+   "object": "Enterprise Account Executive",
+   "surface": "Enterprise Account Executive"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Sarah Chen",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Michael Torres",
+   "object": "VP Sales",
+   "surface": "VP Sales"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Michael Torres",
+   "object": "David Morgan",
+   "surface": "David Morgan"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "surface": "Chief Revenue Officer"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Priya Shah",
+   "object": "Finance Manager",
+   "surface": "Finance Manager"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Priya Shah",
+   "object": "Elena Novak",
+   "surface": "Elena Novak"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Elena Novak",
+   "object": "Director of Finance",
+   "surface": "Director of Finance"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Kelly Floyd",
+   "object": "Enterprise Account Executive",
+   "surface": "Enterprise Account Executive"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Kelly Floyd",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Anthony Day",
+   "object": "Enterprise Account Executive",
+   "surface": "Enterprise Account Executive"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Anthony Day",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Zachary Brown",
+   "object": "Enterprise Account Executive",
+   "surface": "Enterprise Account Executive"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Zachary Brown",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Bryan Rivera",
+   "object": "Sales Operations Analyst",
+   "surface": "Sales Operations Analyst"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Bryan Rivera",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Misty Peterson",
+   "object": "Customer Success Manager",
+   "surface": "Customer Success Manager"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Misty Peterson",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Courtney Barron",
+   "object": "Sales Engineer",
+   "surface": "Sales Engineer"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Courtney Barron",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Robert Hernandez",
+   "object": "Accounts Receivable Specialist",
+   "surface": "Accounts Receivable Specialist"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Robert Hernandez",
+   "object": "Elena Novak",
+   "surface": "Elena Novak"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Stephanie Romero",
+   "object": "Financial Analyst",
+   "surface": "Financial Analyst"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Stephanie Romero",
+   "object": "Elena Novak",
+   "surface": "Elena Novak"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Shari Brown",
+   "object": "Financial Analyst",
+   "surface": "Financial Analyst"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Shari Brown",
+   "object": "Elena Novak",
+   "surface": "Elena Novak"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Glenn Hayes",
+   "object": "Customer Success Manager",
+   "surface": "Customer Success Manager"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Glenn Hayes",
+   "object": "Michael Torres",
+   "surface": "Michael Torres"
+  }
+ ],
+ "support_org_chart.md": [
+  {
+   "predicate": "has_title",
+   "subject": "Michael Torres",
+   "object": "VP Sales",
+   "surface": "VP Sales"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Michael Torres",
+   "object": "David Morgan",
+   "surface": "David Morgan"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "David Morgan",
+   "object": "Chief Revenue Officer",
+   "surface": "Chief Revenue Officer"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Hannah Lindqvist",
+   "object": "Support Escalation Manager",
+   "surface": "Support Escalation Manager"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Hannah Lindqvist",
+   "object": "Marcus Adeyemi",
+   "surface": "Marcus Adeyemi"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Marcus Adeyemi",
+   "object": "Director of Customer Support",
+   "surface": "Director of Customer Support"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Owen Takahashi",
+   "object": "Support Engineering Lead",
+   "surface": "Support Engineering Lead"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Owen Takahashi",
+   "object": "Marcus Adeyemi",
+   "surface": "Marcus Adeyemi"
+  },
+  {
+   "predicate": "has_title",
+   "subject": "Paul Brennan",
+   "object": "Support Billing Manager",
+   "surface": "Support Billing Manager"
+  },
+  {
+   "predicate": "reports_to",
+   "subject": "Paul Brennan",
+   "object": "Marcus Adeyemi",
+   "surface": "Marcus Adeyemi"
+  }
+ ]
+}
