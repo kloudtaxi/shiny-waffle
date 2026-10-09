@@ -111,3 +111,20 @@ metadata. It didn't install or run the package.
    open-source BlueLeaf-like stack". A one-page comparison for the pitch: Semantica records and
    checks decisions an agent made; BlueLeaf decides, from approved instruments, with controls, and
    proves it under attack.
+
+## Tests run (2026-10-09, at the user's go-ahead)
+
+Three tests, each pre-registered, about $4 in all. They sharpen the recommendation; they don't
+change it.
+
+| Test | Result | What it means |
+|---|---|---|
+| **Extraction bake-off** (`runs/2026-10-09-kf-bakeoff/`): Semantica against langextract against a one-call baseline, same model (Haiku), 84 gold facts, plus a Docling PDF round | All found 98–100%. **Semantica has no source spans and costs about 6–7×** ($2.45 against $0.35 and $0.42). Docling kept 100% of text and tables but 0% of list nesting. Reporting lines are the shared weak spot | Keep **Docling + langextract**; Semantica's extractor isn't needed. Take reporting lines from HR systems, not documents |
+| **Deduplication** (`runs/2026-10-09-semantica-dedup/`): its `DuplicateDetector` on I2's 41,617 labelled pairs | **18,402 false merges** at defaults (17,564 on the replication). Same-type lookalike ids, so its type check can't help. No safe threshold: at 0.9, 0 false merges but 4 of 108 true duplicates found | **Never** an identity authority. At most a candidate generator behind the OWM's guard, judge and routing (0 wrong merges, 0.79% routed) |
+| **Bi-temporal queries** (`runs/2026-10-09-semantica-bitemporal/`): the register's governing documents as facts with validity and registration dates | **8/8** agree with an independent calculation, including "as known on T, in force on V", once entities carry transaction time. Untimed entities default to wall-clock *now*, which silently empties past queries (2/8) | A good reference design for G-38. If reused, make transaction time mandatory |
+
+**Revised recommendation:**
+- **Reuse candidates:** connectors, PROV-O provenance, and the bi-temporal model (with
+  transaction time enforced).
+- **Not its extractor:** no spans, more cost, no gain.
+- **Never its deduplication or decision layer.**
