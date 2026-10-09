@@ -188,3 +188,10 @@ variant makes the smallest edit that removes the refusal, and **all six are then
 | P3 | At most 1 legitimate change refused, excluding authoring errors | **Held, at the limit: 1** (C08) |
 | P4 | No admitted attack changes a decision | **Held** (none admitted) |
 | P5 | Regression after the kernel change | Held at freeze (11d1cf8). Nothing in `lab/` has changed since |
+
+## Decision: meaning-changing text pinned (the user, 2026-10-09)
+
+The test is pinned and logged on G-44, with the expected result: a meaning flip that keeps every
+number and title is admitted today. It will be tested together with the fix, where the approver
+signs off on the terms as the decision will use them, shown back in plain wording. It must be
+tested before any claim that registration can't be tampered with.
