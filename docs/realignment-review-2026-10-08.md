@@ -186,3 +186,15 @@ My v1.1 open questions (glowing-garbanzo, `ux-v1-use-manage-operate.md` §11.6):
   therefore written against `owm-decisions`, with web-next adapting to them, not the other way round.
 - **§3 item 8 is done:** the user wrote the sealed attack set, and the run admitted 0 of 14 attacks
   (`runs/2026-10-08-register-attacks`; follow-up on G-44).
+
+### The user's answers to §3 (2026-10-09)
+
+1. **Registration workflow:** two steps (a pending queue in the OWM service).
+2. **Agents' proposals:** covered by the agents sketch (below); `proposed_by` may be an agent.
+3. **Lumen:** an offline test fixture only.
+4. **Operate:** add a platform-admin persona, outside Northstar's org chart.
+5. **Brand:** BlueLeaf is the product; Sovera is the company.
+6. **Agents:** sketch before building, "and don't hold back". See
+   `owm/docs/ux-v1.2-agents-sketch.md` in glowing-garbanzo, branch `v1/use-manage-operate`.
+7. **Proof rounds:** `/present` in web-next, behind a flag.
+8. **The attack set:** done (see above).
