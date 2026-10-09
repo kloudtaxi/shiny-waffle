@@ -40,6 +40,11 @@ select = ["E", "F", "I", "B", "UP", "N", "W"]
 [tool.ruff.lint.isort]
 known-first-party = ["northstar"]
 
+# Runs are results and are never rewritten (CLAUDE.md), so a run script committed with a lint
+# finding is excused here, file by file, rather than edited.
+[tool.ruff.lint.per-file-ignores]
+"runs/2026-10-09-semantica-bitemporal/check.py" = ["E501"]  # two hand-aligned lines over 100
+
 [tool.mypy]
 python_version = "3.11"
 strict = true
