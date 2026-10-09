@@ -4,7 +4,7 @@ measure what survives, then extract from Docling's text with the bake-off's pipe
     KF=<scratchpad>/kfenv/bin/python
     $KF runs/2026-10-09-kf-bakeoff/pdf_round.py render <workdir>   # pandoc + headless Chrome
     $KF runs/2026-10-09-kf-bakeoff/pdf_round.py parse <workdir>    # Docling + fidelity
-    $KF runs/2026-10-09-kf-bakeoff/pdf_round.py render <workdir>   # pandoc + Chrome
+    $KF runs/2026-10-09-kf-bakeoff/pdf_round.py extract <workdir>  # pipelines on Docling text
     $KF runs/2026-10-09-kf-bakeoff/pdf_round.py score <workdir>
 """
 
