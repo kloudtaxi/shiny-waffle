@@ -178,3 +178,36 @@ If the rejection had no level, there's no floor.
 > **§12:** accept 1, 4, 7–12 and 15 as proposed; 2, 3 and 6 with the notes in the review (credit
 > APPROVE being unreachable under separation of duties is intended); 13 confirmed (also,
 > `issue_memo` belongs to Paul Brennan); 14 held.
+
+## Re-review of the revision (896f3f4, 2026-10-10)
+
+**All three P1s are closed in the text,** with the S22 branch table covering each:
+- `as_of` is read from the record, and the body can't carry it;
+- DC-6 allows one live decision per subject, with the floor keyed to the subject;
+- the level comes from the record's figure for every outcome.
+
+The should-fixes and the §12 answers are in. The revision raises two items for the lab.
+
+**1. `spent`: accept, but key it to the subject, as the floor is.**
+- **The problem:**
+  - as revised, `spent` is per decision ("a new clearance on DEC-0418 gets `spent`");
+  - a spent decision is no longer live, so DC-6 lets a new decision on the same subject start;
+  - that new decision can be cleared and redeemed again.
+- **For S36,** whose SLA decisions have no level and so no floor, that issues the $4,200 credit a
+  second time, once Marcus decides the claim again. It's the double issue that `spent` was added to
+  stop, by a different route.
+- **The fix:**
+  - an action executed on a subject is spent for that subject;
+  - any later clearance of the same action on that subject is refused with `spent`, whichever
+    decision asks;
+  - a second, legitimate action on the same subject needs a reversal or adjustment flow. v1.2
+    doesn't have one, so list it under "not in v1.2".
+- **A failed execution:** the action stays spent (fail-closed). A `report` of `failed` raises an
+  incident for a person, rather than reopening clearance automatically.
+
+**2. DR-9002 for the same deal: agree.** It's a known limit, not claimed, and a G-46 follow-up.
+- **An optional step for v1.2:** a non-blocking `possible_duplicate` flag. It would fire when
+  another request on the same account and product has a decision within a set window, and it
+  would show the approver that decision and its floor. That surfaces the case without claiming to
+  link it.
+- **The truth has no duplicate-request scenario,** so testing it would need a new one first.
