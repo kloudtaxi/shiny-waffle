@@ -10,6 +10,7 @@ The corpora are copied once per test session.
 from __future__ import annotations
 
 import atexit
+import csv
 import functools
 import importlib
 import importlib.util
@@ -155,3 +156,22 @@ def decide_with_capture(sid: str) -> tuple[dict[str, Any], list[str | None]]:
         record = decide(sid)
     about: list[str | None] = additions.judgment_about(record, cap)
     return record, about
+
+
+def staff(sid: str) -> list[dict[str, str]]:
+    """The scenario's corpus staff list (`structured/employees.csv`)."""
+    with (roots()[corpus(sid)] / "structured/employees.csv").open() as f:
+        return list(csv.DictReader(f))
+
+
+def roles(sid: str) -> list[dict[str, Any]]:
+    """`additions.approval_roles` on the scenario's decision, with the terms of the policy named in
+    `authority.policy` from the register (replay only)."""
+    kind, record = KIND_OF[sid], decide(sid)
+    requested_by = None if kind == "sla" else str(inputs(sid)["record"]["requested_by"])
+    policy = (record.get("authority") or {}).get("policy")
+    entry = admit().ra.REG[corpus(sid)].by_id().get(policy) if policy else None
+    out: list[dict[str, Any]] = lab("additions").approval_roles(
+        kind, record, staff(sid), requested_by, entry["terms"] if entry else None
+    )
+    return out

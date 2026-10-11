@@ -177,3 +177,54 @@ def test_governed_trace_is_optional() -> None:
     relied = trace["relied"]
     assert relied and all(isinstance(f, str) and isinstance(d, str) for f, d in relied)
     assert {d for _, d in relied} <= harness.doc_ids("base")
+
+
+# -- Task 2: approval roles and the pass-up helper ----------------------------------------------
+def _role(kind: str, role: str, pid: str, frm: dict[str, str] | None = None) -> dict[str, Any]:
+    return {"kind": kind, "role": role, "person_id": pid, "passed_from": frm}
+
+
+def test_s01_approval_is_michael() -> None:
+    assert harness.roles("S01") == [_role("approval", "VP Sales", "EMP-200")]
+
+
+def test_s27_approval_and_concurrence() -> None:
+    got = harness.roles("S27")
+    assert [(r["kind"], r["person_id"]) for r in got] == [
+        ("approval", "EMP-402"), ("concurrence", "EMP-200")]  # fmt: skip
+
+
+def test_s34_concurrence_passes_from_michael_to_david() -> None:
+    c = next(r for r in harness.roles("S34") if r["kind"] == "concurrence")
+    assert c["person_id"] == "EMP-300"
+    assert c["passed_from"] == {"person_id": "EMP-200", "reason": "separation_of_duties"}
+
+
+def test_s36_claim_decision_and_expected_actor() -> None:
+    got = {(r["kind"], r["person_id"]) for r in harness.roles("S36")}
+    assert got == {("claim_decision", "EMP-602"), ("expected_actor", "EMP-604")}
+
+
+def test_no_approver_is_a_concurrer_on_any_credit_scenario() -> None:
+    for sid in harness.DECISIONS["credit"]:
+        harness.roles(sid)  # raises ApprovalConflict otherwise
+
+
+def test_approve_and_refusals_have_no_roles() -> None:
+    for sid in ("S04", "S02", "S05"):  # APPROVE, REJECT_OR_ESCALATE, REQUEST_EVIDENCE
+        assert harness.roles(sid) == []
+
+
+def test_pass_up_for_a_requester_holding_the_role() -> None:
+    additions, staff = harness.lab("additions"), harness.staff("S01")
+    assert additions.pass_up(staff, "EMP-200", "VP Sales")["employee_id"] == "EMP-300"
+    assert additions.pass_up(staff, "EMP-101", "Chief Revenue Officer")["employee_id"] == "EMP-300"
+
+
+def test_one_person_holding_approval_and_concurrence_conflicts() -> None:
+    additions, staff = harness.lab("additions"), harness.staff("S27")
+    record, _ = harness.decide_with_capture("S27")
+    record = {**record, "approvers": [{"name": "Elena Novak", "kind": "concurrence"}]}
+    terms = {"concurrence": [{"title": "Director of Finance"}]}
+    with pytest.raises(additions.ApprovalConflict):
+        additions.approval_roles("credit", record, staff, "sarah.chen@northstar.example", terms)

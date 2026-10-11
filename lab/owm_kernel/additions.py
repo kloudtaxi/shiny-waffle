@@ -78,3 +78,87 @@ def flag_items(flags: list[str], *, route_mode: bool, routed: bool) -> list[dict
         code, rule = next(((c, r) for p, c, r in FLAG_CODES if re.search(p, text)), OTHER)
         out.append({"code": code, "text": text, "routes": when[rule]})
     return out
+
+
+# -- approval roles (contract §5.8; ruling R4) --------------------------------------------------
+class ApprovalConflict(ValueError):  # noqa: N818 (the name the contract and plan fix)
+    """The record's approvers disagree with the people the staff list resolves, or one person
+    would hold both `approval` and `concurrence`."""
+
+
+def pass_up(staff: list[dict[str, str]], requester_id: str, title: str) -> dict[str, str] | None:
+    """The holder of `title` for a request by `requester_id`, under separation of duties: the
+    first holder up the manager chain, and a requester who would approve their own request passes
+    it to their manager. The one code path for `passed_from` and for the ratchet's confirmer."""
+    me = next((e for e in staff if e["employee_id"] == requester_id), None)
+    return None if me is None else kernel.resolve_approver(staff, me, title, sod=True)
+
+
+def _passed_from(staff: list[dict[str, str]], role: str, person_id: str) -> dict[str, str] | None:
+    held = kernel.holder(staff, role)
+    if held is None or held["employee_id"] == person_id:
+        return None
+    return {"person_id": held["employee_id"], "reason": "separation_of_duties"}
+
+
+def _item(
+    kind: str, role: str, person_id: str, passed_from: dict[str, str] | None = None
+) -> dict[str, Any]:
+    return {"kind": kind, "role": role, "person_id": person_id, "passed_from": passed_from}
+
+
+def approval_roles(
+    decision_type: str,
+    record: dict[str, Any],
+    staff: list[dict[str, str]],
+    requested_by: str | None,
+    policy_terms: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    """Who must approve (or decide), by employee id. Discount and credit give `approval` (and
+    credit `concurrence`) only for APPROVE_WITH_AUTHORIZATION; SLA gives `claim_decision` and
+    `expected_actor` only for BREACH_CREDIT_OWED; any other outcome gives `[]`. Raises
+    `ApprovalConflict` when the record's approver is not who `pass_up` resolves, or one person
+    would hold both `approval` and `concurrence`."""
+    outcome = record.get("gated_outcome")
+    if decision_type == "sla":
+        if outcome != "BREACH_CREDIT_OWED":
+            return []
+        titles = {e["employee_id"]: e["title"] for e in staff}
+        duties = {"decide_claim": "claim_decision", "issue_memo": "expected_actor"}
+        return [
+            _item(duties[o["duty"]], titles[o["holder"]], o["holder"])
+            for o in record.get("obligations") or []
+            if o.get("duty") in duties and o.get("holder") in titles
+        ]
+    if outcome != "APPROVE_WITH_AUTHORIZATION":
+        return []
+    me = next((e for e in staff if e["email"].lower() == (requested_by or "").lower()), None)
+    if me is None:
+        raise ApprovalConflict(f"no staff member requested this: {requested_by!r}")
+    by_name = {e["full_name"].lower(): e for e in staff}
+    auth = record.get("authority") or {}
+    role = auth.get("required_role")
+    approver = pass_up(staff, me["employee_id"], role) if role else None
+    named = by_name.get(str(auth.get("approver") or "").lower())
+    if approver is None or named is None or approver["employee_id"] != named["employee_id"]:
+        raise ApprovalConflict(f"the approver for {role!r} is not {auth.get('approver')!r}")
+    out = [_item("approval", role, approver["employee_id"],
+                 _passed_from(staff, role, approver["employee_id"]))]  # fmt: skip
+    titles = [c["title"] for c in (policy_terms or {}).get("concurrence") or []]
+    for a in record.get("approvers") or []:
+        if a.get("kind") != "concurrence":
+            continue
+        person = by_name.get(str(a.get("name") or "").lower())
+        title = next(
+            (t for t in titles
+             if person and (p := pass_up(staff, me["employee_id"], t))
+             and p["employee_id"] == person["employee_id"]),
+            None,
+        )  # fmt: skip
+        if person is None or title is None:
+            raise ApprovalConflict(f"no policy concurrence resolves to {a.get('name')!r}")
+        if person["employee_id"] == approver["employee_id"]:
+            raise ApprovalConflict(f"{a.get('name')!r} would both approve and concur")
+        out.append(_item("concurrence", title, person["employee_id"],
+                         _passed_from(staff, title, person["employee_id"])))  # fmt: skip
+    return out
