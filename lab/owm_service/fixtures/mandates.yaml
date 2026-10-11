@@ -1,0 +1,26 @@
+- doc_id: MANDATE-DEALDESK-2026
+  kind: agent_mandate
+  title: "Deal Desk Agent mandate 2026"
+  text_file: mandate-dealdesk-2026.md
+  effective_from: "2026-01-01"
+  effective_to: "2026-12-31"
+  terms:
+    agent:
+      id: AGT-DEALDESK
+      name: Deal Desk Agent
+      purpose: apply cleared discounts for Sales
+      runtime: agno
+    owner:
+      function: Sales
+      accountable: EMP-200
+    principal: delegated
+    team: Sales
+    versions: ["sha256:demo-dealdesk-v1"]
+    may_ask:
+      - {decision_type: discount, scope: company}
+    may_do:
+      - action: apply_discount
+        decision_types: [discount]
+        match: {}
+        limits: {per_day: 200}
+    may_propose: [register_change]
