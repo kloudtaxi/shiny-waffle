@@ -7,6 +7,7 @@ from __future__ import annotations
 import copy
 import json
 from collections.abc import Callable
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -267,6 +268,24 @@ def test_register_bootstrap_and_kernel_register(tmp_path: Path) -> None:
     register = _lab.kernel_register(state, tmp_path)
     assert len(register.entries) == 17 == state.version
     assert all((tmp_path / "store" / f"{e['sha256']}.md").exists() for e in register.entries)
+
+
+def test_register_rules_are_the_kernels() -> None:
+    """`entry_in_force` and `revoked_on_or_before` call the kernel's own rules (window, RR-12
+    revocation, supersedes), so the service's choice can't drift from the kernel's."""
+    kernel = harness.lab("kernel")
+    entries = _lab.register_bootstrap("base").entries
+    for kind in ("pricing_policy", "credit_policy"):
+        mine = [e for e in entries if e["kind"] == kind]
+        for on in (date(2025, 9, 23), date(2026, 9, 23), date(2027, 2, 1)):
+            assert _lab.entry_in_force(mine, on) is kernel.entry_in_force(mine, on, [])
+    revoked = {"doc_id": "X", "effective_from": "2026-01-01", "effective_to": None,
+               "revoked_on": "2026-09-01"}  # fmt: skip
+    days = (date(2026, 8, 31), date(2026, 9, 1), date(2026, 9, 2))
+    assert [_lab.revoked_on_or_before(revoked, d) for d in days] == [False, True, True]
+    assert [_lab.revoked_on_or_before(revoked, d) for d in days] == [
+        not kernel.in_window(revoked, d) for d in days]  # fmt: skip
+    assert not _lab.revoked_on_or_before({"doc_id": "Y", "revoked_on": None}, days[1])
 
 
 def test_route_to() -> None:

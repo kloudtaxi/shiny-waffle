@@ -20,7 +20,7 @@ import importlib
 import json
 import sys
 import threading
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
@@ -167,6 +167,20 @@ def register_bootstrap(corpus: str) -> Any:
 def kernel_register(state: Any, into: Path) -> Any:
     """A `kernel.Register` over a registrar state, its store of approved texts under `into`."""
     return state.register(into=into)
+
+
+def entry_in_force(entries: Sequence[Mapping[str, Any]], on: date) -> dict[str, Any] | None:
+    """The kernel's own rule (`kernel.entry_in_force`): the one entry among `entries` in force on
+    `on` (inside its window, not revoked on or before it, not superseded by another in force),
+    or None when none is or two are. The caller filters by kind; the kernel's flags are dropped."""
+    found: dict[str, Any] | None = _kernel.entry_in_force(list(entries), on, [])
+    return found
+
+
+def revoked_on_or_before(entry: Mapping[str, Any], on: date) -> bool:
+    """RR-12 as the kernel applies it (`kernel.Register.as_of`): the entry was revoked on or before
+    `on`, so it no longer counts as registered."""
+    return not _kernel.Register([dict(entry)]).as_of(on).entries
 
 
 def procedures_bootstrap() -> tuple[list[dict[str, Any]], Path]:

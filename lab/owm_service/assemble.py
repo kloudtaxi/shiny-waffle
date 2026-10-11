@@ -29,7 +29,7 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Any, Final
 
-from ._lab import ROUTE_TO, KernelResult
+from ._lab import ROUTE_TO, KernelResult, revoked_on_or_before
 from .clock import DEMO_TZ
 from .errors import NotFound
 from .models import (
@@ -222,11 +222,11 @@ def self_sourced_flag(
                      f"{at.astimezone(DEMO_TZ):%H:%M}, after the request.")  # fmt: skip
 
 
-def ratchet_flag(subject: str, floor_version: int, floor_title: str) -> Flag:
-    """The version is below its subject's floor (spec §6.5)."""
+def ratchet_flag(subject: str, needed: str) -> Flag:
+    """The version is below its subject's floor (spec §6.5). `needed` is `ratchet.phrases`'s
+    (`version 1 needed the VP Sales`, naming the decision when another one set the floor)."""
     return Flag(code="ratchet", routes=False, about=[subject],
-                text=f"Below {subject}'s floor: version {floor_version} needed the "
-                     f"{floor_title}.")  # fmt: skip
+                text=f"Below {subject}'s floor: {needed}.")  # fmt: skip
 
 
 # -- approvals, actions -------------------------------------------------------------------------
@@ -315,8 +315,7 @@ def register_used(
         entry = registered.get(d.doc_id)
         if entry is None:
             continue
-        revoked = entry.get("revoked_on")
-        gone = bool(revoked) and date.fromisoformat(str(revoked)) <= as_of
+        gone = revoked_on_or_before(entry, as_of)  # RR-12, the kernel's rule
         out.append(RegisterUsed(
             doc_id=d.doc_id, sha256=str(entry["sha256"]), status="revoked" if gone else "in_force",
             file_matches=str(entry["sha256"]) in on_file.get(d.doc_id, set()),

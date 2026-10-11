@@ -9,15 +9,18 @@ from __future__ import annotations
 
 import copy
 import dataclasses
+import json
 from datetime import UTC, date, datetime, timedelta
+from pathlib import Path
 from typing import Any
 
 import pytest
 from pydantic import BaseModel
 
 from owm_service import _lab
-from owm_service.assemble import revoked_flags
+from owm_service.assemble import ratchet_flag, revoked_flags
 from owm_service.clock import DEMO_TZ
+from owm_service.conditions import ratchet_condition
 from owm_service.decisions import Decisions
 from owm_service.events import Event
 from owm_service.models import (
@@ -36,13 +39,21 @@ from owm_service.ratchet import (
     confirmer,
     floor_from,
     floor_of,
+    in_force,
     level_for,
+    phrases,
     policy_terms,
     raised,
     revoked_by,
 )
 from owm_service.sessions import Sessions
 
+from . import harness
+
+LAB = Path(__file__).resolve().parents[2]
+EXAMPLE: dict[str, Any] = json.loads(
+    (LAB / "lab/owm_service/contract/s22.example.json").read_text()
+)
 SARAH = {"id": "EMP-101", "name": "Sarah Chen", "title": "Enterprise Account Executive",
          "function": "Sales"}  # fmt: skip
 MICHAEL = {"id": "EMP-200", "name": "Michael Torres", "title": "VP Sales", "function": "Sales"}
@@ -216,10 +227,11 @@ def test_new_decision_inherits_the_subjects_floor(org: Org, sarah: Actor) -> Non
     assert dump(second)["floor"] == {"subject": "DR-9001", "level": 1, "set_by": {
         "decision_id": first.decision_id, "version": 1}, "confirmed_by": None}  # fmt: skip
     assert stored_level(org, second) == {"band": 0, "concurrences": [], "title": AE}
+    # R24: the floor was set by another decision, so the wording names it
     assert [dump(c) for c in second.conditions] == [{
         "id": "c1", "source": "ratchet",
-        "what": "Confirm the lower approval level: version 1 needed the VP Sales; version 1 is "
-                "within Sarah Chen's own authority.",
+        "what": "Confirm the lower approval level: DEC-0001 version 1 needed the VP Sales; this "
+                "decision's version 1 is within Sarah Chen's own authority.",
         "who": [MICHAEL], "blocking": True, "field": None, "submitted": None, "on_record": None,
         "opened_in_version": 1, "resolved": None,
     }]  # fmt: skip
@@ -228,7 +240,8 @@ def test_new_decision_inherits_the_subjects_floor(org: Org, sarah: Actor) -> Non
          "text": f"DR-9001 requested_discount changed from 0.15 to 0.08 by Sarah Chen at "
                  f"{hhmm(at)}, after the request.",
          "routes": False, "about": ["DR-9001"]},
-        {"code": "ratchet", "text": "Below DR-9001's floor: version 1 needed the VP Sales.",
+        {"code": "ratchet",
+         "text": "Below DR-9001's floor: DEC-0001 version 1 needed the VP Sales.",
          "routes": False, "about": ["DR-9001"]},
     ]  # fmt: skip
     assert second.state == "not_ready" and second.approvals == []
@@ -279,11 +292,13 @@ def test_below_a_cro_floor_david_morgan_confirms(
     v = ask(org, sarah, "DR-0001", {**figures, "requested_discount": 0.15})
     assert [(c.id, c.source) for c in v.conditions] == [("c1", "missing_record"), ("c2", "ratchet")]
     ratchet = v.conditions[1]
-    assert ratchet.what == ("Confirm the lower approval level: version 1 needed the Chief Revenue "
-                            "Officer; version 1 is at the VP Sales.")  # fmt: skip
+    did = first.decision_id
+    assert ratchet.what == (f"Confirm the lower approval level: {did} version 1 needed the "
+                            "Chief Revenue Officer; this decision's version 1 is at the VP "
+                            "Sales.")  # fmt: skip
     assert [p.id for p in ratchet.who] == ["EMP-300"]
     assert [f.text for f in v.flags] == [
-        "Below DR-0001's floor: version 1 needed the Chief Revenue Officer."]  # fmt: skip
+        f"Below DR-0001's floor: {did} version 1 needed the Chief Revenue Officer."]  # fmt: skip
     assert v.floor is not None
     assert (v.floor.level, v.floor.set_by.decision_id) == (2, first.decision_id)
 
@@ -306,6 +321,92 @@ def test_credit_level_counts_the_customers_tier(
                                       "title": "Director of Finance"}  # fmt: skip
 
 
+def test_dropping_a_concurrence_is_below_the_floor(
+    org: Org, sarah: Actor, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """$650,000 for Acme (Strategic) needs the Director of Finance with the VP Sales concurrence.
+    Sarah withdraws and moves the request to Blue River (Standard): the same band, without the
+    concurrence. The wording names what was dropped instead of repeating the band."""
+    row = org.sor.row("credit_requests", "CR-9201")
+    assert row is not None
+    kr = kernel_on(org, "credit", "CR-9201")  # replay: the kernel's answer for CR-9201
+    monkeypatch.setattr(_lab, "decide", lambda kind, **kw: kr)
+    with org.log.transaction() as tx:
+        org.sor.insert(tx, "credit_requests", {**row, "request_id": "CR-9299",
+                       "requested_limit_usd": "650000"}, actor=dump(sarah),
+                       at=org.clock.now())  # fmt: skip
+    first = ask(org, sarah, "CR-9299", None, "credit")
+    withdraw(org, first)
+    at = edit(org, sarah, "credit_requests", "CR-9299", {"erp_customer_id": "C-1002"})
+    v = ask(org, sarah, "CR-9299", None, "credit")
+    assert stored_level(org, v) == {"band": 2, "concurrences": [], "title": "Director of Finance"}
+    did = first.decision_id
+    (c,) = v.conditions
+    assert (c.id, c.source, c.blocking) == ("c1", "ratchet", True)
+    assert c.what == (f"Confirm the lower approval level: {did} version 1 needed the Director of "
+                      "Finance with the VP Sales concurrence; this decision's version 1 drops the "
+                      "VP Sales concurrence.")  # fmt: skip
+    assert [p.id for p in c.who] == ["EMP-402"]  # the Director of Finance (no holder above Sarah)
+    assert [f.text for f in v.flags] == [
+        f"CR-9299 customer changed from C-1001 to C-1002 by Sarah Chen at {hhmm(at)}, after the "
+        "request.",
+        f"Below CR-9299's floor: {did} version 1 needed the Director of Finance with the VP Sales "
+        "concurrence.",
+    ]  # fmt: skip
+    assert v.floor is not None and (v.floor.level, v.floor.set_by.decision_id) == (2, did)
+
+
+def test_ratchet_wording() -> None:
+    """Ruling R24: another decision's floor is named, this decision's keeps the bare `version N`
+    (the contract's `v2Ratchet`, which Task 12's re-runs make)."""
+    vp_floor = FloorState("DR-9001", Level(1, NONE, VP), ("DEC-0418", 1))
+    ae = Level(0, NONE, AE)
+    same = phrases(vp_floor, ae, "DEC-0418", 2, "Sarah Chen", True)
+    assert same == ("version 1 needed the VP Sales",
+                    "version 2 is within Sarah Chen's own authority")  # fmt: skip
+    ex = EXAMPLE["v2Ratchet"]
+    michael = PersonRef.model_validate(MICHAEL)
+    assert dump(ratchet_condition("c2", *same, 2, michael)) == ex["conditions"][1]
+    assert dump(ratchet_flag("DR-9001", same[0])) == ex["flags"][1]
+    assert phrases(vp_floor, ae, "DEC-0431", 1, "Sarah Chen", False) == (
+        "DEC-0418 version 1 needed the VP Sales",
+        "this decision's version 1 is at the Enterprise Account Executive")  # fmt: skip
+    dof = "Director of Finance"
+    with_vp = FloorState("CR-1", Level(2, frozenset({"VP Sales"}), dof), ("DEC-0001", 1))
+    assert phrases(with_vp, Level(2, NONE, dof), "DEC-0001", 3, "x", False) == (
+        "version 1 needed the Director of Finance with the VP Sales concurrence",
+        "version 3 drops the VP Sales concurrence")  # fmt: skip
+    assert phrases(with_vp, Level(1, NONE, "Finance Manager"), "DEC-0002", 1, "x", False) == (
+        "DEC-0001 version 1 needed the Director of Finance with the VP Sales concurrence",
+        "this decision's version 1 is at the Finance Manager")  # fmt: skip
+    two = FloorState("CR-1", Level(2, frozenset({"VP Sales", "CFO"}), dof), ("DEC-0001", 1))
+    assert phrases(two, Level(2, NONE, dof), "DEC-0001", 2, "x", False) == (
+        "version 1 needed the Director of Finance with the CFO and VP Sales concurrences",
+        "version 2 drops the CFO and VP Sales concurrences")  # fmt: skip
+
+
+@pytest.mark.parametrize(
+    ("on", "pricing", "credit"),
+    [(date(2025, 9, 23), "PRICING-POLICY-2025", "CREDIT-POLICY-2025"),
+     (date(2026, 9, 23), "PRICING-POLICY-2026", "CREDIT-POLICY-2026"),
+     (date(2027, 2, 1), "PRICING-POLICY-2027", None)],
+)  # fmt: skip
+def test_the_policy_in_force_is_the_kernels(
+    org: Org, on: date, pricing: str, credit: str | None
+) -> None:
+    """The level's policy when the authority is withheld is the one the kernel's own
+    `entry_in_force` picks on the bootstrap register."""
+    kernel = harness.lab("kernel")
+    entries = org.register_state().entries
+    for kind, doc_kind, want in (("discount", "pricing_policy", pricing),
+                                 ("credit", "credit_policy", credit)):  # fmt: skip
+        theirs = kernel.entry_in_force([e for e in entries if e["kind"] == doc_kind], on, [])
+        mine = in_force(entries, doc_kind, on)
+        assert (mine and mine["doc_id"]) == (theirs and theirs["doc_id"]) == want
+        terms = policy_terms(kind, None, entries, on, org.policy_terms)
+        assert terms == (theirs["terms"] if theirs else None)
+
+
 def test_sla_has_no_floor(org: Org, marcus: Actor) -> None:
     v = ask(org, marcus, "SR-39385", None, "sla")
     assert v.floor is None and v.conditions == []
@@ -319,13 +420,17 @@ def _ev(seq: int, kind: str, payload: dict[str, Any]) -> Event:
     return Event(seq, at, at, "northstar", "DR-1", kind, None, payload)
 
 
+Cond = tuple[str, str, int]  # (id, source, opened_in_version)
+
+
 def _versioned(seq: int, did: str, n: int, level: Level | None,
-               conditions: tuple[str, ...] = ()) -> Event:  # fmt: skip
+               conditions: tuple[Cond, ...] = ()) -> Event:  # fmt: skip
     lv = None if level is None else {"band": level.band, "title": level.title,
                                      "concurrences": sorted(level.concurrences)}  # fmt: skip
     version = {"decision_id": did, "version": n, "subject": {"request_id": "DR-1"},
                "requested_at": _ev(seq, "", {}).at.isoformat(),
-               "conditions": [{"id": c} for c in conditions]}  # fmt: skip
+               "conditions": [{"id": c, "source": s, "opened_in_version": o}
+                              for c, s, o in conditions]}  # fmt: skip
     return _ev(seq, "decision.versioned", {"version": version, "level": lv})
 
 
@@ -339,7 +444,7 @@ def test_the_floor_rises_and_only_a_confirmation_lowers_it() -> None:
     ae, vp, cro = Level(0, NONE, AE), Level(1, NONE, VP), Level(2, NONE, CRO)
     evs = [_versioned(1, "DEC-0001", 1, vp)]
     assert floor_from(evs, "DR-1") == FloorState("DR-1", vp, ("DEC-0001", 1), None)
-    evs += [_versioned(2, "DEC-0001", 2, ae, ("c2",)),  # below: the floor doesn't move
+    evs += [_versioned(2, "DEC-0001", 2, ae, (("c2", "ratchet", 2),)),  # below: no move
             _resolved(3, "DEC-0001", "c2", "corrected_record"),  # not a confirmation
             _ev(4, "decision.withdrawn", {"decision_id": "DEC-0001", "version": 2}),
             _ev(5, "decision.failed", {"reason": "x"})]  # fmt: skip
@@ -348,17 +453,40 @@ def test_the_floor_rises_and_only_a_confirmation_lowers_it() -> None:
     assert floor_from(evs, "DR-1") == FloorState("DR-1", cro, ("DEC-0002", 1), None)
     evs += [_ev(8, "decision.declined", {"decision_id": "DEC-0002", "version": 1, "index": 0,
                                          "declined": {}}),  # declined: the floor stays
-            _versioned(9, "DEC-0003", 1, ae, ("c1",))]  # fmt: skip
+            _versioned(9, "DEC-0003", 1, ae, (("c1", "ratchet", 1),))]  # fmt: skip
     assert floor_from(evs, "DR-1") == FloorState("DR-1", cro, ("DEC-0002", 1), None)
     evs += [_resolved(10, "DEC-0003", "c1", "confirmed_lower_level")]
     lowered = FloorState("DR-1", ae, ("DEC-0003", 1), PersonRef.model_validate(MICHAEL))
     assert floor_from(evs, "DR-1") == lowered
     assert lowered.model().model_dump() == {"subject": "DR-1", "level": 0, "set_by": {
         "decision_id": "DEC-0003", "version": 1}, "confirmed_by": MICHAEL}  # fmt: skip
-    evs += [_versioned(11, "DEC-0003", 2, ae, ("c1",))]  # at the confirmed level: unchanged
+    evs += [_versioned(11, "DEC-0003", 2, ae, (("c1", "ratchet", 1),))]  # confirmed level: same
     assert floor_from(evs, "DR-1") == lowered
     assert floor_from([_versioned(1, "DEC-0001", 1, None)], "DR-1") is None
     assert floor_from([], "DR-1") is None
+
+
+def test_a_confirmation_lowers_the_floor_wherever_it_is_logged() -> None:
+    """A re-run may log the resolution before or after its new version: the floor comes out the
+    same, lowered to the level of the version that opened the ratchet (`opened_in_version`), with
+    any version logged after that one raising it again."""
+    ae, vp = Level(0, NONE, AE), Level(1, NONE, VP)
+    c2: Cond = ("c2", "ratchet", 2)
+    v1, v2 = _versioned(1, "DEC-0001", 1, vp), _versioned(2, "DEC-0001", 2, ae, (c2,))
+    ok = _resolved(3, "DEC-0001", "c2", "confirmed_lower_level")
+    v3 = _versioned(4, "DEC-0001", 3, ae, (c2,))  # the re-run, at the confirmed level
+    lowered = FloorState("DR-1", ae, ("DEC-0001", 2), PersonRef.model_validate(MICHAEL))
+    assert floor_from([v1, v2, ok, v3], "DR-1") == floor_from([v1, v2, v3, ok], "DR-1") == lowered
+    up = _versioned(4, "DEC-0001", 3, vp, (c2,))  # the re-run is back in the VP Sales band
+    again = FloorState("DR-1", vp, ("DEC-0001", 3), None)
+    assert floor_from([v1, v2, ok, up], "DR-1") == floor_from([v1, v2, up, ok], "DR-1") == again
+    # only a ratchet's condition counts, and only on its own decision
+    held = FloorState("DR-1", vp, ("DEC-0001", 1), None)
+    conflict = _versioned(2, "DEC-0001", 2, ae, (("c1", "input_conflict", 1), c2))
+    c1_ok = _resolved(3, "DEC-0001", "c1", "confirmed_lower_level")
+    assert floor_from([v1, conflict, c1_ok], "DR-1") == held
+    elsewhere = _resolved(3, "DEC-0009", "c2", "confirmed_lower_level")
+    assert floor_from([v1, v2, elsewhere], "DR-1") == held
 
 
 def test_confirmer_passes_up(org: Org) -> None:

@@ -121,17 +121,17 @@ def missing_record_condition(
 
 
 def ratchet_condition(
-    cid: str, floor_version: int, floor_title: str, version: int, desc: str,
-    confirmer: PersonRef,
-) -> Condition:  # fmt: skip
+    cid: str, needed: str, stands: str, version: int, confirmer: PersonRef
+) -> Condition:
     """Below the subject's floor (G-46): the holder of the floor's role confirms the lower level,
-    or it stays not ready. `desc` says where the version stands (`within …'s own authority`, or
-    `at the <title>`)."""
+    or it stays not ready. `needed` and `stands` are `ratchet.phrases`'s: what the floor needed
+    (`version 1 needed the VP Sales`, or `DEC-0001 version 1 needed …` for another decision's
+    floor, R24) and where this version stands (`version 2 is within Sarah Chen's own authority`,
+    `… is at the <title>`, `… drops the <title> concurrence`)."""
     return Condition.model_validate({
         "id": cid,
         "source": "ratchet",
-        "what": f"Confirm the lower approval level: version {floor_version} needed the "
-                f"{floor_title}; version {version} is {desc}.",
+        "what": f"Confirm the lower approval level: {needed}; {stands}.",
         "who": [confirmer.model_dump()],
         "blocking": True,
         "field": None,

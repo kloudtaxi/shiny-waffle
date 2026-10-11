@@ -108,29 +108,14 @@ def raised(floor: Level, level: Level) -> Level:
     return Level(top.band, floor.concurrences | level.concurrences, top.title)
 
 
-# -- the register -------------------------------------------------------------------------------
-def _day(x: Any) -> date:
-    return x if isinstance(x, date) else date.fromisoformat(str(x))
-
-
-def _in_window(e: Mapping[str, Any], on: date) -> bool:
-    if e.get("revoked_on") and on >= _day(e["revoked_on"]):
-        return False
-    end = e.get("effective_to")
-    return _day(e["effective_from"]) <= on <= (_day(end) if end else date.max)
-
-
+# -- the register (the kernel's own rules, through `_lab`, so they can't drift) -----------------
 def in_force(
     entries: Iterable[Mapping[str, Any]], doc_kind: str, on: date
 ) -> Mapping[str, Any] | None:
-    """The one entry of `doc_kind` in force on `on`: inside its window, not revoked on or before
-    it, and not superseded by another entry in force (the kernel's `entry_in_force` rule). None
-    when none is, or when two are."""
-    live = [e for e in entries if e.get("kind") == doc_kind and _in_window(e, on)]
-    superseded = {r.get("target") for e in live for r in e.get("relations") or []
-                  if r.get("type") == "supersedes"}  # fmt: skip
-    live = [e for e in live if e["doc_id"] not in superseded]
-    return live[0] if len(live) == 1 else None
+    """The one entry of `doc_kind` in force on `on`, by `kernel.entry_in_force`: inside its
+    window, not revoked on or before it, and not superseded by another entry in force. None when
+    none is, or when two are."""
+    return _lab.entry_in_force([e for e in entries if e.get("kind") == doc_kind], on)
 
 
 def policy_terms(
@@ -148,9 +133,10 @@ def policy_terms(
 
 
 def revoked_by(entries: Iterable[Mapping[str, Any]], on: date) -> dict[str, str]:
-    """doc_id -> revocation date, for each entry revoked on or before `on`."""
+    """doc_id -> revocation date, for each entry revoked on or before `on` (RR-12, by the kernel's
+    `Register.as_of`)."""
     return {str(e["doc_id"]): str(e["revoked_on"]) for e in entries
-            if e.get("revoked_on") and _day(e["revoked_on"]) <= on}  # fmt: skip
+            if _lab.revoked_on_or_before(e, on)}  # fmt: skip
 
 
 # -- the floor ----------------------------------------------------------------------------------
@@ -181,11 +167,16 @@ def after(
     return floor if up == floor.level else FloorState(subject, up, (decision_id, version))
 
 
+Made = list[tuple[str, int, "Level | None"]]  # (decision_id, version, level), in log order
+
+
 def floor_from(events: Iterable[Event], subject: str) -> FloorState | None:
     """The subject's floor, rebuilt from `decision.versioned` events (each keeps its version's
-    `level`) and `confirmed_lower_level` resolutions, across every decision on the subject."""
+    `level`) and `confirmed_lower_level` resolutions of ratchet conditions, across every decision
+    on the subject."""
     floor: FloorState | None = None
-    carried: dict[str, list[tuple[int, Level | None, frozenset[str]]]] = {}
+    made: Made = []
+    ratchets: dict[tuple[str, str], int] = {}  # (decision_id, condition id) -> opened_in_version
     for e in events:
         if e.kind == "decision.versioned":
             v = e.payload["version"]
@@ -193,19 +184,36 @@ def floor_from(events: Iterable[Event], subject: str) -> FloorState | None:
                 continue
             did, n = str(v["decision_id"]), int(v["version"])
             level = Level.of(e.payload.get("level"))
-            cids = frozenset(str(c["id"]) for c in v.get("conditions") or [])
-            carried.setdefault(did, []).append((n, level, cids))
+            made.append((did, n, level))
+            for c in v.get("conditions") or []:
+                if c.get("source") == "ratchet":
+                    ratchets.setdefault((did, str(c["id"])), int(c["opened_in_version"]))
             floor = after(floor, subject, level, did, n)
         elif (e.kind == "condition.resolved"
               and e.payload["resolved"]["resolution"] == CONFIRMED_LOWER):  # fmt: skip
-            did = str(e.payload["decision_id"])
-            held = [(n, lv) for n, lv, cids in carried.get(did, [])
-                    if e.payload["condition_id"] in cids]  # fmt: skip
-            n, lowered = held[-1] if held else (0, None)
-            if lowered is not None:
-                by = PersonRef.model_validate(e.payload["resolved"]["by"])
-                floor = FloorState(subject, lowered, (did, n), by)
+            floor = _confirmed(floor, subject, made, ratchets, e.payload)
     return floor
+
+
+def _confirmed(
+    floor: FloorState | None, subject: str, made: Made, ratchets: Mapping[tuple[str, str], int],
+    resolution: Mapping[str, Any],
+) -> FloorState | None:  # fmt: skip
+    """A confirmed lower level, honoured only on a ratchet's condition: the floor drops to the
+    level of the version that opened it (by decision and `opened_in_version`, not by log order),
+    then every version logged after that one raises it as it would have. So the floor is the same
+    whether the resolution is logged before or after the re-run's version."""
+    did = str(resolution["decision_id"])
+    opened = ratchets.get((did, str(resolution["condition_id"])))
+    at = next((i for i, (d, n, _) in enumerate(made) if (d, n) == (did, opened)), None)
+    level = None if at is None else made[at][2]
+    if at is None or opened is None or level is None:
+        return floor
+    by = PersonRef.model_validate(resolution["resolved"]["by"])
+    lowered: FloorState | None = FloorState(subject, level, (did, opened), by)
+    for d, n, lv in made[at + 1 :]:
+        lowered = after(lowered, subject, lv, d, n)
+    return lowered
 
 
 def floor_of(org: Org, subject: str) -> FloorState | None:
@@ -332,10 +340,36 @@ def assess(
     if level is not None and prior is not None and below(level, prior.level):
         if requester is None:
             raise ValueError(f"{subject} is below its floor and has no requester")
-        fv, title = prior.set_by[1], prior.level.title
-        desc = (f"within {requester.name}'s own authority" if auth.get("requestor_authorized")
-                else f"at the {level.title}")  # fmt: skip
-        conditions.append(ratchet_condition(cid, fv, title, version, desc,
-                                            confirmer(org, requester.id, prior.level)))  # fmt: skip
-        flags.append(ratchet_flag(subject, fv, title))
+        needed, stands = phrases(prior, level, decision_id, version, requester.name,
+                                 bool(auth.get("requestor_authorized")))  # fmt: skip
+        who = confirmer(org, requester.id, prior.level)
+        conditions.append(ratchet_condition(cid, needed, stands, version, who))
+        flags.append(ratchet_flag(subject, needed))
     return Assessment(level, after(prior, subject, level, decision_id, version), conditions, flags)
+
+
+def _concurrence(titles: Iterable[str]) -> str:
+    names = sorted(titles)
+    joined = names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
+    return f"the {joined} concurrence{'' if len(names) == 1 else 's'}"
+
+
+def phrases(
+    floor: FloorState, level: Level, decision_id: str, version: int, requester: str,
+    authorized: bool,
+) -> tuple[str, str]:  # fmt: skip
+    """The ratchet's wording for a version below `floor`: what the floor needed and where this
+    version stands. A floor set by another decision names it (ruling R24); one set by this
+    decision keeps the bare `version N`. A floor that needed concurrences names them, and a
+    version that is below only because it drops one (its band isn't lower) says which."""
+    did, fv = floor.set_by
+    same = did == decision_id
+    need = floor.level.title
+    if floor.level.concurrences:
+        need += f" with {_concurrence(floor.level.concurrences)}"
+    needed = f"{'' if same else did + ' '}version {fv} needed the {need}"
+    this = f"version {version}" if same else f"this decision's version {version}"
+    if level.band >= floor.level.band:
+        return needed, f"{this} drops {_concurrence(floor.level.concurrences - level.concurrences)}"
+    where = f"within {requester}'s own authority" if authorized else f"at the {level.title}"
+    return needed, f"{this} is {where}"
