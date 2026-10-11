@@ -228,3 +228,54 @@ def test_one_person_holding_approval_and_concurrence_conflicts() -> None:
     terms = {"concurrence": [{"title": "Director of Finance"}]}
     with pytest.raises(additions.ApprovalConflict):
         additions.approval_roles("credit", record, staff, "sarah.chen@northstar.example", terms)
+
+
+def _roles_of(sid: str, edit: Any = None, requested_by: str | None = None) -> Any:
+    """`approval_roles` on a copy of the scenario's real record, after `edit` changes it."""
+    import copy
+
+    additions = harness.lab("additions")
+    record = copy.deepcopy(harness.decide(sid))
+    if edit:
+        edit(record)
+    kind = harness.KIND_OF[sid]
+    by = requested_by or (None if kind == "sla" else harness.inputs(sid)["record"]["requested_by"])
+    return additions.approval_roles(kind, record, harness.staff(sid), by, None)
+
+
+def test_sla_obligation_with_unknown_holder_conflicts() -> None:
+    def edit(rec: dict[str, Any]) -> None:
+        for o in rec["obligations"]:
+            if o["duty"] == "decide_claim":
+                o["holder"] = "EMP-999"
+
+    with pytest.raises(harness.lab("additions").ApprovalConflict, match="EMP-999"):
+        _roles_of("S36", edit)
+
+
+def test_sla_unknown_duty_is_skipped() -> None:
+    def edit(rec: dict[str, Any]) -> None:
+        rec["obligations"].append({"party": "organization", "duty": "other", "holder": "EMP-999"})
+
+    assert len(_roles_of("S36", edit)) == 2
+
+
+def test_approver_name_that_pass_up_does_not_resolve_conflicts() -> None:
+    def edit(rec: dict[str, Any]) -> None:
+        rec["authority"]["approver"] = "Sarah Chen"
+
+    with pytest.raises(harness.lab("additions").ApprovalConflict, match="Sarah Chen"):
+        _roles_of("S01", edit)
+
+
+def test_unknown_requester_email_conflicts() -> None:
+    with pytest.raises(harness.lab("additions").ApprovalConflict, match="nobody@example.test"):
+        _roles_of("S01", requested_by="nobody@example.test")
+
+
+def test_missing_required_role_conflicts_with_its_own_message() -> None:
+    def edit(rec: dict[str, Any]) -> None:
+        rec["authority"]["required_role"] = None
+
+    with pytest.raises(harness.lab("additions").ApprovalConflict, match="required role"):
+        _roles_of("S01", edit)

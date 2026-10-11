@@ -125,11 +125,16 @@ def approval_roles(
             return []
         titles = {e["employee_id"]: e["title"] for e in staff}
         duties = {"decide_claim": "claim_decision", "issue_memo": "expected_actor"}
-        return [
-            _item(duties[o["duty"]], titles[o["holder"]], o["holder"])
-            for o in record.get("obligations") or []
-            if o.get("duty") in duties and o.get("holder") in titles
-        ]
+        out_sla = []
+        for o in record.get("obligations") or []:
+            if o.get("duty") not in duties:
+                continue
+            if o.get("holder") not in titles:
+                raise ApprovalConflict(
+                    f"{o['duty']} holder {o.get('holder')!r} is not an employee in staff"
+                )
+            out_sla.append(_item(duties[o["duty"]], titles[o["holder"]], o["holder"]))
+        return out_sla
     if outcome != "APPROVE_WITH_AUTHORIZATION":
         return []
     me = next((e for e in staff if e["email"].lower() == (requested_by or "").lower()), None)
@@ -138,7 +143,9 @@ def approval_roles(
     by_name = {e["full_name"].lower(): e for e in staff}
     auth = record.get("authority") or {}
     role = auth.get("required_role")
-    approver = pass_up(staff, me["employee_id"], role) if role else None
+    if not role:
+        raise ApprovalConflict("the record names no required role")
+    approver = pass_up(staff, me["employee_id"], role)
     named = by_name.get(str(auth.get("approver") or "").lower())
     if approver is None or named is None or approver["employee_id"] != named["employee_id"]:
         raise ApprovalConflict(f"the approver for {role!r} is not {auth.get('approver')!r}")
