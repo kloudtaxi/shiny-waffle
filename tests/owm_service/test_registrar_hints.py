@@ -44,3 +44,19 @@ def test_rr7_names_the_unstated_date() -> None:
 def test_hints_default_to_none() -> None:
     e = registrar.RefusedError("RR-1", "x")
     assert (e.unmatched, e.fix) == (None, None) and str(e) == "RR-1: x"
+
+
+def test_sla_severity_target_names_the_unmatched_targets() -> None:
+    state = registrar.State.bootstrap("base")
+    entry = next(e for e in state.entries if e["doc_id"] == "SLA-SCHEDULE-2.0")
+    text = (CHECK.DOCS / "sla_schedule_v2.md").read_text()
+    changed = text.replace("| 1 | 30 minutes | 4 hours |", "| 1 | 45 minutes | 4 hours |")
+    assert changed != text
+    with pytest.raises(registrar.RefusedError) as info:
+        registrar.terms_check(
+            "sla_schedule", entry["terms"], changed, registrar.CORPORA["base"],
+            registrar.Staff.load(),
+        )  # fmt: skip
+    e = info.value
+    assert e.rule == "RR-6" and e.unmatched == "30 minutes; 4 hours"
+    assert str(e) == "RR-6: severity 1 targets not stated: ['30 minutes', '4 hours']"

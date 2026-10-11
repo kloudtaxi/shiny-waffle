@@ -317,7 +317,8 @@ def terms_check(kind: str, terms: dict[str, Any], text: str, root: Path, staff: 
                 [duration(t["restoration_minutes"], t["clock"])]
                 if t.get("restoration_minutes") else ["no restoration target"])  # fmt: skip
             if not any(all(flat(w) in r for w in want) for r in rows):
-                raise RefusedError("RR-6", f"severity {t['severity']} targets not stated: {want}")
+                raise RefusedError("RR-6", f"severity {t['severity']} targets not stated: {want}",
+                                   unmatched="; ".join(want))  # fmt: skip
         stated(text, [pct(c["pct"]) for c in terms["credits"]]
                + [pct(terms["cap_pct"]), f"{terms['notice_business_days']} business days",
                   str(terms["version"])], "SLA terms")  # fmt: skip
