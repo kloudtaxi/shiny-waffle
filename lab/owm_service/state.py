@@ -8,7 +8,9 @@ kernel.
 Every decision event sits on the stream named for its subject (`DR-9001`, `CR-9201`,
 `SR-39385`), so the subject's last `seq` moves on any write to any of its decisions. The events
 this module reads, by payload (the steps that write them come later):
-- `decision.versioned`: `{version: <the fixed fields>, kernel, kernel_extra}`;
+- `decision.versioned`: `{version: <the fixed fields>, kernel, kernel_extra, level}`, where
+  `level` is the version's `{band, concurrences, title}` or null (`ratchet.py` rebuilds the
+  subject's floor from it);
 - `condition.resolved`: `{decision_id, condition_id, resolved: <Condition.resolved>}`. A condition
   id is unique within its decision across versions, so a resolution holds in every version that
   carries the condition;

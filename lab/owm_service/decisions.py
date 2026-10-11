@@ -14,8 +14,11 @@ Asking (spec §6.1), in order:
 5. the kernel runs outside any write transaction;
 6. Jev unavailable, a kernel error, or a row or result the service can't put in the contract's
    terms: 503, a `decision.failed` event on the subject's stream, and no version (ruling R19);
-7. the write (`BEGIN IMMEDIATE`) re-checks DC-6 and the subject's last event, 409 if either
-   moved, then takes the next `DEC-` id and appends `decision.versioned` with the whole version.
+7. the version's level, the subject's floor, the ratchet and the self-sourced-basis flags
+   (`ratchet.assess`, spec §6.5-6.6), read from the subject's stream, which step 8 keeps current;
+8. the write (`BEGIN IMMEDIATE`) re-checks DC-6 and the subject's last event, 409 if either
+   moved, then takes the next `DEC-` id and appends `decision.versioned` with the whole version
+   and its level.
 The contract's `DecisionRequest` carries no principal, so there is none to compare with the
 session's: an extra body field fails validation (422).
 
@@ -33,7 +36,7 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any, Final
 
-from . import _lab
+from . import _lab, ratchet
 from .assemble import VersionContext, basis_documents, build_version, register_used
 from .conditions import (
     NUMBERS,
@@ -289,23 +292,32 @@ class Decisions:
         records = [] if prep.basis is None else [prep.basis]
         named = prep.subject.model_dump(include={"request_id", "ticket", "account_id",
                                                  "customer_id"}, exclude_none=True)  # fmt: skip
+        as_of = date.fromisoformat(prep.as_of)
+        conditions = self._conditions(kind, sid, prep, submitted)
+        rk = ratchet.assess(
+            self.org, kind=kind, subject=sid, table=TABLE[kind], decision_id=PENDING, version=1,
+            requester=prep.requester, figures=prep.figures, row=prep.inputs.get("record") or {},
+            authority=kr.record.get("authority"), as_of=as_of, requested_at=requested_at,
+            cid=f"c{len(conditions) + 1}",
+        )  # fmt: skip
         ctx = VersionContext(
             decision_id=PENDING, version=1, subject=prep.subject,
             submitted=None if submitted is None else Submitted.model_validate(submitted),
             requested_by=prep.requester, actor=actor, requested_at=requested_at.isoformat(),
             as_of=prep.as_of, decided_at=decided_at.isoformat(), figures=prep.figures,
-            conditions=self._conditions(kind, sid, prep, submitted),
+            conditions=[*conditions, *rk.conditions],
             basis=Basis(records=records, documents=documents),
-            register_used=register_used(documents, registered, prints,
-                                        date.fromisoformat(prep.as_of)),
+            register_used=register_used(documents, registered, prints, as_of),
             people=self.org.people,
             known_ids=frozenset({d for _, d, _ in prints} | set(registered) | set(named.values())),
+            floor=None if rk.floor is None else rk.floor.model(), service_flags=rk.flags,
+            revoked=ratchet.revoked_by(registered.values(), as_of),
         )  # fmt: skip
         extra = {"judgment_about": kr.judgment_about, "flag_items": kr.flag_items,
                  "approval_roles": kr.approval_roles, "relied": kr.relied,
                  "relied_entries": kr.relied_entries}  # fmt: skip
         return {"version": build_version(kind, kr, ctx), "kernel": _plain(kr.record),
-                "kernel_extra": _plain(extra)}  # fmt: skip
+                "kernel_extra": _plain(extra), "level": rk.level_json()}  # fmt: skip
 
     def _conditions(
         self, kind: DecisionType, sid: str, prep: _Prepared, submitted: dict[str, Any] | None
@@ -381,6 +393,9 @@ class Decisions:
                 )])  # fmt: skip
             did = self.org.log.next_id(tx, self.org.org_id, "DEC", 4)
             payload["version"]["decision_id"] = did
+            floor = payload["version"]["floor"]
+            if floor and floor["set_by"]["decision_id"] == PENDING:  # set by this version
+                floor["set_by"]["decision_id"] = did
             self.org.log.append(tx, at=at, org=self.org.org_id, stream=sid,
                                 kind="decision.versioned", actor=actor.model_dump(mode="json"),
                                 payload=payload)  # fmt: skip

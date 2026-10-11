@@ -1,6 +1,7 @@
-"""Conditions a version opens when it is asked for (spec §6.2): an input conflict for each
-submitted figure the system of record contradicts, and a missing record when the system of record
-has no row. SLA decisions open none. (The ratchet's condition comes with the floor.)
+"""Conditions a version opens (spec §6.2): an input conflict for each submitted figure the system
+of record contradicts, a missing record when the system of record has no row, and the ratchet when
+the version is below its subject's floor (spec §6.5; `ratchet.py` decides when, and who confirms).
+SLA decisions open none.
 
 Figures compare by the contract's §3.5 names, in the contract's units: numbers within 1e-9,
 anything else exactly. The decision always stands on the record (contract ground rule 5).
@@ -113,6 +114,28 @@ def missing_record_condition(
         "blocking": True,
         "field": None,
         "submitted": dict(submitted),
+        "on_record": None,
+        "opened_in_version": version,
+        "resolved": None,
+    })  # fmt: skip
+
+
+def ratchet_condition(
+    cid: str, floor_version: int, floor_title: str, version: int, desc: str,
+    confirmer: PersonRef,
+) -> Condition:  # fmt: skip
+    """Below the subject's floor (G-46): the holder of the floor's role confirms the lower level,
+    or it stays not ready. `desc` says where the version stands (`within …'s own authority`, or
+    `at the <title>`)."""
+    return Condition.model_validate({
+        "id": cid,
+        "source": "ratchet",
+        "what": f"Confirm the lower approval level: version {floor_version} needed the "
+                f"{floor_title}; version {version} is {desc}.",
+        "who": [confirmer.model_dump()],
+        "blocking": True,
+        "field": None,
+        "submitted": None,
         "on_record": None,
         "opened_in_version": version,
         "resolved": None,

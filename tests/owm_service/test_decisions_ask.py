@@ -145,7 +145,9 @@ def test_s22_v1_matches_the_contract_example(org: Org, dealdesk: Actor) -> None:
     assert v1.flags == []
     assert (v1.decision_id, v1.version, v1.previous, v1.executed) == ("DEC-0001", 1, None, [])
     assert v1.actor == dealdesk
-    assert v1.floor is None  # Task 11 sets the floor
+    # the floor (Task 11): the example's, set by this decision's version 1
+    assert dump(v1)["floor"] == {**ex["floor"], "set_by": {"decision_id": v1.decision_id,
+                                                          "version": 1}}  # fmt: skip
 
 
 def test_s22_judgments_say_what_they_are_about(org: Org, dealdesk: Actor) -> None:
@@ -165,10 +167,11 @@ def test_s22_is_stored_whole_and_read_back(org: Org, dealdesk: Actor) -> None:
     assert d.list(state="ready") == [] and d.list(decision_type="sla") == []
     (ev,) = d.events(v1.decision_id)
     assert (ev.kind, ev.stream, ev.actor) == ("decision.versioned", "DR-9001", dump(dealdesk))
-    assert set(ev.payload) == {"version", "kernel", "kernel_extra"}
+    assert set(ev.payload) == {"version", "kernel", "kernel_extra", "level"}  # level: Task 11
     fixed = ev.payload["version"]
     assert "state" not in fixed and "executed" not in fixed  # derived on read
-    assert fixed["floor"] is None and fixed["previous"] is None  # required-nullable: present
+    assert fixed["floor"]["set_by"] == {"decision_id": v1.decision_id, "version": 1}
+    assert fixed["previous"] is None  # required-nullable: present
     assert "ticket" not in fixed["subject"] and "related" not in str(fixed["flags"])  # R13
     assert set(ev.payload["kernel_extra"]) == {"judgment_about", "flag_items", "approval_roles",
                                                "relied", "relied_entries"}  # fmt: skip

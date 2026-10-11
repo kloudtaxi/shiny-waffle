@@ -15,17 +15,22 @@ The mapping, by type:
   `holder_ref`) and `account_owner` as a `PersonRef`.
 A withheld decision (G-32) empties its findings, keeping their types: an empty eligibility reads
 as `unknown`, and an empty authority or breach as null.
+
+Flags are the kernel's, then the service's own (spec §6.2), none of which routes: `revoked` for a
+document the kernel set aside that the register shows revoked on or before `as_of`, then
+`self_sourced_basis` and `ratchet` (`ratchet.py` decides those two).
 """
 
 from __future__ import annotations
 
 import re
 from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass
-from datetime import date
+from dataclasses import dataclass, field
+from datetime import date, datetime
 from typing import Any, Final
 
 from ._lab import ROUTE_TO, KernelResult
+from .clock import DEMO_TZ
 from .errors import NotFound
 from .models import (
     AgentActor,
@@ -40,6 +45,7 @@ from .models import (
     DecisionType,
     DiscountFindings,
     Flag,
+    Floor,
     PersonActor,
     PersonRef,
     Previous,
@@ -76,6 +82,9 @@ class VersionContext:
     people: People
     known_ids: frozenset[str]  # the doc_ids and record ids a flag may name
     previous: Previous | None = None
+    floor: Floor | None = None  # the subject's floor once this version is made (spec §6.5)
+    service_flags: Sequence[Flag] = ()  # self_sourced_basis, then ratchet
+    revoked: Mapping[str, str] = field(default_factory=dict)  # doc_id -> revoked on, by as_of
 
 
 # -- findings -----------------------------------------------------------------------------------
@@ -191,6 +200,35 @@ def flags(items: Sequence[Mapping[str, Any]], known: Iterable[str]) -> list[Flag
     ]  # fmt: skip
 
 
+def revoked_flags(kernel: Sequence[Flag], revoked: Mapping[str, str]) -> list[Flag]:
+    """One `revoked` flag per document a kernel `set_aside` flag names that the register shows
+    revoked (`revoked`: doc_id -> the date, only those revoked on or before `as_of`)."""
+    out: list[Flag] = []
+    for f in kernel:
+        for doc in f.about if f.code == "set_aside" else []:
+            if doc in revoked and all(x.about != [doc] for x in out):
+                out.append(Flag(code="revoked", routes=False, about=[doc],
+                                text=f"{doc} was revoked on {revoked[doc]}; decided without "
+                                     "it."))  # fmt: skip
+    return out
+
+
+def self_sourced_flag(
+    subject: str, field_name: str, was: str, now: str, by: str, at: datetime
+) -> Flag:
+    """The requester (or their agent) changed a basis field after the request (spec §6.6)."""
+    return Flag(code="self_sourced_basis", routes=False, about=[subject],
+                text=f"{subject} {field_name} changed from {was} to {now} by {by} at "
+                     f"{at.astimezone(DEMO_TZ):%H:%M}, after the request.")  # fmt: skip
+
+
+def ratchet_flag(subject: str, floor_version: int, floor_title: str) -> Flag:
+    """The version is below its subject's floor (spec §6.5)."""
+    return Flag(code="ratchet", routes=False, about=[subject],
+                text=f"Below {subject}'s floor: version {floor_version} needed the "
+                     f"{floor_title}.")  # fmt: skip
+
+
 # -- approvals, actions -------------------------------------------------------------------------
 def approvals(roles: Sequence[Mapping[str, Any]], people: People) -> list[ApprovalRequirement]:
     """The kernel's approval roles as people. `expected_actor` is not an approval: it names who
@@ -293,6 +331,7 @@ def build_version(kind: DecisionType, kr: KernelResult, ctx: VersionContext) -> 
     r = kr.record
     proc = r["procedure"]
     routed = r["gated_outcome"] == ROUTE_TO[kind] and r.get("outcome") != r["gated_outcome"]
+    kernel_flags = flags(kr.flag_items, ctx.known_ids)
     whole = DecisionRecord.model_validate({
         "decision_id": ctx.decision_id,
         "version": ctx.version,
@@ -314,14 +353,14 @@ def build_version(kind: DecisionType, kr: KernelResult, ctx: VersionContext) -> 
         "routed": routed,
         "findings": findings(kind, r, ctx.people),
         "judgments": judgments(r, kr.judgment_about),
-        "flags": flags(kr.flag_items, ctx.known_ids),
+        "flags": [*kernel_flags, *revoked_flags(kernel_flags, ctx.revoked), *ctx.service_flags],
         "conditions": list(ctx.conditions),
         "approvals": approvals(kr.approval_roles, ctx.people),
         "actions": actions(kind, r, ctx.subject, ctx.figures, kr.approval_roles, ctx.people),
         "state": "no_action",  # a placeholder: derived on read
         "basis": ctx.basis,
         "register_used": list(ctx.register_used),
-        "floor": None,
+        "floor": ctx.floor,
         "executed": [],  # derived on read
         "previous": ctx.previous,
     })  # fmt: skip
