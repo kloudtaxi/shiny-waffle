@@ -71,3 +71,29 @@ def test_clocks_are_per_org(tmp_path: Path, wall: Wall) -> None:
     log = EventLog(tmp_path / "e.db")
     Clock(log, "a", START).now()
     assert Clock(log, "b", "2027-01-01T00:00:00-06:00").now().year == 2027
+
+
+def test_logged_mode_wins_over_the_constructor(tmp_path: Path, wall: Wall) -> None:
+    log = EventLog(tmp_path / "e.db")
+    Clock(log, "northstar", START).now()
+    Clock(log, "northstar", START).set(datetime.fromisoformat("2026-09-25T09:00:00-05:00"), None)
+    wall.t += timedelta(minutes=3)
+    again = Clock(log, "northstar", "real")
+    assert again.now().isoformat().startswith("2026-09-25T09:03")
+    again.set(datetime.fromisoformat("2026-09-26T09:00:00-05:00"), None)  # still settable
+
+
+def test_real_clock_cannot_be_set(tmp_path: Path, wall: Wall) -> None:
+    log = EventLog(tmp_path / "e.db")
+    c = Clock(log, "northstar", "real")
+    with pytest.raises(ValueError, match="real"):
+        c.set(wall.t + timedelta(days=1), None)
+    # a log that began real stays real even if restarted with a fixed start
+    assert Clock(log, "northstar", START).now() == wall.t
+
+
+def test_naive_start_is_rejected(tmp_path: Path, wall: Wall) -> None:
+    log = EventLog(tmp_path / "e.db")
+    with pytest.raises(ValueError):
+        Clock(log, "northstar", "2026-09-23T09:00:00").now()
+    assert log.read("northstar") == []

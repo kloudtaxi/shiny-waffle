@@ -54,7 +54,8 @@ def test_append_and_read_round_trip(tmp_path: Path) -> None:
         _append(log, tx, "c.d")
     got = log.read("northstar")
     assert [e.kind for e in got] == ["a.b", "c.d"]
-    assert got[0] == ev or got[0].payload == {"k": [1, "x"]}
+    assert got[0] == ev
+    assert got[0].payload == {"k": [1, "x"]}
     assert got[0].actor is None and got[0].at == T
     assert [e.kind for e in log.read("northstar", kinds={"c.d"})] == ["c.d"]
     assert log.read("northstar", stream="other") == []
@@ -197,3 +198,56 @@ def test_concurrent_appends_both_succeed(tmp_path: Path) -> None:
         t.join()
     assert errors == []
     assert len(set(seqs)) == 40 == len(log.read("northstar"))
+
+
+def test_non_unique_integrity_error_is_raised(tmp_path: Path) -> None:
+    log = EventLog(tmp_path / "e.db")
+    bad = ExecutionRow("northstar", "DR-1", "a", "DEC-0001", 1, None, T.isoformat())  # type: ignore[arg-type]
+    with pytest.raises(sqlite3.IntegrityError), log.transaction() as tx:
+        log.insert_execution(tx, bad)
+
+
+def test_naive_at_is_rejected(tmp_path: Path) -> None:
+    log = EventLog(tmp_path / "e.db")
+    with pytest.raises(ValueError), log.transaction() as tx:
+        log.append(
+            tx, at=datetime(2026, 9, 23), org="o", stream="s", kind="k", actor=None, payload={}
+        )
+
+
+def _redeemed(log: EventLog, tx: sqlite3.Connection, ex: ExecutionRow) -> None:
+    log.append(
+        tx,
+        at=T,
+        org="northstar",
+        stream="s",
+        kind="clearance.redeemed",
+        actor=None,
+        payload=ex.__dict__,
+    )
+
+
+def test_rebuild_raises_on_a_corrupt_log(tmp_path: Path) -> None:
+    # a redemption of a clearance that was never issued: mark_used changes no row
+    log = EventLog(tmp_path / "e.db")
+    with log.transaction() as tx:
+        _redeemed(log, tx, _exec("DR-1", "a", "CLR-00001"))
+    with pytest.raises(RuntimeError, match="corrupt"):
+        log.rebuild_projections()
+    # the same subject/action redeemed twice: a duplicate
+    log2 = EventLog(tmp_path / "f.db")
+    with log2.transaction() as tx:
+        for c in ("CLR-00001", "CLR-00002"):
+            log2.put_clearance(tx, _clr(c))
+            log2.append(
+                tx,
+                at=T,
+                org="northstar",
+                stream="s",
+                kind="clearance.attempted",
+                actor=None,
+                payload={"issued": True, "clearance": _clr(c).__dict__},
+            )
+            _redeemed(log2, tx, _exec("DR-1", "a", c))
+    with pytest.raises(RuntimeError, match="twice"):
+        log2.rebuild_projections()

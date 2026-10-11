@@ -29,22 +29,29 @@ class Clock:
         self.org = org
         self.start = start
 
-    def _base(self, tx: sqlite3.Connection | None = None) -> tuple[datetime, datetime] | None:
-        """(demo time at the base, wall time at the base), or None before `clock.started`."""
-        base: tuple[datetime, datetime] | None = None
+    def _base(self, tx: sqlite3.Connection | None = None) -> tuple[datetime, datetime, bool] | None:
+        """(demo time at the base, wall time at the base, is real), or None before the start.
+
+        The logged `clock.started` decides the mode; the constructor's `start` is only used to
+        write that event when the org has none.
+        """
+        base: tuple[datetime, datetime, bool] | None = None
+        real = False
         for ev in self.log.read(self.org, stream=_STREAM, tx=tx):
             if ev.kind == "clock.started" and base is None:
                 wall = datetime.fromisoformat(ev.payload["wall"])
                 start = ev.payload["start"]
-                base = (wall if start == "real" else datetime.fromisoformat(start), wall)
+                real = start == "real"
+                base = (wall if real else datetime.fromisoformat(start), wall, real)
             elif ev.kind == "clock.set":
                 base = (
                     datetime.fromisoformat(ev.payload["to"]),
                     datetime.fromisoformat(ev.payload["wall"]),
+                    real,
                 )
         return base
 
-    def _ensure_started(self) -> tuple[datetime, datetime]:
+    def _ensure_started(self) -> tuple[datetime, datetime, bool]:
         base = self._base()
         if base is not None:
             return base
@@ -53,6 +60,8 @@ class Clock:
             if base is None:
                 wall = _real_now()
                 at = wall if self.start == "real" else datetime.fromisoformat(self.start)
+                if at.tzinfo is None:
+                    raise ValueError("the clock start needs an offset")
                 self.log.append(
                     tx,
                     at=at.astimezone(DEMO_TZ),
@@ -68,8 +77,8 @@ class Clock:
         return base
 
     def now(self) -> datetime:
-        at, wall = self._ensure_started()
-        if self.start == "real":
+        at, wall, real = self._ensure_started()
+        if real:
             return _real_now().astimezone(DEMO_TZ)
         return (at + (_real_now() - wall)).astimezone(DEMO_TZ)
 
@@ -84,6 +93,8 @@ class Clock:
         with self.log.transaction() as tx:
             base = self._base(tx)
             assert base is not None
+            if base[2]:
+                raise ValueError("the clock is real; it can't be set")
             wall = _real_now()
             current = base[0] + (wall - base[1])
             if to < current:

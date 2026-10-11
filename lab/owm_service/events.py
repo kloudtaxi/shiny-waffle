@@ -210,6 +210,8 @@ class EventLog:
         payload: dict[str, Any],
         wall: datetime | None = None,
     ) -> Event:
+        if at.tzinfo is None:
+            raise ValueError("`at` needs an offset (demo time is timezone-aware)")
         actor_json = None if actor is None else _dumps(actor, "actor")
         payload_json = _dumps(payload, "payload")
         wall = wall or datetime.now().astimezone()
@@ -281,9 +283,12 @@ class EventLog:
         )
 
     def mark_used(self, tx: sqlite3.Connection, clearance_id: str, at: datetime) -> bool:
+        return self._set_used(tx, clearance_id, at.isoformat())
+
+    def _set_used(self, tx: sqlite3.Connection, clearance_id: str, at: str) -> bool:
         cur = tx.execute(
             "UPDATE clearances SET used_at = ? WHERE id = ? AND used_at IS NULL",
-            (at.isoformat(), clearance_id),
+            (at, clearance_id),
         )
         return cur.rowcount == 1
 
@@ -302,8 +307,10 @@ class EventLog:
                     row.redeemed_at,
                 ),
             )
-        except sqlite3.IntegrityError:
-            return False
+        except sqlite3.IntegrityError as exc:
+            if exc.sqlite_errorname == "SQLITE_CONSTRAINT_UNIQUE":
+                return False
+            raise
         return True
 
     def get_clearance(
@@ -344,5 +351,12 @@ class EventLog:
                         self.put_clearance(tx, ClearanceRow(**ev.payload["clearance"]))
                 else:
                     ex = ExecutionRow(**ev.payload)
-                    self.insert_execution(tx, ex)
-                    self.mark_used(tx, ex.clearance_id, datetime.fromisoformat(ex.redeemed_at))
+                    if not self.insert_execution(tx, ex):
+                        raise RuntimeError(
+                            f"corrupt log: event {ev.seq} redeems {ex.subject}/{ex.action} twice"
+                        )
+                    if not self._set_used(tx, ex.clearance_id, ex.redeemed_at):
+                        raise RuntimeError(
+                            f"corrupt log: event {ev.seq} redeems clearance "
+                            f"{ex.clearance_id}, which is unknown or already used"
+                        )
