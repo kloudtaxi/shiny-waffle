@@ -362,7 +362,7 @@ class Decisions:
         mine = [e for e in stream if decision_of(e) == decision_id]
         fixed = self._version(mine, decision_id, None).payload["version"]
         record = DecisionRecord.model_validate(
-            with_derived(fixed, mine, self._executions(first.stream)))  # fmt: skip
+            with_derived(fixed, mine, self._executions(first.stream), stream))  # fmt: skip
         return _Current(record, mine, first.stream, stream[-1].seq)
 
     def _recheck(self, tx: sqlite3.Connection, cur: _Current) -> None:
@@ -466,10 +466,13 @@ class Decisions:
             raise NotFound(f"decision {decision_id}")
         return first
 
+    def _stream(self, decision_id: str) -> builtins.list[Event]:
+        """The decision's subject's stream: its events and every other decision's on it."""
+        return self.org.log.read(self.org.org_id, stream=self._first(decision_id).stream)
+
     def events(self, decision_id: str) -> builtins.list[Event]:
-        """The decision's events, in order."""
-        evs = self.org.log.read(self.org.org_id, stream=self._first(decision_id).stream)
-        return [e for e in evs if decision_of(e) == decision_id]
+        """The decision's events, in order (its clearances' attempts are on its own stream)."""
+        return [e for e in self._stream(decision_id) if decision_of(e) == decision_id]
 
     def _version(self, evs: builtins.list[Event], decision_id: str, version: int | None) -> Event:
         versions = [e for e in evs if e.kind == "decision.versioned"]
@@ -481,10 +484,11 @@ class Decisions:
 
     def get(self, decision_id: str, version: int | None = None) -> DecisionRecord:
         """A version (the current one by default), with its derived fields."""
-        evs = self.events(decision_id)
+        stream = self._stream(decision_id)
+        evs = [e for e in stream if decision_of(e) == decision_id]
         fixed = self._version(evs, decision_id, version).payload["version"]
         executions = self._executions(subject_id(fixed["subject"]))
-        return DecisionRecord.model_validate(with_derived(fixed, evs, executions))
+        return DecisionRecord.model_validate(with_derived(fixed, evs, executions, stream))
 
     def kernel_record(self, decision_id: str, version: int) -> dict[str, Any]:
         """The kernel's record for a version, exactly as it came back: for the acceptance check

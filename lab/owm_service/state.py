@@ -22,6 +22,11 @@ Two more sit on the stream and decide nothing here: `decision.rerun_requested`
 `{decision_id, version}` (a `/rerun` of `version`, written with the version it produced) and
 `decision.failed` `{decision_type, subject, reason}`, with `decision_id` and `version` when a
 re-run failed.
+
+`clearance.py` writes three more to the subject's stream (ruling R33), and `executed` reads them
+for every decision on the subject, not only the one that executed: `clearance.redeemed` (the
+`executions` row it projects), `execution.reported` (`status`, by `clearance_id`) and
+`incident.opened` (`incident_id`, by `clearance_id`).
 """
 
 from __future__ import annotations
@@ -89,6 +94,20 @@ def executed(version: Mapping[str, Any], executions: Iterable[ExecutionRow]) -> 
     return [x for x in executions if x.subject == subject]
 
 
+def reports(events: Iterable[Event]) -> dict[str, dict[str, Any]]:
+    """Each reported clearance's `report` and `incident_id`, by clearance id, from the subject's
+    events."""
+    out: dict[str, dict[str, Any]] = {}
+    for e in events:
+        if e.kind == "execution.reported":
+            out.setdefault(str(e.payload["clearance_id"]), {})["report"] = e.payload["status"]
+        elif e.kind == "incident.opened":
+            out.setdefault(str(e.payload["clearance_id"]), {})["incident_id"] = e.payload[
+                "incident_id"
+            ]
+    return out
+
+
 def spent(version: Mapping[str, Any], executions: Iterable[ExecutionRow]) -> bool:
     """Every action the version decided has been executed on its subject, by any decision."""
     done = {x.action for x in executed(version, executions)}
@@ -122,9 +141,12 @@ def derive_state(
 
 
 def with_derived(
-    version: Mapping[str, Any], events: Sequence[Event], executions: Sequence[ExecutionRow]
-) -> dict[str, Any]:
-    """The stored version with its derived fields filled in: a whole `DecisionRecord`."""
+    version: Mapping[str, Any], events: Sequence[Event], executions: Sequence[ExecutionRow],
+    subject_events: Iterable[Event] = (),
+) -> dict[str, Any]:  # fmt: skip
+    """The stored version with its derived fields filled in: a whole `DecisionRecord`. `events`
+    are the decision's own; `subject_events` its subject's whole stream, where every execution's
+    report and incident are found."""
     out = copy.deepcopy(dict(version))
     did, n = str(out["decision_id"]), int(out["version"])
     res = resolutions(events, did)
@@ -134,10 +156,12 @@ def with_derived(
     for i, a in enumerate(out["approvals"]):
         a["given"] = given.get(i, a.get("given"))
         a["declined"] = declined.get(i, a.get("declined"))
+    done = reports(subject_events)
     out["executed"] = [
         {"action": x.action, "decision_id": x.decision_id, "version": x.version,
          "clearance_id": x.clearance_id, "redeemed_at": x.redeemed_at,
-         "report": None, "incident_id": None}  # reports and incidents: the clearance step
+         "report": done.get(x.clearance_id, {}).get("report"),
+         "incident_id": done.get(x.clearance_id, {}).get("incident_id")}
         for x in executed(version, executions)
     ]  # fmt: skip
     out["state"] = derive_state(version, events, executions)

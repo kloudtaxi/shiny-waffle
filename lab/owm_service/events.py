@@ -16,7 +16,8 @@ Payload shapes the projections are rebuilt from (Task 13 writes these events):
   is absent or null. A refused or dry-run attempt (`"issued": false`) projects nothing.
 * `clearance.redeemed` with the `ExecutionRow` fields: `org`, `subject`, `action`, `decision_id`,
   `version`, `clearance_id`, `redeemed_at` (ISO string). It projects an `executions` row and sets
-  the clearance's `used_at` to `redeemed_at`.
+  the clearance's `used_at` to `redeemed_at`. Any other key (Task 13 adds `executor`) is the
+  event's alone: the projection ignores it.
 * `execution.reported` touches neither projection: a failed report stays spent.
 
 Concurrency: a new connection per transaction (WAL, `BEGIN IMMEDIATE`, busy timeout of 30 s).
@@ -24,6 +25,7 @@ Concurrency: a new connection per transaction (WAL, `BEGIN IMMEDIATE`, busy time
 
 from __future__ import annotations
 
+import dataclasses
 import json
 import sqlite3
 from collections.abc import Collection, Iterator
@@ -111,6 +113,9 @@ class ExecutionRow:
     version: int
     clearance_id: str
     redeemed_at: str
+
+
+_EXECUTION_FIELDS = tuple(f.name for f in dataclasses.fields(ExecutionRow))
 
 
 def _dumps(value: Any, what: str) -> str:
@@ -350,7 +355,7 @@ class EventLog:
                     if ev.payload.get("issued") is True:
                         self.put_clearance(tx, ClearanceRow(**ev.payload["clearance"]))
                 else:
-                    ex = ExecutionRow(**ev.payload)
+                    ex = ExecutionRow(**{k: ev.payload[k] for k in _EXECUTION_FIELDS})
                     if not self.insert_execution(tx, ex):
                         raise RuntimeError(
                             f"corrupt log: event {ev.seq} redeems {ex.subject}/{ex.action} twice"
