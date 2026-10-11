@@ -443,12 +443,37 @@ def test_decline_keeps_the_floor(org: Org, dealdesk: Actor, sarah: Actor, michae
         1, did, 1)  # fmt: skip
 
 
-def test_decline_is_held_while_a_blocking_condition_is_open(
+def test_decline_is_not_held_by_an_open_condition(
     org: Org, dealdesk: Actor, michael: Actor
 ) -> None:
+    """Ruling R29: DC-4 holds approving, not declining. The approver may decline version 1 while
+    c1 is open, and the decline closes it: `declined` comes before `not_ready`."""
     v1 = ask_s22(org, dealdesk)
-    e = refused(lambda: Decisions(org).decline(michael, v1.decision_id, step(1, "no")))
-    assert (e.status, rules(e)) == (422, ["DC-4"]) and "c1" in e.refusals[0].detail
+    out = Decisions(org).decline(michael, v1.decision_id, step(1, "no"))
+    assert (out.version, out.state) == (1, "declined")
+    assert out.approvals[0].declined is not None and out.approvals[0].declined.note == "no"
+    assert [(c.id, c.resolved) for c in out.conditions] == [("c1", None)]  # still open
+
+
+def test_a_decline_with_a_condition_open_closes_the_decision(
+    org: Org, dealdesk: Actor, sarah: Actor, michael: Actor
+) -> None:
+    """Declined on version 1 while c1 is open: nothing more can be done with it (no resolve, no
+    re-run, no approval), and it no longer holds DR-9001, whose floor a new ask inherits."""
+    d = Decisions(org)
+    v1 = ask_s22(org, dealdesk)
+    did = v1.decision_id
+    assert d.decline(michael, did, step(1, "not on these terms")).state == "declined"
+    for fn in (lambda: resolve(org, sarah, did, "c1", 1, "confirmed_record"),
+               lambda: d.rerun(sarah, did, RerunRequest(decision_version=1)),
+               lambda: d.approve(michael, did, step(1))):  # fmt: skip
+        e = refused(fn)
+        assert (e.status, rules(e)) == (422, ["DC-2"]) and "declined" in e.refusals[0].detail
+    assert d.get(did).version == 1
+    again = ask(org, sarah, "DR-9001")
+    assert again.decision_id != did and again.floor is not None
+    assert (again.floor.level, again.floor.set_by.decision_id, again.floor.set_by.version) == (
+        1, did, 1)  # fmt: skip
 
 
 def test_withdraw_only_by_requester(

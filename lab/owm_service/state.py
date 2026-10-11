@@ -99,8 +99,9 @@ def spent(version: Mapping[str, Any], executions: Iterable[ExecutionRow]) -> boo
 def derive_state(
     version: Mapping[str, Any], events: Sequence[Event], executions: Sequence[ExecutionRow]
 ) -> DecisionState:
-    """Spec §6.3, first match wins. `events` are the decision's own (others are ignored) and
-    `executions` the projection's rows (only the subject's count)."""
+    """Spec §6.3, first match wins, except that `declined` comes before `not_ready` (ruling
+    R29). `events` are the decision's own (others are ignored) and `executions` the projection's
+    rows (only the subject's count)."""
     did, n = str(version["decision_id"]), int(version["version"])
     if withdrawn(events, did):
         return "withdrawn"
@@ -108,13 +109,13 @@ def derive_state(
         return "spent"
     if not version["actions"]:
         return "no_action"
+    given, declined = approval_steps(events, did, n)
+    if declined:  # R29: a decline closes the decision even while a condition is open
+        return "declined"
     res = resolutions(events, did)
     if any(c["blocking"] and c.get("resolved") is None and c["id"] not in res
            for c in version["conditions"]):  # fmt: skip
         return "not_ready"
-    given, declined = approval_steps(events, did, n)
-    if declined:
-        return "declined"
     if any(i not in given and a.get("given") is None for i, a in enumerate(version["approvals"])):
         return "awaiting_approval"
     return "ready"

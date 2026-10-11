@@ -664,6 +664,7 @@ def test_state_is_derived_first_match_wins() -> None:
     assert derive_state(v, [resolved, other], []) == "awaiting_approval"
     assert derive_state(v, [resolved, approved], []) == "ready"
     assert derive_state(v, [resolved, declined], []) == "declined"
+    assert derive_state(v, [declined], []) == "declined"  # R29: before not_ready
     assert derive_state(v, [resolved, approved], spent) == "spent"
     assert derive_state(v, [withdrawn], spent) == "withdrawn"
     assert derive_state({**v, "actions": []}, [], []) == "no_action"

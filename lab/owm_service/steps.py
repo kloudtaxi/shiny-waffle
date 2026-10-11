@@ -13,7 +13,8 @@ version with its derived fields. DC-5 is 409; every other rule is 422. In this o
      re-run needs the requester or any approval's person;
    - **DC-3**, separation of duties: the requester never approves, concurs or declines, and never
      confirms a ratchet; one person never gives two of a version's approvals;
-   - **DC-4**: approving or declining is held while a blocking condition is open on the version.
+   - **DC-4**: approving is held while a blocking condition is open on the version. Declining
+     isn't (ruling R29): an approver may decline at any point, and a decline closes the decision.
 
 "The requester" is the row's `requested_by`. SLA has none (a ticket isn't anyone's request), so
 there DC-3 names nobody, and withdrawing or re-running falls to whoever asked (`owner`).
@@ -134,7 +135,6 @@ def blocking(rec: DecisionRecord) -> list[Condition]:
 def may_approve(rec: DecisionRecord, me: PersonRef, *, declining: bool, note: str | None) -> int:
     """The index of the outstanding approval `me` gives (or declines) on this version."""
     out: list[Refusal] = []
-    verb = "decline" if declining else "approve"
     mine = [i for i, a in enumerate(rec.approvals) if a.person is not None and a.person.id == me.id]
     done = [i for i in mine if rec.approvals[i].given or rec.approvals[i].declined]
     todo = [i for i in mine if i not in done]
@@ -156,10 +156,10 @@ def may_approve(rec: DecisionRecord, me: PersonRef, *, declining: bool, note: st
     if todo and done:
         out.append(_no("DC-3", f"{me.name} already gave one of this version's approvals; the "
                                "approver and a concurrer are never the same person."))  # fmt: skip
-    held = blocking(rec)
+    held = [] if declining else blocking(rec)  # R29: a decline isn't held, and closes it
     if held:
         what = "; ".join(f"{c.id} ({c.source}, for {_named(c.who)})" for c in held)
-        out.append(_no("DC-4", f"Can't {verb} while a blocking condition is open on version "
+        out.append(_no("DC-4", f"Can't approve while a blocking condition is open on version "
                                f"{rec.version}: {what}. Resolving it re-runs the "
                                "decision."))  # fmt: skip
     _raise(out)
