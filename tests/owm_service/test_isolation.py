@@ -8,7 +8,6 @@ module the service pulls in counts too."""
 from __future__ import annotations
 
 import ast
-import importlib
 import json
 import os
 import re
@@ -216,7 +215,5 @@ def test_lab_decide_never_opens_truth(tmp_path: Path) -> None:
     assert_isolated(audited(LAB_DECIDE, tmp_path))
 
 
-@pytest.mark.xfail(strict=True, raises=ModuleNotFoundError, reason="needs Task 8 (Org)")
 def test_runtime_never_opens_truth(tmp_path: Path) -> None:
-    importlib.import_module("owm_service.org")  # fails here, for the right reason, until Task 8
     assert_isolated(audited(ORG_DECIDE, tmp_path))
