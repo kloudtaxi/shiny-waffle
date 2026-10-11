@@ -1,8 +1,20 @@
 # B-06: the lab's OWM service (design)
 
-**Status:** design agreed section by section in brainstorming (2026-10-10 to 2026-10-11). This spec
-is for review. Next comes the implementation plan (writing-plans). No code is written before the
-plan is approved and an execution method is chosen.
+**Status:** **approved** by the user (2026-10-11), and approved for build sequencing by garbanzo
+(`owm/docs/owm-service-design-review-2026-10-11.md`, 30977cd). Next comes the implementation plan
+(writing-plans). No code is written before the plan is approved and an execution method is chosen.
+
+**Revised 2026-10-11 after garbanzo's review.** The contract moved after the 9d05398 pin (U-18 at
+53ce7b5, B-11 at 16ae5c4, a listing fix at 30977cd). The additions are folded in below, and none
+changes an agreed field:
+- `GET /me` (§8.1, §11);
+- stored drafts, `proposed_at`, `/{id}/submit` taking the submitter's `base_version`, dismissing a
+  draft through `/withdraw`, the `register_draft` work item, `GET /register/changes/{id}`, and
+  RR-13 at approval leaving the change `refused` (§7.1, §7.2);
+- the ratchet's confirmer uses the approvals' pass-up (§6.5, no longer an assumption);
+- `may_ask` stays unenforced (§8.2);
+- the Docker image defaults `OWM_LAB_ROUTES=0` (§11, §12);
+- the replay check on the edited-row re-runs is done (§10).
 
 **What it is:** a service in shiny-waffle that serves glowing-garbanzo's contract v1.2
 (`owm-decisions`) over the lab's kernel. web-next and agents can then use the lab's OWM for real.
@@ -13,7 +25,8 @@ It retires when sovera-owm's `owm-decisions` context serves the same contract (t
 
 | What | Where |
 |---|---|
-| The contract | garbanzo `owm/docs/contract-v1.2.md` at 9d05398 (last contract edit e36ce3a); types in `web-next/lib/contract/owm-decisions.ts`; S22 typed in `s22.example.ts` |
+| The contract | garbanzo `owm/docs/contract-v1.2.md` at 30977cd (first pinned at 9d05398); types in `web-next/lib/contract/owm-decisions.ts`; S22 typed in `s22.example.ts` |
+| garbanzo's review of this design | `owm/docs/owm-service-design-review-2026-10-11.md` (30977cd) |
 | The lab's reviews of it | `docs/contract-v1.2-review-2026-10-09.md` (c196b31, re-review 74aef92) |
 | Agents, clearance and the ratchet | `docs/agents-sketch-review-2026-10-09.md` (deebdd8); G-45, G-46 |
 | The kernel, registrar and procedure register | `lab/owm_kernel/`, `lab/owm_register/` |
@@ -61,6 +74,11 @@ Section numbers like §5.7 refer to the contract.
 | `PUT /register/settings` is for Executives only, and logged | Section 3, approved | 2026-10-11 |
 | **G-43's outcome fix is out of B-06.** The service emits the `revoked` flag; the outcome change gets its own run | Section 5, approved | 2026-10-11 |
 | The kernel's level comes from the register's structured terms, not from a new kernel output | Section 2, approved | 2026-10-11 |
+| The spec as a whole | The user | 2026-10-11 |
+| Fold in the contract's U-18 and B-11 additions during the build | garbanzo's review, the user | 2026-10-11 |
+| A ratchet's confirmer passes up the same way an approval does (DC-3, as `passed_from`) | garbanzo's review | 2026-10-11 |
+| `may_ask` is recorded, never enforced, in v1.2 | garbanzo's review (contract §9) | 2026-10-11 |
+| The Docker image defaults `OWM_LAB_ROUTES=0`; anything hosted stays reachable only from web-next's server | garbanzo's review §3.3 | 2026-10-11 |
 
 ## 3. Not in scope
 
@@ -118,7 +136,7 @@ flowchart LR
 | `decisions.py` | The decision lifecycle (§6) |
 | `clearance.py` | Clearance, redemption and reporting (§6.7) |
 | `register_queue.py` | Two-step register changes over the frozen registrar, plus procedures (§7) |
-| `approvals.py` | `GET /approvals` (#19, §8 of the contract) |
+| `approvals.py` | `GET /approvals` (#19, §8 of the contract): `register_change`, `register_draft` (B-11), `decision_approval` and `condition` work items |
 | `sessions.py` | Demo sessions, the mandate fixture and suspension (§8.1, §8.2) |
 | `app.py` | The FastAPI routes, with the contract's status codes. The lab-only `/lab/*` routes sit visibly outside the contract |
 | `config.py` | Every setting comes from the environment (§12) |
@@ -294,10 +312,10 @@ floor with the subject. A withdraw is possible from any live state.
   - the version gets a blocking `ratchet` condition and a `ratchet` flag;
   - the condition's `who` is whoever holds the floor level's role for this request, never the
     requester.
-- **Assumption (new while writing): when the requester holds the floor level's role.** The contract
-  says separation of duties applies but doesn't say who confirms instead. This spec names the
-  **holder of the next band up** (for discount the CRO, David Morgan, the only Executive). It's
-  listed in §15 to confirm with garbanzo.
+- **When the requester holds the floor level's role,** the confirmer passes up exactly as an
+  approval does: DC-3, the same rule and **the same code path as `passed_from`**. A ratchet and an
+  approval can then never name different people. For discount that's the CRO, David Morgan
+  (confirmed in garbanzo's review).
 
 ### 6.6 Self-sourced basis (§6.3)
 
@@ -396,8 +414,10 @@ contract's two steps **without changing any rule**:
 ```mermaid
 flowchart TD
   D["draft (submit: false): anyone, agents included"] --> D1["dry apply with stand-ins:<br/>the function's head submits, an Executive approves"]
-  D1 --> D2["checks: the first rule that fails, or none<br/>nothing queued, nothing changed"]
-  S["submit: a person in the owning function"] --> S1{"RR-13 strict:<br/>base_version current?"}
+  D1 --> D2["stored draft: proposed_by, proposed_at, checks<br/>(the first rule that fails, or none)<br/>the register doesn't change"]
+  D2 -- "dismiss: withdraw, anyone in the owning function" --> DW["withdrawn"]
+  D2 -- "submit the draft with base_version" --> S1
+  S["submit: a person in the owning function<br/>(directly, or a stored draft)"] --> S1{"RR-13 strict: is the submitter's<br/>base_version current?"}
   S1 -- no --> S0["409"]
   S1 -- yes --> S2["dry apply: the real submitter, a stand-in approver"]
   S2 -- refused --> S3["422 naming the rule (403 for RR-1), nothing queued"]
@@ -405,7 +425,7 @@ flowchart TD
   P -- "withdraw (submitter)" --> W["withdrawn"]
   P -- "decline with a note (approver)" --> X["declined, no rule named"]
   P -- "approve (head or Executive, not the submitter)" --> A1{"RR-13 scoped: an approved change since<br/>submission on the same kind and scope,<br/>or this change's targets?"}
-  A1 -- yes --> A0["409"]
+  A1 -- yes --> A0["refused, RR-13 named (409)"]
   A1 -- no --> A2["real apply against the register as it is now<br/>acting_as = submitter + approver"]
   A2 -- fails --> RF["refused, rule named"]
   A2 -- passes --> OK["approved, register version + 1<br/>the event keeps the entry written"]
@@ -418,6 +438,19 @@ flowchart TD
   - approval runs every rule again with the real people;
   - the submitter's identity comes from the submit session, so `acting_as` at approval is the
     service vouching for something it saw.
+- **Drafts are stored** (B-11). `change.drafted` keeps the draft with `proposed_by`, `proposed_at`
+  and its `checks`, in state `draft`.
+  - An agent's draft lands as a `register_draft` work item for everyone in the owning function,
+    with `raised_by` the agent. A person's own draft stays with them.
+  - **Submitting a draft** (`/{id}/submit` with `{base_version}`) makes it the submitter's change.
+    `submitted_by` is the session's person. `proposed_by` stays on the change, and the service adds
+    it to the entry the registrar writes.
+  - **RR-13 checks the `base_version` the submitter sends,** the version they reviewed the draft
+    against. Otherwise an agent's draft made before the register moved could never be submitted.
+  - **Dismissing a draft** is `/{id}/withdraw` by anyone in the owning function; anyone else is
+    refused with RR-3. A pending change is withdrawn by its submitter only.
+- **Any rule failing at approval, RR-13 included, leaves the change `refused`** with the rule
+  named. RR-13 answers 409; the others answer 422 (403 for RR-1).
 - **A revoke** is the same flow with `action: revoke`, `target` and `revoked_on` (RR-9, RR-12).
 - **Refusals map to the contract's shape** (§3.4): `RefusedError(rule, message)` becomes
   `{rule, detail, unmatched?, fix?}`. The codes are 403 for RR-1, 409 for RR-13 and 422 otherwise.
@@ -434,7 +467,8 @@ flowchart TD
     knowledge-foundation id.
 - `/register/entries/{doc_id}`, `/register/entries/{doc_id}/text`, `GET` and `PUT /register/settings`.
   `PUT` is for Executives only, and logged as `settings.changed`.
-- `GET /api/v1/register/changes?state=&waiting_on=me`.
+- `GET /api/v1/register/changes?state=&waiting_on=me`, and `GET /api/v1/register/changes/{id}`
+  for one change, drafts included (web-next's review drawer reads it).
 - Decisions read a kernel `Register` built from the current state, cached per register version.
 
 ### 7.3 Procedures (#18)
@@ -488,6 +522,10 @@ flowchart TD
   `function`.
 - **A body principal that differs from the session** is refused with RR-1 (403), wherever it
   appears.
+- **`GET /api/v1/me`** returns `{ actor }`, the session's actor as the OWM knows it, whose person
+  carries their function (U-18). web-next uses it to offer only what the rules allow, such as
+  *Submit a new version* for the owning function. The offer is a convenience; the service still
+  checks every request.
 
 ### 8.2 The mandate fixture and suspension
 
@@ -502,6 +540,9 @@ flowchart TD
   Sales function.
 - **It's held outside the registrar's `State`,** so no lab code sees it, `base.yaml` doesn't
   change, and `build_register.py --check` stays green.
+- **`may_ask` is recorded and shown, never enforced, in v1.2** (contract §9). Asking is never
+  refused for want of a mandate: web-next's Ask assistant asks as an agent with no mandate fixture.
+  Mandates bite at clearance.
 - **A change of kind `agent_mandate`** is refused RR-5 (unknown kind), as the contract requires.
 - **Suspension:** `OWM_SUSPENDED=AGT-DEALDESK`, or `AGT-DEALDESK@<sha>` for one version.
 
@@ -625,13 +666,26 @@ The acceptance harness is the experimenter's side, and the only code that reads 
 |---|---|---|
 | 1 | **All 42 scenarios** (22 discount, 10 credit, 10 SLA): seed the row, set the clock, ask as the requester with the scenario's `submitted`, and compare the kernel's fields | The committed records and fields that `check_equivalence` uses: experiment 4 v3 for discount, `exp5-credit/hybrid-decisions.json`, `exp6-sla/hybrid-decisions.json`. The plan pins the file and fields for each scenario |
 | 2 | **The additions:** input conflicts equal the oracle's on 14 scenarios (S22 `requested_discount`, S23 `request_date`, S24 `status`, S35 `requested_limit_usd`, and 10 with none); approvals by person id and role; actions from the outcome | `src/northstar/oracle.py` and each scenario's `expected:` |
-| 3 | **The must-fixes:** a body `as_of` gets 422 and S23 decides on the CRM's date; a second decision on DR-9001 gets 409 DC-6; DR-9102 at 25% re-run at 8% is ratcheted, naming the CRO; the CRM edited to 8% on DR-9001 is ratcheted, naming Michael | G-46, the reviews |
+| 3 | **The must-fixes:** a body `as_of` gets 422 and S23 decides on the CRM's date; a second decision on DR-9001 gets 409 DC-6; DR-9102 at 25% re-run at 8% is ratcheted, naming the CRO; the CRM edited to 8% on DR-9001 is ratcheted, naming Michael | G-46, the reviews. **Replay coverage checked 2026-10-11** (below) |
 | 4 | **`spent`:** after S36's credit is redeemed on SR-39385, a new decision on SR-39385 is `spent` and its clearance is refused `spent`; two clearances race and the second redemption gets `spent` (threads); a `failed` report stays spent and raises an incident | §5.9, §7.2 |
-| + | **Contract drift:** the models parse §10's JSON examples, vendored from garbanzo at 9d05398 into `lab/owm_service/contract/` | The contract |
+| + | **Contract drift:** the models parse §10's JSON examples, vendored into `lab/owm_service/contract/`. Slice 1 vendors them from 9d05398. Slice 2 re-vendors them from 30977cd or later, when it adds the register queue | The contract |
+| + | **The U-18 and B-11 additions:** `GET /me`; a stored agent draft shows as `register_draft` work for the whole owning function; it's submitted with the submitter's `base_version` after the register moved; dismissing it by someone outside the function gets RR-3; RR-13 at approval leaves the change `refused`; `GET /register/changes/{id}` returns drafts | Contract §3.3, §4.2, §8 at 30977cd |
 | + | **Rebuild:** state rebuilt from the log equals the live state after every test | §5 |
 | + | **Isolation:** no service import reaches `truth/` or the answer key, and the Docker image has neither | §4 |
 | + | **The register queue:** the 24 attack cases (C01 to C24) through draft, submit and approve get the same admitted or refused result as `results.json`. The named rule may differ only where a case breaks more than one rule, because submit runs the content rules before approval runs RR-4; each such difference is listed | `runs/2026-10-08-register-attacks/` |
 
+- **Replay coverage for the edited-row re-runs: checked, $0.** Garbanzo asked whether the 8%
+  re-runs hit recorded Jev calls. A replay-only probe (live off, cap 0) ran the governed discount
+  decision on DR-9001 and DR-9102 as recorded, and with the row edited to 8%. All four replayed
+  with 0 live calls, because the discount judgments ask about the justification, the customer, the
+  product and the documents, never the figure.
+
+  | Row | Recorded | Edited to 8%, with no ratchet |
+  |---|---|---|
+  | DR-9001 (S22) | 15%: `APPROVE_WITH_AUTHORIZATION`, Michael Torres, 14 judgments | `APPROVE`, Sarah Chen approves herself |
+  | DR-9102 (S10) | 25%: `APPROVE_WITH_AUTHORIZATION`, David Morgan, 6 judgments | `APPROVE`, Sarah Chen approves herself |
+
+  The right-hand column is exactly what the ratchet must stop. No live spend is needed for item 3.
 - **Seeding:**
   - Only DR-9001 and CR-9201 are in the CSVs. The other discount and credit requests are inserted
     through the overlay: discount rows with `heldout.record`, including the S03 list-price fix;
@@ -654,13 +708,15 @@ The acceptance harness is the experimenter's side, and the only code that reads 
 
 | Routes | |
 |---|---|
-| **Contract, under `/api/v1`** | `GET /register`, `/register/entries/{doc_id}`, `/register/entries/{doc_id}/text`, `GET`/`PUT /register/settings`; `POST /register/changes`, `/register/changes/{id}/submit`, `/approve`, `/decline`, `/withdraw`, `/remind`; `GET /register/changes`; `GET /procedures`, `/procedures/{id}`; `POST /decisions`, `GET /decisions`, `/decisions/{id}`, `/decisions/{id}/versions/{v}`, `/decisions/{id}/events`; `POST /decisions/{id}/conditions/{cid}/resolve`, `/approve`, `/decline`, `/withdraw`, `/rerun`; `POST /decisions/{id}/clearance`, `GET /decisions/{id}/clearances`; `POST /clearances/{id}/redeem`, `/clearances/{id}/report`; `GET /approvals` |
+| **Contract, under `/api/v1`** | `GET /me`; `GET /register`, `/register/entries/{doc_id}`, `/register/entries/{doc_id}/text`, `GET`/`PUT /register/settings`; `POST /register/changes`, `/register/changes/{id}/submit`, `/approve`, `/decline`, `/withdraw`, `/remind`; `GET /register/changes`, `/register/changes/{id}`; `GET /procedures`, `/procedures/{id}`; `POST /decisions`, `GET /decisions`, `/decisions/{id}`, `/decisions/{id}/versions/{v}`, `/decisions/{id}/events`; `POST /decisions/{id}/conditions/{cid}/resolve`, `/approve`, `/decline`, `/withdraw`, `/rerun`; `POST /decisions/{id}/clearance`, `GET /decisions/{id}/clearances`; `POST /clearances/{id}/redeem`, `/clearances/{id}/report`; `GET /approvals` |
 | **Lab-only, outside the contract** | `POST /lab/sessions`, `DELETE /lab/sessions/current`; `PATCH /lab/sor/{table}/{id}`, `POST /lab/sor/{table}`; `POST /lab/adapter/execute`; `POST /lab/clock`; `POST /lab/reset` (archives the log, starts afresh) |
 | **Health** | `GET /healthz` |
 
 - web-next calls the service server-side through its API route, so there's no CORS.
-- `OWM_LAB_ROUTES=0` removes the `/lab/*` routes. They're on by default, because the demo has no
-  other sign-in.
+- `OWM_LAB_ROUTES=0` removes the `/lab/*` routes. They're on by default locally, because the demo
+  has no other sign-in. **The Docker image defaults to `0`.** The container smoke test, and any
+  demo deployment, set it to `1` explicitly and keep the service reachable only from web-next's
+  server. The lab routes let anyone open a session as anyone and edit the CRM.
 
 ## 12. Packaging and configuration
 
@@ -670,14 +726,14 @@ The acceptance harness is the experimenter's side, and the only code that reads 
   in the plan).
 - **Dockerfile:**
   - built on python slim; `uv sync --group owm-service`; runs as non-root on port 8000, with
-    `HEALTHCHECK /healthz`;
+    `HEALTHCHECK /healthz` and `ENV OWM_LAB_ROUTES=0`;
   - **copies:** the lab code, the register and its stores, `dataset/evidence/` and
     `dataset/evidence-variants/`, the procedure admission reports, and the 14 Jev call files;
   - **never copies:** `truth/`, `dataset/answer-key/`, `dataset/evaluation/`, `site/` or
     `_owm-local/`. So the image itself enforces isolation: if anything reaches for `truth/` at
     runtime, the container smoke test fails.
-- **Smoke test:** `docker build`, then S22 end to end against the container. Docker is installed
-  here.
+- **Smoke test:** `docker build`, then S22 end to end against the container, run with
+  `OWM_LAB_ROUTES=1` set explicitly. Docker is installed here.
 
 | Variable | Default | Meaning |
 |---|---|---|
@@ -689,7 +745,7 @@ The acceptance harness is the experimenter's side, and the only code that reads 
 | `OWM_CLOCK` | `2026-09-23T09:00:00-05:00` | The demo start, or `real` |
 | `OWM_CLEARANCE_TTL_SECONDS` | `300` | Clearance lifetime |
 | `OWM_SUSPENDED` | empty | Agents, or `agent@sha` versions, that are suspended |
-| `OWM_LAB_ROUTES` | `1` | `0` removes `/lab/*` |
+| `OWM_LAB_ROUTES` | `1` locally; `0` in the Docker image | `0` removes `/lab/*` |
 
 ## 13. Build order
 
@@ -714,7 +770,7 @@ flowchart LR
 | Risk | Mitigation |
 |---|---|
 | Kernel prep changes what's sent to Jev, so replay misses | `about` is recorded beside the answer. The gate runs replay-only, so a miss fails loudly |
-| A seeded row differs from the harness's row, so the replay hash misses | Seed with the same builders (`heldout.record`, `x5.record`). A miss is 503, never a silent live call |
+| A seeded row differs from the harness's row, so the replay hash misses | Seed with the same builders (`heldout.record`, `x5.record`). A miss is 503, never a silent live call. The edited-row re-runs were checked: they replay (§10) |
 | `self_sourced_basis` only sees service writes | Labelled bounded. The UI says so |
 | Demo sign-in has no real security | `/lab/*` is clearly separate. A real deployment replaces `sessions.py` and sets `OWM_LAB_ROUTES=0` |
 | A single SQLite writer | Fine for a demo. Kernel calls run outside the lock |
@@ -724,11 +780,18 @@ flowchart LR
 ## 15. Open items, after B-06
 
 - **G-43's outcome change**, as its own run with a before/after record on C02 and C01x.
-- **Confirm with garbanzo who confirms a ratchet** when the requester holds the floor level's role
-  (§6.5's assumption).
 - `possible_duplicate`: a truth scenario, a window, a test.
 - G-46 follow-up: linking requests by deal (DR-9002).
 - `agent_mandate` as a real kind, with its owner from the entry (phases 2 and 3).
 - **garbanzo:** an `OWM_API_URL` route in web-next, and a Northstar demo org (it's Bluefin today).
   A paste-ready note goes to the garbanzo session when slice 1 passes.
+- **U-23: scope on a register change.** A change carries `kind` but not `scope`, so nobody can
+  submit a first exception for a new customer. Whenever it suits; it doesn't affect B-06's
+  acceptance.
+- **garbanzo's side when it connects (B-08, B-09),** from its review §4:
+  - map `file.source_id` (a corpus path) to its own document ids;
+  - make `on_mismatch` read-only for anyone but Executives;
+  - default *Effective from* to the register's `clock`;
+  - a plain message for a 503 on `POST /decisions`;
+  - a session bridge to `/lab/sessions`.
 - Production: who may edit a system of record is the real CRM's own access control, not the OWM's.
