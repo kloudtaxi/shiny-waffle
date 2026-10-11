@@ -123,6 +123,13 @@ def make_evidence(root: Path, overlay: Overlay) -> Any:
     return OverlayEvidence(root, overlay)
 
 
+def doc_prints(evidence: Any) -> list[tuple[str, str, str]]:
+    """(filename, doc_id, fingerprint) of every document in `evidence`, fingerprinted as the
+    register records a document (`kernel.fingerprint`)."""
+    return [(str(d.filename), str(d.doc_id), str(_kernel.fingerprint(d.raw)))
+            for d in evidence.docs()]  # fmt: skip
+
+
 def corpus_root(corpus: str) -> Path:
     """The corpus's folder: `base` is the evidence itself; any other is a variant of it."""
     if corpus == "base":
