@@ -115,3 +115,25 @@ def test_mandate_entry(org: Org) -> None:
     assert m.for_agent("AGT-OTHER") is None
     with pytest.raises(NotFound):
         m.entry("MANDATE-NOPE")
+
+
+def test_accountable_owner_is_a_person_ref(org: Org) -> None:
+    m = Mandates(org)
+    terms = m.for_agent("AGT-DEALDESK")
+    assert terms is not None
+    assert terms.owner.accountable.id == "EMP-200"
+    assert terms.owner.accountable.function == "Sales"
+    shape = m.entry("MANDATE-DEALDESK-2026").terms["owner"]["accountable"]
+    assert set(shape) == {"id", "name", "title", "function"} and shape["id"] == "EMP-200"
+
+
+def test_unknown_accountable_id_raises(
+    org: Org, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import owm_service.sessions as mod
+
+    text = (FIXTURE / "mandates.yaml").read_text()
+    (tmp_path / "mandates.yaml").write_text(text.replace("EMP-200", "EMP-nope"))
+    monkeypatch.setattr(mod, "FIXTURES", tmp_path)
+    with pytest.raises(NotFound):
+        Mandates(org)

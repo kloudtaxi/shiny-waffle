@@ -29,6 +29,7 @@ from .models import (
     Mandate,
     MeResponse,
     PersonActor,
+    PersonRef,
     RegisterEntry,
 )
 from .org import Org
@@ -54,7 +55,7 @@ class AgentInfo(_T):
 
 class Owner(_T):
     function: str
-    accountable: str
+    accountable: PersonRef
 
 
 class MayAsk(_T):
@@ -95,7 +96,13 @@ class Mandates:
         self.org = org
         raw: list[dict[str, Any]] = yaml.safe_load((FIXTURES / "mandates.yaml").read_text())
         self._raw = {e["doc_id"]: e for e in raw}
-        self._terms = {d: MandateTerms.model_validate(e["terms"]) for d, e in self._raw.items()}
+        self._terms = {d: self._load(e["terms"]) for d, e in self._raw.items()}
+
+    def _load(self, terms: dict[str, Any]) -> MandateTerms:
+        """The fixture names the accountable person by id; the contract carries a PersonRef."""
+        owner = dict(terms["owner"])
+        owner["accountable"] = self.org.people.ref(owner["accountable"]).model_dump()
+        return MandateTerms.model_validate({**terms, "owner": owner})
 
     def entry(self, doc_id: str) -> RegisterEntry:
         if doc_id not in self._raw:
