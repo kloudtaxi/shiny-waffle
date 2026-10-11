@@ -1,4 +1,5 @@
-"""The decision lifecycle (spec §6): asking, which makes version 1, and reading decisions back.
+"""The decision lifecycle (spec §6): asking, which makes version 1; the people steps, which
+resolve, re-run, approve, decline or withdraw it; and reading decisions back.
 
 Asking (spec §6.1), in order:
 1. the subject's id must fit the type: a `request_id` starting `DR-` (discount) or `CR-`
@@ -22,6 +23,19 @@ Asking (spec §6.1), in order:
 The contract's `DecisionRequest` carries no principal, so there is none to compare with the
 session's: an extra body field fails validation (422).
 
+The people steps (spec §6.4), each `(actor, decision_id, body)` to the current `DecisionRecord`:
+1. the rules first (`steps.py`): DC-1, DC-5 (409), a closed decision, then DC-2 to DC-4 together;
+2. `resolve` and `rerun` re-run the decision: the row as it is now, version 1's `as_of` (for SLA,
+   the kernel's `decided_at` is the clock now), the kernel outside any write transaction with the
+   decision's id as its `sid`, a requester the row still names (else 503: the decision is its
+   requester's), and version n+1 from `rerun.next_version`. A kernel that can't decide is 503 with
+   a `decision.failed` event naming the decision, and nothing else written;
+3. every write (`BEGIN IMMEDIATE`) re-checks that the version is still current (DC-5) and the
+   subject's last event unchanged, 409 if either moved; a resolution appends `condition.resolved`
+   then the `decision.versioned` it produced, a re-run `decision.rerun_requested` then the version,
+   approving `decision.approved`, declining `decision.declined`, withdrawing `decision.withdrawn`.
+Approvals bind to a version: a re-run's version starts with nothing given or declined.
+
 Every decision event is appended to its subject's stream (`state.py` lists the payloads).
 `submitted` is kept as sent and compared, never used (contract ground rule 5). `prepare.py` puts
 the row (or the submitted figures) to the kernel and reads the basis; `assemble.py` maps the
@@ -32,29 +46,40 @@ from __future__ import annotations
 
 import builtins
 import json
-from collections.abc import Mapping
+import sqlite3
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any, Final
 
-from . import _lab, ratchet
+from . import _lab, ratchet, steps
 from .assemble import VersionContext, build_version
 from .conditions import conflict_condition, input_conflicts, missing_record_condition
 from .errors import CannotDecide, NotFound, Refused
 from .events import Event, ExecutionRow
 from .models import (
     Actor,
+    ApprovalGiven,
     Basis,
     Condition,
+    ConditionResolved,
     DecisionRecord,
     DecisionRequest,
     DecisionType,
+    Declined,
+    PersonRef,
+    Previous,
     Refusal,
     RequestSubject,
+    RerunRequest,
+    ResolveRequest,
+    StepRequest,
     Submitted,
     TicketSubject,
 )
 from .org import Org
-from .prepare import PENDING, TABLE, Prepared, documents, prepare, require_figures
+from .prepare import PENDING, TABLE, Prepared, documents, prepare, principal, require_figures
+from .rerun import Resolving, next_version, resolution_payload
 from .state import decision_of, derive_state, is_live, subject_id, with_derived
 
 PREFIX: Final[Mapping[DecisionType, str]] = {"discount": "DR-", "credit": "CR-"}
@@ -74,6 +99,16 @@ def _submitted(s: Submitted | None) -> dict[str, Any] | None:
     if s is None:
         return None
     return {k: v for k, v in s.model_dump(exclude_unset=True).items() if v is not None}
+
+
+@dataclass(frozen=True)
+class _Current:
+    """A decision as a step reads it: the current version and what the write re-checks."""
+
+    record: DecisionRecord  # the current version, with its derived fields
+    events: list[Event]  # the decision's own events
+    subject: str
+    seen: int  # the subject's last seq when read
 
 
 def _plain(x: Any) -> Any:
@@ -107,21 +142,26 @@ class Decisions:
         if row is None:
             require_figures(kind, sid, submitted, actor)
         try:
-            prep = prepare(self.org, kind, sid, row, submitted or {}, actor, requested_at)
+            prep = prepare(self.org, kind, sid, row, submitted or {}, principal(actor),
+                           requested_at)  # fmt: skip
         except Exception as e:  # noqa: BLE001 - R19: the row can't be put to the kernel
             raise self._failed(actor, kind, sid, f"inputs: {e}") from e
-        try:
-            kr = self._decide(kind, prep)
-        except _lab.JevUnavailable as e:
-            raise self._failed(actor, kind, sid, f"Jev unavailable: {e}") from e
-        except CannotDecide as e:
-            raise self._failed(actor, kind, sid, f"kernel: {e.detail}") from e
-        except Exception as e:  # noqa: BLE001 - the register or procedures couldn't be read
-            raise self._failed(actor, kind, sid, f"kernel: {e}") from e
+        kr = self._run(actor, kind, sid, prep)
         decided_at = self.org.clock.now()  # before the write: never first read inside one
         try:
-            payload = self._payload(kind, sid, kr, prep, submitted, actor, requested_at,
-                                    decided_at)  # fmt: skip
+            conditions = self._conditions(kind, sid, prep, submitted)
+            rk = ratchet.assess(
+                self.org, kind=kind, subject=sid, table=TABLE[kind], decision_id=PENDING,
+                version=1, requester=prep.requester, figures=prep.figures,
+                row=prep.inputs.get("record") or {}, authority=kr.record.get("authority"),
+                as_of=date.fromisoformat(prep.as_of), requested_at=requested_at,
+                cid=f"c{len(conditions) + 1}",
+            )  # fmt: skip
+            payload = self._payload(
+                kind, kr, prep, submitted, actor=actor, requested_at=requested_at.isoformat(),
+                decided_at=decided_at, decision_id=PENDING, version=1,
+                conditions=[*conditions, *rk.conditions], rk=rk, previous=None,
+            )  # fmt: skip
         except Exception as e:  # noqa: BLE001 - the result doesn't fit the contract
             raise self._failed(actor, kind, sid, f"result: {e}") from e
         return self.get(self._write(actor, sid, seen, payload, decided_at))
@@ -140,6 +180,21 @@ class Decisions:
             want = f"a {kind} decision names a request_id starting {PREFIX[kind]}"
         raise Refused(422, [Refusal(rule="DC-2", detail=f"subject: {want}, not {shown}")])
 
+    def _run(
+        self, actor: Actor, kind: DecisionType, sid: str, prep: Prepared, *,
+        decision: tuple[str, int] | None = None,
+    ) -> _lab.KernelResult:  # fmt: skip
+        """The kernel, outside any write transaction. Jev unavailable or a kernel error is 503
+        with a `decision.failed` event (ruling R19); a re-run's names its decision."""
+        try:
+            return self._decide(kind, prep)
+        except _lab.JevUnavailable as e:
+            raise self._failed(actor, kind, sid, f"Jev unavailable: {e}", decision) from e
+        except CannotDecide as e:
+            raise self._failed(actor, kind, sid, f"kernel: {e.detail}", decision) from e
+        except Exception as e:  # noqa: BLE001 - the register or procedures couldn't be read
+            raise self._failed(actor, kind, sid, f"kernel: {e}", decision) from e
+
     def _decide(self, kind: DecisionType, prep: Prepared) -> _lab.KernelResult:
         entries, store = self.org.procedures()
         return _lab.decide(
@@ -151,30 +206,24 @@ class Decisions:
         )  # fmt: skip
 
     def _payload(
-        self, kind: DecisionType, sid: str, kr: _lab.KernelResult, prep: Prepared,
-        submitted: dict[str, Any] | None, actor: Actor, requested_at: datetime,
-        decided_at: datetime,
+        self, kind: DecisionType, kr: _lab.KernelResult, prep: Prepared,
+        submitted: Mapping[str, Any] | None, *, actor: Actor, requested_at: str,
+        decided_at: datetime, decision_id: str, version: int, conditions: Sequence[Condition],
+        rk: ratchet.Assessment, previous: Previous | None,
     ) -> dict[str, Any]:  # fmt: skip
         """The `decision.versioned` payload: the version's fixed fields, the kernel's record as
-        it came back, and the kernel's additions."""
+        it came back, the kernel's additions, and the version's level."""
         as_of = date.fromisoformat(prep.as_of)
         docs = documents(self.org, kr, as_of)
         records = [] if prep.basis is None else [prep.basis]
         named = prep.subject.model_dump(include={"request_id", "ticket", "account_id",
                                                  "customer_id"}, exclude_none=True)  # fmt: skip
-        conditions = self._conditions(kind, sid, prep, submitted)
-        rk = ratchet.assess(
-            self.org, kind=kind, subject=sid, table=TABLE[kind], decision_id=PENDING, version=1,
-            requester=prep.requester, figures=prep.figures, row=prep.inputs.get("record") or {},
-            authority=kr.record.get("authority"), as_of=as_of, requested_at=requested_at,
-            cid=f"c{len(conditions) + 1}",
-        )  # fmt: skip
         ctx = VersionContext(
-            decision_id=PENDING, version=1, subject=prep.subject,
+            decision_id=decision_id, version=version, subject=prep.subject,
             submitted=None if submitted is None else Submitted.model_validate(submitted),
-            requested_by=prep.requester, actor=actor, requested_at=requested_at.isoformat(),
+            requested_by=prep.requester, actor=actor, requested_at=requested_at,
             as_of=prep.as_of, decided_at=decided_at.isoformat(), figures=prep.figures,
-            conditions=[*conditions, *rk.conditions],
+            conditions=list(conditions), previous=previous,
             basis=Basis(records=records, documents=docs.basis),
             register_used=docs.register_used, people=self.org.people,
             known_ids=frozenset({d for _, d, _ in docs.prints} | set(docs.registered)
@@ -201,14 +250,20 @@ class Decisions:
             for i, (field, s, r) in enumerate(input_conflicts(kind, submitted, prep.figures), 1)
         ]
 
-    def _failed(self, actor: Actor, kind: DecisionType, sid: str, reason: str) -> CannotDecide:
-        """Log a decision the kernel couldn't make (for the audit), and the 503 to raise."""
+    def _failed(
+        self, actor: Actor, kind: DecisionType, sid: str, reason: str,
+        decision: tuple[str, int] | None = None,
+    ) -> CannotDecide:  # fmt: skip
+        """Log a decision the kernel couldn't make (for the audit), and the 503 to raise. A
+        failed re-run names its decision and the version it would have followed."""
         at = self.org.clock.now()
+        payload: dict[str, Any] = {"decision_type": kind, "subject": sid, "reason": reason}
+        if decision is not None:
+            payload |= {"decision_id": decision[0], "version": decision[1]}
         with self.org.log.transaction() as tx:
             self.org.log.append(tx, at=at, org=self.org.org_id, stream=sid,
                                 kind="decision.failed", actor=actor.model_dump(mode="json"),
-                                payload={"decision_type": kind, "subject": sid,
-                                         "reason": reason})  # fmt: skip
+                                payload=payload)  # fmt: skip
         return CannotDecide(reason)
 
     def _write(
@@ -234,6 +289,155 @@ class Decisions:
                                 payload=payload)  # fmt: skip
         return did
 
+    # -- the people steps (spec §6.4) ---------------------------------------------------------
+    def resolve(
+        self, actor: Actor, decision_id: str, cid: str, body: ResolveRequest
+    ) -> DecisionRecord:
+        """Resolve one of the current version's conditions, which re-runs the decision."""
+        me = steps.person(actor)
+        cur = self._current(decision_id)
+        rec = cur.record
+        steps.current(rec, body.decision_version)
+        steps.live(rec)
+        c = steps.condition(rec, cid)
+        steps.may_resolve(rec, me, c, body.resolution)
+        resolved = ConditionResolved(by=me, at=self.org.clock.now().isoformat(),
+                                     resolution=body.resolution, note=body.note,
+                                     rerun_version=rec.version + 1)  # fmt: skip
+        return self._rerun(actor, me, cur, Resolving(c, resolved))
+
+    def rerun(self, actor: Actor, decision_id: str, body: RerunRequest) -> DecisionRecord:
+        """Re-run the current version on the row as it is now: version n+1."""
+        me = steps.person(actor)
+        cur = self._current(decision_id)
+        steps.current(cur.record, body.decision_version)
+        steps.live(cur.record)
+        steps.may_rerun(cur.record, me)
+        return self._rerun(actor, me, cur, None)
+
+    def approve(self, actor: Actor, decision_id: str, body: StepRequest) -> DecisionRecord:
+        """Give the approval (or concurrence, or claim decision) that names the actor."""
+        me = steps.person(actor)
+        cur = self._current(decision_id)
+        rec = cur.record
+        steps.current(rec, body.decision_version)
+        steps.live(rec)
+        i = steps.may_approve(rec, me, declining=False, note=body.note)
+        given = ApprovalGiven(by=me, at=self.org.clock.now().isoformat(), note=body.note)
+        self._step(actor, cur, "decision.approved", {
+            "decision_id": decision_id, "version": rec.version, "index": i,
+            "given": given.model_dump(mode="json")})  # fmt: skip
+        return self.get(decision_id)
+
+    def decline(self, actor: Actor, decision_id: str, body: StepRequest) -> DecisionRecord:
+        """Decline the approval that names the actor, with a note. The decision is then closed,
+        and its floor stays with the subject."""
+        me = steps.person(actor)
+        cur = self._current(decision_id)
+        rec = cur.record
+        steps.current(rec, body.decision_version)
+        steps.live(rec)
+        i = steps.may_approve(rec, me, declining=True, note=body.note)
+        declined = Declined(by=me, at=self.org.clock.now().isoformat(), note=str(body.note))
+        self._step(actor, cur, "decision.declined", {
+            "decision_id": decision_id, "version": rec.version, "index": i,
+            "declined": declined.model_dump(mode="json")})  # fmt: skip
+        return self.get(decision_id)
+
+    def withdraw(self, actor: Actor, decision_id: str, body: StepRequest) -> DecisionRecord:
+        """The requester withdraws a live decision. Its floor stays with the subject."""
+        me = steps.person(actor)
+        cur = self._current(decision_id)
+        rec = cur.record
+        steps.current(rec, body.decision_version)
+        steps.live(rec)
+        steps.may_withdraw(rec, me)
+        self._step(actor, cur, "decision.withdrawn",
+                   {"decision_id": decision_id, "version": rec.version})  # fmt: skip
+        return self.get(decision_id)
+
+    def _current(self, decision_id: str) -> _Current:
+        first = self._first(decision_id)
+        stream = self.org.log.read(self.org.org_id, stream=first.stream)
+        mine = [e for e in stream if decision_of(e) == decision_id]
+        fixed = self._version(mine, decision_id, None).payload["version"]
+        record = DecisionRecord.model_validate(
+            with_derived(fixed, mine, self._executions(first.stream)))  # fmt: skip
+        return _Current(record, mine, first.stream, stream[-1].seq)
+
+    def _recheck(self, tx: sqlite3.Connection, cur: _Current) -> None:
+        """In the write: the version is still current (DC-5) and nothing else moved on the
+        subject since the step read it (409 either way)."""
+        if self.org.log.last_seq(self.org.org_id, cur.subject, tx=tx) == cur.seen:
+            return
+        did, n = cur.record.decision_id, cur.record.version
+        now = max(e.payload["version"]["version"]
+                  for e in self.org.log.read(self.org.org_id, stream=cur.subject, tx=tx)
+                  if e.kind == "decision.versioned" and decision_of(e) == did)  # fmt: skip
+        if now != n:
+            detail = f"{did} moved to version {now} while this step was taken on version {n}."
+        else:
+            detail = f"{did} changed while this step was taken ({cur.subject}). Read it again."
+        raise Refused(409, [Refusal(rule="DC-5", detail=detail)])
+
+    def _step(self, actor: Actor, cur: _Current, kind: str, payload: dict[str, Any]) -> None:
+        """One step's event, if nothing moved since the step read the decision."""
+        at = self.org.clock.now()  # before the write: never first read inside one
+        with self.org.log.transaction() as tx:
+            self._recheck(tx, cur)
+            self.org.log.append(tx, at=at, org=self.org.org_id, stream=cur.subject, kind=kind,
+                                actor=actor.model_dump(mode="json"), payload=payload)  # fmt: skip
+
+    def _rerun(
+        self, actor: Actor, me: PersonRef, cur: _Current, resolving: Resolving | None
+    ) -> DecisionRecord:
+        """Spec §6.4: re-read the row, keep `as_of`, run the kernel outside the lock, carry the
+        conditions forward, assess the floor, and write version n+1 with what changed."""
+        rec, sid = cur.record, cur.subject
+        kind, did, n = rec.decision_type, rec.decision_id, rec.version
+        versions = [e.payload for e in cur.events if e.kind == "decision.versioned"]
+        stored = next(v["version"] for v in versions if v["version"]["version"] == n)
+        submitted: dict[str, Any] | None = stored.get("submitted")
+        now = self.org.clock.now()
+        try:
+            prep = prepare(self.org, kind, sid, self.org.sor.row(TABLE[kind], sid),
+                           submitted or {}, rec.requested_by, now,
+                           as_of=date.fromisoformat(rec.as_of), kernel_sid=did)  # fmt: skip
+            asker = rec.requested_by
+            if asker is not None and (prep.requester is None or prep.requester.id != asker.id):
+                named = prep.requester.name if prep.requester else "nobody"
+                raise ValueError(f"the row now names {named} as the requester; {did} is "
+                                 f"{asker.name}'s. Withdraw it and ask again.")  # fmt: skip
+        except Exception as e:  # noqa: BLE001 - R19: the row can't be put to the kernel
+            raise self._failed(actor, kind, sid, f"inputs: {e}", (did, n)) from e
+        kr = self._run(actor, kind, sid, prep, decision=(did, n))
+        decided_at = self.org.clock.now()
+        try:
+            nxt = next_version(
+                self.org, rec, [v["version"] for v in versions],
+                {int(v["version"]["version"]): v.get("level") for v in versions}, prep, kr,
+                submitted, me, resolving, decided_at,
+            )  # fmt: skip
+            payload = self._payload(
+                kind, kr, prep, submitted, actor=rec.actor, requested_at=rec.requested_at,
+                decided_at=decided_at, decision_id=did, version=n + 1,
+                conditions=nxt.conditions, rk=nxt.assessment,
+                previous=Previous(version=n, what_changed=nxt.what_changed),
+            )  # fmt: skip
+        except Exception as e:  # noqa: BLE001 - the result doesn't fit the contract
+            raise self._failed(actor, kind, sid, f"result: {e}", (did, n)) from e
+        if resolving is not None:
+            first = ("condition.resolved", resolution_payload(did, resolving))
+        else:
+            first = ("decision.rerun_requested", {"decision_id": did, "version": n})
+        with self.org.log.transaction() as tx:
+            self._recheck(tx, cur)
+            for kind_, body in (first, ("decision.versioned", payload)):
+                self.org.log.append(tx, at=decided_at, org=self.org.org_id, stream=sid,
+                                    kind=kind_, actor=actor.model_dump(mode="json"),
+                                    payload=body)  # fmt: skip
+        return self.get(did)
+
     # -- the subject --------------------------------------------------------------------------
     def _executions(self, sid: str) -> builtins.list[ExecutionRow]:
         return [x for x in self.org.log.executions()
@@ -254,13 +458,17 @@ class Decisions:
         return None
 
     # -- reading ------------------------------------------------------------------------------
-    def events(self, decision_id: str) -> builtins.list[Event]:
-        """The decision's events, in order."""
+    def _first(self, decision_id: str) -> Event:
+        """The decision's first `decision.versioned` event; its stream is the subject's."""
         first = next((e for e in self.org.log.read(self.org.org_id, kinds=("decision.versioned",))
                       if decision_of(e) == decision_id), None)  # fmt: skip
         if first is None:
             raise NotFound(f"decision {decision_id}")
-        evs = self.org.log.read(self.org.org_id, stream=first.stream)
+        return first
+
+    def events(self, decision_id: str) -> builtins.list[Event]:
+        """The decision's events, in order."""
+        evs = self.org.log.read(self.org.org_id, stream=self._first(decision_id).stream)
         return [e for e in evs if decision_of(e) == decision_id]
 
     def _version(self, evs: builtins.list[Event], decision_id: str, version: int | None) -> Event:

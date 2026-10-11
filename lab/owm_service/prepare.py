@@ -130,40 +130,46 @@ def synthesized_row(
 # -- the kernel's inputs --------------------------------------------------------------------------
 def prepare(
     org: Org, kind: DecisionType, sid: str, row: dict[str, str] | None,
-    submitted: Mapping[str, Any], actor: Actor, now: datetime,
+    submitted: Mapping[str, Any], standing: PersonRef | None, now: datetime, *,
+    as_of: date | None = None, kernel_sid: str = PENDING,
 ) -> Prepared:  # fmt: skip
     """The kernel's inputs for the subject's row (or, with no row, the submitted figures), and what
-    the version keeps of it. Any failure here is the caller's 503 (ruling R19)."""
+    the version keeps of it. Any failure here is the caller's 503 (ruling R19).
+
+    `standing` is who stands as the requester when the system of record has no row: the session's
+    person or the agent's principal when asking (ruling R22), the decision's requester on a
+    re-run; never a submitted `requestor`. A re-run keeps version 1's `as_of` (S23's trap) and
+    gives the kernel the decision's id as its `sid`; SLA's `decided_at` is always `now`."""
     if kind == "sla":
         assert row is not None
         subject = Subject(ticket=sid, account_id=row["account_id"], product=row["product_sku"])
-        return Prepared(subject, {"sid": PENDING, "ticket_id": sid, "decided_at": now}, now,
-                        now.date().isoformat(), None, None, {}, row,
+        return Prepared(subject, {"sid": kernel_sid, "ticket_id": sid, "decided_at": now}, now,
+                        (as_of or now.date()).isoformat(), None, None, {}, row,
                         basis_record(org, kind, sid, row, now))  # fmt: skip
     if row is not None:
         figures = contract_view(kind, row, org.people)
-        as_of = date.fromisoformat(row["request_date"])
+        on = as_of or date.fromisoformat(row["request_date"])
         email = row["requested_by"]
         requester = org.people.by_email(email) if email else None
         if requester is None:
             raise ValueError(f"the requester {email!r} is not in the HR export")
         record = {k: str(v) for k, v in row.items()}
     else:
-        requester = principal(actor)  # never the body's `requestor` (ruling R22)
+        requester = standing
         if requester is None:
             raise ValueError("no requester: the session acts for nobody")
         email = email_of(org, requester.id)
-        as_of = now.date()
+        on = as_of or now.date()
         figures = {k: float(v) if k in NUMBERS else str(v) for k, v in submitted.items()}
-        record = synthesized_row(kind, sid, submitted, email, as_of)
+        record = synthesized_row(kind, sid, submitted, email, on)
     if kind == "discount":
         subject = Subject(request_id=sid, account_id=str(figures["customer"]),
                           product=str(figures["product"]))  # fmt: skip
     else:
         subject = Subject(request_id=sid, customer_id=str(figures["customer"]))
-    inputs = {"sid": PENDING, "record": record, "as_of": as_of}
+    inputs = {"sid": kernel_sid, "record": record, "as_of": on}
     basis = None if row is None else basis_record(org, kind, sid, row, now)
-    return Prepared(subject, inputs, as_of, as_of.isoformat(), requester, email, figures, row,
+    return Prepared(subject, inputs, on, on.isoformat(), requester, email, figures, row,
                     basis)  # fmt: skip
 
 

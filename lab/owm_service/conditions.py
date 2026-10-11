@@ -5,12 +5,22 @@ SLA decisions open none.
 
 Figures compare by the contract's §3.5 names, in the contract's units: numbers within 1e-9,
 anything else exactly. The decision always stands on the record (contract ground rule 5).
+
+A re-run (spec §6.4) carries its version's conditions forward (`carry_forward`, `carry_ratchet`):
+- a resolved condition is history: it is copied with its `resolved`, whatever its source;
+- a resolved input conflict stays resolved while the row still holds the figure that was confirmed
+  (`confirmed_record`); when the row holds another figure, a new condition opens with the next id.
+  A `corrected_record` covers nothing later: a correction that still differs from `submitted`
+  opens a new condition;
+- an open condition the re-run finds again (the same figures; still no record; still below the
+  floor at the same level, for the same confirmer) keeps its id. One it doesn't find is gone;
+- ids are `c1`, `c2`… and never reused within a decision, across versions (`next_number`).
 """
 
 from __future__ import annotations
 
 import math
-from collections.abc import Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from typing import Any, Final
 
 from .models import Condition, PersonRef
@@ -45,7 +55,8 @@ def _number(x: Any) -> float | None:
     return f if math.isfinite(f) else None
 
 
-def _same(field: str, submitted: Any, on_record: Any) -> bool:
+def same(field: str, submitted: Any, on_record: Any) -> bool:
+    """One figure, two values: equal in the contract's units (numbers within 1e-9)."""
     if field in NUMBERS:
         a, b = _number(submitted), _number(on_record)
         return a is not None and b is not None and abs(a - b) <= TOLERANCE
@@ -63,7 +74,7 @@ def input_conflicts(
         (f, submitted[f], on_record[f])
         for f in FIELDS
         if submitted.get(f) is not None and f in on_record
-        and not _same(f, submitted[f], on_record[f])
+        and not same(f, submitted[f], on_record[f])
     ]  # fmt: skip
 
 
@@ -140,3 +151,89 @@ def ratchet_condition(
         "opened_in_version": version,
         "resolved": None,
     })  # fmt: skip
+
+
+# -- re-runs (spec §6.4) --------------------------------------------------------------------------
+def number(cid: str) -> int:
+    """A condition id's number: `c12` is 12."""
+    return int(cid[1:])
+
+
+def next_number(versions: Iterable[Mapping[str, Any]]) -> int:
+    """The next free condition number in a decision: one past every id any version has used."""
+    return 1 + max((number(str(c["id"])) for v in versions for c in v["conditions"]), default=0)
+
+
+def _confirms(c: Condition, field: str, on_record: Any) -> bool:
+    """A confirmed figure the row still holds."""
+    return (c.source == "input_conflict" and c.field == field and c.resolved is not None
+            and c.resolved.resolution == "confirmed_record"
+            and same(field, c.on_record, on_record))  # fmt: skip
+
+
+def carry_forward(
+    kind: str, subject_id: str, previous: Sequence[Condition],
+    found: Sequence[tuple[str, Any, Any]], missing: Mapping[str, Any] | None,
+    requester: PersonRef, version: int, next_n: int,
+) -> tuple[list[Condition], int]:  # fmt: skip
+    """The input-conflict and missing-record conditions of version `version`, and the next free
+    number. `previous` are the last version's conditions with their resolutions (the one being
+    resolved included), `found` the conflicts the re-run finds (`input_conflicts`), `missing` the
+    submitted figures when the system of record still has no row (else None). Resolved conditions
+    of every source are kept as history; the ratchet's open one is `carry_ratchet`'s."""
+    out = [c for c in previous if c.resolved is not None]
+    for field, submitted, on_record in found:
+        if any(_confirms(c, field, on_record) for c in previous):
+            continue
+        kept = next((c for c in previous if c.source == "input_conflict" and c.resolved is None
+                     and c.field == field and same(field, c.submitted, submitted)
+                     and same(field, c.on_record, on_record)), None)  # fmt: skip
+        if kept is None:
+            kept = conflict_condition(f"c{next_n}", kind, subject_id, field, submitted, on_record,
+                                      requester, version)  # fmt: skip
+            next_n += 1
+        out.append(kept)
+    if missing is not None:
+        kept = next((c for c in previous
+                     if c.source == "missing_record" and c.resolved is None), None)  # fmt: skip
+        if kept is None:
+            kept = missing_record_condition(f"c{next_n}", kind, subject_id, missing, requester,
+                                            version)  # fmt: skip
+            next_n += 1
+        out.append(kept)
+    return out, next_n
+
+
+def carry_ratchet(
+    previous: Sequence[Condition], fresh: Sequence[Condition],
+    same_level: Callable[[Condition], bool],
+) -> list[Condition]:  # fmt: skip
+    """The version's open ratchet condition: the last version's open one, kept with its id, when
+    the re-run is still below the floor (`fresh`, from `ratchet.assess`) for the same confirmer
+    and at the level of the version that opened it (`same_level`); otherwise `fresh`."""
+    held = next((c for c in previous if c.source == "ratchet" and c.resolved is None), None)
+    if fresh and held is not None and same_level(held) and (
+            [p.id for p in held.who] == [p.id for p in fresh[0].who]):  # fmt: skip
+        return [held]
+    return list(fresh)
+
+
+def in_order(conditions: Iterable[Condition]) -> list[Condition]:
+    """By id number: history first, then what each version opened, in the order it opened them."""
+    return sorted(conditions, key=lambda c: number(c.id))
+
+
+def _names(ids: Sequence[str]) -> str:
+    return ids[0] if len(ids) == 1 else ", ".join(ids[:-1]) + " and " + ids[-1]
+
+
+def what_changed(cause: str, *, below: bool, was_below: bool, open_ids: Sequence[str]) -> str:
+    """`previous.what_changed`, one line: what caused the re-run, then where it leaves the version
+    (below the floor; the blocking conditions still open; or none)."""
+    if below:
+        then = f"the level {'is still' if was_below else 'fell'} below the floor"
+    elif open_ids:
+        then = f"{_names(open_ids)} {'is' if len(open_ids) == 1 else 'are'} open"
+    else:
+        then = "no conditions remain"
+    return f"{cause[:1].upper()}{cause[1:]}; {then}."

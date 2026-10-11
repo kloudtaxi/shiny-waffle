@@ -7,7 +7,7 @@ kernel.
 
 Every decision event sits on the stream named for its subject (`DR-9001`, `CR-9201`,
 `SR-39385`), so the subject's last `seq` moves on any write to any of its decisions. The events
-this module reads, by payload (the steps that write them come later):
+this module reads, by payload (`decisions.py` writes them):
 - `decision.versioned`: `{version: <the fixed fields>, kernel, kernel_extra, level}`, where
   `level` is the version's `{band, concurrences, title}` or null (`ratchet.py` rebuilds the
   subject's floor from it);
@@ -18,6 +18,10 @@ this module reads, by payload (the steps that write them come later):
   `decision.declined`: `{decision_id, version, index, declined: <…declined>}`, where `index` is
   the approval's place in that version's `approvals`. Approvals bind to a version;
 - `decision.withdrawn`: `{decision_id, version}`.
+Two more sit on the stream and decide nothing here: `decision.rerun_requested`
+`{decision_id, version}` (a `/rerun` of `version`, written with the version it produced) and
+`decision.failed` `{decision_type, subject, reason}`, with `decision_id` and `version` when a
+re-run failed.
 """
 
 from __future__ import annotations

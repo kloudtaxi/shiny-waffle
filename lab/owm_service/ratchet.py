@@ -21,7 +21,7 @@ everything under it is a pure function of the registered terms and the log:
 
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any, Final
@@ -316,13 +316,16 @@ def assess(
     org: Org, *, kind: DecisionType, subject: str, table: str, decision_id: str, version: int,
     requester: PersonRef | None, figures: Mapping[str, Any], row: Mapping[str, str],
     authority: Mapping[str, Any] | None, as_of: date, requested_at: datetime, cid: str,
+    pending: Sequence[Event] = (),
 ) -> Assessment:  # fmt: skip
     """Version `version` of `decision_id`: its level, the subject's floor before and after it, the
     ratchet when it is below that floor, and the requester's own edits to its basis since the
     subject's first ask. `figures` are by §3.5 names in contract units, `row` is the record the
     kernel was given (the credit tier is read from it), `authority` the kernel's, `cid` the id a
-    ratchet condition takes."""
-    events = org.log.read(org.org_id, stream=subject)
+    ratchet condition takes. `pending` are events the same command will append with this version
+    (a re-run's `condition.resolved`): the floor counts them, and `floor_from` doesn't depend on
+    where they land in the log."""
+    events = [*org.log.read(org.org_id, stream=subject), *pending]
     prior = floor_from(events, subject)
     auth = authority or {}
     level = None
