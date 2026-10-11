@@ -61,9 +61,10 @@ FLAG_CODES: tuple[tuple[str, str, str], ...] = (
      "route_mode"),
     (r"; set aside", "set_aside", "never"),
     (r"not on file", "not_on_file", "routed"),
-    (r"^cannot decide:", "cannot_decide", "routed"),
-    (r"^out of scope:", "out_of_scope", "routed"),
-    (r"^no claim yet:", "note", "routed"),
+    # SLA: word-bounded prefixes, so sla.yaml's "cannot decide restoration: …" counts (ruling R9)
+    (r"^cannot decide\b", "cannot_decide", "routed"),
+    (r"^out of scope\b", "out_of_scope", "routed"),
+    (r"^no claim yet\b", "note", "routed"),
 )  # fmt: skip
 OTHER = ("note", "never")
 

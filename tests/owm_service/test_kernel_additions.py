@@ -105,6 +105,8 @@ FLAG_ROWS = [
     ("AMD-1: amends MSA-X-2025, not on file", "not_on_file", "routed"),
     ("AMD-2: depends on AMD-1, which is not on file", "not_on_file", "routed"),
     ("cannot decide: missing open time", "cannot_decide", "routed"),
+    # S45's own flag (sla.yaml v1): a word-bounded prefix, not "cannot decide:" (ruling R9)
+    ("cannot decide restoration: missing the root-cause finding", "cannot_decide", "routed"),
     ("out of scope: no support terms cover this customer and product", "out_of_scope", "routed"),
     ("no claim yet: 1200.00 would be owed if claimed by 2026-07-24", "note", "routed"),
     ("claim received after the window closed on 2026-07-24", "note", "never"),
@@ -126,19 +128,45 @@ def test_flag_code_table(flag: str, code: str, rule: str, route_mode: bool, rout
     ]
 
 
-@pytest.mark.parametrize("sid", list(harness.KIND_OF))
-def test_every_routed_decision_has_a_routing_flag_item(sid: str) -> None:
-    rec = harness.decide(sid)
+def _routed_and_items(
+    rec: dict[str, Any], sid: str, route: bool = False
+) -> tuple[bool, list[dict[str, Any]]]:
+    """Whether the gate routed the decision, and its flag items. A routed decision has a flag
+    item that routes, unless an uncertain judgment routed it; an unrouted one has none."""
     route_to = harness.ROUTE_TO[harness.KIND_OF[sid]]
     routed = rec["gated_outcome"] == route_to and rec["gated_outcome"] != rec["outcome"]
-    items = harness.lab("additions").flag_items(
-        rec["flags"], route_mode=harness.route_mode(sid), routed=routed
+    items: list[dict[str, Any]] = harness.lab("additions").flag_items(
+        rec["flags"], route_mode=harness.route_mode(sid, route), routed=routed
     )
     assert [i["text"] for i in items] == rec["flags"]
     if routed and not rec["uncertain"]:
         assert any(i["routes"] for i in items), rec["flags"]
     if not routed:
         assert not any(i["routes"] for i in items), rec["flags"]
+    return routed, items
+
+
+# None of the 42 clean decisions is routed by the gate today, so this pins the unrouted half (no
+# flag item routes); the routed half runs on the constructed route-mode cases below.
+@pytest.mark.parametrize("sid", list(harness.KIND_OF))
+def test_clean_decisions_have_a_routing_flag_item_only_when_routed(sid: str) -> None:
+    _routed_and_items(harness.decide(sid), sid)
+
+
+# G-32 route mode, constructed (replay only): a sealed set F attack makes a registered document on
+# file differ from its registered version; with `on_mismatch: route` it is set aside and the
+# `routed:` flag sends the decision to route_to. One per decision type, on the attack's own target,
+# plus check_withhold.py's P-32d probe (F9 on S45).
+ROUTE_MODE_CASES = [("F1", "S21"), ("F4", "S29"), ("F9", "S43"), ("F9", "S45")]
+
+
+@pytest.mark.parametrize(("attack", "sid"), ROUTE_MODE_CASES)
+def test_a_flag_routed_decision_has_a_routing_flag_item(attack: str, sid: str) -> None:
+    rec = harness.decide(sid, attack=attack, route=True)
+    assert not rec["uncertain"]  # the route comes from a flag, not an uncertain judgment
+    routed, items = _routed_and_items(rec, sid, route=True)
+    assert routed, (rec["outcome"], rec["gated_outcome"])
+    assert "routed" in [i["code"] for i in items if i["routes"]]
 
 
 def test_governed_trace_is_optional() -> None:
