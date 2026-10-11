@@ -149,6 +149,12 @@ def decide(
     return record
 
 
+def reference(sid: str, trace: dict[str, Any] | None = None) -> dict[str, Any]:
+    """The reference record `_lab.decide` must reproduce: `governed.decide` called directly, on
+    the scenario's inputs, its clean corpus and the committed register (`decide`, unattacked)."""
+    return decide(sid, trace)
+
+
 def decide_with_capture(sid: str) -> tuple[dict[str, Any], list[str | None]]:
     """The decision, made inside `additions.capture`, and what each of its judgments is about."""
     additions = lab("additions")
