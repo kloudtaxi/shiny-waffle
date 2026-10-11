@@ -18,6 +18,11 @@ northstar = "northstar.cli:main"
 
 [dependency-groups]
 dev = ["pytest>=8.2", "ruff>=0.6", "mypy>=1.11", "types-PyYAML>=6.0"]
+owm-service = [
+    "fastapi>=0.143.0",
+    "httpx>=0.28.1",
+    "uvicorn>=0.54.0",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -29,25 +34,44 @@ packages = ["src/northstar"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["src", "tests"]
+src = ["src", "tests", "lab"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N", "W"]
 
+[tool.ruff.lint.per-file-ignores]
+# The contract names these errors without an Error suffix (Refused, NotFound, ...).
+"lab/owm_service/errors.py" = ["N818"]
+
 [tool.ruff.lint.isort]
-known-first-party = ["northstar"]
+known-first-party = ["northstar", "owm_service"]
 
 [tool.mypy]
 python_version = "3.11"
 strict = true
-files = ["src", "tests"]
-mypy_path = ["src"]
+files = ["src", "tests", "lab/owm_service"]
+mypy_path = ["src", "lab"]
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
 module = ["faker.*", "polyfactory.*"]
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = [
+    "kernel",
+    "flow",
+    "governed",
+    "additions",
+    "registrar",
+    "build_procedures",
+    "serve",
+    "engine",
+]
+ignore_missing_imports = true
+follow_imports = "skip"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["lab"]
 addopts = "-ra"
