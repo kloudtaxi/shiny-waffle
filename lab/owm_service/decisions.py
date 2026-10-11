@@ -23,79 +23,42 @@ The contract's `DecisionRequest` carries no principal, so there is none to compa
 session's: an extra body field fails validation (422).
 
 Every decision event is appended to its subject's stream (`state.py` lists the payloads).
-`submitted` is kept as sent and compared, never used (contract ground rule 5).
+`submitted` is kept as sent and compared, never used (contract ground rule 5). `prepare.py` puts
+the row (or the submitted figures) to the kernel and reads the basis; `assemble.py` maps the
+result to the contract.
 """
 
 from __future__ import annotations
 
 import builtins
-import hashlib
 import json
 from collections.abc import Mapping
-from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any, Final
 
 from . import _lab, ratchet
-from .assemble import VersionContext, basis_documents, build_version, register_used
-from .conditions import (
-    NUMBERS,
-    SYSTEM,
-    conflict_condition,
-    input_conflicts,
-    missing_record_condition,
-)
+from .assemble import VersionContext, build_version
+from .conditions import conflict_condition, input_conflicts, missing_record_condition
 from .errors import CannotDecide, NotFound, Refused
 from .events import Event, ExecutionRow
 from .models import (
     Actor,
     Basis,
-    BasisRecord,
     Condition,
     DecisionRecord,
     DecisionRequest,
     DecisionType,
-    LastChanged,
-    PersonActor,
-    PersonRef,
     Refusal,
     RequestSubject,
-    Subject,
     Submitted,
     TicketSubject,
 )
 from .org import Org
-from .sor import basis_columns, contract_view
+from .prepare import PENDING, TABLE, Prepared, documents, prepare, require_figures
 from .state import decision_of, derive_state, is_live, subject_id, with_derived
 
-TABLE: Final[Mapping[DecisionType, str]] = {
-    "discount": "discount_requests", "credit": "credit_requests", "sla": "service_tickets",
-}  # fmt: skip
-SOURCE: Final[Mapping[DecisionType, str]] = {"discount": "crm", "credit": "erp", "sla": "service"}
 PREFIX: Final[Mapping[DecisionType, str]] = {"discount": "DR-", "credit": "CR-"}
-# what the kernel needs from a submission when the system of record has no row
-NEEDS: Final[Mapping[DecisionType, tuple[str, ...]]] = {
-    "discount": ("customer", "product", "requested_discount"),
-    "credit": ("customer", "requested_limit_usd"),
-}
-EVENTS: Final = "events"  # the SLA basis field: a digest of the ticket's events (ruling R17)
-PENDING: Final = "pending"  # the kernel's sid: it only fills the record's `scenario`
 FILTERS: Final = frozenset({"decision_type", "subject", "state"})
-
-
-@dataclass(frozen=True)
-class _Prepared:
-    """What the kernel is asked, and what the version keeps of the row."""
-
-    subject: Subject
-    inputs: dict[str, Any]
-    at: date | datetime
-    as_of: str
-    requester: PersonRef | None
-    requester_email: str | None
-    figures: dict[str, Any]  # the figures decided on, by §3.5 names, in contract units
-    row: dict[str, str] | None
-    basis: BasisRecord | None  # read with the row, so it is what the kernel was given
 
 
 def _dc6(subject: str, existing: str) -> Refused:
@@ -106,21 +69,11 @@ def _dc6(subject: str, existing: str) -> Refused:
     )])  # fmt: skip
 
 
-def _number_text(x: Any) -> str:
-    f = float(x)
-    return str(int(f)) if f.is_integer() else repr(f)
-
-
 def _submitted(s: Submitted | None) -> dict[str, Any] | None:
     """The submission by §3.5 names, as sent; a null figure counts as not sent."""
     if s is None:
         return None
     return {k: v for k, v in s.model_dump(exclude_unset=True).items() if v is not None}
-
-
-def _principal(actor: Actor) -> PersonRef | None:
-    """The person a session acts as: its own person, or the agent's principal (ruling R22)."""
-    return actor.person if isinstance(actor, PersonActor) else actor.on_behalf_of
 
 
 def _plain(x: Any) -> Any:
@@ -152,9 +105,9 @@ class Decisions:
         requested_at = self.org.clock.now()
         row = self.org.sor.row(TABLE[kind], sid)
         if row is None:
-            self._require_figures(kind, sid, submitted, actor)
+            require_figures(kind, sid, submitted, actor)
         try:
-            prep = self._prepare(kind, sid, row, submitted or {}, actor, requested_at)
+            prep = prepare(self.org, kind, sid, row, submitted or {}, actor, requested_at)
         except Exception as e:  # noqa: BLE001 - R19: the row can't be put to the kernel
             raise self._failed(actor, kind, sid, f"inputs: {e}") from e
         try:
@@ -187,89 +140,7 @@ class Decisions:
             want = f"a {kind} decision names a request_id starting {PREFIX[kind]}"
         raise Refused(422, [Refusal(rule="DC-2", detail=f"subject: {want}, not {shown}")])
 
-    def _require_figures(
-        self, kind: DecisionType, sid: str, submitted: dict[str, Any] | None, actor: Actor
-    ) -> None:
-        """A subject the system of record doesn't hold is 404 unless the submission names what
-        the kernel needs (Review Focus 1) and the session acts for a person, who stands as the
-        requester (ruling R22). SLA can't decide on a submission."""
-        if kind == "sla":
-            raise NotFound(f"{sid}: no such ticket")
-        lacking = [f for f in NEEDS[kind] if (submitted or {}).get(f) in (None, "")]
-        if lacking:
-            raise NotFound(f"{sid}: {SYSTEM[kind]} has no such request, and the submission "
-                           f"doesn't give {', '.join(lacking)}")  # fmt: skip
-        if _principal(actor) is None:
-            raise NotFound(f"{sid}: {SYSTEM[kind]} has no such request, and this session acts "
-                           "for nobody who could stand as its requester")  # fmt: skip
-
-    def _prepare(
-        self, kind: DecisionType, sid: str, row: dict[str, str] | None,
-        submitted: dict[str, Any], actor: Actor, now: datetime,
-    ) -> _Prepared:  # fmt: skip
-        if kind == "sla":
-            assert row is not None
-            subject = Subject(ticket=sid, account_id=row["account_id"], product=row["product_sku"])
-            return _Prepared(subject, {"sid": PENDING, "ticket_id": sid, "decided_at": now}, now,
-                             now.date().isoformat(), None, None, {}, row,
-                             self._basis_record(kind, sid, row, now))  # fmt: skip
-        if row is not None:
-            figures = contract_view(kind, row, self.org.people)
-            as_of = date.fromisoformat(row["request_date"])
-            email = row["requested_by"]
-            requester = self.org.people.by_email(email) if email else None
-            if requester is None:
-                raise ValueError(f"the requester {email!r} is not in the HR export")
-            record = {k: str(v) for k, v in row.items()}
-        else:
-            requester = _principal(actor)  # never the body's `requestor` (ruling R22)
-            if requester is None:
-                raise ValueError("no requester: the session acts for nobody")
-            email = self._email(requester.id)
-            as_of = now.date()
-            figures = {k: float(v) if k in NUMBERS else str(v) for k, v in submitted.items()}
-            record = self._record(kind, sid, submitted, email, as_of)
-        if kind == "discount":
-            subject = Subject(request_id=sid, account_id=str(figures["customer"]),
-                              product=str(figures["product"]))  # fmt: skip
-        else:
-            subject = Subject(request_id=sid, customer_id=str(figures["customer"]))
-        inputs = {"sid": PENDING, "record": record, "as_of": as_of}
-        basis = None if row is None else self._basis_record(kind, sid, row, now)
-        return _Prepared(subject, inputs, as_of, as_of.isoformat(), requester, email, figures, row,
-                         basis)  # fmt: skip
-
-    def _email(self, emp_id: str) -> str:
-        found = next((r["email"] for r in self.org.evidence.table("employees")
-                      if r["employee_id"] == emp_id), None)  # fmt: skip
-        if not found:
-            raise ValueError(f"{emp_id} has no email in the HR export")
-        return str(found)
-
-    def _record(
-        self, kind: DecisionType, sid: str, submitted: dict[str, Any], email: str, as_of: date
-    ) -> dict[str, str]:
-        """The row the kernel reads when the system of record has none: the submitted figures,
-        in the system's own columns."""
-        common = {"request_id": sid, "requested_by": email, "request_date": as_of.isoformat(),
-                  "justification": "", "status": str(submitted.get("status") or "")}  # fmt: skip
-        if kind == "discount":
-            pct = _number_text(round(float(submitted["requested_discount"]) * 100, 9))
-            return {
-                **common,
-                "account_id": str(submitted["customer"]),
-                "product_sku": str(submitted["product"]),
-                "requested_discount_pct": pct,
-            }
-        current = submitted.get("current_limit_usd")
-        return {
-            **common,
-            "erp_customer_id": str(submitted["customer"]),
-            "requested_limit_usd": _number_text(submitted["requested_limit_usd"]),
-            "current_limit_usd": "" if current is None else _number_text(current),
-        }
-
-    def _decide(self, kind: DecisionType, prep: _Prepared) -> _lab.KernelResult:
+    def _decide(self, kind: DecisionType, prep: Prepared) -> _lab.KernelResult:
         entries, store = self.org.procedures()
         return _lab.decide(
             kind, evidence=self.org.evidence, inputs=prep.inputs, at=prep.at,
@@ -280,19 +151,17 @@ class Decisions:
         )  # fmt: skip
 
     def _payload(
-        self, kind: DecisionType, sid: str, kr: _lab.KernelResult, prep: _Prepared,
+        self, kind: DecisionType, sid: str, kr: _lab.KernelResult, prep: Prepared,
         submitted: dict[str, Any] | None, actor: Actor, requested_at: datetime,
         decided_at: datetime,
     ) -> dict[str, Any]:  # fmt: skip
         """The `decision.versioned` payload: the version's fixed fields, the kernel's record as
         it came back, and the kernel's additions."""
-        registered = {str(e["doc_id"]): e for e in self.org.register_state().entries}
-        prints = _lab.doc_prints(self.org.evidence)
-        documents = basis_documents(kr.relied, registered, prints, kr.relied_entries)
+        as_of = date.fromisoformat(prep.as_of)
+        docs = documents(self.org, kr, as_of)
         records = [] if prep.basis is None else [prep.basis]
         named = prep.subject.model_dump(include={"request_id", "ticket", "account_id",
                                                  "customer_id"}, exclude_none=True)  # fmt: skip
-        as_of = date.fromisoformat(prep.as_of)
         conditions = self._conditions(kind, sid, prep, submitted)
         rk = ratchet.assess(
             self.org, kind=kind, subject=sid, table=TABLE[kind], decision_id=PENDING, version=1,
@@ -306,12 +175,12 @@ class Decisions:
             requested_by=prep.requester, actor=actor, requested_at=requested_at.isoformat(),
             as_of=prep.as_of, decided_at=decided_at.isoformat(), figures=prep.figures,
             conditions=[*conditions, *rk.conditions],
-            basis=Basis(records=records, documents=documents),
-            register_used=register_used(documents, registered, prints, as_of),
-            people=self.org.people,
-            known_ids=frozenset({d for _, d, _ in prints} | set(registered) | set(named.values())),
+            basis=Basis(records=records, documents=docs.basis),
+            register_used=docs.register_used, people=self.org.people,
+            known_ids=frozenset({d for _, d, _ in docs.prints} | set(docs.registered)
+                                | set(named.values())),
             floor=None if rk.floor is None else rk.floor.model(), service_flags=rk.flags,
-            revoked=ratchet.revoked_by(registered.values(), as_of),
+            revoked=ratchet.revoked_by(docs.registered.values(), as_of),
         )  # fmt: skip
         extra = {"judgment_about": kr.judgment_about, "flag_items": kr.flag_items,
                  "approval_roles": kr.approval_roles, "relied": kr.relied,
@@ -320,7 +189,7 @@ class Decisions:
                 "kernel_extra": _plain(extra), "level": rk.level_json()}  # fmt: skip
 
     def _conditions(
-        self, kind: DecisionType, sid: str, prep: _Prepared, submitted: dict[str, Any] | None
+        self, kind: DecisionType, sid: str, prep: Prepared, submitted: dict[str, Any] | None
     ) -> builtins.list[Condition]:
         if kind == "sla":
             return []
@@ -331,42 +200,6 @@ class Decisions:
             conflict_condition(f"c{i}", kind, sid, field, s, r, prep.requester, 1)
             for i, (field, s, r) in enumerate(input_conflicts(kind, submitted, prep.figures), 1)
         ]
-
-    def _basis_record(
-        self, kind: DecisionType, sid: str, row: dict[str, str], read_at: datetime
-    ) -> BasisRecord:
-        """The row's basis columns as read, raw (§3.5 maps them), and its last recorded edit."""
-        cols = basis_columns(kind, row)
-        fields = {c: self._events_digest(sid) if kind == "sla" and c == EVENTS else row.get(c, "")
-                  for c in cols}  # fmt: skip
-        edits = [e for e in self.org.sor.edits(TABLE[kind], sid) if e.payload["field"] in cols]
-        last = edits[-1] if edits else None
-        return BasisRecord(
-            system=SOURCE[kind], table=TABLE[kind], id=sid, fields=fields,
-            read_at=read_at.isoformat(),
-            last_changed=LastChanged(by=self._editor(last.actor), at=last.at.isoformat())
-            if last else None,
-        )  # fmt: skip
-
-    def _events_digest(self, ticket: str) -> str:
-        """Ruling R17: sha256 of the ticket's `ticket_events` rows, in table order."""
-        rows = [r for r in self.org.sor.table("ticket_events") if r.get("ticket_id") == ticket]
-        return hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()
-
-    def _editor(self, actor: dict[str, Any] | None) -> PersonRef | None:
-        """The person behind a systems-of-record edit, where the edit names one."""
-        try:
-            if not actor:
-                return None
-            if isinstance(actor.get("person"), dict):
-                return PersonRef.model_validate(actor["person"])
-            if isinstance(actor.get("on_behalf_of"), dict):
-                return PersonRef.model_validate(actor["on_behalf_of"])
-            if actor.get("kind") == "person" and actor.get("id"):
-                return self.org.people.ref(str(actor["id"]))
-        except (NotFound, ValueError):
-            return None
-        return None
 
     def _failed(self, actor: Actor, kind: DecisionType, sid: str, reason: str) -> CannotDecide:
         """Log a decision the kernel couldn't make (for the audit), and the 503 to raise."""
