@@ -11,10 +11,11 @@ import ast
 import importlib
 import json
 import os
+import re
 import subprocess
 import sys
 import textwrap
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 import pytest
@@ -22,20 +23,51 @@ import pytest
 LAB = Path(__file__).resolve().parents[2]
 SERVICE = LAB / "lab/owm_service"
 FORBIDDEN_TEXT = ("truth/", "answer-key", "dataset/evaluation", "site/")
+# a path component on its own, as `LAB / "truth"` builds it, or inside a path string
+FORBIDDEN_PARTS = frozenset({"truth", "answer-key", "answer_key", "evaluation", "site"})
+# modules that load the truth model: the admission gate and the register's bootstrap builder
+FORBIDDEN_MODULES = frozenset({"admit", "spec_admission", "build_register"})
+IMPORT_CALLS = frozenset({"import_module", "__import__", "find_spec", "spec_from_file_location",
+                          "run_module", "run_path"})  # fmt: skip
+DOTTED = re.compile(r"[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*")
 FORBIDDEN_DIRS = [LAB / "truth", LAB / "dataset/answer-key", LAB / "dataset/evaluation",
                   LAB / "site"]  # fmt: skip
 
 
 def _forbidden_module(name: str) -> bool:
     parts = name.split(".")
-    return parts[0] == "northstar" or "admit" in parts or "spec_admission" in parts
+    return parts[0] == "northstar" or bool(FORBIDDEN_MODULES & set(parts))
+
+
+def _forbidden_string(text: str, imported: bool) -> str | None:
+    """Why a string constant is forbidden, or None. `imported`: it is an import call's argument.
+    A bare "northstar" elsewhere is a name (the org id), not a module; a dotted one is a module."""
+    parts = PurePosixPath(text).parts
+    if any(t in text for t in FORBIDDEN_TEXT) or FORBIDDEN_PARTS & set(parts):
+        return "path"
+    if any(PurePosixPath(p).stem in FORBIDDEN_MODULES for p in parts):
+        return "module file"
+    if DOTTED.fullmatch(text) and (
+        FORBIDDEN_MODULES & set(text.split("."))
+        or (text.split(".")[0] == "northstar" and ("." in text or imported))
+    ):
+        return "module name"
+    return None
+
+
+def _callee(node: ast.Call) -> str:
+    f = node.func
+    return f.attr if isinstance(f, ast.Attribute) else f.id if isinstance(f, ast.Name) else ""
 
 
 def violations(source: str) -> list[str]:
-    """Forbidden imports, and string constants that name the answer side or load a forbidden
-    module by name (`importlib.import_module("admit")`), in one module's source."""
+    """Forbidden imports, and string constants that name the answer side (a path or a path
+    component) or a forbidden module (`importlib.import_module("admit")`), in one module."""
+    tree = ast.parse(source)
+    imported = {id(a) for n in ast.walk(tree) if isinstance(n, ast.Call)
+                and _callee(n) in IMPORT_CALLS for a in n.args}  # fmt: skip
     out = []
-    for node in ast.walk(ast.parse(source)):
+    for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             out += [f"import {a.name}" for a in node.names if _forbidden_module(a.name)]
         elif isinstance(node, ast.ImportFrom) and node.module:
@@ -43,13 +75,9 @@ def violations(source: str) -> list[str]:
             if any(_forbidden_module(n) for n in names):
                 out.append(f"from {node.module} import ...")
         elif isinstance(node, ast.Constant) and isinstance(node.value, str):
-            text = node.value
-            if any(t in text for t in FORBIDDEN_TEXT):
-                out.append(f"string {text[:60]!r}")
-            elif text in ("admit", "admit.py") or any(
-                m in text for m in ("spec_admission", "northstar.model")
-            ):
-                out.append(f"module name {text[:60]!r}")
+            why = _forbidden_string(node.value, id(node) in imported)
+            if why:
+                out.append(f"{why} {node.value[:60]!r}")
     return out
 
 
@@ -58,16 +86,38 @@ def violations(source: str) -> list[str]:
     ["import northstar.model", "from northstar import model", "import admit",
      "from spec_admission import admit", "import importlib\nimportlib.import_module('admit')",
      "P = 'truth/scenarios'", "P = 'dataset/answer-key/x.yaml'",
-     "P = LAB / 'dataset/evaluation'", "P = 'site/index.html'"],
+     "P = LAB / 'dataset/evaluation'", "P = 'site/index.html'",
+     # the codebase's own idiom (build_register.py reaches the truth as LAB / "truth")
+     "P = LAB / 'truth'", "P = LAB / 'truth' / 'scenarios'", "P = LAB / 'site'",
+     "P = LAB / 'dataset' / 'evaluation'", "P = 'dataset/answer_key'",
+     "import importlib\nimportlib.import_module('northstar')",
+     "import importlib\nimportlib.import_module('build_register')",
+     "import northstar", "import build_register", "from build_register import REG",
+     "M = 'northstar.build'", "P = 'lab/owm_register/build_register.py'",
+     "P = LAB / 'lab/spec_admission/admit.py'"],
 )  # fmt: skip
 def test_the_scan_catches_what_it_looks_for(source: str) -> None:
     assert violations(source)
 
 
+@pytest.mark.parametrize(
+    "source",
+    ["P = LAB / 'dataset/evidence'", "P = LAB / 'dataset' / 'evidence-variants' / corpus",
+     "P = LAB / 'runs'", "D = 'lab/owm_kernel'", "from .errors import CannotDecide",
+     "import importlib\nimportlib.import_module('kernel')",
+     "ORG = 'northstar'",  # Task 8's default org id: a name, not a module or a path
+     "E = 'sarah.chen@northstar.example'", "S = 'the truth of the matter'",
+     "S = 'an evaluation of the request'", "S = 'a site visit'", "S = 'admitted'",
+     "S = 'answer key'"],
+)  # fmt: skip
+def test_the_scan_passes_ordinary_code(source: str) -> None:
+    assert violations(source) == []
+
+
 def test_no_forbidden_imports_or_paths() -> None:
-    files = sorted(SERVICE.glob("*.py"))
+    files = sorted(SERVICE.rglob("*.py"))
     assert SERVICE / "_lab.py" in files
-    found = {f.name: v for f in files if (v := violations(f.read_text()))}
+    found = {str(f.relative_to(SERVICE)): v for f in files if (v := violations(f.read_text()))}
     assert found == {}
 
 
