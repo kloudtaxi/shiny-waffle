@@ -90,9 +90,12 @@ SOD = "no one may approve"
 
 
 class RefusedError(Exception):
-    def __init__(self, rule: str, message: str) -> None:
+    def __init__(self, rule: str, message: str, *, unmatched: str | None = None,
+                 fix: dict[str, Any] | None = None) -> None:  # fmt: skip
         super().__init__(f"{rule}: {message}")
         self.rule = rule
+        self.unmatched = unmatched  # the term or phrase the text doesn't state (RR-6, RR-7)
+        self.fix = fix  # a change to the submission that would clear the refusal (RR-10)
 
 
 # -- people ---------------------------------------------------------------------------------------
@@ -201,7 +204,8 @@ def stated(text: str, needles: list[str], what: str) -> None:
     f = flat(text)
     missing = [n for n in needles if flat(n) not in f]
     if missing:
-        raise RefusedError("RR-6", f"{what} not stated in the text: {missing}")
+        raise RefusedError("RR-6", f"{what} not stated in the text: {missing}",
+                           unmatched="; ".join(missing))  # fmt: skip
 
 
 def lines_with(text: str, needle: str) -> list[str]:
@@ -211,7 +215,8 @@ def lines_with(text: str, needle: str) -> list[str]:
 
 def co_located(text: str, title: str, bound: str, what: str) -> None:
     if not any(flat(bound) in line for line in lines_with(text, title)):
-        raise RefusedError("RR-6", f"{what}: '{title}' and '{bound}' are not stated together")
+        raise RefusedError("RR-6", f"{what}: '{title}' and '{bound}' are not stated together",
+                           unmatched=bound)  # fmt: skip
 
 
 def bands_check(text: str, terms: dict[str, Any], fmt: Any, staff: Staff) -> None:
@@ -236,7 +241,8 @@ def bands_check(text: str, terms: dict[str, Any], fmt: Any, staff: Staff) -> Non
 def grants_check(text: str, grants: Any) -> None:
     says_no = any(n in flat(text) for n in NO_GRANT)
     if grants is False and not says_no:
-        raise RefusedError("RR-6", "terms say it grants no approval authority; the text doesn't")
+        raise RefusedError("RR-6", "terms say it grants no approval authority; the text doesn't",
+                           unmatched=NO_GRANT[0])  # fmt: skip
     if grants is True and says_no:
         raise RefusedError("RR-6", "terms say it grants approval authority; the text says not")
     if grants not in (True, False):
@@ -329,7 +335,8 @@ def window_check(text: str, change: dict[str, Any]) -> None:
     for k in ("effective_from", "effective_to"):
         v = change.get(k)
         if v is not None and str(day(v)) not in text:
-            raise RefusedError("RR-7", f"{k} {v} is not stated in the text")
+            raise RefusedError("RR-7", f"{k} {v} is not stated in the text",
+                               unmatched=str(day(v)))  # fmt: skip
 
 
 # -- people checks --------------------------------------------------------------------------------
@@ -444,7 +451,9 @@ def _register(state: State, ch: dict[str, Any], text: str | None, acting_as: set
                 and overlaps(entry, e)):  # fmt: skip
             until = e["effective_to"] or "open"
             raise RefusedError("RR-10", f"overlaps {e['doc_id']} ({e['effective_from']} to "
-                                        f"{until}) without superseding it")  # fmt: skip
+                                        f"{until}) without superseding it",
+                               fix={"relations": [{"type": "supersedes",
+                                                   "target": e["doc_id"]}]})  # fmt: skip
     state.entries.append(entry)
     state.store[sha] = text
     state.log.append({"action": "register", "doc_id": doc.doc_id, "by": submit,
