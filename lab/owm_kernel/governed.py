@@ -50,8 +50,9 @@ def in_force(entries: list[dict[str, Any]], decision_type: str,
 def decide(
     decision_type: str, eng: Any, ev: Evidence, inputs: dict[str, Any], at: date | datetime | str,
     register: Register | None, entries: list[dict[str, Any]] | None = None,
-    store: Path = STORE, specs: Path = SPECS,
+    store: Path = STORE, specs: Path = SPECS, trace: dict[str, Any] | None = None,
 ) -> dict[str, Any]:  # fmt: skip
+    """`trace` (B-06), when given, is filled by `flow.run` with what the decision relied on."""
     entries = procedures() if entries is None else entries
     entry = in_force(entries, decision_type, at)
     if entry is None:
@@ -64,7 +65,7 @@ def decide(
     differs = not on_disk.exists() or fingerprint(on_disk.read_text()) != entry["sha256"]
     if register is not None:  # a revoked governing document stops counting from its date
         register = register.as_of(day(at))
-    record = flow.run(spec, eng, ev, inputs, register)
+    record = flow.run(spec, eng, ev, inputs, register, trace=trace)
     if differs:
         record.setdefault("flags", []).append(
             f"incident: the procedure file {entry['file']} differs from {entry['proc_id']} "

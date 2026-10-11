@@ -31,6 +31,8 @@ from zoneinfo import ZoneInfo
 
 import yaml
 from kernel import (
+    JUDGED,
+    LAST_READ,
     Calendar,
     Clock,
     Doc,
@@ -374,7 +376,13 @@ def run(
     env: dict[str, Any] = dict(PURE)
 
     def reader(src: str) -> Callable[[Doc], Any]:
-        return lambda doc: evaluate(src, {**env, "doc": doc})
+        def read(doc: Doc) -> Any:
+            value = evaluate(src, {**env, "doc": doc})
+            if isinstance(value, str) and JUDGED.get() is not None:  # B-06: a judgment's `about`
+                LAST_READ.set((doc.doc_id, value))
+            return value
+
+        return read
 
     readers = {name: reader(str(src)) for name, src in (spec.get("readers") or {}).items()}
 

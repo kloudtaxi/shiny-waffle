@@ -29,6 +29,7 @@ import re
 import sys
 import unicodedata
 from collections.abc import Callable, Mapping
+from contextvars import ContextVar
 from dataclasses import dataclass, field
 from datetime import date, datetime, time, timedelta
 from pathlib import Path
@@ -408,19 +409,45 @@ def concurrences(
 
 
 # -- judgments --------------------------------------------------------------------------------
+# B-06 (2026-10-11): what each judgment is about, recorded beside it and never sent to Jev. All
+# three are unset (None) unless `additions.capture` is active, and then `judge` records into JUDGED.
+JUDGED: ContextVar[dict[int, str | None] | None] = ContextVar("JUDGED", default=None)
+# the doc_id and text a spec reader last rendered (`flow.run`)
+LAST_READ: ContextVar[tuple[str, str] | None] = ContextVar("LAST_READ", default=None)
+SUBJECT: ContextVar[str | None] = ContextVar("SUBJECT", default=None)  # the request id or ticket
+
+
+def about_of(state: Any) -> str | None:
+    """What a judgment's state is about: the document a spec reader last rendered, when the state
+    carries that text as `document`; the role words, when it has a `role`; else the subject."""
+    if isinstance(state, Mapping):
+        last = LAST_READ.get()
+        if "document" in state and last is not None and state["document"] == last[1]:
+            return last[0]
+        if "role" in state:
+            return str(state["role"])
+    return SUBJECT.get()
+
+
 def judge(eng: Engine, state: Any, name: str, q: dict[str, Any]) -> dict[str, Any]:
     ans = eng.ask(state, {name: q})["answers"][name]
+    out: dict[str, Any]
     if q["type"] == "noul":
         p = float(ans["noul"])
-        return {
+        out = {
             "q": name,
             "noul": p,
             "yes": p >= 0.5,
             "uncertain": NOUL_BAND[0] <= p <= NOUL_BAND[1],
         }
-    conf = float(ans["confidence"])
-    return {"q": name, "choice": ans["choice"], "probabilities": ans["probabilities"],
-            "confidence": conf, "uncertain": conf < CHOICE_FLOOR}  # fmt: skip
+    else:
+        conf = float(ans["confidence"])
+        out = {"q": name, "choice": ans["choice"], "probabilities": ans["probabilities"],
+               "confidence": conf, "uncertain": conf < CHOICE_FLOOR}  # fmt: skip
+    judged = JUDGED.get()
+    if judged is not None:  # B-06: keyed by the result's identity, so the result is unchanged
+        judged[id(out)] = about_of(state)
+    return out
 
 
 # -- the guard pipeline -------------------------------------------------------------------------

@@ -6,9 +6,10 @@ from pathlib import Path
 
 import pytest
 
-from conftest import TRUTH
 from northstar.model import load_truth
 from northstar.model.truth import TruthError
+
+from .conftest import TRUTH
 
 
 def test_truth_matches_doc_03_anchors() -> None:

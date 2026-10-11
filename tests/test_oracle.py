@@ -6,8 +6,9 @@ from pathlib import Path
 
 import pytest
 
-from conftest import SEED
 from northstar.build import Dataset, IncoherentTruthError, assemble
+
+from .conftest import SEED
 
 
 def test_all_scenarios_coherent(ds: Dataset) -> None:

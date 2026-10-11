@@ -7,8 +7,9 @@ import io
 import re
 from pathlib import Path
 
-from conftest import SEED, TRUTH
 from northstar.build import Dataset, assemble, build
+
+from .conftest import SEED, TRUTH
 
 
 def _rows(ds: Dataset, artifact_id: str) -> list[dict[str, str]]:
