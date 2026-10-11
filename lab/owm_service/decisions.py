@@ -6,7 +6,9 @@ Asking (spec §6.1), in order:
 2. DC-6: a live decision on the subject is refused with 409 and its id as `existing`;
 3. the subject's row is read through the systems-of-record overlay. With no row, a discount or
    credit decision stands on the submitted figures when they name the customer, the product
-   (discount) and the requested figure, and opens a `missing_record` condition; otherwise 404;
+   (discount) and the requested figure, and opens a `missing_record` condition; otherwise 404.
+   Its requester is the session's person or the agent's principal, never a submitted
+   `requestor` (ruling R22); a session that acts for nobody is 404 too;
 4. `as_of`: the row's `request_date` (discount, credit), the service's date when the row is
    missing, the service clock for SLA. Never from the body (S23's trap);
 5. the kernel runs outside any write transaction;
@@ -90,6 +92,7 @@ class _Prepared:
     requester_email: str | None
     figures: dict[str, Any]  # the figures decided on, by §3.5 names, in contract units
     row: dict[str, str] | None
+    basis: BasisRecord | None  # read with the row, so it is what the kernel was given
 
 
 def _dc6(subject: str, existing: str) -> Refused:
@@ -110,6 +113,11 @@ def _submitted(s: Submitted | None) -> dict[str, Any] | None:
     if s is None:
         return None
     return {k: v for k, v in s.model_dump(exclude_unset=True).items() if v is not None}
+
+
+def _principal(actor: Actor) -> PersonRef | None:
+    """The person a session acts as: its own person, or the agent's principal (ruling R22)."""
+    return actor.person if isinstance(actor, PersonActor) else actor.on_behalf_of
 
 
 def _plain(x: Any) -> Any:
@@ -141,7 +149,7 @@ class Decisions:
         requested_at = self.org.clock.now()
         row = self.org.sor.row(TABLE[kind], sid)
         if row is None:
-            self._require_figures(kind, sid, submitted)
+            self._require_figures(kind, sid, submitted, actor)
         try:
             prep = self._prepare(kind, sid, row, submitted or {}, actor, requested_at)
         except Exception as e:  # noqa: BLE001 - R19: the row can't be put to the kernel
@@ -177,16 +185,20 @@ class Decisions:
         raise Refused(422, [Refusal(rule="DC-2", detail=f"subject: {want}, not {shown}")])
 
     def _require_figures(
-        self, kind: DecisionType, sid: str, submitted: dict[str, Any] | None
+        self, kind: DecisionType, sid: str, submitted: dict[str, Any] | None, actor: Actor
     ) -> None:
         """A subject the system of record doesn't hold is 404 unless the submission names what
-        the kernel needs (Review Focus 1). SLA can't decide on a submission."""
+        the kernel needs (Review Focus 1) and the session acts for a person, who stands as the
+        requester (ruling R22). SLA can't decide on a submission."""
         if kind == "sla":
             raise NotFound(f"{sid}: no such ticket")
         lacking = [f for f in NEEDS[kind] if (submitted or {}).get(f) in (None, "")]
         if lacking:
             raise NotFound(f"{sid}: {SYSTEM[kind]} has no such request, and the submission "
                            f"doesn't give {', '.join(lacking)}")  # fmt: skip
+        if _principal(actor) is None:
+            raise NotFound(f"{sid}: {SYSTEM[kind]} has no such request, and this session acts "
+                           "for nobody who could stand as its requester")  # fmt: skip
 
     def _prepare(
         self, kind: DecisionType, sid: str, row: dict[str, str] | None,
@@ -196,7 +208,8 @@ class Decisions:
             assert row is not None
             subject = Subject(ticket=sid, account_id=row["account_id"], product=row["product_sku"])
             return _Prepared(subject, {"sid": PENDING, "ticket_id": sid, "decided_at": now}, now,
-                             now.date().isoformat(), None, None, {}, row)  # fmt: skip
+                             now.date().isoformat(), None, None, {}, row,
+                             self._basis_record(kind, sid, row, now))  # fmt: skip
         if row is not None:
             figures = contract_view(kind, row, self.org.people)
             as_of = date.fromisoformat(row["request_date"])
@@ -206,7 +219,9 @@ class Decisions:
                 raise ValueError(f"the requester {email!r} is not in the HR export")
             record = {k: str(v) for k, v in row.items()}
         else:
-            requester = self._requester(submitted, actor)
+            requester = _principal(actor)  # never the body's `requestor` (ruling R22)
+            if requester is None:
+                raise ValueError("no requester: the session acts for nobody")
             email = self._email(requester.id)
             as_of = now.date()
             figures = {k: float(v) if k in NUMBERS else str(v) for k, v in submitted.items()}
@@ -217,17 +232,9 @@ class Decisions:
         else:
             subject = Subject(request_id=sid, customer_id=str(figures["customer"]))
         inputs = {"sid": PENDING, "record": record, "as_of": as_of}
-        return _Prepared(subject, inputs, as_of, as_of.isoformat(), requester, email, figures, row)
-
-    def _requester(self, submitted: dict[str, Any], actor: Actor) -> PersonRef:
-        """Who asks when there's no row: the submitted requestor, else the session's person."""
-        if submitted.get("requestor"):
-            return self.org.people.ref(str(submitted["requestor"]))
-        if isinstance(actor, PersonActor):
-            return actor.person
-        if actor.on_behalf_of is not None:
-            return actor.on_behalf_of
-        raise ValueError("no requester: the record is missing and the submission names nobody")
+        basis = None if row is None else self._basis_record(kind, sid, row, now)
+        return _Prepared(subject, inputs, as_of, as_of.isoformat(), requester, email, figures, row,
+                         basis)  # fmt: skip
 
     def _email(self, emp_id: str) -> str:
         found = next((r["email"] for r in self.org.evidence.table("employees")
@@ -278,9 +285,8 @@ class Decisions:
         it came back, and the kernel's additions."""
         registered = {str(e["doc_id"]): e for e in self.org.register_state().entries}
         prints = _lab.doc_prints(self.org.evidence)
-        documents = basis_documents(kr.relied, registered, prints)
-        records = [] if prep.row is None else [
-            self._basis_record(kind, sid, prep.row, requested_at)]  # fmt: skip
+        documents = basis_documents(kr.relied, registered, prints, kr.relied_entries)
+        records = [] if prep.basis is None else [prep.basis]
         named = prep.subject.model_dump(include={"request_id", "ticket", "account_id",
                                                  "customer_id"}, exclude_none=True)  # fmt: skip
         ctx = VersionContext(
@@ -296,7 +302,8 @@ class Decisions:
             known_ids=frozenset({d for _, d, _ in prints} | set(registered) | set(named.values())),
         )  # fmt: skip
         extra = {"judgment_about": kr.judgment_about, "flag_items": kr.flag_items,
-                 "approval_roles": kr.approval_roles, "relied": kr.relied}  # fmt: skip
+                 "approval_roles": kr.approval_roles, "relied": kr.relied,
+                 "relied_entries": kr.relied_entries}  # fmt: skip
         return {"version": build_version(kind, kr, ctx), "kernel": _plain(kr.record),
                 "kernel_extra": _plain(extra)}  # fmt: skip
 

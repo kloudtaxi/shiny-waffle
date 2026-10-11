@@ -547,6 +547,12 @@ def run(
         withhold(record, spec["record"], set(inputs) | ROUTE_FIELDS, set_aside, flags)
     if trace is not None:  # G-06 (2026-10-06): what the decision relied on, for the admission check
         trace["relied"] = [(d.filename, d.doc_id) for d in relied]
+        # B-06 (ruling R21): the register entries read through `use_entry`, once each, in order
+        trace["relied_entries"] = list(
+            dict.fromkeys(
+                str(e["doc_id"]) for e in relied_entries if isinstance(e, dict) and e.get("doc_id")
+            )
+        )
     return record
 
 

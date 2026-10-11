@@ -246,13 +246,15 @@ Prints = Sequence[tuple[str, str, str]]  # (filename, doc_id, fingerprint) of ea
 
 
 def basis_documents(
-    relied: Sequence[tuple[str, str]], registered: Mapping[str, Mapping[str, Any]], prints: Prints
-) -> list[BasisDocument]:
-    """The documents the decision relied on, once each (the kernel can list one twice), in the
-    kernel's order: a registered one with its registered sha256, any other with its copy's."""
+    relied: Sequence[tuple[str, str]], registered: Mapping[str, Mapping[str, Any]], prints: Prints,
+    relied_entries: Sequence[str] = (),
+) -> list[BasisDocument]:  # fmt: skip
+    """What the decision relied on, once each (the kernel can list one twice), in the kernel's
+    order: the documents it read, then the register entries it read terms from (ruling R21). A
+    registered one carries its registered sha256; any other, its copy's."""
     by_file = {(f, d): p for f, d, p in prints}
     out: list[BasisDocument] = []
-    for filename, doc_id in relied:
+    for filename, doc_id in [*relied, *(("", d) for d in relied_entries)]:
         if any(x.doc_id == doc_id for x in out):
             continue
         entry = registered.get(doc_id)

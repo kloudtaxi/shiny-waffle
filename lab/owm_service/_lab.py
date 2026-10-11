@@ -244,6 +244,7 @@ class KernelResult:
     flag_items: list[dict[str, Any]]  # one per `record["flags"]` item: {code, text, routes}
     approval_roles: list[dict[str, Any]]
     relied: list[tuple[str, str]]  # (filename, doc_id) of each document the decision relied on
+    relied_entries: list[str]  # doc_id of each register entry it read terms from (R21)
 
 
 def _route(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -287,4 +288,5 @@ def decide(
     except Exception as e:  # noqa: BLE001 - the kernel couldn't decide; nothing is written
         raise CannotDecide(str(e)) from e
     relied = [(str(f), str(d)) for f, d in trace.get("relied", [])]
-    return KernelResult(record, about, items, roles, relied)
+    relied_entries = [str(d) for d in trace.get("relied_entries", [])]
+    return KernelResult(record, about, items, roles, relied, relied_entries)

@@ -23,6 +23,7 @@ from owm_service.errors import CannotDecide, NotFound, Refused
 from owm_service.events import Event, ExecutionRow
 from owm_service.models import (
     Actor,
+    AgentActor,
     CreditFindings,
     DecisionRecord,
     DecisionRequest,
@@ -170,7 +171,7 @@ def test_s22_is_stored_whole_and_read_back(org: Org, dealdesk: Actor) -> None:
     assert fixed["floor"] is None and fixed["previous"] is None  # required-nullable: present
     assert "ticket" not in fixed["subject"] and "related" not in str(fixed["flags"])  # R13
     assert set(ev.payload["kernel_extra"]) == {"judgment_about", "flag_items", "approval_roles",
-                                               "relied"}  # fmt: skip
+                                               "relied", "relied_entries"}  # fmt: skip
     k = d.kernel_record(v1.decision_id, 1)
     assert k == ev.payload["kernel"] and k["authority"]["approver"] == "Michael Torres"
     assert k["judgments"][4]["noul"] == 0.98  # the kernel's own shape, not the contract's
@@ -282,6 +283,32 @@ def test_s35_credit_conflict(org: Org, sarah: Actor) -> None:
     assert v1.basis.records[0].system == "erp" and v1.state == "not_ready"
 
 
+def test_s35_basis_carries_the_registered_policy(org: Org, sarah: Actor) -> None:
+    """Ruling R21: credit reads its policy as a register entry (`use_entry`), not a document, and
+    the basis and register_used still show it."""
+    v1 = ask(org, sarah, "CR-9201", {"requested_limit_usd": 300000}, "credit")
+    sha = next(e["sha256"] for e in org.register_state().entries
+               if e["doc_id"] == "CREDIT-POLICY-2026")  # fmt: skip
+    assert [dump(d) for d in v1.basis.documents] == [
+        {"doc_id": "CREDIT-POLICY-2026", "sha256": sha, "registered": True}]  # fmt: skip
+    assert [dump(u) for u in v1.register_used] == [
+        {"doc_id": "CREDIT-POLICY-2026", "sha256": sha, "status": "in_force",
+         "file_matches": True}]  # fmt: skip
+    extra = Decisions(org).events(v1.decision_id)[0].payload["kernel_extra"]
+    assert extra["relied_entries"] == ["CREDIT-POLICY-2026"] and extra["relied"] == []
+
+
+def test_the_trace_records_entries_additively() -> None:
+    """R21 in the kernel: `trace["relied_entries"]` is new, and the record is the same with or
+    without a trace."""
+    trace: dict[str, Any] = {}
+    assert harness.decide("S35", trace=trace) == harness.decide("S35")
+    assert trace["relied_entries"] == ["CREDIT-POLICY-2026"] and trace["relied"] == []
+    s22: dict[str, Any] = {}
+    harness.decide("S22", trace=s22)
+    assert s22["relied_entries"] == [] and s22["relied"]
+
+
 def test_s36_sla_has_claim_decision_and_no_conditions(org: Org, marcus: Actor) -> None:
     v1 = ask(org, marcus, "SR-39385", None, "sla")
     assert v1.outcome == v1.gated_outcome == "BREACH_CREDIT_OWED" and v1.conditions == []
@@ -312,6 +339,36 @@ def test_s36_sla_has_claim_decision_and_no_conditions(org: Org, marcus: Actor) -
     assert (rec.system, rec.table, rec.fields["events"]) == ("service", "service_tickets", digest)
     assert rec.fields["opened_at"] == "2026-06-16T02:14:00-05:00"
     assert v1.state == "awaiting_approval"
+
+
+def test_the_basis_is_read_with_the_row(
+    org: Org, marcus: Actor, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A ticket event added, or a basis field edited, after the row was read is not in the basis:
+    the basis is what the kernel was given, so a later change makes the decision stale."""
+    real = _lab.decide
+
+    def digest() -> str:
+        rows = [r for r in org.sor.table("ticket_events") if r["ticket_id"] == "SR-39385"]
+        return hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()
+
+    before = digest()
+
+    def then_change(kind: _lab.DecisionType, **kw: Any) -> _lab.KernelResult:
+        out = real(kind, **kw)
+        at = org.clock.now()
+        with org.log.transaction() as tx:
+            org.sor.insert(tx, "ticket_events", {"ticket_id": "SR-39385", "at": at.isoformat(),
+                           "event": "note", "actor": "x", "detail": "added after the read"},
+                           actor=dump(marcus), at=at)  # fmt: skip
+            org.sor.edit(tx, "service_tickets", "SR-39385", {"status": "Open"},
+                         actor=dump(marcus), at=at)  # fmt: skip
+        return out
+
+    monkeypatch.setattr(_lab, "decide", then_change)
+    (rec,) = ask(org, marcus, "SR-39385", None, "sla").basis.records
+    assert digest() != before and rec.fields["events"] == before
+    assert (rec.fields["status"], rec.last_changed) == ("Restored", None)
 
 
 # -- refusals and failures ----------------------------------------------------------------------
@@ -379,6 +436,43 @@ def test_missing_record_decides_on_the_submitted_figures(
                                    "product": "NS-500"}  # fmt: skip
     assert v1.actions[0].params["discount"] == 0.15 and v1.state == "not_ready"
     assert v1.requested_by is not None and v1.requested_by.id == "EMP-101"
+
+
+def test_the_body_never_picks_the_requester(org: Org, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Ruling R22: on a missing row the requester is the session's person (or the agent's
+    principal). A submitted `requestor` is kept as sent and never used: here Michael (VP Sales)
+    names Sarah, which would make him her approver instead of the requester."""
+    kr = s22_kernel(org)
+    seen: list[dict[str, Any]] = []
+
+    def fake(kind: _lab.DecisionType, **kw: Any) -> _lab.KernelResult:
+        seen.append(kw)
+        return kr
+
+    monkeypatch.setattr(_lab, "decide", fake)
+    michael = Sessions(org).open_person("EMP-200")[1]
+    submitted = {"customer": "CRM-2048", "product": "NS-500", "requested_discount": 0.15,
+                 "requestor": "EMP-101"}  # fmt: skip
+    v1 = ask(org, michael, "DR-0002", submitted)
+    assert v1.requested_by is not None and v1.requested_by.id == "EMP-200"
+    assert seen[0]["requested_by"] == "michael.torres@northstar.example"
+    assert seen[0]["inputs"]["record"]["requested_by"] == "michael.torres@northstar.example"
+    assert [p.id for p in v1.conditions[0].who] == ["EMP-200"]
+    assert dump(v1)["submitted"] == submitted  # kept as sent
+    agent = Sessions(org).open_agent("AGT-DEALDESK", "EMP-101")[1]
+    v2 = ask(org, agent, "DR-0003", submitted)  # an agent's principal stands as the requester
+    assert v2.requested_by is not None and v2.requested_by.id == "EMP-101"
+
+
+def test_a_session_for_nobody_cannot_ask_on_a_missing_row(org: Org) -> None:
+    service = AgentActor(kind="agent", id="AGT-SERVICE", name="Service principal", version="v1",
+                         on_behalf_of=None, mandate=None)  # fmt: skip
+    submitted = {"customer": "CRM-2048", "product": "NS-500", "requested_discount": 0.15,
+                 "requestor": "EMP-101"}  # fmt: skip
+    with pytest.raises(NotFound) as e:
+        ask(org, service, "DR-0004", submitted)
+    assert "DR-0004" in e.value.what
+    assert decision_events(org) == []
 
 
 @pytest.mark.parametrize(
