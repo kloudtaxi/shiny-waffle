@@ -63,8 +63,8 @@ skips and the other 106 run.
 ## 3. Cost
 
 **$0.** Every Jev answer was a recorded one: the service's engine is replay-only (`OWM_JEV=replay`,
-the default), so an unrecorded question would have failed the test as a 503. Items 1, 3 and 4a
-also assert that the org's own `jev-calls.jsonl` was never created. The two 8% re-runs replay
+the default), so an unrecorded question would have failed the test as a 503. The item 1, 3c, 3d
+and 4a tests also assert that the org's own `jev-calls.jsonl` was never created. The two 8% re-runs replay
 because the discount judgments ask about the justification, the customer, the product and the
 documents, never the figure. No live run was needed or made.
 
@@ -75,8 +75,8 @@ documents, never the figure. No live run was needed or made.
 > **Where it is.** Run it locally from shiny-waffle with
 > `PYTHONPATH=lab uv run --group owm-service python -m owm_service`. It listens on
 > `http://localhost:8000`. The contract is under **`/api/v1`**, and `GET /healthz` is the health
-> check. Slice 1 serves `GET /me`, the decision routes (#19, #20), clearance, redeem and report
-> (#21), and `GET /approvals`. The register and procedure routes (#16 to #18) arrive in slice 2.
+> check. Slice 1 serves `GET /me`, `GET /approvals` (#19), the decision routes (#20), and
+> clearance, redeem and report (#21). The register and procedure routes (#16 to #18) arrive in slice 2.
 >
 > **The `OWM_API_URL` route.** Please add a server-side API route in web-next that forwards to
 > `${OWM_API_URL}/api/v1/...`. The service sends no CORS headers: only web-next's server should
