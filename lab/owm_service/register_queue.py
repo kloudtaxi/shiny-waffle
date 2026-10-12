@@ -14,12 +14,16 @@ three points:
    the `base_version` the submitter sends, so the registrar's own RR-13 is strict here (409). A
    refusal is returned and nothing is queued. On a pass the change is pending, waiting on the head
    and the Executives other than the submitter (RR-4).
-3. **Approve** (a person among the approvers): scoped RR-13 first (a change approved since this
-   one was submitted that touched the same kind and scope, or a document this one names, leaves it
-   refused, 409), then the real run against the register as it is now, acting as the submitter and
-   the approver. A refusal leaves it refused with the rule named (422; 403 for RR-1). A pass
-   stores what the registrar wrote (`_lab.register_result`) in `change.approved`, with
-   `proposed_by` added to the entry, and the text goes to the org's content store.
+3. **Approve** (a person among the approvers): scoped RR-13 first, then the real run against the
+   register as it is now, acting as the submitter and the approver. Scoped RR-13 (ruling R45)
+   leaves the change refused (409) when a change approved since it was submitted touched the same
+   kind and scope, a document both name (registered, superseded or revoked), or a document one of
+   them is `under` that the other names: an exception under an agreement revoked since, or a
+   revocation of an agreement something was registered under since. Two changes that are merely
+   under the same document don't clash. The real run's refusal also leaves it refused with the
+   rule named (422; 403 for RR-1). A pass stores what the registrar wrote
+   (`_lab.register_result`) in `change.approved`, with `proposed_by` added to the entry, and the
+   text goes to the org's content store.
 
 Stand-in runs are always thrown away; approval runs every rule again with the real people. A
 registrar error that isn't a rule (terms of the wrong shape, say) is reported as RR-5, never a 500.
@@ -36,7 +40,8 @@ Events go on one stream per change, `change:<CHG-nnnn>`:
   `approvers`. A direct submit also carries the draft's opening fields, with `proposed_by` and
   `proposed_at` null;
 - `change.approved`: `approved_by`, `approved_at`, `result` (what `Org.register_state` replays) and
-  `touched` (what scoped RR-13 compares);
+  `touched` (what scoped RR-13 compares: `kind`, `scope`, `docs`, and `reads`, its `under`
+  targets);
 - `change.refused` (`refusals`), `change.declined` (`declined`), `change.withdrawn` (`by`, `at`),
   `change.reminded` (`by`, `at`, `on`: the clock's date).
 
@@ -304,24 +309,36 @@ def _target(fields: Mapping[str, Any], state: Any) -> dict[str, Any] | None:
 
 def _touched(action: str, fields: Mapping[str, Any], state: Any) -> dict[str, Any]:
     """What a change touches, for scoped RR-13: its kind and scope (the registrar's `scope`; a
-    revocation's are its target's) and the documents it names (registers, supersedes, revokes)."""
+    revocation's are its target's), the documents it names (`docs`: registers, supersedes,
+    revokes) and the documents it depends on (`reads`: its `under` targets; ruling R45)."""
     if action == "register":
         entry = {"kind": fields["kind"], "doc_id": fields["doc_id"], "terms": fields["terms"] or {}}
         docs = [str(fields["doc_id"]), *_supersedes(fields)]
-        return {"kind": fields["kind"], "scope": _lab.scope(entry), "docs": docs}
+        reads = [str(r["target"]) for r in fields["relations"] or [] if r["type"] == "under"]
+        return {"kind": fields["kind"], "scope": _lab.scope(entry), "docs": docs, "reads": reads}
     target = _target(fields, state)
     return {"kind": None if target is None else target["kind"],
             "scope": None if target is None else _lab.scope(target),
-            "docs": [str(fields["target"])]}  # fmt: skip
+            "docs": [str(fields["target"])], "reads": []}  # fmt: skip
 
 
-def _overlap(mine: Mapping[str, Any], theirs: Mapping[str, Any]) -> str | None:
-    """What two changes both touch, in words, or None."""
+def overlap(mine: Mapping[str, Any], theirs: Mapping[str, Any]) -> str | None:
+    """Scoped RR-13 (ruling R45): what `theirs`, approved since `mine` was submitted, did to what
+    `mine` touches, as the end of a sentence; None when they don't clash. They clash on the same
+    kind and scope, on a document both name, or on a document one is `under` that the other
+    names. Two changes merely `under` the same document never clash."""
     if mine["kind"] is not None and (mine["kind"], mine["scope"]) == (theirs["kind"],
                                                                       theirs["scope"]):  # fmt: skip
-        return f"the {mine['kind']} for {mine['scope']}"
-    both = sorted(set(mine["docs"]) & set(theirs["docs"]))
-    return ", ".join(both) if both else None
+        return f"changed the {mine['kind']} for {mine['scope']}"
+    docs, their_docs = set(mine["docs"]), set(theirs["docs"])
+    reads, their_reads = set(mine.get("reads", [])), set(theirs.get("reads", []))
+    if named := sorted(docs & their_docs):
+        return f"changed {', '.join(named)}"
+    if under := sorted(reads & their_docs):
+        return f"changed {', '.join(under)}, which this change is under"
+    if above := sorted(docs & their_reads):
+        return f"put a document under {', '.join(above)}, which this change names"
+    return None
 
 
 def _shown(v: Any) -> str | None:
@@ -651,15 +668,15 @@ class RegisterQueue:
     def _moved(
         self, c: _Change, mine: Mapping[str, Any], state: Any, tx: sqlite3.Connection
     ) -> Refusal | None:
-        """Scoped RR-13: a change approved since this one was submitted touched what it touches."""
+        """Scoped RR-13: a change approved since this one was submitted clashes with it."""
         approved = self.org.log.read(self.org.org_id, kinds=("change.approved",), tx=tx)
         for e in approved:
-            what = _overlap(mine, e.payload["touched"]) if e.seq > c.submitted_seq else None
+            what = overlap(mine, e.payload["touched"]) if e.seq > c.submitted_seq else None
             if what is not None:
                 return _no("RR-13", f"{e.payload['change_id']} was approved after {c.change_id} "
-                                    f"was submitted and changed {what}; the register is at "
-                                    f"version {state.version}. Prepare it again against that "
-                                    "version and submit it.")  # fmt: skip
+                                    f"was submitted and {what}; the register is at version "
+                                    f"{state.version}. Prepare it again against that version "
+                                    "and submit it.")  # fmt: skip
         return None
 
     # -- events -------------------------------------------------------------------------------

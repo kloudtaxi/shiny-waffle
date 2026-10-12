@@ -23,7 +23,7 @@ from owm_service.config import load_settings
 from owm_service.errors import NotFound, Refused
 from owm_service.models import Actor, RefusalFix, RegisterChange, SupersedesRelation
 from owm_service.org import Org
-from owm_service.register_queue import ChangeBody, RegisterQueue
+from owm_service.register_queue import ChangeBody, RegisterQueue, overlap
 from owm_service.sessions import Sessions
 
 from ._registrar import CHECK
@@ -74,6 +74,11 @@ def marcus(org: Org) -> Actor:
 
 
 @pytest.fixture
+def kelly(org: Org) -> Actor:
+    return _person(org, "EMP-500")
+
+
+@pytest.fixture
 def dealdesk(org: Org) -> Actor:
     return Sessions(org).open_agent("AGT-DEALDESK", "EMP-101")[1]
 
@@ -108,10 +113,35 @@ def revoke_brl(on: str = "2026-10-01", **over: Any) -> ChangeBody:
     return ChangeBody.model_validate(raw | over)
 
 
-def case(name: str, *, submit: bool = True, **over: Any) -> ChangeBody:
-    """An attack case's first change, as written."""
+def hub(**over: Any) -> ChangeBody:
+    """A third Acme exception, for another product, under the same agreement as `edge`."""
+    change, text = CHECK.exception_edge()
+    for was, now in (("2026-09-10", "2026-10-01"), ("EDGE-12", "HUB-11"),
+                     ("NS-Edge Monitoring Package", "NS-Hub Gateway"), ("NS-EDGE", "NS-HUB"),
+                     ("12% of list price", "11% of list price")):  # fmt: skip
+        text = text.replace(was, now)
+    terms = dict(change["terms"], product="NS-HUB", maximum_discount=0.11)
+    fields = {"doc_id": "EXC-ACME-HUB-11", "effective_from": "2026-10-01", "terms": terms}
+    return body(change | fields, text, submit=True, **over)
+
+
+def revoke_acme(**over: Any) -> ChangeBody:
+    """Sales revokes Acme's master agreement, which `edge` and `hub` are under, from 2026-10-01."""
+    return revoke_brl(target="ACME-MFG-2025", **over)
+
+
+def case(name: str, *, submit: bool = True, text: str | None = None, **over: Any) -> ChangeBody:
+    """An attack case's first change, as written (or with `text` in place of its own)."""
     change = yaml.safe_load((CASES / f"{name}.yaml").read_text())["changes"][0]
-    return body(change, (CASES / change["text"]).read_text(), submit=submit, **over)
+    return body(change, text or (CASES / change["text"]).read_text(), submit=submit, **over)
+
+
+def case_change(name: str) -> tuple[dict[str, Any], str]:
+    """An attack case's first change as the registrar takes it, as the queue passes it (no
+    `file`), with its text."""
+    change = yaml.safe_load((CASES / f"{name}.yaml").read_text())["changes"][0]
+    text = (CASES / change["text"]).read_text()
+    return {k: v for k, v in change.items() if k not in ("file", "text")}, text
 
 
 def mandate(*, submit: bool) -> ChangeBody:
@@ -304,6 +334,109 @@ def test_a_change_elsewhere_does_not_hold_approval(
     q.approve(elena, c.change_id)
     done = q.approve(marcus, r.change_id)  # submitted at 17; applied at 18, the register now
     assert done.state == "approved" and org.register_state().version == 19
+
+
+def test_rr13_through_kind_and_scope_alone(org: Org, priya: Actor, elena: Actor) -> None:
+    """No document in common (2027 supersedes 2026; 2028 supersedes nothing, and its window
+    overlaps neither), so only the kind and scope clash. Without scoped RR-13 the real run
+    would admit 2028."""
+    q = RegisterQueue(org)
+    y27 = q.submit_new(priya, credit())
+    y28 = q.submit_new(priya, credit(
+        doc_id="CREDIT-POLICY-2028", effective_from="2028-01-01", effective_to="2028-12-31",
+        relations=[], text=CHECK.text_2027_credit().replace("2027", "2028"),
+    ))  # fmt: skip
+    q.approve(elena, y27.change_id)
+    with pytest.raises(Refused) as e:
+        q.approve(elena, y28.change_id)
+    assert refused(e) == (409, ["RR-13"])
+    assert "changed the credit_policy for company" in e.value.refusals[0].detail
+
+
+def test_rr13_through_a_document_both_name_alone(
+    org: Org, priya: Actor, elena: Actor, sarah: Actor, michael: Actor
+) -> None:
+    """Different kinds (credit_policy, pricing_policy); the one thing both name is a doc_id.
+    Without scoped RR-13 the real run would refuse with RR-5 (422), not RR-13."""
+    q = RegisterQueue(org)
+    first = q.submit_new(priya, credit())
+    text = (CASES / "C09/c09.md").read_text().replace("PRICING-POLICY-2028", "CREDIT-POLICY-2027")
+    clash = q.submit_new(sarah, case("C09", doc_id="CREDIT-POLICY-2027", text=text))
+    q.approve(elena, first.change_id)
+    with pytest.raises(Refused) as e:
+        q.approve(michael, clash.change_id)
+    assert refused(e) == (409, ["RR-13"])
+    assert "changed CREDIT-POLICY-2027;" in e.value.refusals[0].detail
+
+
+def T(kind: str, scope: str, docs: list[str], reads: list[str] | None = None) -> dict[str, Any]:  # noqa: N802
+    return {"kind": kind, "scope": scope, "docs": docs, "reads": reads or []}
+
+
+@pytest.mark.parametrize(
+    ("mine", "theirs", "want"),
+    [
+        (T("credit_policy", "company", ["A"]), T("credit_policy", "company", ["B"]),
+         "changed the credit_policy for company"),
+        # a supersedes target the other revokes, alone (a real pair also shares kind and scope,
+        # since RR-11 makes a superseding entry match its target's)
+        (T("exception", "x", ["E", "TGT"]), T("agreement", "y", ["TGT"]), "changed TGT"),
+        (T("exception", "x", ["E"], ["AGR"]), T("agreement", "y", ["AGR"]),
+         "changed AGR, which this change is under"),
+        (T("agreement", "y", ["AGR"]), T("exception", "x", ["E"], ["AGR"]),
+         "put a document under AGR, which this change names"),
+        (T("exception", "x", ["E"], ["AGR"]), T("exception", "z", ["F"], ["AGR"]), None),
+        (T("exception", "x", ["E"]), T("exception", "z", ["F"]), None),
+        (T("exception", "x", ["E"], ["AGR"]), {"kind": "agreement", "scope": "y", "docs": ["AGR"]},
+         "changed AGR, which this change is under"),  # stored without `reads`
+    ],
+)  # fmt: skip
+def test_scoped_rr13_each_path_alone(
+    mine: dict[str, Any], theirs: dict[str, Any], want: str | None
+) -> None:
+    assert overlap(mine, theirs) == want
+
+
+def test_rr13_a_child_approved_after_its_agreement_was_revoked(
+    org: Org, sarah: Actor, kelly: Actor, michael: Actor, david: Actor
+) -> None:
+    """Ruling R45: the exception is `under` ACME-MFG-2025; the agreement's revocation was approved
+    after the exception was submitted. RR-14 checks the agreement exists, not that it's live, so
+    without this the exception would land under a revoked agreement with no re-review."""
+    q = RegisterQueue(org)
+    child = q.submit_new(sarah, edge(submit=True))
+    parent = q.submit_new(kelly, revoke_acme())
+    q.approve(michael, parent.change_id)
+    with pytest.raises(Refused) as e:
+        q.approve(david, child.change_id)
+    assert refused(e) == (409, ["RR-13"])
+    assert "ACME-MFG-2025, which this change is under" in e.value.refusals[0].detail
+    assert q.get(child.change_id).state == "refused" and org.register_state().version == 18
+
+
+def test_rr13_a_revocation_approved_after_something_was_put_under_it(
+    org: Org, sarah: Actor, kelly: Actor, michael: Actor, david: Actor
+) -> None:
+    q = RegisterQueue(org)
+    parent = q.submit_new(kelly, revoke_acme())
+    child = q.submit_new(sarah, edge(submit=True))
+    q.approve(michael, child.change_id)
+    with pytest.raises(Refused) as e:
+        q.approve(david, parent.change_id)
+    assert refused(e) == (409, ["RR-13"])
+    assert "put a document under ACME-MFG-2025" in e.value.refusals[0].detail
+    assert q.get(parent.change_id).state == "refused" and org.register_state().version == 18
+
+
+def test_two_changes_under_one_agreement_both_approve(
+    org: Org, sarah: Actor, michael: Actor
+) -> None:
+    q = RegisterQueue(org)
+    a = q.submit_new(sarah, edge(submit=True))
+    b = q.submit_new(sarah, hub())
+    q.approve(michael, a.change_id)
+    assert q.approve(michael, b.change_id).state == "approved"
+    assert org.register_state().version == 19
 
 
 def test_a_rule_failing_at_approval_leaves_refused(org: Org, hannah: Actor, marcus: Actor) -> None:
@@ -532,12 +665,23 @@ def test_list_by_state_and_waiting_on(
 
 # -- rebuild ------------------------------------------------------------------------------------
 def test_rebuild_does_not_rerun_rules(
-    org: Org, tmp_path: Path, sarah: Actor, michael: Actor, monkeypatch: pytest.MonkeyPatch
-) -> None:
+    org: Org, tmp_path: Path, sarah: Actor, michael: Actor, hannah: Actor, marcus: Actor,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:  # fmt: skip
     q = RegisterQueue(org)
     p = q.submit_new(sarah, case("C09"))
     q.approve(michael, p.change_id)
-    live = org.register_state()
+    r = q.submit_new(hannah, revoke_brl(base_version=18))
+    q.approve(marcus, r.change_id)
+    # the registrar's own output for the same two changes, by the same people, on the same day
+    staff, today = _lab.Staff.load(_lab.corpus_root("base")), org.clock.today()
+    c09, text = case_change("C09")  # submit_by EMP-101, approve_by EMP-200
+    want = _lab.apply(_lab.register_bootstrap("base"), c09, text, {"EMP-101", "EMP-200"},
+                      clock=today, staff=staff)  # fmt: skip
+    revoke = {"action": "revoke", "base_version": 18, "target": "SUP-BRL-2025",
+              "revoked_on": "2026-10-01", "submit_by": "EMP-601",
+              "approve_by": "EMP-602"}  # fmt: skip
+    want = _lab.apply(want, revoke, None, {"EMP-601", "EMP-602"}, clock=today, staff=staff)
 
     def tightened(*args: Any, **kwargs: Any) -> Any:
         raise _lab.RefusedError("RR-6", "a rule that tightened after the approval")
@@ -545,6 +689,13 @@ def test_rebuild_does_not_rerun_rules(
     monkeypatch.setattr(_lab._registrar, "apply", tightened)
     again = Org(load_settings({"OWM_STATE_DIR": str(tmp_path / "state")}))
     state = again.register_state()
-    assert state.version == 18 and state.entries == live.entries and state.store == live.store
-    assert RegisterQueue(again).get(p.change_id) == q.get(p.change_id)
-    assert RegisterQueue(again).get(p.change_id).state == "approved"
+    added = next(e for e in state.entries if e["doc_id"] == "PRICING-POLICY-2028")
+    assert "proposed_by" in added and added["proposed_by"] is None  # the one addition
+    plain = [{k: v for k, v in e.items() if not (e is added and k == "proposed_by")}
+             for e in state.entries]  # fmt: skip
+    assert plain == want.entries  # the new entry and the revocation fields, as written
+    assert (state.store, state.log, state.version) == (want.store, want.log, want.version)
+    assert state.version == 19 and len(state.log) == 2
+    for cid in (p.change_id, r.change_id):
+        assert RegisterQueue(again).get(cid) == q.get(cid)
+        assert RegisterQueue(again).get(cid).state == "approved"
