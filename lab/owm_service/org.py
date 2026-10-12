@@ -1,8 +1,15 @@
 """One organisation: settings, event log, clock, systems of record, people, the Jev replay engine,
-the overlay evidence, the register and the procedures (spec §2)."""
+the overlay evidence, the register and the procedures (spec §2).
+
+The register is the registrar's bootstrap plus the stored result of every approved change
+(`change.approved`, written by the register queue), replayed in log order without running any
+rule. Approved texts live in the org's content store, `register-store/<sha256>.md`."""
 
 from __future__ import annotations
 
+import os
+import sqlite3
+import tempfile
 from pathlib import Path
 from typing import Any, Literal
 
@@ -35,15 +42,42 @@ class Org:
             cap=settings.jev_cap,
         )
         self.evidence = _lab.make_evidence(root, self._overlay)
-        self._state: Any = _lab.register_bootstrap(self.corpus)
+        self.register_store = self.dir / "register-store"
+        self._state: tuple[int, Any] | None = None  # (the last approval's seq, the state)
         self._kernel_register: tuple[int, Any] | None = None
 
     def _overlay(self, name: str, rows: list[dict[str, str]]) -> list[dict[str, str]]:
         """The kernel's view of a table: the systems of record's (base rows, inserts, edits)."""
         return self.sor.table(name)
 
-    def register_state(self) -> Any:
-        return self._state
+    def register_state(self, tx: sqlite3.Connection | None = None) -> Any:
+        """The registrar's state now: the bootstrap, then each approved change's stored result
+        (`_lab.register_replay`). Rules never run again here. Cached until the next approval;
+        `tx` reads the log inside a caller's write transaction."""
+        approved = self.log.read(self.org_id, kinds=("change.approved",), tx=tx)
+        key = approved[-1].seq if approved else 0
+        cached = self._state
+        if cached is None or cached[0] != key:
+            results = [e.payload["result"] for e in approved]
+            cached = (key, _lab.register_replay(self.corpus, results, self.register_text))
+            self._state = cached
+        return cached[1]
+
+    def put_register_text(self, text: str) -> str:
+        """Keep an approved text in the content store, by its fingerprint; that sha256."""
+        sha = _lab.fingerprint(text)
+        path = self.register_store / f"{sha}.md"
+        if not path.exists():
+            self.register_store.mkdir(parents=True, exist_ok=True)
+            fd, part = tempfile.mkstemp(dir=self.register_store, prefix=f".{sha}.", suffix=".part")
+            with os.fdopen(fd, "w") as f:
+                f.write(text)
+            os.replace(part, path)
+        return sha
+
+    def register_text(self, sha: str) -> str:
+        """An approved text from the content store."""
+        return (self.register_store / f"{sha}.md").read_text()
 
     def kernel_register(self) -> Any:
         state = self.register_state()

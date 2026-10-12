@@ -190,7 +190,7 @@ def procedures_bootstrap() -> tuple[list[dict[str, Any]], Path]:
     return entries, store
 
 
-# registrar access (the register queue and procedures, later tasks), typed for the service
+# registrar access (the register queue, Task 16; procedures, Task 18), typed for the service
 if TYPE_CHECKING:
 
     class RefusedError(Exception):
@@ -237,6 +237,62 @@ def people(
     """The registrar's people rules (RR-1 to RR-4): the submitter and approver, or a refusal."""
     pair: tuple[str, str] = _registrar.people(kind, submit, approve, acting_as, staff)
     return pair
+
+
+def scope(entry: Mapping[str, Any]) -> str:
+    """The registrar's own `scope`: what one entry in force at a time is about (the company, or a
+    customer, with an exception's product or a guarantee's guarantor; each amendment its own).
+    `entry` needs `kind`, `doc_id` and `terms`."""
+    found: str = _registrar.scope(dict(entry))
+    return found
+
+
+def fingerprint(text: str) -> str:
+    """A document text's sha256 as the register records it (`kernel.fingerprint`, RR-5)."""
+    return str(_kernel.fingerprint(text))
+
+
+def register_result(before: Any, after: Any) -> dict[str, Any]:
+    """What one change the registrar admitted wrote, in the shape `register_replay` applies: the
+    entry it added (`entry`), or the fields it set on a registered entry (`revocation`: `target`
+    and `fields`), with its log line (`log`) and the register's new `version`. Copies."""
+    old = {e["doc_id"]: e for e in before.entries}
+    out: dict[str, Any] = {"version": after.version, "log": copy.deepcopy(after.log[-1])}
+    added = [e for e in after.entries if e["doc_id"] not in old]
+    if added:
+        return out | {"entry": copy.deepcopy(added[0])}
+    for e in after.entries:
+        was = old[e["doc_id"]]
+        if e != was:
+            fields = {k: copy.deepcopy(v) for k, v in e.items() if was.get(k) != v}
+            return out | {"revocation": {"target": e["doc_id"], "fields": fields}}
+    raise ValueError("the change wrote nothing to the register")
+
+
+def register_replay(
+    corpus: str, results: Sequence[Mapping[str, Any]], text_of: Callable[[str], str]
+) -> Any:
+    """The registrar's state for the corpus: its bootstrap, then each stored `register_result` in
+    order, applied as written. No rule runs (spec §5), so a rule that tightens later never
+    un-approves the past. `text_of(sha256)` gives an added entry's approved text. A result whose
+    `version` isn't the next one, or a revocation of an entry that isn't there, is a corrupt log."""
+    state = _registrar.State.bootstrap(corpus)
+    for r in results:
+        if "entry" in r:
+            entry = copy.deepcopy(dict(r["entry"]))
+            state.entries.append(entry)
+            state.store[entry["sha256"]] = text_of(entry["sha256"])
+        else:
+            rev = r["revocation"]
+            target = next((e for e in state.entries if e["doc_id"] == rev["target"]), None)
+            if target is None:
+                raise RuntimeError(f"corrupt log: {rev['target']} revoked but never registered")
+            target.update(copy.deepcopy(dict(rev["fields"])))
+        state.log.append(copy.deepcopy(dict(r["log"])))
+        state.version += 1
+        if state.version != r["version"]:
+            raise RuntimeError(f"corrupt log: version {r['version']} replayed as {state.version}")
+    return state
 
 
 def register_procedure(

@@ -5,6 +5,7 @@ run is switched on, and then only up to its cap. Replay only: no test constructs
 from __future__ import annotations
 
 import copy
+import inspect
 import json
 from collections.abc import Callable
 from datetime import date
@@ -17,6 +18,7 @@ from owm_service import _lab
 from owm_service.errors import CannotDecide
 
 from . import harness
+from ._registrar import CHECK
 
 Overlay = Callable[[str, list[dict[str, str]]], list[dict[str, str]]]
 KINDS: dict[str, _lab.DecisionType] = {"discount": "discount", "credit": "credit", "sla": "sla"}
@@ -291,3 +293,53 @@ def test_register_rules_are_the_kernels() -> None:
 def test_route_to() -> None:
     assert _lab.ROUTE_TO == {"discount": "REQUEST_EVIDENCE", "credit": "REQUEST_EVIDENCE",
                              "sla": "CANNOT_DECIDE"}  # fmt: skip
+
+
+# -- the registrar facade (deferred from Task 7 to Task 16) --------------------------------------
+def _params(
+    fn: Any, kinds: tuple[Any, ...] = (inspect.Parameter.POSITIONAL_OR_KEYWORD,)
+) -> list[str]:
+    return [p.name for p in inspect.signature(fn).parameters.values() if p.kind in kinds]
+
+
+def test_registrar_names_exist_with_the_signatures_lab_calls() -> None:
+    """Every registrar name `_lab` exposes is the real module's, called the way `_lab` calls it:
+    the typed stubs `_lab` declares for mypy can't drift from the module unnoticed."""
+    reg, procs, serve = (harness.lab(m) for m in ("registrar", "build_procedures", "serve"))
+    assert _lab.RefusedError is reg.RefusedError and _lab.Staff is reg.Staff
+    assert _lab.ProcedureRefusedError is procs.RefusedError
+    assert _lab.OWNER is reg.OWNER and _lab.EXECUTIVE == reg.EXECUTIVE == "Executive"
+    assert _lab.COVERAGE is serve.COVERAGE
+    assert _params(reg.apply)[:4] == ["state", "change", "text", "acting_as"]
+    assert {"clock", "staff"} <= set(_params(reg.apply))
+    assert _params(reg.people) == ["kind", "submit", "approve", "acting_as", "staff"]
+    assert len(_params(reg.scope)) == 1
+    assert _params(reg.RefusedError.__init__) == ["self", "rule", "message"]
+    keyword = (inspect.Parameter.KEYWORD_ONLY,)
+    assert _params(reg.RefusedError.__init__, keyword) == ["unmatched", "fix"]
+    assert _params(reg.Staff.load) == ["root"] and _params(reg.Staff.head) == ["self", "dept"]
+    assert _params(reg.Staff.label) == ["self", "emp"]
+    assert _params(reg.State.bootstrap) == ["corpus"] and _params(reg.State.register) == [
+        "self", "into"]  # fmt: skip
+    assert _params(procs.register) == ["v", "staff", "spec_text", "report_path"]
+    e = _lab.RefusedError("RR-10", "overlaps", fix={"relations": []})
+    assert (e.rule, e.unmatched, e.fix, str(e)) == ("RR-10", None, {"relations": []},
+                                                    "RR-10: overlaps")  # fmt: skip
+
+
+def test_registrar_smoke_apply_and_people() -> None:
+    state = _lab.register_bootstrap("base")
+    staff = _lab.Staff.load(_lab.corpus_root("base"))
+    both = {"EMP-401", "EMP-402"}
+    new = _lab.apply(state, CHECK.credit_2027(), CHECK.text_2027_credit(), both,
+                     clock=date(2026, 9, 1), staff=staff)  # fmt: skip
+    assert (new.version, state.version) == (18, 17)  # a new state; the old one unchanged
+    assert new.entries[-1]["doc_id"] == "CREDIT-POLICY-2027"
+    assert new.entries[-1]["registered_on"] == "2026-09-01"
+    assert _lab.people("credit_policy", "EMP-401", "EMP-402", both, staff) == ("EMP-401", "EMP-402")
+    with pytest.raises(_lab.RefusedError) as e:
+        _lab.people("credit_policy", "EMP-401", "EMP-401", {"EMP-401"}, staff)
+    assert e.value.rule == "RR-4"
+    assert _lab.scope(new.entries[-1]) == "company"
+    acme = next(x for x in state.entries if x["doc_id"] == "EXC-ACME-NS500-15")
+    assert _lab.scope(acme) == harness.lab("registrar").scope(acme)
