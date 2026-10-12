@@ -199,7 +199,12 @@ def dealdesk_terms(org: Org, **may_do: Any) -> OneMandate:
 
 
 # -- the contract's S22 clearances (§10) ----------------------------------------------------------
-def test_refused8_matches_the_contract(org: Org, dealdesk: Actor, c: Clearances) -> None:
+def test_refused8_codes_order_and_waiting_on_match_the_contract(
+    org: Org, dealdesk: Actor, c: Clearances
+) -> None:
+    """The contract's refused8: the codes and their order, `differs` and `awaiting_approval` as
+    written, and `condition_open`'s code, waiting_on and condition_id. Its detail is the
+    condition's full sentence, not the example's shortened text (ruling R36)."""
     v1 = ask_s22(org, dealdesk)
     r = refused_with(c.ask(dealdesk, v1.decision_id, creq(v1, P8)))
     assert codes(r) == ["differs", "condition_open", "awaiting_approval"]
