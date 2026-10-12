@@ -134,9 +134,9 @@ def test_waiting_on_me_is_empty_for_an_agent(client: TestClient, agent: Headers)
     priya, elena = person(client, "EMP-401"), person(client, "EMP-402")
     c = post(client, priya, credit())
     mine = client.get("/api/v1/register/changes", params={"waiting_on": "me"}, headers=elena)
-    assert [x["change_id"] for x in mine.json()] == [c["change_id"]]
+    assert [x["change_id"] for x in mine.json()["items"]] == [c["change_id"]]
     theirs = client.get("/api/v1/register/changes", params={"waiting_on": "me"}, headers=agent)
-    assert theirs.status_code == 200 and theirs.json() == []
+    assert theirs.status_code == 200 and theirs.json()["items"] == []
 
 
 def test_settings_get_put_executives_only(client: TestClient) -> None:
@@ -155,7 +155,7 @@ def test_settings_get_put_executives_only(client: TestClient) -> None:
 
 def test_procedures_reads(client: TestClient) -> None:
     h = person(client, "EMP-101")
-    rows = client.get("/api/v1/procedures", headers=h).json()
+    rows = client.get("/api/v1/procedures", headers=h).json()["items"]
     assert {p["id"] for p in rows} == {"PROC-DISCOUNT", "PROC-CREDIT", "PROC-SLA"}
     one = client.get("/api/v1/procedures/PROC-SLA", headers=h).json()
     assert one["decision_type"] == "sla" and len(one["versions"]) == 2
@@ -255,12 +255,12 @@ def test_list_changes_filters(client: TestClient, agent: Headers) -> None:
     d = post(client, agent, edge())
     c = post(client, person(client, "EMP-401"), credit())
     michael = person(client, "EMP-200")
-    allc = client.get("/api/v1/register/changes", headers=michael).json()
+    allc = client.get("/api/v1/register/changes", headers=michael).json()["items"]
     assert [x["change_id"] for x in allc] == [d["change_id"], c["change_id"]]
     pend = client.get("/api/v1/register/changes", params={"state": "pending"}, headers=michael)
-    assert [x["change_id"] for x in pend.json()] == [c["change_id"]]
+    assert [x["change_id"] for x in pend.json()["items"]] == [c["change_id"]]
     me = client.get("/api/v1/register/changes", params={"waiting_on": "me"}, headers=michael)
-    assert [x["change_id"] for x in me.json()] == [d["change_id"]]
+    assert [x["change_id"] for x in me.json()["items"]] == [d["change_id"]]
     bad = client.get("/api/v1/register/changes", params={"state": "nope"}, headers=michael)
     assert bad.status_code == 422
     other = client.get("/api/v1/register/changes", params={"waiting_on": "EMP-1"}, headers=michael)

@@ -17,12 +17,14 @@ from .changes import ChangeBody
 from .models import (
     Actor,
     ChangeState,
+    Page,
     PersonActor,
     RegisterChange,
     RegisterChangeRequest,
     RegisterEntry,
     RegisterSettings,
     RegisterView,
+    one_page,
 )
 from .service import Me, Svc
 
@@ -132,13 +134,13 @@ def propose_change(svc: Svc, actor: Me, body: ChangeRequest) -> RegisterChange:
 @router.get("/register/changes", response_model_exclude_unset=True)
 def list_changes(
     svc: Svc, actor: Me, state: ChangeState | None = None, waiting_on: Literal["me"] | None = None
-) -> list[RegisterChange]:
+) -> Page[RegisterChange]:
     """`waiting_on=me`: the changes waiting on the session's person. Nothing waits on an agent
     and an agent takes no register step (RR-2), so an agent's list is empty, as in /approvals."""
     who = None
     if waiting_on is not None:
         who = actor.person.id if isinstance(actor, PersonActor) else ""
-    return svc.register.list(state=state, waiting_on=who)
+    return one_page(svc.register.list(state=state, waiting_on=who))
 
 
 @router.get("/register/changes/{change_id}", response_model_exclude_unset=True)
@@ -181,8 +183,8 @@ def remind_change(svc: Svc, actor: Me, change_id: str) -> RegisterChange:
 
 
 @router.get("/procedures")
-def list_procedures(svc: Svc) -> list[dict[str, Any]]:
-    return procedures.list_procedures(svc.org)
+def list_procedures(svc: Svc) -> Page[dict[str, Any]]:
+    return one_page(procedures.list_procedures(svc.org))
 
 
 @router.get("/procedures/{proc_id}")

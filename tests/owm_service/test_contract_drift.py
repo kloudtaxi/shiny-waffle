@@ -102,6 +102,21 @@ def test_a_dry_run_has_its_own_variant() -> None:
             ClearanceResponse.model_validate(bad)
 
 
+def test_a_list_is_a_page() -> None:
+    """v1.4 (D-24): `Page<T>` is `{items: T[], next_cursor: string | null}`, nothing else."""
+    page = models.Page[DecisionRecord].model_validate({"items": [example("v1")],
+                                                      "next_cursor": None})  # fmt: skip
+    assert page.items[0].decision_id == example("v1")["decision_id"] and page.next_cursor is None
+    bads: list[Any] = [
+        {"items": []},
+        {"items": [], "next_cursor": None, "total": 0},
+        [example("v1")],
+    ]
+    for bad in bads:
+        with pytest.raises(ValidationError):
+            models.Page[DecisionRecord].model_validate(bad)
+
+
 def test_extra_field_is_refused_on_nested_models() -> None:
     bad = example("v1")
     bad["actor"]["surprise"] = 1

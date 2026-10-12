@@ -4,6 +4,10 @@
 (`owm/docs/owm-service-design-review-2026-10-11.md`, 30977cd). Built to the plan
 (`docs/superpowers/plans/2026-10-11-owm-service.md`) and merged to `main` at f59d710.
 
+**Amended 2026-10-12 for contract v1.4** (garbanzo 6b6619e, the user's decision D-24): every list
+is a page, `{items, next_cursor}`. The service serves each of its five lists as one page, so
+`next_cursor` is always null (R65, §11).
+
 **Amended 2026-10-12 for contract v1.3** (garbanzo 589e0c7, §6.2 wording at 7732488). The user
 ruled on the three points this build left open, and the service follows:
 - **R26 → R61, R62:** a dropped credit concurrence's holder confirms the lower level too, with
@@ -29,7 +33,7 @@ changes an agreed field:
 - the Docker image defaults `OWM_LAB_ROUTES=0` (§11, §12);
 - the replay check on the edited-row re-runs is done (§10).
 
-**What it is:** a service in shiny-waffle that serves glowing-garbanzo's contract v1.2, now v1.3
+**What it is:** a service in shiny-waffle that serves glowing-garbanzo's contract v1.2, now v1.4
 (`owm-decisions`) over the lab's kernel. web-next and agents can then use the lab's OWM for real.
 It retires when sovera-owm's `owm-decisions` context serves the same contract (the user's decision,
 2026-10-09).
@@ -38,7 +42,7 @@ It retires when sovera-owm's `owm-decisions` context serves the same contract (t
 
 | What | Where |
 |---|---|
-| The contract | garbanzo `owm/docs/contract-v1.2.md`, v1.3 at 589e0c7 (built to v1.2 at 30977cd; first pinned at 9d05398); types in `web-next/lib/contract/owm-decisions.ts`; S22 typed in `s22.example.ts` |
+| The contract | garbanzo `owm/docs/contract-v1.2.md`, v1.4 at 6b6619e (v1.3 at 589e0c7; built to v1.2 at 30977cd; first pinned at 9d05398); types in `web-next/lib/contract/owm-decisions.ts`; S22 typed in `s22.example.ts` |
 | garbanzo's review of this design | `owm/docs/owm-service-design-review-2026-10-11.md` (30977cd) |
 | The lab's reviews of it | `docs/contract-v1.2-review-2026-10-09.md` (c196b31, re-review 74aef92) |
 | Agents, clearance and the ratchet | `docs/agents-sketch-review-2026-10-09.md` (deebdd8); G-45, G-46 |
@@ -867,6 +871,10 @@ The acceptance harness is the experimenter's side, and the only code that reads 
 | **Lab-only, outside the contract** | `POST /lab/sessions`, `DELETE /lab/sessions/current`; `PATCH /lab/sor/{table}/{id}`, `POST /lab/sor/{table}`; `POST /lab/adapter/execute`; `POST /lab/clock`; `POST /lab/reset` (archives the log, starts afresh) |
 | **Health** | `GET /healthz` |
 
+- **Lists are pages** (v1.4, R65): `GET /decisions`, `/decisions/{id}/events`,
+  `/decisions/{id}/clearances`, `/register/changes` and `/procedures` return
+  `{items, next_cursor: null}`, the whole list as one page. Objects stay objects: `/register`,
+  `/approvals` and `/me`.
 - web-next calls the service server-side through its API route, so there's no CORS.
 - **Sessions, as built** (R39): every `/api/v1` route needs a session, reads included (401
   without). `/lab/clock` and `/lab/reset` need none; the lab routes already let anyone sign in as
@@ -1039,3 +1047,4 @@ the final review. R61 to R64 build contract v1.3, after the user's rulings on R2
 | R62 | One person in two confirmer roles fails closed: 503, nothing written, as R25 | Contract v1.3: the confirmers are never the same person | Such an ask isn't recorded; no Northstar case reaches it |
 | R63 | After one of a round's confirmations, `what_changed` names who it still needs ("the lower level still needs Michael Torres to confirm it") | "Still below the floor" alone reads as if the confirmation did nothing | Wording |
 | R64 | The user's R34 ruling (contract v1.3 §7.1): every dry run answers `{dry_run: true, would_clear, reasons}`, refused or not; `ClearanceResponse` tells the variants apart by `dry_run`, then `cleared`; a dry run logged before v1.3 is served in the new shape; the history still calls a dry run that would clear `clearance_cleared` | The contract's new variant is a dry run's only response | A client may read the history's `clearance_cleared` for a dry run as a real clearance; its detail says nothing was issued |
+| R65 | Contract v1.4 (the user's D-24): the five lists are `Page<T>`, `{items, next_cursor}`, each served whole as one page with `next_cursor` null; a `?cursor=` the service never issued is ignored | The lists are small (one demo org), and a page with no cursor is a valid v1.4 page | A client that loops on `next_cursor` stops after one page, which is correct; paging becomes real only in sovera-owm |

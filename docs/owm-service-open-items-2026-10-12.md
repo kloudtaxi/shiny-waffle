@@ -1,7 +1,7 @@
 # B-06 OWM service: open items after the build (2026-10-12)
 
 The service is built, reviewed and green. This note lists what is still open. The rulings made during the
-build are in the spec's Appendix A (`docs/superpowers/specs/2026-10-10-owm-service-design.md`, R1–R64), and
+build are in the spec's Appendix A (`docs/superpowers/specs/2026-10-10-owm-service-design.md`, R1–R65), and
 the slice-1 result is in `docs/owm-service-slice1-2026-10-11.md`.
 
 ## Update: contract v1.3 and the first live run (later on 2026-10-12)
@@ -18,6 +18,11 @@ the slice-1 result is in `docs/owm-service-slice1-2026-10-11.md`.
   - **R58:** adopted as built. It binds the actor, not the token, and a fresh sign-in can still report;
   - **`href`:** the OWM resource path, as built.
 - **The §3 nits are fixed:** R26 and R58 wording, and the status block. The R53 credit in §7.3 stands.
+- **Contract v1.4** (garbanzo 6b6619e, the user's D-24): the five lists are pages, `{items, next_cursor}`, each served
+  whole with `next_cursor` null (R65).
+- **D-23:** BlueLeaf has its own knowledge base, loaded by garbanzo from `dataset/evidence` at 571baac, whose tree is
+  identical to today's. The experiment's base is untouched.
+- **Verified live by web-next:** B-14 (Try to act, R34) and an R26 journey, against 2af58b6. Both passed.
 - **First live run:** web-next ran S22 end to end against the service at f59d710 and the user's Utopia. Sarah resolved
   c1, Michael approved, and the decision reached `ready`. Credit and SLA haven't been run live yet.
 

@@ -54,6 +54,7 @@ from .models import (
     MeResponse,
     NotCleared,
     NotRedeemed,
+    Page,
     Redeemed,
     RedeemRequest,
     Refusal,
@@ -63,6 +64,7 @@ from .models import (
     RerunRequest,
     ResolveRequest,
     StepRequest,
+    one_page,
 )
 from .service import Me, Service, Svc, bearer, session
 from .sor import KEYS
@@ -97,9 +99,9 @@ def ask(svc: Svc, actor: Me, body: DecisionRequest) -> DecisionRecord:
 def list_decisions(
     svc: Svc, decision_type: DecisionType | None = None, subject: str | None = None,
     state: DecisionState | None = None,
-) -> list[DecisionRecord]:  # fmt: skip
+) -> Page[DecisionRecord]:  # fmt: skip
     given = {"decision_type": decision_type, "subject": subject, "state": state}
-    return svc.decisions.list(**{k: v for k, v in given.items() if v is not None})
+    return one_page(svc.decisions.list(**{k: v for k, v in given.items() if v is not None}))
 
 
 @api.get("/decisions/{decision_id}", response_model_exclude_unset=True)
@@ -113,8 +115,8 @@ def get_version(svc: Svc, decision_id: str, version: int) -> DecisionRecord:
 
 
 @api.get("/decisions/{decision_id}/events", response_model_exclude_unset=True)
-def decision_events(svc: Svc, decision_id: str) -> list[DecisionEvent]:
-    return history.events(svc.org, svc.decisions, decision_id)
+def decision_events(svc: Svc, decision_id: str) -> Page[DecisionEvent]:
+    return one_page(history.events(svc.org, svc.decisions, decision_id))
 
 
 @api.post("/decisions/{decision_id}/conditions/{condition_id}/resolve",
@@ -154,8 +156,8 @@ def clear(
 
 
 @api.get("/decisions/{decision_id}/clearances", response_model_exclude_unset=True)
-def clearance_attempts(svc: Svc, decision_id: str) -> list[ClearanceAttempt]:
-    return svc.clearances.attempts(decision_id)
+def clearance_attempts(svc: Svc, decision_id: str) -> Page[ClearanceAttempt]:
+    return one_page(svc.clearances.attempts(decision_id))
 
 
 @api.post("/clearances/{clearance_id}/redeem", response_model_exclude_unset=True)

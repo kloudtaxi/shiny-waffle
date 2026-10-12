@@ -90,7 +90,9 @@ def test_body_as_of_refused_over_http_and_s23_decides_on_the_crm_date(tmp_path: 
     assert r.status_code == 422
     (err,) = r.json()["detail"]
     assert (err["type"], err["loc"]) == ("extra_forbidden", ["body", "as_of"])
-    assert client.get("/api/v1/decisions", headers=sarah).json() == []  # nothing was decided
+    assert (
+        client.get("/api/v1/decisions", headers=sarah).json()["items"] == []
+    )  # nothing was decided
     r = client.post("/api/v1/decisions", json=S23_BODY, headers=sarah)
     assert r.status_code == 201, r.text
     v1 = DecisionRecord.model_validate(r.json())

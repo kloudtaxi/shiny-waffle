@@ -1,4 +1,4 @@
-"""Pydantic mirror of `contract/owm-decisions.ts` (garbanzo 589e0c7, v1.3), field for field.
+"""Pydantic mirror of `contract/owm-decisions.ts` (garbanzo 6b6619e, v1.4), field for field.
 
 Every model forbids extra fields. TS unions become `Literal` unions; unions the TS
 discriminates are discriminated here (Actor on `kind`, Judgment on `form`, Findings on `type`,
@@ -8,7 +8,8 @@ fields (`?:`) default to None; `unknown` is `Any`.
 
 from __future__ import annotations
 
-from typing import Annotated, Any, Literal
+from collections.abc import Iterable
+from typing import Annotated, Any, Generic, Literal, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Discriminator, Field, RootModel, Tag, model_validator
 
@@ -18,6 +19,20 @@ class _M(BaseModel):
 
 
 # ---------------------------------------------------------------- §3 common
+T = TypeVar("T")
+
+
+class Page(_M, Generic[T]):
+    """v1.4 (D-24): every list is a page. The service serves each list as one page (R65), so
+    `next_cursor` is always null."""
+
+    items: list[T]
+    next_cursor: str | None
+
+
+def one_page(items: Iterable[T]) -> Page[T]:
+    """A whole list as its only page (R65)."""
+    return Page[T](items=list(items), next_cursor=None)
 
 
 class PersonRef(_M):

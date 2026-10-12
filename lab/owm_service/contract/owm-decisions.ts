@@ -1,5 +1,5 @@
 /**
- * The v1.2 contract on `owm-decisions`: the shapes the OWM service serves for
+ * The v1.4 contract on `owm-decisions`: the shapes the OWM service serves for
  * the register, decisions, approvals and clearance. owm/docs/contract-v1.2.md
  * is the reference; section numbers below point into it. Revised after the
  * lab's review and re-review (shiny-waffle docs/contract-v1.2-review-2026-10-09.md,
@@ -10,6 +10,16 @@
  */
 
 /* ---------------------------------------------------------------- §3 common */
+
+/**
+ * v1.4 (D-24): every list is a page. `next_cursor` is null when the page holds everything; pass it
+ * back as `?cursor=` for the next. GET /register/changes, /procedures, /decisions,
+ * /decisions/{id}/events and /decisions/{id}/clearances each return one.
+ */
+export interface Page<T> {
+  items: T[];
+  next_cursor: string | null;
+}
 
 /** An employee, from the HR export. */
 export interface PersonRef {

@@ -225,13 +225,13 @@ def test_s22_over_http_end_to_end(
     r1 = client.get(f"/api/v1/decisions/{did}/versions/1", headers=sarah_tok).json()
     assert (r1["version"], r1["state"]) == (1, "spent")
     listed = client.get("/api/v1/decisions", params={"subject": "DR-9001"}, headers=sarah_tok)
-    assert [d["decision_id"] for d in listed.json()] == [did]
+    assert [d["decision_id"] for d in listed.json()["items"]] == [did]
     assert client.get("/api/v1/decisions", params={"state": "ready"},
-                      headers=sarah_tok).json() == []  # fmt: skip
-    attempts = client.get(f"/api/v1/decisions/{did}/clearances", headers=sarah_tok).json()
+                      headers=sarah_tok).json()["items"] == []  # fmt: skip
+    attempts = client.get(f"/api/v1/decisions/{did}/clearances", headers=sarah_tok).json()["items"]
     assert [a["response"]["cleared"] for a in attempts] == [False, True]
     assert "dry_run" not in attempts[0]["request"]  # R13
-    events = client.get(f"/api/v1/decisions/{did}/events", headers=sarah_tok).json()
+    events = client.get(f"/api/v1/decisions/{did}/events", headers=sarah_tok).json()["items"]
     assert [e["kind"] for e in events] == [
         "requested",
         "decided",
@@ -291,7 +291,7 @@ def test_as_of_in_body_is_422(client: TestClient, sarah_tok: Headers) -> None:
     assert r.status_code == 422
     (err,) = r.json()["detail"]
     assert (err["type"], err["loc"]) == ("extra_forbidden", ["body", "as_of"])
-    assert client.get("/api/v1/decisions", headers=sarah_tok).json() == []
+    assert client.get("/api/v1/decisions", headers=sarah_tok).json()["items"] == []
 
 
 def test_dc6_second_decision_is_409_with_the_example_body(
@@ -345,7 +345,7 @@ def test_rerun_decline_and_withdraw_over_http(
                     headers=sarah_tok)  # fmt: skip
     assert r.status_code == 200 and r.json()["state"] == "withdrawn"
     kinds = [e["kind"] for e in client.get(f"/api/v1/decisions/{did}/events",
-                                           headers=sarah_tok).json()]  # fmt: skip
+                                           headers=sarah_tok).json()["items"]]  # fmt: skip
     assert kinds == ["requested", "decided", "rerun", "decided", "declined"]
 
 
@@ -379,7 +379,7 @@ def test_503_body(client: TestClient, app: FastAPI, sarah_tok: Headers) -> None:
     body = r.json()
     assert set(body) == {"error", "detail"} and body["error"] == "cannot_decide"
     assert isinstance(body["detail"], str) and body["detail"]
-    assert client.get("/api/v1/decisions", headers=sarah_tok).json() == []
+    assert client.get("/api/v1/decisions", headers=sarah_tok).json()["items"] == []
 
 
 def test_jev_unavailable_is_503(
@@ -423,9 +423,32 @@ def test_a_dry_run_answers_with_its_own_shape(
     no = r.json()
     assert r.status_code == 200 and (no["dry_run"], no["would_clear"]) == (True, False)
     assert set(no) == {"dry_run", "would_clear", "reasons"} and codes(no)[0] == "differs"
-    attempts = client.get(f"/api/v1/decisions/{did}/clearances", headers=sarah_tok).json()
+    attempts = client.get(f"/api/v1/decisions/{did}/clearances", headers=sarah_tok).json()["items"]
     assert [a["response"] for a in attempts] == [
         {"dry_run": True, "would_clear": True, "reasons": []}, no]  # fmt: skip
+
+
+def test_every_list_is_a_page(
+    client: TestClient, agent_tok: Headers, sarah_tok: Headers, michael_tok: Headers
+) -> None:
+    """Contract v1.4 (D-24): every list is `{items, next_cursor}`. The service serves each as one
+    page, so `next_cursor` is always null. Objects stay objects."""
+    did = ready_s22(client, agent_tok, sarah_tok, michael_tok)
+    for path in ("/api/v1/decisions", f"/api/v1/decisions/{did}/events",
+                 f"/api/v1/decisions/{did}/clearances", "/api/v1/register/changes",
+                 "/api/v1/procedures"):  # fmt: skip
+        r = client.get(path, headers=sarah_tok)
+        assert r.status_code == 200, (path, r.text)
+        page = r.json()
+        assert set(page) == {"items", "next_cursor"} and page["next_cursor"] is None, path
+        assert isinstance(page["items"], list), path
+    listed = client.get("/api/v1/decisions", headers=sarah_tok).json()["items"]
+    assert [d["decision_id"] for d in listed] == [did]
+    # R65: a cursor the service never issued is ignored; the whole list is the one page
+    again = client.get("/api/v1/decisions", params={"cursor": "x"}, headers=sarah_tok).json()
+    assert again == {"items": listed, "next_cursor": None}
+    for path in ("/api/v1/register", "/api/v1/approvals", "/api/v1/me"):
+        assert "items" not in client.get(path, headers=sarah_tok).json(), path
 
 
 # -- redeem and report over HTTP (R35) ------------------------------------------------------------
@@ -561,7 +584,7 @@ def test_reset_archives_the_log_and_starts_afresh(
     assert archived.is_file() and archived.name.startswith("events-")
     assert client.get("/api/v1/me", headers=sarah_tok).status_code == 401  # sessions went too
     fresh = sign_in(client, agent_id="AGT-DEALDESK", on_behalf_of="EMP-101")
-    assert client.get("/api/v1/decisions", headers=fresh).json() == []
+    assert client.get("/api/v1/decisions", headers=fresh).json()["items"] == []
     assert ask_s22(client, fresh)["decision_id"] == "DEC-0001"
 
 
