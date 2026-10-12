@@ -19,11 +19,12 @@ import yaml
 from pydantic import BaseModel
 
 from owm_service import _lab
+from owm_service.changes import ChangeBody, overlap
 from owm_service.config import load_settings
 from owm_service.errors import NotFound, Refused
 from owm_service.models import Actor, RefusalFix, RegisterChange, SupersedesRelation
 from owm_service.org import Org
-from owm_service.register_queue import ChangeBody, RegisterQueue, overlap
+from owm_service.register_queue import RegisterQueue
 from owm_service.sessions import Sessions
 
 from ._registrar import CHECK

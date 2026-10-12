@@ -1,0 +1,257 @@
+"""A register change as data (spec §7.1; contract §4.2): what `POST /register/changes` takes
+(`ChangeBody`), the change folded from its events (`Change`, `fold`), its contract shape
+(`to_model`), and what the queue compares and shows about it: what it touches (`touched`, for
+scoped RR-13), whether two changes clash (`overlap`, ruling R45) and the reviewer's `diff` (G-33).
+
+The register queue (`register_queue.py`) writes the events this module folds; its docstring lists
+their payloads. Nothing here runs a rule or writes anything.
+"""
+
+from __future__ import annotations
+
+import json
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
+from datetime import date
+from typing import Any, Final, Literal
+
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+
+from . import _lab
+from .events import Event
+from .models import Actor, RegisterChange, RegisterRelation
+
+FIELDS: Final[Mapping[str, tuple[str, ...]]] = {
+    "register": ("doc_id", "kind", "title", "effective_from", "effective_to", "terms", "relations"),
+    "revoke": ("target", "revoked_on"),
+}
+NEEDED: Final[Mapping[str, tuple[str, ...]]] = {
+    "register": ("doc_id", "kind", "effective_from"), "revoke": ("target",),
+}  # fmt: skip
+STATE_OF: Final[Mapping[str, str]] = {
+    "change.drafted": "draft", "change.submitted": "pending", "change.approved": "approved",
+    "change.refused": "refused", "change.declined": "declined", "change.withdrawn": "withdrawn",
+}  # fmt: skip
+KINDS: Final = (*STATE_OF, "change.reminded")
+
+
+class ChangeBody(BaseModel):
+    """`POST /register/changes` as the core takes it: the `RegisterChange` input fields, the full
+    `text`, and `submit` (false: a draft). `proposed_by` and `submitted_by` are only compared with
+    the session's (RR-1): a change's people always come from the session."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    action: Literal["register", "revoke"]
+    base_version: int
+    submit: bool
+    text: str | None = None
+    doc_id: str | None = None
+    kind: str | None = None
+    title: str | None = None
+    effective_from: str | None = None
+    effective_to: str | None = None
+    terms: dict[str, Any] | None = None
+    relations: list[RegisterRelation] | None = None
+    target: str | None = None
+    revoked_on: str | None = None
+    proposed_by: Actor | None = None
+    submitted_by: str | None = None
+
+    @field_validator("effective_from", "effective_to", "revoked_on")
+    @classmethod
+    def _a_date(cls, v: str | None) -> str | None:
+        if v is not None:
+            date.fromisoformat(v)
+        return v
+
+    @model_validator(mode="after")
+    def _fits_the_action(self) -> ChangeBody:
+        """A register names its document; a revoke names its target and carries no document."""
+        if self.action == "register":
+            foreign = FIELDS["revoke"]
+        else:
+            foreign = (*FIELDS["register"], "text")
+        missing = [k for k in NEEDED[self.action] if getattr(self, k) is None]
+        extra = [k for k in foreign if getattr(self, k) is not None]
+        parts = [*([f"needs {', '.join(missing)}"] if missing else []),
+                 *([f"takes no {', '.join(extra)}"] if extra else [])]  # fmt: skip
+        if parts:
+            raise ValueError(f"a {self.action} change {' and '.join(parts)}")
+        return self
+
+    def fields(self) -> dict[str, Any]:
+        """The action's input fields, JSON-plain."""
+        dumped = self.model_dump(mode="json")
+        return {k: dumped[k] for k in FIELDS[self.action]}
+
+
+def named(people: Sequence[Mapping[str, Any]]) -> str:
+    names = [str(p["name"]) for p in people]
+    if not names:
+        return "nobody"
+    return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " or " + names[-1]
+
+
+@dataclass
+class Change:
+    """One change, folded from its events: the contract's fields and what the steps need."""
+
+    change_id: str
+    action: str
+    state: str
+    base_version: int
+    fields: dict[str, Any]
+    text: str | None
+    sha256: str | None
+    owning_function: str | None
+    diff: list[dict[str, Any]]
+    proposed_by: dict[str, Any] | None
+    proposed_at: str | None
+    checks: list[dict[str, Any]]
+    submitted_by: dict[str, Any] | None = None
+    submitted_at: str | None = None
+    submitted_seq: int = 0
+    approvers: list[dict[str, Any]] = field(default_factory=list)
+    approved_by: dict[str, Any] | None = None
+    approved_at: str | None = None
+    declined: dict[str, Any] | None = None
+    refused: list[dict[str, Any]] | None = None
+    reminded_on: list[str] = field(default_factory=list)
+
+    def submitter(self) -> str | None:
+        return None if self.submitted_by is None else str(self.submitted_by["id"])
+
+    def submitter_name(self) -> str:
+        return named([self.submitted_by] if self.submitted_by else [])
+
+    def drafters(self) -> set[str]:
+        """Who may dismiss the draft as its drafter (ruling R42): the person who drafted it, or
+        the person an agent drafted it for (`on_behalf_of`)."""
+        p = self.proposed_by or {}
+        person = p.get("person") if p.get("kind") == "person" else p.get("on_behalf_of")
+        return {str(person["id"])} if person else set()
+
+    def what(self) -> str:
+        if self.action == "revoke":
+            return f"the revocation of {self.fields['target']}"
+        return f"{self.fields['kind']} {self.fields['doc_id']}"
+
+
+def fold(events: Sequence[Event]) -> Change:
+    c: Change | None = None
+    for e in events:
+        p = e.payload
+        if e.kind == "change.drafted" or (e.kind == "change.submitted" and "fields" in p):
+            c = Change(
+                change_id=p["change_id"], action=p["action"], state="draft",
+                base_version=p["base_version"], fields=p["fields"], text=p["text"],
+                sha256=p["sha256"], owning_function=p["owning_function"], diff=p["diff"],
+                proposed_by=p["proposed_by"], proposed_at=p["proposed_at"],
+                checks=p.get("checks", []),
+            )  # fmt: skip
+        if c is None:
+            raise RuntimeError(f"corrupt log: {e.stream} starts with {e.kind}")
+        if e.kind == "change.submitted":
+            c.base_version, c.submitted_by = p["base_version"], p["submitted_by"]
+            c.submitted_at, c.submitted_seq, c.approvers = p["submitted_at"], e.seq, p["approvers"]
+        elif e.kind == "change.approved":
+            c.approved_by, c.approved_at = p["approved_by"], p["approved_at"]
+        elif e.kind == "change.refused":
+            c.refused = p["refusals"]
+        elif e.kind == "change.declined":
+            c.declined = p["declined"]
+        elif e.kind == "change.reminded":
+            c.reminded_on.append(p["on"])
+        c.state = STATE_OF.get(e.kind, c.state)
+    if c is None:
+        raise RuntimeError("corrupt log: a register change with no events")
+    return c
+
+
+def to_model(c: Change) -> RegisterChange:
+    """The contract's `RegisterChange`. Optional fields are set only when they apply (ruling R13):
+    a register's document fields (with `effective_to` even when null), a revoke's target and date,
+    the fingerprint when there is a text, and `checks` on a draft only."""
+    out: dict[str, Any] = {
+        "change_id": c.change_id, "action": c.action, "state": c.state,
+        "base_version": c.base_version, "proposed_by": c.proposed_by,
+        "proposed_at": c.proposed_at, "submitted_by": c.submitted_by,
+        "submitted_at": c.submitted_at, "approvers": c.approvers, "approved_by": c.approved_by,
+        "approved_at": c.approved_at, "declined": c.declined, "refused": c.refused,
+        "diff": c.diff,
+    }  # fmt: skip
+    out |= {k: v for k, v in c.fields.items() if v is not None or k == "effective_to"}
+    if c.sha256 is not None:
+        out["sha256"] = c.sha256
+    if c.state == "draft":
+        out["checks"] = c.checks
+    return RegisterChange.model_validate(out)
+
+
+# -- what a change is about ---------------------------------------------------------------------
+def _supersedes(fields: Mapping[str, Any]) -> list[str]:
+    return [str(r["target"]) for r in fields.get("relations") or [] if r["type"] == "supersedes"]
+
+
+def target_entry(fields: Mapping[str, Any], state: Any) -> dict[str, Any] | None:
+    """The registered entry a revocation names, or None."""
+    found: dict[str, Any] | None = next(
+        (e for e in state.entries if e["doc_id"] == fields.get("target")), None)  # fmt: skip
+    return found
+
+
+def touched(action: str, fields: Mapping[str, Any], state: Any) -> dict[str, Any]:
+    """What a change touches, for scoped RR-13: its kind and scope (the registrar's `scope`; a
+    revocation's are its target's), the documents it names (`docs`: registers, supersedes,
+    revokes) and the documents it depends on (`reads`: its `under` targets; ruling R45)."""
+    if action == "register":
+        entry = {"kind": fields["kind"], "doc_id": fields["doc_id"], "terms": fields["terms"] or {}}
+        docs = [str(fields["doc_id"]), *_supersedes(fields)]
+        reads = [str(r["target"]) for r in fields["relations"] or [] if r["type"] == "under"]
+        return {"kind": fields["kind"], "scope": _lab.scope(entry), "docs": docs, "reads": reads}
+    target = target_entry(fields, state)
+    return {"kind": None if target is None else target["kind"],
+            "scope": None if target is None else _lab.scope(target),
+            "docs": [str(fields["target"])], "reads": []}  # fmt: skip
+
+
+def overlap(mine: Mapping[str, Any], theirs: Mapping[str, Any]) -> str | None:
+    """Scoped RR-13 (ruling R45): what `theirs`, approved since `mine` was submitted, did to what
+    `mine` touches, as the end of a sentence; None when they don't clash. They clash on the same
+    kind and scope, on a document both name, or on a document one is `under` that the other
+    names. Two changes merely `under` the same document never clash."""
+    if mine["kind"] is not None and (mine["kind"], mine["scope"]) == (theirs["kind"],
+                                                                      theirs["scope"]):  # fmt: skip
+        return f"changed the {mine['kind']} for {mine['scope']}"
+    docs, their_docs = set(mine["docs"]), set(theirs["docs"])
+    reads, their_reads = set(mine.get("reads", [])), set(theirs.get("reads", []))
+    if shared := sorted(docs & their_docs):
+        return f"changed {', '.join(shared)}"
+    if under := sorted(reads & their_docs):
+        return f"changed {', '.join(under)}, which this change is under"
+    if above := sorted(docs & their_reads):
+        return f"put a document under {', '.join(above)}, which this change names"
+    return None
+
+
+def _shown(v: Any) -> str | None:
+    if v is None or isinstance(v, str):
+        return v
+    if isinstance(v, date):
+        return v.isoformat()
+    return json.dumps(v, sort_keys=True, default=str)
+
+
+def diff(action: str, fields: Mapping[str, Any], state: Any) -> list[dict[str, Any]]:
+    """Against the entry the change supersedes, for the reviewer (G-33): the window dates and each
+    term that differ. A revocation, or a change that supersedes nothing registered, has none."""
+    targets = set(_supersedes(fields)) if action == "register" else set()
+    was = next((e for e in state.entries if e["doc_id"] in targets), None)
+    if was is None:
+        return []
+    old, new = was.get("terms") or {}, fields["terms"] or {}
+    pairs = [(k, k, was.get(k), fields[k]) for k in ("effective_from", "effective_to")]
+    pairs += [(f"terms.{k}", k, old.get(k), new.get(k)) for k in sorted(set(old) | set(new))]
+    return [{"key": key, "label": name.replace("_", " ").capitalize(), "was": _shown(a),
+             "now": _shown(b)} for key, name, a, b in pairs if _shown(a) != _shown(b)]  # fmt: skip
