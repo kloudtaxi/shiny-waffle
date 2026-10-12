@@ -452,11 +452,12 @@ def test_redeem_and_report_need_a_session_and_record_it(
     assert len(evs) == 4 and all(e.payload["by"] == michael for e in evs)
 
 
-def test_only_the_redeeming_session_may_report_over_http(
+def test_only_the_redeeming_actor_may_report_over_http(
     client: TestClient, app: FastAPI, agent_tok: Headers, sarah_tok: Headers, michael_tok: Headers
 ) -> None:
-    """Ruling R58 over HTTP: Michael redeems; Sarah's and the agent's reports are 422 DC-2 and
-    open no incident; Michael's own report lands."""
+    """Ruling R58 over HTTP (contract v1.3 §7.2): Michael redeems; Sarah's and the agent's reports
+    are 422 DC-2 and open no incident. It binds the actor, not the token: Michael signs in again,
+    as web-next's bridge does on a 401, and his report lands."""
     did = ready_s22(client, agent_tok, sarah_tok, michael_tok)
     cid = clear15(client, agent_tok, did)
     body = {"params": P15, "executor": {"system": "crm", "adapter": "web-next"}}
@@ -469,7 +470,9 @@ def test_only_the_redeeming_session_may_report_over_http(
     org = app.state.owm.org
     assert org.log.read(org.org_id, kinds=("execution.reported", "incident.opened")) == []
     ok = {"status": "applied", "external_ref": "CRM-1", "detail": None}
-    r = client.post(f"/api/v1/clearances/{cid}/report", json=ok, headers=michael_tok)
+    again = sign_in(client, person_id="EMP-200")
+    assert again != michael_tok
+    r = client.post(f"/api/v1/clearances/{cid}/report", json=ok, headers=again)
     assert r.status_code == 200 and r.json() == {"incident_id": None}
 
 

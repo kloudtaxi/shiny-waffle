@@ -1,8 +1,17 @@
 # B-06: the lab's OWM service (design)
 
 **Status:** **approved** by the user (2026-10-11), and approved for build sequencing by garbanzo
-(`owm/docs/owm-service-design-review-2026-10-11.md`, 30977cd). Next comes the implementation plan
-(writing-plans). No code is written before the plan is approved and an execution method is chosen.
+(`owm/docs/owm-service-design-review-2026-10-11.md`, 30977cd). Built to the plan
+(`docs/superpowers/plans/2026-10-11-owm-service.md`) and merged to `main` at f59d710.
+
+**Amended 2026-10-12 for contract v1.3** (garbanzo 589e0c7, §6.2 wording at 7732488). The user
+ruled on the three points this build left open, and the service follows:
+- **R26 → R61, R62:** a dropped credit concurrence's holder confirms the lower level too, with
+  one ratchet condition per confirmer (§6.5);
+- **R34 → R64:** a dry run answers with its own shape, `{dry_run: true, would_clear, reasons}`
+  (§6.7);
+- **R58:** adopted as built. It binds the actor who redeemed, not the token (§6.7);
+- **`href`:** the OWM resource path, as built; clients map it to their pages.
 
 **Amended 2026-10-12 after the build.** B-06 is built: 21 tasks, a final review ("with fixes")
 and its fix wave. The sections below now say what was built, each change naming its ruling.
@@ -20,7 +29,7 @@ changes an agreed field:
 - the Docker image defaults `OWM_LAB_ROUTES=0` (§11, §12);
 - the replay check on the edited-row re-runs is done (§10).
 
-**What it is:** a service in shiny-waffle that serves glowing-garbanzo's contract v1.2
+**What it is:** a service in shiny-waffle that serves glowing-garbanzo's contract v1.2, now v1.3
 (`owm-decisions`) over the lab's kernel. web-next and agents can then use the lab's OWM for real.
 It retires when sovera-owm's `owm-decisions` context serves the same contract (the user's decision,
 2026-10-09).
@@ -29,7 +38,7 @@ It retires when sovera-owm's `owm-decisions` context serves the same contract (t
 
 | What | Where |
 |---|---|
-| The contract | garbanzo `owm/docs/contract-v1.2.md` at 30977cd (first pinned at 9d05398); types in `web-next/lib/contract/owm-decisions.ts`; S22 typed in `s22.example.ts` |
+| The contract | garbanzo `owm/docs/contract-v1.2.md`, v1.3 at 589e0c7 (built to v1.2 at 30977cd; first pinned at 9d05398); types in `web-next/lib/contract/owm-decisions.ts`; S22 typed in `s22.example.ts` |
 | garbanzo's review of this design | `owm/docs/owm-service-design-review-2026-10-11.md` (30977cd) |
 | The lab's reviews of it | `docs/contract-v1.2-review-2026-10-09.md` (c196b31, re-review 74aef92) |
 | Agents, clearance and the ratchet | `docs/agents-sketch-review-2026-10-09.md` (deebdd8); G-45, G-46 |
@@ -338,18 +347,25 @@ requester for withdraw and re-run, and DC-3 doesn't bar the claim decider (R30).
   - only a `confirmed_lower_level` resolution lowers it.
 - **Below the floor:**
   - the outcome stands;
-  - the version gets a blocking `ratchet` condition and a `ratchet` flag;
-  - the condition's `who` is whoever holds the floor level's role for this request, never the
-    requester.
+  - the version gets a `ratchet` flag and a round of blocking `ratchet` conditions, one per
+    confirmer, each with one person in `who` (R61, contract v1.3 §6.2);
+  - the confirmers are whoever holds the floor level's role for this request and, for credit,
+    whoever holds each concurrence the floor required that the version drops. Never the
+    requester, and never one person twice: that fails closed, 503, nothing written (R62);
+  - each confirmer resolves only their own condition, and each resolution re-runs the decision.
+    The round keeps its ids while the re-run is still below the floor at the same level for the
+    same confirmers, so nobody confirms twice. The floor drops to the opening version's level
+    only when every condition in the round is confirmed. A new level opens a new round (R61).
 - **When the requester holds the floor level's role,** the confirmer passes up exactly as an
   approval does: DC-3, the same rule and **the same code path as `passed_from`**. A ratchet and an
   approval can then never name different people. For discount that's the CRO, David Morgan
   (confirmed in garbanzo's review).
 - **A pass-up that would land on the requester** (the top of the chain, say an Executive asking
   below a CRO floor) fails closed: 503, nothing written (R25).
-- **A dropped credit concurrence** at the same band is confirmed by the holder of the floor band's
-  role, not by the concurrer whose check was dropped (R26). This weakens separation of duties for
-  credit and is flagged to garbanzo.
+- **A dropped credit concurrence** is confirmed by its holder too, beside the floor band's holder
+  (R61, the user's ruling in contract v1.3, superseding R26). For example, $650,000 for a
+  Strategic customer re-run at $450,000 opens c1 for the Director of Finance and c2 for the VP
+  Sales.
 - **A floor set by another decision** is named in the ratchet condition and flag
   (`DEC-0001 version 1 needed the VP Sales; …`), so two "version 1"s don't read as a
   contradiction (R24).
@@ -389,9 +405,9 @@ says so.
 - **A clearance** binds the decision, version, action, params and the session's actor. It's single
   use, and expires in `OWM_CLEARANCE_TTL_SECONDS` (default 300). `dry_run: true` checks and logs
   but issues nothing. Every attempt is logged, and `GET /decisions/{id}/clearances` lists them.
-- **A dry run that would clear answers `{cleared: false, reasons: []}`** (R34): the contract's
-  union has no "would clear" variant, and `cleared: true` needs a clearance id. Empty reasons
-  mean "would clear". A contract smell, noted for garbanzo.
+- **A dry run answers with its own shape,** `{dry_run: true, would_clear, reasons}`, whether it
+  would clear or not (R64, contract v1.3 §7.1, superseding R34). `reasons` is empty exactly
+  when `would_clear`. It never says `cleared` and never carries a clearance id.
 - **`POST /clearances/{id}/redeem` runs in one transaction:**
   - mark the clearance used (`used` if it already was, and nothing else is checked);
   - `expired`;
@@ -408,10 +424,12 @@ says so.
 - **Redeeming and reporting need an authenticated session** (R35). The session's actor is recorded
   as `by` beside the executor on `clearance.redeemed`, `redeem.refused`, `execution.reported` and
   `incident.opened`; the event's own actor stays the executor's system (R40).
-  - **Any session may redeem, but only the session that redeemed a clearance may report on it**
-    (R58, revising R35 and R40). Another session's report is 422 DC-2 and writes nothing. CLR ids
-    are sequential, so holding one proves nothing, and a hostile `failed` report would open a
-    false incident and block the real one.
+  - **Any actor may redeem, but only the actor who redeemed a clearance may report on it**
+    (R58, revising R35 and R40; contract v1.3 §7.2). That's the same person, or the same agent
+    acting for the same principal. It binds the actor, not the token, so a session bridge that
+    signs in again between the two steps can still report. Another actor's report is 422 DC-2
+    and writes nothing. CLR ids are sequential, so holding one proves nothing, and a hostile
+    `failed` report would open a false incident and block the real one.
 
 ### 6.8 Failures and status codes
 
@@ -949,7 +967,7 @@ flowchart LR
 
 The build's controller ruled on every question the plan left open. This is the permanent record of
 those rulings, in order: what was decided, why, and the cost if it's wrong. R58 to R60 came from
-the final review.
+the final review. R61 to R64 build contract v1.3, after the user's rulings on R26, R34 and R58.
 
 | # | Decided | Why | Cost if wrong |
 |---|---|---|---|
@@ -978,7 +996,7 @@ the final review.
 | R23 | For `self_sourced_basis`, the reference time is the subject's first ask | The floor and the threat belong to the subject; a fresh ask must not reset the window | An extra flag on legitimate edits between asks; the flag never blocks |
 | R24 | When another decision set the floor, the ratchet condition and flag name it | Two "version 1"s from different decisions read as a contradiction | Wording |
 | R25 | A below-floor version whose confirmer would be the requester fails closed: 503, nothing written | The requester never confirms her own lower level | Such an ask isn't recorded |
-| R26 | A dropped credit concurrence at the same band is confirmed by the floor band's holder | The contract names the person holding the floor level's role | The concurrer isn't asked about their own dropped check; flagged to garbanzo |
+| R26 | A dropped credit concurrence at the same band is confirmed by the floor band's holder (**superseded by R61**, contract v1.3) | The contract names the person holding the floor level's role | The concurrer isn't asked about their own dropped check; flagged to garbanzo |
 | R27 | Basis building and missing-row synthesis moved to `prepare.py` before the lifecycle commands | `decisions.py` was doing several jobs | A refactor commit |
 | R28 | A resolution must fit its condition's source (`input_conflict`: confirmed or corrected record; `missing_record`: corrected record; `ratchet`: confirmed lower level); anything else is 422 DC-2 | Contract §5.6; the floor honours a confirmed lower level only on ratchet conditions | None |
 | R29 | A decline isn't held by DC-4 and closes the decision even with a condition open; `declined` derives before `not_ready` (amended) | Otherwise the decision stays live as `not_ready` and the next re-run drops the decline | None for safety; the UI shows declined, not not ready |
@@ -986,7 +1004,7 @@ the final review.
 | R31 | A re-run whose row now names a different requester fails closed (503, `decision.failed`) | Blocks reassigning a request to oneself and then approving it | A legitimate reassignment needs a new decision |
 | R32 | A resolved input conflict covers its figure again if the row returns to the exact value confirmed | The requester confirmed that figure; approvals reset per version, and the ratchet catches a lower level | One fewer re-confirmation when a figure goes A, B, A |
 | R33 | Every event that changes a decision's derived state goes on the subject's stream, redemptions, reports and incidents included | Writes re-check the subject's last `seq`, so an approval can't land on a spent decision | None |
-| R34 | A dry run that would clear answers `{cleared: false, reasons: []}` | The contract's union has no "would clear" variant, and `cleared: true` needs a clearance id | A client that tests `cleared` reads success as refusal; noted for garbanzo |
+| R34 | A dry run that would clear answers `{cleared: false, reasons: []}` (**superseded by R64**, contract v1.3) | The contract's union has no "would clear" variant, and `cleared: true` needs a clearance id | A client that tests `cleared` reads success as refusal; noted for garbanzo |
 | R35 | Redeeming and reporting need an authenticated session, whose actor is recorded (revised by R58) | The HTTP layer must not leave redemption unauthenticated | Any signed-in user may redeem a clearance whose id they hold |
 | R36 | A clearance's `condition_open` detail is the condition's full sentence, not the example's shortened text | The detail is free text, and the full sentence says what's needed | A test name overclaimed; renamed |
 | R37 | `OWM_LAB_ROUTES` is read case-insensitively and stripped; an unknown value is refused at startup | `False` must not leave sign-in-as-anyone on | None |
@@ -1010,6 +1028,10 @@ the final review.
 | R55 | The admission report is self-attested JSON supplied with the change: a known limit, with the two-person rule behind it | The service never runs the gate; a gate-signed report is roadmap | A forged report and a colluding approver could register an unadmitted procedure |
 | R56 | `waiting_on=me` on register changes is empty for an agent session, as `/approvals` is | An agent takes no register step (RR-2) | An agent UI must ask for its principal explicitly |
 | R57 | The attack test submits directly, without drafts; a probe with drafts over all 24 cases gave identical results | Identical outcomes | A draft-path regression isn't caught by that test; the queue's own draft tests still run |
-| R58 | Any authenticated session may redeem, but only the session that redeemed a clearance may report on it; another's report is 422 DC-2 (revises R35, R40) | CLR ids are sequential, so holding one proves nothing; a hostile report would open a false incident and block the real one | An adapter that redeems and reports from different sessions must share one |
+| R58 | Any authenticated actor may redeem, but only the actor who redeemed a clearance may report on it; another's report is 422 DC-2 (revises R35, R40). It binds the actor, not the token. Adopted in contract v1.3 §7.2 | CLR ids are sequential, so holding one proves nothing; a hostile report would open a false incident and block the real one | An adapter that redeems as one actor and reports as another is refused |
 | R59 | At approval, an error that isn't a rule propagates and the change stays pending; draft and submit keep RR-5 (narrows R44) | The rules already passed at submit, so the error is environmental | A malformed change surfaces as an error at approval, not a refusal |
 | R60 | The overlay is writable only for §8.3's tables: edits on the request tables and tickets, inserts on those plus `ticket_events` and `service_credits`; any other table is 422 RR-5 | HR, accounts and customers decide approvers and tiers; the spec never made them editable | A demo that edits a customer tier needs that table re-opened deliberately |
+| R61 | The user's R26 ruling (contract v1.3 §6.2), in the shape they chose: one `ratchet` condition per confirmer, each with one person in `who`. A round is the conditions one version opens. It is kept with its ids while the re-run is still below the floor at that version's level for the same confirmers, and the floor drops only when every condition in it is confirmed. A new level opens a new round, and a confirmation in an unfinished round lowers nothing | §5.6's `who` means any one person may resolve, `resolved.by` is one person, and §5.7 says resolving re-runs. One condition each keeps all three true without a new type field | A UI shows two work items for one lower level |
+| R62 | One person in two confirmer roles fails closed: 503, nothing written, as R25 | Contract v1.3: the confirmers are never the same person | Such an ask isn't recorded; no Northstar case reaches it |
+| R63 | After one of a round's confirmations, `what_changed` names who it still needs ("the lower level still needs Michael Torres to confirm it") | "Still below the floor" alone reads as if the confirmation did nothing | Wording |
+| R64 | The user's R34 ruling (contract v1.3 §7.1): every dry run answers `{dry_run: true, would_clear, reasons}`, refused or not; `ClearanceResponse` tells the variants apart by `dry_run`, then `cleared`; the history still calls a dry run that would clear `clearance_cleared` | The contract's new variant is a dry run's only response | Attempts logged before v1.3 keep the old shape, and the attempts list serves them as logged |

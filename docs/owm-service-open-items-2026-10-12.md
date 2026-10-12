@@ -1,11 +1,56 @@
 # B-06 OWM service: open items after the build (2026-10-12)
 
 The service is built, reviewed and green. This note lists what is still open. The rulings made during the
-build are in the spec's Appendix A (`docs/superpowers/specs/2026-10-10-owm-service-design.md`, R1–R60), and
+build are in the spec's Appendix A (`docs/superpowers/specs/2026-10-10-owm-service-design.md`, R1–R64), and
 the slice-1 result is in `docs/owm-service-slice1-2026-10-11.md`.
 
-**Where it stands:**
-- **Branch:** `worktree-b06-owm-service`, 52 commits on a69b4c9. Not merged or pushed.
+## Update: contract v1.3 and the first live run (later on 2026-10-12)
+
+- **Merged and pushed:** B-06 is on `main` at f59d710. G-45 and G-46 have log entries, and the two gap candidates in
+  §1 are now Ledger gaps G-47 and G-48.
+- **The garbanzo message (§2)** was delivered straight to the garbanzo session, which had been brought local.
+  web-next already had most of it (B-08, B-09, U-24 to U-26). Its review is garbanzo
+  `owm/docs/owm-service-handover-2026-10-12.md`.
+- **The user ruled on R26, R34 and R58,** and garbanzo issued them as contract v1.3 (589e0c7; §6.2 wording at 7732488).
+  The service was rebuilt to v1.3. The spec's rulings R61 to R64 record the details:
+  - **R26:** a dropped credit concurrence's holder confirms too, with one ratchet condition per confirmer (R61, R62, R63);
+  - **R34:** a dry run answers `{dry_run: true, would_clear, reasons}` (R64);
+  - **R58:** adopted as built. It binds the actor, not the token, and a fresh sign-in can still report;
+  - **`href`:** the OWM resource path, as built.
+- **The §3 nits are fixed:** R26 and R58 wording, and the status block. The R53 credit in §7.3 stands.
+- **First live run:** web-next ran S22 end to end against the service at f59d710 and the user's Utopia. Sarah resolved
+  c1, Michael approved, and the decision reached `ready`. Credit and SLA haven't been run live yet.
+
+## Replay coverage at the demo clock (probe, 2026-10-12, $0)
+
+Every request and ticket in the demo corpus was asked once, in replay mode, on a throwaway copy of the state.
+
+| Kind | Decides | 503 `cannot_decide` |
+|---|---|---|
+| Discount | **26 of 26** (DR-7001 to DR-7024, DR-8104, DR-9001) | none |
+| Credit | **1 of 11** (CR-9201) | the other 10 |
+| SLA | **10 of 10** | none |
+
+- **Edits mostly replay.**
+  - DR-9001 decides at 8%, 9%, 10%, 12%, 15%, 20% and 25%, and with its date or status changed.
+  - Copies under new ids (DR-9002, DR-9003 at 12%, CR-9299) decide.
+  - CR-9201 decides with its limit at $450,000 or $650,000, or with its customer changed.
+  - So the questions the kernel sends the model don't depend on the request's figures, date or status. The customer
+    is different: changing it changes the questions.
+- **What misses:**
+  - DR-9001 moved to another customer (CRM-3001);
+  - a request the CRM doesn't hold (DR-9999 with submitted figures);
+  - 10 of the 11 credit requests;
+  - after approving a register entry that decisions read (§5 below).
+- **For a demo:**
+  - discount and SLA are safe on the demo data, Sarah's edit to 8% included;
+  - keep credit to CR-9201, or record the other ten once;
+  - recording needs a live Jev run under a spend cap the user agrees in advance. After that they replay at $0.
+
+## After the build (as first written)
+
+**Where it stood:**
+- **Branch:** `worktree-b06-owm-service`, 52 commits on a69b4c9. Since merged to `main` (f59d710) and pushed.
 - **Tests:** 853 pass (`uv run --group owm-service pytest`). ruff and mypy (strict) are clean, and
   `scripts/owm-gate.sh` is GREEN with `runs/` byte-identical.
 - **Acceptance:** §12.2 passes:
@@ -25,9 +70,10 @@ the slice-1 result is in `docs/owm-service-slice1-2026-10-11.md`.
 | **Gap candidate: RR-14 doesn't check a parent is live** | The registrar's RR-14 checks that an `under` agreement exists and matches, not that it is in force. A child submitted under an already-revoked agreement passes. The queue's R45 only catches a revoke approved after submission. The registrar is frozen, so the service can't fix it without changing a rule | Log it on the Ledger as a new gap (registrar rule change, with an attack-set re-run) |
 | **Gap candidate: a second SLA payment** | After S36's $4,200 credit is issued, a new decision on SR-39385 offers another $2,100, because the cap counts that ticket's own credit. Only the service's `spent` guard stops it. `test_spent.py` pins the current behaviour, so a kernel fix will show up there | Log it on the Ledger as a kernel/truth gap |
 | **Ledger updates for G-45 and G-46** | The plan's Task 21 appends "service implementation landed" to their logs, using a pinned `ArtifactData` update that only appends | Do it when the branch is merged, so the log can cite a commit on `main` |
-| **Merge** | The branch is complete | See the finishing options |
+| **Merge** | The branch is complete | Done: merged and pushed (f59d710) |
+| **Record the other 10 credit requests** | Only CR-9201 replays at the demo clock (see the coverage section above) | A one-off live Jev run under an agreed cap, then $0 replays |
 
-## 2. For the garbanzo session
+## 2. For the garbanzo session (done: delivered and answered, see the update above)
 
 The slice-1 note (`docs/owm-service-slice1-2026-10-11.md`) carries the paste-ready message. Add these points:
 - **Contract smells to settle:**
@@ -49,7 +95,7 @@ The slice-1 note (`docs/owm-service-slice1-2026-10-11.md`) carries the paste-rea
   - *Effective from* defaulting to the register's clock (the demo clock starts 2026-09-23);
   - a plain message for the 503 `cannot_decide`.
 
-## 3. Spec wording nits (the last re-review)
+## 3. Spec wording nits (the last re-review; fixed with v1.3 except §7.3)
 
 - **§6.5 and Appendix A R26** say "flagged to garbanzo". That becomes true once you send section 2.
 - **§6.7 and R58** say "the session that redeemed". The code binds the actor, so two sessions of one person count

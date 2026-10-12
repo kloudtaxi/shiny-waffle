@@ -469,12 +469,12 @@ def test_redeem_and_report_record_who_called(
     assert all(e.actor == {"kind": "system", **EXEC.model_dump()} for e in evs)
 
 
-def test_only_the_redeeming_session_may_report(
+def test_only_the_redeeming_actor_may_report(
     org: Org, dealdesk: Actor, sarah: Actor, michael: Actor, c: Clearances
 ) -> None:
-    """Ruling R58: any session may redeem, but only the one that redeemed may report. Another
-    session's report (here Michael's `failed`, or one with no session at all) is DC-2 and writes
-    nothing: no false incident, and the redeemer's own report still lands."""
+    """Ruling R58 (contract v1.3 §7.2): any actor may redeem, but only the one that redeemed may
+    report. Another actor's report (here Michael's `failed`, or one with no actor at all) is DC-2
+    and writes nothing: no false incident, and the redeemer's own report still lands."""
     v2 = ready_s22(org, dealdesk, sarah, michael)
     ok = clear15(c, dealdesk, v2)
     body = RedeemRequest(params=ok.bound.params, executor=EXEC)
@@ -485,7 +485,8 @@ def test_only_the_redeeming_session_may_report(
             c.report(ok.clearance_id, failed, by=other)
         assert (e.value.status, e.value.refusals[0].rule) == (422, "DC-2")
         assert e.value.refusals[0].detail == (
-            f"Only the session that redeemed {ok.clearance_id} may report on it.")  # fmt: skip
+            f"Only the person or agent that redeemed {ok.clearance_id} may report on it."
+        )  # fmt: skip
     assert org.log.read(org.org_id, kinds=("execution.reported", "incident.opened")) == []
     applied = ReportRequest(status="applied", external_ref="CRM-1", detail=None)
     assert c.report(ok.clearance_id, applied, by=sarah).incident_id is None
