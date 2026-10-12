@@ -152,10 +152,11 @@ documents, never the figure. No live run was needed or made.
 All 24 register attack cases (C01–C24, run 2026-10-08) were replayed through the two-step queue
 (draft not used; submit, then approve) on the base corpus at the registrar's fixed clock.
 **24/24 cases give the same admitted/refused result as the one-shot registrar (0 of 14 attacks
-admitted), and 4 cases name a different rule, each explained below.** Submit runs the content
-rules (RR-5 to RR-14) and the people rules before approval runs RR-4, so where a case breaks more
-than one rule the queue can name an earlier one than the one-shot did. Every listed case breaks
-more than one rule. Registrar only: no kernel decision, so no Jev and $0.
+admitted), and 4 cases name a different rule, each explained below.** Three mechanisms cause the
+differences. In C13 and C14, submit runs the content rules before approval runs RR-4. In C11, the
+agent session is refused before any registrar run. In C19, the body model refuses the relation type
+before the registrar runs. Every listed case breaks more than one rule. Registrar only: no kernel
+decision, so no Jev and $0.
 
 - **C11** (an agent proposes a pricing policy): one-shot RR-1, queue RR-2. The approver EMP-200 is
   not among the actors (RR-1), the submitter is an agent (RR-2), and the empty terms also miss the
