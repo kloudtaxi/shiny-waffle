@@ -13,7 +13,7 @@ A re-run (spec §6.4) carries its version's conditions forward (`carry_forward`,
   A `corrected_record` covers nothing later: a correction that still differs from `submitted`
   opens a new condition;
 - an open condition the re-run finds again (the same figures; still no record; still below the
-  floor at the same level, for the same confirmer) keeps its id. One it doesn't find is gone;
+  floor at the same level, for the same confirmers) keeps its id. One it doesn't find is gone;
 - ids are `c1`, `c2`… and never reused within a decision, across versions (`next_number`).
 """
 
@@ -134,11 +134,12 @@ def missing_record_condition(
 def ratchet_condition(
     cid: str, needed: str, stands: str, version: int, confirmer: PersonRef
 ) -> Condition:
-    """Below the subject's floor (G-46): the holder of the floor's role confirms the lower level,
-    or it stays not ready. `needed` and `stands` are `ratchet.phrases`'s: what the floor needed
-    (`version 1 needed the VP Sales`, or `DEC-0001 version 1 needed …` for another decision's
-    floor, R24) and where this version stands (`version 2 is within Sarah Chen's own authority`,
-    `… is at the <title>`, `… drops the <title> concurrence`)."""
+    """Below the subject's floor (G-46): one confirmer's condition (`ratchet.confirmers`: the
+    floor's band holder, or the holder of a concurrence the version drops, R26). Each confirms
+    the lower level, or it stays not ready. `needed` and `stands` are `ratchet.phrases`'s: what
+    the floor needed (`version 1 needed the VP Sales`, or `DEC-0001 version 1 needed …` for
+    another decision's floor, R24) and where this version stands (`version 2 is within Sarah
+    Chen's own authority`, `… is at the <title>`, `… drops the <title> concurrence`)."""
     return Condition.model_validate({
         "id": cid,
         "source": "ratchet",
@@ -204,18 +205,26 @@ def carry_forward(
     return out, next_n
 
 
+def _confirmer_ids(conditions: Iterable[Condition]) -> list[str]:
+    return sorted(p.id for c in conditions for p in c.who)
+
+
 def carry_ratchet(
     previous: Sequence[Condition], fresh: Sequence[Condition],
     same_level: Callable[[Condition], bool],
 ) -> list[Condition]:  # fmt: skip
-    """The version's open ratchet condition: the last version's open one, kept with its id, when
-    the re-run is still below the floor (`fresh`, from `ratchet.assess`) for the same confirmer
-    and at the level of the version that opened it (`same_level`); otherwise `fresh`."""
-    held = next((c for c in previous if c.source == "ratchet" and c.resolved is None), None)
-    if fresh and held is not None and same_level(held) and (
-            [p.id for p in held.who] == [p.id for p in fresh[0].who]):  # fmt: skip
-        return [held]
-    return list(fresh)
+    """The version's open ratchet conditions. A round is the ratchet conditions one version
+    opened, one per confirmer (R26). The last version's round is kept while one of its conditions
+    is open and the re-run is still below the floor (`fresh`, from `ratchet.assess`) at the level
+    of the version that opened it (`same_level`), for the same confirmers: its open conditions
+    keep their ids, and its confirmed ones are already history (`carry_forward`), so nobody
+    confirms twice. Otherwise `fresh`, a new round."""
+    held = [c for c in previous if c.source == "ratchet" and c.resolved is None]
+    if not fresh or not held or not same_level(held[0]):
+        return list(fresh)
+    opened = held[0].opened_in_version
+    round_ = [c for c in previous if c.source == "ratchet" and c.opened_in_version == opened]
+    return held if _confirmer_ids(round_) == _confirmer_ids(fresh) else list(fresh)
 
 
 def in_order(conditions: Iterable[Condition]) -> list[Condition]:
@@ -227,10 +236,16 @@ def _names(ids: Sequence[str]) -> str:
     return ids[0] if len(ids) == 1 else ", ".join(ids[:-1]) + " and " + ids[-1]
 
 
-def what_changed(cause: str, *, below: bool, was_below: bool, open_ids: Sequence[str]) -> str:
+def what_changed(
+    cause: str, *, below: bool, was_below: bool, open_ids: Sequence[str],
+    awaiting: Sequence[str] = (),
+) -> str:  # fmt: skip
     """`previous.what_changed`, one line: what caused the re-run, then where it leaves the version
-    (below the floor; the blocking conditions still open; or none)."""
-    if below:
+    (a round of confirmations still `awaiting` those people; below the floor; the blocking
+    conditions still open; or none)."""
+    if below and awaiting:
+        then = f"the lower level still needs {_names(awaiting)} to confirm it"
+    elif below:
         then = f"the level {'is still' if was_below else 'fell'} below the floor"
     elif open_ids:
         then = f"{_names(open_ids)} {'is' if len(open_ids) == 1 else 'are'} open"

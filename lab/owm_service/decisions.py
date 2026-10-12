@@ -155,7 +155,7 @@ class Decisions:
                 version=1, requester=prep.requester, figures=prep.figures,
                 row=prep.inputs.get("record") or {}, authority=kr.record.get("authority"),
                 as_of=date.fromisoformat(prep.as_of), requested_at=requested_at,
-                cid=f"c{len(conditions) + 1}",
+                next_n=len(conditions) + 1,
             )  # fmt: skip
             payload = self._payload(
                 kind, kr, prep, submitted, actor=actor, requested_at=requested_at.isoformat(),

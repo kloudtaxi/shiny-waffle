@@ -11,8 +11,9 @@ takes the kernel's result from there:
    the decision's real id (the wording of a floor this decision set is the bare `version N`). The
    floor counts the resolution being made: its `condition.resolved` event is passed as pending,
    and the write appends it with the version, in one transaction;
-3. an open ratchet condition is kept with its id while the version is still below the floor at
-   the same level, for the same confirmer (`conditions.carry_ratchet`);
+3. the open ratchet conditions are kept with their ids while the version is still below the
+   floor at the same level, for the same confirmers (`conditions.carry_ratchet`). After one of a
+   round's confirmations (R26), the line says who it still needs;
 4. `previous.what_changed`: the cause (who confirmed what, what the record now says and who
    changed it, or who asked for the re-run), then where the version stands.
 """
@@ -95,7 +96,7 @@ def next_version(
         org, kind=kind, subject=sid, table=TABLE[kind], decision_id=did, version=n + 1,
         requester=prep.requester, figures=prep.figures, row=prep.inputs.get("record") or {},
         authority=kr.record.get("authority"), as_of=date.fromisoformat(rec.as_of),
-        requested_at=datetime.fromisoformat(rec.requested_at), cid=f"c{next_n}", pending=pending,
+        requested_at=datetime.fromisoformat(rec.requested_at), next_n=next_n, pending=pending,
     )  # fmt: skip
 
     def same_level(c: Condition) -> bool:
@@ -103,11 +104,14 @@ def next_version(
 
     ratchets = carry_ratchet(previous, rk.conditions, same_level)
     conditions = in_order([*carried, *ratchets])
+    confirming = resolving is not None and resolving.condition.source == "ratchet"
+    kept = {c.id for c in previous}
     line = what_changed(
         _cause(org, rec, prep, by, resolving),
         below=bool(ratchets),
         was_below=any(c.source == "ratchet" and c.resolved is None for c in rec.conditions),
         open_ids=[c.id for c in conditions if c.blocking and c.resolved is None],
+        awaiting=[p.name for c in ratchets if confirming and c.id in kept for p in c.who],
     )  # fmt: skip
     return Next(conditions, rk, line)
 

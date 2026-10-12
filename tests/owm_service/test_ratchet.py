@@ -3,7 +3,8 @@
 
 The level comes from the registered policy's terms, never from the kernel; the floor belongs to
 the subject and is rebuilt from the log; a version below it gets a blocking `ratchet` condition
-for whoever holds the floor's role (passed up, never the requester) and a `ratchet` flag."""
+for whoever holds the floor's role (passed up, never the requester), one more for the holder of
+each concurrence it drops (R26, contract v1.3), and a `ratchet` flag."""
 
 from __future__ import annotations
 
@@ -22,6 +23,7 @@ from owm_service.assemble import ratchet_flag, revoked_flags
 from owm_service.clock import DEMO_TZ
 from owm_service.conditions import ratchet_condition
 from owm_service.decisions import Decisions
+from owm_service.errors import Refused
 from owm_service.events import Event
 from owm_service.models import (
     Actor,
@@ -30,13 +32,15 @@ from owm_service.models import (
     Flag,
     FlagCode,
     PersonRef,
+    RerunRequest,
+    ResolveRequest,
 )
 from owm_service.org import Org
 from owm_service.ratchet import (
     FloorState,
     Level,
     below,
-    confirmer,
+    confirmers,
     floor_from,
     floor_of,
     in_force,
@@ -75,6 +79,11 @@ def michael(org: Org) -> Actor:
 @pytest.fixture
 def dealdesk(org: Org) -> Actor:
     return Sessions(org).open_agent("AGT-DEALDESK", "EMP-101")[1]
+
+
+@pytest.fixture
+def elena(org: Org) -> Actor:
+    return Sessions(org).open_person("EMP-402")[1]
 
 
 @pytest.fixture
@@ -341,12 +350,14 @@ def test_dropping_a_concurrence_is_below_the_floor(
     v = ask(org, sarah, "CR-9299", None, "credit")
     assert stored_level(org, v) == {"band": 2, "concurrences": [], "title": "Director of Finance"}
     did = first.decision_id
-    (c,) = v.conditions
-    assert (c.id, c.source, c.blocking) == ("c1", "ratchet", True)
-    assert c.what == (f"Confirm the lower approval level: {did} version 1 needed the Director of "
-                      "Finance with the VP Sales concurrence; this decision's version 1 drops the "
-                      "VP Sales concurrence.")  # fmt: skip
-    assert [p.id for p in c.who] == ["EMP-402"]  # the Director of Finance (no holder above Sarah)
+    want = (f"Confirm the lower approval level: {did} version 1 needed the Director of Finance "
+            "with the VP Sales concurrence; this decision's version 1 drops the VP Sales "
+            "concurrence.")  # fmt: skip
+    # R26: the floor's band holder, then the dropped concurrence's holder, one condition each
+    assert [(c.id, c.source, c.blocking, c.what, [p.id for p in c.who]) for c in v.conditions] == [
+        ("c1", "ratchet", True, want, ["EMP-402"]),  # Elena Novak, the Director of Finance
+        ("c2", "ratchet", True, want, ["EMP-200"]),  # Michael Torres, the VP Sales
+    ]  # fmt: skip
     assert [f.text for f in v.flags] == [
         f"CR-9299 customer changed from C-1001 to C-1002 by Sarah Chen at {hhmm(at)}, after the "
         "request.",
@@ -354,6 +365,93 @@ def test_dropping_a_concurrence_is_below_the_floor(
         "concurrence.",
     ]  # fmt: skip
     assert v.floor is not None and (v.floor.level, v.floor.set_by.decision_id) == (2, did)
+
+
+def cr9299_rerun_at(
+    org: Org, sarah: Actor, monkeypatch: pytest.MonkeyPatch, limit: str
+) -> DecisionRecord:  # fmt: skip
+    """CR-9299: $650,000 for Acme (Strategic), so the Director of Finance with the VP Sales
+    concurrence. Sarah, the requester, then edits the ERP to `limit` and asks for a re-run:
+    version 2. The kernel replays CR-9201's answer; the level comes from the row."""
+    row = org.sor.row("credit_requests", "CR-9201")
+    assert row is not None
+    kr = kernel_on(org, "credit", "CR-9201")
+    monkeypatch.setattr(_lab, "decide", lambda kind, **kw: kr)
+    with org.log.transaction() as tx:
+        org.sor.insert(tx, "credit_requests", {**row, "request_id": "CR-9299",
+                       "requested_limit_usd": "650000"}, actor=dump(sarah),
+                       at=org.clock.now())  # fmt: skip
+    v1 = ask(org, sarah, "CR-9299", None, "credit")
+    assert v1.conditions == []
+    edit(org, sarah, "credit_requests", "CR-9299", {"requested_limit_usd": limit})
+    return Decisions(org).rerun(sarah, v1.decision_id, RerunRequest(decision_version=1))
+
+
+def resolve(org: Org, actor: Actor, did: str, cid: str, version: int) -> DecisionRecord:
+    body = ResolveRequest(decision_version=version, resolution="confirmed_lower_level")
+    return Decisions(org).resolve(actor, did, cid, body)
+
+
+def open_ratchets(rec: DecisionRecord) -> list[tuple[str, list[str], int]]:
+    return [(c.id, [p.id for p in c.who], c.opened_in_version) for c in rec.conditions
+            if c.source == "ratchet" and c.resolved is None]  # fmt: skip
+
+
+def test_a_dropped_concurrence_is_confirmed_by_its_holder_too(
+    org: Org, sarah: Actor, michael: Actor, elena: Actor, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """R26 (contract v1.3): at $450,000 the re-run is in the Finance Manager's band and drops the
+    VP Sales concurrence. One ratchet condition per confirmer: Elena Novak for the floor's band,
+    Michael Torres for the concurrence. Each resolves only their own, each resolution re-runs,
+    and the floor drops to version 2's level only once both have confirmed."""
+    v2 = cr9299_rerun_at(org, sarah, monkeypatch, "450000")
+    did = v2.decision_id
+    assert open_ratchets(v2) == [("c1", ["EMP-402"], 2), ("c2", ["EMP-200"], 2)]
+    assert v2.conditions[0].what == v2.conditions[1].what
+    assert v2.conditions[0].what.startswith(
+        "Confirm the lower approval level: version 1 needed the Director of Finance with the VP "
+        "Sales concurrence; version 2 ")  # fmt: skip
+    for who, cid in ((michael, "c1"), (elena, "c2"), (sarah, "c1")):  # only their own; never Sarah
+        with pytest.raises(Refused):
+            resolve(org, who, did, cid, 2)
+    v3 = resolve(org, elena, did, "c1", 2)
+    assert open_ratchets(v3) == [("c2", ["EMP-200"], 2)]  # the same condition, still open
+    c1 = v3.conditions[0]
+    assert (c1.id, c1.resolved and c1.resolved.by.id) == ("c1", "EMP-402")  # kept as history
+    assert v3.state == "not_ready" and "ratchet" in {f.code for f in v3.flags}
+    floor = floor_of(org, "CR-9299")
+    assert floor is not None and floor.level == Level(2, frozenset({VP}), "Director of Finance")
+    assert v3.previous is not None and v3.previous.what_changed == (
+        "Elena Novak confirmed the lower approval level; the lower level still needs Michael "
+        "Torres to confirm it.")  # fmt: skip
+    v4 = resolve(org, michael, did, "c2", 3)
+    assert open_ratchets(v4) == [] and "ratchet" not in {f.code for f in v4.flags}
+    assert [(c.id, c.resolved and c.resolved.rerun_version) for c in v4.conditions] == [
+        ("c1", 3), ("c2", 4)]  # fmt: skip
+    floor = floor_of(org, "CR-9299")
+    assert floor is not None and floor.confirmed_by is not None
+    assert (floor.level, floor.set_by, floor.confirmed_by.id) == (
+        Level(1, NONE, "Finance Manager"), (did, 2), "EMP-200")  # fmt: skip
+    assert v4.floor is not None and v4.floor.level == 1
+    assert v4.previous is not None and v4.previous.what_changed == (
+        "Michael Torres confirmed the lower approval level; no conditions remain.")  # fmt: skip
+
+
+def test_a_confirmation_counts_only_for_its_own_round(
+    org: Org, sarah: Actor, elena: Actor, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Elena confirms $450,000, then Sarah edits the ERP to $90,000 and asks for a re-run. That's
+    another level, so a new round opens and both confirm again, under new ids; c2, never
+    confirmed, is gone, and c1 stays as history."""
+    v2 = cr9299_rerun_at(org, sarah, monkeypatch, "450000")
+    did = v2.decision_id
+    resolve(org, elena, did, "c1", 2)
+    edit(org, sarah, "credit_requests", "CR-9299", {"requested_limit_usd": "90000"})
+    v4 = Decisions(org).rerun(sarah, did, RerunRequest(decision_version=3))
+    assert open_ratchets(v4) == [("c3", ["EMP-402"], 4), ("c4", ["EMP-200"], 4)]
+    assert [c.id for c in v4.conditions] == ["c1", "c3", "c4"]
+    assert v4.previous is not None and v4.previous.what_changed == (
+        "Sarah Chen asked for a re-run; the level is still below the floor.")  # fmt: skip
 
 
 def test_ratchet_wording() -> None:
@@ -489,13 +587,57 @@ def test_a_confirmation_lowers_the_floor_wherever_it_is_logged() -> None:
     assert floor_from([v1, v2, elsewhere], "DR-1") == held
 
 
-def test_confirmer_passes_up(org: Org) -> None:
-    assert confirmer(org, "EMP-200", Level(1, frozenset(), "VP Sales")).id == "EMP-300"
-    assert confirmer(org, "EMP-101", Level(1, NONE, VP)).id == "EMP-200"
-    assert confirmer(org, "EMP-101", Level(2, NONE, CRO)).id == "EMP-300"
-    assert confirmer(org, "EMP-101", Level(1, NONE, VP)).model_dump() == MICHAEL
+def test_a_round_lowers_the_floor_only_once_every_confirmer_has_confirmed() -> None:
+    """R26: a version below the floor opens one ratchet condition per confirmer (a round). The
+    floor drops to that version's level only when every condition the round opened is confirmed,
+    wherever the resolutions are logged; a confirmation in an unfinished round lowers nothing."""
+    dof_vp, fm = Level(2, frozenset({VP}), "Director of Finance"), Level(1, NONE, "Finance Manager")
+    pair: tuple[Cond, ...] = (("c1", "ratchet", 2), ("c2", "ratchet", 2))
+    v1, v2 = _versioned(1, "DEC-0001", 1, dof_vp), _versioned(2, "DEC-0001", 2, fm, pair)
+    one = _resolved(3, "DEC-0001", "c1", "confirmed_lower_level")
+    v3 = _versioned(4, "DEC-0001", 3, fm, pair)  # c1 resolved, c2 still open
+    two = _resolved(5, "DEC-0001", "c2", "confirmed_lower_level")
+    v4 = _versioned(6, "DEC-0001", 4, fm, pair)
+    held = FloorState("DR-1", dof_vp, ("DEC-0001", 1), None)
+    assert floor_from([v1, v2, one, v3], "DR-1") == floor_from([v1, v2, v3, one], "DR-1") == held
+    lowered = FloorState("DR-1", fm, ("DEC-0001", 2), PersonRef.model_validate(MICHAEL))
+    assert floor_from([v1, v2, one, v3, two, v4], "DR-1") == lowered
+    assert floor_from([v1, v2, one, v3, v4, two], "DR-1") == lowered
+    # a new round at another level: c1's confirmation doesn't count towards it
+    ae = Level(0, NONE, AE)
+    fresh: tuple[Cond, ...] = (("c1", "ratchet", 2), ("c3", "ratchet", 4), ("c4", "ratchet", 4))
+    v4 = _versioned(6, "DEC-0001", 4, ae, fresh)
+    c4 = _resolved(7, "DEC-0001", "c4", "confirmed_lower_level")
+    assert floor_from([v1, v2, one, v3, v4, c4], "DR-1") == held
+
+
+def ids(people: list[PersonRef]) -> list[str]:
+    return [p.id for p in people]
+
+
+def test_confirmers_pass_up(org: Org) -> None:
+    ae = Level(0, NONE, AE)
+    assert ids(confirmers(org, "EMP-200", Level(1, frozenset(), "VP Sales"), ae)) == ["EMP-300"]
+    assert ids(confirmers(org, "EMP-101", Level(1, NONE, VP), ae)) == ["EMP-200"]
+    assert ids(confirmers(org, "EMP-101", Level(2, NONE, CRO), ae)) == ["EMP-300"]
+    assert [p.model_dump() for p in confirmers(org, "EMP-101", Level(1, NONE, VP), ae)] == [MICHAEL]
     with pytest.raises(ValueError, match="requester"):  # nobody above the CRO: never the requester
-        confirmer(org, "EMP-300", Level(2, NONE, CRO))
+        confirmers(org, "EMP-300", Level(2, NONE, CRO), ae)
+
+
+def test_confirmers_add_each_dropped_concurrence(org: Org) -> None:
+    """R26 (contract v1.3): the floor's band holder, then the holder of each concurrence the floor
+    required and the level drops, by title; a concurrence the level keeps asks nobody. Each is
+    passed up the same way, and one person never confirms twice: that fails closed."""
+    dof, fm = "Director of Finance", "Finance Manager"
+    floor = Level(2, frozenset({VP, CRO}), dof)
+    assert ids(confirmers(org, "EMP-101", floor, Level(1, NONE, fm))) == [
+        "EMP-402", "EMP-300", "EMP-200"]  # fmt: skip
+    assert ids(confirmers(org, "EMP-101", floor, Level(2, frozenset({CRO}), dof))) == [
+        "EMP-402", "EMP-200"]  # fmt: skip
+    # Michael asks: the VP Sales concurrence passes up to David Morgan, who holds the CRO's too
+    with pytest.raises(ValueError, match="never the same person"):
+        confirmers(org, "EMP-200", floor, Level(1, NONE, fm))
 
 
 # -- self-sourced basis ---------------------------------------------------------------------------
