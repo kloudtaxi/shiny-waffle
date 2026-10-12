@@ -1,9 +1,9 @@
 """The HTTP surface (spec §11): FastAPI over the core, with the contract's status codes (§3.4).
 
 - **Contract routes, under `/api/v1`.** Every one needs a session: `Authorization: Bearer
-  <token>`. A missing, unknown, closed or expired token is 401, never a default user. Slice 1
-  serves `GET /me`, the decision and clearance routes and `GET /approvals`; the register and
-  procedure routes arrive in Task 19.
+  <token>`. A missing, unknown, closed or expired token is 401, never a default user. It serves
+  `GET /me`, the decision and clearance routes, `GET /approvals` and, for the register, the
+  entries and their text, the settings, the change queue and the procedures (spec §11).
 - **Lab-only routes, under `/lab`,** sit visibly outside the contract and are mounted only when
   `OWM_LAB_ROUTES` is on: demo sign-in, systems-of-record edits and inserts, the demo adapter,
   the clock and a reset. Anyone who can reach them can sign in as anyone, so a deployment keeps
@@ -13,21 +13,22 @@
 Responses are the contract's models, serialised with `exclude_unset` (ruling R13): an absent
 `?:` field stays absent and a required nullable one is null. Errors map as follows; anything else
 is a bug and surfaces as a 500, with no catch-all to hide it:
-- `Refused` → its status (403 RR-1; 409 DC-5, DC-6 or a moved write; 422 any other rule), body
-  `{"refusals": [...]}`;
+- `Refused` → its status (403 RR-1; 409 DC-5, DC-6, RR-13 or a moved write; 422 any other rule),
+  body `{"refusals": [...]}`;
 - `NotFound` → 404 and `Unauthenticated` → 401, body `{"error", "detail"}`;
 - `CannotDecide` and `JevUnavailable` → 503, body `{"error": "cannot_decide", "detail"}`;
 - a body that fails validation, an extra field such as `as_of` included → FastAPI's own 422.
 A clearance or redemption refusal is an answer, so it is 200.
 
-One `Service` per app holds the org and the core over it; `/lab/reset` archives the org's event
-log and swaps in a fresh org. The core never imports FastAPI; this module is its only HTTP user.
+The register and procedure routes live in `app_register.py`, the `Service` and the session
+dependencies in `service.py`. One `Service` per app holds the org and the core over it;
+`/lab/reset` archives the org's event log and swaps in a fresh org. The core never imports
+FastAPI; the HTTP modules are its only users.
 """
 
 from __future__ import annotations
 
-import threading
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Annotated, Any, Final
 
 from fastapi import APIRouter, Body, Depends, FastAPI, Header, HTTPException, Request
@@ -35,13 +36,11 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict
 
 from . import _lab, approvals, history, lab_adapter
-from .clearance import Clearances
+from .app_register import router as register_router
 from .config import Settings, load_settings
-from .decisions import Decisions
 from .errors import CannotDecide, NotFound, Refused, Unauthenticated
 from .models import (
     Actor,
-    AgentActor,
     ApprovalsView,
     ClearanceAttempt,
     ClearanceRequest,
@@ -54,7 +53,6 @@ from .models import (
     MeResponse,
     NotCleared,
     NotRedeemed,
-    PersonActor,
     Redeemed,
     RedeemRequest,
     Refusal,
@@ -65,63 +63,10 @@ from .models import (
     ResolveRequest,
     StepRequest,
 )
-from .org import Org
-from .sessions import Sessions
+from .service import Me, Service, Svc, bearer, session
 from .sor import KEYS
 
 LAB_ACTOR: Final[dict[str, Any]] = {"kind": "system", "id": "lab"}
-
-
-class Service:
-    """One organisation and the core over it. `reset` archives the event log and starts afresh:
-    a new `Org`, so no cache (sessions, the overlay, the register) outlives the old log."""
-
-    org: Org
-    sessions: Sessions
-    decisions: Decisions
-    clearances: Clearances
-
-    def __init__(self, settings: Settings) -> None:
-        self.settings = settings
-        self._lock = threading.Lock()
-        self._open()
-
-    def _open(self) -> None:
-        self.org = Org(self.settings)
-        self.sessions = Sessions(self.org)
-        self.decisions = Decisions(self.org)
-        self.clearances = Clearances(self.org, self.decisions, self.sessions.mandates)
-
-    def reset(self) -> str:
-        """Rename the log aside with a timestamp, open a fresh org; the archived file's name.
-        A request already running when this happens may still be using the old org."""
-        with self._lock:
-            archived = self.org.log.archive(datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ"))
-            self._open()
-        return archived.name
-
-
-# -- dependencies -------------------------------------------------------------------------------
-def _service(request: Request) -> Service:
-    svc: Service = request.app.state.owm
-    return svc
-
-
-def _bearer(authorization: str | None) -> str | None:
-    """The token from `Authorization: Bearer <token>`; None for anything else."""
-    scheme, _, token = (authorization or "").partition(" ")
-    return (token.strip() or None) if scheme.lower() == "bearer" else None
-
-
-def _session(
-    request: Request, authorization: Annotated[str | None, Header()] = None
-) -> PersonActor | AgentActor:
-    """The session's actor (spec §8.1); Unauthenticated (401) without a valid token."""
-    return _service(request).sessions.resolve(_bearer(authorization))
-
-
-Svc = Annotated[Service, Depends(_service)]
-Me = Annotated[PersonActor | AgentActor, Depends(_session)]
 
 
 # -- health -------------------------------------------------------------------------------------
@@ -134,7 +79,7 @@ def healthz() -> dict[str, str]:
 
 
 # -- the contract, under /api/v1 ----------------------------------------------------------------
-api = APIRouter(prefix="/api/v1", dependencies=[Depends(_session)], tags=["owm-decisions"])
+api = APIRouter(prefix="/api/v1", dependencies=[Depends(session)], tags=["owm-decisions"])
 
 
 @api.get("/me", response_model_exclude_unset=True)
@@ -225,6 +170,9 @@ def work(svc: Svc, actor: Me) -> ApprovalsView:
     return approvals.view(svc.org, actor)
 
 
+api.include_router(register_router)  # the register and procedures (spec §11)
+
+
 # -- lab-only, outside the contract -------------------------------------------------------------
 class _Body(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -272,7 +220,7 @@ def close_session(
     svc: Svc, actor: Me, authorization: Annotated[str | None, Header()] = None
 ) -> None:
     """Sign out: the session's token stops working (`actor` has already checked it)."""
-    svc.sessions.close(_bearer(authorization) or "")
+    svc.sessions.close(bearer(authorization) or "")
 
 
 @lab.patch("/sor/{table}/{key}")

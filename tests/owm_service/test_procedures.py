@@ -395,7 +395,8 @@ def test_an_agents_draft_keeps_its_author(filtered: Org) -> None:
     q = RegisterQueue(filtered)
     draft = q.draft(agent(filtered), procedure(submit=False))
     assert (draft.state, draft.checks) == ("draft", [])
-    assert {p.id for p in q.waiting_on(draft.change_id)} == _support(filtered)
+    # the function that owns it, and the person the agent drafted for (EMP-101), who may dismiss it
+    assert {p.id for p in q.waiting_on(draft.change_id)} == _support(filtered) | {"EMP-101"}
     q.submit(person(filtered, "EMP-601"), draft.change_id, 17)
     q.approve(person(filtered, "EMP-300"), draft.change_id)  # David, the Executive
     v2 = get_procedure(filtered, "PROC-SLA")["versions"][1]

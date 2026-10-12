@@ -344,12 +344,8 @@ class RegisterQueue:
         self, state: str | None = None, waiting_on: str | None = None
     ) -> builtins.list[RegisterChange]:
         """Every change, by id; `state` filters by state and `waiting_on` by a person's id."""
-        streams: dict[str, builtins.list[Event]] = {}
-        for e in self.org.log.read(self.org.org_id, kinds=KINDS):
-            streams.setdefault(e.stream, []).append(e)
         out = []
-        for stream in sorted(streams):
-            c = fold(streams[stream])
+        for c in self.changes():
             if state is not None and c.state != state:
                 continue
             if waiting_on is not None and waiting_on not in {p.id for p in self._waiting(c)}:
@@ -362,16 +358,34 @@ class RegisterQueue:
         return self._waiting(self._read(change_id))
 
     def _waiting(self, c: Change) -> builtins.list[PersonRef]:
-        """A pending change waits on its approvers. An agent's draft waits on everyone in the
-        owning function, to submit or dismiss it; a person's own draft on that person."""
+        """A pending change waits on its approvers; a draft on `draft_waiting`."""
         if c.state == "pending":
             return [PersonRef.model_validate(p) for p in c.approvers]
-        if c.state != "draft" or c.proposed_by is None:
+        return self.draft_waiting(c) if c.state == "draft" else []
+
+    def draft_waiting(self, c: Change) -> builtins.list[PersonRef]:
+        """Who a draft is for: a person's own draft, that person; an agent's, everyone in the
+        owning function plus the person it drafted for, who may dismiss it (ruling R42). A draft
+        of a kind no function owns waits on that person alone."""
+        p = c.proposed_by
+        if p is None:
             return []
-        if c.proposed_by["kind"] == "person":
-            return [PersonRef.model_validate(c.proposed_by["person"])]
-        return [self.org.people.ref(e) for e, r in self.staff.rows.items()
-                if r["department"] == c.owning_function]  # fmt: skip
+        if p["kind"] == "person":
+            return [PersonRef.model_validate(p["person"])]
+        function = c.owning_function
+        out = [self.org.people.ref(e) for e, r in self.staff.rows.items()
+               if function is not None and r["department"] == function]  # fmt: skip
+        whom = p.get("on_behalf_of")
+        if whom is not None and whom["id"] not in {x.id for x in out}:
+            out.append(PersonRef.model_validate(whom))
+        return out
+
+    def changes(self) -> builtins.list[Change]:
+        """Every change folded from its events, by id (the work items read these)."""
+        streams: dict[str, builtins.list[Event]] = {}
+        for e in self.org.log.read(self.org.org_id, kinds=KINDS):
+            streams.setdefault(e.stream, []).append(e)
+        return [fold(streams[s]) for s in sorted(streams)]
 
     def _read(self, change_id: str, tx: sqlite3.Connection | None = None) -> Change:
         events = self.org.log.read(self.org.org_id, stream=_stream(change_id), tx=tx)

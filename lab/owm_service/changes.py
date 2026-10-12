@@ -147,6 +147,7 @@ class Change:
     approved_by: dict[str, Any] | None = None
     approved_at: str | None = None
     declined: dict[str, Any] | None = None
+    withdrawn: dict[str, Any] | None = None
     refused: list[dict[str, Any]] | None = None
     reminded_on: list[str] = field(default_factory=list)
 
@@ -194,6 +195,8 @@ def fold(events: Sequence[Event]) -> Change:
             c.refused = p["refusals"]
         elif e.kind == "change.declined":
             c.declined = p["declined"]
+        elif e.kind == "change.withdrawn":
+            c.withdrawn = {"by": p["by"], "at": p["at"]}
         elif e.kind == "change.reminded":
             c.reminded_on.append(p["on"])
         c.state = STATE_OF.get(e.kind, c.state)

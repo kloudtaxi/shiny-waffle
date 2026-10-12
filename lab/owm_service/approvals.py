@@ -14,7 +14,12 @@ version:
 - `decision_approval`: an approval, concurrence or claim decision not yet given or declined. Its
   `held_by` lists the version's open blocking conditions, which hold approving (DC-4);
 - `condition`: an open condition, ratchet confirmations included, waiting on its `who`.
-The register adds `register_change` and `register_draft` items in Task 19, as another source.
+The register adds two kinds, as another source (`register_items`), over every change:
+- `register_change`: a pending change, waiting on its approvers (RR-4). Its id is the change's id
+  and its `href` the change's URL. Done: approved or declined by the viewer;
+- `register_draft` (B-11): an agent's draft, waiting on everyone in the function that owns its
+  kind and on the person the agent drafted for (who may dismiss it, ruling R42); a person's own
+  draft waits on that person alone. Done: submitted or dismissed by the viewer.
 """
 
 from __future__ import annotations
@@ -24,6 +29,9 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Final
 
+from pydantic import TypeAdapter
+
+from .changes import Change, named
 from .decisions import Decisions
 from .models import (
     Actor,
@@ -40,6 +48,7 @@ from .models import (
 )
 from .org import Org
 from .prepare import principal
+from .register_queue import RegisterQueue
 from .state import decision_of, is_live, subject_id
 
 # imperative (the item's title) and present tense (its detail), by approval kind
@@ -218,5 +227,83 @@ def _action(a: DecidedAction) -> str:
     return f"a ${float(p['amount_usd']):,.2f} service credit on {p['ticket']}"
 
 
-# Task 19 adds the register's source here.
-SOURCES: Final[tuple[Source, ...]] = (decision_items,)
+# -- the register ------------------------------------------------------------------------------
+_ACTOR: Final[TypeAdapter[Actor]] = TypeAdapter(Actor)
+
+
+def register_items(org: Org, viewer: Viewer) -> tuple[list[Open], list[DoneWorkItem]]:
+    queue = RegisterQueue(org)
+    opened: list[Open] = []
+    done: list[DoneWorkItem] = []
+    for c in queue.changes():
+        if c.state == "pending":
+            item = _change_item(c)
+            opened.append(Open(item, _register_followers(c, item.waiting_on)))
+        elif c.state == "draft":
+            item = _draft_item(c, queue.draft_waiting(c))
+            opened.append(Open(item, _register_followers(c, item.waiting_on)))
+        if viewer.you is not None:
+            done += _register_done(queue, c, viewer.you)
+    return opened, done
+
+
+def _register_followers(c: Change, waiting_on: Sequence[PersonRef]) -> frozenset[str]:
+    """Whoever it waits on, its submitter, and the person who drafted it (or the agent's)."""
+    people = [*waiting_on, *c.drafters(), c.submitter()]
+    return frozenset(str(p.id if isinstance(p, PersonRef) else p) for p in people if p)
+
+
+def _change_item(c: Change) -> WorkItem:
+    assert c.submitted_by is not None and c.submitted_at is not None  # pending: submitted
+    who = c.submitted_by["name"]
+    detail = f"{who} submitted {c.what()} for the {c.owning_function} function"
+    detail += f" against register version {c.base_version}; it waits on {named(c.approvers)}."
+    return WorkItem(
+        kind="register_change", id=c.change_id, title=f"Approve {c.what()}", detail=detail,
+        raised_by=PersonActor(kind="person", person=PersonRef.model_validate(c.submitted_by)),
+        raised_at=c.submitted_at, waiting_on=[PersonRef.model_validate(p) for p in c.approvers],
+        held_by=[], href=_change_href(c.change_id),
+    )  # fmt: skip
+
+
+def _draft_item(c: Change, waiting_on: list[PersonRef]) -> WorkItem:
+    assert c.proposed_by is not None and c.proposed_at is not None  # a stored draft
+    drafter = _ACTOR.validate_python(c.proposed_by)
+    name = drafter.person.name if isinstance(drafter, PersonActor) else drafter.name
+    owner = c.owning_function or "no function (the registrar doesn't know its kind)"
+    detail = f"{name} drafted {c.what()}; {owner} owns it: submit it or dismiss it."
+    if c.checks:
+        detail += f" The rules would refuse it now ({c.checks[0]['rule']}): {c.checks[0]['detail']}"
+    return WorkItem(
+        kind="register_draft", id=c.change_id, title=f"Submit or dismiss {c.what()}",
+        detail=detail, raised_by=drafter, raised_at=c.proposed_at, waiting_on=waiting_on,
+        held_by=[], href=_change_href(c.change_id),
+    )  # fmt: skip
+
+
+def _register_done(queue: RegisterQueue, c: Change, you: str) -> list[DoneWorkItem]:
+    """What the viewer did with a change: approved or declined it (their item as an approver),
+    or submitted or dismissed a draft."""
+    out: list[DoneWorkItem] = []
+    if c.approved_by and c.approved_by["id"] == you:
+        out.append(DoneWorkItem(**_fields(_change_item(c)), result="approved",
+                                at=str(c.approved_at)))  # fmt: skip
+    if c.declined and c.declined["by"]["id"] == you:
+        out.append(DoneWorkItem(**_fields(_change_item(c)), result="declined",
+                                at=str(c.declined["at"])))  # fmt: skip
+    if c.proposed_by is not None:  # a stored draft
+        draft = _draft_item(c, queue.draft_waiting(c))
+        if c.submitted_by and c.submitted_by["id"] == you:
+            out.append(DoneWorkItem(**_fields(draft), result="submitted",
+                                    at=str(c.submitted_at)))  # fmt: skip
+        if c.withdrawn and c.submitted_by is None and c.withdrawn["by"]["id"] == you:
+            out.append(DoneWorkItem(**_fields(draft), result="dismissed",
+                                    at=str(c.withdrawn["at"])))  # fmt: skip
+    return out
+
+
+def _change_href(change_id: str) -> str:
+    return f"/api/v1/register/changes/{change_id}"
+
+
+SOURCES: Final[tuple[Source, ...]] = (decision_items, register_items)
