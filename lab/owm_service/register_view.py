@@ -15,8 +15,8 @@ own rules through `_lab` (a revocation on or before the date, a live entry in fo
   registered after the bootstrap); `differs` when its fingerprint isn't the registered one.
   `source_id` is the copy's corpus path (`documents/<file>`); the lab has no
   knowledge-foundation id.
-- `series`: entries joined by `supersedes`, oldest first. A document nothing supersedes or
-  follows isn't a series.
+- `series`: entries joined by `supersedes`, oldest first. Every entry, the mandate fixture
+  included, is in exactly one series; a document with no chain is a series of one (R48).
 - `as_known_at` is reserved and not served."""
 
 from __future__ import annotations
@@ -190,8 +190,6 @@ def _series(entries: list[RegisterEntry]) -> list[RegisterSeries]:
         groups.setdefault(find(e.doc_id), []).append(e)
     out = []
     for members in groups.values():
-        if len(members) < 2:
-            continue
         members.sort(key=lambda m: (m.effective_from, m.doc_id))
         first = members[0]
         live = [m.doc_id for m in members if m.status == "in_force"]

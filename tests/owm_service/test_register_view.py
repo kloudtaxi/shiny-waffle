@@ -49,6 +49,15 @@ def test_bootstrap_view(org: Org) -> None:
     assert sorted(c.decision_type for c in v.coverage) == ["credit", "discount", "sla"]
 
 
+def test_every_entry_is_in_exactly_one_series(org: Org) -> None:
+    v = view(org, None)
+    listed = [d for s in v.series for d in s.entries]
+    assert sorted(listed) == sorted(e.doc_id for e in v.entries)  # the mandate included
+    assert len(listed) == len(set(listed))
+    one = next(s for s in v.series if s.entries == ["MANDATE-DEALDESK-2026"])
+    assert one.in_force == "MANDATE-DEALDESK-2026"
+
+
 def test_status_as_of(org: Org) -> None:
     def status(doc: str, on: str) -> str:
         return _by_id(view(org, date.fromisoformat(on)).entries, doc).status
