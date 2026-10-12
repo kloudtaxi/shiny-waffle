@@ -105,3 +105,6 @@ test: background approvals are generated to obey the policy in force (CLAUDE.md)
 - credit 11 of 11.
 
 The edits and copies the first probe tried behave as before.
+
+**Criterion 2 is met.** After the results commit (f89673a), `scripts/owm-gate.sh` is GREEN: 863
+tests pass, ruff and mypy are clean, and `runs/` is byte-identical.
