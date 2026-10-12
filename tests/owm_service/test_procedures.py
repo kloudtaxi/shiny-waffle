@@ -253,6 +253,26 @@ def test_versions_are_numbered_in_order(org: Org) -> None:
         assert detail in r.refusals[0].detail
 
 
+def test_a_backdated_version_is_rr9(filtered: Org) -> None:
+    """Ruling R52: no backdating against the register's clock (the service clock's date), in a
+    draft's checks, at submit and at approval, in the registrar's words."""
+    q = RegisterQueue(filtered)
+    hannah = person(filtered, "EMP-601")
+    early = procedure(effective_from="2026-09-01")
+    detail = "effective 2026-09-01, before the register's clock 2026-09-23"
+    r = refused(lambda: q.submit_new(hannah, early))
+    assert (r.status, r.refusals[0].rule, r.refusals[0].detail) == (422, "RR-9", detail)
+    draft = q.draft(agent(filtered), early.model_copy(update={"submit": False}))
+    assert [(c.rule, c.detail) for c in draft.checks or []] == [("RR-9", detail)]
+    pending = q.submit_new(hannah, procedure())  # from 2026-10-06, submitted on 2026-09-23
+    later(filtered)  # approved on 2026-10-07: now backdated
+    r = refused(lambda: q.approve(person(filtered, "EMP-602"), pending.change_id))
+    assert (r.refusals[0].rule, r.refusals[0].detail) == (
+        "RR-9", "effective 2026-10-06, before the register's clock 2026-10-07")  # fmt: skip
+    assert q.get(pending.change_id).state == "refused"
+    assert [v["version"] for v in get_procedure(filtered, "PROC-SLA")["versions"]] == [1]
+
+
 def test_a_procedure_body_takes_its_own_fields() -> None:
     with pytest.raises(ValueError, match="needs proc_id"):
         ChangeBody.model_validate({"action": "register", "kind": "procedure", "base_version": 17,

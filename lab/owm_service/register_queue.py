@@ -51,12 +51,12 @@ what a change touches, `overlap` and the reviewer's diff.
 
 **A procedure version** (kind `procedure`, contract §4.5) takes the same steps and differs at three
 seams: `_function` (its owner comes from its decision type), `_run` (its rules are
-`procedures.check`: the people rules for the decision type's owner, RR-5 on its numbering, and ADM
-through the lab's procedure registrar, instead of `registrar.apply`) and the approval (scoped RR-13
-doesn't apply, and it writes `procedure.approved`, never `change.approved`, so the document
-register's replay and scoped RR-13 never see it; ruling R50). The register's version doesn't move,
-so a procedure change's `base_version` is recorded and not compared: the next-version rule is its
-stale check.
+`procedures.check`: the people rules for the decision type's owner, RR-5 on its numbering, RR-9
+(ruling R52) and ADM through the lab's procedure registrar, instead of `registrar.apply`) and the
+approval (scoped RR-13 doesn't apply, and it writes `procedure.approved`, never `change.approved`,
+so the document register's replay and scoped RR-13 never see it; ruling R50). The register's
+version doesn't move, so a procedure change's `base_version` is recorded and not compared: the
+next-version rule is its stale check.
 """
 
 from __future__ import annotations

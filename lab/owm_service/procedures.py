@@ -13,6 +13,8 @@ two steps. `check` is its rules, in the registrar's order:
    the governed runner's highest-version rule picks among one procedure's versions); the next
    version number, which is also a procedure's stale check, since a procedure approval never
    moves the register's version (ruling R50); RR-7: a window that doesn't end before it starts;
+   RR-9: no backdating, an `effective_from` on or after the register's clock (the service
+   clock's date; ruling R52), so a new version never changes what a past decision ran;
 4. ADM: the lab's procedure registrar (`build_procedures.register`), given the change's report as
    a temp file, refuses no report, a report for another text, or a verdict that isn't admitted,
    in its own words. Then a text that declares no `registered_kinds` is refused too: the gate
@@ -98,6 +100,8 @@ def check(
     start, end = fields["effective_from"], fields["effective_to"]
     if end is not None and date.fromisoformat(end) < date.fromisoformat(start):
         raise _no("RR-7", "the window ends before it starts")
+    if date.fromisoformat(start) < today:  # ruling R52
+        raise _no("RR-9", f"effective {start}, before the register's clock {today}")
     file = file_name(pid, n)
     report = fields.get("report")
     if report is None:
