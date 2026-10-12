@@ -28,7 +28,7 @@ Every request and ticket in the demo corpus was asked once, in replay mode, on a
 | Kind | Decides | 503 `cannot_decide` |
 |---|---|---|
 | Discount | **26 of 26** (DR-7001 to DR-7024, DR-8104, DR-9001) | none |
-| Credit | **1 of 11** (CR-9201) | the other 10 |
+| Credit | **11 of 11** since `runs/2026-10-12-owm-credit-recordings/` (1 of 11 before it) | none |
 | SLA | **10 of 10** | none |
 
 - **Edits mostly replay.**
@@ -40,12 +40,13 @@ Every request and ticket in the demo corpus was asked once, in replay mode, on a
 - **What misses:**
   - DR-9001 moved to another customer (CRM-3001);
   - a request the CRM doesn't hold (DR-9999 with submitted figures);
-  - 10 of the 11 credit requests;
+  - 10 of the 11 credit requests, until they were recorded with one live call (the run linked above);
   - after approving a register entry that decisions read (§5 below).
 - **For a demo:**
   - discount and SLA are safe on the demo data, Sarah's edit to 8% included;
-  - keep credit to CR-9201, or record the other ten once;
-  - recording needs a live Jev run under a spend cap the user agrees in advance. After that they replay at $0.
+  - credit is safe too, now that the other ten are recorded. One live call covered them, because the kernel's only
+    credit question reads the justification text, and all ten say "Order growth";
+  - a credit request with a new justification text would still need a recording.
 
 ## After the build (as first written)
 
@@ -71,7 +72,7 @@ Every request and ticket in the demo corpus was asked once, in replay mode, on a
 | **Gap candidate: a second SLA payment** | After S36's $4,200 credit is issued, a new decision on SR-39385 offers another $2,100, because the cap counts that ticket's own credit. Only the service's `spent` guard stops it. `test_spent.py` pins the current behaviour, so a kernel fix will show up there | Log it on the Ledger as a kernel/truth gap |
 | **Ledger updates for G-45 and G-46** | The plan's Task 21 appends "service implementation landed" to their logs, using a pinned `ArtifactData` update that only appends | Do it when the branch is merged, so the log can cite a commit on `main` |
 | **Merge** | The branch is complete | Done: merged and pushed (f59d710) |
-| **Record the other 10 credit requests** | Only CR-9201 replays at the demo clock (see the coverage section above) | A one-off live Jev run under an agreed cap, then $0 replays |
+| **Record the other 10 credit requests** | Only CR-9201 replayed at the demo clock | Done: one live call, cap 150 (`runs/2026-10-12-owm-credit-recordings/`) |
 
 ## 2. For the garbanzo session (done: delivered and answered, see the update above)
 

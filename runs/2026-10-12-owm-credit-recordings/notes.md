@@ -1,7 +1,10 @@
 # Recording the credit requests the OWM service can't replay (2026-10-12)
 
-> **Status: pre-registered, before any live call.** Results are appended below this plan. The plan
-> itself isn't edited after this commit.
+> **Status: done. All 11 credit requests now replay, from 1 live call (414 tokens).**
+> - One recording covers all ten. The credit kernel asks Jev one question per request, what it
+>   relies on, from its justification text. All ten background requests say "Order growth".
+> - **Spend:** one call, 372 tokens in and 42 out: a fraction of a cent.
+> - The pre-registered plan follows unchanged, then the results.
 
 ## Why
 
@@ -61,3 +64,44 @@ The user approved one capped live run to record them, so they replay at $0 from 
 
 The outcomes are recorded, not graded. These are background requests with no scenario or answer
 key, and nothing here is scored.
+
+---
+
+## Results (appended after the run)
+
+**The run** used live Jev with a cap of 150, from a fresh state at the demo clock.
+- **Live calls: 1 of 150.** The call was the `relies` question for CR-7001, answered "standard"
+  with confidence 1.0, in 239 ms.
+- The other nine requests send the same state, `{"request": {"justification": "Order growth"}}`,
+  so they hit that answer without another call.
+- The file is `owm-credit-jev-calls.jsonl`. It's the engine's record, copied unchanged.
+
+**A counting slip during the run.**
+- `record.py`'s live-call counter read `<state>/jev-calls.jsonl`, but the engine writes to
+  `<state>/<org>/jev-calls.jsonl`. So during the run it printed 0 calls for every request.
+- The engine's own file is the true count: one call.
+- The counter was fixed after the run, in `record.py` as committed. The outcomes weren't affected.
+
+**Outcomes** (recorded, not graded):
+
+| Request | Status on the CRM | The OWM's outcome |
+|---|---|---|
+| CR-7001, CR-7002, CR-7003, CR-7005, CR-7006, CR-7007 | Approved | APPROVE_WITH_AUTHORIZATION |
+| CR-7004, CR-7008, CR-7009, CR-7010 | Declined | REJECT_OR_ESCALATE |
+
+The outcomes line up with the requests' historical statuses in all ten. That's an observation, not a
+test: background approvals are generated to obey the policy in force (CLAUDE.md).
+
+**The check** ran in replay mode on a fresh state, through `record.py check`.
+- All 11 credit requests decide when Sarah Chen (EMP-101) asks, and again when Priya Shah (EMP-401)
+  asks.
+- Before this file existed, the same check gave a 503 for all ten, each with the same missing hash
+  (`b2ff71f21a60`).
+- **Criterion 1 is met.**
+
+**Coverage at the demo clock is now:**
+- discount 26 of 26;
+- SLA 10 of 10;
+- credit 11 of 11.
+
+The edits and copies the first probe tried behave as before.
