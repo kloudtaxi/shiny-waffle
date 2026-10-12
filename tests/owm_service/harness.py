@@ -204,6 +204,9 @@ CREDIT: list[str] = DECISIONS["credit"]  # S26-S35
 SLA: list[str] = DECISIONS["sla"]  # S36-S45
 ALL: list[str] = DISCOUNT + CREDIT + SLA
 SLA_ASKER = "EMP-602"  # Marcus Adeyemi, Director of Customer Support, asks every SLA question
+# SLA scenarios with a deadline after the default clock, and a clock after their latest (R41)
+LATE_DEADLINES = frozenset({"S40", "S44"})
+AFTER_LATE_DEADLINES = "2026-10-01T09:00:00-05:00"
 HARNESS: dict[str, Any] = {"kind": "system", "id": "harness"}  # who seeds a scenario's row
 # the committed records each kind's kernel part is held to, and the fields compared
 # (`runs/2026-10-04-specs-as-data/check_equivalence.py`'s lists; discount: experiment 4 v3's rows)
@@ -232,12 +235,21 @@ def expected(sid: str) -> dict[str, Any]:
     return dict(scenario(sid).expected)
 
 
+def clock_for(sid: str) -> str:
+    """The clock a scenario is asked at: its `decided_at` (S45); for an SLA scenario without one,
+    a time after every deadline on its ticket (spec §10, ruling R41): the service's default, except
+    S40 and S44, whose claim duties fall due on 2026-09-27 and 2026-09-29; else the default."""
+    at = scenario(sid).decided_at
+    if at:
+        return str(at.isoformat())
+    return AFTER_LATE_DEADLINES if sid in LATE_DEADLINES else DEFAULT_CLOCK
+
+
 def scenario_settings(sid: str, tmp: Path) -> Settings:
     """A fresh org's settings for the scenario: its own state dir, its corpus (SLA: `base`), and
-    the clock at the scenario's `decided_at` (S45), else the service's default."""
-    at = scenario(sid).decided_at
+    its clock (`clock_for`)."""
     return load_settings({"OWM_STATE_DIR": str(tmp / "state"), "OWM_CORPUS": corpus(sid),
-                          "OWM_CLOCK": at.isoformat() if at else DEFAULT_CLOCK})  # fmt: skip
+                          "OWM_CLOCK": clock_for(sid)})  # fmt: skip
 
 
 def record_of(sid: str) -> dict[str, str]:

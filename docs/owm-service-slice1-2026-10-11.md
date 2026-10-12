@@ -12,7 +12,7 @@ are the only code that reads the lab's truth; the service under `lab/owm_service
 
 | §12.2 | What it checks | Result |
 |---|---|---|
-| 1 | **All 42 decision scenarios** (22 discount, 10 credit, 10 SLA). Each gets a fresh org with its corpus, its clock and its request row seeded through the systems-of-record overlay. The requester asks with the scenario's `submitted`; Marcus Adeyemi asks the SLA ones. The kernel's record for version 1, as the service stored it, equals the reference (`governed.decide` called directly) on every key but `scenario`. It also equals the committed record on the fields `check_equivalence` compares: experiment 4 v3 for discount, experiment 5 for credit, experiment 6 for SLA | **42/42** |
+| 1 | **All 42 decision scenarios** (22 discount, 10 credit, 10 SLA). Each gets a fresh org with its corpus, its clock (S45's `decided_at`; after every deadline on the ticket for the other SLA scenarios) and its request row seeded through the systems-of-record overlay. The requester asks with the scenario's `submitted`; Marcus Adeyemi asks the SLA ones. The kernel's record for version 1, as the service stored it, equals the reference (`governed.decide` called directly) on every key but `scenario`. It also equals the committed record on the fields `check_equivalence` compares: experiment 4 v3 for discount, experiment 5 for credit, experiment 6 for SLA | **42/42** |
 | 2 | **Input conflicts** equal the oracle's on the 14 scenarios whose `expected:` lists them: S22 `requested_discount`, S23 `request_date`, S24 `status`, S35 `requested_limit_usd`, and 10 with none. Each conflict names the requester and blocks | **14/14** (and the count, 14, is pinned) |
 | 2 | **Approvals and actions** match the truth: the discount approver by person id; the credit approvers as `(id, kind)`; for an SLA credit owed, the claim decision by the `decide_claim` holder and the credit's expected actor the `issue_memo` holder. Actions are decided exactly when the outcome clears, with the row's figures (the SLA amount equals the truth's `credit_usd`) | **42/42**. Version 1's gated outcome equals the truth's on all 42, so approvals were compared on every scenario |
 | 3a | An `as_of` in the body is refused with 422 at the model and at the HTTP level, and nothing is decided. S23 then decides on the CRM's 2026-09-23 under PRICING-POLICY-2026, with Michael Torres as approver | pass |
@@ -38,15 +38,16 @@ skips and the other 106 run.
   payment** (the action is executed once per subject). This is pinned in the test. It's a kernel
   point for a later run, not a service defect.
 - **Two SLA claim deadlines fall after the demo clock (S40, S44).** The nine SLA scenarios without
-  a `decided_at` are asked at the service's default clock, 2026-09-23 09:00 CT. The SLA spec reads
-  `decided_at` only against the root-cause deadline (`sla.yaml` lines 144 and 150), and none is
-  pending on those nine. So the clock decides exactly as `decided_at: None` does, and the 42/42
-  comparison confirms it. But not every deadline has passed on 2026-09-23:
+  a `decided_at` are asked at a clock after every deadline on their ticket (spec §10), so the clock
+  decides exactly as `decided_at: None` ("after all events") does. The test proves it: every
+  obligation falls due before the decision on all nine. Seven are asked at the service's default
+  clock, 2026-09-23 09:00 CT. S40 and S44 are asked at 2026-10-01 09:00 CT, because the default
+  clock comes before some of their deadlines:
   - S40's claim decision and credit memo are due 2026-09-27;
   - S44's claim decision is due 2026-09-29.
 
-  They are outputs, not inputs, and the test pins exactly those two. In the demo, those duties
-  show as still open.
+  The 42/42 comparison holds at those clocks. On the demo clock (2026-09-23), those duties show as
+  still open.
 
 ## 2. What it lets us say (spec §1)
 
