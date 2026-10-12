@@ -149,6 +149,8 @@ class Change:
     declined: dict[str, Any] | None = None
     withdrawn: dict[str, Any] | None = None
     refused: list[dict[str, Any]] | None = None
+    refused_by: dict[str, Any] | None = None  # the approver whose approval was refused
+    refused_at: str | None = None
     reminded_on: list[str] = field(default_factory=list)
 
     def submitter(self) -> str | None:
@@ -193,6 +195,8 @@ def fold(events: Sequence[Event]) -> Change:
             c.approved_by, c.approved_at = p["approved_by"], p["approved_at"]
         elif e.kind == "change.refused":
             c.refused = p["refusals"]
+            who = (e.actor or {}).get("person")  # an agent never reaches an approval (RR-2)
+            c.refused_by, c.refused_at = who, e.at.isoformat()
         elif e.kind == "change.declined":
             c.declined = p["declined"]
         elif e.kind == "change.withdrawn":

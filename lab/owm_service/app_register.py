@@ -17,13 +17,13 @@ from .changes import ChangeBody
 from .models import (
     Actor,
     ChangeState,
+    PersonActor,
     RegisterChange,
     RegisterChangeRequest,
     RegisterEntry,
     RegisterSettings,
     RegisterView,
 )
-from .prepare import principal
 from .service import Me, Svc
 
 router = APIRouter()
@@ -133,12 +133,11 @@ def propose_change(svc: Svc, actor: Me, body: ChangeRequest) -> RegisterChange:
 def list_changes(
     svc: Svc, actor: Me, state: ChangeState | None = None, waiting_on: Literal["me"] | None = None
 ) -> list[RegisterChange]:
-    """`waiting_on=me`: the changes waiting on the session's person (an agent's: the person it
-    acts for)."""
+    """`waiting_on=me`: the changes waiting on the session's person. Nothing waits on an agent
+    and an agent takes no register step (RR-2), so an agent's list is empty, as in /approvals."""
     who = None
     if waiting_on is not None:
-        p = principal(actor)
-        who = p.id if p else ""
+        who = actor.person.id if isinstance(actor, PersonActor) else ""
     return svc.register.list(state=state, waiting_on=who)
 
 

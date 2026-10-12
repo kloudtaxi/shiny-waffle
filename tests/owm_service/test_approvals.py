@@ -9,8 +9,11 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
+
 from owm_service import approvals
 from owm_service.decisions import Decisions
+from owm_service.errors import Refused
 from owm_service.models import (
     Actor,
     ApprovalsView,
@@ -20,6 +23,7 @@ from owm_service.models import (
     StepRequest,
 )
 from owm_service.org import Org
+from owm_service.register_queue import RegisterQueue
 from owm_service.sessions import Sessions
 
 CONFIRM = ResolveRequest(decision_version=1, resolution="confirmed_record")
@@ -164,3 +168,20 @@ def test_a_closed_decision_waits_on_nobody(org: Org) -> None:
     assert approvals.view(org, sarah).waiting_on_others == []
     (done,) = approvals.view(org, michael).done
     assert (done.kind, done.result) == ("decision_approval", "declined")
+
+
+def test_a_change_refused_at_approval_is_done_for_that_approver(org: Org) -> None:
+    from .test_register_queue import credit
+
+    priya, elena = person(org, "EMP-401"), person(org, "EMP-402")
+    q = RegisterQueue(org)
+    first = q.submit_new(priya, credit())
+    second = q.submit_new(priya, credit(text=(credit().text or "") + "\nReviewed annually.\n"))
+    q.approve(elena, first.change_id)
+    with pytest.raises(Refused):
+        q.approve(elena, second.change_id)  # RR-13: the register moved since it was submitted
+    view = approvals.view(org, elena)
+    assert second.change_id not in [i.id for i in view.waiting_on_you]
+    results = {i.id: i.result for i in view.done if i.kind == "register_change"}
+    assert results == {first.change_id: "approved", second.change_id: "refused"}
+    assert approvals.view(org, priya).done == []  # the submitter did nothing

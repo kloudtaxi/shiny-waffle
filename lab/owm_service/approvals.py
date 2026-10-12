@@ -291,6 +291,9 @@ def _register_done(queue: RegisterQueue, c: Change, you: str) -> list[DoneWorkIt
     if c.declined and c.declined["by"]["id"] == you:
         out.append(DoneWorkItem(**_fields(_change_item(c)), result="declined",
                                 at=str(c.declined["at"])))  # fmt: skip
+    if c.refused_by and c.refused_by["id"] == you:  # any rule refused at their approval
+        out.append(DoneWorkItem(**_fields(_change_item(c)), result="refused",
+                                at=str(c.refused_at)))  # fmt: skip
     if c.proposed_by is not None:  # a stored draft
         draft = _draft_item(c, queue.draft_waiting(c))
         if c.submitted_by and c.submitted_by["id"] == you:

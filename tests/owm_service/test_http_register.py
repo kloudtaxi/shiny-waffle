@@ -117,6 +117,28 @@ def test_text_is_the_approved_text_byte_for_byte(client: TestClient) -> None:
     assert t.content == (b.text or "").encode()
 
 
+def test_text_with_crlf_is_returned_byte_for_byte(client: TestClient) -> None:
+    priya, elena = person(client, "EMP-401"), person(client, "EMP-402")
+    b = credit()
+    b = b.model_copy(update={"text": (b.text or "").replace("\n", "\r\n")})
+    assert b.text and "\r\n" in b.text
+    made = post(client, priya, b)
+    r = client.post(f"/api/v1/register/changes/{made['change_id']}/approve", headers=elena)
+    assert r.status_code == 200 and r.json()["state"] == "approved", r.text
+    t = client.get(f"/api/v1/register/entries/{b.doc_id}/text", headers=priya)
+    assert t.status_code == 200 and t.headers["content-type"] == "text/plain; charset=utf-8"
+    assert t.content == b.text.encode()
+
+
+def test_waiting_on_me_is_empty_for_an_agent(client: TestClient, agent: Headers) -> None:
+    priya, elena = person(client, "EMP-401"), person(client, "EMP-402")
+    c = post(client, priya, credit())
+    mine = client.get("/api/v1/register/changes", params={"waiting_on": "me"}, headers=elena)
+    assert [x["change_id"] for x in mine.json()] == [c["change_id"]]
+    theirs = client.get("/api/v1/register/changes", params={"waiting_on": "me"}, headers=agent)
+    assert theirs.status_code == 200 and theirs.json() == []
+
+
 def test_settings_get_put_executives_only(client: TestClient) -> None:
     sarah, david = person(client, "EMP-101"), person(client, "EMP-300")
     assert client.get("/api/v1/register/settings", headers=sarah).json() == {
@@ -269,6 +291,12 @@ def test_rr13_refused_over_http(client: TestClient) -> None:
     assert r.status_code == 409 and r.json()["refusals"][0]["rule"] == "RR-13"
     got = client.get(f"/api/v1/register/changes/{second['change_id']}", headers=priya).json()
     assert got["state"] == "refused" and got["refused"][0]["rule"] == "RR-13"
+    # the refused approval is no longer waiting on Elena and shows in her done
+    mine = items(client, elena, "waiting_on_you")
+    assert second["change_id"] not in [i["id"] for i in of_kind(mine, "register_change")]
+    done = [i for i in of_kind(items(client, elena, "done"), "register_change")
+            if i["id"] == second["change_id"]]  # fmt: skip
+    assert [d["result"] for d in done] == ["refused"]
     stale = client.post("/api/v1/register/changes", headers=priya,
                         json=payload(credit(), base_version=16))  # fmt: skip
     assert stale.status_code == 409
