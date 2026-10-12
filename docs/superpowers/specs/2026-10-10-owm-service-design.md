@@ -4,6 +4,10 @@
 (`owm/docs/owm-service-design-review-2026-10-11.md`, 30977cd). Next comes the implementation plan
 (writing-plans). No code is written before the plan is approved and an execution method is chosen.
 
+**Amended 2026-10-12 after the build.** B-06 is built: 21 tasks, a final review ("with fixes")
+and its fix wave. The sections below now say what was built, each change naming its ruling.
+Appendix A records every ruling, R1 to R60.
+
 **Revised 2026-10-11 after garbanzo's review.** The contract moved after the 9d05398 pin (U-18 at
 53ce7b5, B-11 at 16ae5c4, a listing fix at 30977cd). The additions are folded in below, and none
 changes an agreed field:
@@ -152,8 +156,14 @@ flowchart LR
 
 **One SQLite table is the record of everything:** `events(seq, at, wall, org, stream, kind, actor, payload)`.
 - `at` is demo time from the service clock, and `wall` is real time.
-- `stream` is a decision id, change id, subject or session.
 - `actor` and `payload` are JSON.
+- `stream`, as built (R33):
+  - **the subject** (`DR-…`, `CR-…`, `SR-…`): every event that changes a decision's derived
+    state, so a write's re-check of the subject's last `seq` sees it: versions, steps,
+    `decision.failed`, redemptions, reports and incidents;
+  - **the decision id**: clearance attempts and refused redemptions, which decide nothing, so an
+    agent polling for clearance never makes an approver's write 409;
+  - `change:<id>`, `session:<sha12>`, `sor`, `clock` and `register:settings`.
 
 The contract's ground rule 4 ("nothing is edited in place") then holds by construction.
 
@@ -161,9 +171,9 @@ The contract's ground rule 4 ("nothing is edited in place") then holds by constr
 |---|---|
 | Sessions and clock | `session.opened`, `session.closed`, `clock.started`, `clock.set` |
 | Systems of record | `sor.inserted`, `sor.edited` (`table, key, field, was, now`) |
-| Decisions | `decision.versioned` (**the whole computed version**), `condition.resolved`, `decision.approved`, `decision.declined`, `decision.withdrawn`, `decision.rerun_requested` |
+| Decisions | `decision.versioned` (**the whole computed version**, with its level), `condition.resolved`, `decision.approved`, `decision.declined`, `decision.withdrawn`, `decision.rerun_requested`, `decision.failed` (the kernel couldn't decide: 503, nothing else written; R19) |
 | Clearance | `clearance.attempted` (issued or refused, dry runs included), `clearance.redeemed`, `redeem.refused`, `execution.reported`, `incident.opened` |
-| Register | `change.drafted`, `change.submitted`, `change.approved` (with the entry or revocation the registrar wrote), `change.refused`, `change.declined`, `change.withdrawn`, `change.reminded`, `settings.changed` |
+| Register | `change.drafted`, `change.submitted`, `change.approved` (with the entry or revocation the registrar wrote), `change.refused`, `change.declined`, `change.withdrawn`, `change.reminded`, `settings.changed`, `procedure.approved` (a procedure version's entry; the register's replay and scoped RR-13 never read it, R50) |
 
 **Rules:**
 - **A version is stored whole.** Rebuilding state replays the events and never re-runs the kernel
@@ -183,8 +193,8 @@ The contract's ground rule 4 ("nothing is edited in place") then holds by constr
   - Each write is `BEGIN IMMEDIATE`. It re-checks its preconditions (DC-6, DC-5 and the subject's
     last `seq`), and returns 409 if any of them moved.
   - Redemption is one short transaction.
-- **A test proves the rebuild:** after every acceptance test, state rebuilt from the log equals the
-  live state.
+- **A test proves the rebuild:** after every acceptance test that builds an org, state rebuilt from
+  the log equals the live state.
 
 ---
 
@@ -214,8 +224,14 @@ flowchart TD
 - **Only the subject's id is named:** `request_id` for discount and credit, `ticket` for SLA.
   Customer, product, figures, requester and date are read from the row. `submitted` is compared and
   never used (contract ground rule 5).
-- **The kernel's `sid` input gets the decision id.** It only fills the record's `scenario` field,
-  which the service drops and the acceptance comparison ignores.
+- **On the missing-row path** the figures come from `submitted`, but the requester never does: it
+  is the session's person, or an agent's `on_behalf_of`. A submitted requestor is kept in
+  `submitted` only, and an agent with no principal and no row gets 404 (R22).
+- **The kernel's `sid` input is `pending` on an ask** (the id is taken only at the write) **and
+  the decision id on a re-run.** It only fills the record's `scenario` field, which the service
+  drops and the acceptance comparison ignores.
+- **Any error building the row view or the kernel's inputs** (a blank inserted value, say) is a
+  503 with `decision.failed`, never a 500 (R19).
 - **For SLA, `decided_at` is the service clock** (§5.2 of the contract: SLA `as_of` is the
   decision's own time).
 
@@ -223,7 +239,7 @@ flowchart TD
 
 | Field | How |
 |---|---|
-| `decision_id`, `version`, `requested_at`, `decided_at`, `actor`, `requested_by` | `DEC-…` ids. Times from the service clock. `actor` from the session. `requested_by` from the row's `requested_by` email, resolved through the HR export (null for SLA) |
+| `decision_id`, `version`, `requested_at`, `decided_at`, `actor`, `requested_by` | `DEC-…` ids. Times from the service clock. `actor` from the session. `requested_by` from the row's `requested_by` email, resolved through the HR export (null for SLA); on the missing-row path, the session's person or the agent's principal (R22) |
 | `as_of` | §6.1. Fixed at version 1 and never moved |
 | `submitted` | Kept as sent, by §3.5's names. Compared after converting the row's columns (`requested_discount_pct` "15.0" becomes 0.15, and so on) |
 | `conditions` | §6.4 and §6.5. Three sources: `input_conflict`, `missing_record`, `ratchet`. None for SLA |
@@ -231,8 +247,8 @@ flowchart TD
 | `flags` | The kernel's `flag_items` with `about`, plus the service's own codes: `revoked` (a document the kernel set aside as not registered that the register shows revoked on or before `as_of`), `self_sourced_basis` and `ratchet`. `possible_duplicate` is never emitted |
 | `approvals` | From the kernel's `approval_roles`, as `PersonRef`s (§5.8). A discount `APPROVE_WITH_AUTHORIZATION` needs one approval. Credit needs an approval plus concurrences, with `passed_from`. An SLA `BREACH_CREDIT_OWED` needs a `claim_decision` from the `decide_claim` holder |
 | `actions` | From the outcome (§5.9): `apply_discount {request_id, account_id, product, discount}`; `set_credit_limit {request_id, customer_id, limit_usd}`; `issue_service_credit {ticket, account_id, amount_usd}`, with `expected_actor` the `issue_memo` holder |
-| `basis` | **Records:** the row's §3.5 fields the decision relied on, read through the overlay. **Documents:** from the kernel's trace |
-| `register_used` | The registered documents in the trace, with status and `file_matches` |
+| `basis` | **Records:** the row's raw columns the decision relied on, read through the overlay: `account_id`, `product_sku`, `requested_discount_pct`, `request_date`, `requested_by` for discount; `erp_customer_id`, `current_limit_usd`, `requested_limit_usd`, `request_date`, `requested_by` for credit; for SLA every ticket column plus `events`, the sha256 of the ticket's `ticket_events` rows (R17). **Documents:** from the kernel's trace, including register entries the procedure read through `use_entry` (R21) |
+| `register_used` | Every registered document the decision relied on, `use_entry` reads included (R20, R21: three for S22, where the contract example shows two), with status and `file_matches` |
 | `floor` | §6.5 |
 | `state`, `executed`, `previous` | Derived (§6.3). `previous.what_changed` is one line written at the re-run |
 
@@ -248,26 +264,32 @@ stateDiagram-v2
   not_ready --> ready: resolve, re-run, no approval needed
   awaiting_approval --> ready: every approval given
   awaiting_approval --> declined: an approver declines
+  not_ready --> declined: an approver declines (R29)
   ready --> spent: a clearance is redeemed
   ready --> not_ready: /rerun after stale, below the floor
   declined --> [*]
   spent --> [*]
 ```
 
-`state` is derived, first match wins (§5.2):
+`state` is derived, first match wins (§5.2). **As built, `declined` comes before `not_ready`**
+(R29): a decline closes the decision even while a blocking condition is open. In the contract's
+order such a decision would derive `not_ready`, stay live, and lose the decline at the next
+re-run.
 
 | | State | When | Live? |
 |---|---|---|---|
 | 1 | `withdrawn` | The requester withdrew it | No |
 | 1 | `spent` | Every action it decided has been executed on the subject, by any decision | No |
 | 2 | `no_action` | `actions` is empty | Yes |
-| 3 | `not_ready` | A blocking condition is open | Yes |
-| 4 | `declined` | An approver declined this version | No |
+| 3 | `declined` | An approver declined this version | No |
+| 4 | `not_ready` | A blocking condition is open | Yes |
 | 5 | `awaiting_approval` | An approval, concurrence or claim decision isn't given yet | Yes |
 | 6 | `ready` | Otherwise: clearance can be issued | Yes |
 
 **A subject has at most one live decision** (DC-6). A decision that stops being live leaves its
-floor with the subject. A withdraw is possible from any live state.
+floor with the subject. A withdraw is possible from any live state. **For SLA,** whose tickets
+name no requester, the asker (the session's person or the agent's principal) counts as the
+requester for withdraw and re-run, and DC-3 doesn't bar the claim decider (R30).
 
 ### 6.4 Resolving, re-running, approving, declining, withdrawing
 
@@ -275,17 +297,24 @@ floor with the subject. A withdraw is possible from any live state.
   - DC-1: agents never take a people step;
   - DC-2: the step must name you;
   - DC-3: separation of duties;
-  - DC-4: approving is held while a blocking condition is open;
+  - DC-4: approving is held while a blocking condition is open. Declining isn't held: a decline
+    closes the decision (R29);
   - DC-5: the `decision_version` must be current.
+- **A resolution must fit its condition's source** (R28): `input_conflict` takes
+  `confirmed_record` or `corrected_record`; `missing_record` takes `corrected_record`; `ratchet`
+  takes `confirmed_lower_level`. Anything else is 422 DC-2.
 - **Resolving a condition, or `POST /rerun`, re-runs the decision** (§6.1 of the contract):
   1. re-read the row as it is now, keeping `as_of`;
   2. run `_lab.decide`;
   3. rebuild the conditions;
   4. apply the ratchet and the self-sourced-basis check;
   5. write version n+1.
+- **A re-run fails closed (503, `decision.failed`) when the row now names a different
+  requester** (R31). That blocks reassigning a request to oneself and then approving it.
 - **A resolved input conflict stays resolved** as long as the row still holds the value that was
   confirmed. If the row changes again, a new condition opens with a new id. Ids are unique across
-  versions.
+  versions. If the row returns to the exact value that was confirmed, the resolution covers it
+  again (R32).
 - **`corrected_record`** means the requester changed the system of record. The re-run reads it
   again. If it still differs from `submitted`, a new condition opens.
 - **Approvals bind to a version** (§5.8). A re-run's new version starts with nothing given.
@@ -316,11 +345,21 @@ floor with the subject. A withdraw is possible from any live state.
   approval does: DC-3, the same rule and **the same code path as `passed_from`**. A ratchet and an
   approval can then never name different people. For discount that's the CRO, David Morgan
   (confirmed in garbanzo's review).
+- **A pass-up that would land on the requester** (the top of the chain, say an Executive asking
+  below a CRO floor) fails closed: 503, nothing written (R25).
+- **A dropped credit concurrence** at the same band is confirmed by the holder of the floor band's
+  role, not by the concurrer whose check was dropped (R26). This weakens separation of duties for
+  credit and is flagged to garbanzo.
+- **A floor set by another decision** is named in the ratchet condition and flag
+  (`DEC-0001 version 1 needed the VP Sales; …`), so two "version 1"s don't read as a
+  contradiction (R24).
 
 ### 6.6 Self-sourced basis (§6.3)
 
 On every re-run, and on a new decision for a subject that already has decisions:
-- the service looks for `sor.edited` events on the decision's basis fields after `requested_at`;
+- the service looks for `sor.edited` events on the decision's basis fields after the subject's
+  first ask, the earliest `requested_at` among its decisions (R23), so a fresh ask never resets
+  the window;
 - they must be made by the requester, or by an agent whose `on_behalf_of` is the requester;
 - each match becomes a `self_sourced_basis` flag naming the field, the old and new values, who
   changed it and when.
@@ -342,21 +381,37 @@ says so.
   6. `condition_open`, one reason per open blocking condition;
   7. `awaiting_approval`, one per outstanding approval;
   8. `declined`.
+
+  Items 6 and 7 apply only while the decision is live: once it's closed, nothing waits on anyone.
+  **A decision that isn't `ready` never clears,** even if no check names why: it is refused
+  `stale` (fail closed). The same `ready` check guards redemption.
 - **People aren't mandate-checked.** A body `decision_id` that differs from the path's is 422.
 - **A clearance** binds the decision, version, action, params and the session's actor. It's single
   use, and expires in `OWM_CLEARANCE_TTL_SECONDS` (default 300). `dry_run: true` checks and logs
   but issues nothing. Every attempt is logged, and `GET /decisions/{id}/clearances` lists them.
+- **A dry run that would clear answers `{cleared: false, reasons: []}`** (R34): the contract's
+  union has no "would clear" variant, and `cleared: true` needs a clearance id. Empty reasons
+  mean "would clear". A contract smell, noted for garbanzo.
 - **`POST /clearances/{id}/redeem` runs in one transaction:**
-  - `used` and `expired`;
+  - mark the clearance used (`used` if it already was, and nothing else is checked);
+  - `expired`;
   - `mismatch`: params differ from the bound ones;
-  - the re-checks: `stale`, `spent`, `condition_open` and `suspended`;
-  - then it marks the clearance used and inserts into `executions`.
+  - the re-checks: `stale`, `spent`, `condition_open` and `suspended` (of the bound actor);
+  - then it inserts into `executions`.
+  - Any refusal rolls back to before the mark, so a refused clearance stays unused.
   - If two clearances race on one subject and action, the second insert hits the unique key and
     gets `spent`.
-- **`POST /clearances/{id}/report`** takes `applied` or `failed`.
+- **`POST /clearances/{id}/report`** takes `applied` or `failed`, once per redeemed clearance.
   - A `failed` report leaves the action spent and opens an incident for the decision type's owning
     function: discount, Sales; credit, Finance; SLA, Customer Support.
   - With no report, the action is still spent.
+- **Redeeming and reporting need an authenticated session** (R35). The session's actor is recorded
+  as `by` beside the executor on `clearance.redeemed`, `redeem.refused`, `execution.reported` and
+  `incident.opened`; the event's own actor stays the executor's system (R40).
+  - **Any session may redeem, but only the session that redeemed a clearance may report on it**
+    (R58, revising R35 and R40). Another session's report is 422 DC-2 and writes nothing. CLR ids
+    are sequential, so holding one proves nothing, and a hostile `failed` report would open a
+    false incident and block the real one.
 
 ### 6.8 Failures and status codes
 
@@ -415,7 +470,7 @@ contract's two steps **without changing any rule**:
 flowchart TD
   D["draft (submit: false): anyone, agents included"] --> D1["dry apply with stand-ins:<br/>the function's head submits, an Executive approves"]
   D1 --> D2["stored draft: proposed_by, proposed_at, checks<br/>(the first rule that fails, or none)<br/>the register doesn't change"]
-  D2 -- "dismiss: withdraw, anyone in the owning function" --> DW["withdrawn"]
+  D2 -- "dismiss: withdraw, by the drafter, the agent's principal<br/>or anyone in the owning function (R42)" --> DW["withdrawn"]
   D2 -- "submit the draft with base_version" --> S1
   S["submit: a person in the owning function<br/>(directly, or a stored draft)"] --> S1{"RR-13 strict: is the submitter's<br/>base_version current?"}
   S1 -- no --> S0["409"]
@@ -428,6 +483,7 @@ flowchart TD
   A1 -- yes --> A0["refused, RR-13 named (409)"]
   A1 -- no --> A2["real apply against the register as it is now<br/>acting_as = submitter + approver"]
   A2 -- fails --> RF["refused, rule named"]
+  A2 -- "error that isn't a rule (R59)" --> PE["error surfaces, nothing written,<br/>still pending"]
   A2 -- passes --> OK["approved, register version + 1<br/>the event keeps the entry written"]
 ```
 
@@ -440,17 +496,33 @@ flowchart TD
     service vouching for something it saw.
 - **Drafts are stored** (B-11). `change.drafted` keeps the draft with `proposed_by`, `proposed_at`
   and its `checks`, in state `draft`.
-  - An agent's draft lands as a `register_draft` work item for everyone in the owning function,
-    with `raised_by` the agent. A person's own draft stays with them.
+  - An agent's draft lands as a `register_draft` work item for everyone in the owning function
+    **and the agent's principal** (R42), with `raised_by` the agent. A person's own draft stays
+    with them.
+  - An agent mandate's `may_propose` is recorded, not enforced, at draft (R43): drafting grants
+    nothing, and a person still submits.
   - **Submitting a draft** (`/{id}/submit` with `{base_version}`) makes it the submitter's change.
     `submitted_by` is the session's person. `proposed_by` stays on the change, and the service adds
     it to the entry the registrar writes.
   - **RR-13 checks the `base_version` the submitter sends,** the version they reviewed the draft
     against. Otherwise an agent's draft made before the register moved could never be submitted.
-  - **Dismissing a draft** is `/{id}/withdraw` by anyone in the owning function; anyone else is
-    refused with RR-3. A pending change is withdrawn by its submitter only.
+  - **Dismissing a draft** is `/{id}/withdraw` by anyone in the owning function, by the person who
+    drafted it, or, for an agent's draft, by the agent's principal (R42); anyone else is refused
+    with RR-3. Without the drafter's right, a draft of a kind the drafter's function doesn't own
+    could never be cleared. A pending change is withdrawn by its submitter only.
+- **Scoped RR-13 also covers `under` dependencies** (R45): a change's `under` targets clash with
+  another change's targets, either way round (never `under` against `under`). Otherwise a child
+  could be approved under an agreement revoked since it was submitted, because RR-14 checks the
+  agreement exists, not that it's live.
 - **Any rule failing at approval, RR-13 included, leaves the change `refused`** with the rule
   named. RR-13 answers 409; the others answer 422 (403 for RR-1).
+- **An error that isn't a rule** (a change the registrar can't read) is RR-5 at draft and submit,
+  never a 500 (R44). **At approval it propagates instead, and the change stays `pending`** (R59,
+  narrowing R44): the same rules already passed at submit, so the error is environmental and must
+  not refuse the change for good.
+- Smaller calls (R44): a remind by anyone but the submitter is RR-3; a step on a change in the
+  wrong state is DC-2, checked before RR-4; a directly submitted change has null `proposed_by`
+  and `proposed_at`.
 - **A revoke** is the same flow with `action: revoke`, `target` and `revoked_on` (RR-9, RR-12).
 - **Refusals map to the contract's shape** (§3.4): `RefusedError(rule, message)` becomes
   `{rule, detail, unmatched?, fix?}`. The codes are 403 for RR-1, 409 for RR-13 and 422 otherwise.
@@ -460,15 +532,19 @@ flowchart TD
 - `GET /api/v1/register?as_of=` returns `version`, `clock`, `entries`, `series`, `coverage` and
   `settings`.
   - `coverage` comes from `serve.COVERAGE`.
-  - `series` follows `supersedes` chains.
-  - `status` is computed for the `as_of` read. That read decides nothing.
-  - `file.matches` compares the copy on file with the registered sha256.
+  - `series` follows `supersedes` chains. Every entry is in exactly one series; a document that
+    supersedes nothing and has no successor is a series of one (R48).
+  - `status` is computed for the `as_of` read. That read decides nothing. An entry past its window
+    whose successor is in force reads `superseded`; `expired` only when nothing live follows (R47).
+  - `file.matches` compares the copy on file with the registered sha256. A missing copy reads
+    `{sha256: '', matches: false, detail: 'missing', source_id: null}` (R49).
   - `file.source_id` is the copy's path in the corpus (`documents/<file>`). The lab has no
     knowledge-foundation id.
 - `/register/entries/{doc_id}`, `/register/entries/{doc_id}/text`, `GET` and `PUT /register/settings`.
   `PUT` is for Executives only, and logged as `settings.changed`.
 - `GET /api/v1/register/changes?state=&waiting_on=me`, and `GET /api/v1/register/changes/{id}`
-  for one change, drafts included (web-next's review drawer reads it).
+  for one change, drafts included (web-next's review drawer reads it). For an agent session
+  `waiting_on=me` is empty, as `/approvals` is: an agent takes no register step (R56).
 - Decisions read a kernel `Register` built from the current state, cached per register version.
 
 ### 7.3 Procedures (#18)
@@ -482,8 +558,27 @@ flowchart LR
 ```
 
 - The service never runs the admission gate. The lab's `admit.py` makes the report.
+- **The request shape** (the contract's `RegisterChange` has no procedure fields, so the lab
+  defines one, noted for garbanzo): `{action: register, kind: procedure, base_version, submit,
+  proc_id, decision_type, version, effective_from, effective_to, text, report}`, the admission
+  report as JSON. Extra fields are refused.
+- **The rules, in the registrar's order** (R52, R53):
+  - RR-5: a known decision type, and a `proc_id` of the form `PROC-` then capitals, digits and
+    hyphens;
+  - the people rules (RR-1 to RR-4), the owner taken from the decision type;
+  - RR-5: a text; **one procedure per decision type**; and the next version number, which is
+    also a procedure's stale check, since its approval never moves the register's version;
+  - RR-7 on the window, and **RR-9: no backdating** against the register clock (R52);
+  - ADM: `build_procedures.register` refuses no report, a report for another text, or one not
+    admitted. The service then also refuses a report whose `type` is another decision type, and
+    a text that declares no `registered_kinds` (R53).
+- **An approved version** is written as `procedure.approved` (R50), named `<proc_id>-v<n>.yaml`,
+  and its text goes to the org's procedure store. Decisions check each version's file against
+  the service's own mirror of approved texts (`<state>/<org>/procedure-specs`), not
+  `lab/owm_kernel/specs/` (R54); a stored text whose sha256 differs fails closed.
 - `GET /api/v1/procedures` and `/procedures/{id}` serve v1.1's shape: the versions with their
-  sha256, author, registrar, approver and admission report.
+  sha256, author, registrar, approver and admission report, with `id` beside `proc_id` and the
+  statuses `scheduled` and `expired` beyond v1.1's union.
 
 ### 7.4 The register's clock
 
@@ -501,6 +596,10 @@ acceptance harness sets it to the registrar's 2026-09-01 when it replays the att
   with.
 - **Draft checks can act as an oracle** for tuning a meaning flip. The contract accepts this for
   v1.2, because a person submits and another person approves.
+- **The admission report is self-attested** (R55): JSON supplied with the change. The service
+  checks that it is for this exact text, for this decision type, and admitted, but it can't tell
+  a report the gate wrote from one written by hand. Only the two-person rule stands behind it, and
+  the procedure reads serve its verdict and gates as supplied. A gate-signed report is roadmap.
 
 ---
 
@@ -555,7 +654,7 @@ flowchart TD
   OV --> R1["the request row, and as_of"]
   OV --> R2["the kernel's own reads: accounts, invoices,<br/>tickets, events, notices, credits"]
   OV --> R3["basis, and the stale check at clearance"]
-  OV --> R4["self_sourced_basis: edits after requested_at<br/>by the requester or an agent for them"]
+  OV --> R4["self_sourced_basis: edits after the subject's first ask<br/>by the requester or an agent for them"]
   W1["Sarah: PATCH /lab/sor/discount_requests/DR-9001"] --> LOG
   W2["harness: POST /lab/sor/{table} seeds a scenario row"] --> LOG
   W3["adapter: POST /lab/adapter/execute"] --> LOG
@@ -566,25 +665,41 @@ flowchart TD
     crm_accounts, customers, erp_invoices, service_tickets, ticket_events, maintenance_notices,
     service_credits), not only the request row;
   - a subclass gives the kernel, `basis` and the G-46 check the same rows, and writes no files.
-- **Edits are by key column:** `request_id` for the request tables and `ticket_id` for tickets.
-  Tables without a single key (`ticket_events`) take inserts only.
+- **Only the request tables and tickets are writable** (R60), in the core and over `/lab/sor`:
+  - edits on `discount_requests`, `credit_requests` and `service_tickets`, by key column:
+    `request_id` for the request tables and `ticket_id` for tickets;
+  - inserts on those three plus `ticket_events` and `service_credits`;
+  - a write to any other table (HR, accounts, customers, products, invoices) is 422 RR-5. Those
+    tables decide who approves and at what tier: a requester who could insert HR rows could
+    reroute her own approval, and no ratchet, flag or `stale` check would see it. A table the org
+    doesn't have is 404 (R16).
+  - A malformed value is 422 RR-5 with the column and value, and a duplicate key on insert is
+    409 RR-5 (R16).
 - **The overlay is the lab's stand-in for "the CRM",** and it sits outside OWM governance on
   purpose: that's G-46's threat.
 - **The demo adapter closes the loop.** `POST /lab/adapter/execute {clearance_id, fail?}` does
   three things:
   1. redeems;
   2. writes the effect as `{system: adapter}`;
-     - `apply_discount` sets the request's `status`, `approved_by` and `approved_on`, and notes the
-       CLR id;
-     - `set_credit_limit` updates the credit request;
-     - `issue_service_credit` inserts a `service_credits` row, so the SLA cap counts it next time;
-  3. reports `applied`, or `failed` when `fail` is set.
+     - `apply_discount` sets the request's `status`, `approved_by` and `approved_on`;
+     - `set_credit_limit` sets the same three on the credit request;
+     - `issue_service_credit` inserts a `service_credits` row whose `credit_id` is the CLR id, so
+       the SLA cap counts it next time;
+  3. reports `applied`, or `failed` when `fail` is set. With `fail` it writes no effect. A write
+     the overlay refuses after redeeming is reported `failed`; any other error is reported
+     `failed` and then raised, so redeemed always means reported.
+
+  **The effect never writes a column a kernel judgment reads.** The discount and credit
+  procedures ask Jev about the request's `justification`, so changing it would move the request
+  hash: a later ask on the subject would miss the replay and answer 503 instead of `spent`. The
+  adapter doesn't note the CLR id in the row; `clearance.redeemed` and `execution.reported`
+  already carry it.
 
 ### 8.4 Jev
 
 ```mermaid
 flowchart LR
-  K["kernel asks Jev"] --> Q{"recorded?<br/>runs/**/engine-calls*, jev-calls* (14 files, 46 MB)<br/>+ state/jev-calls.jsonl"}
+  K["kernel asks Jev"] --> Q{"recorded?<br/>runs/**/engine-calls*, jev-calls* (13 tracked files, 16.7 MB)<br/>+ state/jev-calls.jsonl"}
   Q -- yes --> Y["recorded answer, $0"]
   Q -- no --> M{"OWM_JEV"}
   M -- "replay (default)" --> N["503, nothing written"]
@@ -594,11 +709,16 @@ flowchart LR
 ```
 
 - **The index works like `admit.Layered`:** keyed by `request_hash(model, state, questions)`. It
-  reads only the call files.
+  reads only the call files: the 13 tracked under `runs/` (16.7 MB; the planned 14 files and
+  46 MB counted a 32 MB untracked file that exists only in the main checkout) and the state
+  directory's own.
 - **The cap counts the calls recorded in the state directory,** so a restart doesn't reset it.
-  Default 100.
-- **Live mode reads the key only through `TYPESAFE_API_KEY_FILE`.** The key is never logged or
-  baked into an image; Docker mounts it as a secret.
+  Default 100. Live calls that fail don't count toward it.
+- **The service's settings never read the key.** In live mode, on the first call that misses the
+  replay, the lab engine reads it itself (`engine._key_from_env`): `TYPESAFE_API_KEY` if set,
+  else the file `TYPESAFE_API_KEY_FILE` names. Neither belongs in an image: a key file is
+  mounted at run time and its path set when the container starts. The key is never logged or
+  recorded, and the regression gate unsets both variables.
 - **The spend is pre-registered in the plan** before any live run, and costs are reported after
   each one.
 
@@ -656,6 +776,15 @@ uv run pytest · uv run ruff check · uv run ruff format --check · uv run mypy
 
 All of it is replay-only and costs $0.
 
+**As built,** the gate is `scripts/owm-gate.sh`:
+- the registrar comparison is one test, `test_gate_registrar_steps.py`, run in place of
+  `run_attacks.py` (R3);
+- `check_withhold.py` and `run_governed.py` rewrite committed files under `runs/`, so the gate
+  then requires `runs/` byte-identical, and restores it and fails on any difference (R7);
+- pytest and mypy run with the `owm-service` group, because the HTTP layer type-checks against
+  FastAPI (R38);
+- ruff runs on `src tests lab scripts`, not repo-wide (R5).
+
 ---
 
 ## 10. Acceptance and tests
@@ -670,9 +799,9 @@ The acceptance harness is the experimenter's side, and the only code that reads 
 | 4 | **`spent`:** after S36's credit is redeemed on SR-39385, a new decision on SR-39385 is `spent` and its clearance is refused `spent`; two clearances race and the second redemption gets `spent` (threads); a `failed` report stays spent and raises an incident | §5.9, §7.2 |
 | + | **Contract drift:** the models parse §10's JSON examples, vendored into `lab/owm_service/contract/`. Slice 1 vendors them from 9d05398. Slice 2 re-vendors them from 30977cd or later, when it adds the register queue | The contract |
 | + | **The U-18 and B-11 additions:** `GET /me`; a stored agent draft shows as `register_draft` work for the whole owning function; it's submitted with the submitter's `base_version` after the register moved; dismissing it by someone outside the function gets RR-3; RR-13 at approval leaves the change `refused`; `GET /register/changes/{id}` returns drafts | Contract §3.3, §4.2, §8 at 30977cd |
-| + | **Rebuild:** state rebuilt from the log equals the live state after every test | §5 |
-| + | **Isolation:** no service import reaches `truth/` or the answer key, and the Docker image has neither | §4 |
-| + | **The register queue:** the 24 attack cases (C01 to C24) through draft, submit and approve get the same admitted or refused result as `results.json`. The named rule may differ only where a case breaks more than one rule, because submit runs the content rules before approval runs RR-4; each such difference is listed | `runs/2026-10-08-register-attacks/` |
+| + | **Rebuild:** state rebuilt from the log equals the live state after every acceptance test that builds an org (as built: the acceptance suite's autouse check, not every test) | §5 |
+| + | **Isolation:** no service import reaches `truth/` or the answer key (a static scan and a runtime audit hook), and the Docker image has neither, nor any `lab/` directory but the four the service runs, nor `src/` or the repo README (§12) | §4 |
+| + | **The register queue:** the 24 attack cases (C01 to C24) through submit and approve get the same admitted or refused result as `results.json`. As built the test submits directly, without drafts; a probe of draft, submit and approve over all 24 gave identical results (R57). The named rule differs in four cases, each breaking more than one rule: C11 (RR-1 → RR-2: the agent session is refused before any registrar run), C13 and C14 (RR-4 → RR-6: submit runs the content rules before approval runs RR-4), C19 (RR-6 → malformed: the body model refuses the relation type). The slice note lists them | `runs/2026-10-08-register-attacks/` |
 
 - **Replay coverage for the edited-row re-runs: checked, $0.** Garbanzo asked whether the 8%
   re-runs hit recorded Jev calls. A replay-only probe (live off, cap 0) ran the governed discount
@@ -695,12 +824,16 @@ The acceptance harness is the experimenter's side, and the only code that reads 
   - S45 uses its `decided_at`.
   - The nine with none use a time after every deadline on that ticket. The SLA spec uses
     `decided_at` only in deadline comparisons (`sla.yaml` lines 144 and 150), so that equals
-    "after all events". The test proves it.
-- **Where the tests live:** `tests/owm_service/`.
+    "after all events". The test proves it. S40 and S44 needed a clock after their latest
+    obligation (2026-10-01 09:00 CT), past the default (R41).
+- **Where the tests live:** `tests/owm_service/`, a package (R1).
   - The core tests run in the default `uv run pytest`.
   - The HTTP tests use `pytest.importorskip("fastapi")`, so they run only with the `owm-service`
-    group installed.
-  - `lab/owm_service` is added to mypy's `files` (strict) and ruff's `src`.
+    group installed. The gate always installs it (R38).
+  - `lab/owm_service` is added to mypy's `files` (strict) and ruff's `src`. mypy needs the
+    `owm-service` group (R38).
+- **Contract drift:** as built, the contract's examples and types were vendored once, from
+  30977cd (R11).
 
 ---
 
@@ -713,27 +846,40 @@ The acceptance harness is the experimenter's side, and the only code that reads 
 | **Health** | `GET /healthz` |
 
 - web-next calls the service server-side through its API route, so there's no CORS.
+- **Sessions, as built** (R39): every `/api/v1` route needs a session, reads included (401
+  without). `/lab/clock` and `/lab/reset` need none; the lab routes already let anyone sign in as
+  anyone, and the image turns them off.
 - `OWM_LAB_ROUTES=0` removes the `/lab/*` routes. They're on by default locally, because the demo
   has no other sign-in. **The Docker image defaults to `0`.** The container smoke test, and any
   demo deployment, set it to `1` explicitly and keep the service reachable only from web-next's
-  server. The lab routes let anyone open a session as anyone and edit the CRM.
+  server. The lab routes let anyone open a session as anyone and edit the request tables and
+  tickets (§8.3, R60). The value is read case-insensitively; anything but `1/true/yes/on` or
+  `0/false/no/off` is refused at startup (R37).
 
 ## 12. Packaging and configuration
 
 - **Dependencies:** a new `owm-service` dependency group in `pyproject.toml` (FastAPI and uvicorn,
   pinned). The default install is unchanged.
-- **Run locally:** `uv run --group owm-service python -m owm_service` (the exact entry point is fixed
-  in the plan).
-- **Dockerfile:**
-  - built on python slim; `uv sync --group owm-service`; runs as non-root on port 8000, with
-    `HEALTHCHECK /healthz` and `ENV OWM_LAB_ROUTES=0`;
-  - **copies:** the lab code, the register and its stores, `dataset/evidence/` and
-    `dataset/evidence-variants/`, the procedure admission reports, and the 14 Jev call files;
-  - **never copies:** `truth/`, `dataset/answer-key/`, `dataset/evaluation/`, `site/` or
-    `_owm-local/`. So the image itself enforces isolation: if anything reaches for `truth/` at
-    runtime, the container smoke test fails.
+- **Run locally:** `PYTHONPATH=lab uv run --group owm-service python -m owm_service`. It listens
+  on `0.0.0.0:8000`.
+- **Dockerfile** (`lab/owm_service/Dockerfile`, build context the repo root):
+  - built on `python:3.12.11-slim` with uv 0.12.17; `uv sync --frozen --group owm-service --no-dev
+    --no-install-project`, so the `northstar` package is never installed; runs as non-root
+    (uid 10001) on port 8000, with `/data` as its volume, `HEALTHCHECK /healthz`,
+    `ENV OWM_LAB_ROUTES=0` and `OWM_JEV=replay`;
+  - **copies only:** the service and the three lab packages `_lab.py` imports
+    (`lab/owm_service`, `lab/owm_kernel`, `lab/owm_register`, `lab/decision_engine`), with the
+    register and its stores; `dataset/evidence/` and `dataset/evidence-variants/`; the procedure
+    admission reports; and the 13 Jev call files. `.dockerignore` keeps the rest of `runs/` out;
+  - **never copies:** `truth/`, `dataset/answer-key/`, `dataset/evaluation/`, `site/`,
+    `_owm-local/`, the rest of `lab/` (the admission gate in `lab/spec_admission` and the
+    experiment drivers), `src/` or the repo README. So the image itself enforces isolation: if
+    anything reaches for `truth/` at runtime, the container smoke test fails. A static test pins
+    the copy list, and an in-image check proves those paths are absent and `/app/lab` holds only
+    the four packages.
 - **Smoke test:** `docker build`, then S22 end to end against the container, run with
-  `OWM_LAB_ROUTES=1` set explicitly. Docker is installed here.
+  `OWM_LAB_ROUTES=1` set explicitly (`lab/owm_service/smoke.py`, which prints `S22: spent`).
+  Docker is installed here.
 
 | Variable | Default | Meaning |
 |---|---|---|
@@ -741,7 +887,7 @@ The acceptance harness is the experimenter's side, and the only code that reads 
 | `OWM_CORPUS` | `base` | The org's corpus |
 | `OWM_JEV` | `replay` | `replay` or `live` |
 | `OWM_JEV_CAP` | `100` | Live calls allowed per state directory |
-| `TYPESAFE_API_KEY_FILE` | unset | A path to the key file, never the key itself |
+| `TYPESAFE_API_KEY` / `TYPESAFE_API_KEY_FILE` | unset | Not service settings: the lab engine reads them in live mode only, the key itself or a path to it (§8.4). Neither belongs in an image |
 | `OWM_CLOCK` | `2026-09-23T09:00:00-05:00` | The demo start, or `real` |
 | `OWM_CLEARANCE_TTL_SECONDS` | `300` | Clearance lifetime |
 | `OWM_SUSPENDED` | empty | Agents, or `agent@sha` versions, that are suspended |
@@ -774,7 +920,8 @@ flowchart LR
 | `self_sourced_basis` only sees service writes | Labelled bounded. The UI says so |
 | Demo sign-in has no real security | `/lab/*` is clearly separate. A real deployment replaces `sessions.py` and sets `OWM_LAB_ROUTES=0` |
 | A single SQLite writer | Fine for a demo. Kernel calls run outside the lock |
-| Loading the 46 MB replay index takes a few seconds at startup | Accepted. Trimming to the calls the demo needs is a later optimisation |
+| Loading the 16.7 MB replay index (13 files) takes a few seconds at startup | Accepted. Trimming to the calls the demo needs is a later optimisation |
+| Approving a new register entry of a kind decisions read can change what the kernel sends Jev, so the next such decision misses the replay | A 503 in replay mode, never a silent live call. A "register a document, then decide" demo needs pre-registered live spend or recorded calls |
 | A re-entered request (DR-9002) is a new subject | A known limit, not claimed (§12.3) |
 
 ## 15. Open items, after B-06
@@ -795,3 +942,74 @@ flowchart LR
   - a plain message for a 503 on `POST /decisions`;
   - a session bridge to `/lab/sessions`.
 - Production: who may edit a system of record is the real CRM's own access control, not the OWM's.
+
+---
+
+## Appendix A. As-built rulings
+
+The build's controller ruled on every question the plan left open. This is the permanent record of
+those rulings, in order: what was decided, why, and the cost if it's wrong. R58 to R60 came from
+the final review.
+
+| # | Decided | Why | Cost if wrong |
+|---|---|---|---|
+| R1 | The tests are a package (`tests/`, `tests/owm_service/`, `acceptance/` each have `__init__.py`); helpers are imported relatively | Nested conftests and mypy collide on duplicate module names, and a tests package named `owm_service` would shadow the real one | Discovery or mypy breaks, caught at once |
+| R2 | `additions.capture(subject=None)` is a context manager yielding a `Capture` | The plan used two spellings; the boundary needs the subject | A rename |
+| R3 | The registrar's "messages unchanged" check is one test, `test_gate_registrar_steps.py`, which the gate runs | One comparison, one place | None |
+| R4 | `approval_roles` lists approval and concurrence items only for `APPROVE_WITH_AUTHORIZATION`, SLA items only for `BREACH_CREDIT_OWED`, and nothing otherwise | Contract §5.8; otherwise an `APPROVE` record's approver (the requester) raises a conflict | Approvals listed for outcomes that need none |
+| R5 | The gate runs ruff on `src tests lab scripts`, not repo-wide | The repo-wide failures are a committed run script and the plan's Markdown code blocks | A lint issue in `docs/` goes unflagged |
+| R6 | The routing-consistency test runs over the 42 decision scenarios, plus one example string per pattern row | Committed set-F rows don't reliably carry both outcome fields | Weaker coverage of rare flag strings |
+| R7 | The gate runs the two scripts that rewrite committed files under `runs/`, then requires `runs/` byte-identical, restoring it and failing on a difference | Committed results are never left rewritten, and a byte-identical rewrite is the strongest regression proof | A script that writes a timestamp fails the gate at baseline |
+| R8 | The commit-hygiene scan pattern lives only in prompts, never in a file, and gates every commit | The repo is public | n/a |
+| R9 | SLA flag codes match word-bounded prefixes (`^cannot decide\b`, `^out of scope\b`, `^no claim yet\b`) | These are the kernel's real strings, not the contract's shorthand | A code label on SLA flags; routes unchanged |
+| R10 | A commit names the model that wrote it, plus the session line; no amends | Truthful attribution; amends add churn | Trailer wording, fixable at merge |
+| R11 | The contract was vendored from a staged copy of garbanzo 30977cd, not by running git against that repo | The worktree guard refuses git against other repos | None; the contract README records the commit |
+| R12 | `ClearanceResponse` and `RedeemResponse` stay RootModels for validating external JSON; core functions return the concrete variants | Keeps both the drift tests and the call sites simple | An extra `.root` at call sites |
+| R13 | Emitted JSON omits absent TS `?:` fields (`exclude_unset`); required-nullable fields always appear | The TS shape tells `?:` from `\| null` | Extra null keys; a drift failure if checked |
+| R14 | The logged `clock.started` start is the source of truth for the clock's mode and base; `set()` in real mode raises | A restart must not change the clock's history | None for the demo |
+| R15 | The isolation scan flags a bare `northstar` only as an import argument, and dotted `northstar.*` anywhere | `northstar` is the demo org's id | A bare-string import could slip past the static half; the runtime audit still checks |
+| R16 | A malformed systems-of-record value is 422 RR-5 with the column and value; a duplicate insert key is 409 RR-5; an unknown table or key is 404 | The contract has no SoR rule; RR-5 (integrity) is nearest, and `/lab/sor` is outside the contract | A rule label on lab-only routes |
+| R17 | The SLA basis field `events` is the sha256 of the ticket's `ticket_events` rows as canonical JSON; stale when it differs | `ticket_events` has no id column; a digest detects any added or changed event | A less readable basis field |
+| R18 | A mandate's `owner.accountable` is a `PersonRef` resolved from the HR export at load; an unknown id raises | The contract binds over the plan's fixture shorthand | None |
+| R19 | Any error building the row view or the kernel's inputs is 503 with `decision.failed`, never a 500 | Blank inserted values crashed the row view | A 503 where a 422 might be friendlier |
+| R20 | `register_used` lists every registered document the decision relied on (three for S22), not only those whose terms were read | §6.2: the registered documents in the trace | One extra entry; the stale check watches more, which is stricter |
+| R21 | The flow records `trace['relied_entries']` (entries read through `use_entry`), added to the trace out-param only; basis documents and `register_used` include them | Credit reads its policy as a register entry, so R20 needs it | The gate catches any effect on committed results |
+| R22 | On the missing-row path the requester is the session's person or the agent's principal; a submitted requestor stays in `submitted`; an agent with no principal and no row is 404 | Nothing that picks people comes from the body | None |
+| R23 | For `self_sourced_basis`, the reference time is the subject's first ask | The floor and the threat belong to the subject; a fresh ask must not reset the window | An extra flag on legitimate edits between asks; the flag never blocks |
+| R24 | When another decision set the floor, the ratchet condition and flag name it | Two "version 1"s from different decisions read as a contradiction | Wording |
+| R25 | A below-floor version whose confirmer would be the requester fails closed: 503, nothing written | The requester never confirms her own lower level | Such an ask isn't recorded |
+| R26 | A dropped credit concurrence at the same band is confirmed by the floor band's holder | The contract names the person holding the floor level's role | The concurrer isn't asked about their own dropped check; flagged to garbanzo |
+| R27 | Basis building and missing-row synthesis moved to `prepare.py` before the lifecycle commands | `decisions.py` was doing several jobs | A refactor commit |
+| R28 | A resolution must fit its condition's source (`input_conflict`: confirmed or corrected record; `missing_record`: corrected record; `ratchet`: confirmed lower level); anything else is 422 DC-2 | Contract §5.6; the floor honours a confirmed lower level only on ratchet conditions | None |
+| R29 | A decline isn't held by DC-4 and closes the decision even with a condition open; `declined` derives before `not_ready` (amended) | Otherwise the decision stays live as `not_ready` and the next re-run drops the decline | None for safety; the UI shows declined, not not ready |
+| R30 | For SLA, the asker counts as the requester for withdraw and re-run; DC-3 doesn't bar the claim decider | Tickets name no requester | The asker could withdraw a decision someone else would have kept |
+| R31 | A re-run whose row now names a different requester fails closed (503, `decision.failed`) | Blocks reassigning a request to oneself and then approving it | A legitimate reassignment needs a new decision |
+| R32 | A resolved input conflict covers its figure again if the row returns to the exact value confirmed | The requester confirmed that figure; approvals reset per version, and the ratchet catches a lower level | One fewer re-confirmation when a figure goes A, B, A |
+| R33 | Every event that changes a decision's derived state goes on the subject's stream, redemptions, reports and incidents included | Writes re-check the subject's last `seq`, so an approval can't land on a spent decision | None |
+| R34 | A dry run that would clear answers `{cleared: false, reasons: []}` | The contract's union has no "would clear" variant, and `cleared: true` needs a clearance id | A client that tests `cleared` reads success as refusal; noted for garbanzo |
+| R35 | Redeeming and reporting need an authenticated session, whose actor is recorded (revised by R58) | The HTTP layer must not leave redemption unauthenticated | Any signed-in user may redeem a clearance whose id they hold |
+| R36 | A clearance's `condition_open` detail is the condition's full sentence, not the example's shortened text | The detail is free text, and the full sentence says what's needed | A test name overclaimed; renamed |
+| R37 | `OWM_LAB_ROUTES` is read case-insensitively and stripped; an unknown value is refused at startup | `False` must not leave sign-in-as-anyone on | None |
+| R38 | The gate runs pytest and mypy with the `owm-service` group | Type-checking the HTTP layer needs FastAPI; the gate must pass from a fresh environment | None |
+| R39 | The adapter's `fail` writes no effect; an unknown `OWM_LAB_ROUTES` raises; every `/api/v1` route needs a session; `/lab/clock` and `/lab/reset` need none | Each fails closed or fits the demo's threat model | Anyone reaching an enabled lab instance can reset it |
+| R40 | The session behind a redemption or report is recorded as `by` beside the executor; the event's actor stays the executor's system (revised by R58) | Keeps the adapter and the caller both on the record | Field naming |
+| R41 | S40 and S44 run with the clock after their latest obligation | §10: the nine SLA scenarios without `decided_at` run after every deadline | None |
+| R42 | A draft's drafter, or an agent's principal, may dismiss it, beside the owning function; an agent's draft also waits on its principal | A person's own draft stays with them; otherwise some drafts could never be cleared | None |
+| R43 | An agent mandate's `may_propose` is recorded, not enforced, at draft | v1.2 enforces mandates only at clearance; drafting grants nothing | An agent can draft kinds its mandate doesn't list |
+| R44 | A remind by a non-submitter is RR-3; a wrong-state step is DC-2 before RR-4; a direct submit has null `proposed_by`; a registrar error that isn't a rule is RR-5 (narrowed by R59) | Each fails closed and fits the contract's shapes | Rule labels |
+| R45 | Scoped RR-13 at approval also clashes on `under` dependencies, never `under` against `under` | RR-14 checks an agreement exists, not that it's live | An extra 409 forcing a re-review |
+| R46 | The content store reads and writes text as UTF-8 with `newline=''`, and removes a stale `.part` on failure | Register text must be served byte for byte | None |
+| R47 | An entry past its window whose successor is in force reads `superseded`; `expired` only when nothing live follows | `superseded` says more | A label |
+| R48 | Every register entry is in exactly one series; a lone document is a series of one | The UI names every entry by its series | A few one-entry series |
+| R49 | A missing copy on file reads `{sha256: '', matches: false, detail: 'missing', source_id: null}`; coverage labels use the service's wording | The shapes fit the TS; labels are display text | Wording |
+| R50 | A procedure approval writes its own kind, `procedure.approved`, which the register's replay and scoped RR-13 never read | A procedure version must not break the register's replay or RR-13 | None |
+| R51 | The change model and its helpers moved to `changes.py` before procedures were added | Keep files focused | A refactor commit |
+| R52 | RR-9 (no backdating against the register clock) applies to procedure versions at draft, submit and approval | Backdating a procedure into past decisions is the threat RR-9 blocks for documents | None |
+| R53 | ADM also refuses a text without `registered_kinds`; RR-5 numbering (next version only, one procedure per decision type) and RR-7 on the window; numbering is a procedure's stale check | Each fails closed; procedures version independently of the register | A stale procedure draft is caught by numbering, not RR-13 |
+| R54 | Service decisions check procedure files against the service's own mirror of approved texts, not `lab/owm_kernel/specs/` | In the service the approved text from the store is what runs | Tampering with the lab's spec files is invisible to the service, which never ran them |
+| R55 | The admission report is self-attested JSON supplied with the change: a known limit, with the two-person rule behind it | The service never runs the gate; a gate-signed report is roadmap | A forged report and a colluding approver could register an unadmitted procedure |
+| R56 | `waiting_on=me` on register changes is empty for an agent session, as `/approvals` is | An agent takes no register step (RR-2) | An agent UI must ask for its principal explicitly |
+| R57 | The attack test submits directly, without drafts; a probe with drafts over all 24 cases gave identical results | Identical outcomes | A draft-path regression isn't caught by that test; the queue's own draft tests still run |
+| R58 | Any authenticated session may redeem, but only the session that redeemed a clearance may report on it; another's report is 422 DC-2 (revises R35, R40) | CLR ids are sequential, so holding one proves nothing; a hostile report would open a false incident and block the real one | An adapter that redeems and reports from different sessions must share one |
+| R59 | At approval, an error that isn't a rule propagates and the change stays pending; draft and submit keep RR-5 (narrows R44) | The rules already passed at submit, so the error is environmental | A malformed change surfaces as an error at approval, not a refusal |
+| R60 | The overlay is writable only for §8.3's tables: edits on the request tables and tickets, inserts on those plus `ticket_events` and `service_credits`; any other table is 422 RR-5 | HR, accounts and customers decide approvers and tiers; the spec never made them editable | A demo that edits a customer tier needs that table re-opened deliberately |
