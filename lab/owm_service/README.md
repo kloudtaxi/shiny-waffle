@@ -62,10 +62,12 @@ startup, so a typo never leaves the routes switched on.
 
 ## Warning: the lab routes
 
-`/lab/*` lets anyone sign in as anyone and edit the CRM, ERP and service records, move the clock
-and reset the org. It is demo scaffolding outside the contract, with no real authentication. The
-image defaults it off. A demo deployment that turns it on must stay reachable only from web-next's
-server, never from the open network.
+`/lab/*` lets anyone sign in as anyone, edit the discount and credit requests and the service
+tickets, add ticket events and service credits, move the clock and reset the org. Every other
+system of record (HR, accounts, customers, products, invoices) is read-only, and a write to it is
+422 RR-5 (R60): those tables decide who approves and at what tier. It is demo scaffolding outside
+the contract, with no real authentication. The image defaults it off. A demo deployment that
+turns it on must stay reachable only from web-next's server, never from the open network.
 
 ## Live Jev
 

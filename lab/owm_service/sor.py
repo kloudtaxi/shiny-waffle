@@ -3,6 +3,12 @@ inserts and edits (spec §5). The kernel reads the overlay, so an edit changes a
 
 Events (stream `sor`): `sor.inserted` `{table, row}` and `sor.edited` `{table, key, field, was,
 now}`, one per field. The overlay is the base rows, then inserts, then edits, in event order.
+
+**What may be written** (ruling R60, spec §8.3): edits only on the request tables and tickets
+(`EDITABLE`); inserts on those plus `ticket_events` and `service_credits` (`INSERTABLE`). Every
+other table is read-only, and a write to it is refused 422 RR-5: HR, accounts, customers,
+products and invoices decide who approves and at what tier, so a requester who could write them
+could reroute her own approval. A table the org doesn't have is NotFound (ruling R16).
 """
 
 from __future__ import annotations
@@ -28,6 +34,8 @@ KEYS: Final = {
     "crm_accounts": "account_id",
     "customers": "erp_customer_id",
 }
+EDITABLE: Final = frozenset({"discount_requests", "credit_requests", "service_tickets"})
+INSERTABLE: Final = EDITABLE | {"ticket_events", "service_credits"}
 NUMERIC: Final = frozenset({
     "requested_discount_pct", "list_value_usd", "discount_value_usd", "net_value_usd",
     "current_limit_usd", "requested_limit_usd", "amount_usd",
@@ -153,11 +161,20 @@ class SystemsOfRecord:
                         r[ev.payload["field"]] = ev.payload["now"]
         return rows
 
+    def _writable(self, table: str, allowed: frozenset[str], what: str) -> list[str]:
+        """The table's columns, if the overlay may write it this way (ruling R60). A table the
+        org doesn't have is NotFound (ruling R16); one it may not write is 422 RR-5."""
+        cols = self._columns(table)
+        if table not in allowed:
+            raise _refuse(422, f"{table} is read-only here: the lab {what} "
+                               f"{', '.join(sorted(allowed))}.")  # fmt: skip
+        return cols
+
     def insert(
         self, tx: sqlite3.Connection, table: str, row: dict[str, str], *,
         actor: dict[str, Any] | None, at: datetime,
     ) -> None:  # fmt: skip
-        cols = self._columns(table)
+        cols = self._writable(table, INSERTABLE, "inserts rows only into")
         extra = sorted(set(row) - set(cols))
         if extra:
             raise _refuse(422, f"{table}: unknown column {extra[0]!r}")
@@ -175,10 +192,8 @@ class SystemsOfRecord:
         self, tx: sqlite3.Connection, table: str, key: str, fields: dict[str, str], *,
         actor: dict[str, Any] | None, at: datetime,
     ) -> None:  # fmt: skip
-        col = KEYS.get(table)
-        if col is None:
-            raise NotFound(f"table {table} takes inserts only")
-        cols = self._columns(table)
+        cols = self._writable(table, EDITABLE, "edits rows only in")
+        col = KEYS[table]  # every editable table has a key column
         current = next((r for r in self._in_tx(tx, table) if r.get(col) == key), None)
         if current is None:
             raise NotFound(f"{table} {key}")

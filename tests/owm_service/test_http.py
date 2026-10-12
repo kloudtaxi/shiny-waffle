@@ -483,6 +483,32 @@ def test_sor_edits_are_checked_and_attributed(
                        headers=sarah_tok).status_code == 409  # fmt: skip
 
 
+def test_sor_writes_outside_the_request_tables_are_refused(
+    client: TestClient, app: FastAPI, sarah_tok: Headers, agent_tok: Headers
+) -> None:
+    """Ruling R60 over HTTP, the final review's probe: Sarah can't insert HR rows that make a rep
+    the VP Sales, nor edit an account's tier; nothing is logged, and DR-9001's approval still
+    waits on Michael Torres."""
+    base = {"preferred_name": "", "department": "Sales", "location": "Chicago, IL"}
+    rows = [
+        {**base, "employee_id": "EMP-200", "full_name": "Michael Torres", "manager_id": "EMP-500",
+         "title": "Enterprise Account Executive", "email": "michael.torres@northstar.example"},
+        {**base, "employee_id": "EMP-500", "full_name": "Kelly Floyd", "manager_id": "EMP-300",
+         "title": "VP Sales", "email": "kelly.floyd@northstar.example"},
+    ]  # fmt: skip
+    for row in rows:
+        r = client.post("/lab/sor/employees", json=row, headers=sarah_tok)
+        assert r.status_code == 422 and r.json()["refusals"][0]["rule"] == "RR-5", r.text
+    for url, fields in [("/lab/sor/crm_accounts/CRM-2048", {"account_tier": "Commercial"}),
+                        ("/lab/sor/employees/EMP-500", {"title": "VP Sales"})]:  # fmt: skip
+        r = client.patch(url, json=fields, headers=sarah_tok)
+        assert r.status_code == 422 and r.json()["refusals"][0]["rule"] == "RR-5", url
+    org = app.state.owm.org
+    assert org.log.read(org.org_id, stream="sor") == []
+    (approval,) = ask_s22(client, agent_tok)["approvals"]
+    assert (approval["role"], approval["person"]["id"]) == ("VP Sales", "EMP-200")
+
+
 def test_clock_moves_forward_only(client: TestClient) -> None:
     r = client.post("/lab/clock", json={"to": "2026-09-24T09:00:00-05:00"})
     assert r.status_code == 200 and r.json()["now"].startswith("2026-09-24T09:00")
