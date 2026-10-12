@@ -35,9 +35,13 @@ insert, whose UNIQUE (org, subject, action) refuses a second redemption as `spen
 rolls back to before the mark, so a refused clearance stays unused (and a used one stays used),
 and logs `redeem.refused`.
 
-**Reporting** (`Clearances.report`): once per redeemed clearance. `failed` opens `INC-…` for the
-decision type's owning function (discount Sales, credit Finance, SLA Customer Support). The
-action stays spent either way, and with no report at all.
+**Reporting** (`Clearances.report`): once per redeemed clearance, and only by the session that
+redeemed it (ruling R58): any session may redeem, but a report whose `by` differs from the `by`
+on `clearance.redeemed` is 422 DC-2. CLR ids are sequential, so holding one proves nothing; this
+stops a stray session reporting `failed` first, which would open a false incident and block the
+real report. `failed` opens `INC-…` for the decision type's owning function (discount Sales,
+credit Finance, SLA Customer Support). The action stays spent either way, and with no report at
+all.
 
 **Streams.** `clearance.redeemed`, `execution.reported` and `incident.opened` change decisions'
 derived fields (`state`, `executed`), so they go on the subject's stream (ruling R33), where a
@@ -399,7 +403,8 @@ class Clearances:
         self, clearance_id: str, req: RedeemRequest, *, by: Actor | None = None
     ) -> Redeemed | NotRedeemed:
         """Redeem a clearance. `by` is the session that asked (ruling R35): recorded beside the
-        executor on the event this writes, never checked against the clearance's actor."""
+        executor on the event this writes, never checked against the clearance's actor. It is
+        then the one session that may report on the clearance (ruling R58)."""
         now = self.org.clock.now()  # before the write: never first read inside one
         at, org = now.isoformat(), self.org.org_id
         executor = req.executor.model_dump(mode="json")
@@ -473,7 +478,7 @@ class Clearances:
     ) -> ReportResponse:
         """The adapter's report on a redeemed clearance. `failed` opens an incident for the
         decision type's owning function; the action stays spent. `by` is recorded as in
-        `redeem`."""
+        `redeem`, and must be the session that redeemed it (ruling R58): another is DC-2."""
         now = self.org.clock.now()  # before the write: never first read inside one
         org = self.org.org_id
         caller = _by(by)
@@ -491,6 +496,9 @@ class Clearances:
             if redeemed is None:
                 raise _refused("DC-2", f"{clearance_id} hasn't been redeemed, so there is nothing "
                                        "to report.")  # fmt: skip
+            if redeemed.payload.get("by") != caller.get("by"):
+                raise _refused("DC-2", f"Only the session that redeemed {clearance_id} may report "
+                                       "on it.")  # fmt: skip
             if done is not None:
                 when = _hhmm(done.at.isoformat())
                 raise _refused("DC-2", f"{clearance_id} was already reported "

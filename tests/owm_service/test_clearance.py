@@ -458,6 +458,44 @@ def test_redeem_and_report_record_who_called(
     assert all(e.actor == {"kind": "system", **EXEC.model_dump()} for e in evs)
 
 
+def test_only_the_redeeming_session_may_report(
+    org: Org, dealdesk: Actor, sarah: Actor, michael: Actor, c: Clearances
+) -> None:
+    """Ruling R58: any session may redeem, but only the one that redeemed may report. Another
+    session's report (here Michael's `failed`, or one with no session at all) is DC-2 and writes
+    nothing: no false incident, and the redeemer's own report still lands."""
+    v2 = ready_s22(org, dealdesk, sarah, michael)
+    ok = clear15(c, dealdesk, v2)
+    body = RedeemRequest(params=ok.bound.params, executor=EXEC)
+    assert isinstance(c.redeem(ok.clearance_id, body, by=sarah), Redeemed)
+    failed = ReportRequest(status="failed", external_ref=None, detail="hostile")
+    for other in (michael, None):
+        with pytest.raises(Refused) as e:
+            c.report(ok.clearance_id, failed, by=other)
+        assert (e.value.status, e.value.refusals[0].rule) == (422, "DC-2")
+        assert e.value.refusals[0].detail == (
+            f"Only the session that redeemed {ok.clearance_id} may report on it.")  # fmt: skip
+    assert org.log.read(org.org_id, kinds=("execution.reported", "incident.opened")) == []
+    applied = ReportRequest(status="applied", external_ref="CRM-1", detail=None)
+    assert c.report(ok.clearance_id, applied, by=sarah).incident_id is None
+    rec = c.decisions.get(v2.decision_id)
+    assert [(x.report, x.incident_id) for x in rec.executed] == [("applied", None)]
+
+
+def test_a_redemption_without_a_session_is_reported_without_one(
+    org: Org, dealdesk: Actor, sarah: Actor, michael: Actor, c: Clearances
+) -> None:
+    """R58 from the other side: a clearance redeemed with no session (a core caller) takes no
+    report from a session."""
+    v2 = ready_s22(org, dealdesk, sarah, michael)
+    ok = clear15(c, dealdesk, v2)
+    assert isinstance(redeem(c, ok), Redeemed)
+    applied = ReportRequest(status="applied", external_ref=None, detail=None)
+    e = refused(lambda: c.report(ok.clearance_id, applied, by=sarah))
+    assert (e.status, e.refusals[0].rule) == (422, "DC-2")
+    assert report(c, ok.clearance_id, "applied") is None
+
+
 def test_redeem_without_a_caller_records_no_by(
     org: Org, dealdesk: Actor, sarah: Actor, michael: Actor, c: Clearances
 ) -> None:

@@ -443,6 +443,27 @@ def test_redeem_and_report_need_a_session_and_record_it(
     assert len(evs) == 4 and all(e.payload["by"] == michael for e in evs)
 
 
+def test_only_the_redeeming_session_may_report_over_http(
+    client: TestClient, app: FastAPI, agent_tok: Headers, sarah_tok: Headers, michael_tok: Headers
+) -> None:
+    """Ruling R58 over HTTP: Michael redeems; Sarah's and the agent's reports are 422 DC-2 and
+    open no incident; Michael's own report lands."""
+    did = ready_s22(client, agent_tok, sarah_tok, michael_tok)
+    cid = clear15(client, agent_tok, did)
+    body = {"params": P15, "executor": {"system": "crm", "adapter": "web-next"}}
+    assert client.post(f"/api/v1/clearances/{cid}/redeem", json=body,
+                       headers=michael_tok).json()["redeemed"] is True  # fmt: skip
+    rep = {"status": "failed", "external_ref": None, "detail": "hostile"}
+    for tok in (sarah_tok, agent_tok):
+        r = client.post(f"/api/v1/clearances/{cid}/report", json=rep, headers=tok)
+        assert r.status_code == 422 and r.json()["refusals"][0]["rule"] == "DC-2", r.text
+    org = app.state.owm.org
+    assert org.log.read(org.org_id, kinds=("execution.reported", "incident.opened")) == []
+    ok = {"status": "applied", "external_ref": "CRM-1", "detail": None}
+    r = client.post(f"/api/v1/clearances/{cid}/report", json=ok, headers=michael_tok)
+    assert r.status_code == 200 and r.json() == {"incident_id": None}
+
+
 # -- lab routes ---------------------------------------------------------------------------------
 def test_lab_routes_absent_when_disabled(tmp_path: Path) -> None:
     s = load_settings({"OWM_STATE_DIR": str(tmp_path / "state"), "OWM_LAB_ROUTES": "0"})
