@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Northstar OWM Lab (shiny-waffle)",
+    "output": ".archify/architecture-shiny-waffle-20261012-221939/shiny-waffle.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/kloudtaxi/shiny-waffle",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "2af58b6b8f2b06d9ec7802b31b7f861ee358f2cf"
+    }
+  },
+  "components": [
+    { "id": "admit", "type": "security", "label": "Admission gate", "sublabel": "spec_admission/admit.py",
+      "pos": [40, 40], "size": [150, 64],
+      "sources": [
+        { "path": "lab/spec_admission/admit.py", "line": 1, "end_line": 20, "label": "gate contract A/B/C" },
+        { "path": "lab/spec_admission/admit.py", "line": 98, "end_line": 104, "label": "loads truth + answer key" }
+      ] },
+    { "id": "answerkey", "type": "database", "label": "Answer key", "sublabel": "+ evaluation sheets",
+      "pos": [330, 40], "size": [150, 64],
+      "sources": [
+        { "path": "src/northstar/build.py", "line": 99, "end_line": 127, "label": "write answer-key, evaluation" }
+      ] },
+    { "id": "utopia", "type": "external", "label": "Utopia", "sublabel": "foundation under test",
+      "pos": [910, 40], "size": [150, 64],
+      "sources": [
+        { "path": "lab/utopia/utopia.py", "line": 36, "label": "UTOPIA_API default" },
+        { "path": "lab/utopia/blind_reader.py", "line": 132, "end_line": 145, "label": "Utopia MCP config" }
+      ] },
+    { "id": "ledger", "type": "frontend", "label": "Lab Ledger", "sublabel": "tracker artifact",
+      "pos": [1200, 40], "size": [150, 64],
+      "sources": [
+        { "path": "tracker/build_seed.py", "line": 1, "end_line": 9, "label": "seed from a run folder" },
+        { "path": "tracker/build_seed.py", "line": 699, "end_line": 867, "label": "main writes seed JSON" }
+      ] },
+    { "id": "truth", "type": "database", "label": "truth/", "sublabel": "hand-authored YAML",
+      "pos": [40, 200], "size": [150, 64],
+      "sources": [
+        { "path": "src/northstar/model/truth.py", "line": 153, "end_line": 214, "label": "load_truth + cross-check" }
+      ] },
+    { "id": "build", "type": "backend", "label": "northstar build", "sublabel": "Polyfactory + Faker",
+      "tag": "oracle gate",
+      "pos": [330, 200], "size": [150, 64],
+      "sources": [
+        { "path": "src/northstar/build.py", "line": 36, "end_line": 65, "label": "assemble + oracle check" },
+        { "path": "src/northstar/cli.py", "line": 15, "end_line": 38, "label": "build / check CLI" }
+      ] },
+    { "id": "evidence", "type": "database", "label": "dataset/evidence", "sublabel": "CSV + MD corpora",
+      "pos": [620, 200], "size": [150, 64],
+      "sources": [
+        { "path": "src/northstar/build.py", "line": 68, "end_line": 97, "label": "evidence + variants written" }
+      ] },
+    { "id": "drivers", "type": "backend", "label": "Utopia drivers", "sublabel": "utopia.py · blind_reader",
+      "pos": [910, 200], "size": [150, 64],
+      "sources": [
+        { "path": "lab/utopia/utopia.py", "line": 118, "end_line": 136, "label": "upload documents" },
+        { "path": "lab/utopia/utopia.py", "line": 169, "end_line": 175, "label": "arm A: ask" },
+        { "path": "lab/utopia/blind_reader.py", "line": 148, "end_line": 170, "label": "arm B: claude -p reader" }
+      ] },
+    { "id": "runs", "type": "database", "label": "runs/", "sublabel": "results + Jev recordings",
+      "pos": [1200, 200], "size": [150, 64],
+      "sources": [
+        { "path": "lab/utopia/blind_reader.py", "line": 287, "label": "--out runs/<run>/arm-b" },
+        { "path": "lab/owm_service/_lab.py", "line": 63, "end_line": 66, "label": "recorded Jev calls" }
+      ] },
+    { "id": "clients", "type": "external", "label": "HTTP clients", "sublabel": "web-next · smoke.py",
+      "pos": [330, 360], "size": [150, 64],
+      "sources": [
+        { "path": "lab/owm_service/smoke.py", "line": 1, "end_line": 6, "label": "S22 over HTTP" },
+        { "path": "lab/owm_service/README.md", "line": 77, "end_line": 84, "label": "web-next server only" }
+      ] },
+    { "id": "owm", "type": "backend", "label": "OWM service", "sublabel": "FastAPI :8000 · v1.2",
+      "pos": [620, 360], "size": [150, 64],
+      "sources": [
+        { "path": "lab/owm_service/app.py", "line": 284, "end_line": 316, "label": "create_app + 503 mapping" },
+        { "path": "lab/owm_service/org.py", "line": 64, "end_line": 80, "label": "Org reads corpus" },
+        { "path": "lab/owm_service/__main__.py", "line": 12, "end_line": 13, "label": "uvicorn :8000" }
+      ] },
+    { "id": "statedir", "type": "database", "label": "OWM_STATE_DIR", "sublabel": "events.sqlite · stores",
+      "pos": [910, 360], "size": [150, 64],
+      "sources": [
+        { "path": "lab/owm_service/org.py", "line": 66, "end_line": 83, "label": "log, stores, jev-calls" },
+        { "path": "lab/owm_service/events.py", "line": 167, "end_line": 182, "label": "SQLite event log" }
+      ] },
+    { "id": "typesafe", "type": "external", "label": "TypeSafe Jev", "sublabel": "api.typesafe.ai",
+      "pos": [330, 520], "size": [150, 64],
+      "sources": [
+        { "path": "lab/decision_engine/engine.py", "line": 69, "end_line": 81, "label": "key from env, HTTP engine" }
+      ] },
+    { "id": "core", "type": "backend", "label": "Decision core", "sublabel": "kernel · register · replay",
+      "pos": [620, 520], "size": [150, 64],
+      "sources": [
+        { "path": "lab/owm_service/_lab.py", "line": 1, "end_line": 14, "label": "the one boundary to lab code" },
+        { "path": "lab/owm_service/_lab.py", "line": 69, "end_line": 109, "label": "ReplayEngine, live cap" },
+        { "path": "lab/owm_service/_lab.py", "line": 340, "end_line": 381, "label": "decide via governed kernel" }
+      ] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Answer side · never loaded into a system under test", "wraps": ["admit", "answerkey", "truth", "build"] },
+    { "kind": "security-group", "label": "owm-service image", "wraps": ["owm", "core"] }
+  ],
+  "connections": [
+    { "id": "load-truth", "from": "truth", "to": "build", "label": "load + cross-check", "variant": "emphasis" },
+    { "id": "write-evidence", "from": "build", "to": "evidence", "label": "writes if coherent", "variant": "emphasis" },
+    { "id": "write-key", "from": "build", "to": "answerkey", "label": "expected results" },
+    { "id": "admit-scores", "from": "answerkey", "to": "admit", "label": "scores against" },
+    { "id": "admit-truth", "from": "truth", "to": "admit", "label": "scenarios" },
+    { "id": "upload-utopia", "from": "evidence", "to": "drivers", "label": "upload CSV + MD", "variant": "emphasis" },
+    { "id": "query-utopia", "from": "drivers", "to": "utopia", "label": "REST + MCP" },
+    { "id": "record-runs", "from": "drivers", "to": "runs", "label": "run results" },
+    { "id": "seed-ledger", "from": "runs", "to": "ledger", "label": "seed", "variant": "dashed" },
+    { "id": "read-corpus", "from": "evidence", "to": "owm", "label": "reads corpus", "variant": "emphasis" },
+    { "id": "call-api", "from": "clients", "to": "owm", "label": "HTTP /api/v1" },
+    { "id": "append-events", "from": "owm", "to": "statedir", "label": "appends events" },
+    { "id": "decide", "from": "owm", "to": "core", "label": "decide()" },
+    { "id": "live-jev", "from": "core", "to": "typesafe", "label": "live only, capped", "variant": "dashed" },
+    { "id": "replay-jev", "from": "runs", "to": "core", "label": "Jev recordings", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "amber", "title": "Build gate", "items": [
+      "assemble() runs the oracle on every scenario against its own corpus",
+      "Any mismatch raises IncoherentTruthError and nothing is written",
+      "Same seed gives a byte-identical dataset/"
+    ] },
+    { "dot": "emerald", "title": "OWM service", "items": [
+      "Every decision appends to a SQLite event log in OWM_STATE_DIR",
+      "A replay miss or kernel failure returns 503 cannot_decide",
+      "Jev goes live only with OWM_JEV=live, up to OWM_JEV_CAP calls",
+      "/lab/* demo routes: on locally, off in the image"
+    ] },
+    { "dot": "rose", "title": "Isolation", "items": [
+      "The image copies 4 lab packages, the evidence and the Jev recordings",
+      "No truth/, answer key, evaluation sheets, src/ or site/ in it",
+      "The service accepts an admission report; it never runs the gate"
+    ] }
+  ]
+}
