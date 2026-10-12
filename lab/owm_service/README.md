@@ -29,7 +29,9 @@ against FastAPI (R38). Plain `uv run mypy` fails without it.
 ```bash
 docker build -f lab/owm_service/Dockerfile -t owm-service:dev .
 docker run --rm owm-service:dev sh -c 'for p in truth dataset/answer-key dataset/evaluation site \
-  lab/utopia lab/spec_admission src README.md; do test ! -e "/app/$p" || exit 1; done; echo isolated'
+  src README.md; do test ! -e "/app/$p" || exit 1; done; \
+  test "$(ls /app/lab | tr "\n" " ")" = "decision_engine owm_kernel owm_register owm_service " \
+  && echo isolated'
 docker run -d --name owm-smoke -p 8000:8000 -e OWM_LAB_ROUTES=1 owm-service:dev
 uv run --group owm-service python lab/owm_service/smoke.py --base http://localhost:8000
 docker rm -f owm-smoke
@@ -38,6 +40,10 @@ docker rm -f owm-smoke
 The smoke script runs S22's main branch over HTTP (ask DR-9001 at 8%, Sarah confirms the record,
 Michael approves, the agent clears 15%, the adapter executes) and prints `S22: spent`. It needs
 the lab routes, so the run sets `OWM_LAB_ROUTES=1` explicitly.
+
+The isolation check proves the image holds no answer side, no `src/`, no repo README, and no
+`lab/` directory but the four below (so not the admission gate, `lab/spec_admission`, or any
+experiment driver).
 
 The build context is the repo root. The image copies only what the service runs:
 - the four lab packages it imports: `lab/owm_service`, `lab/owm_kernel`, `lab/owm_register` and

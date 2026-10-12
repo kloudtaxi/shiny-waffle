@@ -127,9 +127,9 @@ IMAGE_PACKAGES = {"lab/owm_service/", "lab/owm_kernel/", "lab/owm_register/",
 
 def test_the_image_copies_only_the_service_and_the_lab_packages_it_imports() -> None:
     """I-3: the Dockerfile copies the service and the three lab packages `_lab.py` puts on the
-    path, never the rest of `lab/` (`lab/utopia`, `lab/spec_admission`), `src/` or the repo
-    README, and installs the dependencies without the project. The README's `docker run …
-    isolated` check proves the same in a built image."""
+    path, never the rest of `lab/` (the admission gate, `lab/spec_admission`, and the experiment
+    drivers), `src/` or the repo README, and installs the dependencies without the project. The
+    README's `docker run … isolated` check proves the same in a built image."""
     text = (SERVICE / "Dockerfile").read_text()
     sources = {s for line in text.splitlines() if line.startswith("COPY ") and "--from" not in line
                for s in line.split()[1:-1]}  # fmt: skip
