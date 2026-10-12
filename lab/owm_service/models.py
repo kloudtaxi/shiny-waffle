@@ -1,16 +1,16 @@
-"""Pydantic mirror of `contract/owm-decisions.ts` (garbanzo 30977cd), field for field.
+"""Pydantic mirror of `contract/owm-decisions.ts` (garbanzo 589e0c7, v1.3), field for field.
 
 Every model forbids extra fields. TS unions become `Literal` unions; unions the TS
 discriminates are discriminated here (Actor on `kind`, Judgment on `form`, Findings on `type`,
-ClearanceResponse on `cleared`, RedeemResponse on `redeemed`). `Optional` TS fields (`?:`)
-default to None; `unknown` is `Any`.
+ClearanceResponse on `dry_run` then `cleared`, RedeemResponse on `redeemed`). `Optional` TS
+fields (`?:`) default to None; `unknown` is `Any`.
 """
 
 from __future__ import annotations
 
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Discriminator, Field, RootModel, Tag, model_validator
 
 
 class _M(BaseModel):
@@ -721,7 +721,42 @@ class NotCleared(_M):
     reasons: list[ClearanceReason]
 
 
-class ClearanceResponse(RootModel[Annotated[Cleared | NotCleared, Field(discriminator="cleared")]]):
+class DryRun(_M):
+    """A dry run's only response (v1.3, R34): `reasons` is empty exactly when `would_clear`. It
+    never says `cleared` and never carries a clearance id."""
+
+    dry_run: Literal[True]
+    would_clear: bool
+    reasons: list[ClearanceReason]
+
+    @model_validator(mode="after")
+    def _reasons_exactly_when_refused(self) -> DryRun:
+        if self.would_clear == bool(self.reasons):
+            raise ValueError("reasons must be empty exactly when would_clear")
+        return self
+
+
+def _clearance_variant(raw: Any) -> str:
+    """A dry run carries `dry_run`; the two real-attempt variants differ on `cleared`."""
+
+    def get(key: str) -> Any:
+        return raw.get(key) if isinstance(raw, dict) else getattr(raw, key, None)
+
+    if get("dry_run") is not None:
+        return "dry_run"
+    return "cleared" if get("cleared") is True else "not_cleared"
+
+
+class ClearanceResponse(
+    RootModel[
+        Annotated[
+            Annotated[Cleared, Tag("cleared")]
+            | Annotated[NotCleared, Tag("not_cleared")]
+            | Annotated[DryRun, Tag("dry_run")],
+            Discriminator(_clearance_variant),
+        ]
+    ]
+):
     pass
 
 

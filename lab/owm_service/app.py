@@ -50,6 +50,7 @@ from .models import (
     DecisionRequest,
     DecisionState,
     DecisionType,
+    DryRun,
     MeResponse,
     NotCleared,
     NotRedeemed,
@@ -145,7 +146,10 @@ def rerun(svc: Svc, actor: Me, decision_id: str, body: RerunRequest) -> Decision
 
 
 @api.post("/decisions/{decision_id}/clearance", response_model_exclude_unset=True)
-def clear(svc: Svc, actor: Me, decision_id: str, body: ClearanceRequest) -> Cleared | NotCleared:
+def clear(
+    svc: Svc, actor: Me, decision_id: str, body: ClearanceRequest
+) -> Cleared | NotCleared | DryRun:
+    """A real attempt is `Cleared` or `NotCleared`; a dry run is `DryRun` (v1.3, R34)."""
     return svc.clearances.ask(actor, decision_id, body)
 
 

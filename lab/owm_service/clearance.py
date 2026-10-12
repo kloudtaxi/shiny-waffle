@@ -25,7 +25,8 @@ contract's order:
 A decision that isn't `ready` never clears, even if no check above names why (`stale`, fail
 closed). Otherwise the clearance binds the decision, version, action, params and the session's
 actor, is single use and expires after `clearance_ttl` seconds. A dry run checks and logs, and
-issues nothing: when nothing would stop it, it answers `{cleared: false, reasons: []}`.
+issues nothing. It answers with its own shape, `{dry_run: true, would_clear, reasons}` (contract
+v1.3, R34), so it never says `cleared` and never carries a clearance id.
 
 **Redeeming** (`Clearances.redeem`), one write transaction, in this order: mark the clearance used
 (`used` if it already was, and nothing else is checked); `expired`; `mismatch`; the re-checks
@@ -85,6 +86,7 @@ from .models import (
     Cleared,
     DecisionRecord,
     DecisionType,
+    DryRun,
     NotCleared,
     NotRedeemed,
     Redeemed,
@@ -180,7 +182,9 @@ class Clearances:
         self.mandates: MandateBook = mandates if mandates is not None else Mandates(org)
 
     # -- asking -------------------------------------------------------------------------------
-    def ask(self, actor: Actor, decision_id: str, req: ClearanceRequest) -> Cleared | NotCleared:
+    def ask(
+        self, actor: Actor, decision_id: str, req: ClearanceRequest
+    ) -> Cleared | NotCleared | DryRun:
         if req.decision_id != decision_id:
             raise _refused("DC-2", f"decision_id: the body names {req.decision_id} and the path "
                                    f"{decision_id}; they must be the same.")  # fmt: skip
@@ -193,8 +197,10 @@ class Clearances:
             rec = self.decisions.get(decision_id)  # 404 for an unknown decision
             reasons, params = self._checks(actor, rec, req, now, tx)
             row: ClearanceRow | None = None
-            resp: Cleared | NotCleared
-            if reasons or req.dry_run:
+            resp: Cleared | NotCleared | DryRun
+            if req.dry_run:
+                resp = DryRun(dry_run=True, would_clear=not reasons, reasons=reasons)
+            elif reasons:
                 resp = NotCleared(cleared=False, reasons=reasons)
             else:
                 cid = self.org.log.next_id(tx, org, "CLR", 5)

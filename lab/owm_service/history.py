@@ -170,7 +170,7 @@ def _attempt(e: Event) -> DecisionEvent:
         text = (f"{resp['clearance_id']} was issued for {action} on version {n}, single use, "
                 f"until {_hhmm(resp['expires_at'])}.")  # fmt: skip
         return _event(at, e.actor, n, "clearance_cleared", text)
-    if not resp["reasons"]:  # ruling R34: a dry run nothing stops
+    if p.get("dry_run") and not resp["reasons"]:  # R34: a dry run that would clear
         text = f"A dry run of {action} on version {n}: nothing stops it. Nothing was issued."
         return _event(at, e.actor, n, "clearance_cleared", text)
     why = ", ".join(r["code"] for r in resp["reasons"])

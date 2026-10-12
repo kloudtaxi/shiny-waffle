@@ -29,6 +29,7 @@ from owm_service.models import (
     Cleared,
     DecisionRecord,
     DecisionRequest,
+    DryRun,
     Executor,
     NotCleared,
     NotRedeemed,
@@ -136,18 +137,23 @@ def creq(
     })  # fmt: skip
 
 
-def cleared(r: Cleared | NotCleared) -> Cleared:
+def cleared(r: Cleared | NotCleared | DryRun) -> Cleared:
     assert isinstance(r, Cleared), dump(r)
     return r
 
 
-def refused_with(r: Cleared | NotCleared) -> NotCleared:
+def refused_with(r: Cleared | NotCleared | DryRun) -> NotCleared:
     assert isinstance(r, NotCleared), dump(r)
     return r
 
 
-def codes(r: Cleared | NotCleared | Redeemed | NotRedeemed) -> list[str]:
-    assert isinstance(r, NotCleared | NotRedeemed), dump(r)
+def dry(r: Cleared | NotCleared | DryRun) -> DryRun:
+    assert isinstance(r, DryRun), dump(r)
+    return r
+
+
+def codes(r: Cleared | NotCleared | DryRun | Redeemed | NotRedeemed) -> list[str]:
+    assert isinstance(r, NotCleared | DryRun | NotRedeemed), dump(r)
     return [x.code for x in r.reasons]
 
 
@@ -623,7 +629,7 @@ def test_per_day_limit(org: Org, sarah: Actor, michael: Actor, dealdesk: Actor,
     actors' clearances don't count; the next day starts afresh."""
     v2 = ready_s22(org, dealdesk, sarah, michael)
     cleared(c.ask(sarah, v2.decision_id, creq(v2, P15)))
-    refused_with(c.ask(dealdesk, v2.decision_id, creq(v2, P15, dry_run=True)))
+    assert dry(c.ask(dealdesk, v2.decision_id, creq(v2, P15, dry_run=True))).would_clear
     for _ in range(200):
         cleared(c.ask(dealdesk, v2.decision_id, creq(v2, P15)))
     r = refused_with(c.ask(dealdesk, v2.decision_id, creq(v2, P15)))
@@ -638,17 +644,19 @@ def test_per_day_limit(org: Org, sarah: Actor, michael: Actor, dealdesk: Actor,
 def test_dry_run_issues_nothing_and_is_logged(
     org: Org, sarah: Actor, michael: Actor, dealdesk: Actor, c: Clearances
 ) -> None:
+    """A dry run answers with its own shape (R34, v1.3), refused or not, and issues nothing."""
     v1 = ask_s22(org, dealdesk)
-    assert codes(c.ask(dealdesk, v1.decision_id, creq(v1, P8, dry_run=True))) == [
-        "differs", "condition_open", "awaiting_approval"]  # fmt: skip
+    no = dry(c.ask(dealdesk, v1.decision_id, creq(v1, P8, dry_run=True)))
+    assert not no.would_clear
+    assert codes(no) == ["differs", "condition_open", "awaiting_approval"]
     v2 = ready_s22_from(org, v1, sarah, michael)
-    r = refused_with(c.ask(dealdesk, v2.decision_id, creq(v2, P15, dry_run=True)))
-    assert r.reasons == []  # nothing stops it, and nothing was issued
-    assert org.log.clearances() == []
+    r = dry(c.ask(dealdesk, v2.decision_id, creq(v2, P15, dry_run=True)))
+    assert dump(r) == {"dry_run": True, "would_clear": True, "reasons": []}  # no `cleared`, no id
+    assert org.log.clearances() == []  # nothing was issued
     ok = clear15(c, dealdesk, v2)
     attempts = c.attempts(v2.decision_id)
-    assert [(a.request.dry_run, a.response.root.cleared) for a in attempts] == [
-        (True, False), (True, False), (None, True)]  # fmt: skip
+    assert [(a.request.dry_run, type(a.response.root)) for a in attempts] == [
+        (True, DryRun), (True, DryRun), (None, Cleared)]  # fmt: skip
     assert all(a.actor == dealdesk for a in attempts)
     assert dump(attempts[-1].response) == dump(ok)
     assert attempts[0].request == creq(v1, P8, dry_run=True)
@@ -777,7 +785,7 @@ def test_request_checks(org: Org, dealdesk: Actor, sarah: Actor, c: Clearances) 
         c.ask(dealdesk, "DEC-9999", creq(v1, P8).model_copy(update={"decision_id": "DEC-9999"}))
     with pytest.raises(NotFound):
         c.redeem("CLR-99999", RedeemRequest(params=P15, executor=EXEC))
-    assert [a.response.root.cleared for a in c.attempts(v1.decision_id)] == [False]
+    assert [type(a.response.root) for a in c.attempts(v1.decision_id)] == [NotCleared]
 
 
 # -- the log is the record ----------------------------------------------------------------------

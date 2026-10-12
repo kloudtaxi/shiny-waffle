@@ -409,14 +409,23 @@ def test_an_unexpected_error_is_not_hidden(
     assert r.status_code == 500
 
 
-def test_dry_run_that_would_clear_is_passed_through(
+def test_a_dry_run_answers_with_its_own_shape(
     client: TestClient, agent_tok: Headers, sarah_tok: Headers, michael_tok: Headers
 ) -> None:
-    """Ruling R34: a dry run nothing stops answers `{cleared: false, reasons: []}`."""
+    """R34 (v1.3): `{dry_run: true, would_clear, reasons}`, never `cleared` or a clearance id."""
     did = ready_s22(client, agent_tok, sarah_tok, michael_tok)
     r = client.post(f"/api/v1/decisions/{did}/clearance",
                     json=clearance(did, 2, P15, dry_run=True), headers=agent_tok)  # fmt: skip
-    assert r.status_code == 200 and r.json() == {"cleared": False, "reasons": []}
+    assert r.status_code == 200 and r.json() == {"dry_run": True, "would_clear": True,
+                                                 "reasons": []}  # fmt: skip
+    r = client.post(f"/api/v1/decisions/{did}/clearance",
+                    json=clearance(did, 2, P8, dry_run=True), headers=agent_tok)  # fmt: skip
+    no = r.json()
+    assert r.status_code == 200 and (no["dry_run"], no["would_clear"]) == (True, False)
+    assert set(no) == {"dry_run", "would_clear", "reasons"} and codes(no)[0] == "differs"
+    attempts = client.get(f"/api/v1/decisions/{did}/clearances", headers=sarah_tok).json()
+    assert [a["response"] for a in attempts] == [
+        {"dry_run": True, "would_clear": True, "reasons": []}, no]  # fmt: skip
 
 
 # -- redeem and report over HTTP (R35) ------------------------------------------------------------

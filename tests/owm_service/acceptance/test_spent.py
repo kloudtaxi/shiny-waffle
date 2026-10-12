@@ -27,6 +27,7 @@ from owm_service.models import (
     ClearanceRequest,
     Cleared,
     DecisionRecord,
+    DryRun,
     Executor,
     NotCleared,
     NotRedeemed,
@@ -52,7 +53,9 @@ def clear(org: Org, actor: Actor, rec: DecisionRecord) -> Cleared | NotCleared:
     (act,) = rec.actions
     req = ClearanceRequest(decision_id=rec.decision_id, decision_version=rec.version,
                            action=act.action, params=act.params)  # fmt: skip
-    return Clearances(org, Decisions(org)).ask(actor, rec.decision_id, req)
+    out = Clearances(org, Decisions(org)).ask(actor, rec.decision_id, req)
+    assert not isinstance(out, DryRun), out  # a real attempt
+    return out
 
 
 def cleared(r: Cleared | NotCleared) -> Cleared:

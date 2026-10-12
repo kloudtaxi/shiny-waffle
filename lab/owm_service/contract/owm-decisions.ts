@@ -582,9 +582,14 @@ export type ClearanceResponse =
       expires_at: string;
       single_use: true;
     }
-  | { cleared: false; reasons: ClearanceReason[] };
+  | { cleared: false; reasons: ClearanceReason[] }
+  /** v1.3 (R34): a dry run's only response. `reasons` is empty exactly when `would_clear`. */
+  | { dry_run: true; would_clear: boolean; reasons: ClearanceReason[] };
 
-/** POST /clearances/{id}/redeem, by the adapter that holds the system's credential. */
+/**
+ * POST /clearances/{id}/redeem, by the adapter that holds the system's credential. v1.3 (R58): any
+ * authenticated actor may redeem; only the actor who redeemed may report.
+ */
 export interface RedeemRequest {
   params: Record<string, unknown>;
   executor: { system: string; adapter: string };
@@ -633,6 +638,7 @@ export interface WorkItem {
   waiting_on: PersonRef[];
   /** decision_approval only: the open blocking conditions holding it (DC-4). */
   held_by: { condition_id: string; what: string; who: PersonRef[] }[];
+  /** v1.3: the OWM resource (e.g. /api/v1/decisions/DEC-0001). Map it to a page with `workItemHref`. */
   href: string;
 }
 

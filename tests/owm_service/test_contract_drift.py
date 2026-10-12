@@ -76,9 +76,30 @@ def test_unions_discriminate() -> None:
     rec = DecisionRecord.model_validate(example("v1"))
     assert rec.actor.kind == "agent"
     cleared = ClearanceResponse.model_validate(example("cleared15"))
-    assert cleared.root.cleared is True
+    assert isinstance(cleared.root, models.Cleared)
     redeem = RedeemResponse.model_validate(example("replay"))
     assert redeem.root.redeemed is False
+
+
+def test_a_dry_run_has_its_own_variant() -> None:
+    """v1.3 (R34): `{dry_run: true, would_clear, reasons}`, with `reasons` empty exactly when
+    `would_clear`. It never says `cleared` and never carries a clearance id."""
+    stale = {"code": "stale", "detail": "The CRM changed."}
+    ok = ClearanceResponse.model_validate({"dry_run": True, "would_clear": True, "reasons": []})
+    assert isinstance(ok.root, models.DryRun) and ok.root.would_clear is True
+    no = ClearanceResponse.model_validate(
+        {"dry_run": True, "would_clear": False, "reasons": [stale]}
+    )
+    assert isinstance(no.root, models.DryRun) and no.root.reasons[0].code == "stale"
+    for bad in (
+        {"dry_run": True, "would_clear": True, "reasons": [stale]},
+        {"dry_run": True, "would_clear": False, "reasons": []},
+        {"dry_run": True, "would_clear": True, "reasons": [], "cleared": True},
+        {"dry_run": True, "would_clear": True, "reasons": [], "clearance_id": "CLR-00001"},
+        {"dry_run": False, "would_clear": True, "reasons": []},
+    ):
+        with pytest.raises(ValidationError):
+            ClearanceResponse.model_validate(bad)
 
 
 def test_extra_field_is_refused_on_nested_models() -> None:
