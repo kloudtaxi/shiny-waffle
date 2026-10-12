@@ -70,14 +70,19 @@ class Org:
         if not path.exists():
             self.register_store.mkdir(parents=True, exist_ok=True)
             fd, part = tempfile.mkstemp(dir=self.register_store, prefix=f".{sha}.", suffix=".part")
-            with os.fdopen(fd, "w") as f:
-                f.write(text)
-            os.replace(part, path)
+            try:
+                with os.fdopen(fd, "w", encoding="utf-8", newline="") as f:
+                    f.write(text)
+                os.replace(part, path)
+            except BaseException:
+                Path(part).unlink(missing_ok=True)
+                raise
         return sha
 
     def register_text(self, sha: str) -> str:
         """An approved text from the content store."""
-        return (self.register_store / f"{sha}.md").read_text()
+        with (self.register_store / f"{sha}.md").open(encoding="utf-8", newline="") as f:
+            return f.read()
 
     def kernel_register(self) -> Any:
         state = self.register_state()
@@ -92,6 +97,10 @@ class Org:
         return _lab.procedures_bootstrap()
 
     def on_mismatch(self) -> Literal["use_registered", "route"]:
+        """The register's setting (`settings.changed`, latest wins); `use_registered` until set."""
+        found = self.log.read(self.org_id, stream="register:settings", kinds=("settings.changed",))
+        if found and found[-1].payload["on_mismatch"] == "route":
+            return "route"
         return "use_registered"
 
     def policy_terms(self, doc_id: str) -> dict[str, Any] | None:
