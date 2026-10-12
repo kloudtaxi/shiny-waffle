@@ -210,6 +210,29 @@ def test_dismiss_draft_rules(org: Org, dealdesk: Actor, sarah: Actor, priya: Act
     assert refused(closed) == (422, ["DC-2"])
 
 
+def test_a_drafter_dismisses_their_own_draft(
+    org: Org, sarah: Actor, michael: Actor, priya: Actor, hannah: Actor, dealdesk: Actor
+) -> None:
+    """Ruling R42: the drafter (or the person an agent drafted for) may always dismiss a draft,
+    beside the owning function, including kinds their function doesn't own and unknown kinds."""
+    q = RegisterQueue(org)
+    credit_draft = q.draft(sarah, credit(submit=False))  # Finance owns it; Sarah is in Sales
+    with pytest.raises(Refused) as unrelated:
+        q.withdraw(michael, credit_draft.change_id)  # neither Finance nor its drafter
+    assert refused(unrelated) == (422, ["RR-3"])
+    assert q.withdraw(sarah, credit_draft.change_id).state == "withdrawn"
+    unknown = q.draft(michael, mandate(submit=False))  # no function owns an unknown kind
+    with pytest.raises(Refused) as other:
+        q.withdraw(priya, unknown.change_id)
+    assert refused(other) == (422, ["RR-3"])
+    assert q.withdraw(michael, unknown.change_id).state == "withdrawn"
+    agents = q.draft(dealdesk, mandate(submit=False))  # the Deal Desk Agent, for Sarah
+    with pytest.raises(Refused) as stranger:
+        q.withdraw(hannah, agents.change_id)
+    assert refused(stranger) == (422, ["RR-3"])
+    assert q.withdraw(sarah, agents.change_id).state == "withdrawn"
+
+
 def test_a_pending_change_is_withdrawn_by_its_submitter_only(
     org: Org, priya: Actor, elena: Actor
 ) -> None:

@@ -172,6 +172,13 @@ class _Change:
     def submitter_name(self) -> str:
         return _named([self.submitted_by] if self.submitted_by else [])
 
+    def drafters(self) -> set[str]:
+        """Who may dismiss the draft as its drafter (ruling R42): the person who drafted it, or
+        the person an agent drafted it for (`on_behalf_of`)."""
+        p = self.proposed_by or {}
+        person = p.get("person") if p.get("kind") == "person" else p.get("on_behalf_of")
+        return {str(person["id"])} if person else set()
+
     def what(self) -> str:
         if self.action == "revoke":
             return f"the revocation of {self.fields['target']}"
@@ -452,17 +459,20 @@ class RegisterQueue:
         return self.get(change_id)
 
     def withdraw(self, actor: Actor, change_id: str) -> RegisterChange:
-        """Dismiss a draft (anyone in the owning function) or withdraw a pending change (its
+        """Dismiss a draft (anyone in the owning function, or its drafter: the person who drafted
+        it, or the person an agent drafted it for; ruling R42) or withdraw a pending change (its
         submitter). Anyone else: RR-3."""
         me = self._person(actor, "withdraw")
         now = self.org.clock.now()
         with self.org.log.transaction() as tx:
             c = self._read(change_id, tx)
             if c.state == "draft":
-                if c.owning_function is None or me.function != c.owning_function:
+                owns = c.owning_function is not None and me.function == c.owning_function
+                if not owns and me.id not in c.drafters():
                     owner = c.owning_function or "no function (the registrar doesn't know its kind)"
-                    raise _refused(_no("RR-3", f"{me.name} is in {me.function}; a draft of "
-                                               f"{c.what()} is dismissed by {owner}, which owns "
+                    raise _refused(_no("RR-3", f"{me.name} is in {me.function} and didn't draft "
+                                               f"{c.change_id}; a draft of {c.what()} is dismissed "
+                                               f"by its drafter or by {owner}, which owns "
                                                "it."))  # fmt: skip
             elif c.state == "pending":
                 if me.id != c.submitter():
