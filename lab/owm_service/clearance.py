@@ -173,6 +173,32 @@ def _by(actor: Actor | None) -> dict[str, Any]:
     return {} if actor is None else {"by": actor.model_dump(mode="json")}
 
 
+def _as_served(attempt: Mapping[str, Any]) -> Any:
+    """A logged attempt's response as v1.3 serves it (R64): a dry run logged before v1.3, as
+    `{cleared: false, reasons}`, comes back as `{dry_run: true, would_clear, reasons}`."""
+    resp = attempt["response"]
+    if attempt.get("dry_run") and "dry_run" not in resp:
+        return {"dry_run": True, "would_clear": not resp["reasons"], "reasons": resp["reasons"]}
+    return resp
+
+
+def _same_actor(a: Any, b: Any) -> bool:
+    """Ruling R58 (contract v1.3 §7.2): the same person, or the same agent acting for the same
+    principal. An agent's version and mandate don't count. With no actor on either side (a core
+    call without a session, never the HTTP layer, R35) they match, as before."""
+
+    def who(x: Any) -> tuple[str, ...] | None:
+        if not isinstance(x, Mapping):
+            return None
+        if x.get("kind") == "person":
+            return ("person", str(x["person"]["id"]))
+        principal = x.get("on_behalf_of")
+        return ("agent", str(x.get("id")),
+                str(principal.get("id")) if isinstance(principal, Mapping) else "")  # fmt: skip
+
+    return who(a) == who(b)
+
+
 def _refused(rule: RuleCode, detail: str, status: int = 422) -> Refused:
     return Refused(status, [Refusal(rule=rule, detail=detail)])
 
@@ -233,7 +259,7 @@ class Clearances:
         return [
             ClearanceAttempt.model_validate({"at": e.at.isoformat(), "actor": e.actor,
                                              "request": e.payload["request"],
-                                             "response": e.payload["response"]})
+                                             "response": _as_served(e.payload)})
             for e in evs
         ]  # fmt: skip
 
@@ -503,7 +529,7 @@ class Clearances:
             if redeemed is None:
                 raise _refused("DC-2", f"{clearance_id} hasn't been redeemed, so there is nothing "
                                        "to report.")  # fmt: skip
-            if redeemed.payload.get("by") != caller.get("by"):
+            if not _same_actor(redeemed.payload.get("by"), caller.get("by")):
                 raise _refused("DC-2", f"Only the person or agent that redeemed {clearance_id} "
                                        "may report on it.")  # fmt: skip
             if done is not None:

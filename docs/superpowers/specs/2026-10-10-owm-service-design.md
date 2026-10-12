@@ -355,7 +355,10 @@ requester for withdraw and re-run, and DC-3 doesn't bar the claim decider (R30).
   - each confirmer resolves only their own condition, and each resolution re-runs the decision.
     The round keeps its ids while the re-run is still below the floor at the same level for the
     same confirmers, so nobody confirms twice. The floor drops to the opening version's level
-    only when every condition in the round is confirmed. A new level opens a new round (R61).
+    only when every condition in the round is confirmed, and `floor.confirmed_by` names the
+    confirmer who completed it. A new level opens a new round (R61);
+  - the concurrence holder's condition says so: "Confirm dropping the VP Sales concurrence: …".
+    The band holder's keeps "Confirm the lower approval level: …".
 - **When the requester holds the floor level's role,** the confirmer passes up exactly as an
   approval does: DC-3, the same rule and **the same code path as `passed_from`**. A ratchet and an
   approval can then never name different people. For discount that's the CRO, David Morgan
@@ -426,8 +429,9 @@ says so.
   `incident.opened`; the event's own actor stays the executor's system (R40).
   - **Any actor may redeem, but only the actor who redeemed a clearance may report on it**
     (R58, revising R35 and R40; contract v1.3 §7.2). That's the same person, or the same agent
-    acting for the same principal. It binds the actor, not the token, so a session bridge that
-    signs in again between the two steps can still report. Another actor's report is 422 DC-2
+    acting for the same principal; an agent's version and mandate don't count. It binds the
+    actor, not the token, so a session bridge that signs in again between the two steps can
+    still report. Another actor's report is 422 DC-2
     and writes nothing. CLR ids are sequential, so holding one proves nothing, and a hostile
     `failed` report would open a false incident and block the real one.
 
@@ -439,7 +443,7 @@ says so.
 | DC-5 (version not current), DC-6 (live decision), a write whose precondition moved | 409 |
 | Any other DC rule; extra body fields such as `as_of`; a body id that differs from the path | 422 `{refusals}` |
 | Jev can't answer: a replay miss with live off, or the live cap reached | 503, nothing written. Asking grants nothing, so failing closed is safe |
-| A clearance refusal | 200 `{cleared: false, reasons}` (it's an answer, §3.4) |
+| A clearance refusal | 200 `{cleared: false, reasons}` (it's an answer, §3.4); a dry run, refused or not, is 200 `{dry_run: true, would_clear, reasons}` (R64) |
 
 ### 6.9 S22 end to end, with the branch the ratchet closes
 
@@ -1028,10 +1032,10 @@ the final review. R61 to R64 build contract v1.3, after the user's rulings on R2
 | R55 | The admission report is self-attested JSON supplied with the change: a known limit, with the two-person rule behind it | The service never runs the gate; a gate-signed report is roadmap | A forged report and a colluding approver could register an unadmitted procedure |
 | R56 | `waiting_on=me` on register changes is empty for an agent session, as `/approvals` is | An agent takes no register step (RR-2) | An agent UI must ask for its principal explicitly |
 | R57 | The attack test submits directly, without drafts; a probe with drafts over all 24 cases gave identical results | Identical outcomes | A draft-path regression isn't caught by that test; the queue's own draft tests still run |
-| R58 | Any authenticated actor may redeem, but only the actor who redeemed a clearance may report on it; another's report is 422 DC-2 (revises R35, R40). It binds the actor, not the token. Adopted in contract v1.3 §7.2 | CLR ids are sequential, so holding one proves nothing; a hostile report would open a false incident and block the real one | An adapter that redeems as one actor and reports as another is refused |
+| R58 | Any authenticated actor may redeem, but only the actor who redeemed a clearance may report on it; another's report is 422 DC-2 (revises R35, R40). It binds the actor, not the token: the person, or the agent and its principal (its version and mandate don't count). Adopted in contract v1.3 §7.2 | CLR ids are sequential, so holding one proves nothing; a hostile report would open a false incident and block the real one | An adapter that redeems as one actor and reports as another is refused |
 | R59 | At approval, an error that isn't a rule propagates and the change stays pending; draft and submit keep RR-5 (narrows R44) | The rules already passed at submit, so the error is environmental | A malformed change surfaces as an error at approval, not a refusal |
 | R60 | The overlay is writable only for §8.3's tables: edits on the request tables and tickets, inserts on those plus `ticket_events` and `service_credits`; any other table is 422 RR-5 | HR, accounts and customers decide approvers and tiers; the spec never made them editable | A demo that edits a customer tier needs that table re-opened deliberately |
-| R61 | The user's R26 ruling (contract v1.3 §6.2), in the shape they chose: one `ratchet` condition per confirmer, each with one person in `who`. A round is the conditions one version opens. It is kept with its ids while the re-run is still below the floor at that version's level for the same confirmers, and the floor drops only when every condition in it is confirmed. A new level opens a new round, and a confirmation in an unfinished round lowers nothing | §5.6's `who` means any one person may resolve, `resolved.by` is one person, and §5.7 says resolving re-runs. One condition each keeps all three true without a new type field | A UI shows two work items for one lower level |
+| R61 | The user's R26 ruling (contract v1.3 §6.2), in the shape they chose: one `ratchet` condition per confirmer, each with one person in `who`. A round is the conditions one version opens. It is kept with its ids while the re-run is still below the floor at that version's level for the same confirmers, and the floor drops only when every condition in it is confirmed; `floor.confirmed_by` is the confirmer who completed the round. The round's size is read from the log too (one, plus each concurrence the floor required and the version drops), so a round opened before v1.3 with the band holder alone never completes without the concurrence's holder. A new level opens a new round, and a confirmation in an unfinished round lowers nothing. The concurrence holder's condition reads "Confirm dropping the <title> concurrence: …" | §5.6's `who` means any one person may resolve, `resolved.by` is one person, and §5.7 says resolving re-runs. One condition each keeps all three true without a new type field | A UI shows two work items for one lower level |
 | R62 | One person in two confirmer roles fails closed: 503, nothing written, as R25 | Contract v1.3: the confirmers are never the same person | Such an ask isn't recorded; no Northstar case reaches it |
 | R63 | After one of a round's confirmations, `what_changed` names who it still needs ("the lower level still needs Michael Torres to confirm it") | "Still below the floor" alone reads as if the confirmation did nothing | Wording |
-| R64 | The user's R34 ruling (contract v1.3 §7.1): every dry run answers `{dry_run: true, would_clear, reasons}`, refused or not; `ClearanceResponse` tells the variants apart by `dry_run`, then `cleared`; the history still calls a dry run that would clear `clearance_cleared` | The contract's new variant is a dry run's only response | Attempts logged before v1.3 keep the old shape, and the attempts list serves them as logged |
+| R64 | The user's R34 ruling (contract v1.3 §7.1): every dry run answers `{dry_run: true, would_clear, reasons}`, refused or not; `ClearanceResponse` tells the variants apart by `dry_run`, then `cleared`; a dry run logged before v1.3 is served in the new shape; the history still calls a dry run that would clear `clearance_cleared` | The contract's new variant is a dry run's only response | A client may read the history's `clearance_cleared` for a dry run as a real clearance; its detail says nothing was issued |

@@ -25,6 +25,7 @@ from owm_service.decisions import Decisions
 from owm_service.errors import NotFound, Refused
 from owm_service.models import (
     Actor,
+    AgentActor,
     ClearanceRequest,
     Cleared,
     DecisionRecord,
@@ -33,6 +34,7 @@ from owm_service.models import (
     Executor,
     NotCleared,
     NotRedeemed,
+    PersonActor,
     Redeemed,
     RedeemRequest,
     ReportRequest,
@@ -663,6 +665,45 @@ def test_dry_run_issues_nothing_and_is_logged(
     assert attempts[0].request == creq(v1, P8, dry_run=True)
     with pytest.raises(NotFound):
         c.attempts("DEC-9999")
+
+
+def test_reporting_binds_the_agent_and_its_principal_not_its_version(
+    org: Org, dealdesk: Actor, sarah: Actor, michael: Actor, c: Clearances
+) -> None:
+    """R58 (contract v1.3 §7.2, review M2): the same agent acting for the same principal may
+    report, even signed in again under another version; the same agent for another principal
+    may not."""
+    assert isinstance(dealdesk, AgentActor) and isinstance(michael, PersonActor)
+    v2 = ready_s22(org, dealdesk, sarah, michael)
+    ok = clear15(c, dealdesk, v2)
+    body = RedeemRequest(params=ok.bound.params, executor=EXEC)
+    assert isinstance(c.redeem(ok.clearance_id, body, by=dealdesk), Redeemed)
+    other = dealdesk.model_copy(update={"on_behalf_of": michael.person})
+    failed = ReportRequest(status="failed", external_ref=None, detail="hostile")
+    with pytest.raises(Refused):
+        c.report(ok.clearance_id, failed, by=other)
+    newer = dealdesk.model_copy(update={"version": "9.9.9", "mandate": None})
+    applied = ReportRequest(status="applied", external_ref="CRM-1", detail=None)
+    assert c.report(ok.clearance_id, applied, by=newer).incident_id is None
+
+
+def test_a_dry_run_logged_before_v13_is_served_in_its_shape(
+    org: Org, dealdesk: Actor, c: Clearances
+) -> None:
+    """R64 (review M4): a dry run logged as `{cleared: false, reasons: []}` before v1.3 is served
+    as `{dry_run: true, would_clear: true, reasons: []}`; a real refusal stays as it was."""
+    v1 = ask_s22(org, dealdesk)
+    req = creq(v1, P8, dry_run=True).model_dump(mode="json", exclude_unset=True)
+    with org.log.transaction() as tx:
+        for dry in (True, False):
+            org.log.append(tx, at=org.clock.now(), org=org.org_id, stream=v1.decision_id,
+                           kind="clearance.attempted", actor=dealdesk.model_dump(mode="json"),
+                           payload={"issued": False, "dry_run": dry, "decision_id": v1.decision_id,
+                                    "request": req, "response": {"cleared": False,
+                                                                 "reasons": []}})  # fmt: skip
+    old, real = c.attempts(v1.decision_id)
+    assert dump(old.response) == {"dry_run": True, "would_clear": True, "reasons": []}
+    assert dump(real.response) == {"cleared": False, "reasons": []}
 
 
 def ready_s22_from(org: Org, v1: DecisionRecord, sarah: Actor, michael: Actor) -> DecisionRecord:

@@ -132,18 +132,21 @@ def missing_record_condition(
 
 
 def ratchet_condition(
-    cid: str, needed: str, stands: str, version: int, confirmer: PersonRef
-) -> Condition:
+    cid: str, needed: str, stands: str, version: int, confirmer: PersonRef,
+    concurrence: str | None = None,
+) -> Condition:  # fmt: skip
     """Below the subject's floor (G-46): one confirmer's condition (`ratchet.confirmers`: the
-    floor's band holder, or the holder of a concurrence the version drops, R26). Each confirms
-    the lower level, or it stays not ready. `needed` and `stands` are `ratchet.phrases`'s: what
+    floor's band holder, or the holder of the `concurrence` the version drops, R61). Each confirms
+    the lower level, or it stays not ready; a concurrence holder's sentence says it's their
+    concurrence being dropped. `needed` and `stands` are `ratchet.phrases`'s: what
     the floor needed (`version 1 needed the VP Sales`, or `DEC-0001 version 1 needed …` for
     another decision's floor, R24) and where this version stands (`version 2 is within Sarah
     Chen's own authority`, `… is at the <title>`, `… drops the <title> concurrence`)."""
     return Condition.model_validate({
         "id": cid,
         "source": "ratchet",
-        "what": f"Confirm the lower approval level: {needed}; {stands}.",
+        "what": (f"Confirm dropping the {concurrence} concurrence: {needed}; {stands}."
+                 if concurrence else f"Confirm the lower approval level: {needed}; {stands}."),
         "who": [confirmer.model_dump()],
         "blocking": True,
         "field": None,
@@ -214,7 +217,7 @@ def carry_ratchet(
     same_level: Callable[[Condition], bool],
 ) -> list[Condition]:  # fmt: skip
     """The version's open ratchet conditions. A round is the ratchet conditions one version
-    opened, one per confirmer (R26). The last version's round is kept while one of its conditions
+    opened, one per confirmer (R61). The last version's round is kept while one of its conditions
     is open and the re-run is still below the floor (`fresh`, from `ratchet.assess`) at the level
     of the version that opened it (`same_level`), for the same confirmers: its open conditions
     keep their ids, and its confirmed ones are already history (`carry_forward`), so nobody

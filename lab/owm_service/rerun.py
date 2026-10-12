@@ -13,7 +13,7 @@ takes the kernel's result from there:
    and the write appends it with the version, in one transaction;
 3. the open ratchet conditions are kept with their ids while the version is still below the
    floor at the same level, for the same confirmers (`conditions.carry_ratchet`). After one of a
-   round's confirmations (R26), the line says who it still needs;
+   round's confirmations (R61, R63), the line says who it still needs;
 4. `previous.what_changed`: the cause (who confirmed what, what the record now says and who
    changed it, or who asked for the re-run), then where the version stands.
 """

@@ -11,14 +11,14 @@ everything under it is a pure function of the registered terms and the log:
 - **The floor belongs to the subject.** It starts at the first decision's level and rises with any
   later version or decision (the higher band, the union of the concurrences). Only
   `confirmed_lower_level` resolutions lower it, to the level of the version that opened the
-  ratchet, once every ratchet condition that version opened is confirmed (R26). Withdrawn,
+  ratchet, once every ratchet condition that version opened is confirmed (R61). Withdrawn,
   declined and spent decisions keep theirs with the subject. Each
   `decision.versioned` event keeps its version's level beside the version (`level`), so the floor
   is rebuilt from the log alone, never from a register that may have changed since.
 - **Below the floor** the outcome stands. The version gets a `ratchet` flag and a round of
   blocking `ratchet` conditions, one per confirmer (`confirmers`): the holder of the floor's role
-  and, for credit, the holder of each concurrence the floor required that this level drops (R26,
-  contract v1.3). Each is passed up exactly as an approval is (`_lab.pass_up`, separation of
+  and, for credit, the holder of each concurrence the floor required that this level drops (R61,
+  contract v1.3's R26). Each is passed up exactly as an approval is (`_lab.pass_up`, separation of
   duties, so never the requester), and one person never confirms twice.
 """
 
@@ -177,11 +177,16 @@ def floor_from(events: Iterable[Event], subject: str) -> FloorState | None:
     """The subject's floor, rebuilt from `decision.versioned` events (each keeps its version's
     `level`) and `confirmed_lower_level` resolutions of ratchet conditions, across every decision
     on the subject. A round (the ratchet conditions one version opened) lowers it once all of its
-    conditions are confirmed, by the resolution that completes it (R26)."""
+    conditions are confirmed, by the resolution that completes it (R61). How many confirmers a
+    round needs is read from the log too: one, plus one per concurrence the floor in force just
+    before the opening version required and that version's level drops. So a round opened before
+    v1.3, with the band holder alone, never completes without the concurrence's holder; a re-run
+    opens a full round."""
     floor: FloorState | None = None
     made: Made = []
     ratchets: dict[tuple[str, str], int] = {}  # (decision_id, condition id) -> opened_in_version
     confirmed: set[tuple[str, str]] = set()  # (decision_id, condition id)
+    needs: dict[tuple[str, int], int] = {}  # (decision_id, opening version) -> confirmers needed
     for e in events:
         if e.kind == "decision.versioned":
             v = e.payload["version"]
@@ -190,31 +195,36 @@ def floor_from(events: Iterable[Event], subject: str) -> FloorState | None:
             did, n = str(v["decision_id"]), int(v["version"])
             level = Level.of(e.payload.get("level"))
             made.append((did, n, level))
+            opens = False
             for c in v.get("conditions") or []:
                 if c.get("source") == "ratchet":
                     ratchets.setdefault((did, str(c["id"])), int(c["opened_in_version"]))
+                    opens = opens or int(c["opened_in_version"]) == n
+            if opens and floor is not None and level is not None:
+                needs[(did, n)] = 1 + len(floor.level.concurrences - level.concurrences)
             floor = after(floor, subject, level, did, n)
         elif (e.kind == "condition.resolved"
               and e.payload["resolved"]["resolution"] == CONFIRMED_LOWER):  # fmt: skip
             confirmed.add((str(e.payload["decision_id"]), str(e.payload["condition_id"])))
-            floor = _confirmed(floor, subject, made, ratchets, confirmed, e.payload)
+            floor = _confirmed(floor, subject, made, ratchets, confirmed, needs, e.payload)
     return floor
 
 
 def _confirmed(
     floor: FloorState | None, subject: str, made: Made, ratchets: Mapping[tuple[str, str], int],
-    confirmed: set[tuple[str, str]], resolution: Mapping[str, Any],
+    confirmed: set[tuple[str, str]], needs: Mapping[tuple[str, int], int],
+    resolution: Mapping[str, Any],
 ) -> FloorState | None:  # fmt: skip
     """A confirmed lower level, honoured only on a ratchet's condition, and only once its round
     is complete: every ratchet condition opened in the same version of the same decision is in
-    `confirmed` (R26). The floor then drops to the level of the version that opened the round (by
-    decision and `opened_in_version`, not by log order), and every version logged after that one
-    raises it as it would have. So the floor is the same whether the resolution is logged before
-    or after the re-run's version."""
+    `confirmed`, and there are as many as the round `needs` (R61). The floor then drops to the
+    level of the version that opened the round (by decision and `opened_in_version`, not by log
+    order), and every version logged after that one raises it as it would have. So the floor is
+    the same whether the resolution is logged before or after the re-run's version."""
     did = str(resolution["decision_id"])
     opened = ratchets.get((did, str(resolution["condition_id"])))
     round_ = {key for key, n in ratchets.items() if key[0] == did and n == opened}
-    if not round_ <= confirmed:
+    if opened is None or len(round_) < needs.get((did, opened), 1) or not round_ <= confirmed:
         return floor
     at = next((i for i, (d, n, _) in enumerate(made) if (d, n) == (did, opened)), None)
     level = None if at is None else made[at][2]
@@ -252,9 +262,9 @@ def _holder(org: Org, requester_id: str, title: str) -> PersonRef:
 
 def confirmers(org: Org, requester_id: str, floor: Level, level: Level) -> list[PersonRef]:
     """Who confirms `level` below `floor`, one ratchet condition each: the holder of the floor's
-    title, then (credit, R26 in contract v1.3) the holder of each concurrence the floor required
-    that `level` drops, by title. Never the requester, and never one person twice: they would be
-    confirming their own check, so that fails closed."""
+    title, then (credit, R61: R26 in contract v1.3) the holder of each concurrence the floor
+    required that `level` drops, by title. Never the requester, and never one person twice: they
+    would be confirming their own check, so that fails closed (R62)."""
     titles = [floor.title, *sorted(floor.concurrences - level.concurrences)]
     people = [_holder(org, requester_id, t) for t in titles]
     for i, p in enumerate(people):
@@ -372,8 +382,12 @@ def assess(
             raise ValueError(f"{subject} is below its floor and has no requester")
         needed, stands = phrases(prior, level, decision_id, version, requester.name,
                                  bool(auth.get("requestor_authorized")))  # fmt: skip
-        for i, who in enumerate(confirmers(org, requester.id, prior.level, level)):
-            conditions.append(ratchet_condition(f"c{next_n + i}", needed, stands, version, who))
+        dropped = [None, *sorted(prior.level.concurrences - level.concurrences)]
+        for i, (who, title) in enumerate(
+            zip(confirmers(org, requester.id, prior.level, level), dropped, strict=True)
+        ):
+            conditions.append(ratchet_condition(f"c{next_n + i}", needed, stands, version, who,
+                                                concurrence=title))  # fmt: skip
         flags.append(ratchet_flag(subject, needed))
     return Assessment(level, after(prior, subject, level, decision_id, version), conditions, flags)
 

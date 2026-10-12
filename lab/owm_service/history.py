@@ -9,8 +9,8 @@ merges both in log order (`seq`) and words each event for a person. Log event �
 - `decision.rerun_requested` → `rerun`; `condition.resolved` → `condition_resolved`, on the
   version it resolved; `decision.approved`, `.declined`, `.withdrawn` → `approved`, `declined`,
   `withdrawn`;
-- `clearance.attempted` → `clearance_cleared` when issued, or when a dry run would clear (ruling
-  R34; the detail says nothing was issued); otherwise `clearance_refused`;
+- `clearance.attempted` → `clearance_cleared` when issued, or when a dry run would clear (rulings
+  R34 and R64; the detail says nothing was issued); otherwise `clearance_refused`;
 - `redeem.refused` → `clearance_refused`, at redemption;
 - `clearance.redeemed`, `execution.reported`, `incident.opened` → `clearance_redeemed`,
   `execution_reported`, `incident_raised`.
