@@ -28,6 +28,8 @@ against FastAPI (R38). Plain `uv run mypy` fails without it.
 
 ```bash
 docker build -f lab/owm_service/Dockerfile -t owm-service:dev .
+docker run --rm owm-service:dev sh -c 'for p in truth dataset/answer-key dataset/evaluation site \
+  lab/utopia lab/spec_admission src README.md; do test ! -e "/app/$p" || exit 1; done; echo isolated'
 docker run -d --name owm-smoke -p 8000:8000 -e OWM_LAB_ROUTES=1 owm-service:dev
 uv run --group owm-service python lab/owm_service/smoke.py --base http://localhost:8000
 docker rm -f owm-smoke
@@ -37,11 +39,18 @@ The smoke script runs S22's main branch over HTTP (ask DR-9001 at 8%, Sarah conf
 Michael approves, the agent clears 15%, the adapter executes) and prints `S22: spent`. It needs
 the lab routes, so the run sets `OWM_LAB_ROUTES=1` explicitly.
 
-The build context is the repo root. `.dockerignore` keeps `truth/`, `dataset/answer-key/`,
-`dataset/evaluation/`, `site/`, `_owm-local/`, `.vault/`, `.git/` and all of `runs/` except the
-recorded Jev exchanges and the procedure admission specs out of the image, so the image enforces
-the lab's isolation itself. The image holds no key. It runs as a non-root user, with `/data` as
-its volume.
+The build context is the repo root. The image copies only what the service runs:
+- the four lab packages it imports: `lab/owm_service`, `lab/owm_kernel`, `lab/owm_register` and
+  `lab/decision_engine`;
+- `dataset/evidence/` and `dataset/evidence-variants/`;
+- from `runs/`, only the 13 recorded Jev exchange files and the procedure admission reports.
+
+The dependencies are installed with `uv sync --no-install-project`, so neither `src/` (the
+`northstar` package) nor the repo README is in the image. `.dockerignore` also keeps `truth/`,
+`dataset/answer-key/`, `dataset/evaluation/`, `site/`, `_owm-local/`, `.vault/`, `.owm-service/`,
+`.superpowers/`, `.claude/`, `.git/` and the rest of `runs/` out of the build context, so the
+image enforces the lab's isolation itself. The image holds no key. It runs as a non-root user,
+with `/data` as its volume.
 
 ## Environment variables
 

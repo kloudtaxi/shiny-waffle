@@ -8,11 +8,16 @@ FROM python:3.12.11-slim
 COPY --from=uv /uv /uvx /bin/
 WORKDIR /app
 
-COPY pyproject.toml uv.lock README.md ./
-COPY src/ src/
-RUN uv sync --frozen --group owm-service --no-dev
+# Dependencies only: the project itself (src/, the northstar package) is never installed, and the
+# repo's README never enters the image.
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --group owm-service --no-dev --no-install-project
 
-COPY lab/ lab/
+# Only the four lab packages the service imports (through _lab.py), never the rest of lab/
+COPY lab/owm_service/ lab/owm_service/
+COPY lab/owm_kernel/ lab/owm_kernel/
+COPY lab/owm_register/ lab/owm_register/
+COPY lab/decision_engine/ lab/decision_engine/
 COPY dataset/evidence/ dataset/evidence/
 COPY dataset/evidence-variants/ dataset/evidence-variants/
 # runs/: the .dockerignore lets through only the recorded Jev exchanges and the admission specs
