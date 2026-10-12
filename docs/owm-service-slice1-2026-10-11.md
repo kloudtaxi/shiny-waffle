@@ -146,3 +146,29 @@ documents, never the figure. No live run was needed or made.
 > **What's proven:** all 42 decision scenarios reproduce through the API; clearance refusals
 > (`differs`, `condition_open`, `awaiting_approval`, `spent`…) hold; and the ratchet stops a
 > requester who edits the CRM into her own band. All of it ran replay-only, at $0.
+
+## Slice 2 addendum: the attack set through the queue
+
+All 24 register attack cases (C01–C24, run 2026-10-08) were replayed through the two-step queue
+(draft not used; submit, then approve) on the base corpus at the registrar's fixed clock.
+**24/24 cases give the same admitted/refused result as the one-shot registrar (0 of 14 attacks
+admitted), and 4 cases name a different rule, each explained below.** Submit runs the content
+rules (RR-5 to RR-14) and the people rules before approval runs RR-4, so where a case breaks more
+than one rule the queue can name an earlier one than the one-shot did. Every listed case breaks
+more than one rule. Registrar only: no kernel decision, so no Jev and $0.
+
+- **C11** (an agent proposes a pricing policy): one-shot RR-1, queue RR-2. The approver EMP-200 is
+  not among the actors (RR-1), the submitter is an agent (RR-2), and the empty terms also miss the
+  pricing schema (RR-6). The queue's submit session is an agent, which can never submit.
+- **C13** (the submitter approves their own credit policy): one-shot RR-4, queue RR-6. The approver
+  is the submitter (RR-4), and the empty terms miss the six required credit terms (RR-6), which
+  submit checks before anyone is asked to approve.
+- **C14** (the wrong person approves a credit policy): one-shot RR-4, queue RR-6. EMP-200 is neither
+  the Finance head nor an Executive (RR-4), and the same empty terms miss the credit schema (RR-6).
+- **C19** (a pricing policy with a `replaces` relation): one-shot RR-6, queue "malformed". The terms
+  are empty so required terms are missing (RR-6), and `replaces` is not an allowed relation type
+  (RR-14). The queue's request body admits only `supersedes` and `under`, so it refuses the body
+  before the registrar runs.
+
+The differences are listed in `tests/owm_service/fixtures/attack_rule_differences.json`, and
+`tests/owm_service/test_attacks_through_queue.py` fails if they change.
