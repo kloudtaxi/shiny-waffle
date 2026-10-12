@@ -7,12 +7,16 @@ holding a system's credential would. Lab-only, outside the contract.
 2. **writes the effect** into the systems-of-record overlay, as actor `{kind: system, id:
    adapter}`, in one transaction:
    - `apply_discount`: the request's `status` becomes Approved, with `approved_by` (the approver's
-     email, or the requester's when no approval was needed) and `approved_on` (the clock's date),
-     and the CLR id is noted at the end of `justification`;
+     email, or the requester's when no approval was needed) and `approved_on` (the clock's date);
    - `set_credit_limit`: the credit request's `status`, `approved_by` and `approved_on`, alike;
    - `issue_service_credit`: a `service_credits` row whose `credit_id` is the CLR id, with
      `amount_usd`, so the SLA cap counts it next time;
 3. **reports** `applied`, or `failed` when `fail` is set.
+
+The effect never changes a column a kernel judgment reads (the discount and credit specs ask Jev
+about the request's `justification`), so a later ask on the subject replays and comes back
+`spent`. The clearance id needs no note in the row: `clearance.redeemed` and `execution.reported`
+carry it.
 
 With `fail`, nothing is written: a failed execution changed nothing in the system, and the report
 raises the incident. If the overlay refuses the write (the row is gone, a value doesn't fit), the
@@ -123,8 +127,6 @@ def _write(
         raise NotFound(f"{table} {key}")
     fields = {"status": "Approved", "approved_by": _approver_email(org, rec),
               "approved_on": today}  # fmt: skip
-    if bound.action == "apply_discount":
-        fields["justification"] = f"{current['justification']} [{clearance_id}]"
     with org.log.transaction() as tx:
         org.sor.edit(tx, table, key, fields, actor=ADAPTER, at=now)
     return {"system": SYSTEM[bound.action], "table": table, "id": key, "fields": fields}

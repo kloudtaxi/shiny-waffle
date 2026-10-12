@@ -7,6 +7,8 @@ bound to, writes the effect into the systems-of-record overlay as `{system: adap
 
 from __future__ import annotations
 
+import re
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -29,6 +31,8 @@ from owm_service.org import Org
 from owm_service.sessions import Sessions
 
 ADAPTER = {"kind": "system", "id": "adapter"}
+SPECS = Path(__file__).resolve().parents[2] / "lab/owm_kernel/specs"
+RECORD_COLUMN = re.compile(r'record(?:\["(\w+)"\]|\.get\("(\w+)")')
 P15: dict[str, Any] = {"request_id": "DR-9001", "account_id": "CRM-2048", "product": "NS-500",
                        "discount": 0.15}  # fmt: skip
 
@@ -93,9 +97,9 @@ def test_s22_applies_the_discount_in_the_crm(org: Org) -> None:
         "michael.torres@northstar.example",
         org.clock.today().isoformat(),
     )
-    assert row["justification"] == f"{before['justification']} [{cid}]"
+    assert row["justification"] == before["justification"]  # a judged column: never written
     assert {e.payload["field"] for e in edits(org, "discount_requests")} == {
-        "status", "approved_by", "approved_on", "justification"}  # fmt: skip
+        "status", "approved_by", "approved_on"}  # fmt: skip
     assert out["effect"]["table"] == "discount_requests" and out["effect"]["id"] == "DR-9001"
     rec = Decisions(org).get(v2.decision_id)
     assert rec.state == "spent" and [x.report for x in rec.executed] == ["applied"]
@@ -170,7 +174,9 @@ def test_unknown_clearance_is_404(org: Org) -> None:
         run(org, "CLR-99999")
 
 
-def test_credit_limit_is_approved_in_the_erp(org: Org) -> None:
+def cr9208_cleared(org: Org) -> tuple[DecisionRecord, Cleared]:
+    """A $650,000 credit request Michael raises (CR-9201's row), approved by Elena with the
+    CFO's concurrence, and cleared for Elena."""
     michael = person(org, "EMP-200")
     row = org.sor.row("credit_requests", "CR-9201")
     assert row is not None
@@ -184,7 +190,11 @@ def test_credit_limit_is_approved_in_the_erp(org: Org) -> None:
     v1 = ask(org, michael, "CR-9208", None, "credit")
     d.approve(elena, v1.decision_id, step(1))
     done = d.approve(person(org, "EMP-300"), v1.decision_id, step(1))
-    ok = clear(org, elena, done, done.actions[0].params)
+    return done, clear(org, elena, done, done.actions[0].params)
+
+
+def test_credit_limit_is_approved_in_the_erp(org: Org) -> None:
+    _, ok = cr9208_cleared(org)
     assert run(org, ok.clearance_id)["report"] == "applied"
     after = org.sor.row("credit_requests", "CR-9208")
     assert after is not None
@@ -194,6 +204,51 @@ def test_credit_limit_is_approved_in_the_erp(org: Org) -> None:
         org.clock.today().isoformat(),
     )
     assert after["requested_limit_usd"] == "650000"
+
+
+# -- I-1: a later decision on an executed subject is spent ------------------------------------
+def judged_columns() -> set[str]:
+    """Every request column a kernel spec passes to a Jev judgment (a `judge(` line that reads
+    `record[…]` or `record.get(…)`): changing one changes the request hash, so the replay misses."""
+    out: set[str] = set()
+    for spec in SPECS.glob("*.yaml"):
+        for line in spec.read_text().splitlines():
+            if "judge(" in line:
+                out |= {a or b for a, b in RECORD_COLUMN.findall(line)}
+    return out
+
+
+def test_the_judged_columns_scan_finds_the_justification() -> None:
+    assert "justification" in judged_columns()  # discount.yaml's and credit.yaml's basis
+
+
+def test_a_later_discount_ask_after_the_adapter_is_spent_at_no_cost(org: Org) -> None:
+    """I-1: after S22 runs through the adapter, a new ask on DR-9001 replays (no live call, no
+    `decision.failed`) and is `spent` at version 1, because the adapter's effect writes no column
+    a judgment reads."""
+    v2, ok, agent = s22_cleared(org)
+    assert run(org, ok.clearance_id, by=agent)["report"] == "applied"
+    later = ask(org, person(org, "EMP-101"), "DR-9001")
+    assert later.decision_id != v2.decision_id
+    assert (later.version, later.state) == (1, "spent")
+    assert org.log.read(org.org_id, kinds=("decision.failed",)) == []
+    assert not org.engine.calls.exists()  # replay only: nothing went out
+    written = {e.payload["field"] for e in edits(org, "discount_requests")}
+    assert written and not written & judged_columns()
+
+
+def test_a_later_credit_ask_after_the_adapter_is_spent_at_no_cost(org: Org) -> None:
+    """I-1 for `set_credit_limit`: the credit request's `status`, `approved_by` and `approved_on`
+    are no judgment's input either, so a new ask on CR-9208 replays and is `spent`."""
+    done, ok = cr9208_cleared(org)
+    assert run(org, ok.clearance_id)["report"] == "applied"
+    later = ask(org, person(org, "EMP-200"), "CR-9208", None, "credit")
+    assert later.decision_id != done.decision_id
+    assert (later.version, later.state) == (1, "spent")
+    assert org.log.read(org.org_id, kinds=("decision.failed",)) == []
+    assert not org.engine.calls.exists()
+    written = {e.payload["field"] for e in edits(org, "credit_requests")}
+    assert written and not written & judged_columns()
 
 
 def test_s36_inserts_the_service_credit(org: Org) -> None:
