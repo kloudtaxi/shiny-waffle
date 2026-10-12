@@ -452,6 +452,46 @@ def test_a_rule_failing_at_approval_leaves_refused(org: Org, hannah: Actor, marc
     assert org.register_state().version == 17
 
 
+def _unreachable(*args: Any, **kwargs: Any) -> Any:
+    raise OSError("the content store is unreachable")
+
+
+def test_a_non_rule_error_at_approval_propagates_and_leaves_pending(
+    org: Org, sarah: Actor, michael: Actor, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Ruling R59: at approval, a registrar error that isn't a rule (a store or lock fault)
+    surfaces and writes nothing. The change stays pending, and approves once the fault clears."""
+    q = RegisterQueue(org)
+    p = q.submit_new(sarah, case("C09"))
+    real = _lab.apply
+    monkeypatch.setattr(_lab, "apply", _unreachable)
+    with pytest.raises(OSError, match="unreachable"):
+        q.approve(michael, p.change_id)
+    got = q.get(p.change_id)
+    assert (got.state, got.refused, got.approved_by) == ("pending", None, None)
+    assert org.log.read(org.org_id, kinds=("change.refused", "change.approved")) == []
+    assert org.register_state().version == 17
+    monkeypatch.setattr(_lab, "apply", real)
+    assert q.approve(michael, p.change_id).state == "approved"
+    assert org.register_state().version == 18
+
+
+def test_a_non_rule_error_at_draft_or_submit_is_still_rr5(
+    org: Org, sarah: Actor, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """R59 keeps R44 before approval: a non-rule error is RR-5 (never a 500). A submit queues
+    nothing; a draft records it as its check."""
+    monkeypatch.setattr(_lab, "apply", _unreachable)
+    q = RegisterQueue(org)
+    with pytest.raises(Refused) as e:
+        q.submit_new(sarah, case("C09"))
+    assert refused(e) == (422, ["RR-5"])
+    assert "OSError: the content store is unreachable" in e.value.refusals[0].detail
+    assert q.list() == []
+    d = q.draft(sarah, case("C09", submit=False))
+    assert d.state == "draft" and [c.rule for c in d.checks or []] == ["RR-5"]
+
+
 def test_submitter_cannot_approve(org: Org, priya: Actor, michael: Actor) -> None:
     q = RegisterQueue(org)
     p = q.submit_new(priya, credit())

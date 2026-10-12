@@ -368,6 +368,29 @@ def test_registering_an_admitted_version(filtered: Org, org_at: OrgAt) -> None:
     assert v2["admission"]["gates"]["A"] == {"passed": True, "detail": "10 of 10 held"}
 
 
+def test_a_store_fault_at_approval_leaves_the_version_pending(
+    filtered: Org, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Ruling R59 for a procedure version: `procedures()` failing on a store problem at approval
+    surfaces and writes nothing. The version stays pending, and approves once the store is back."""
+    q = RegisterQueue(filtered)
+    pending = q.submit_new(person(filtered, "EMP-601"), procedure())
+    marcus = person(filtered, "EMP-602")
+    real = filtered.procedures
+
+    def gone(*args: Any, **kwargs: Any) -> Any:
+        raise FileNotFoundError("procedure-store: the approved text is missing")
+
+    monkeypatch.setattr(filtered, "procedures", gone)
+    with pytest.raises(FileNotFoundError, match="approved text is missing"):
+        q.approve(marcus, pending.change_id)
+    monkeypatch.setattr(filtered, "procedures", real)
+    assert q.get(pending.change_id).state == "pending"
+    kinds = ("change.refused", "procedure.approved")
+    assert filtered.log.read(filtered.org_id, kinds=kinds) == []
+    assert q.approve(marcus, pending.change_id).state == "approved"
+
+
 def test_the_approved_text_runs_from_the_orgs_store(filtered: Org) -> None:
     """The store holds the approved text by its fingerprint, and the specs directory the kernel
     checks holds it under the version's file name; without that directory the kernel would flag

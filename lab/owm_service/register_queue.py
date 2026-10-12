@@ -25,8 +25,10 @@ three points:
    (`_lab.register_result`) in `change.approved`, with `proposed_by` added to the entry, and the
    text goes to the org's content store.
 
-Stand-in runs are always thrown away; approval runs every rule again with the real people. A
-registrar error that isn't a rule (terms of the wrong shape, say) is reported as RR-5, never a 500.
+Stand-in runs are always thrown away; approval runs every rule again with the real people. At
+draft and submit, a registrar error that isn't a rule (terms of the wrong shape, say) is reported
+as RR-5, never a 500. At approval the same rules already passed, so such an error is
+environmental: it propagates, nothing is written, and the change stays pending (ruling R59).
 
 Before any of that, a principal in the body that differs from the session's is RR-1 (403), and an
 agent taking a people step (submit, approve, decline, withdraw, remind) is RR-2. A step on a change
@@ -212,7 +214,8 @@ class RegisterQueue:
     def approve(self, actor: Actor, change_id: str) -> RegisterChange:
         """A document: scoped RR-13, then the real run on the register as it is now. A procedure
         version: its rules again with the real people. Any refusal leaves the change refused with
-        the rule named, and is raised (409 for RR-13)."""
+        the rule named, and is raised (409 for RR-13). An error that isn't a rule propagates and
+        writes nothing, so the change stays pending (ruling R59)."""
         me = self._person(actor, "approve")
         now = self.org.clock.now()
         with self.org.log.transaction() as tx:
@@ -240,7 +243,7 @@ class RegisterQueue:
         if found is not None:
             return found
         new, found = self._run(tx, state, c.action, c.fields, c.text, state.version,
-                               c.submitter(), me.id, now.date())  # fmt: skip
+                               c.submitter(), me.id, now.date(), at_approval=True)  # fmt: skip
         if found is not None:
             return found
         result = _lab.register_result(state, new)
@@ -262,7 +265,7 @@ class RegisterQueue:
         `procedure.approved` with the entry. Never `change.approved` (ruling R50): neither the
         register's replay nor scoped RR-13 reads a procedure version."""
         entry, found = self._run(tx, None, c.action, c.fields, c.text, c.base_version,
-                                 c.submitter(), me.id, now.date())  # fmt: skip
+                                 c.submitter(), me.id, now.date(), at_approval=True)  # fmt: skip
         if found is not None:
             return found
         assert c.text is not None  # the rules refuse a version without one
@@ -474,12 +477,17 @@ class RegisterQueue:
     def _run(
         self, tx: sqlite3.Connection, state: Any, action: str, fields: Mapping[str, Any],
         text: str | None, base_version: int, submit_by: str | None, approve_by: str | None,
-        today: date,
+        today: date, *, at_approval: bool = False,
     ) -> tuple[Any, Refusal | None]:  # fmt: skip
         """The one place a change meets its rules, on the service clock's date: (what it would
         write, None), or (None, the first rule it breaks). A document goes through the registrar
         (the new state; the input state is never changed), a procedure version through its
-        rules against the procedure register as it is now (the entry; `procedures.check`)."""
+        rules against the procedure register as it is now (the entry; `procedures.check`).
+
+        An error that isn't a rule is RR-5 at draft and submit (a change the registrar can't
+        read is no 500). At approval it propagates instead (ruling R59): the same rules already
+        passed at submit, so it is environmental (a store or lock fault), not the change's
+        fault, and must not refuse the change for good."""
         try:
             if is_procedure(fields):
                 entries, _ = self.org.procedures(tx=tx)
@@ -491,6 +499,8 @@ class RegisterQueue:
         except _lab.RefusedError as e:
             return None, refusal(e)
         except Exception as e:  # noqa: BLE001 - a change the registrar can't read is no 500
+            if at_approval:
+                raise
             return None, _no("RR-5", f"the registrar can't read this change: "
                                      f"{type(e).__name__}: {e}")  # fmt: skip
 
