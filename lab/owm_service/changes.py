@@ -5,6 +5,12 @@ scoped RR-13), whether two changes clash (`overlap`, ruling R45) and the reviewe
 
 The register queue (`register_queue.py`) writes the events this module folds; its docstring lists
 their payloads. Nothing here runs a rule or writes anything.
+
+A procedure version (contract §4.5) is a `register` change of kind `procedure` whose fields are
+`proc_id`, `decision_type`, `version`, its window and `report` (the admission report, as JSON),
+with the spec as its `text`. The contract's `RegisterChange` has no fields of its own for it, so
+it reads as one: `doc_id` is the version's name (`PROC-SLA v2`, as the procedure register names a
+version it supersedes), `terms` the procedure's fields and `relations` the version it supersedes.
 """
 
 from __future__ import annotations
@@ -21,18 +27,34 @@ from . import _lab
 from .events import Event
 from .models import Actor, RegisterChange, RegisterRelation
 
+PROCEDURE: Final = "procedure"
+# the input fields of each shape of change: a document registered, a revocation, a procedure version
 FIELDS: Final[Mapping[str, tuple[str, ...]]] = {
     "register": ("doc_id", "kind", "title", "effective_from", "effective_to", "terms", "relations"),
     "revoke": ("target", "revoked_on"),
-}
+    PROCEDURE: ("kind", "proc_id", "decision_type", "version", "effective_from", "effective_to",
+                "report"),
+}  # fmt: skip
 NEEDED: Final[Mapping[str, tuple[str, ...]]] = {
     "register": ("doc_id", "kind", "effective_from"), "revoke": ("target",),
+    PROCEDURE: ("proc_id", "decision_type", "version", "effective_from"),
 }  # fmt: skip
 STATE_OF: Final[Mapping[str, str]] = {
     "change.drafted": "draft", "change.submitted": "pending", "change.approved": "approved",
-    "change.refused": "refused", "change.declined": "declined", "change.withdrawn": "withdrawn",
+    "procedure.approved": "approved", "change.refused": "refused", "change.declined": "declined",
+    "change.withdrawn": "withdrawn",
 }  # fmt: skip
 KINDS: Final = (*STATE_OF, "change.reminded")
+
+
+def is_procedure(fields: Mapping[str, Any]) -> bool:
+    """The change registers a procedure version."""
+    return fields.get("kind") == PROCEDURE
+
+
+def version_name(proc_id: str, version: int) -> str:
+    """A procedure version's name, as the procedure register names the version it supersedes."""
+    return f"{proc_id} v{version}"
 
 
 class ChangeBody(BaseModel):
@@ -55,6 +77,10 @@ class ChangeBody(BaseModel):
     relations: list[RegisterRelation] | None = None
     target: str | None = None
     revoked_on: str | None = None
+    proc_id: str | None = None
+    decision_type: str | None = None
+    version: int | None = None
+    report: dict[str, Any] | None = None
     proposed_by: Actor | None = None
     submitted_by: str | None = None
 
@@ -65,25 +91,30 @@ class ChangeBody(BaseModel):
             date.fromisoformat(v)
         return v
 
+    def shape(self) -> str:
+        """`register`, `revoke`, or `procedure` (a register of kind procedure)."""
+        return PROCEDURE if self.action == "register" and self.kind == PROCEDURE else self.action
+
     @model_validator(mode="after")
     def _fits_the_action(self) -> ChangeBody:
-        """A register names its document; a revoke names its target and carries no document."""
-        if self.action == "register":
-            foreign = FIELDS["revoke"]
-        else:
-            foreign = (*FIELDS["register"], "text")
-        missing = [k for k in NEEDED[self.action] if getattr(self, k) is None]
+        """A register names its document; a revoke names its target and carries no document; a
+        procedure version names the procedure, its decision type and version, and no document."""
+        shape = self.shape()
+        mine = {*FIELDS[shape], *(("text",) if shape != "revoke" else ())}
+        every = [k for s in FIELDS.values() for k in s] + ["text"]
+        foreign = list(dict.fromkeys(k for k in every if k not in mine))
+        missing = [k for k in NEEDED[shape] if getattr(self, k) is None]
         extra = [k for k in foreign if getattr(self, k) is not None]
         parts = [*([f"needs {', '.join(missing)}"] if missing else []),
                  *([f"takes no {', '.join(extra)}"] if extra else [])]  # fmt: skip
         if parts:
-            raise ValueError(f"a {self.action} change {' and '.join(parts)}")
+            raise ValueError(f"a {shape} change {' and '.join(parts)}")
         return self
 
     def fields(self) -> dict[str, Any]:
-        """The action's input fields, JSON-plain."""
+        """The input fields of the change's shape, JSON-plain."""
         dumped = self.model_dump(mode="json")
-        return {k: dumped[k] for k in FIELDS[self.action]}
+        return {k: dumped[k] for k in FIELDS[self.shape()]}
 
 
 def named(people: Sequence[Mapping[str, Any]]) -> str:
@@ -135,6 +166,8 @@ class Change:
     def what(self) -> str:
         if self.action == "revoke":
             return f"the revocation of {self.fields['target']}"
+        if is_procedure(self.fields):
+            return f"procedure {version_name(self.fields['proc_id'], self.fields['version'])}"
         return f"{self.fields['kind']} {self.fields['doc_id']}"
 
 
@@ -155,7 +188,7 @@ def fold(events: Sequence[Event]) -> Change:
         if e.kind == "change.submitted":
             c.base_version, c.submitted_by = p["base_version"], p["submitted_by"]
             c.submitted_at, c.submitted_seq, c.approvers = p["submitted_at"], e.seq, p["approvers"]
-        elif e.kind == "change.approved":
+        elif e.kind in ("change.approved", "procedure.approved"):
             c.approved_by, c.approved_at = p["approved_by"], p["approved_at"]
         elif e.kind == "change.refused":
             c.refused = p["refusals"]
@@ -169,10 +202,23 @@ def fold(events: Sequence[Event]) -> Change:
     return c
 
 
+def _as_document(fields: Mapping[str, Any]) -> dict[str, Any]:
+    """A procedure version's fields as the contract's document fields (module docstring)."""
+    pid, n = fields["proc_id"], fields["version"]
+    return {
+        "doc_id": version_name(pid, n), "kind": PROCEDURE,
+        "effective_from": fields["effective_from"], "effective_to": fields["effective_to"],
+        "terms": {"proc_id": pid, "decision_type": fields["decision_type"], "version": n},
+        "relations": ([{"type": "supersedes", "target": version_name(pid, n - 1)}]
+                      if isinstance(n, int) and n > 1 else []),
+    }  # fmt: skip
+
+
 def to_model(c: Change) -> RegisterChange:
     """The contract's `RegisterChange`. Optional fields are set only when they apply (ruling R13):
     a register's document fields (with `effective_to` even when null), a revoke's target and date,
-    the fingerprint when there is a text, and `checks` on a draft only."""
+    the fingerprint when there is a text, and `checks` on a draft only. A procedure version reads
+    as a document (`_as_document`); its admission report isn't shown."""
     out: dict[str, Any] = {
         "change_id": c.change_id, "action": c.action, "state": c.state,
         "base_version": c.base_version, "proposed_by": c.proposed_by,
@@ -181,7 +227,8 @@ def to_model(c: Change) -> RegisterChange:
         "approved_at": c.approved_at, "declined": c.declined, "refused": c.refused,
         "diff": c.diff,
     }  # fmt: skip
-    out |= {k: v for k, v in c.fields.items() if v is not None or k == "effective_to"}
+    fields = _as_document(c.fields) if is_procedure(c.fields) else c.fields
+    out |= {k: v for k, v in fields.items() if v is not None or k == "effective_to"}
     if c.sha256 is not None:
         out["sha256"] = c.sha256
     if c.state == "draft":

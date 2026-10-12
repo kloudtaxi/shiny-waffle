@@ -42,15 +42,21 @@ Events go on one stream per change, `change:<CHG-nnnn>`:
 - `change.approved`: `approved_by`, `approved_at`, `result` (what `Org.register_state` replays) and
   `touched` (what scoped RR-13 compares: `kind`, `scope`, `docs`, and `reads`, its `under`
   targets);
+- `procedure.approved`, for a procedure version instead: `approved_by`, `approved_at` and `entry`
+  (what `Org.procedures` replays);
 - `change.refused` (`refusals`), `change.declined` (`declined`), `change.withdrawn` (`by`, `at`),
   `change.reminded` (`by`, `at`, `on`: the clock's date).
 `changes.py` holds the change as data: the body, the fold of these events, the contract model,
 what a change touches, `overlap` and the reviewer's diff.
 
-Task 18's `procedure` kind plugs in at three seams, each one method: `_function` (a procedure's
-owner comes from its decision type), `_run` (the one place a change meets its rules: ADM through
-the procedure registrar instead of `registrar.apply`) and the approved `result` (a procedure
-version for `Org.procedures` instead of a register entry).
+**A procedure version** (kind `procedure`, contract §4.5) takes the same steps and differs at three
+seams: `_function` (its owner comes from its decision type), `_run` (its rules are
+`procedures.check`: the people rules for the decision type's owner, RR-5 on its numbering, and ADM
+through the lab's procedure registrar, instead of `registrar.apply`) and the approval (scoped RR-13
+doesn't apply, and it writes `procedure.approved`, never `change.approved`, so the document
+register's replay and scoped RR-13 never see it; ruling R50). The register's version doesn't move,
+so a procedure change's `base_version` is recorded and not compared: the next-version rule is its
+stale check.
 """
 
 from __future__ import annotations
@@ -62,13 +68,14 @@ from collections.abc import Mapping
 from datetime import date, datetime
 from typing import Any, Final
 
-from . import _lab
+from . import _lab, procedures
 from .changes import (
     KINDS,
     Change,
     ChangeBody,
     diff,
     fold,
+    is_procedure,
     named,
     overlap,
     target_entry,
@@ -155,12 +162,11 @@ class RegisterQueue:
             state = self.org.register_state(tx=tx)
             function = self._function(body.action, fields, state)
             submit_by, approve_by = self._stand_ins(function)
-            change = _registrar_change(body.action, fields, body.base_version, submit_by,
-                                       approve_by)  # fmt: skip
-            _, found = self._run(state, change, body.text, now.date())
+            _, found = self._run(tx, state, body.action, fields, body.text, body.base_version,
+                                 submit_by, approve_by, now.date())  # fmt: skip
             cid = self.org.log.next_id(tx, self.org.org_id, "CHG", 4)
             self._append(tx, actor, now, cid, "change.drafted", {
-                **self._opening(cid, body, fields, function, state),
+                **self._opening(tx, cid, body, fields, function, state),
                 "proposed_by": actor.model_dump(mode="json"), "proposed_at": now.isoformat(),
                 "checks": [] if found is None else [_dump(found)],
             })  # fmt: skip
@@ -175,11 +181,11 @@ class RegisterQueue:
         with self.org.log.transaction() as tx:
             state = self.org.register_state(tx=tx)
             function = self._function(body.action, fields, state)
-            self._dry_submit(state, body.action, fields, body.text, body.base_version, me,
+            self._dry_submit(tx, state, body.action, fields, body.text, body.base_version, me,
                              function, now.date())  # fmt: skip
             cid = self.org.log.next_id(tx, self.org.org_id, "CHG", 4)
             self._append(tx, actor, now, cid, "change.submitted", {
-                **self._opening(cid, body, fields, function, state),
+                **self._opening(tx, cid, body, fields, function, state),
                 "proposed_by": None, "proposed_at": None,
                 **self._submitted(me, now, body.base_version, function),
             })  # fmt: skip
@@ -195,7 +201,7 @@ class RegisterQueue:
             c = self._read(change_id, tx)
             self._in(c, "draft")
             state = self.org.register_state(tx=tx)
-            self._dry_submit(state, c.action, c.fields, c.text, base_version, me,
+            self._dry_submit(tx, state, c.action, c.fields, c.text, base_version, me,
                              c.owning_function, now.date())  # fmt: skip
             self._append(tx, actor, now, change_id, "change.submitted",
                          {"change_id": change_id,
@@ -204,37 +210,68 @@ class RegisterQueue:
 
     # -- the steps on a change ----------------------------------------------------------------
     def approve(self, actor: Actor, change_id: str) -> RegisterChange:
-        """Scoped RR-13, then the real run on the register as it is now. Any refusal leaves the
-        change refused with the rule named, and is raised (409 for RR-13)."""
+        """A document: scoped RR-13, then the real run on the register as it is now. A procedure
+        version: its rules again with the real people. Any refusal leaves the change refused with
+        the rule named, and is raised (409 for RR-13)."""
         me = self._person(actor, "approve")
         now = self.org.clock.now()
         with self.org.log.transaction() as tx:
             c = self._read(change_id, tx)
             self._in(c, "pending")
             self._approver(c, me)
-            state = self.org.register_state(tx=tx)
-            mine = touched(c.action, c.fields, state)
-            found = self._moved(c, mine, state, tx)
-            new: Any = None
-            if found is None:
-                change = _registrar_change(c.action, c.fields, state.version, c.submitter(), me.id)
-                new, found = self._run(state, change, c.text, now.date())
+            if is_procedure(c.fields):
+                found = self._approve_procedure(tx, actor, now, c, me)
+            else:
+                found = self._approve_document(tx, actor, now, c, me)
             if found is not None:
                 self._append(tx, actor, now, change_id, "change.refused",
                              {"change_id": change_id, "refusals": [_dump(found)]})  # fmt: skip
-            else:
-                result = _lab.register_result(state, new)
-                if "entry" in result:
-                    result["entry"]["proposed_by"] = c.proposed_by
-                    if c.text is not None:
-                        self.org.put_register_text(c.text)
-                self._append(tx, actor, now, change_id, "change.approved", {
-                    "change_id": change_id, "approved_by": me.model_dump(mode="json"),
-                    "approved_at": now.isoformat(), "result": result, "touched": mine,
-                })  # fmt: skip
         if found is not None:
             raise _refused(found)
         return self.get(change_id)
+
+    def _approve_document(
+        self, tx: sqlite3.Connection, actor: Actor, now: datetime, c: Change, me: PersonRef
+    ) -> Refusal | None:
+        """Scoped RR-13, then the registrar; on a pass, `change.approved` with what it wrote."""
+        state = self.org.register_state(tx=tx)
+        mine = touched(c.action, c.fields, state)
+        found = self._moved(c, mine, state, tx)
+        if found is not None:
+            return found
+        new, found = self._run(tx, state, c.action, c.fields, c.text, state.version,
+                               c.submitter(), me.id, now.date())  # fmt: skip
+        if found is not None:
+            return found
+        result = _lab.register_result(state, new)
+        if "entry" in result:
+            result["entry"]["proposed_by"] = c.proposed_by
+            if c.text is not None:
+                self.org.put_register_text(c.text)
+        self._append(tx, actor, now, c.change_id, "change.approved", {
+            "change_id": c.change_id, "approved_by": me.model_dump(mode="json"),
+            "approved_at": now.isoformat(), "result": result, "touched": mine,
+        })  # fmt: skip
+        return None
+
+    def _approve_procedure(
+        self, tx: sqlite3.Connection, actor: Actor, now: datetime, c: Change, me: PersonRef
+    ) -> Refusal | None:
+        """The version's rules with the submitter and the approver, against the procedure
+        register as it is now; on a pass, the text to the procedure store and
+        `procedure.approved` with the entry. Never `change.approved` (ruling R50): neither the
+        register's replay nor scoped RR-13 reads a procedure version."""
+        entry, found = self._run(tx, None, c.action, c.fields, c.text, c.base_version,
+                                 c.submitter(), me.id, now.date())  # fmt: skip
+        if found is not None:
+            return found
+        assert c.text is not None  # the rules refuse a version without one
+        self.org.put_procedure_text(c.text)
+        self._append(tx, actor, now, c.change_id, "procedure.approved", {
+            "change_id": c.change_id, "approved_by": me.model_dump(mode="json"),
+            "approved_at": now.isoformat(), "entry": procedures.approved(entry, c, now.date()),
+        })  # fmt: skip
+        return None
 
     def decline(self, actor: Actor, change_id: str, note: str | None) -> RegisterChange:
         """An approver declines a pending change, with a note. No rule is named."""
@@ -410,20 +447,32 @@ class RegisterQueue:
         return head or executive, executive
 
     def _function(self, action: str, fields: Mapping[str, Any], state: Any) -> str | None:
-        """The function owning the change's kind (a revocation: its target's), or None when the
-        registrar doesn't know the kind (RR-5) or the target isn't registered (RR-12)."""
+        """The function owning the change's kind (a revocation: its target's; a procedure
+        version: its decision type's), or None when the registrar doesn't know the kind (RR-5),
+        the target isn't registered (RR-12) or the decision type is unknown (RR-5)."""
+        if is_procedure(fields):
+            return procedures.owner(fields.get("decision_type"))
         target = target_entry(fields, state) if action == "revoke" else None
         kind = fields.get("kind") if action == "register" else target and target["kind"]
         return _lab.OWNER.get(kind) if isinstance(kind, str) else None
 
     # -- the registrar ------------------------------------------------------------------------
     def _run(
-        self, state: Any, change: dict[str, Any], text: str | None, today: date
-    ) -> tuple[Any, Refusal | None]:
-        """One registrar run on the service clock's date: (the new state, None), or (None, the
-        first rule it breaks). The input state is never changed."""
-        acting = {p for p in (change["submit_by"], change["approve_by"]) if p is not None}
+        self, tx: sqlite3.Connection, state: Any, action: str, fields: Mapping[str, Any],
+        text: str | None, base_version: int, submit_by: str | None, approve_by: str | None,
+        today: date,
+    ) -> tuple[Any, Refusal | None]:  # fmt: skip
+        """The one place a change meets its rules, on the service clock's date: (what it would
+        write, None), or (None, the first rule it breaks). A document goes through the registrar
+        (the new state; the input state is never changed), a procedure version through its
+        rules against the procedure register as it is now (the entry; `procedures.check`)."""
         try:
+            if is_procedure(fields):
+                entries, _ = self.org.procedures(tx=tx)
+                return procedures.check(entries, self.staff, fields, text, submit_by, approve_by,
+                                        today), None  # fmt: skip
+            change = _registrar_change(action, fields, base_version, submit_by, approve_by)
+            acting = {p for p in (submit_by, approve_by) if p is not None}
             return _lab.apply(state, change, text, acting, clock=today, staff=self.staff), None
         except _lab.RefusedError as e:
             return None, refusal(e)
@@ -432,13 +481,13 @@ class RegisterQueue:
                                      f"{type(e).__name__}: {e}")  # fmt: skip
 
     def _dry_submit(
-        self, state: Any, action: str, fields: Mapping[str, Any], text: str | None,
-        base_version: int, me: PersonRef, function: str | None, today: date,
+        self, tx: sqlite3.Connection, state: Any, action: str, fields: Mapping[str, Any],
+        text: str | None, base_version: int, me: PersonRef, function: str | None, today: date,
     ) -> None:  # fmt: skip
         """The submit's dry run: the real submitter, a stand-in approver. Raises its refusal."""
         stand_in = next((p for p in self._may_approve(function) if p != me.id), None)
-        change = _registrar_change(action, fields, base_version, me.id, stand_in)
-        _, found = self._run(state, change, text, today)
+        _, found = self._run(tx, state, action, fields, text, base_version, me.id, stand_in,
+                             today)  # fmt: skip
         if found is not None:
             raise _refused(found)
 
@@ -458,15 +507,19 @@ class RegisterQueue:
 
     # -- events -------------------------------------------------------------------------------
     def _opening(
-        self, cid: str, body: ChangeBody, fields: dict[str, Any], function: str | None,
-        state: Any,
+        self, tx: sqlite3.Connection, cid: str, body: ChangeBody, fields: dict[str, Any],
+        function: str | None, state: Any,
     ) -> dict[str, Any]:  # fmt: skip
         """What a new change records first, whether drafted or submitted directly."""
+        sha = None if body.text is None else _lab.fingerprint(body.text)
+        if is_procedure(fields):
+            shown = procedures.diff(fields, sha, self.org.procedures(tx=tx)[0])
+        else:
+            shown = diff(body.action, fields, state)
         return {
             "change_id": cid, "action": body.action, "base_version": body.base_version,
-            "fields": fields, "text": body.text,
-            "sha256": None if body.text is None else _lab.fingerprint(body.text),
-            "owning_function": function, "diff": diff(body.action, fields, state),
+            "fields": fields, "text": body.text, "sha256": sha, "owning_function": function,
+            "diff": shown,
         }  # fmt: skip
 
     def _submitted(

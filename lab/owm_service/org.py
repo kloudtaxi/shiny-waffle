@@ -3,13 +3,23 @@ the overlay evidence, the register and the procedures (spec §2).
 
 The register is the registrar's bootstrap plus the stored result of every approved change
 (`change.approved`, written by the register queue), replayed in log order without running any
-rule. Approved texts live in the org's content store, `register-store/<sha256>.md`."""
+rule. Approved texts live in the org's content store, `register-store/<sha256>.md`.
+
+The procedures are the procedure register's bootstrap plus every approved procedure version
+(`procedure.approved`, also written by the register queue; ruling R50 keeps it apart from the
+document register). Their approved texts live in `procedure-store/<sha256>.yaml`, the bootstrap's
+copied there from the lab's store, and that is what decisions run. `procedure-specs/<file>`
+mirrors each version's stored text under its file name: the kernel checks a version's file
+against its registered sha256 (`incident: the procedure file … differs`), so pointed at this
+mirror that check verifies the store itself."""
 
 from __future__ import annotations
 
+import copy
 import os
 import sqlite3
 import tempfile
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any, Literal
 
@@ -21,10 +31,32 @@ from .people import People
 from .sor import SystemsOfRecord
 
 
+def _write(path: Path, text: str) -> None:
+    """`text` at `path`, whole or not at all (a temp file, then a rename), as UTF-8 with its line
+    endings untouched."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, part = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.", suffix=".part")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="") as f:
+            f.write(text)
+        os.replace(part, path)
+    except BaseException:
+        Path(part).unlink(missing_ok=True)
+        raise
+
+
+def _read(path: Path) -> str:
+    with path.open(encoding="utf-8", newline="") as f:
+        return f.read()
+
+
 class Org:
     def __init__(
-        self, settings: Settings, *, org_id: str = "northstar", corpus: str | None = None
-    ) -> None:
+        self, settings: Settings, *, org_id: str = "northstar", corpus: str | None = None,
+        procedure_filter: Callable[[dict[str, Any]], bool] | None = None,
+    ) -> None:  # fmt: skip
+        """`procedure_filter` is for tests only: it keeps the bootstrap's procedure versions it
+        returns true for (approved versions are never filtered)."""
         self.settings, self.org_id = settings, org_id
         self.corpus = corpus or settings.corpus
         self.dir = settings.state_dir / org_id
@@ -43,6 +75,9 @@ class Org:
         )
         self.evidence = _lab.make_evidence(root, self._overlay)
         self.register_store = self.dir / "register-store"
+        self.procedure_store = self.dir / "procedure-store"
+        self.procedure_specs = self.dir / "procedure-specs"
+        self._procedure_filter = procedure_filter
         self._state: tuple[int, Any] | None = None  # (the last approval's seq, the state)
         self._kernel_register: tuple[int, Any] | None = None
 
@@ -68,21 +103,12 @@ class Org:
         sha = _lab.fingerprint(text)
         path = self.register_store / f"{sha}.md"
         if not path.exists():
-            self.register_store.mkdir(parents=True, exist_ok=True)
-            fd, part = tempfile.mkstemp(dir=self.register_store, prefix=f".{sha}.", suffix=".part")
-            try:
-                with os.fdopen(fd, "w", encoding="utf-8", newline="") as f:
-                    f.write(text)
-                os.replace(part, path)
-            except BaseException:
-                Path(part).unlink(missing_ok=True)
-                raise
+            _write(path, text)
         return sha
 
     def register_text(self, sha: str) -> str:
         """An approved text from the content store."""
-        with (self.register_store / f"{sha}.md").open(encoding="utf-8", newline="") as f:
-            return f.read()
+        return _read(self.register_store / f"{sha}.md")
 
     def kernel_register(self) -> Any:
         state = self.register_state()
@@ -93,8 +119,42 @@ class Org:
             )
         return self._kernel_register[1]
 
-    def procedures(self) -> tuple[list[dict[str, Any]], Path]:
-        return _lab.procedures_bootstrap()
+    # -- procedures ---------------------------------------------------------------------------
+    def procedures(self, tx: sqlite3.Connection | None = None) -> tuple[list[dict[str, Any]], Path]:
+        """The procedure register now and the store its texts run from: the bootstrap's versions
+        (through `procedure_filter`), then each approved version (`procedure.approved`), in log
+        order. Every version's text is in the store and mirrored in `procedure_specs` before this
+        returns. Copies; `tx` reads the log inside a caller's write transaction."""
+        boot, lab_store = _lab.procedures_bootstrap()
+        keep = self._procedure_filter
+        boot = [e for e in boot if keep is None or keep(e)]
+        for e in boot:
+            if not self._procedure_path(e["sha256"]).exists():
+                self.put_procedure_text(_read(lab_store / f"{e['sha256']}.yaml"))
+        approved = self.log.read(self.org_id, kinds=("procedure.approved",), tx=tx)
+        entries = [*boot, *(copy.deepcopy(ev.payload["entry"]) for ev in approved)]
+        for e in entries:
+            text = self.procedure_text(e["sha256"])
+            mirror = self.procedure_specs / e["file"]
+            if not mirror.exists() or _read(mirror) != text:
+                _write(mirror, text)
+        return entries, self.procedure_store
+
+    def _procedure_path(self, sha: str) -> Path:
+        return self.procedure_store / f"{sha}.yaml"
+
+    def put_procedure_text(self, text: str) -> str:
+        """Keep an approved procedure text in the procedure store, by its fingerprint; that
+        sha256."""
+        sha = _lab.fingerprint(text)
+        path = self._procedure_path(sha)
+        if not path.exists():
+            _write(path, text)
+        return sha
+
+    def procedure_text(self, sha: str) -> str:
+        """An approved procedure text from the procedure store."""
+        return _read(self._procedure_path(sha))
 
     def on_mismatch(self) -> Literal["use_registered", "route"]:
         """The register's setting (`settings.changed`, latest wins); `use_registered` until set."""

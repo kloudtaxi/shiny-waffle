@@ -18,6 +18,7 @@ from __future__ import annotations
 import copy
 import importlib
 import json
+import os
 import sys
 import threading
 from collections.abc import Callable, Mapping, Sequence
@@ -190,6 +191,15 @@ def procedures_bootstrap() -> tuple[list[dict[str, Any]], Path]:
     return entries, store
 
 
+def procedure_in_force(
+    entries: Sequence[Mapping[str, Any]], decision_type: str, on: date
+) -> dict[str, Any] | None:
+    """The governed runner's own rule (`governed.in_force`): the highest version of the decision
+    type's procedure whose window holds `on`, which is the one a decision on `on` runs."""
+    found: dict[str, Any] | None = _governed.in_force(list(entries), decision_type, on)
+    return found
+
+
 # registrar access (the register queue, Task 16; procedures, Task 18), typed for the service
 if TYPE_CHECKING:
 
@@ -299,9 +309,12 @@ def register_procedure(
     version: dict[str, Any], employees: set[str], spec_text: str, report_path: Path
 ) -> tuple[dict[str, Any], str]:
     """One procedure version through the procedure registrar (the admission check): its entry
-    and approved text, or `ProcedureRefusedError`."""
+    and approved text, or `ProcedureRefusedError`. The registrar records the report's path
+    relative to the lab root, lexically (`Path.relative_to`), so a report outside it (a temp file)
+    is passed as that same file reached from the lab root."""
+    reached = LAB_ROOT / os.path.relpath(os.path.realpath(report_path), LAB_ROOT)
     out: tuple[dict[str, Any], str] = _build_procedures.register(
-        version, employees, spec_text, report_path
+        version, employees, spec_text, reached
     )
     return out
 
@@ -328,19 +341,24 @@ def decide(
     register: Any, entries: list[dict[str, Any]], store: Path, engine: ReplayEngine,
     staff: list[dict[str, str]], requested_by: str | None,
     policy_terms: Callable[[str], dict[str, Any] | None], route_mode: bool,
+    specs: Path | None = None,
 ) -> KernelResult:  # fmt: skip
     """The registered procedure in force on `at`, run on `inputs` (discount and credit: `sid`,
     `record`, `as_of`; SLA: `sid`, `ticket_id`, `decided_at`), with what each judgment is about,
     the flags as items and who must approve. `route_mode` deploys every procedure with
-    `on_mismatch: route`. `JevUnavailable` propagates; any other failure is `CannotDecide`."""
+    `on_mismatch: route`. `specs` is the directory the kernel checks each version's file in
+    (`incident: the procedure file … differs`); the lab's own specs when None. `JevUnavailable`
+    propagates; any other failure is `CannotDecide`."""
     subject = str(inputs["ticket_id"] if kind == "sla" else inputs["record"]["request_id"])
     deployed = _route(entries) if route_mode else list(entries)
     trace: dict[str, Any] = {}
+    where: dict[str, Any] = {} if specs is None else {"specs": specs}
     try:
         with _additions.capture(subject=subject) as cap:
             record: dict[str, Any] = _governed.decide(
-                kind, engine, evidence, inputs, at, register, deployed, store=store, trace=trace
-            )
+                kind, engine, evidence, inputs, at, register, deployed, store=store, trace=trace,
+                **where,
+            )  # fmt: skip
         # by identity: the raw record, before any copy
         about: list[str | None] = _additions.judgment_about(record, cap)
         routed = (record["gated_outcome"] == ROUTE_TO[kind]

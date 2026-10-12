@@ -202,7 +202,7 @@ class Decisions:
             register=self.org.kernel_register(), entries=entries, store=store,
             engine=self.org.engine, staff=self.org.evidence.table("employees"),
             requested_by=prep.requester_email, policy_terms=self.org.policy_terms,
-            route_mode=self.org.on_mismatch() == "route",
+            route_mode=self.org.on_mismatch() == "route", specs=self.org.procedure_specs,
         )  # fmt: skip
 
     def _payload(

@@ -203,8 +203,7 @@ def _coverage(org: Org, entries: list[RegisterEntry], on: date) -> list[Coverage
     procedures, _ = org.procedures()
     out = []
     for dt, kinds in _lab.COVERAGE.items():
-        versions = [{**p, "doc_id": p["proc_id"]} for p in procedures if p["decision_type"] == dt]
-        found = _lab.entry_in_force(versions, on)
+        found = _lab.procedure_in_force(procedures, dt, on)  # the version a decision runs
         docs = [CoverageDocument(doc_id=e.doc_id, title=e.title) for e in entries
                 if e.kind in kinds and e.status == "in_force"]  # fmt: skip
         gap = None
