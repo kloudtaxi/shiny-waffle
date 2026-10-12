@@ -5,7 +5,8 @@ A procedure is a spec the kernel runs as a decision, used only in a registered, 
 A new version is a register change of kind `procedure` (`changes.py`) through the register queue's
 two steps. `check` is its rules, in the registrar's order:
 
-1. RR-5: a decision type with an owner (`KIND_OF`: discount, credit, sla);
+1. RR-5: a decision type with an owner (`KIND_OF`: discount, credit, sla), and a `proc_id` of
+   the form `PROC-` then capitals, digits and hyphens (it names the version's file);
 2. the people rules (`registrar.people`, RR-1 to RR-4), the owner taken from the decision type as
    the representative kind of its owning function: discount `pricing_policy` (Sales), credit
    `credit_policy` (Finance), sla `sla_schedule` (Customer Support);
@@ -17,13 +18,19 @@ two steps. `check` is its rules, in the registrar's order:
    clock's date; ruling R52), so a new version never changes what a past decision ran;
 4. ADM: the lab's procedure registrar (`build_procedures.register`), given the change's report as
    a temp file, refuses no report, a report for another text, or a verdict that isn't admitted,
-   in its own words. Then a text that declares no `registered_kinds` is refused too: the gate
-   admits such a spec with its standard mapping applied, which the lab registers as the version's
-   deployment, and a change carries no deployment, so the version would run unlike admitted.
+   in its own words. Then the service refuses a report admitted for another decision type
+   (`report.type`), and a text that declares no `registered_kinds`: the gate admits such a spec
+   with its standard mapping applied, which the lab registers as the version's deployment, and a
+   change carries no deployment, so the version would run unlike admitted.
 
 The queue runs `check` as a dry run at draft and submit, and for real at approval, where the
 entry the registrar wrote is stored with the service's fields (`approved`). The service never runs
 the admission gate. A version registered here is named `<proc_id>-v<n>.yaml`, unique per version.
+
+**Known limit (ruling R55):** the admission report is self-attested JSON supplied with the change.
+The service checks that it is for this exact text, for this decision type and admitted, but it
+can't tell a report the gate wrote from one written by hand to look like it; only the two-person
+rule (a person in the owning function submits, another person approves) stands behind it.
 """
 
 from __future__ import annotations
@@ -48,6 +55,7 @@ from .register_view import LABEL
 KIND_OF: Final[Mapping[str, str]] = {
     "discount": "pricing_policy", "credit": "credit_policy", "sla": "sla_schedule",
 }  # fmt: skip
+PROC_ID: Final = re.compile(r"^PROC-[A-Z0-9-]+$")
 _PERSON = re.compile(r"^(?P<name>.+) \((?P<id>EMP-\d+), (?P<title>.+)\)$")
 _AGENT_AUTHOR = "proposed by an agent"  # how the procedure register's author text names one
 
@@ -79,6 +87,9 @@ def check(
     if kind is None:
         raise _no("RR-5", f"no decision type {dt!r}: a procedure is for "
                           f"{', '.join(KIND_OF)} decisions")  # fmt: skip
+    if not PROC_ID.fullmatch(pid):
+        raise _no("RR-5", f"{pid!r} isn't a procedure id: PROC- then capital letters, digits and "
+                          "hyphens")  # fmt: skip
     acting = {p for p in (submit_by, approve_by) if p is not None}
     submit, approve = _lab.people(kind, submit_by, approve_by, acting, staff)
     if not text:
@@ -124,6 +135,9 @@ def check(
         except (KeyError, TypeError, AttributeError) as e:
             raise _no("ADM", f"{file}: the admission report can't be read "
                              f"({type(e).__name__}: {e})") from e  # fmt: skip
+    admitted_as = (report.get("report") or {}).get("type")
+    if admitted_as != dt:
+        raise _no("ADM", f"{file}: admitted as a {admitted_as} procedure, not {dt}")
     if not _declares_kinds(text):
         raise _no("ADM", f"{file}: declares no registered_kinds. The gate admitted it with its "
                          "standard mapping applied, which a version registered here doesn't "

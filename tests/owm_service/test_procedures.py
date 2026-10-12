@@ -253,6 +253,59 @@ def test_versions_are_numbered_in_order(org: Org) -> None:
         assert detail in r.refusals[0].detail
 
 
+def test_a_text_admitted_for_another_decision_type_is_adm(org: Org) -> None:
+    """The report records the type it was admitted for (`report.type`): sla_agent.yaml, admitted
+    as an SLA procedure, can't become PROC-CREDIT v2 (review fix round 1, item 1)."""
+    q = RegisterQueue(org)
+    body = procedure("PROC-CREDIT", "credit", effective_from="2026-10-10")  # sla_agent's text
+    detail = "PROC-CREDIT-v2.yaml: admitted as a sla procedure, not credit"
+    r = refused(lambda: q.submit_new(person(org, "EMP-401"), body))
+    assert (r.status, r.refusals[0].rule, r.refusals[0].detail) == (422, "ADM", detail)
+    draft = q.draft(agent(org), body.model_copy(update={"submit": False}))
+    assert [(c.rule, c.detail) for c in draft.checks or []] == [("ADM", detail)]
+
+
+def test_a_procedure_id_is_checked(org: Org) -> None:
+    """RR-5: a `proc_id` is PROC- and capitals, digits and hyphens, since it names a file."""
+    q = RegisterQueue(org)
+    for pid in ("PROC-../../escape", "proc-sla", "PROC-SLA/v2", ""):
+        r = refused(lambda pid=pid: q.submit_new(person(org, "EMP-601"),  # type: ignore[misc]
+                                                 procedure(pid, version=1)))  # fmt: skip
+        assert r.refusals[0].rule == "RR-5", pid
+        assert "isn't a procedure id" in r.refusals[0].detail
+
+
+def test_a_mirror_outside_its_directory_fails_closed(org: Org) -> None:
+    """A version whose file would land outside `procedure-specs` (a forged log entry; the rules
+    never admit one) stops the procedure register rather than write there."""
+    sha = org.put_procedure_text(spec("sla_agent.yaml"))
+    entry = {"proc_id": "PROC-SLA", "decision_type": "sla", "version": 3,
+             "file": "../escape.yaml", "sha256": sha, "effective_from": "2026-10-06",
+             "effective_to": None}  # fmt: skip
+    with org.log.transaction() as tx:
+        org.log.append(tx, at=org.clock.now(), org=org.org_id, stream="change:CHG-0099",
+                       kind="procedure.approved", actor=None,
+                       payload={"change_id": "CHG-0099", "approved_by": None,
+                                "approved_at": None, "entry": entry})  # fmt: skip
+    with pytest.raises(CannotDecide, match="outside"):
+        org.procedures()
+    assert not (org.dir / "escape.yaml").exists()
+
+
+def test_a_tampered_store_text_fails_closed(org: Org) -> None:
+    """A store text whose fingerprint isn't its registered sha256 never runs: an ask is 503 and
+    nothing is versioned (review fix round 1, item 2)."""
+    org.procedures()  # the bootstrap's texts are in the store
+    v1 = "5e45743925ab1291a7be299229a9c1aa5d0facbf8f8888e29ee3def28b895b2b"
+    path = org.procedure_store / f"{v1}.yaml"
+    path.write_text(path.read_text() + "\n# edited after approval\n")
+    with pytest.raises(CannotDecide) as e:
+        ask_sla(org)
+    assert e.value.status == 503
+    assert "PROC-SLA v1" in e.value.detail and "sha256" in e.value.detail
+    assert Decisions(org).list() == []
+
+
 def test_a_backdated_version_is_rr9(filtered: Org) -> None:
     """Ruling R52: no backdating against the register's clock (the service clock's date), in a
     draft's checks, at submit and at approval, in the registrar's words."""

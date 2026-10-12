@@ -8,10 +8,13 @@ rule. Approved texts live in the org's content store, `register-store/<sha256>.m
 The procedures are the procedure register's bootstrap plus every approved procedure version
 (`procedure.approved`, also written by the register queue; ruling R50 keeps it apart from the
 document register). Their approved texts live in `procedure-store/<sha256>.yaml`, the bootstrap's
-copied there from the lab's store, and that is what decisions run. `procedure-specs/<file>`
-mirrors each version's stored text under its file name: the kernel checks a version's file
-against its registered sha256 (`incident: the procedure file … differs`), so pointed at this
-mirror that check verifies the store itself."""
+copied there from the lab's store, and that is what decisions run. Every read checks each stored
+text's fingerprint against its registered sha256 first: a text that differs stops the procedure
+register (`CannotDecide`, so a decision fails closed with a 503) and is never mirrored or run.
+`procedure-specs/<file>` then mirrors each verified text under its version's file name, never
+outside that directory, because the kernel checks a version's file against its registered sha256
+(`incident: the procedure file … differs`) and would otherwise flag every version registered
+here."""
 
 from __future__ import annotations
 
@@ -26,6 +29,7 @@ from typing import Any, Literal
 from . import _lab
 from .clock import Clock
 from .config import Settings
+from .errors import CannotDecide
 from .events import EventLog
 from .people import People
 from .sor import SystemsOfRecord
@@ -123,8 +127,10 @@ class Org:
     def procedures(self, tx: sqlite3.Connection | None = None) -> tuple[list[dict[str, Any]], Path]:
         """The procedure register now and the store its texts run from: the bootstrap's versions
         (through `procedure_filter`), then each approved version (`procedure.approved`), in log
-        order. Every version's text is in the store and mirrored in `procedure_specs` before this
-        returns. Copies; `tx` reads the log inside a caller's write transaction."""
+        order. Every version's text is in the store, matches its sha256, and is mirrored in
+        `procedure_specs` before this returns; a text that doesn't match, or a file that would
+        land outside `procedure_specs`, raises `CannotDecide`. Copies; `tx` reads the log inside
+        a caller's write transaction."""
         boot, lab_store = _lab.procedures_bootstrap()
         keep = self._procedure_filter
         boot = [e for e in boot if keep is None or keep(e)]
@@ -133,9 +139,17 @@ class Org:
                 self.put_procedure_text(_read(lab_store / f"{e['sha256']}.yaml"))
         approved = self.log.read(self.org_id, kinds=("procedure.approved",), tx=tx)
         entries = [*boot, *(copy.deepcopy(ev.payload["entry"]) for ev in approved)]
+        specs = self.procedure_specs.resolve()
         for e in entries:
+            name = f"{e['proc_id']} v{e['version']}"
             text = self.procedure_text(e["sha256"])
-            mirror = self.procedure_specs / e["file"]
+            if _lab.fingerprint(text) != e["sha256"]:
+                raise CannotDecide(f"the procedure store's text for {name} doesn't match its "
+                                   f"registered sha256 {e['sha256']}; it doesn't run")  # fmt: skip
+            mirror = (specs / str(e["file"])).resolve()
+            if mirror.parent != specs:
+                raise CannotDecide(f"the file {e['file']!r} of {name} would be mirrored outside "
+                                   "the procedure specs; it doesn't run")  # fmt: skip
             if not mirror.exists() or _read(mirror) != text:
                 _write(mirror, text)
         return entries, self.procedure_store
