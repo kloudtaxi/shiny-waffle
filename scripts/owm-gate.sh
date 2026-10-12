@@ -45,11 +45,11 @@ uv run python lab/owm_register/build_procedures.py --check
 step "registrar replay (register-attacks)"
 uv run python runs/2026-10-08-register-attacks/check_registrar.py
 step "registrar steps vs results.json (24 cases)"
-uv run pytest tests/owm_service/test_gate_registrar_steps.py -q
-step "full test suite"
-uv run pytest -q
+uv run --group owm-service pytest tests/owm_service/test_gate_registrar_steps.py -q
+step "full test suite (owm-service group: the HTTP tests run, never skip)"
+uv run --group owm-service pytest -q
 step "ruff (code paths)"
 uv run ruff check src tests lab scripts
 uv run ruff format --check src tests lab scripts
-step "mypy"
-uv run mypy
+step "mypy (owm-service group: app.py and the HTTP tests type-check against FastAPI)"
+uv run --group owm-service mypy

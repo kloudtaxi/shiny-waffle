@@ -142,6 +142,29 @@ def test_an_effect_the_system_refuses_is_reported_failed(
     assert "DR-9001" in str(rep.payload["detail"])
 
 
+def test_an_unexpected_error_after_redeeming_is_reported_then_raised(
+    org: Org, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Redeemed always means reported: a bug (or a lock timeout) while writing the effect reports
+    `failed`, which opens the incident, and the error still surfaces."""
+    v2, ok, _ = s22_cleared(org)
+
+    def broken(*a: Any, **kw: Any) -> dict[str, Any]:
+        raise RuntimeError("database is locked")
+
+    monkeypatch.setattr(lab_adapter, "_write", broken)
+    with pytest.raises(RuntimeError, match="database is locked"):
+        run(org, ok.clearance_id)
+    (rep,) = org.log.read(org.org_id, kinds=("execution.reported",))
+    assert rep.payload["status"] == "failed" and "database is locked" in str(rep.payload["detail"])
+    (inc,) = org.log.read(org.org_id, kinds=("incident.opened",))
+    assert inc.payload["clearance_id"] == ok.clearance_id
+    rec = Decisions(org).get(v2.decision_id)
+    assert rec.state == "spent" and [(x.report, x.incident_id) for x in rec.executed] == [
+        ("failed", inc.payload["incident_id"])
+    ]
+
+
 def test_unknown_clearance_is_404(org: Org) -> None:
     with pytest.raises(NotFound):
         run(org, "CLR-99999")

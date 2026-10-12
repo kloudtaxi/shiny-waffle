@@ -16,12 +16,15 @@ holding a system's credential would. Lab-only, outside the contract.
 
 With `fail`, nothing is written: a failed execution changed nothing in the system, and the report
 raises the incident. If the overlay refuses the write (the row is gone, a value doesn't fit), the
-action is still spent, since it was redeemed, so the adapter reports `failed` with the reason.
+action is still spent, since it was redeemed, so the adapter reports `failed` with the reason. Any
+other error after redeeming (a bug, a lock timeout) is reported `failed` too and then re-raised:
+redeemed always means reported, and the bug still surfaces.
 """
 
 from __future__ import annotations
 
 from collections.abc import Mapping
+from dataclasses import dataclass
 from typing import Any, Final
 
 from .clearance import Clearances
@@ -64,17 +67,37 @@ def execute(
     effect: dict[str, Any] | None = None
     detail: str | None = "The lab adapter was asked to fail; it wrote nothing." if fail else None
     if not fail:
-        rec = clearances.decisions.get(bound.decision_id, bound.decision_version)
         try:
+            rec = clearances.decisions.get(bound.decision_id, bound.decision_version)
             effect = _write(org, clearance_id, bound, rec)
         except (NotFound, Refused) as e:
             detail = f"The system refused the write: {e}"
+        except Exception as e:
+            # redeemed always means reported: report the failure (it opens the incident), then let
+            # the bug surface
+            why = f"The adapter failed after redeeming: {type(e).__name__}: {e}"
+            _report(clearances, clearance_id, None, why, by)
+            raise
+    report = _report(clearances, clearance_id, effect, detail, by)
+    return {"redeemed": True, "at": redeemed.at, "effect": effect, "report": report.status,
+            "incident_id": report.incident_id}  # fmt: skip
+
+
+@dataclass(frozen=True)
+class _Reported:
+    status: str
+    incident_id: str | None
+
+
+def _report(
+    clearances: Clearances, clearance_id: str, effect: dict[str, Any] | None,
+    detail: str | None, by: Actor | None,
+) -> _Reported:  # fmt: skip
+    """`applied` with a reference to what was written, or `failed` with why."""
     status = "failed" if effect is None else "applied"
     ref = None if effect is None else f"{effect['table']}/{effect['id']}"
-    report = clearances.report(clearance_id, ReportRequest.model_validate(
-        {"status": status, "external_ref": ref, "detail": detail}), by=by)  # fmt: skip
-    return {"redeemed": True, "at": redeemed.at, "effect": effect, "report": status,
-            "incident_id": report.incident_id}  # fmt: skip
+    body = ReportRequest.model_validate({"status": status, "external_ref": ref, "detail": detail})
+    return _Reported(status, clearances.report(clearance_id, body, by=by).incident_id)
 
 
 def _write(

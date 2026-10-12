@@ -75,3 +75,8 @@ follow_imports = "skip"
 testpaths = ["tests"]
 pythonpath = ["lab"]
 addopts = "-ra"
+# Starlette 1.7's test client warns that it will move from httpx to httpx2 (a UserWarning
+# subclass); only that message is silenced, by its exact start.
+filterwarnings = [
+    'ignore:Using `httpx` with `starlette\.testclient` is deprecated:UserWarning',
+]
