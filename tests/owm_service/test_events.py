@@ -251,3 +251,20 @@ def test_rebuild_raises_on_a_corrupt_log(tmp_path: Path) -> None:
             _redeemed(log2, tx, _exec("DR-1", "a", c))
     with pytest.raises(RuntimeError, match="twice"):
         log2.rebuild_projections()
+
+
+def test_archive_moves_the_log_aside_whole(tmp_path: Path) -> None:
+    """`/lab/reset`: the log is renamed, never deleted, and a log on the same path starts empty."""
+    log = EventLog(tmp_path / "events.sqlite")
+    with log.transaction() as tx:
+        _append(log, tx, n=1)
+        log.next_id(tx, "northstar", "DEC", 4)
+    archived = log.archive("20261011T120000Z")
+    assert archived == tmp_path / "events-20261011T120000Z.sqlite"
+    assert [e.payload for e in EventLog(archived).read("northstar")] == [{"n": 1}]
+    fresh = EventLog(tmp_path / "events.sqlite")
+    assert fresh.read("northstar") == []
+    with fresh.transaction() as tx:
+        assert fresh.next_id(tx, "northstar", "DEC", 4) == "DEC-0001"
+    with pytest.raises(FileExistsError):
+        fresh.archive("20261011T120000Z")

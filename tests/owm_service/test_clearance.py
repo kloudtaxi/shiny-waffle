@@ -438,6 +438,36 @@ def test_failed_report_stays_spent_and_opens_incident(
         "clearance.redeemed", "execution.reported", "incident.opened"]  # fmt: skip
 
 
+def test_redeem_and_report_record_who_called(
+    org: Org, dealdesk: Actor, sarah: Actor, michael: Actor, c: Clearances
+) -> None:
+    """Ruling R35: the session behind a redemption or a report is recorded as `by` beside the
+    executor, on every event it writes, refused redemptions included. Without one, nothing is."""
+    v2 = ready_s22(org, dealdesk, sarah, michael)
+    ok = clear15(c, dealdesk, v2)
+    body = RedeemRequest(params=ok.bound.params, executor=EXEC)
+    who = sarah.model_dump(mode="json")
+    assert isinstance(c.redeem(ok.clearance_id, body, by=sarah), Redeemed)
+    assert isinstance(c.redeem(ok.clearance_id, body, by=sarah), NotRedeemed)
+    failed = ReportRequest(status="failed", external_ref=None, detail="CRM timeout")
+    assert c.report(ok.clearance_id, failed, by=sarah).incident_id == "INC-0001"
+    kinds = ("clearance.redeemed", "redeem.refused", "execution.reported", "incident.opened")
+    evs = org.log.read(org.org_id, kinds=kinds)
+    assert sorted(e.kind for e in evs) == sorted(kinds)
+    assert all(e.payload["by"] == who for e in evs)
+    assert all(e.actor == {"kind": "system", **EXEC.model_dump()} for e in evs)
+
+
+def test_redeem_without_a_caller_records_no_by(
+    org: Org, dealdesk: Actor, sarah: Actor, michael: Actor, c: Clearances
+) -> None:
+    v2 = ready_s22(org, dealdesk, sarah, michael)
+    ok = clear15(c, dealdesk, v2)
+    assert isinstance(redeem(c, ok), Redeemed)
+    (e,) = org.log.read(org.org_id, kinds=("clearance.redeemed",))
+    assert "by" not in e.payload
+
+
 def test_s36_failed_credit_goes_to_customer_support(
     org: Org, marcus: Actor, paul: Actor, c: Clearances
 ) -> None:

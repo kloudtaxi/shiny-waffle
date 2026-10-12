@@ -340,6 +340,23 @@ class EventLog:
                 for r in conn.execute("SELECT * FROM executions ORDER BY org, subject, action")
             ]
 
+    def archive(self, suffix: str) -> Path:
+        """Move the log aside as `<stem>-<suffix><ext>` (with its WAL files, if any) and return
+        where it went; an `EventLog` opened on the same path afterwards starts empty. Nothing is
+        deleted: the archived file is the whole record. The caller makes sure nothing else is
+        using the log."""
+        with self._reader() as conn:
+            conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        target = self.path.with_name(f"{self.path.stem}-{suffix}{self.path.suffix}")
+        if target.exists():
+            raise FileExistsError(target)
+        self.path.rename(target)
+        for side in ("-wal", "-shm"):
+            src = Path(f"{self.path}{side}")
+            if src.exists():
+                src.rename(Path(f"{target}{side}"))
+        return target
+
     def rebuild_projections(self) -> None:
         """Drop and refill `clearances` and `executions` from the events (shapes: see top)."""
         with self.transaction() as tx:

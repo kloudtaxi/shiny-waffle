@@ -51,6 +51,9 @@ write 409. Payloads:
 - `execution.reported`: `{clearance_id, decision_id, version, subject, action, status,
   external_ref, detail}`, and `incident.opened` the same keys but `status` and `external_ref`,
   plus `incident_id` and `function` (`state.py` reads `status` and `incident_id`).
+`redeem.refused`, `clearance.redeemed`, `execution.reported` and `incident.opened` also carry
+`by`, the session's actor, when the caller passes one (ruling R35: the HTTP layer always does).
+The event's own actor stays the system the executor acts in.
 """
 
 from __future__ import annotations
@@ -156,6 +159,11 @@ def _json(m: Any) -> dict[str, Any]:
 def _system(executor: dict[str, Any]) -> dict[str, Any]:
     """The event actor for what the adapter does: the system it acts in."""
     return {"kind": "system", **executor}
+
+
+def _by(actor: Actor | None) -> dict[str, Any]:
+    """The payload key naming the session behind a redemption or report (ruling R35), if any."""
+    return {} if actor is None else {"by": actor.model_dump(mode="json")}
 
 
 def _refused(rule: RuleCode, detail: str, status: int = 422) -> Refused:
@@ -387,10 +395,15 @@ class Clearances:
         return [ClearanceReason(code="stale", detail=detail)]
 
     # -- redeeming ----------------------------------------------------------------------------
-    def redeem(self, clearance_id: str, req: RedeemRequest) -> Redeemed | NotRedeemed:
+    def redeem(
+        self, clearance_id: str, req: RedeemRequest, *, by: Actor | None = None
+    ) -> Redeemed | NotRedeemed:
+        """Redeem a clearance. `by` is the session that asked (ruling R35): recorded beside the
+        executor on the event this writes, never checked against the clearance's actor."""
         now = self.org.clock.now()  # before the write: never first read inside one
         at, org = now.isoformat(), self.org.org_id
         executor = req.executor.model_dump(mode="json")
+        caller = _by(by)
         with self.org.log.transaction() as tx:
             row = self.org.log.get_clearance(clearance_id, tx=tx)
             if row is None or row.org != org:
@@ -408,10 +421,10 @@ class Clearances:
                                     kind="redeem.refused", actor=_system(executor), payload={
                     "clearance_id": row.id, "decision_id": row.decision_id,
                     "version": row.decision_version, "params": req.params, "executor": executor,
-                    "reasons": [r.model_dump(mode="json") for r in reasons]})  # fmt: skip
+                    "reasons": [r.model_dump(mode="json") for r in reasons], **caller})  # fmt: skip
                 return NotRedeemed(redeemed=False, reasons=reasons)
             tx.execute("RELEASE redeem")
-            payload = {**dataclasses.asdict(ex), "executor": executor}
+            payload = {**dataclasses.asdict(ex), "executor": executor, **caller}
             self.org.log.append(tx, at=now, org=org, stream=row.subject, kind="clearance.redeemed",
                                 actor=_system(executor), payload=payload)  # fmt: skip
         return Redeemed(redeemed=True, at=at)
@@ -455,11 +468,15 @@ class Clearances:
         return []
 
     # -- reporting ----------------------------------------------------------------------------
-    def report(self, clearance_id: str, req: ReportRequest) -> ReportResponse:
+    def report(
+        self, clearance_id: str, req: ReportRequest, *, by: Actor | None = None
+    ) -> ReportResponse:
         """The adapter's report on a redeemed clearance. `failed` opens an incident for the
-        decision type's owning function; the action stays spent."""
+        decision type's owning function; the action stays spent. `by` is recorded as in
+        `redeem`."""
         now = self.org.clock.now()  # before the write: never first read inside one
         org = self.org.org_id
+        caller = _by(by)
         row = self.org.log.get_clearance(clearance_id)
         if row is None or row.org != org:
             raise NotFound(f"clearance {clearance_id}")
@@ -484,7 +501,7 @@ class Clearances:
             self.org.log.append(tx, at=now, org=org, stream=row.subject, actor=redeemed.actor,
                                 kind="execution.reported", payload={
                 **base, "status": req.status, "external_ref": req.external_ref,
-                "detail": req.detail})  # fmt: skip
+                "detail": req.detail, **caller})  # fmt: skip
             if req.status == "failed":
                 incident = self.org.log.next_id(tx, org, "INC", 4)
                 why = req.detail or "no detail given"
@@ -493,5 +510,5 @@ class Clearances:
                 self.org.log.append(tx, at=now, org=org, stream=row.subject, actor=redeemed.actor,
                                     kind="incident.opened", payload={
                     **base, "incident_id": incident, "function": FUNCTION[kind],
-                    "detail": detail})  # fmt: skip
+                    "detail": detail, **caller})  # fmt: skip
         return ReportResponse(incident_id=incident)
