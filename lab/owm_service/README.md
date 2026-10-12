@@ -60,7 +60,6 @@ with `/data` as its volume.
 | `OWM_CORPUS` | `base` | The org's corpus (`base`, or a name under `dataset/evidence-variants/`) |
 | `OWM_JEV` | `replay` | `replay` or `live` |
 | `OWM_JEV_CAP` | `100` | Live calls allowed per state directory |
-| `TYPESAFE_API_KEY_FILE` | unset | A path to the key file, never the key itself |
 | `OWM_CLOCK` | `2026-09-23T09:00:00-05:00` | The demo's start time |
 | `OWM_CLEARANCE_TTL_SECONDS` | `300` | Clearance lifetime |
 | `OWM_SUSPENDED` | empty | Comma-separated agents, or `agent@sha` versions, that are suspended |
@@ -82,9 +81,16 @@ turns it on must stay reachable only from web-next's server, never from the open
 
 The default is replay: every kernel call is answered from recorded exchanges, and a miss is a
 503, never a silent live call. Going live spends money. Pre-register the run and spend only after
-the user agrees a cap (`OWM_JEV_CAP`). The key is reached only through `TYPESAFE_API_KEY_FILE`,
-a path to a file that is mounted at run time. The service never reads the key from an environment
-variable and the image never holds one.
+the user agrees a cap (`OWM_JEV_CAP`).
+
+The service's own settings never read the key. In live mode, on the first call that misses the
+replay, the lab engine reads it (`lab/decision_engine/engine.py`, `_key_from_env`):
+1. from `TYPESAFE_API_KEY`, the key itself, if that variable is set;
+2. otherwise from the file whose path `TYPESAFE_API_KEY_FILE` holds.
+
+Neither belongs in an image: no `ENV` and no key file baked in. Prefer the file: mount it at run
+time and set `TYPESAFE_API_KEY_FILE` to its path when the container starts. The key is never
+logged or recorded.
 
 ## Known limits
 

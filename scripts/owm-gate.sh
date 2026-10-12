@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # B-06 regression gate: replay-only proof that kernel/registrar changes moved no committed lab result.
-# Never goes live: TYPESAFE_API_KEY_FILE is unset and run_attacks.py is never run.
+# Never goes live: both key variables the lab engine reads are unset, and run_attacks.py is never
+# run.
 set -euo pipefail
-unset TYPESAFE_API_KEY_FILE
+unset TYPESAFE_API_KEY TYPESAFE_API_KEY_FILE
 cd "$(git rev-parse --show-toplevel)"
 
 if [ -n "$(git status --porcelain runs/)" ]; then

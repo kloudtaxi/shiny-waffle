@@ -70,7 +70,8 @@ class ReplayEngine:
     """Recorded answers by request hash, from `files` and from `calls` (this engine's own file).
     A miss raises `JevUnavailable`, unless `live` is on and `calls` holds fewer than `cap` lines;
     then the request goes to TypeSafe's Jev through the recorder, which appends it to `calls`.
-    The live engine is built on the first live call, and TypeSafe reads its own key file.
+    The live engine is built on the first live call, and TypeSafe reads the key itself
+    (`TYPESAFE_API_KEY`, else the file `TYPESAFE_API_KEY_FILE` names); the service never does.
     Answers are copies: the kernel puts parts of an answer into the record, and one engine serves
     every decision the service makes."""
 

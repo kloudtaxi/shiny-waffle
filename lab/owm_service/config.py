@@ -1,4 +1,6 @@
-"""Settings from the environment (spec §12). The Jev key is reached only through a file path."""
+"""Settings from the environment (spec §12). None of them is the Jev key or its path: in live mode
+the lab engine reads the key itself, on the first live call (`TYPESAFE_API_KEY`, else the file
+`TYPESAFE_API_KEY_FILE` names; `lab/decision_engine/engine.py`, `_key_from_env`)."""
 
 from __future__ import annotations
 
@@ -19,7 +21,6 @@ class Settings:
     corpus: str
     jev: Literal["replay", "live"]
     jev_cap: int
-    key_file: Path | None
     clock: str
     clearance_ttl: int
     suspended: frozenset[str]
@@ -45,13 +46,11 @@ def load_settings(env: Mapping[str, str] = os.environ) -> Settings:
         mode = "live"
     else:
         raise ValueError(f"OWM_JEV must be 'replay' or 'live', not {jev!r}")
-    key_file = env.get("TYPESAFE_API_KEY_FILE")
     return Settings(
         state_dir=Path(env.get("OWM_STATE_DIR", ".owm-service")),
         corpus=env.get("OWM_CORPUS", "base"),
         jev=mode,
         jev_cap=int(env.get("OWM_JEV_CAP", "100")),
-        key_file=Path(key_file) if key_file else None,
         clock=env.get("OWM_CLOCK", DEFAULT_CLOCK),
         clearance_ttl=int(env.get("OWM_CLEARANCE_TTL_SECONDS", "300")),
         suspended=frozenset(

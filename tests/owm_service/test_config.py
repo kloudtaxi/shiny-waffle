@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+import dataclasses
 from pathlib import Path
 
 import pytest
 
-from owm_service.config import load_settings
+from owm_service.config import Settings, load_settings
 
 
 def test_defaults() -> None:
@@ -18,12 +19,15 @@ def test_defaults() -> None:
     )
     assert s.state_dir == Path(".owm-service")
     assert s.corpus == "base"
-    assert s.key_file is None
     assert s.suspended == frozenset()
 
 
-def test_key_file_is_a_path_only() -> None:
-    assert load_settings({"TYPESAFE_API_KEY_FILE": "/x/k"}).key_file == Path("/x/k")
+def test_settings_never_hold_the_key_or_its_path() -> None:
+    """M-1: the service's settings don't read the key variables (the lab engine does, in live
+    mode only), so neither can reach a log or a response through them."""
+    assert not [f.name for f in dataclasses.fields(Settings) if "key" in f.name]
+    keyed = {"TYPESAFE_API_KEY": "not-a-key", "TYPESAFE_API_KEY_FILE": "/x/k"}
+    assert load_settings(keyed) == load_settings({})
 
 
 def test_overrides() -> None:
