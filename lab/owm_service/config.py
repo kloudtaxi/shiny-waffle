@@ -9,6 +9,8 @@ from pathlib import Path
 from typing import Literal
 
 DEFAULT_CLOCK = "2026-09-23T09:00:00-05:00"
+OFF = frozenset({"0", "false", "no", "off", ""})
+ON = frozenset({"1", "true", "yes", "on"})
 
 
 @dataclass(frozen=True)
@@ -22,6 +24,17 @@ class Settings:
     clearance_ttl: int
     suspended: frozenset[str]
     lab_routes: bool
+
+
+def _switch(name: str, raw: str) -> bool:
+    """An on/off setting, read case-insensitively and stripped (ruling R37). Anything that is
+    neither on nor off is refused, so a typo never leaves a guarded route switched on."""
+    value = raw.strip().lower()
+    if value in OFF:
+        return False
+    if value in ON:
+        return True
+    raise ValueError(f"{name} must be one of 1/true/yes/on or 0/false/no/off, not {raw!r}")
 
 
 def load_settings(env: Mapping[str, str] = os.environ) -> Settings:
@@ -44,5 +57,5 @@ def load_settings(env: Mapping[str, str] = os.environ) -> Settings:
         suspended=frozenset(
             part.strip() for part in env.get("OWM_SUSPENDED", "").split(",") if part.strip()
         ),
-        lab_routes=env.get("OWM_LAB_ROUTES", "1") not in ("0", "false", "no", ""),
+        lab_routes=_switch("OWM_LAB_ROUTES", env.get("OWM_LAB_ROUTES", "1")),
     )

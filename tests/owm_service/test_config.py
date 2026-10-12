@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from owm_service.config import load_settings
 
 
@@ -41,3 +43,21 @@ def test_overrides() -> None:
     assert (s.jev, s.jev_cap, s.clock, s.clearance_ttl) == ("live", 5, "real", 60)
     assert s.suspended == frozenset({"AGT-DEALDESK", "AGT-X@abc"})
     assert s.lab_routes is False
+
+
+@pytest.mark.parametrize("raw", ["0", "false", "False", "no", "off", "OFF", " 0 ", "", "  "])
+def test_lab_routes_off(raw: str) -> None:
+    """Ruling R37: the flag that gates sign-in-as-anyone reads case-insensitively and stripped."""
+    assert load_settings({"OWM_LAB_ROUTES": raw}).lab_routes is False
+
+
+@pytest.mark.parametrize("raw", ["1", "true", "True", "yes", " on "])
+def test_lab_routes_on(raw: str) -> None:
+    assert load_settings({"OWM_LAB_ROUTES": raw}).lab_routes is True
+
+
+@pytest.mark.parametrize("raw", ["disabled", "2", "enable"])
+def test_lab_routes_unknown_value_refuses(raw: str) -> None:
+    """A value that is neither on nor off fails loudly, as OWM_JEV does, rather than guessing."""
+    with pytest.raises(ValueError, match="OWM_LAB_ROUTES"):
+        load_settings({"OWM_LAB_ROUTES": raw})
