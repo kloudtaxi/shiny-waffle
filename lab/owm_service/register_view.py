@@ -211,7 +211,7 @@ def _coverage(org: Org, entries: list[RegisterEntry], on: date) -> list[Coverage
         if not docs:
             gap = (
                 f"No {', '.join(kinds.values())} in force on {on}: a {dt} decision "
-                f"is routed to {ROUTE_TO[cast('DecisionType', dt)]} (G-31)."
+                f"is routed to {ROUTE_TO[cast('DecisionType', dt)]}."
             )
         out.append(Coverage(
             decision_type=dt, label=LABEL[dt],

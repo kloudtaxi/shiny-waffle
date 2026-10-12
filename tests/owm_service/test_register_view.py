@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import copy
 import os
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -14,7 +16,7 @@ from owm_service.decisions import Decisions
 from owm_service.errors import NotFound, Refused
 from owm_service.models import Actor, FunctionParty, PersonRef, RegisterEntry
 from owm_service.org import Org
-from owm_service.register_view import entry, put_settings, settings, text, view
+from owm_service.register_view import _status, entry, put_settings, settings, text, view
 from owm_service.sessions import Sessions
 
 from . import harness
@@ -79,6 +81,58 @@ def test_status_as_of(org: Org) -> None:
 def test_expired_when_nothing_follows(org: Org) -> None:
     v = view(org, date(2030, 6, 1))
     assert _by_id(v.entries, "CREDIT-POLICY-2026").status == "expired"
+
+
+def _entries(org: Org) -> list[dict[str, Any]]:
+    """Copies of the registrar's entries: a test edits these, never the cached state."""
+    return copy.deepcopy(org.register_state().entries)
+
+
+def _one(entries: list[dict[str, Any]], doc_id: str) -> dict[str, Any]:
+    return next(e for e in entries if e["doc_id"] == doc_id)
+
+
+def test_window_boundary_days(org: Org) -> None:
+    es = _entries(org)
+    old, new = _one(es, "PRICING-POLICY-2025"), _one(es, "PRICING-POLICY-2026")
+    last = date.fromisoformat(old["effective_to"])
+    assert date.fromisoformat(new["effective_from"]) == last + timedelta(days=1)
+    assert _status(old, es, last) == ("in_force", None)  # its last day, successor not yet
+    assert _status(old, es, last + timedelta(days=1)) == ("superseded", new["doc_id"])  # R47
+    assert _status(new, es, last) == ("scheduled", None)
+    assert _status(new, es, last + timedelta(days=1)) == ("in_force", None)
+    # nothing follows: the day after the window is `expired`
+    alone = [e for e in es if e["doc_id"] != "PRICING-POLICY-2026"]
+    assert _status(_one(alone, "PRICING-POLICY-2025"), alone, last) == ("in_force", None)
+    day_after = last + timedelta(days=1)
+    assert _status(_one(alone, "PRICING-POLICY-2025"), alone, day_after) == ("expired", None)
+
+
+def test_revoked_on_boundary_day(org: Org) -> None:
+    es = _entries(org)
+    new = _one(es, "PRICING-POLICY-2026")
+    new["revoked_on"] = "2026-03-01"
+    assert _status(new, es, date(2026, 2, 28))[0] == "in_force"
+    assert _status(new, es, date(2026, 3, 1)) == ("revoked", None)
+    assert _status(new, es, date(2026, 3, 2)) == ("revoked", None)
+
+
+def test_revoked_successor_restores_its_predecessor(org: Org) -> None:
+    es = _entries(org)
+    old, new = _one(es, "PRICING-POLICY-2025"), _one(es, "PRICING-POLICY-2026")
+    new["revoked_on"] = new["effective_from"]  # revoked the day it starts: never in force
+    on = date(2026, 6, 1)
+    assert _status(old, es, on) == ("expired", None)  # past its own window
+    old["effective_to"] = None  # an open window: it is back in force
+    assert _status(old, es, on) == ("in_force", None)
+    es2 = _entries(org)
+    _one(es2, "PRICING-POLICY-2025")["effective_to"] = None
+    assert _status(_one(es2, "PRICING-POLICY-2025"), es2, on) == ("superseded", new["doc_id"])
+
+
+def test_past_window_with_live_successor_is_superseded(org: Org) -> None:
+    v = view(org, date(2026, 9, 23))
+    assert _by_id(v.entries, "PRICING-POLICY-2025").status == "superseded"
 
 
 def test_revoked_from_its_date(org: Org) -> None:
@@ -188,14 +242,27 @@ def test_failed_write_leaves_no_part_file(org: Org, monkeypatch: pytest.MonkeyPa
     assert not list(org.register_store.glob(".*.part"))
 
 
-def test_route_mode_changes_decisions(tmp_path: Path) -> None:
-    sid, attack = "S22", "F1"
-    org = harness.scenario_org(sid, tmp_path)
+def _f1_org(tmp_path: Path) -> Org:
+    """S22's org, its copies on file swapped for set F's F1 attack corpus."""
+    org = harness.scenario_org("S22", tmp_path)
     org.evidence = _lab.make_evidence(
-        harness.attacked_roots(attack)[harness.corpus(sid)], org._overlay
+        harness.attacked_roots("F1")[harness.corpus("S22")], org._overlay
     )
+    return org
+
+
+def test_default_setting_does_not_route(tmp_path: Path) -> None:
+    org = _f1_org(tmp_path)  # the counterfactual: the same mismatch, the default setting
+    rec = Decisions(org).ask(harness.asker(org, "S22"), harness.request_for("S22"))
+    assert not rec.routed and not any(f.code == "routed" for f in rec.flags)
+    assert not org.engine.calls.exists() or org.engine.calls.read_text() == ""
+
+
+def test_route_mode_changes_decisions(tmp_path: Path) -> None:
+    org = _f1_org(tmp_path)
     put_settings(org, _person(org, "EMP-300"), {"on_mismatch": "route"})
     assert org.on_mismatch() == "route"
-    rec = Decisions(org).ask(harness.asker(org, sid), harness.request_for(sid))
+    rec = Decisions(org).ask(harness.asker(org, "S22"), harness.request_for("S22"))
     assert rec.outcome is None and rec.gated_outcome == "REQUEST_EVIDENCE" and rec.routed
     assert any(f.code == "routed" and f.routes for f in rec.flags)
+    assert not org.engine.calls.exists() or org.engine.calls.read_text() == ""  # $0: replay only
