@@ -1,0 +1,19 @@
+left_entity	right_entity	score	status	reason
+C-1001	C-1002	0.9431762	pending	proposed
+C-1002	C-1003	0.9407941	pending	proposed
+C-1001	C-1003	0.9403267	pending	proposed
+BlueRiver Logistics	Blue River Logistics LLC	0.9217696	pending	proposed
+Acme Industrial	Acme Mfg. Holdings	0.80578476	pending	proposed
+Acme Industrial Supply Co.	Acme Mfg. Holdings	0.77492917	pending	proposed
+Miller LLC	Miller LLC Co.	0.7518216	pending	proposed
+C-1002	C-1044	0.7360776	pending	proposed
+Chang-James	Chang-James Co.	0.7228493	pending	proposed
+C-1002	C-2003	0.72227055	pending	proposed
+C-1002	C-2008	0.70992243	pending	proposed
+C-1002	C-2007	0.69331735	pending	proposed
+Approval Authority Matrix	The Approval Authority Matrix	0.66922355	pending	proposed
+CRM-3005	CRM	0.658365	pending	proposed
+CRM-2051	CRM	0.6455915	pending	proposed
+zachary.brown@northstar.example	Zachary Brown	0.6097062	pending	escalate_unsure|second_look_unavailable
+NS-EDGE	NS-Edge Monitoring Package	0.46722913	pending	proposed
+NS-Cloud	NS-Cloud Operations Suite	0.42547452	pending	proposed

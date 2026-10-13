@@ -1,0 +1,137 @@
+{
+  "drops": [
+    {
+      "count": 24,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d4d6-71f0-a00d-3a55f972d3db",
+      "example": "DR-7017",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 13,
+      "detail": "a time mention's words are not in the statement's own sentence",
+      "document_id": "01a136ce-d5f5-7e33-9685-b99b427278fb",
+      "example": "2026-09-01",
+      "reason": "time_not_in_quote"
+    },
+    {
+      "count": 3,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d5bb-7d91-a787-70a602844a5a",
+      "example": "Authority",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 2,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136ce-d5ab-7333-931b-43af649b99b7",
+      "example": "Acme",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 2,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136ce-d738-7dc3-9fed-ae5e44e406b4",
+      "example": "NS-EDGE",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 2,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d516-7201-a0e6-94a92303162c",
+      "example": "| EMP-502 | Zachary Brown |  | Enterprise Account Executive | Sales | EMP-200 | Zachary Brown |  |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 2,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d4d6-71f0-a00d-3a55f972d3db",
+      "example": "| DR-7023 CRM-3008 NS-840-SER | 10.0 | 93000 | 83700 | 9300 | anthony.day@northstar.example | 2026-08-29 | Competitive | Approved | anthony.day@northstar.example | 2026-08-29 |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 2,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d64c-7400-901f-8f3ee2b21102",
+      "example": "request",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 1,
+      "detail": "5 items in the open reply were malformed",
+      "document_id": "01a136ce-d738-7dc3-9fed-ae5e44e406b4",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "1 items in the open reply were malformed",
+      "document_id": "01a136ce-d5ab-7333-931b-43af649b99b7",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "a statement has neither an object nor a value",
+      "document_id": "01a136ce-d629-76a3-b523-9ac639f75059",
+      "example": "must be reviewed",
+      "reason": "object_missing"
+    },
+    {
+      "count": 1,
+      "detail": "a statement has neither an object nor a value",
+      "document_id": "01a136ce-d606-7151-a841-e5dbd18b1842",
+      "example": "must be reviewed",
+      "reason": "object_missing"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136ce-d5ab-7333-931b-43af649b99b7",
+      "example": "~$125,000,000",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136ce-d606-7151-a841-e5dbd18b1842",
+      "example": "2025-01-01 through 2025-12-31",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "kept, but the phrase is the value itself",
+      "document_id": "01a136ce-d738-7dc3-9fed-ae5e44e406b4",
+      "example": "scheduled",
+      "reason": "phrase_is_value"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d738-7dc3-9fed-ae5e44e406b4",
+      "example": "Remote diagnostics scheduled.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d4b9-7e92-8d6d-7105615f9519",
+      "example": "| C-2002 Miller LLC Co. Buildinging Materials 1473 Atkinson Mission Suite 740 Fort Wayne IN | 46934 | 82-869-6184 | Net 45 |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d494-7551-b2ca-e29e3da9923f",
+      "example": "| CRM-3008 Blanchard Group Standard Midwest Mid-Market Pharmaceuticals 63155 Kathryn Courts Chicago IL | 97-565-7333 | Anthony Day | anthony@northstar.example |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d5ab-7333-931b-43af649b99b7",
+      "example": "we",
+      "reason": "unknown_ref"
+    }
+  ]
+}

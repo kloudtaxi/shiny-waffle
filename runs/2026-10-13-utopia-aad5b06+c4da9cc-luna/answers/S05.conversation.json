@@ -1,0 +1,77 @@
+{
+  "messages": [
+    {
+      "content": "Can Sarah Chen's 15% NS-500 discount for Acme (DR-9001) be approved on 2026-09-23?",
+      "created_at": "2026-10-13T19:59:35.917187Z",
+      "id": "01a136d9-57ec-79e1-a4b7-b6fe6630cdba",
+      "role": "user",
+      "sources": [],
+      "steps": []
+    },
+    {
+      "content": "The available sources don’t establish whether Sarah can approve DR-9001 on 2026-09-23. The 15% approval limit in the pricing policy applied only through 2025, so it can’t confirm approval authority for 2026. [5] DR-9001 is still marked “Pending Approval.” [2]\n\nAcme’s 2025 agreement and a prior 15% request were cited, but the account strategy says to confirm the preferential pricing with Deal Desk; the sources don’t show that confirmation or a current 2026 approval policy. [3][4]",
+      "created_at": "2026-10-13T19:59:39.034163Z",
+      "id": "01a136d9-6418-7cf0-af12-e46518b9d6fc",
+      "role": "assistant",
+      "sources": [
+        {
+          "chunk_id": "01a136ce-d605-7230-b011-29c0020ab6cd",
+          "document_id": "01a136ce-d5dd-7be2-a994-a8c1eb52886d",
+          "excerpt": "doc_id: MSG-20260923-0914\ntitle: Acme NS-500 — DR-9001\nfrom: sarah.chen@northstar.example\nto: michael.torres@northstar.example\nsent: '2026-09-23'\n---\n\n**From:**…",
+          "filename": "email_sarah_to_michael.md",
+          "n": 1
+        },
+        {
+          "chunk_id": "01a136ce-d55a-7311-8aec-3cb8c827cc88",
+          "document_id": "01a136ce-d4d6-71f0-a00d-3a55f972d3db",
+          "excerpt": "| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…",
+          "filename": "discount_requests.csv",
+          "n": 2
+        },
+        {
+          "chunk_id": "01a136ce-d5c5-7142-a1c5-834a3145ac37",
+          "document_id": "01a136ce-d5ab-7333-931b-43af649b99b7",
+          "excerpt": "doc_id: ACCT-PLAN-CRM-2048-2026\ntitle: ACME Manufacturing — Account Strategy 2026\nowner: Sarah Chen\ncreated: '2026-02-10'\n---\n\n# ACME Manufacturing — Account St…",
+          "filename": "acme_account_strategy.md",
+          "n": 3
+        },
+        {
+          "chunk_id": "01a136ce-d55a-7311-8aec-3c66115e8632",
+          "document_id": "01a136ce-d4d6-71f0-a00d-3a55f972d3db",
+          "excerpt": "| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…",
+          "filename": "discount_requests.csv",
+          "n": 4
+        },
+        {
+          "chunk_id": "01a136ce-d647-70b2-95de-9d5d02897d6f",
+          "document_id": "01a136ce-d606-7151-a841-e5dbd18b1842",
+          "excerpt": "doc_id: PRICING-POLICY-2025\ntitle: Northstar Pricing Policy 2025\nowner: Revenue Operations\ncreated: '2024-12-10'\neffective_from: '2025-01-01'\neffective_to: '202…",
+          "filename": "pricing_policy_2025.md",
+          "n": 5
+        },
+        {
+          "chunk_id": "01a136ce-d78b-79b3-b32b-56811c373e14",
+          "document_id": "01a136ce-d738-7dc3-9fed-ae5e44e406b4",
+          "excerpt": "doc_id: SR-40418\ntitle: Service Request SR-40418 — Acme Industrial\nowner: Customer Support\ncreated: '2026-09-14'\n---\n\n# Service Request SR-40418\n\n| Field | Valu…",
+          "filename": "service_ticket_acme_industrial.md",
+          "n": 6
+        },
+        {
+          "chunk_id": "01a136ce-d55a-7311-8aec-3c8d118ec18e",
+          "document_id": "01a136ce-d4d6-71f0-a00d-3a55f972d3db",
+          "excerpt": "| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…",
+          "filename": "discount_requests.csv",
+          "n": 7
+        },
+        {
+          "chunk_id": "01a136ce-d55a-7311-8aec-3ca3c86f1527",
+          "document_id": "01a136ce-d4d6-71f0-a00d-3a55f972d3db",
+          "excerpt": "| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…",
+          "filename": "discount_requests.csv",
+          "n": 8
+        }
+      ],
+      "steps": []
+    }
+  ]
+}

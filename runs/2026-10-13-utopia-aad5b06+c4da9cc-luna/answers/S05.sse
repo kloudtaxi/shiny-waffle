@@ -1,0 +1,375 @@
+event: snapshot
+data: {"content":"","sources":[],"steps":[]}
+
+event: conversation
+data: {"id":"01a136d9-57e8-7cb3-8843-2ad34370c192"}
+
+event: sources
+data: [{"chunk_id":"01a136ce-d605-7230-b011-29c0020ab6cd","document_id":"01a136ce-d5dd-7be2-a994-a8c1eb52886d","excerpt":"doc_id: MSG-20260923-0914\ntitle: Acme NS-500 — DR-9001\nfrom: sarah.chen@northstar.example\nto: michael.torres@northstar.example\nsent: '2026-09-23'\n---\n\n**From:**…","filename":"email_sarah_to_michael.md","n":1},{"chunk_id":"01a136ce-d55a-7311-8aec-3cb8c827cc88","document_id":"01a136ce-d4d6-71f0-a00d-3a55f972d3db","excerpt":"| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…","filename":"discount_requests.csv","n":2},{"chunk_id":"01a136ce-d5c5-7142-a1c5-834a3145ac37","document_id":"01a136ce-d5ab-7333-931b-43af649b99b7","excerpt":"doc_id: ACCT-PLAN-CRM-2048-2026\ntitle: ACME Manufacturing — Account Strategy 2026\nowner: Sarah Chen\ncreated: '2026-02-10'\n---\n\n# ACME Manufacturing — Account St…","filename":"acme_account_strategy.md","n":3},{"chunk_id":"01a136ce-d55a-7311-8aec-3c66115e8632","document_id":"01a136ce-d4d6-71f0-a00d-3a55f972d3db","excerpt":"| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…","filename":"discount_requests.csv","n":4},{"chunk_id":"01a136ce-d647-70b2-95de-9d5d02897d6f","document_id":"01a136ce-d606-7151-a841-e5dbd18b1842","excerpt":"doc_id: PRICING-POLICY-2025\ntitle: Northstar Pricing Policy 2025\nowner: Revenue Operations\ncreated: '2024-12-10'\neffective_from: '2025-01-01'\neffective_to: '202…","filename":"pricing_policy_2025.md","n":5},{"chunk_id":"01a136ce-d78b-79b3-b32b-56811c373e14","document_id":"01a136ce-d738-7dc3-9fed-ae5e44e406b4","excerpt":"doc_id: SR-40418\ntitle: Service Request SR-40418 — Acme Industrial\nowner: Customer Support\ncreated: '2026-09-14'\n---\n\n# Service Request SR-40418\n\n| Field | Valu…","filename":"service_ticket_acme_industrial.md","n":6},{"chunk_id":"01a136ce-d55a-7311-8aec-3c8d118ec18e","document_id":"01a136ce-d4d6-71f0-a00d-3a55f972d3db","excerpt":"| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…","filename":"discount_requests.csv","n":7},{"chunk_id":"01a136ce-d55a-7311-8aec-3ca3c86f1527","document_id":"01a136ce-d4d6-71f0-a00d-3a55f972d3db","excerpt":"| request_id account_id product_sku | requested_discount_pct | list_value_usd | discount_value_usd | net_value_usd | requested_by | request_date | justification…","filename":"discount_requests.csv","n":8}]
+
+event: delta
+data: {"text":"The"}
+
+event: delta
+data: {"text":" available"}
+
+event: delta
+data: {"text":" sources"}
+
+event: delta
+data: {"text":" don"}
+
+event: delta
+data: {"text":"’t"}
+
+event: delta
+data: {"text":" establish"}
+
+event: delta
+data: {"text":" whether"}
+
+event: delta
+data: {"text":" Sarah"}
+
+event: delta
+data: {"text":" can"}
+
+event: delta
+data: {"text":" approve"}
+
+event: delta
+data: {"text":" DR"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"900"}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":" on"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"6"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"09"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"23"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" The"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"15"}
+
+event: delta
+data: {"text":"%"}
+
+event: delta
+data: {"text":" approval"}
+
+event: delta
+data: {"text":" limit"}
+
+event: delta
+data: {"text":" in"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" pricing"}
+
+event: delta
+data: {"text":" policy"}
+
+event: delta
+data: {"text":" applied"}
+
+event: delta
+data: {"text":" only"}
+
+event: delta
+data: {"text":" through"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"5"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" so"}
+
+event: delta
+data: {"text":" it"}
+
+event: delta
+data: {"text":" can"}
+
+event: delta
+data: {"text":"’t"}
+
+event: delta
+data: {"text":" confirm"}
+
+event: delta
+data: {"text":" approval"}
+
+event: delta
+data: {"text":" authority"}
+
+event: delta
+data: {"text":" for"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"6"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" ["}
+
+event: delta
+data: {"text":"5"}
+
+event: delta
+data: {"text":"]"}
+
+event: delta
+data: {"text":" DR"}
+
+event: delta
+data: {"text":"-"}
+
+event: delta
+data: {"text":"900"}
+
+event: delta
+data: {"text":"1"}
+
+event: delta
+data: {"text":" is"}
+
+event: delta
+data: {"text":" still"}
+
+event: delta
+data: {"text":" marked"}
+
+event: delta
+data: {"text":" “"}
+
+event: delta
+data: {"text":"Pending"}
+
+event: delta
+data: {"text":" Approval"}
+
+event: delta
+data: {"text":".”"}
+
+event: delta
+data: {"text":" ["}
+
+event: delta
+data: {"text":"2"}
+
+event: delta
+data: {"text":"]\n\n"}
+
+event: delta
+data: {"text":"Ac"}
+
+event: delta
+data: {"text":"me"}
+
+event: delta
+data: {"text":"’s"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"5"}
+
+event: delta
+data: {"text":" agreement"}
+
+event: delta
+data: {"text":" and"}
+
+event: delta
+data: {"text":" a"}
+
+event: delta
+data: {"text":" prior"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"15"}
+
+event: delta
+data: {"text":"%"}
+
+event: delta
+data: {"text":" request"}
+
+event: delta
+data: {"text":" were"}
+
+event: delta
+data: {"text":" cited"}
+
+event: delta
+data: {"text":","}
+
+event: delta
+data: {"text":" but"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" account"}
+
+event: delta
+data: {"text":" strategy"}
+
+event: delta
+data: {"text":" says"}
+
+event: delta
+data: {"text":" to"}
+
+event: delta
+data: {"text":" confirm"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" preferential"}
+
+event: delta
+data: {"text":" pricing"}
+
+event: delta
+data: {"text":" with"}
+
+event: delta
+data: {"text":" Deal"}
+
+event: delta
+data: {"text":" Desk"}
+
+event: delta
+data: {"text":";"}
+
+event: delta
+data: {"text":" the"}
+
+event: delta
+data: {"text":" sources"}
+
+event: delta
+data: {"text":" don"}
+
+event: delta
+data: {"text":"’t"}
+
+event: delta
+data: {"text":" show"}
+
+event: delta
+data: {"text":" that"}
+
+event: delta
+data: {"text":" confirmation"}
+
+event: delta
+data: {"text":" or"}
+
+event: delta
+data: {"text":" a"}
+
+event: delta
+data: {"text":" current"}
+
+event: delta
+data: {"text":" "}
+
+event: delta
+data: {"text":"202"}
+
+event: delta
+data: {"text":"6"}
+
+event: delta
+data: {"text":" approval"}
+
+event: delta
+data: {"text":" policy"}
+
+event: delta
+data: {"text":"."}
+
+event: delta
+data: {"text":" ["}
+
+event: delta
+data: {"text":"3"}
+
+event: delta
+data: {"text":"]["}
+
+event: delta
+data: {"text":"4"}
+
+event: delta
+data: {"text":"]"}
+
+event: done
+data: {}
+

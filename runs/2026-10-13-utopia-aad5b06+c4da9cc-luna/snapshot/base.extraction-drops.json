@@ -1,0 +1,151 @@
+{
+  "drops": [
+    {
+      "count": 28,
+      "detail": "a time mention's words are not in the statement's own sentence",
+      "document_id": "01a136ce-d185-7be3-9d55-f142ca7b064b",
+      "example": "2026-09-01",
+      "reason": "time_not_in_quote"
+    },
+    {
+      "count": 12,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d011-70a0-ad21-099656989ea0",
+      "example": "SO-7002",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 4,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d04e-7cc3-a8c0-fb9e87109a5a",
+      "example": "Acme negotiated preferential NS-500 pricing in the 2025 agreement — I believe it's 15%, same as what we approved for them last September.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 4,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d04e-7cc3-a8c0-fb9e87109a5a",
+      "example": "Acme",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 3,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136ce-d069-7ac3-9550-8e4d5a715612",
+      "example": "2025-03-22",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 2,
+      "detail": "a statement has neither an object nor a value",
+      "document_id": "01a136ce-d227-7f02-8143-f8349866cea2",
+      "example": "must not be approved",
+      "reason": "object_missing"
+    },
+    {
+      "count": 2,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d0c4-7c80-9ebc-a9015bab028b",
+      "example": "It does not grant approval authority to any Northstar employee.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 2,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d01f-7da3-a126-ed310b6a1913",
+      "example": "NS-840 Commissioning Service",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 2,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d12e-7803-9112-d4853df3351f",
+      "example": "I",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 1,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136ce-d069-7ac3-9550-8e4d5a715612",
+      "example": "Acme Manufacturing",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 1,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136ce-d098-7081-844f-b329a530378f",
+      "example": "NS-500",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 1,
+      "detail": "a statement has neither an object nor a value",
+      "document_id": "01a136ce-d04e-7cc3-a8c0-fb9e87109a5a",
+      "example": "confirming",
+      "reason": "object_missing"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136ce-d1ba-77e3-b6ba-4ee8bd060549",
+      "example": "2025-01-01 through 2025-12-31",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136ce-d1f2-7621-afb9-27f5d64fe1d2",
+      "example": "these thresholds",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "kept, but the phrase is the value itself",
+      "document_id": "01a136ce-d1ba-77e3-b6ba-4ee8bd060549",
+      "example": "must be reviewed",
+      "reason": "phrase_is_value"
+    },
+    {
+      "count": 1,
+      "detail": "kept, but the phrase is the value itself",
+      "document_id": "01a136ce-d28b-7ce0-ba52-bc3782125cb9",
+      "example": "scheduled",
+      "reason": "phrase_is_value"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d28b-7ce0-ba52-bc3782125cb9",
+      "example": "Remote diagnostics scheduled.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-cfb0-7c62-b796-a426df1ad3b3",
+      "example": "| CRM-3002 Miller LLC Standard East Enterprise Building Materials 1473 Atkinson Mission Suite 740 Fort Wayne IN | 82-869-6184 | Zachary Brown | kelly.floyd@northstar.example |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136ce-d069-7ac3-9550-8e4d5a715612",
+      "example": "Customer's contractual pricing eligibility does not modify Northstar's internal approval authority.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a name's thing is not a listed thing",
+      "document_id": "01a136ce-d01f-7da3-a126-ed310b6a1913",
+      "example": "NS-840 Commissioning Service",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136ce-d227-7f02-8143-f8349866cea2",
+      "example": "contractual eligibility",
+      "reason": "unknown_ref"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+left_entity	right_entity	score	status	reason
+BlueRiver Logistics	Blue River Logistics LLC	0.92174935	pending	escalate_unsure|second_look_unavailable
+Acme Industrial	CRM-3007	0.8682469	pending	proposed
+Acme Industrial	CRM-3008	0.8611025	pending	proposed
+Acme Industrial	Acme Mfg. Holdings	0.80578476	pending	proposed
+Miller LLC	Miller LLC Co.	0.7518216	pending	proposed
+C-1001	C-1044	0.70612806	pending	proposed
+Acme Industrial	Acme Manufacturing	0.67791367	pending	proposed
+Blanchard Group	Blanchard Group Corp.	0.66482073	pending	proposed
+Master Supply Agreement	agreement ACME-MFG-2025	0.6620096	pending	proposed
+CRM-2051	CRM	0.6455916	pending	proposed
+zachary.brown@northstar.example	Zachary Brown	0.6097757	pending	escalate_unsure|second_look_unavailable
+Acme Industrial Supply Co.	Acme Manufacturing	0.5397853	pending	proposed
+Acme Mfg. Holdings	Acme Manufacturing	0.5397853	pending	proposed
+NS-500 Industrial Controller	NS-500	0.53560853	pending	proposed
+Acme Industrial	Acme Industrial Supply Co.	0.4948354	pending	proposed
+Sarah Chen	Sarah Chen	0.4457482	pending	proposed
+Enterprise Account Executives	Enterprise Account Executive	0	pending	proposed
