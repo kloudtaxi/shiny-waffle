@@ -1,0 +1,42 @@
+{
+  "base": {
+    "decisions": 12705,
+    "labelled": 12523,
+    "keep": 12239,
+    "missed_merge": 40,
+    "right": 12279,
+    "truly_same": 155,
+    "route": 204,
+    "merge": 80,
+    "false_merge_kinds": {},
+    "false_merges": []
+  },
+  "missing-contract": {
+    "decisions": 11726,
+    "labelled": 11601,
+    "keep": 11419,
+    "missed_merge": 40,
+    "right": 11462,
+    "truly_same": 154,
+    "merge": 85,
+    "route": 97,
+    "false_merge": 2,
+    "false_merge_kinds": {
+      "customer~customer": 2
+    },
+    "false_merges": [
+      {
+        "a": "Wilson-Wilson LLC",
+        "b": "Wilson LLC",
+        "reason": "Both records have the exact same name, \u201cWilson LLC,\u201d and no facts contradict that they refer to the same entity.",
+        "confidence": 0.99
+      },
+      {
+        "a": "Wilson-Wilson",
+        "b": "Wilson LLC",
+        "reason": "Record A\u2019s name matches the alias \u201cWilson-Wilson LLC\u201d listed for Record B.",
+        "confidence": 0.99
+      }
+    ]
+  }
+}

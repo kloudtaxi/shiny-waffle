@@ -1,0 +1,235 @@
+{
+  "drops": [
+    {
+      "count": 115,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f766-7071-9ed1-6be41c826f87",
+      "example": "CRM-3199",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 102,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-f823-76c1-a4fc-562084b497b6",
+      "example": "DR-7927",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 48,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f848-7122-9735-001533e3e1d6",
+      "example": "Remote",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 26,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f823-76c1-a4fc-562084b497b6",
+      "example": "126650",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 26,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f8bd-79c3-a9c4-4ed59eb1436d",
+      "example": "NS-650-SOF",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 20,
+      "detail": "a statement's value is not in its own quoted sentence",
+      "document_id": "01a136fa-f87a-77f3-b21c-54efb174d4b1",
+      "example": "879200",
+      "reason": "value_not_in_quote"
+    },
+    {
+      "count": 15,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f823-76c1-a4fc-562084b497b6",
+      "example": "| DR-7820 CRM-3136 NS-560-SOF | 10.0 | 233000 | 23300 | 209700 | stephanie.wells@northstar.example | 2026-05-27 | Competitive | Approved | michael.torres@northstar.example | 2026-05-27 |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 13,
+      "detail": "a statement's value is not in its own quoted sentence",
+      "document_id": "01a136fa-f823-76c1-a4fc-562084b497b6",
+      "example": "283720",
+      "reason": "value_not_in_quote"
+    },
+    {
+      "count": 9,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-f766-7071-9ed1-6be41c826f87",
+      "example": "Mclaughlin, Parks and Mack",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 8,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-fa78-7320-a930-872e9ef972ae",
+      "example": "customer",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 7,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f916-7e93-946f-46a2a9201ead",
+      "example": "Acme negotiated preferential NS-500 pricing in the 2025 agreement — I believe it's 15%, same as what we approved for them last September.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 5,
+      "detail": "1 items in the open reply were malformed",
+      "document_id": "01a136fa-f766-7071-9ed1-6be41c826f87",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 5,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f916-7e93-946f-46a2a9201ead",
+      "example": "15%",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 5,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-f87a-77f3-b21c-54efb174d4b1",
+      "example": "SO-5382",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 3,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f7c0-7583-86fe-8e15e04635b0",
+      "example": "| C-2168 Snyder Ltd Co. Buildinging Materials 6374 Diane Spring Apt. 990 Pittsburgh PA | 19007 | 15-276-3131 | Net 45 |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 2,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136fa-fa78-7320-a930-872e9ef972ae",
+      "example": "NS-EDGE",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 2,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-fa3e-7f51-ad69-cebe7b0949b1",
+      "example": "operational reference",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 2,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f87a-77f3-b21c-54efb174d4b1",
+      "example": "| SO-5310 C-2144 | 2026-02-10 | 855800 | USD | Completed |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 2,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f766-7071-9ed1-6be41c826f87",
+      "example": "| CRM-3018 Rogers, Wood and Chavez Standard East Enterprise Energy & Utilities 9636 Torres Extensions Cleveland OH | 28-824-6100 | kelly.floyd@northstar.example |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 2,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f848-7122-9735-001533e3e1d6",
+      "example": "| EMP-537 | Jacqueline Riggs |  | Financial Analyst | Finance | EMP-402 | EMP-402 | jacqueline.riggs@northstar.example | Indianapolis, IN |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "2 items in the open reply were malformed",
+      "document_id": "01a136fa-f766-7071-9ed1-6be41c826f87",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "45 items in the open reply were malformed",
+      "document_id": "01a136fa-f766-7071-9ed1-6be41c826f87",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "2 items in the open reply were malformed",
+      "document_id": "01a136fa-f87a-77f3-b21c-54efb174d4b1",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "1 items in the open reply were malformed",
+      "document_id": "01a136fa-f87a-77f3-b21c-54efb174d4b1",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "24 items in the open reply were malformed",
+      "document_id": "01a136fa-f823-76c1-a4fc-562084b497b6",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136fa-f916-7e93-946f-46a2a9201ead",
+      "example": "Acme",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f9b8-72c2-a31e-cc217e3b4b3c",
+      "example": "2026-09-01",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f98a-70e1-a2ae-d75f52b651dc",
+      "example": "15% off list",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f7c0-7583-86fe-8e15e04635b0",
+      "example": "C-2130",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "kept, but the phrase is the value itself",
+      "document_id": "01a136fa-fa78-7320-a930-872e9ef972ae",
+      "example": "scheduled",
+      "reason": "phrase_is_value"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-fa78-7320-a930-872e9ef972ae",
+      "example": "Remote diagnostics scheduled.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-f98a-70e1-a2ae-d75f52b651dc",
+      "example": "Sarah",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-fa11-7412-9bfb-bbde53e40b24",
+      "example": "discounts greater than 15%",
+      "reason": "unknown_ref"
+    }
+  ]
+}

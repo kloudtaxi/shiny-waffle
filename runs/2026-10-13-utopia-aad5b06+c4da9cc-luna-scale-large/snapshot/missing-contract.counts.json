@@ -1,0 +1,11 @@
+{
+  "entities": "2552",
+  "open_facts": "17616",
+  "typed_facts": "3089",
+  "merges": "82",
+  "reviews_kept_merged_pending": "11538 / 86 / 103",
+  "doc_time_source": [
+    "content\t8",
+    "none\t6"
+  ]
+}

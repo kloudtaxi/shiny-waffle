@@ -1,0 +1,1 @@
+GET /kbs/01a136fa-8e1d-77c0-b01d-bfc6423990b4/export?format=turtle -> 422 {"code":"unexported_target","detail":"fact.object(merged): 22 row(s); fact.subject(merged): 3 row(s)","error":"export refused: a reference points at a row that is not in this KB's exported set"}

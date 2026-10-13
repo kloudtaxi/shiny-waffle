@@ -1,0 +1,225 @@
+left_entity	right_entity	score	status	reason
+CRM-2091	CRM-2091	1	pending	proposed
+Agreement	Master Supply Agreement	1	pending	proposed
+CRM-3144	CRM-3143	0.99189687	pending	proposed
+CRM-3171	CRM-3175	0.9899691	pending	proposed
+CRM-3032	CRM-3035	0.9882918	pending	proposed
+CRM-3031	CRM-3035	0.9869834	pending	proposed
+CRM-3127	CRM-3126	0.9852056	pending	proposed
+CRM-3033	CRM-3035	0.9851381	pending	proposed
+CRM-3088	CRM-3082	0.9844248	pending	proposed
+CRM-3149	CRM-3143	0.9843873	pending	proposed
+CRM-3094	CRM-3097	0.9838005	pending	proposed
+CRM-3145	CRM-3143	0.98378074	pending	proposed
+CRM-3044	CRM-3048	0.982398	pending	proposed
+CRM-3026	CRM-3027	0.9815584	pending	proposed
+CRM-3038	CRM-3035	0.9809543	pending	proposed
+CRM-3123	CRM-3126	0.9808261	pending	proposed
+CRM-3176	CRM-3175	0.9807407	pending	proposed
+CRM-3118	CRM-3113	0.9807052	pending	proposed
+CRM-3034	CRM-3035	0.9805187	pending	proposed
+CRM-3044	CRM-3047	0.98024	pending	proposed
+CRM-3141	CRM-3143	0.98005295	pending	proposed
+CRM-3116	CRM-3113	0.97932166	pending	proposed
+CRM-3047	CRM-3048	0.9774523	pending	proposed
+CRM-3073	CRM-3076	0.9767737	pending	proposed
+CRM-3097	CRM-3098	0.9767654	pending	proposed
+CRM-3087	CRM-3082	0.9755901	pending	proposed
+CRM-3045	CRM-3048	0.97521377	pending	proposed
+CRM-3095	CRM-3097	0.9743281	pending	proposed
+CRM-3099	CRM-3097	0.97271425	pending	proposed
+CRM-3112	CRM-3113	0.9723023	pending	proposed
+C-2144	C-2141	0.9705572	pending	proposed
+CRM-3097	CRM-3096	0.9696532	pending	proposed
+CRM-3073	CRM-3078	0.96783596	pending	proposed
+CRM-3111	CRM-3113	0.96692216	pending	proposed
+CRM-3022	CRM-3027	0.96336377	pending	proposed
+NS-500 I/O Module	NS-500 Industrial Controller	0.96231073	pending	proposed
+CRM-3042	CRM-3048	0.96137804	pending	proposed
+C-2087	C-2084	0.9606033	pending	proposed
+CRM-3030	CRM-3035	0.9603321	pending	proposed
+C-2143	C-2141	0.96016514	pending	proposed
+C-2136	C-2139	0.9601199	pending	proposed
+C-2151	C-2154	0.95993066	pending	proposed
+C-2123	C-2122	0.95900875	pending	proposed
+C-2134	C-2139	0.9584359	pending	proposed
+CRM-3190	CRM-3191	0.9566589	pending	proposed
+CRM-3123	CRM-3113	0.9558539	pending	proposed
+C-2109	C-2104	0.95550334	pending	proposed
+C-2133	C-2139	0.95494604	pending	proposed
+C-2103	C-2109	0.9533878	pending	proposed
+CRM-3032	CRM-3027	0.95306677	pending	proposed
+C-2134	C-2131	0.95289224	pending	proposed
+CRM-3067	CRM-3076	0.9523138	pending	proposed
+C-2103	C-2104	0.9517521	pending	proposed
+C-2109	C-2102	0.9517172	pending	proposed
+C-2080	C-2084	0.9512717	pending	proposed
+CRM-3035	CRM-3027	0.95025647	pending	proposed
+CRM-3133	CRM-3113	0.9493378	pending	proposed
+C-2132	C-2139	0.9483061	pending	proposed
+CRM-3086	CRM-3076	0.9482391	pending	proposed
+CRM-3034	CRM-3027	0.9476626	pending	proposed
+CRM-3116	CRM-3126	0.9475448	pending	proposed
+CRM-3137	CRM-3175	0.947102	pending	proposed
+C-2135	C-2139	0.9468434	pending	proposed
+CRM-3031	CRM-3027	0.9464254	pending	proposed
+C-2135	C-2131	0.945827	pending	proposed
+CRM-3123	CRM-3114	0.9453567	pending	proposed
+CRM-3033	CRM-3027	0.9449428	pending	proposed
+CRM-3097	CRM-3079	0.94490844	pending	proposed
+CRM-3138	CRM-3143	0.9440464	pending	proposed
+C-2106	C-2104	0.94360197	pending	proposed
+CRM-3054	CRM-3048	0.94258225	pending	proposed
+CRM-3145	CRM-3158	0.9421609	pending	proposed
+CRM-3034	CRM-3043	0.9420633	pending	proposed
+CRM-3013	CRM-3027	0.9418469	pending	proposed
+C-2106	C-2109	0.9416763	pending	proposed
+CRM-3183	CRM-3175	0.9414288	pending	proposed
+CRM-3145	CRM-3154	0.9412673	pending	proposed
+CRM-3145	CRM-3175	0.9409281	pending	proposed
+CRM-3048	CRM-3068	0.9400634	pending	proposed
+CRM-3181	CRM-3175	0.9399349	pending	proposed
+C-2127	C-2123	0.9395887	pending	proposed
+C-2136	C-2131	0.9395752	pending	proposed
+C-2060	C-2066	0.93815887	pending	proposed
+CRM-3048	CRM-3056	0.93771636	pending	proposed
+CRM-3034	CRM-3074	0.9376319	pending	proposed
+CRM-3013	CRM-3035	0.9366005	pending	proposed
+CRM-3104	CRM-3113	0.9363349	pending	proposed
+CRM-3019	CRM-3027	0.93607926	pending	proposed
+CRM-3178	CRM-3143	0.9348365	pending	proposed
+CRM-3044	CRM-3057	0.9344896	pending	proposed
+CRM-2051	Acme Industrial	0.9342942	pending	proposed
+CRM-3049	CRM-3097	0.9342797	pending	proposed
+CRM-3044	CRM-3074	0.9337153	pending	proposed
+C-2130	C-2131	0.9333596	pending	proposed
+CRM-3132	CRM-3113	0.93323004	pending	proposed
+CRM-3106	CRM-3113	0.93257654	pending	proposed
+CRM-3158	CRM-3143	0.9322828	pending	proposed
+CRM-3044	CRM-3084	0.93227553	pending	proposed
+CRM-3043	CRM-3035	0.9320217	pending	proposed
+CRM-3186	CRM-3175	0.93095946	pending	proposed
+CRM-3153	CRM-3175	0.9303619	pending	proposed
+CRM-3015	CRM-3027	0.9300895	pending	proposed
+CRM-3045	CRM-3035	0.92962587	pending	proposed
+CRM-3190	CRM-3196	0.9287442	pending	proposed
+CRM-3161	CRM-3191	0.9268687	pending	proposed
+CRM-3164	CRM-3143	0.9262729	pending	proposed
+CRM-3155	CRM-3175	0.9235788	pending	proposed
+CRM-3162	CRM-3181	0.923409	pending	proposed
+CRM-3193	CRM-3175	0.9217817	pending	proposed
+CRM-3018	CRM-3027	0.91990626	pending	proposed
+C-2130	C-2135	0.91922987	pending	proposed
+CRM-3009	CRM-3097	0.91907126	pending	proposed
+CRM-3109	CRM-3097	0.91827905	pending	proposed
+C-2130	C-2134	0.91805905	pending	proposed
+Acme Industrial	CRM-3097	0.9175986	pending	proposed
+CRM-3102	CRM-3113	0.9171819	pending	proposed
+CRM-3003	CRM-3035	0.9157323	pending	proposed
+CRM-3152	CRM-3143	0.9143065	pending	proposed
+CRM-3199	CRM-3175	0.9142235	pending	proposed
+CRM-3009	CRM-3027	0.9117248	pending	proposed
+CRM-3030	CRM-3027	0.90745026	pending	proposed
+CRM-3003	CRM-3027	0.90713197	pending	proposed
+Acme Industrial	CRM-3027	0.90705943	pending	proposed
+Acme Industrial	CRM-3074	0.90619767	pending	proposed
+C-2130	C-2139	0.9040289	pending	proposed
+C-2058	C-2068	0.8886961	pending	proposed
+CRM-2051	CRM-3027	0.885114	pending	proposed
+CRM-2051	CRM-3175	0.88473606	pending	proposed
+NS-500 Industrial Controller	NS-500 controller	0.8785284	pending	escalate_unsure|second_look_unavailable
+C-2144	C-2154	0.8771507	pending	proposed
+C-2072	C-2068	0.8768559	pending	proposed
+C-2047	C-2040	0.8744908	pending	proposed
+C-2059	C-2068	0.8728146	pending	proposed
+Pitts-Johnson	Johnson LLC	0.8722793	pending	proposed|redirected
+C-2046	C-2040	0.87006325	pending	proposed
+C-2141	C-2154	0.8655811	pending	proposed
+C-2141	C-2134	0.86528003	pending	proposed
+C-2006	C-2001	0.86170214	pending	proposed
+C-2109	C-2091	0.8575072	pending	proposed
+C-2008	C-2001	0.85744804	pending	proposed
+C-2159	C-2139	0.8554852	pending	proposed
+C-2060	C-2040	0.85310256	pending	proposed
+C-2109	C-2118	0.84869456	pending	proposed
+C-2059	C-2071	0.8466114	pending	proposed
+C-2092	C-2109	0.84649885	pending	proposed
+C-2149	C-2139	0.8445585	pending	proposed
+C-2081	C-2068	0.8369058	pending	proposed
+C-2055	C-2068	0.832462	pending	proposed
+C-2084	C-2068	0.8321689	pending	proposed
+C-2089	C-2068	0.8227354	pending	proposed
+C-2031	C-2131	0.8206632	pending	proposed
+C-2140	C-2139	0.82002026	pending	proposed
+C-2123	C-2139	0.81570286	pending	proposed
+C-2034	C-2068	0.8097499	pending	proposed
+C-2029	C-2068	0.80699337	pending	proposed
+C-2130	C-2113	0.8050828	pending	proposed
+C-2011	C-2001	0.80250746	pending	proposed
+C-2080	C-2068	0.7954175	pending	proposed
+C-2020	C-2040	0.79073274	pending	proposed
+CRM-2048	CRM-3048	0.7888556	pending	proposed
+C-2059	C-2115	0.78410304	pending	proposed
+C-1001	C-2001	0.7767996	pending	proposed
+Turner Inc	Turner Inc Inc.	0.7492041	pending	proposed
+Miller LLC	Miller LLC Co.	0.7487669	pending	proposed
+C-1002	C-2001	0.7471659	pending	proposed
+Pugh Holdings	Pugh-Daugherty	0.74682105	pending	proposed
+Enterprise Account Executives	Enterprise Account Executive	0.74585176	pending	proposed
+Kim-Richardson	Kim-Richardson LLC	0.74525404	pending	proposed
+C-2004	C-2104	0.7431348	pending	proposed
+NS-500 I/O Module	NS-500 controller	0.74265426	pending	proposed
+NS-690 Commissioning Service	NS-690-SER	0.7392258	pending	escalate_unsure|second_look_unavailable
+C-1001	C-2109	0.7371213	pending	proposed
+Castaneda Ltd	Castaneda Ltd Inc.	0.7367629	pending	proposed
+Esparza-Carson	Esparza-Carson LLC	0.73609096	pending	proposed
+C-1001	C-2104	0.733251	pending	proposed
+Simpson and Sons	Simpson and Sons LLC	0.73290986	pending	proposed
+Jordan-Mcclure	Jordan-Mcclure Co.	0.7310416	pending	proposed
+Palmer Inc	Palmer Inc Inc.	0.73103166	pending	proposed
+Hatfield-Barrera	Hatfield-Barrera Corp.	0.73103166	pending	proposed
+Ewing-House	Ewing-House Co.	0.73094416	pending	proposed
+Freeman LLC	Freeman LLC Co.	0.72772485	pending	proposed
+Chang-James	Chang-James Co.	0.7267241	pending	proposed
+Roberts-Avery	Roberts-Avery LLC	0.72633195	pending	proposed
+Snyder Ltd	Snyder Ltd Co.	0.7219128	pending	proposed
+Gaines Group	Gaines Group Co.	0.7173043	pending	proposed
+ACME-MFG-2025	ACME-SA-2023	0.71545166	pending	proposed
+Davis-Harris	Davis-Harris Inc.	0.71391237	pending	proposed
+Garcia-Floyd	Garcia-Floyd Inc.	0.7133098	pending	proposed
+Barnes Inc	Barnes Inc Corp.	0.7115979	pending	proposed
+Tran-Brooks	Tran-Brooks Corp.	0.70989305	pending	proposed
+NS-500 controller	NS-500	0.70694506	pending	proposed
+Rollins Group	Rollins Group LLC	0.70301014	pending	proposed
+Bennett Inc	Bennett Inc Co.	0.70301014	pending	proposed
+Velez PLC	Velez PLC Inc.	0.7007875	pending	proposed
+May and Sons	May and Sons Corp.	0.69955355	pending	proposed
+Ramirez and Sons	Ramirez and Sons Corp.	0.69818175	pending	proposed
+Elliott-Byrd	Elliott-Byrd Inc.	0.69818175	pending	proposed
+NS-400 Drive Unit	NS-400 Gateway	0.69763017	pending	escalate_unsure|second_look_unavailable
+Schultz-Clay	Schultz-Clay LLC	0.6963584	pending	proposed
+Long Group	Long Group LLC	0.6961616	pending	proposed
+Mcknight Inc	Mcknight Inc Inc.	0.6961616	pending	proposed
+Gill Group	Gill Group Corp.	0.6913809	pending	proposed
+Stephenson-Maldonado	Stephenson-Maldonado LLC	0.6885502	pending	proposed
+NS-780 Training Package	NS-780-SER	0.67957	pending	escalate_unsure|second_look_unavailable
+NS-390 Safety Module	SO-5091	0.67914486	pending	proposed
+Hughes-Williams	Williams LLC	0.6694881	pending	proposed|redirected
+C-2019	C-2068	0.6666223	pending	proposed
+CRM-3096	CRM	0.66373867	pending	proposed
+CRM-3057	CRM	0.65754473	pending	proposed
+CRM-3014	CRM	0.65400374	pending	proposed
+Acme Manufacturing	ACME-MFG-2025	0.6385192	pending	proposed
+Sarah	Sarah Chen	0.62808096	pending	proposed
+Ramos-Diaz	Ramos Inc	0.62641424	pending	proposed
+Acme Master Supply Agreement	Agreement	0.6241442	pending	proposed
+Acme Master Supply Agreement	Master Supply Agreement	0.6241442	pending	proposed
+May and Sons	Greer and Sons	0.6142928	pending	proposed
+Zachary Brown	zachary.brown@northstar.example	0.6096983	pending	escalate_unsure|second_look_unavailable
+NS-130 Commissioning Service	NS-500	0.60927135	pending	proposed
+sarah.chen@northstar.example	Sarah	0.5967018	pending	proposed
+NS-500 I/O Module	NS-500	0.54401875	pending	proposed
+NS-500 Industrial Controller	NS-500	0.5432512	pending	proposed
+NS-500 Historian	NS-500	0.5159392	pending	proposed
+Acme Industrial Supply Co.	Acme Industrial	0.49487558	pending	proposed
+Sarah Jordan	Sarah	0.4175976	pending	proposed

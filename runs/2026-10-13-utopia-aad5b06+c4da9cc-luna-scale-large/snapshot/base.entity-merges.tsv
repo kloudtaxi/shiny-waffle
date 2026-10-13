@@ -1,0 +1,81 @@
+target	source	reason	created_at
+Acme Mfg. Holdings	Acme Mfg. Holdings	governed|0.99	2026-10-13 20:38:36.898135+00
+Acme Manufacturing	Acme Mfg. Holdings	governed|0.91	2026-10-13 20:38:36.941013+00
+NS-500 Industrial Controller	NS-500 Industrial Controller	governed|0.99	2026-10-13 20:39:16.070256+00
+NS-Cloud Operations Suite	NS-Cloud Operations Suite	governed|0.98	2026-10-13 20:39:16.18937+00
+NS-Edge Monitoring Package	NS-Edge Monitoring Package	governed|0.96	2026-10-13 20:39:16.230428+00
+Edward Floyd	Edward Floyd	governed|0.99	2026-10-13 20:40:09.387199+00
+Cedar Health Systems	Cedar Health Systems Inc.	governed|0.88	2026-10-13 20:40:09.437454+00
+Clark Inc	Clark Inc Inc.	governed|0.94	2026-10-13 20:47:56.433451+00
+Blanchard Group	Blanchard Group Corp.	governed|0.88	2026-10-13 20:48:42.464747+00
+Bond-Cline	Bond-Cline LLC	governed|0.87	2026-10-13 20:48:50.59503+00
+Brown-Patterson	Brown-Patterson Inc.	governed|0.95	2026-10-13 20:48:50.652241+00
+Chicago	Chicago, Illinois	governed|0.98	2026-10-13 20:48:55.592031+00
+Acme Industrial	CRM-2091	governed|0.99	2026-10-13 20:49:04.035847+00
+EMP-520	Stephanie Wells	governed|0.99	2026-10-13 20:50:12.929853+00
+Rogers-Taylor	Rogers-Taylor Corp.	governed|0.92	2026-10-13 20:51:12.252291+00
+Bentley-Johnson	Bentley-Johnson Inc.	governed|0.94	2026-10-13 20:51:12.374901+00
+Hughes PLC	Hughes PLC Co.	governed|0.91	2026-10-13 20:51:16.631887+00
+Jackson-Ruiz	Jackson-Ruiz Co.	governed|0.88	2026-10-13 20:51:24.88088+00
+EMP-520	Stephanie Wells	governed|0.99	2026-10-13 20:51:24.997688+00
+Fry-Clark	Fry-Clark Corp.	governed|0.91	2026-10-13 20:53:03.097559+00
+EMP-536	Rachel Mendez	governed|0.98	2026-10-13 20:53:34.139951+00
+Pugh-Daugherty	Pugh-Daugherty Co.	governed|0.94	2026-10-13 20:54:31.209554+00
+Farmer-Sanders	Farmer-Sanders Inc.	governed|0.88	2026-10-13 20:57:30.31249+00
+Zuniga and Sons	Zuniga and Sons Inc.	governed|0.91	2026-10-13 20:57:30.36265+00
+Wilson-Harper	Wilson-Harper Co.	governed|0.91	2026-10-13 20:57:36.399952+00
+Taylor-West	Taylor-West Corp.	governed|0.88	2026-10-13 20:57:50.456359+00
+Allen-Hill	Allen-Hill LLC	governed|0.92	2026-10-13 20:58:23.275391+00
+Olson Inc	Olson Inc Corp.	governed|0.89	2026-10-13 20:59:18.428992+00
+Flores and Sons	Flores and Sons Co.	governed|0.91	2026-10-13 21:00:09.395409+00
+Johnson-Austin	Johnson-Austin Inc.	governed|0.86	2026-10-13 21:00:09.455065+00
+Mcbride-Escobar	Mcbride-Escobar Corp.	governed|0.90	2026-10-13 21:00:15.867472+00
+Newton-Lee	Newton-Lee Inc.	governed|0.89	2026-10-13 21:00:48.154639+00
+Rodriguez-Robinson	Rodriguez-Robinson Corp.	governed|0.88	2026-10-13 21:00:52.831231+00
+Molina PLC	Molina PLC Inc.	governed|0.88	2026-10-13 21:01:13.537009+00
+Martinez-Chavez	Martinez-Chavez Corp.	governed|0.88	2026-10-13 21:01:18.350957+00
+Day-Robinson	Day-Robinson Inc.	governed|0.87	2026-10-13 21:01:18.397259+00
+Ford-Hamilton	Ford-Hamilton Co.	governed|0.94	2026-10-13 21:01:57.078636+00
+Palmer-Lam	Palmer-Lam Corp.	governed|0.88	2026-10-13 21:02:21.555093+00
+Carlson and Sons	Carlson and Sons LLC	governed|0.86	2026-10-13 21:02:55.12373+00
+EMP-536	Rachel Mendez	governed|0.98	2026-10-13 21:03:06.21691+00
+Salazar-Higgins	Salazar-Higgins Co.	governed|0.88	2026-10-13 21:03:50.82209+00
+Adams-Jacobs	Adams-Jacobs Co.	governed|0.86	2026-10-13 21:04:24.469633+00
+Scott Group	Scott Group Inc.	governed|0.88	2026-10-13 21:04:31.707021+00
+Garcia Group	Garcia Group Co.	governed|0.85	2026-10-13 21:05:11.060158+00
+Wilson-Wilson	Wilson-Wilson LLC	governed|0.96	2026-10-13 21:05:19.250312+00
+Hawkins-White	Hawkins-White LLC	governed|0.88	2026-10-13 21:05:47.713188+00
+EMP-510	Charles Lopez	governed|0.88	2026-10-13 21:06:39.722011+00
+Charles Lopez	EMP-510	governed|0.86	2026-10-13 21:06:39.809019+00
+Miller-Coleman	Miller-Coleman Corp.	governed|0.91	2026-10-13 21:07:07.17245+00
+Young PLC	Young PLC Co.	governed|0.94	2026-10-13 21:07:36.520597+00
+Rodriguez Group	Rodriguez Group Corp.	governed|0.86	2026-10-13 21:08:40.565987+00
+Merritt-Morgan	Merritt-Morgan Inc.	governed|0.88	2026-10-13 21:08:49.876925+00
+Ramsey-Hamilton	Ramsey-Hamilton Co.	governed|0.88	2026-10-13 21:08:55.791962+00
+Pitts-Johnson	Pitts-Johnson LLC	governed|0.96	2026-10-13 21:09:04.874786+00
+Hughes-Williams	Hughes-Williams LLC	governed|0.98	2026-10-13 21:09:24.451556+00
+Kennedy-Johnson	Kennedy-Johnson Corp.	governed|0.88	2026-10-13 21:09:55.80457+00
+Riley-Norton	Riley-Norton Co.	governed|0.86	2026-10-13 21:10:01.954214+00
+White-Trujillo	White-Trujillo Inc.	governed|0.88	2026-10-13 21:11:10.396834+00
+Roman-Butler	Roman-Butler LLC	governed|0.90	2026-10-13 21:11:16.567422+00
+Kim-Rodriguez	Kim-Rodriguez Co.	governed|0.86	2026-10-13 21:12:07.494972+00
+Barnes-Vance	Barnes-Vance Corp.	governed|0.91	2026-10-13 21:12:07.541392+00
+Cook-Smith	Cook-Smith Inc.	governed|0.96	2026-10-13 21:13:19.283334+00
+Barker-Soto	Barker-Soto Corp.	governed|0.88	2026-10-13 21:13:54.903173+00
+Castillo-Townsend	Castillo-Townsend Inc.	governed|0.88	2026-10-13 21:13:54.945879+00
+Thompson Group	Thompson Group LLC	governed|0.86	2026-10-13 21:13:58.665485+00
+Garcia Inc	Garcia Inc Co.	governed|0.85	2026-10-13 21:14:45.4243+00
+Wilson-Kelly	Wilson-Kelly LLC	governed|0.88	2026-10-13 21:14:51.138793+00
+Burns LLC	Burns LLC Co.	governed|0.90	2026-10-13 21:14:51.188977+00
+Cline-Thomas	Cline-Thomas Inc.	governed|0.88	2026-10-13 21:15:35.464319+00
+Knox-Griffin	Knox-Griffin Co.	governed|0.88	2026-10-13 21:16:05.062661+00
+Williams-Davenport	Williams-Davenport Co.	governed|0.90	2026-10-13 21:16:46.196767+00
+Black-Salazar	Black-Salazar Corp.	governed|0.87	2026-10-13 21:17:09.192463+00
+Williams-Foster	Williams-Foster Co.	governed|0.87	2026-10-13 21:18:13.524618+00
+Gonzalez-Stevenson	Gonzalez-Stevenson Inc.	governed|0.87	2026-10-13 21:18:13.589548+00
+Payne-Krause	Payne-Krause LLC	governed|0.87	2026-10-13 21:18:18.985259+00
+Goodwin-Young	Goodwin-Young Inc.	governed|0.90	2026-10-13 21:18:36.090439+00
+Donovan-Massey	Donovan-Massey Corp.	governed|0.87	2026-10-13 21:18:36.158627+00
+Taylor and Sons	Taylor and Sons Corp.	governed|0.87	2026-10-13 21:18:42.3576+00
+Acme Industrial	CRM-2091	governed|0.99	2026-10-13 22:08:29.720767+00
+NS-780 Training Package	NS-780-SER	governed|0.98	2026-10-13 22:50:35.461425+00

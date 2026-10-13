@@ -1,0 +1,256 @@
+{
+  "drops": [
+    {
+      "count": 157,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-ee27-7742-8443-c981e1fa1d60",
+      "example": "CRM-3196",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 97,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-ee41-7771-8ba6-07dc59ea0413",
+      "example": "Net 30",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 90,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": "DR-7793",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 50,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": "| DR-7896 CRM-3176 NS-620-SER | 8.0 | 33000 | 2640 | 30360 | kelly.floyd@northstar.example | 2026-07-16 | Competitive | Approved | michael.torres@northstar.example | 2026-07-16 |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 44,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-ef47-7313-bf4b-f39415f5f4d1",
+      "example": "SO-5320",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 26,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f22a-7232-b800-03908cf08d64",
+      "example": "NS-730-SOF",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 11,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-ee27-7742-8443-c981e1fa1d60",
+      "example": "| CRM-3170 Arnold PLC Standard East Enterprise Energy & Utilities 3605 Cervastantes Burgs Suite 460 Columbus OH | 69-926-9145 | Stephanie Wells | stephanie.wells@northstar.example |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 6,
+      "detail": "a statement has neither an object nor a value",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": "approved_on",
+      "reason": "object_missing"
+    },
+    {
+      "count": 6,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f306-7d43-9936-083977984e39",
+      "example": "15%",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 5,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-f306-7d43-9936-083977984e39",
+      "example": "Acme",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 4,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f306-7d43-9936-083977984e39",
+      "example": "Acme negotiated preferential NS-500 pricing in the 2025 agreement — I believe it's 15%, same as what we approved for them last September.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 3,
+      "detail": "1 items in the open reply were malformed",
+      "document_id": "01a136fa-ee27-7742-8443-c981e1fa1d60",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 3,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136fa-f346-7481-ae6c-f13057eadcbc",
+      "example": "NS-500",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 2,
+      "detail": "1 items in the open reply were malformed",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 2,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f565-7693-be21-9551fba0a033",
+      "example": "these thresholds",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 2,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f346-7481-ae6c-f13057eadcbc",
+      "example": "March 31, 2028",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 2,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f3fd-7f12-a3dc-e6508a0da4ed",
+      "example": "It does not grant approval authority to any Northstar employee.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 2,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-f22a-7232-b800-03908cf08d64",
+      "example": "NS-840 Commissioning Service",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 2,
+      "detail": "a name's thing is not a listed thing",
+      "document_id": "01a136fa-f22a-7232-b800-03908cf08d64",
+      "example": "NS-840 Commissioning Service",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 1,
+      "detail": "3 items in the open reply were malformed",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "1 items in the open reply were malformed",
+      "document_id": "01a136fa-ef47-7313-bf4b-f39415f5f4d1",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "1 items in the open reply were malformed",
+      "document_id": "01a136fa-ee41-7771-8ba6-07dc59ea0413",
+      "example": null,
+      "reason": "malformed_item"
+    },
+    {
+      "count": 1,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136fa-f3fd-7f12-a3dc-e6508a0da4ed",
+      "example": "NS-500",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 1,
+      "detail": "an extra name is already another thing's name",
+      "document_id": "01a136fa-f36e-7451-ab75-eaad4c197eff",
+      "example": "NS-500",
+      "reason": "name_claimed_by_another"
+    },
+    {
+      "count": 1,
+      "detail": "a statement has neither an object nor a value",
+      "document_id": "01a136fa-f565-7693-be21-9551fba0a033",
+      "example": "must be reviewed",
+      "reason": "object_missing"
+    },
+    {
+      "count": 1,
+      "detail": "a statement has neither an object nor a value",
+      "document_id": "01a136fa-f595-7f20-b560-d6442d950353",
+      "example": "receive",
+      "reason": "object_missing"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": "CRM-3063",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's object is not a listed thing; written as a value",
+      "document_id": "01a136fa-f531-7d20-b182-b41471e4479d",
+      "example": "2025-01-01 through 2025-12-31",
+      "reason": "object_undeclared"
+    },
+    {
+      "count": 1,
+      "detail": "kept, but the phrase is the value itself",
+      "document_id": "01a136fa-f5c4-73f3-8771-0bc334349a37",
+      "example": "scheduled",
+      "reason": "phrase_is_value"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f346-7481-ae6c-f13057eadcbc",
+      "example": "Customer's contractual pricing eligibility does not modify Northstar's internal approval\n authority.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-f5c4-73f3-8771-0bc334349a37",
+      "example": "Remote diagnostics scheduled.",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-ee41-7771-8ba6-07dc59ea0413",
+      "example": "| C-2002 Miller LLC Co. Buildinging Materials 1473 Atkinson Mission Suite 740 Fort Wayne IN | 46934 | 82-869-6184 | Net 45 |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "a quoted sentence is not in the chunk verbatim",
+      "document_id": "01a136fa-ef2d-7063-b1b4-c18f1b771626",
+      "example": "| EMP-517 | Zachary Baldwin |  | Financial Analyst | Finance | EMP-402 | brian.nunez@northstar.example | Remote |",
+      "reason": "quote_not_in_chunk"
+    },
+    {
+      "count": 1,
+      "detail": "the open reply was cut off; kept up to the last complete item",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": null,
+      "reason": "truncated_reply"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's subject is not a listed thing",
+      "document_id": "01a136fa-f595-7f20-b560-d6442d950353",
+      "example": "contractual eligibility",
+      "reason": "unknown_ref"
+    },
+    {
+      "count": 1,
+      "detail": "a statement's value is not in its own quoted sentence",
+      "document_id": "01a136fa-ee50-7383-8dda-8a67519657ee",
+      "example": "200640",
+      "reason": "value_not_in_quote"
+    }
+  ]
+}

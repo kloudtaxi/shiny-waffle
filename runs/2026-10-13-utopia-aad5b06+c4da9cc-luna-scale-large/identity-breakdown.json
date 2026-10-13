@@ -1,0 +1,513 @@
+{
+  "base": {
+    "missed_by_kind": {
+      "customer~customer": 38,
+      "product~product": 2
+    },
+    "routed_by_kind_and_label": {
+      "customer~customer different": 163,
+      "customer~customer same": 31,
+      "product~product different": 5,
+      "product~product same": 3,
+      "employee~employee same": 1,
+      "product~order different": 1
+    },
+    "missed_merges": [
+      {
+        "a": "Smith Inc",
+        "b": "Smith Inc LLC",
+        "reason": "Smith Inc LLC adds a legal-entity suffix to Smith Inc, which indicates a distinct, more specific entity under the naming rules.",
+        "confidence": 0.92
+      },
+      {
+        "a": "Edwards-Cisneros",
+        "b": "Edwards-Cisneros Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity rather than the unqualified \u201cEdwards-Cisneros\u201d.",
+        "confidence": 0.85
+      },
+      {
+        "a": "May Ltd",
+        "b": "May Ltd LLC",
+        "reason": "\u201cMay Ltd LLC\u201d adds a legal-entity suffix to \u201cMay Ltd,\u201d indicating a distinct entity rather than an abbreviation.",
+        "confidence": 0.86
+      },
+      {
+        "a": "NS-500",
+        "b": "NS-500 Industrial Controller",
+        "reason": "\u201cIndustrial Controller\u201d makes NS-500 a more specific named thing rather than the same record.",
+        "confidence": 0.9
+      },
+      {
+        "a": "Weiss Ltd",
+        "b": "Weiss Ltd Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific legal entity, not the company named \u201cWeiss Ltd\u201d.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Greer and Sons",
+        "b": "Greer and Sons Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity, not the company named \u201cGreer and Sons\u201d.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Reeves Inc",
+        "b": "Reeves Inc Holdings",
+        "reason": "\u201cHoldings\u201d added at the end denotes a more specific entity, not an abbreviation of \u201cReeves Inc\u201d.",
+        "confidence": 0.91
+      },
+      {
+        "a": "NS-820 Commissioning Service",
+        "b": "NS-820-SER",
+        "reason": "NS-820 Commissioning Service is specifically named as a commissioning service, unlike the separately designated NS-820-SER product.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Davidson-Chapman",
+        "b": "Davidson-Chapman Holdings",
+        "reason": "\u201cHoldings\u201d added at the end denotes a more specific entity than \u201cDavidson-Chapman.\u201d",
+        "confidence": 0.94
+      },
+      {
+        "a": "Wilson Ltd",
+        "b": "Wilson Ltd Inc.",
+        "reason": "Wilson Ltd Inc. adds a corporate designation to Wilson Ltd, so the names do not establish the same legal entity.",
+        "confidence": 0.9
+      },
+      {
+        "a": "Ramos Inc",
+        "b": "Ramos Inc LLC",
+        "reason": "\u201cRamos Inc LLC\u201d adds a legal-entity designation to \u201cRamos Inc,\u201d indicating a distinct entity rather than just a dropped name qualifier.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Peterson-Olson",
+        "b": "Peterson-Olson Holdings",
+        "reason": "\u201cHoldings\u201d is an added qualifier indicating a distinct, more specific entity rather than the same name abbreviated.",
+        "confidence": 0.9
+      },
+      {
+        "a": "White LLC",
+        "b": "White LLC Corp.",
+        "reason": "\u201cWhite LLC Corp.\u201d adds a corporate designation to \u201cWhite LLC,\u201d making it a more specific legal entity.",
+        "confidence": 0.95
+      },
+      {
+        "a": "Wilson LLC",
+        "b": "Wilson LLC Corp.",
+        "reason": "\u201cCorp.\u201d is added to the end of the name, making this a more specific named entity than \u201cWilson LLC.\u201d",
+        "confidence": 0.87
+      },
+      {
+        "a": "Rivera and Sons",
+        "b": "Rivera and Sons Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity, not the company named Rivera and Sons.",
+        "confidence": 0.87
+      },
+      {
+        "a": "Williams LLC",
+        "b": "Williams LLC Co.",
+        "reason": "\u201cWilliams LLC Co.\u201d adds a qualifier to \u201cWilliams LLC,\u201d indicating a distinct, more specific entity.",
+        "confidence": 0.92
+      },
+      {
+        "a": "Anderson LLC",
+        "b": "Anderson LLC Corp.",
+        "reason": "\u201cAnderson LLC Corp.\u201d adds a corporate-entity qualifier to \u201cAnderson LLC,\u201d denoting a more specific legal entity.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Gibson-Thomas",
+        "b": "Gibson-Thomas LLC",
+        "reason": "\u201cGibson-Thomas LLC\u201d adds a legal-entity designation to \u201cGibson-Thomas,\u201d making it a more specific entity.",
+        "confidence": 0.86
+      },
+      {
+        "a": "Morales PLC",
+        "b": "Morales PLC Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity, not the same organization as Morales PLC.",
+        "confidence": 0.9
+      },
+      {
+        "a": "Preston Inc",
+        "b": "Preston Inc LLC",
+        "reason": "\u201cLLC\u201d is added at the end as a legal-entity designation, so Preston Inc LLC is a more specific entity than Preston Inc.",
+        "confidence": 0.85
+      },
+      {
+        "a": "Jones PLC",
+        "b": "Jones PLC LLC",
+        "reason": "\u201cJones PLC LLC\u201d adds a legal-entity qualifier, so it is not the same record as \u201cJones PLC\u201d.",
+        "confidence": 0.95
+      },
+      {
+        "a": "Brown Group",
+        "b": "Brown Group Holdings",
+        "reason": "\u201cBrown Group Holdings\u201d is a more specifically named entity than \u201cBrown Group,\u201d consistent with a distinct legal entity or holding company.",
+        "confidence": 0.96
+      },
+      {
+        "a": "Todd-Taylor",
+        "b": "Todd-Taylor LLC",
+        "reason": "\u201cTodd-Taylor LLC\u201d names a specific legal entity, not simply \u201cTodd-Taylor.\u201d",
+        "confidence": 0.9
+      },
+      {
+        "a": "Swanson Group",
+        "b": "Swanson Group Holdings",
+        "reason": "\u201cHoldings\u201d makes Swanson Group Holdings a more specific legal entity than Swanson Group.",
+        "confidence": 0.88
+      },
+      {
+        "a": "Martinez PLC",
+        "b": "Martinez PLC Corp.",
+        "reason": "\u201cMartinez PLC Corp.\u201d adds a corporate legal designation to \u201cMartinez PLC,\u201d identifying a distinct legal entity rather than an abbreviated name.",
+        "confidence": 0.87
+      },
+      {
+        "a": "Williams Ltd",
+        "b": "Williams Ltd Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity, not the same entity as \u201cWilliams Ltd\u201d.",
+        "confidence": 0.93
+      },
+      {
+        "a": "Wilson-Brown",
+        "b": "Wilson-Brown Holdings",
+        "reason": "\u201cWilson-Brown Holdings\u201d adds a corporate qualifier, making it a more specific entity than \u201cWilson-Brown.\u201d",
+        "confidence": 0.86
+      },
+      {
+        "a": "Thomas-Martin",
+        "b": "Thomas-Martin Holdings",
+        "reason": "\u201cThomas-Martin Holdings\u201d adds a specific corporate designation to \u201cThomas-Martin,\u201d so they are not the same record.",
+        "confidence": 0.85
+      },
+      {
+        "a": "Mills PLC",
+        "b": "Mills PLC LLC",
+        "reason": "\u201cMills PLC LLC\u201d adds a legal-entity qualifier to \u201cMills PLC,\u201d indicating a distinct entity.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Williams-Wolf",
+        "b": "Williams-Wolf Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity than \u201cWilliams-Wolf.\u201d",
+        "confidence": 0.87
+      },
+      {
+        "a": "Dunn-Rivera",
+        "b": "Dunn-Rivera Holdings",
+        "reason": "\u201cHoldings\u201d added at the end denotes a more specific entity rather than the unqualified name.",
+        "confidence": 0.87
+      },
+      {
+        "a": "Wright PLC",
+        "b": "Wright PLC Holdings",
+        "reason": "\u201cWright PLC Holdings\u201d adds a corporate qualifier, indicating a distinct, more specific entity than \u201cWright PLC.\u201d",
+        "confidence": 0.88
+      },
+      {
+        "a": "Beasley-Wilcox",
+        "b": "Beasley-Wilcox Holdings",
+        "reason": "\u201cBeasley-Wilcox Holdings\u201d adds a qualifier at the end, identifying a more specific entity than \u201cBeasley-Wilcox\u201d.",
+        "confidence": 0.87
+      },
+      {
+        "a": "Anderson PLC",
+        "b": "Anderson PLC Holdings",
+        "reason": "\u201cHoldings\u201d makes Anderson PLC Holdings a more specific legal entity, not Anderson PLC.",
+        "confidence": 0.9
+      },
+      {
+        "a": "Richardson-Dixon",
+        "b": "Richardson-Dixon Holdings",
+        "reason": "\u201cRichardson-Dixon Holdings\u201d adds a qualifier identifying a more specific entity than \u201cRichardson-Dixon\u201d.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Saunders LLC",
+        "b": "Saunders LLC LLC",
+        "reason": "\u201cSaunders LLC LLC\u201d adds a second legal-entity suffix, so it is a more specific name rather than a front qualifier omitted from \u201cSaunders LLC\u201d.",
+        "confidence": 0.87
+      },
+      {
+        "a": "Ramos-Diaz",
+        "b": "Ramos-Diaz Corp.",
+        "reason": "\u201cCorp.\u201d makes Ramos-Diaz Corp. a more specific legal entity than Ramos-Diaz.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Arnold PLC",
+        "b": "Arnold PLC LLC",
+        "reason": "\u201cArnold PLC LLC\u201d adds a legal-entity suffix to \u201cArnold PLC,\u201d identifying a more specific entity rather than the organization as a whole.",
+        "confidence": 0.86
+      },
+      {
+        "a": "Kelly-Soto",
+        "b": "Kelly-Soto Holdings",
+        "reason": "\u201cKelly-Soto Holdings\u201d is a more specific holding entity, not the same record as \u201cKelly-Soto.\u201d",
+        "confidence": 0.87
+      },
+      {
+        "a": "Thompson-Cox",
+        "b": "Thompson-Cox Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity rather than the unqualified \u201cThompson-Cox.\u201d",
+        "confidence": 0.87
+      }
+    ]
+  },
+  "missing-contract": {
+    "missed_by_kind": {
+      "customer~customer": 30,
+      "product~product": 10
+    },
+    "routed_by_kind_and_label": {
+      "employee~employee same": 1,
+      "product~product different": 1,
+      "product~product same": 4,
+      "customer~customer same": 26,
+      "customer~customer different": 65
+    },
+    "missed_merges": [
+      {
+        "a": "Thompson-Cox",
+        "b": "Thompson-Cox Holdings",
+        "reason": "\u201cThompson-Cox Holdings\u201d adds a specific legal-entity designation to \u201cThompson-Cox,\u201d so the records denote different things.",
+        "confidence": 0.9
+      },
+      {
+        "a": "Dunn-Rivera",
+        "b": "Dunn-Rivera Holdings",
+        "reason": "\u201cDunn-Rivera Holdings\u201d adds a specific organizational qualifier to \u201cDunn-Rivera,\u201d indicating a distinct entity rather than an abbreviation.",
+        "confidence": 0.87
+      },
+      {
+        "a": "NS-EDGE",
+        "b": "NS-Edge Monitoring Package",
+        "reason": "\u201cNS-Edge Monitoring Package\u201d adds a specific designation to \u201cNS-EDGE,\u201d indicating a more specific product or package.",
+        "confidence": 0.9
+      },
+      {
+        "a": "Weiss Ltd Holdings",
+        "b": "Weiss Ltd",
+        "reason": "\u201cWeiss Ltd Holdings\u201d adds a corporate qualifier to \u201cWeiss Ltd,\u201d indicating a more specific legal entity rather than the same name.",
+        "confidence": 0.88
+      },
+      {
+        "a": "NS-Edge Monitoring Package",
+        "b": "NS-EDGE",
+        "reason": "\u201cMonitoring Package\u201d makes NS-Edge a more specific offering than NS-EDGE.",
+        "confidence": 0.9
+      },
+      {
+        "a": "NS-EDGE",
+        "b": "NS-Edge Monitoring Package",
+        "reason": "\u201cMonitoring Package\u201d makes NS-Edge a more specific offering than NS-EDGE.",
+        "confidence": 0.9
+      },
+      {
+        "a": "ACME Manufacturing",
+        "b": "Acme Mfg. Holdings",
+        "reason": "The ERP bill-to relation identifies ACME Manufacturing as a separate entity from Acme Mfg. Holdings.",
+        "confidence": 0.97
+      },
+      {
+        "a": "Acme Mfg. Holdings",
+        "b": "ACME Manufacturing",
+        "reason": "The ERP bill-to relation identifies ACME Manufacturing as a separate entity from Acme Mfg. Holdings.",
+        "confidence": 0.97
+      },
+      {
+        "a": "NS-500 Industrial Controller",
+        "b": "NS-500",
+        "reason": "\u201cIndustrial Controller\u201d added to \u201cNS-500\u201d makes a more specific designation, which the rules treat as a different thing.",
+        "confidence": 0.91
+      },
+      {
+        "a": "NS-Cloud Operations Suite",
+        "b": "NS-Cloud",
+        "reason": "\u201cNS-Cloud Operations Suite\u201d names a more specific product than \u201cNS-Cloud,\u201d with an added qualifier at the end.",
+        "confidence": 0.85
+      },
+      {
+        "a": "Greer and Sons",
+        "b": "Greer and Sons Holdings",
+        "reason": "\u201cHoldings\u201d added to the end identifies a more specific entity, not the company named \u201cGreer and Sons\u201d.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Reeves Inc",
+        "b": "Reeves Inc Holdings",
+        "reason": "\u201cHoldings\u201d added at the end denotes a more specific legal entity rather than the company named Reeves Inc.",
+        "confidence": 0.88
+      },
+      {
+        "a": "Davidson-Chapman",
+        "b": "Davidson-Chapman Holdings",
+        "reason": "\u201cDavidson-Chapman Holdings\u201d adds a corporate qualifier, identifying a more specific entity than \u201cDavidson-Chapman\u201d.",
+        "confidence": 0.86
+      },
+      {
+        "a": "Ramos Inc",
+        "b": "Ramos Inc LLC",
+        "reason": "\u201cRamos Inc LLC\u201d adds a legal-entity designation to \u201cRamos Inc,\u201d making it a more specific entity.",
+        "confidence": 0.9
+      },
+      {
+        "a": "White LLC",
+        "b": "White LLC Corp.",
+        "reason": "\u201cWhite LLC\u201d and \u201cWhite LLC Corp.\u201d have different legal designations, with LLC and Corp. indicating distinct entity forms.",
+        "confidence": 0.96
+      },
+      {
+        "a": "Williams Ltd",
+        "b": "Williams Ltd Holdings",
+        "reason": "\u201cWilliams Ltd Holdings\u201d adds a qualifier to \u201cWilliams Ltd,\u201d denoting a more specific entity.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Rivera and Sons",
+        "b": "Rivera and Sons Holdings",
+        "reason": "\u201cHoldings\u201d added at the end indicates a more specific legal entity rather than the organization without that qualifier.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Morales PLC",
+        "b": "Morales PLC Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific legal entity, not the company named Morales PLC.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Preston Inc",
+        "b": "Preston Inc LLC",
+        "reason": "\u201cLLC\u201d is added at the end, identifying a more specific legal entity than \u201cPreston Inc.\u201d",
+        "confidence": 0.87
+      },
+      {
+        "a": "Martinez PLC",
+        "b": "Martinez PLC Corp.",
+        "reason": "\u201cCorp.\u201d added at the end identifies a more specific legal entity, not the same name as \u201cMartinez PLC.\u201d",
+        "confidence": 0.89
+      },
+      {
+        "a": "Swanson Group",
+        "b": "Swanson Group Holdings",
+        "reason": "\u201cSwanson Group Holdings\u201d names a more specific holding entity, not the organization \u201cSwanson Group.\u201d",
+        "confidence": 0.91
+      },
+      {
+        "a": "Wilson-Brown",
+        "b": "Wilson-Brown Holdings",
+        "reason": "Wilson-Brown Holdings is a more specific entity name than Wilson-Brown, and an added organization qualifier denotes a distinct entity.",
+        "confidence": 0.96
+      },
+      {
+        "a": "Stephenson-Maldonado",
+        "b": "Stephenson-Maldonado LLC",
+        "reason": "Stephenson-Maldonado LLC is a specific legal entity, while Stephenson-Maldonado is the unqualified name and the records provide no evidence that they are the same entity.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Jones PLC",
+        "b": "Jones PLC LLC",
+        "reason": "\u201cJones PLC LLC\u201d adds a legal-entity qualifier to \u201cJones PLC,\u201d which denotes a more specific entity.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Brown Group",
+        "b": "Brown Group Holdings",
+        "reason": "Brown Group Holdings adds a qualifier to Brown Group, denoting a more specific entity rather than the same record.",
+        "confidence": 0.95
+      },
+      {
+        "a": "Mills PLC",
+        "b": "Mills PLC LLC",
+        "reason": "\u201cMills PLC\u201d and \u201cMills PLC LLC\u201d have different legal designations, indicating distinct entities.",
+        "confidence": 0.91
+      },
+      {
+        "a": "May Ltd",
+        "b": "May Ltd LLC",
+        "reason": "\u201cMay Ltd LLC\u201d adds a legal-entity suffix to \u201cMay Ltd,\u201d indicating a distinct entity.",
+        "confidence": 0.91
+      },
+      {
+        "a": "Edwards-Cisneros",
+        "b": "Edwards-Cisneros Holdings",
+        "reason": "\u201cHoldings\u201d added at the end denotes a more specific entity, not the unqualified \u201cEdwards-Cisneros.\u201d",
+        "confidence": 0.86
+      },
+      {
+        "a": "Smith Inc",
+        "b": "Smith Inc LLC",
+        "reason": "Smith Inc LLC adds a legal-entity qualifier to Smith Inc, denoting a more specific entity rather than the same record.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Wright PLC",
+        "b": "Wright PLC Holdings",
+        "reason": "\u201cWright PLC Holdings\u201d adds a specific \u201cHoldings\u201d designation to \u201cWright PLC,\u201d indicating a distinct entity.",
+        "confidence": 0.9
+      },
+      {
+        "a": "Richardson-Dixon",
+        "b": "Richardson-Dixon Holdings",
+        "reason": "\u201cRichardson-Dixon Holdings\u201d is a more specific named entity than \u201cRichardson-Dixon,\u201d not an abbreviated form of it.",
+        "confidence": 0.94
+      },
+      {
+        "a": "Williams-Wolf",
+        "b": "Williams-Wolf Holdings",
+        "reason": "\u201cHoldings\u201d added at the end identifies a more specific entity, not the entity named \u201cWilliams-Wolf\u201d.",
+        "confidence": 0.91
+      },
+      {
+        "a": "NS-500",
+        "b": "NS-500 Industrial Controller",
+        "reason": "\u201cNS-500 Industrial Controller\u201d adds a specific product designation to \u201cNS-500.\u201d",
+        "confidence": 0.97
+      },
+      {
+        "a": "Wilson-Kelly",
+        "b": "Wilson-Kelly LLC",
+        "reason": "Wilson-Kelly LLC is a more specific legal entity, and the added LLC qualifier indicates a distinct entity from Wilson-Kelly.",
+        "confidence": 0.87
+      },
+      {
+        "a": "Young PLC",
+        "b": "Young PLC Co.",
+        "reason": "\u201cYoung PLC Co.\u201d adds a corporate designation at the end, making it a more specific legal entity than \u201cYoung PLC.\u201d",
+        "confidence": 0.87
+      },
+      {
+        "a": "Arnold PLC",
+        "b": "Arnold PLC LLC",
+        "reason": "\u201cPLC\u201d and \u201cLLC\u201d identify different legal forms, so these are distinct legal entities.",
+        "confidence": 0.93
+      },
+      {
+        "a": "NS-CLOUD",
+        "b": "NS-Cloud Operations Suite",
+        "reason": "\u201cNS-Cloud Operations Suite\u201d is a more specific product designation than \u201cNS-CLOUD,\u201d so it is not the same record.",
+        "confidence": 0.97
+      },
+      {
+        "a": "NS-500",
+        "b": "NS-500 Industrial Controller",
+        "reason": "NS-500 Industrial Controller is a more specific product name than NS-500.",
+        "confidence": 0.97
+      },
+      {
+        "a": "NS-500",
+        "b": "NS-500 Industrial Controller",
+        "reason": "NS-500 Industrial Controller is a more specific product name than NS-500.",
+        "confidence": 0.97
+      },
+      {
+        "a": "NS-500",
+        "b": "NS-500",
+        "reason": "Record A is identified through product and SKU links, while Record B is identified as a third-plant rollout, so they are a product and a rollout.",
+        "confidence": 0.91
+      }
+    ]
+  }
+}
