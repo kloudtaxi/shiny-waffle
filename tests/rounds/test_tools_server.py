@@ -7,6 +7,9 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
+import pytest
+
+from rounds import tools_server
 from rounds.scenarios import SCENARIOS
 from rounds.tools_server import Ctx, call, tool_list
 
@@ -15,12 +18,12 @@ ROOT = Path(__file__).resolve().parents[2]
 ALL_TOOLS = ["get_request", "apply_discount", "decide"]
 
 
-def _post(base: str, path: str, body: dict[str, Any]) -> dict[str, Any]:
+def _post(base: str, path: str, body: dict[str, Any], token: str | None = None) -> dict[str, Any]:
+    headers = {"Content-Type": "application/json"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     req = urllib.request.Request(
-        base + path,
-        data=json.dumps(body).encode(),
-        method="POST",
-        headers={"Content-Type": "application/json"},
+        base + path, data=json.dumps(body).encode(), method="POST", headers=headers
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         out: dict[str, Any] = json.loads(resp.read())
@@ -172,3 +175,80 @@ def test_stdio_loop_logs_calls(live_service: str, tmp_path: Path) -> None:
     assert records[1]["result"]["cleared"] is False
     assert token not in log.read_text()
     assert token not in proc.stdout and token not in proc.stderr
+
+
+def test_unexpected_exception_is_an_error_not_a_crash(
+    live_service: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    ctx = _ctx(live_service, "direct")
+
+    def boom(*_a: Any, **_k: Any) -> Any:
+        raise KeyError("secret-detail")
+
+    monkeypatch.setattr(tools_server, "_find_row", boom)
+    result, err = call("get_request", {"request_id": "DR-9001"}, ctx)
+    assert err and result == {"error": "internal KeyError"}
+    monkeypatch.undo()
+    result, err = call("apply_discount", {"request_id": "DR-9001", "discount_pct": 10**400}, ctx)
+    assert err and "error" in result
+
+
+def test_stdio_loop_survives_malformed_lines(live_service: str, tmp_path: Path) -> None:
+    env = {
+        "PATH": "/usr/bin:/bin",
+        "DEAL_DESK_URL": live_service,
+        "DEAL_DESK_TOKEN": _token(live_service),
+        "DEAL_DESK_WRITE_PATH": "direct",
+        "DEAL_DESK_LOG": str(tmp_path / "no-such-dir" / "calls.jsonl"),
+    }
+    bad_call = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "tools/call",
+        "params": {"name": "x", "arguments": [1]},
+    }
+    odd_list = {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": "junk"}
+    lines = ["[1]", "5", json.dumps(bad_call), json.dumps(odd_list)]
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "lab/rounds/tools_server.py")],
+        input="\n".join(lines) + "\n",
+        capture_output=True,
+        text=True,
+        env=env,
+        timeout=60,
+        check=True,
+    )
+    replies = [json.loads(line) for line in proc.stdout.splitlines()]
+    assert [r["id"] for r in replies] == [1, 2]
+    assert replies[0]["result"]["isError"] is True
+    assert [t["name"] for t in replies[1]["result"]["tools"]] == ["get_request", "apply_discount"]
+
+
+def test_blueleaf_apply_15_after_human_steps_clears_and_applies(live_service: str) -> None:
+    ctx = _ctx(live_service, "blueleaf")
+    rec, err = call("decide", {"request_id": "DR-9001"}, ctx)
+    assert not err
+    did = rec["decision_id"]
+    sarah = str(_post(live_service, "/lab/sessions", {"person_id": "EMP-101"})["token"])
+    michael = str(_post(live_service, "/lab/sessions", {"person_id": "EMP-200"})["token"])
+    resolved = _post(
+        live_service,
+        f"/api/v1/decisions/{did}/conditions/c1/resolve",
+        {"decision_version": rec["version"], "resolution": "confirmed_record"},
+        sarah,
+    )
+    _post(
+        live_service,
+        f"/api/v1/decisions/{did}/approve",
+        {"decision_version": resolved["version"]},
+        michael,
+    )
+    result, err = call("apply_discount", {"request_id": "DR-9001", "discount_pct": 15}, ctx)
+    assert not err
+    assert result["cleared"] is True
+    assert result["bound"]["params"]["discount"] == 0.15
+    assert result["adapter"]["redeemed"] is True
+    row = _row(live_service)
+    assert row["status"] == "Approved"
+    assert row["approved_by"] == "michael.torres@northstar.example"
+    assert row["requested_discount_pct"] == "15.0"

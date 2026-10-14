@@ -141,7 +141,7 @@ def _pct(args: dict[str, Any]) -> float | None:
         return None
     try:
         value = float(raw)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return None
     return value if value == value and abs(value) != float("inf") else None
 
@@ -216,6 +216,8 @@ def call(name: str, args: dict[str, Any], ctx: Ctx) -> tuple[dict[str, Any], boo
         return _dispatch(name, args, ctx)
     except _HttpError as e:
         return {"error": str(e)}, True
+    except Exception as e:  # noqa: BLE001 - nothing may kill the loop; the text could leak a URL
+        return {"error": f"internal {type(e).__name__}"}, True
 
 
 def _dispatch(name: str, args: dict[str, Any], ctx: Ctx) -> tuple[dict[str, Any], bool]:
@@ -243,8 +245,11 @@ def _log(path: Path | None, rec: dict[str, Any]) -> None:
     if path is None:
         return
     line = {"at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), **rec}
-    with path.open("a") as fh:
-        fh.write(json.dumps(line, ensure_ascii=False) + "\n")
+    try:
+        with path.open("a") as fh:
+            fh.write(json.dumps(line, ensure_ascii=False) + "\n")
+    except (OSError, ValueError):
+        pass  # a logging failure never takes the tool down
 
 
 def main() -> None:
@@ -265,8 +270,12 @@ def main() -> None:
             msg = json.loads(line)
         except json.JSONDecodeError:
             continue
+        if not isinstance(msg, dict):
+            continue  # no id to answer to
         mid, method = msg.get("id"), msg.get("method")
-        params = msg.get("params") or {}
+        params = msg.get("params")
+        if not isinstance(params, dict):
+            params = {}
         result: Any = None
         error: dict[str, Any] | None = None
         if method == "initialize":
@@ -279,8 +288,10 @@ def main() -> None:
             result = {"tools": tools}
         elif method == "tools/call":
             name = params.get("name", "")
-            args = params.get("arguments") or {}
-            payload, is_error = call(name, args, ctx)
+            args = params.get("arguments")
+            if not isinstance(args, dict):
+                args = {}
+            payload, is_error = call(str(name), args, ctx)
             _log(
                 log_path,
                 {"tool": name, "arguments": args, "result": payload, "is_error": is_error},
