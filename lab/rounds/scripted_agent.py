@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import subprocess
 import urllib.request
 from typing import Any
@@ -18,11 +17,18 @@ from typing import Any
 from rounds.agent import AgentCall, AgentFn, AgentResult
 
 Step = tuple[str, dict[str, Any]]
-_REF = re.compile(r"\$\{([A-Za-z0-9_]+)\}")
 
 
-def _expand(value: str, env: dict[str, str]) -> str:
-    return _REF.sub(lambda m: env.get(m.group(1), ""), value)
+def _expand_env(spec_env: dict[str, str], env: dict[str, str]) -> dict[str, str]:
+    """Each value must be exactly `${<its own key>}`; the value comes from `env` or we raise."""
+    out: dict[str, str] = {}
+    for key, ref in spec_env.items():
+        if ref != "${" + key + "}":
+            raise RuntimeError(f"bad env reference: {key}")
+        if key not in env:
+            raise RuntimeError(f"missing env: {key}")
+        out[key] = env[key]
+    return out
 
 
 def _post(base: str, path: str, body: dict[str, Any], token: str | None = None) -> dict[str, Any]:
@@ -59,9 +65,9 @@ def _human(service_url: str, decision: dict[str, Any]) -> None:
 class _Server:
     def __init__(self, call: AgentCall) -> None:
         spec = call.mcp_config["mcpServers"]["deal_desk"]
-        env = {**os.environ, **{k: _expand(v, call.env) for k, v in spec.get("env", {}).items()}}
+        env = {**os.environ, **_expand_env(spec.get("env", {}), call.env)}
         self.proc = subprocess.Popen(
-            [_expand(spec["command"], call.env), *[_expand(a, call.env) for a in spec["args"]]],
+            [spec["command"], *spec["args"]],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.DEVNULL,
@@ -69,8 +75,12 @@ class _Server:
             env=env,
         )
         self._id = 0
-        self.rpc("initialize", {})
-        self.send({"jsonrpc": "2.0", "method": "notifications/initialized"})
+        try:
+            self.rpc("initialize", {})
+            self.send({"jsonrpc": "2.0", "method": "notifications/initialized"})
+        except BaseException:
+            self.close()
+            raise
 
     def send(self, msg: dict[str, Any]) -> None:
         assert self.proc.stdin is not None

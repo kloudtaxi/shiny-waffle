@@ -158,6 +158,27 @@ def claude_agent(call: AgentCall) -> AgentResult:
     finally:
         shutil.rmtree(blind, ignore_errors=True)
     if proc.returncode != 0 and not proc.stdout:
-        return AgentResult(proc.stderr[-2000:], None, 0.0, 0, "agent error", "agent error")
+        tail = _redact(proc.stderr[-2000:], call.env)
+        return AgentResult(tail, None, 0.0, 0, "agent error", "agent error")
     reply, cost, turns, stop = parse_stream(proc.stdout)
-    return AgentResult(proc.stdout, reply, cost, turns, stop, None)
+    failed = proc.returncode != 0 or _result_is_error(proc.stdout)
+    return AgentResult(proc.stdout, reply, cost, turns, stop, "agent error" if failed else None)
+
+
+def _redact(text: str, env: dict[str, str]) -> str:
+    for value in env.values():
+        if len(value) >= 8:
+            text = text.replace(value, "[redacted]")
+    return text
+
+
+def _result_is_error(text: str) -> bool:
+    last: Any = None
+    for line in text.splitlines():
+        try:
+            event = json.loads(line) if line.strip().startswith("{") else None
+        except json.JSONDecodeError:
+            continue
+        if isinstance(event, dict) and event.get("type") == "result":
+            last = event
+    return bool(last and last.get("is_error"))

@@ -250,3 +250,64 @@ def test_scripted_crash(live_service: str, tmp_path: Path) -> None:
     res = fn(blue)
     assert (res.error, res.stop) == ("crashed", "crashed")
     assert '"type": "result"' not in res.transcript
+
+
+def test_claude_agent_error_cases(monkeypatch: pytest.MonkeyPatch) -> None:
+    token = "tok-abcdefgh-123456"
+    call = AgentCall("s", "a", mcp_config(None, "direct"), [], {"X": token, "S": "S22"})
+    ok = '{"type":"result","subtype":"success","result":"r","num_turns":1,"total_cost_usd":0}'
+
+    def run(stdout: str, stderr: str, code: int) -> Any:
+        return lambda *a, **k: subprocess.CompletedProcess(a, code, stdout=stdout, stderr=stderr)
+
+    monkeypatch.setattr(subprocess, "run", run(ok, "", 1))
+    assert claude_agent(call).error == "agent error"
+    maxed = (
+        '{"type":"result","subtype":"error_max_turns","is_error":true,"num_turns":40,'
+        '"total_cost_usd":2}'
+    )
+    monkeypatch.setattr(subprocess, "run", run(maxed, "", 0))
+    res = claude_agent(call)
+    assert (res.error, res.stop) == ("agent error", "error_max_turns")
+    monkeypatch.setattr(subprocess, "run", run("", f"boom {token} S22", 2))
+    res = claude_agent(call)
+    assert res.error == "agent error"
+    assert token not in res.transcript and "[redacted]" in res.transcript
+    assert "S22" in res.transcript
+
+
+def test_scripted_missing_env_raises_before_child(
+    live_service: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    call = _call(live_service, "direct", tmp_path / "m.jsonl", "alone_realistic")
+    del call.env["DEAL_DESK_TOKEN"]
+    started: list[int] = []
+    real = subprocess.Popen
+
+    def spy(*a: Any, **k: Any) -> Any:
+        started.append(1)
+        return real(*a, **k)
+
+    monkeypatch.setattr(subprocess, "Popen", spy)
+    with pytest.raises(RuntimeError, match="missing env: DEAL_DESK_TOKEN"):
+        scripted({"alone_realistic": []}, live_service)(call)
+    assert started == []
+
+
+def test_scripted_handshake_failure_reaps_child(
+    live_service: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    call = _call(live_service, "direct", tmp_path / "e.jsonl", "alone_realistic")
+    call.mcp_config["mcpServers"]["deal_desk"]["args"] = ["-c", "pass"]
+    procs: list[Any] = []
+    real = subprocess.Popen
+
+    def spy(*a: Any, **k: Any) -> Any:
+        p = real(*a, **k)
+        procs.append(p)
+        return p
+
+    monkeypatch.setattr(subprocess, "Popen", spy)
+    with pytest.raises(Exception):  # noqa: B017 - the handshake error surfaces as is
+        scripted({"alone_realistic": []}, live_service)(call)
+    assert len(procs) == 1 and procs[0].poll() is not None
