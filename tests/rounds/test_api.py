@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import shutil
 import threading
 from pathlib import Path
 from typing import Any
@@ -79,7 +81,24 @@ def test_post_validates_scenario_and_runs_per_arm(store: Store) -> None:
         assert resp.status_code == 400, body
         assert resp.json()["error"] == "bad_request"
         assert resp.json()["detail"]
-    assert client.post("/lab/rounds", content=b"not json").status_code == 400
+    as_json = {"Content-Type": "application/json"}
+    assert client.post("/lab/rounds", content=b"not json", headers=as_json).status_code == 400
+
+
+def test_post_refuses_anything_but_json(store: Store) -> None:
+    """A web page can POST text/plain cross-origin to 127.0.0.1 without a preflight; it must
+    not be able to start a paid round."""
+    runner = FakeRunner(store)
+    client = TestClient(create_app(runner, store))
+    body = json.dumps(BODY).encode()
+    for ctype in ("text/plain", "application/x-www-form-urlencoded", "multipart/form-data", None):
+        headers = {} if ctype is None else {"Content-Type": ctype}
+        resp = client.post("/lab/rounds", content=body, headers=headers)
+        assert (resp.status_code, resp.json()) == (415, {"error": "unsupported_media_type"}), ctype
+    assert runner.n == 0
+    runner.release.set()
+    ok = {"Content-Type": "Application/JSON; charset=utf-8"}
+    assert client.post("/lab/rounds", content=body, headers=ok).status_code == 202
 
 
 def test_get_lists_and_gets(store: Store) -> None:
@@ -126,6 +145,38 @@ def test_build_app_requires_kb_unless_scripted(tmp_path: Path) -> None:
     with pytest.raises(SystemExit) as exc:
         build_app_from_env({"ROUNDS_STATE_DIR": str(tmp_path)})
     assert "ROUNDS_KB" in str(exc.value)
+
+
+@pytest.mark.parametrize("cap", ["0", "-5", "nan", "inf", "-inf", "thirty", ""])
+def test_cap_must_be_finite_and_positive(tmp_path: Path, cap: str) -> None:
+    from rounds.__main__ import build_app_from_env
+
+    env = {"ROUNDS_SCRIPTED": "1", "ROUNDS_STATE_DIR": str(tmp_path), "ROUNDS_CAP_USD": cap}
+    with pytest.raises(SystemExit) as exc:
+        build_app_from_env(env)
+    assert "ROUNDS_CAP_USD" in str(exc.value) and "\n" not in str(exc.value)
+
+
+def test_live_mode_needs_claude_on_the_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from rounds.__main__ import build_app_from_env
+
+    looked: list[str] = []
+
+    def which(name: str) -> str | None:
+        looked.append(name)
+        return None
+
+    monkeypatch.setattr(shutil, "which", which)
+    live = {"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path)}
+    with pytest.raises(SystemExit) as exc:
+        build_app_from_env(live)
+    assert looked == ["claude"]
+    assert "claude" in str(exc.value) and "\n" not in str(exc.value)
+    build_app_from_env({**live, "ROUNDS_SCRIPTED": "1"})  # scripted needs no claude
+    monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    build_app_from_env(live)
 
 
 def test_scripted_mode_builds_without_minting(

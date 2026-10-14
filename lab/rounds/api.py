@@ -1,7 +1,9 @@
 """The `/lab/rounds` HTTP API that web-next's `/present` page calls, server-side only (spec §7).
 
 Three routes, no auth and no CORS: the runner binds to loopback and web-next is its only caller.
-A POST validates its body (400, never FastAPI's 422), refuses while a round runs (409), and
+A POST must be `application/json` (else 415): a web page in the operator's browser can send a
+text/plain POST to 127.0.0.1 without a CORS preflight, and must not start a paid round. It
+validates its body (400, never FastAPI's 422), refuses while a round runs (409), and
 otherwise starts the round on a daemon thread (202). A non-blocking `threading.Lock` is held for
 the round's life and released in the thread's `finally`, so a round that raises can't leave the
 API answering 409 for ever.
@@ -50,6 +52,9 @@ def create_app(runner: RunnerLike, store: Store) -> FastAPI:
 
     @app.post("/lab/rounds", status_code=202)
     async def post_round(request: Request) -> JSONResponse:
+        media = request.headers.get("content-type", "").split(";")[0].strip().lower()
+        if media != "application/json":
+            return JSONResponse({"error": "unsupported_media_type"}, status_code=415)
         try:
             body = NewRound.model_validate_json(await request.body())
         except ValidationError as exc:
@@ -68,7 +73,7 @@ def create_app(runner: RunnerLike, store: Store) -> FastAPI:
             def work() -> None:
                 try:
                     runner.run_round(round_id)
-                except Exception:  # noqa: BLE001 - the runner records its own failures
+                except (Exception, SystemExit):  # noqa: BLE001 - the runner records its failures
                     pass
                 finally:
                     lock.release()

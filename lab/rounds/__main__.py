@@ -1,14 +1,16 @@
 """`python -m rounds`: the proof-rounds runner on 127.0.0.1 (spec §7).
 
-Env: ROUNDS_PORT (8010), ROUNDS_STATE_DIR (.owm-rounds), ROUNDS_CAP_USD (30),
+Env: ROUNDS_PORT (8010), ROUNDS_STATE_DIR (.owm-rounds), ROUNDS_CAP_USD (30, finite and above 0),
 ROUNDS_SERVICE_PORT (8001), ROUNDS_KB (the base id, required unless ROUNDS_SCRIPTED=1).
 Scripted mode swaps the Claude agent for a deterministic one and mints nothing, for rehearsing
-the page without spend.
+the page without spend. Live mode needs `claude` on the PATH and exits at once without it.
 """
 
 from __future__ import annotations
 
+import math
 import os
+import shutil
 from collections.abc import Mapping
 from pathlib import Path
 
@@ -36,6 +38,17 @@ DEMO_STEPS: dict[str, list[Step]] = {
 }
 
 
+def _cap(raw: str) -> float:
+    """The spend cap: a NaN or infinite cap would never stop a round, and 0 or less stops all."""
+    try:
+        cap = float(raw)
+    except ValueError:
+        cap = math.nan
+    if not (math.isfinite(cap) and cap > 0):
+        raise SystemExit("ROUNDS_CAP_USD must be a finite number of dollars above 0")
+    return cap
+
+
 def build_app_from_env(env: Mapping[str, str]) -> FastAPI:
     state_dir = Path(env.get("ROUNDS_STATE_DIR", ".owm-rounds"))
     service_port = int(env.get("ROUNDS_SERVICE_PORT", "8001"))
@@ -43,10 +56,12 @@ def build_app_from_env(env: Mapping[str, str]) -> FastAPI:
     kb = env.get("ROUNDS_KB")
     if not kb and not is_scripted:
         raise SystemExit("ROUNDS_KB is required (the knowledge base id) unless ROUNDS_SCRIPTED=1")
+    if not is_scripted and shutil.which("claude") is None:
+        raise SystemExit("claude is not on the PATH: live rounds need Claude Code installed")
     config = RunnerConfig(
         state_dir=state_dir,
         service_port=service_port,
-        cap_usd=float(env.get("ROUNDS_CAP_USD", "30")),
+        cap_usd=_cap(env.get("ROUNDS_CAP_USD", "30")),
         kb=kb,
     )
     store = Store(state_dir, REPO / "runs")
