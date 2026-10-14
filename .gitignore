@@ -227,3 +227,6 @@ tracker/seed/
 
 # OWM service state (event log, stores, recorded Jev calls)
 .owm-service/
+
+# Proof-rounds harness state
+.owm-rounds/

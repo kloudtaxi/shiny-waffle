@@ -255,6 +255,41 @@ def insert_row(
     return {"table": table, "row": stored}
 
 
+@lab.get("/sor/{table}")
+def read_table(svc: Svc, table: str) -> dict[str, Any]:
+    """A keyed table now, with every edit and insert made to it, in event order (read-only)."""
+    if table not in KEYS:
+        raise HTTPException(status_code=404, detail=f"No such table: {table}")
+    edits: list[dict[str, Any]] = []
+    for ev in svc.org.sor.events():
+        p = ev.payload
+        if p["table"] != table:
+            continue
+        inserted = ev.kind == "sor.inserted"
+        edits.append(
+            {
+                "seq": ev.seq,
+                "kind": ev.kind,
+                "key": str(p["row"][KEYS[table]]) if inserted else p["key"],
+                "field": None if inserted else p["field"],
+                "was": None if inserted else p["was"],
+                "now": None if inserted else p["now"],
+                "row": p["row"] if inserted else None,
+                "actor": ev.actor,
+            }
+        )
+    return {"table": table, "rows": svc.org.sor.table(table), "edits": edits}
+
+
+@lab.get("/clock")
+def get_clock(svc: Svc) -> dict[str, str]:
+    """Demo time and the demo date (read-only)."""
+    return {
+        "now": svc.org.clock.now().isoformat(),
+        "date": svc.org.clock.today().isoformat(),
+    }
+
+
 @lab.post("/adapter/execute")
 def execute(svc: Svc, actor: Me, body: AdapterRequest) -> dict[str, Any]:
     """The demo adapter (spec §8.3): redeem, write the effect, report."""

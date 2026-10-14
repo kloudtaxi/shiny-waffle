@@ -44,12 +44,12 @@ select = ["E", "F", "I", "B", "UP", "N", "W"]
 "lab/owm_service/errors.py" = ["N818"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["northstar", "owm_service"]
+known-first-party = ["northstar", "owm_service", "rounds"]
 
 [tool.mypy]
 python_version = "3.11"
 strict = true
-files = ["src", "tests", "lab/owm_service"]
+files = ["src", "tests", "lab/owm_service", "lab/rounds"]
 mypy_path = ["src", "lab"]
 plugins = ["pydantic.mypy"]
 

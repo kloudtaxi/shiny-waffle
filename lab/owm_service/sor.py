@@ -109,7 +109,8 @@ class SystemsOfRecord:
         self._base_rows(name)
         return self._cols[name]
 
-    def _events(self) -> list[Event]:
+    def events(self) -> list[Event]:
+        """The `sor` stream's insert and edit events, in order (cached by last seq)."""
         with self._lock:
             last = self.log.last_seq(self.org, STREAM)
             if self._cache is None or self._cache[0] != last:
@@ -121,7 +122,7 @@ class SystemsOfRecord:
         """The table now: base rows, then inserts, then edits (event order). Fresh copies."""
         rows = [dict(r) for r in self._base_rows(name)]
         key = KEYS.get(name)
-        for ev in self._events():
+        for ev in self.events():
             if ev.payload["table"] != name:
                 continue
             if ev.kind == "sor.inserted":
@@ -140,7 +141,7 @@ class SystemsOfRecord:
 
     def edits(self, table: str, key: str, *, after: datetime | None = None) -> list[Event]:
         return [
-            e for e in self._events()
+            e for e in self.events()
             if e.kind == "sor.edited" and e.payload["table"] == table
             and e.payload["key"] == key and (after is None or e.at > after)
         ]  # fmt: skip
