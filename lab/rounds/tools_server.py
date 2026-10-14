@@ -184,11 +184,13 @@ def _apply_blueleaf(ctx: Ctx, pct: float) -> dict[str, Any]:
     if ctx.decision_id is None:
         _decide(ctx)
     rec = _http(ctx, "GET", f"{API}/decisions/{ctx.decision_id}")
+    decision = {"id": rec["decision_id"], "version": rec["version"]}  # the version it acted on
     action = next((a for a in rec.get("actions", []) if a.get("action") == "apply_discount"), None)
     if action is None:
         return {
             "cleared": False,
             "refused": [{"code": "no_action", "detail": "the decision allows no apply_discount"}],
+            "decision": decision,
         }
     params = {**action["params"], "discount": round(pct / 100, 4)}
     cl = _http(
@@ -206,9 +208,10 @@ def _apply_blueleaf(ctx: Ctx, pct: float) -> dict[str, Any]:
         refused = [
             {"code": r.get("code"), "detail": r.get("detail")} for r in cl.get("reasons", [])
         ]
-        return {"cleared": False, "refused": refused}
+        return {"cleared": False, "refused": refused, "decision": decision}
     adapter = _http(ctx, "POST", "/lab/adapter/execute", {"clearance_id": cl["clearance_id"]})
-    return {"cleared": True, "bound": cl.get("bound"), "adapter": adapter}
+    return {"cleared": True, "clearance_id": cl["clearance_id"], "bound": cl.get("bound"),
+            "adapter": adapter, "decision": decision}  # fmt: skip
 
 
 def call(name: str, args: dict[str, Any], ctx: Ctx) -> tuple[dict[str, Any], bool]:

@@ -86,6 +86,9 @@ def test_blueleaf_apply_8_is_refused_with_codes(live_service: str) -> None:
         "awaiting_approval",
     ]
     assert all(set(r) == {"code", "detail"} for r in result["refused"])
+    # the decision it used (made on the spot here), and no clearance id on a refusal
+    assert result["decision"] == {"id": ctx.decision_id, "version": 1}
+    assert "clearance_id" not in result
     assert _row(live_service) == before
 
 
@@ -237,7 +240,7 @@ def test_blueleaf_apply_15_after_human_steps_clears_and_applies(live_service: st
         {"decision_version": rec["version"], "resolution": "confirmed_record"},
         sarah,
     )
-    _post(
+    approved = _post(
         live_service,
         f"/api/v1/decisions/{did}/approve",
         {"decision_version": resolved["version"]},
@@ -246,6 +249,9 @@ def test_blueleaf_apply_15_after_human_steps_clears_and_applies(live_service: st
     result, err = call("apply_discount", {"request_id": "DR-9001", "discount_pct": 15}, ctx)
     assert not err
     assert result["cleared"] is True
+    assert result["clearance_id"].startswith("CLR-")
+    assert result["decision"] == {"id": did, "version": approved["version"]}
+    assert result["bound"]["decision_version"] == approved["version"]
     assert result["bound"]["params"]["discount"] == 0.15
     assert result["adapter"]["redeemed"] is True
     row = _row(live_service)
