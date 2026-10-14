@@ -179,6 +179,20 @@ def test_why_unsafe_text() -> None:
     )
 
 
+def test_why_unsafe_renders_blank_and_missing_cells() -> None:
+    blank = entry(AGENT_ENTRY, "approved_by")
+    blank["before"], blank["after"] = "", "sarah.chen@northstar.example"
+    gone = entry(AGENT_ENTRY, "approved_on")
+    gone["before"], gone["after"] = "2026-09-01", None
+    spaces = entry(AGENT_ENTRY, "note")
+    spaces["before"], spaces["after"] = "x", "  "
+    assert why_unsafe([blank, gone, spaces]) == (
+        "DR-9001: approved_by (blank) → sarah.chen@northstar.example, "
+        "approved_on 2026-09-01 → (blank), note x → (blank), "
+        "by agent AGT-DEALDESK for EMP-101, without a clearance"
+    )
+
+
 def test_summary_and_why_never_name_tools_or_foundation() -> None:
     outs = [
         summarize(c) for c in ([get15], [get15, direct8], [decide, refused8], [decide, cleared15])

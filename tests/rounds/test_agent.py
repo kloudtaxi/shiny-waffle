@@ -15,6 +15,7 @@ from rounds.agent import (
     claude_agent,
     claude_argv,
     mcp_config,
+    parse_servers,
     parse_stream,
 )
 from rounds.scenarios import PROMPTS, SCENARIOS
@@ -124,6 +125,21 @@ def test_parse_stream_reads_result_event() -> None:
     assert parse_stream('{"type":"system"}\ngarbage') == (None, 0.0, 0, "no result")
 
 
+INIT = (
+    '{"type":"system","subtype":"init","tools":["mcp__kb__search"],"mcp_servers":['
+    '{"name":"kb","status":"connected","source":"dynamic"},'
+    '{"name":"deal_desk","status":"failed","source":"dynamic"}]}'
+)
+
+
+def test_parse_servers_reads_the_init_event() -> None:
+    later = '{"type":"system","subtype":"init","mcp_servers":[]}'
+    stream = "\n".join(["not json {", INIT, '{"type":"assistant"}', later])
+    assert parse_servers(stream) == {"kb": "connected", "deal_desk": "failed"}
+    assert parse_servers('{"type":"system","subtype":"init"}') == {}
+    assert parse_servers('{"type":"result","subtype":"success"}\ngarbage') == {}
+
+
 def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
     seen: dict[str, Any] = {}
 
@@ -150,7 +166,7 @@ def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
 
     def run_ok(*a: Any, **k: Any) -> Any:
         out = '{"type":"result","subtype":"success","result":"ok","num_turns":3,"total_cost_usd":1}'
-        return subprocess.CompletedProcess(a, 0, stdout=out, stderr="")
+        return subprocess.CompletedProcess(a, 0, stdout=INIT + "\n" + out, stderr="")
 
     monkeypatch.setattr(subprocess, "run", run_ok)
     res = claude_agent(call)
@@ -161,6 +177,14 @@ def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
         "success",
         None,
     )
+    assert res.servers == {"kb": "connected", "deal_desk": "failed"}
+
+    def run_timeout_after_init(*a: Any, **k: Any) -> Any:
+        raise subprocess.TimeoutExpired(cmd="claude", timeout=1, output=INIT.encode())
+
+    monkeypatch.setattr(subprocess, "run", run_timeout_after_init)
+    res = claude_agent(call)
+    assert (res.error, res.servers) == ("timeout", {"kb": "connected", "deal_desk": "failed"})
 
 
 def test_scripted_agent_drives_tools(live_service: str, tmp_path: Path) -> None:
@@ -189,6 +213,8 @@ def test_scripted_agent_drives_tools(live_service: str, tmp_path: Path) -> None:
     ]
     assert uses == ["mcp__deal_desk__get_request", "mcp__deal_desk__apply_discount"]
     assert events[-1]["type"] == "result" and events[-1]["total_cost_usd"] == 0.5
+    assert (events[0]["type"], events[0]["subtype"]) == ("system", "init")
+    assert res.servers == parse_servers(res.transcript) == {"deal_desk": "connected"}
     assert len((tmp_path / "d.jsonl").read_text().splitlines()) == 2
 
 
@@ -240,6 +266,17 @@ def test_scripted_human_step_then_apply15_applies(live_service: str, tmp_path: P
     row = _row(live_service)
     assert row["status"] == "Approved"
     assert row["approved_by"] == "michael.torres@northstar.example"
+
+
+def test_scripted_reports_kb_when_configured_and_a_chosen_status(
+    live_service: str, tmp_path: Path
+) -> None:
+    call = _call(live_service, "direct", tmp_path / "k.jsonl", "alone_realistic", "http://kb/mcp")
+    both = {"kb": "connected", "deal_desk": "connected"}
+    res = scripted({"alone_realistic": []}, live_service)(call)
+    assert res.servers == parse_servers(res.transcript) == both
+    down = scripted({"alone_realistic": []}, live_service, servers={"deal_desk": "failed"})(call)
+    assert down.servers == {"kb": "connected", "deal_desk": "failed"}
 
 
 def test_scripted_crash(live_service: str, tmp_path: Path) -> None:

@@ -6,7 +6,8 @@ in argv or in the MCP config: the config holds `${VAR}` references that Claude C
 process env, and the real values travel only in `AgentCall.env`.
 
 A failed run reports one of a fixed vocabulary in `AgentResult.error` ("timeout", "crashed",
-"agent error"); the transcript keeps the detail.
+"agent error"); the transcript keeps the detail. `AgentResult.servers` is each MCP server's status
+from the stream's `init` event, since Claude Code carries on without a server that failed.
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ import subprocess
 import sys
 import tempfile
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -55,6 +56,7 @@ class AgentResult:
     turns: int
     stop: str
     error: str | None
+    servers: dict[str, str] = field(default_factory=dict)  # MCP server -> status, from `init`
 
 
 AgentFn = Callable[[AgentCall], AgentResult]
@@ -114,9 +116,8 @@ def claude_argv(call: AgentCall) -> list[str]:
     ]
 
 
-def parse_stream(text: str) -> tuple[str | None, float, int, str]:
-    """`(reply, cost_usd, turns, stop)` from the last `result` event of a stream-json transcript."""
-    last: dict[str, Any] | None = None
+def _events(text: str) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
     for line in text.splitlines():
         if not line.strip().startswith("{"):
             continue
@@ -124,7 +125,30 @@ def parse_stream(text: str) -> tuple[str | None, float, int, str]:
             event = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if isinstance(event, dict) and event.get("type") == "result":
+        if isinstance(event, dict):
+            out.append(event)
+    return out
+
+
+def parse_servers(text: str) -> dict[str, str]:
+    """`{name: status}` from the first `system`/`init` event's `mcp_servers`; `{}` without one.
+
+    Claude Code carries on when an MCP server fails to connect, so the runner checks this."""
+    for event in _events(text):
+        if event.get("type") == "system" and event.get("subtype") == "init":
+            servers = event.get("mcp_servers")
+            if not isinstance(servers, list):
+                return {}
+            return {str(s["name"]): str(s.get("status")) for s in servers
+                    if isinstance(s, dict) and s.get("name")}  # fmt: skip
+    return {}
+
+
+def parse_stream(text: str) -> tuple[str | None, float, int, str]:
+    """`(reply, cost_usd, turns, stop)` from the last `result` event of a stream-json transcript."""
+    last: dict[str, Any] | None = None
+    for event in _events(text):
+        if event.get("type") == "result":
             last = event
     if last is None:
         return None, 0.0, 0, "no result"
@@ -154,7 +178,8 @@ def claude_agent(call: AgentCall) -> AgentResult:
             )
         except subprocess.TimeoutExpired as e:
             partial = e.stdout.decode(errors="replace") if isinstance(e.stdout, bytes) else e.stdout
-            return AgentResult(partial or "", None, 0.0, 0, "timeout", "timeout")
+            partial = partial or ""
+            return AgentResult(partial, None, 0.0, 0, "timeout", "timeout", parse_servers(partial))
     finally:
         shutil.rmtree(blind, ignore_errors=True)
     if proc.returncode != 0 and not proc.stdout:
@@ -162,7 +187,8 @@ def claude_agent(call: AgentCall) -> AgentResult:
         return AgentResult(tail, None, 0.0, 0, "agent error", "agent error")
     reply, cost, turns, stop = parse_stream(proc.stdout)
     failed = proc.returncode != 0 or _result_is_error(proc.stdout)
-    return AgentResult(proc.stdout, reply, cost, turns, stop, "agent error" if failed else None)
+    return AgentResult(proc.stdout, reply, cost, turns, stop, "agent error" if failed else None,
+                       parse_servers(proc.stdout))  # fmt: skip
 
 
 def _redact(text: str, env: dict[str, str]) -> str:
@@ -173,12 +199,5 @@ def _redact(text: str, env: dict[str, str]) -> str:
 
 
 def _result_is_error(text: str) -> bool:
-    last: Any = None
-    for line in text.splitlines():
-        try:
-            event = json.loads(line) if line.strip().startswith("{") else None
-        except json.JSONDecodeError:
-            continue
-        if isinstance(event, dict) and event.get("type") == "result":
-            last = event
+    last = next((e for e in reversed(_events(text)) if e.get("type") == "result"), None)
     return bool(last and last.get("is_error"))

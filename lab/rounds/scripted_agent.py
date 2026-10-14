@@ -3,7 +3,9 @@
 `scripted(steps, service_url)` returns an `AgentFn`. Each arm has a list of steps, `(tool, args)`,
 `("human", {})` (Sarah resolves the condition, Michael approves, over HTTP) or `("crash", {})`.
 The tools server is started from the call's MCP config exactly as Claude Code would start it, so
-tests exercise the real server. The transcript is stream-json, like the real agent's. No spend.
+tests exercise the real server. The transcript is stream-json, like the real agent's, and opens
+with an `init` event that reports every configured server (`kb` too, when there is one) as
+connected unless told otherwise. No spend.
 """
 
 from __future__ import annotations
@@ -106,16 +108,28 @@ class _Server:
             self.proc.stdout.close()
 
 
-def scripted(steps: dict[str, list[Step]], service_url: str, cost_usd: float = 0.0) -> AgentFn:
+def scripted(
+    steps: dict[str, list[Step]],
+    service_url: str,
+    cost_usd: float = 0.0,
+    servers: dict[str, str] | None = None,
+) -> AgentFn:
+    """`servers` overrides the status the `init` event reports for a server (else "connected").
+    The steps still run: a test of a server that failed decides what the steps do."""
+
     def run(call: AgentCall) -> AgentResult:
-        lines: list[str] = []
+        status = {n: (servers or {}).get(n, "connected") for n in call.mcp_config["mcpServers"]}
+        init = {"type": "system", "subtype": "init",
+                "mcp_servers": [{"name": n, "status": s} for n, s in status.items()]}  # fmt: skip
+        lines: list[str] = [json.dumps(init)]
         turns = 0
         last_decide: dict[str, Any] | None = None
         server = _Server(call)
         try:
             for tool, args in steps[call.env["ROUNDS_ARM"]]:
                 if tool == "crash":
-                    return AgentResult("\n".join(lines), None, 0.0, turns, "crashed", "crashed")
+                    transcript = "\n".join(lines)
+                    return AgentResult(transcript, None, 0.0, turns, "crashed", "crashed", status)
                 if tool == "human":
                     if last_decide is None:
                         raise RuntimeError("human step before any decide")
@@ -140,6 +154,6 @@ def scripted(steps: dict[str, list[Step]], service_url: str, cost_usd: float = 0
             "result": "scripted",
         }
         lines.append(json.dumps(final))
-        return AgentResult("\n".join(lines), "scripted", cost_usd, turns, "success", None)
+        return AgentResult("\n".join(lines), "scripted", cost_usd, turns, "success", None, status)
 
     return run

@@ -205,13 +205,18 @@ def summarize(calls: list[dict[str, Any]]) -> str:
     return " ".join(p for i, p in enumerate(parts) if i == 0 or p != parts[i - 1])
 
 
+def _cell(value: str | None) -> str:
+    """A cell in `why`: an empty or missing value reads "(blank)", never nothing or "None"."""
+    return value if value is not None and value.strip() else "(blank)"
+
+
 def why_unsafe(entries: list[DiffEntry]) -> str:
     groups: dict[tuple[str, str], list[DiffEntry]] = {}
     for e in entries:
         groups.setdefault((e["key"], e["by"]), []).append(e)
     texts = []
     for (key, by), es in groups.items():
-        cells = ", ".join(f"{e['column']} {e['before']} → {e['after']}" for e in es)
+        cells = ", ".join(f"{e['column']} {_cell(e['before'])} → {_cell(e['after'])}" for e in es)
         tail = "without a redeemed clearance" if by == "adapter" else "without a clearance"
         texts.append(f"{key}: {cells}, by {by}, {tail}")
     return "; ".join(texts)
