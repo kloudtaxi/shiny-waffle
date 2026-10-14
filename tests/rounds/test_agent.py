@@ -24,6 +24,7 @@ from rounds.scripted_agent import scripted
 S22 = SCENARIOS["S22"]
 FAKE_KB_TOKEN = "kb-token-value-123"
 FAKE_BEARER = "bearer-value-456"
+FAKE_CLAUDE_TOKEN = "claude-token-value-789"
 
 
 def _call(base: str, write_path: str, log: Path, arm: str, kb_url: str | None = None) -> AgentCall:
@@ -150,7 +151,7 @@ def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
 
     call = AgentCall("s", "a", mcp_config(None, "direct"), [], {"KB_MCP_TOKEN": FAKE_KB_TOKEN})
     monkeypatch.setattr(subprocess, "run", run_timeout)
-    res = claude_agent(call)
+    res = claude_agent(call, token=FAKE_CLAUDE_TOKEN)
     assert (res.error, res.stop) == ("timeout", "timeout")
     assert not seen["cwd"].exists()
     assert not seen["cwd"].resolve().is_relative_to(agent.REPO)
@@ -160,7 +161,7 @@ def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
         return subprocess.CompletedProcess(a, 1, stdout="", stderr="secret detail")
 
     monkeypatch.setattr(subprocess, "run", run_fail)
-    res = claude_agent(call)
+    res = claude_agent(call, token=FAKE_CLAUDE_TOKEN)
     assert res.error == "agent error"
     assert "secret detail" not in (res.error or "")
 
@@ -169,7 +170,7 @@ def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
         return subprocess.CompletedProcess(a, 0, stdout=INIT + "\n" + out, stderr="")
 
     monkeypatch.setattr(subprocess, "run", run_ok)
-    res = claude_agent(call)
+    res = claude_agent(call, token=FAKE_CLAUDE_TOKEN)
     assert (res.reply, res.cost_usd, res.turns, res.stop, res.error) == (
         "ok",
         1.0,
@@ -183,7 +184,7 @@ def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
         raise subprocess.TimeoutExpired(cmd="claude", timeout=1, output=INIT.encode())
 
     monkeypatch.setattr(subprocess, "run", run_timeout_after_init)
-    res = claude_agent(call)
+    res = claude_agent(call, token=FAKE_CLAUDE_TOKEN)
     assert (res.error, res.servers) == ("timeout", {"kb": "connected", "deal_desk": "failed"})
 
 
@@ -289,6 +290,27 @@ def test_scripted_crash(live_service: str, tmp_path: Path) -> None:
     assert '"type": "result"' not in res.transcript
 
 
+def test_claude_agent_signs_in_fresh_with_the_token(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Signed in as the operator, Claude Code tells the agent the account's email (the 2026-10-14
+    probe). A fresh config dir holds no account, and the long-lived token signs it in."""
+    seen: dict[str, Any] = {}
+
+    def run(*a: Any, **k: Any) -> Any:
+        cfg = Path(k["env"]["CLAUDE_CONFIG_DIR"])
+        seen.update(env=k["env"], cfg=cfg, empty=cfg.is_dir() and not any(cfg.iterdir()))
+        return subprocess.CompletedProcess(a, 2, stdout="", stderr=f"bad {FAKE_CLAUDE_TOKEN}")
+
+    monkeypatch.setenv("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude"))
+    monkeypatch.setattr(subprocess, "run", run)
+    call = AgentCall("s", "a", mcp_config(None, "direct"), [], {})
+    res = claude_agent(call, token=FAKE_CLAUDE_TOKEN)
+    assert seen["env"]["CLAUDE_CODE_OAUTH_TOKEN"] == FAKE_CLAUDE_TOKEN
+    assert seen["empty"] and not seen["cfg"].resolve().is_relative_to(agent.REPO)
+    assert seen["cfg"] != Path.home() / ".claude" and not seen["cfg"].exists()
+    assert FAKE_CLAUDE_TOKEN not in res.transcript and "[redacted]" in res.transcript
+    assert FAKE_CLAUDE_TOKEN not in claude_argv(call)
+
+
 def test_claude_agent_error_cases(monkeypatch: pytest.MonkeyPatch) -> None:
     token = "tok-abcdefgh-123456"
     call = AgentCall("s", "a", mcp_config(None, "direct"), [], {"X": token, "S": "S22"})
@@ -298,16 +320,16 @@ def test_claude_agent_error_cases(monkeypatch: pytest.MonkeyPatch) -> None:
         return lambda *a, **k: subprocess.CompletedProcess(a, code, stdout=stdout, stderr=stderr)
 
     monkeypatch.setattr(subprocess, "run", run(ok, "", 1))
-    assert claude_agent(call).error == "agent error"
+    assert claude_agent(call, token=FAKE_CLAUDE_TOKEN).error == "agent error"
     maxed = (
         '{"type":"result","subtype":"error_max_turns","is_error":true,"num_turns":40,'
         '"total_cost_usd":2}'
     )
     monkeypatch.setattr(subprocess, "run", run(maxed, "", 0))
-    res = claude_agent(call)
+    res = claude_agent(call, token=FAKE_CLAUDE_TOKEN)
     assert (res.error, res.stop) == ("agent error", "error_max_turns")
     monkeypatch.setattr(subprocess, "run", run("", f"boom {token} S22", 2))
-    res = claude_agent(call)
+    res = claude_agent(call, token=FAKE_CLAUDE_TOKEN)
     assert res.error == "agent error"
     assert token not in res.transcript and "[redacted]" in res.transcript
     assert "S22" in res.transcript

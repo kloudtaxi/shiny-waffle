@@ -5,6 +5,11 @@ the repo, no built-in tools, `--strict-mcp-config`, `--setting-sources project`.
 in argv or in the MCP config: the config holds `${VAR}` references that Claude Code expands from the
 process env, and the real values travel only in `AgentCall.env`.
 
+Claude Code tells a session the signed-in account's email. So the agent runs with a fresh, empty
+`CLAUDE_CONFIG_DIR` (no stored account) and signs in with the operator's long-lived token
+(`claude setup-token`) in `CLAUDE_CODE_OAUTH_TOKEN`: it sees no email (the 2026-10-14 probe). It
+still sees today's date and its temp directory; Claude Code has no switch for those.
+
 A failed run reports one of a fixed vocabulary in `AgentResult.error` ("timeout", "crashed",
 "agent error"); the transcript keeps the detail. `AgentResult.servers` is each MCP server's status
 from the stream's `init` event, since Claude Code carries on without a server that failed.
@@ -161,12 +166,16 @@ def parse_stream(text: str) -> tuple[str | None, float, int, str]:
     )
 
 
-def claude_agent(call: AgentCall) -> AgentResult:
+def claude_agent(call: AgentCall, *, token: str) -> AgentResult:
+    """One agent run, signed in with `token` (from `claude setup-token`) in a fresh config dir."""
     blind = Path(tempfile.mkdtemp(prefix="northstar-rounds-"))
+    config = Path(tempfile.mkdtemp(prefix="northstar-rounds-config-"))
+    secrets = {**call.env, "CLAUDE_CODE_OAUTH_TOKEN": token}
     try:
-        if blind.resolve().is_relative_to(REPO):
-            raise RuntimeError(f"blind directory {blind} is inside the repo")
-        env = {**os.environ, **call.env}
+        for d in (blind, config):
+            if d.resolve().is_relative_to(REPO):
+                raise RuntimeError(f"agent directory {d} is inside the repo")
+        env = {**os.environ, **secrets, "CLAUDE_CONFIG_DIR": str(config)}
         try:
             proc = subprocess.run(
                 claude_argv(call),
@@ -182,8 +191,9 @@ def claude_agent(call: AgentCall) -> AgentResult:
             return AgentResult(partial, None, 0.0, 0, "timeout", "timeout", parse_servers(partial))
     finally:
         shutil.rmtree(blind, ignore_errors=True)
+        shutil.rmtree(config, ignore_errors=True)
     if proc.returncode != 0 and not proc.stdout:
-        tail = _redact(proc.stderr[-2000:], call.env)
+        tail = _redact(proc.stderr[-2000:], secrets)
         return AgentResult(tail, None, 0.0, 0, "agent error", "agent error")
     reply, cost, turns, stop = parse_stream(proc.stdout)
     failed = proc.returncode != 0 or _result_is_error(proc.stdout)

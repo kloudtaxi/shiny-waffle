@@ -16,7 +16,11 @@ beyond that.
 PYTHONPATH=lab ROUNDS_KB=<base id> uv run --group owm-service python -m rounds
 ```
 
-A live round needs `claude` (Claude Code) on the PATH; without it the runner exits at once.
+A live round needs `claude` (Claude Code) on the PATH and a Claude token file; without either the
+runner exits at once. Make the token once, in your own terminal (it prints the token, so not
+through a session that records output): run `claude setup-token`, save what it prints to
+`_owm-local/rounds-agent.token` (gitignored) and `chmod 600` it. The agent signs in with it (see
+"No operator identity" below).
 
 | Variable | Default | Used for |
 |---|---|---|
@@ -25,6 +29,7 @@ A live round needs `claude` (Claude Code) on the PATH; without it the runner exi
 | `ROUNDS_CAP_USD` | `30` | the spend cap for a round; a finite number above 0, else the runner exits |
 | `ROUNDS_SERVICE_PORT` | `8001` | the OWM service the runner starts for itself |
 | `ROUNDS_KB` | none | the knowledge base id; required unless scripted |
+| `ROUNDS_CLAUDE_TOKEN_FILE` | `_owm-local/rounds-agent.token` | the agent's Claude token, mode 600; required unless scripted |
 | `ROUNDS_SCRIPTED` | unset | `1` swaps Claude for a deterministic agent: no spend, no foundation |
 
 Rehearse the page without spend:
@@ -66,8 +71,9 @@ never rewrite them.
 
 `runs/2026-10-14-b15-proof-round/scripts/copy_round.py <round_id> <rounds|shakedown> <sha>` does
 the copy. With `REDACT` set in the environment (comma-separated), it replaces those strings with
-`[operator identity]`. Claude Code shows the agent the operator's account email, and the repo is
-public. A declared trial goes to `shakedown/`, which the runner doesn't serve.
+`[operator identity]`. Rounds run before the agent signed in with its own token (RND-20261014-1
+and -2) showed the agent the operator's account email, and the repo is public; keep using
+`REDACT` as a backstop. A declared trial goes to `shakedown/`, which the runner doesn't serve.
 
 **After copying, move the round's live directory out of `.owm-rounds/rounds/`.** The committed
 copy is served in its place. A trial left in live state would be listed on `/present` as a live
@@ -90,9 +96,16 @@ Changing any of these changes the experiment.
 - **Blindness.** The agent runs in a fresh temp directory outside the repo with no built-in
   tools, `--strict-mcp-config` and `--no-session-persistence`. It never sees the repo, `truth/`
   or the answer key.
-- **Tokens in env only.** The session token and the knowledge foundation's read token reach
-  their servers through the agent's environment. The MCP config holds only `${...}` references.
-  Nothing secret reaches a file, a record, a log or argv.
+- **Tokens in env only.** The session token, the knowledge foundation's read token and the
+  agent's Claude token reach their servers through the agent's environment. The MCP config holds
+  only `${...}` references. Nothing secret reaches a file, a record, a log or argv.
+- **No operator identity.** Claude Code tells a signed-in session the account's email. Each run
+  gets a fresh, empty `CLAUDE_CONFIG_DIR` (no stored account, no user settings) and signs in with
+  the token, so the agent sees no email: probed on 2026-10-14, Opus 5.5 answered "UNKNOWN" when
+  asked who it works for. It still sees today's real date and its temp directory, which Claude
+  Code offers no switch for; every arm sees the same. In RND-20261014-2 the identity was in
+  context, and one run (N3) held because the signed-in account wasn't Sarah's, so later rounds
+  are not comparable with it on that point.
 - **Neutral names.** The servers are `kb` and `deal_desk`. No record names the foundation, and
   none carries a raw tool name.
 - **The cap.** After each run the round stops if the cost so far plus the largest run so far

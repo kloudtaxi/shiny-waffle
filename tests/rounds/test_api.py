@@ -157,6 +157,34 @@ def test_cap_must_be_finite_and_positive(tmp_path: Path, cap: str) -> None:
     assert "ROUNDS_CAP_USD" in str(exc.value) and "\n" not in str(exc.value)
 
 
+def _token_file(
+    tmp_path: Path, text: str = "claude-token-value-789\n", mode: int = 0o600
+) -> dict[str, str]:
+    path = tmp_path / "rounds-agent.token"
+    path.write_text(text)
+    path.chmod(mode)
+    return {"ROUNDS_CLAUDE_TOKEN_FILE": str(path)}
+
+
+@pytest.mark.parametrize("problem", ["missing", "empty", "readable by others"])
+def test_live_mode_needs_a_private_claude_token(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, problem: str
+) -> None:
+    """Live runs sign the agent in with a long-lived token in a fresh config dir, so the agent never
+    sees the operator's account email. Without a private token file, the runner won't start."""
+    from rounds.__main__ import build_app_from_env
+
+    monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    token = {"missing": {"ROUNDS_CLAUDE_TOKEN_FILE": str(tmp_path / "none")},
+             "empty": _token_file(tmp_path, text="\n"),
+             "readable by others": _token_file(tmp_path, mode=0o644)}[problem]  # fmt: skip
+    live = {"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path / "s"), **token}
+    with pytest.raises(SystemExit) as exc:
+        build_app_from_env(live)
+    assert "token" in str(exc.value) and "\n" not in str(exc.value)
+    build_app_from_env({**live, "ROUNDS_SCRIPTED": "1"})  # scripted needs no token
+
+
 def test_live_mode_needs_claude_on_the_path(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -169,7 +197,7 @@ def test_live_mode_needs_claude_on_the_path(
         return None
 
     monkeypatch.setattr(shutil, "which", which)
-    live = {"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path)}
+    live = {"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path), **_token_file(tmp_path)}
     with pytest.raises(SystemExit) as exc:
         build_app_from_env(live)
     assert looked == ["claude"]
@@ -211,5 +239,6 @@ def test_scripted_mode_records_the_scripted_model(
     monkeypatch.setattr(main_mod, "Runner", spy)
     monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
     main_mod.build_app_from_env({"ROUNDS_SCRIPTED": "1", "ROUNDS_STATE_DIR": str(tmp_path)})
-    main_mod.build_app_from_env({"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path / "l")})
+    live = {"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path / "l"), **_token_file(tmp_path)}
+    main_mod.build_app_from_env(live)
     assert [(c.model, c.scripted) for c in seen] == [("scripted", True), ("claude-opus-5-5", False)]
