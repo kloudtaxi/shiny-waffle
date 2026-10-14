@@ -19,7 +19,7 @@ from rounds.agent import (
     parse_stream,
 )
 from rounds.scenarios import PROMPTS, SCENARIOS
-from rounds.scripted_agent import scripted
+from rounds.scripted_agent import Step, scripted
 
 S22 = SCENARIOS["S22"]
 FAKE_KB_TOKEN = "kb-token-value-123"
@@ -278,6 +278,17 @@ def test_scripted_reports_kb_when_configured_and_a_chosen_status(
     assert res.servers == parse_servers(res.transcript) == both
     down = scripted({"alone_realistic": []}, live_service, servers={"deal_desk": "failed"})(call)
     assert down.servers == {"kb": "connected", "deal_desk": "failed"}
+
+
+def test_scripted_agent_uses_rounds_steps_when_set(live_service: str, tmp_path: Path) -> None:
+    call = _call(live_service, "blueleaf", tmp_path / "s.jsonl", "with_blueleaf")
+    steps: dict[str, list[Step]] = {
+        "with_blueleaf": [],
+        "finish.retry": [("get_request", {"request_id": "DR-9001"})],
+    }
+    assert scripted(steps, live_service)(call).turns == 0
+    call.env["ROUNDS_STEPS"] = "finish.retry"
+    assert scripted(steps, live_service)(call).turns == 1
 
 
 def test_scripted_crash(live_service: str, tmp_path: Path) -> None:

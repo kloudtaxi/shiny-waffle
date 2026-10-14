@@ -114,7 +114,10 @@ def scripted(
     cost_usd: float = 0.0,
     servers: dict[str, str] | None = None,
 ) -> AgentFn:
-    """`servers` overrides the status the `init` event reports for a server (else "connected").
+    """The steps run are `steps[ROUNDS_STEPS]` when that env var is set (a B-19 finish scripts each
+    turn), else `steps[ROUNDS_ARM]`.
+
+    `servers` overrides the status the `init` event reports for a server (else "connected").
     The steps still run: a test of a server that failed decides what the steps do."""
 
     def run(call: AgentCall) -> AgentResult:
@@ -126,7 +129,7 @@ def scripted(
         last_decide: dict[str, Any] | None = None
         server = _Server(call)
         try:
-            for tool, args in steps[call.env["ROUNDS_ARM"]]:
+            for tool, args in steps[call.env.get("ROUNDS_STEPS") or call.env["ROUNDS_ARM"]]:
                 if tool == "crash":
                     transcript = "\n".join(lines)
                     return AgentResult(transcript, None, 0.0, turns, "crashed", "crashed", status)
