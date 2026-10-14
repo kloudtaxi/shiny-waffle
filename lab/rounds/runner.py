@@ -34,7 +34,6 @@ from typing import Any, Protocol
 from rounds.agent import AgentCall, AgentFn, AgentResult, allowed_tools, mcp_config
 from rounds.classify import CRM_TABLES, classify, crm_sha, diff, summarize
 from rounds.scenarios import ARMS, PROMPTS, SCENARIOS, Arm, Scenario, run_order, sha
-from rounds.service_child import ServiceChild
 from rounds.store import Store
 from rounds.tools_server import tool_list
 
@@ -42,6 +41,14 @@ TALLY = ("finished", "unsafe_applied", "held", "applied_as_decided", "incomplete
 NOT_RUN = "Not run."
 UNREAD = "unsafe: the CRM could not be read after the run"
 Tables = dict[str, list[dict[str, str]]]
+
+
+class ServiceLike(Protocol):
+    """What a runner needs of an OWM service: where it is, and (for rounds) a fresh start."""
+
+    @property
+    def url(self) -> str: ...
+    def restart(self) -> None: ...
 
 
 class FoundationLike(Protocol):
@@ -94,7 +101,7 @@ class Runner:
         config: RunnerConfig,
         agent: AgentFn,
         store: Store,
-        service: ServiceChild,
+        service: ServiceLike,
         foundation: FoundationLike | None = None,
     ) -> None:
         self.config = config
@@ -242,15 +249,23 @@ class Runner:
         except _ServiceError as e:
             rec["why"] = f"service: {e.status}"
             return
+        paths = self.store.run_paths(rec["round_id"], rec["run_id"])
+        self._agent_turn(ctx, rec, arm, session, before, paths)
+
+    def _agent_turn(
+        self, ctx: _Ctx, rec: dict[str, Any], arm: Arm, session: dict[str, Any], before: Tables,
+        paths: tuple[str, str], *, ask: str | None = None, steps: str | None = None,
+    ) -> None:  # fmt: skip
+        """From the agent's session to a classified record."""
         token = str(session["token"])
         rec["agent"]["mandate_version"] = (session.get("actor") or {}).get("version")
         rec["crm_before_sha"] = crm_sha(before)
-        transcript, tool_calls = self.store.run_paths(rec["round_id"], rec["run_id"])
+        transcript, tool_calls = paths
         log = self.store.live_dir / tool_calls
         log.parent.mkdir(parents=True, exist_ok=True)
         log.write_text("")
         rec["tool_calls"] = tool_calls  # from here on, `_runs` can read the log if we raise
-        res = self._agent(ctx, arm, token, log)
+        res = self._agent(ctx, arm, token, log, ask=ask, steps=steps)
         calls = _read_log(log)
         rec.update(cost_usd=res.cost_usd, turns=res.turns, stop=res.stop)
         rec["agent"]["servers"] = {n: res.servers[n] for n in _servers(ctx) if n in res.servers}
@@ -265,14 +280,19 @@ class Runner:
         (self.store.live_dir / transcript).write_text(_redact(res.transcript, secrets))
         rec["transcript"] = transcript
 
-    def _agent(self, ctx: _Ctx, arm: Arm, token: str, log: Path) -> AgentResult:
+    def _agent(
+        self, ctx: _Ctx, arm: Arm, token: str, log: Path, *, ask: str | None = None,
+        steps: str | None = None,
+    ) -> AgentResult:  # fmt: skip
         env = {"DEAL_DESK_URL": self.service.url, "DEAL_DESK_TOKEN": token,
                "DEAL_DESK_WRITE_PATH": arm.write_path, "DEAL_DESK_SCENARIO": ctx.scenario.id,
                "DEAL_DESK_LOG": str(log.resolve()), "ROUNDS_ARM": arm.id}  # fmt: skip
+        if steps is not None:
+            env["ROUNDS_STEPS"] = steps
         if ctx.kb is not None:
             env["KB_MCP_TOKEN"] = ctx.kb.token
         call = AgentCall(
-            system_prompt=PROMPTS[arm.prompt], ask=ctx.scenario.ask,
+            system_prompt=PROMPTS[arm.prompt], ask=ask or ctx.scenario.ask,
             mcp_config=mcp_config(ctx.kb.url if ctx.kb else None, arm.write_path),
             allowed_tools=allowed_tools(arm.write_path, ctx.kb.tools if ctx.kb else []),
             env=env, model=self.config.model, max_turns=self.config.max_turns,
@@ -342,10 +362,15 @@ class Runner:
             tables[table], edits[table] = out["rows"], out["edits"]
         return tables, edits
 
-    def _call(self, method: str, path: str, body: dict[str, Any] | None = None) -> dict[str, Any]:
+    def _call(
+        self, method: str, path: str, body: dict[str, Any] | None = None, token: str | None = None
+    ) -> dict[str, Any]:
         data = None if body is None else json.dumps(body).encode()
+        headers = {"Content-Type": "application/json"}
+        if token is not None:
+            headers["Authorization"] = f"Bearer {token}"
         req = urllib.request.Request(self.service.url + path, data=data, method=method,
-                                     headers={"Content-Type": "application/json"})  # fmt: skip
+                                     headers=headers)  # fmt: skip
         try:
             with urllib.request.urlopen(req, timeout=60) as resp:
                 out: dict[str, Any] = json.loads(resp.read())

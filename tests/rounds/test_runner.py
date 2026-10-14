@@ -719,3 +719,17 @@ def test_round_says_whether_it_was_scripted(tmp_path: Path) -> None:
                               scripted=flag)  # fmt: skip
         r = Runner(config, agent=scripted({}, "http://127.0.0.1:1"), store=store, service=service)
         assert r.new_round(SCENARIOS["S22"], 1, {"kind": "admin", "name": "t"})["scripted"] is flag
+
+
+def test_call_sends_the_bearer_token(tmp_path: Path, child: ServiceChild) -> None:
+    child.restart()
+    store = Store(tmp_path / "state", tmp_path / "runs")
+    config = RunnerConfig(state_dir=tmp_path / "state", service_port=child.port, model="scripted")
+    runner = Runner(config, scripted(NO_STEPS, child.url), store, child)
+    body = {"agent_id": "AGT-DEALDESK", "on_behalf_of": "EMP-101"}
+    session = runner._call("POST", "/lab/sessions", body)
+    got = runner._call("GET", "/api/v1/register", token=session["token"])
+    assert isinstance(got["version"], int)
+    with pytest.raises(runner_mod._ServiceError) as raised:
+        runner._call("GET", "/api/v1/register")
+    assert raised.value.status == 401
