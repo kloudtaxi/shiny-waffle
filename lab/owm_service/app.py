@@ -67,7 +67,7 @@ from .models import (
     one_page,
 )
 from .service import Me, Service, Svc, bearer, session
-from .sor import KEYS
+from .sor import INSERTABLE, KEYS
 
 LAB_ACTOR: Final[dict[str, Any]] = {"kind": "system", "id": "lab"}
 
@@ -257,8 +257,10 @@ def insert_row(
 
 @lab.get("/sor/{table}")
 def read_table(svc: Svc, table: str) -> dict[str, Any]:
-    """A keyed table now, with every edit and insert made to it, in event order (read-only)."""
-    if table not in KEYS:
+    """A writable table now, with every edit and insert made to it, in event order (read-only).
+
+    An insert into a table with no key column has a null `key`."""
+    if table not in KEYS and table not in INSERTABLE:
         raise HTTPException(status_code=404, detail=f"No such table: {table}")
     edits: list[dict[str, Any]] = []
     for ev in svc.org.sor.events():
@@ -270,7 +272,9 @@ def read_table(svc: Svc, table: str) -> dict[str, Any]:
             {
                 "seq": ev.seq,
                 "kind": ev.kind,
-                "key": str(p["row"][KEYS[table]]) if inserted else p["key"],
+                "key": (str(p["row"][KEYS[table]]) if table in KEYS else None)
+                if inserted
+                else p["key"],
                 "field": None if inserted else p["field"],
                 "was": None if inserted else p["was"],
                 "now": None if inserted else p["now"],

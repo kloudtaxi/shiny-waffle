@@ -81,6 +81,17 @@ def test_get_sor_unknown_table_is_404(client: TestClient) -> None:
     assert client.get("/lab/sor/employees").status_code == 404
 
 
+def test_get_sor_unkeyed_writable_table(client: TestClient, sarah_tok: Headers) -> None:
+    r = client.get("/lab/sor/service_credits")
+    assert r.status_code == 200
+    assert r.json()["edits"] == []
+    row = {**r.json()["rows"][0], "credit_id": "SCR-NEW"}
+    assert client.post("/lab/sor/service_credits", json=row, headers=sarah_tok).status_code == 201
+    e = client.get("/lab/sor/service_credits").json()["edits"]
+    assert [(x["kind"], x["key"]) for x in e] == [("sor.inserted", None)]
+    assert e[0]["row"] == row
+
+
 def test_get_clock_is_demo_date(client: TestClient) -> None:
     body = client.get("/lab/clock").json()
     assert body["date"] == "2026-09-23"

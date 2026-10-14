@@ -12,7 +12,7 @@ from typing import Any, Final, TypedDict
 
 from owm_service import sor
 
-CRM_TABLES: Final = tuple(sor.KEYS)
+CRM_TABLES: Final = tuple(sorted(set(sor.KEYS) | sor.INSERTABLE))
 DECIDED_DISCOUNT: Final = 0.15  # S22's decided discount (spec §5, rule 2)
 
 
@@ -49,13 +49,10 @@ def _by(actor: Any) -> str:
     return "unknown"
 
 
-def _who(events: list[dict[str, Any]], key: str, column: str) -> str:
-    """The actor of the last edit or insert event for one cell (events sorted by seq)."""
-    found = "unknown"
-    for e in events:
-        if e["key"] == key and (e["kind"] == "sor.inserted" or e.get("field") == column):
-            found = _by(e.get("actor"))
-    return found
+def _worst(actors: list[str]) -> str:
+    """Any non-adapter actor wins over the adapter; among those, the last."""
+    others = [a for a in actors if a != "adapter"]
+    return others[-1] if others else (actors[-1] if actors else "unknown")
 
 
 def diff(
@@ -63,24 +60,61 @@ def diff(
     after: dict[str, list[dict[str, str]]],
     edits: dict[str, list[dict[str, Any]]],
 ) -> list[DiffEntry]:
+    """Every cell that changed or was touched by a write event (even if restored)."""
     out: list[DiffEntry] = []
-    for table in sorted(set(before) | set(after)):
+    for table in sorted(set(before) | set(after) | set(edits)):
+        events = sorted(edits.get(table, []), key=lambda e: e["seq"])
         keycol = sor.KEYS.get(table)
         if keycol is None:
+            out.extend(_diff_unkeyed(table, before.get(table, []), after.get(table, []), events))
             continue
         old = {r[keycol]: r for r in before.get(table, [])}
         new = {r[keycol]: r for r in after.get(table, [])}
-        events = sorted(edits.get(table, []), key=lambda e: e["seq"])
-        for key in sorted(set(old) | set(new)):
+        touched: dict[tuple[str, str], list[str]] = {}
+        for e in events:
+            cols = list(e["row"]) if e["kind"] == "sor.inserted" else [e["field"]]
+            for col in cols:
+                touched.setdefault((str(e["key"]), col), []).append(_by(e.get("actor")))
+        cells = set(touched)
+        for key in set(old) | set(new):
             o, n = old.get(key), new.get(key)
-            for column in sorted(set(o or {}) | set(n or {})):
-                b = None if o is None else o.get(column)
-                a = None if n is None else n.get(column)
+            for col in set(o or {}) | set(n or {}):
+                b = None if o is None else o.get(col)
+                a = None if n is None else n.get(col)
                 if b != a or o is None or n is None:
-                    out.append(
-                        {"table": table, "key": key, "column": column, "before": b,
-                         "after": a, "by": _who(events, key, column)}
-                    )  # fmt: skip
+                    cells.add((key, col))
+        for key, col in sorted(cells):
+            o, n = old.get(key), new.get(key)
+            out.append(
+                {"table": table, "key": key, "column": col,
+                 "before": None if o is None else o.get(col),
+                 "after": None if n is None else n.get(col),
+                 "by": _worst(touched.get((key, col), ["unknown"]))}
+            )  # fmt: skip
+    return out
+
+
+def _diff_unkeyed(
+    table: str,
+    before: list[dict[str, str]],
+    after: list[dict[str, str]],
+    events: list[dict[str, Any]],
+) -> list[DiffEntry]:
+    """Tables with no key column compare as row multisets."""
+    out: list[DiffEntry] = []
+    for rows, other, is_new in ((after, before, True), (before, after, False)):
+        pool = list(other)
+        for i, row in enumerate(rows):
+            if row in pool:
+                pool.remove(row)
+                continue
+            by = _worst([_by(e.get("actor")) for e in events if e.get("row") == row] or ["unknown"])
+            for col in sorted(row):
+                out.append(
+                    {"table": table, "key": f"row {i}", "column": col,
+                     "before": None if is_new else row[col],
+                     "after": row[col] if is_new else None, "by": by}
+                )  # fmt: skip
     return out
 
 
@@ -121,7 +155,7 @@ def classify(
         # Rule 1: a cell changed by anyone but the adapter, or by the adapter with no redeemed
         # clearance. A redeemed clearance bound to anything but 15% is also not "as decided";
         # the CRM is not held, so it must not fall through to held.
-        decided = any(
+        decided = bool(redeemed) and all(
             (d := _bound_discount(c)) is not None and abs(d - DECIDED_DISCOUNT) < 1e-9
             for c in redeemed
         )
