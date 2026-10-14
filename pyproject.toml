@@ -67,6 +67,8 @@ module = [
     "build_procedures",
     "serve",
     "engine",
+    "utopia",
+    "blind_reader",
 ]
 ignore_missing_imports = true
 follow_imports = "skip"

@@ -1,0 +1,252 @@
+from __future__ import annotations
+
+import json
+import subprocess
+import urllib.request
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+from rounds import agent
+from rounds.agent import (
+    AgentCall,
+    allowed_tools,
+    claude_agent,
+    claude_argv,
+    mcp_config,
+    parse_stream,
+)
+from rounds.scenarios import PROMPTS, SCENARIOS
+from rounds.scripted_agent import scripted
+
+S22 = SCENARIOS["S22"]
+FAKE_KB_TOKEN = "kb-token-value-123"
+FAKE_BEARER = "bearer-value-456"
+
+
+def _call(base: str, write_path: str, log: Path, arm: str, kb_url: str | None = None) -> AgentCall:
+    body = json.dumps({"agent_id": S22.agent_id, "on_behalf_of": S22.on_behalf_of}).encode()
+    req = urllib.request.Request(
+        base + "/lab/sessions", data=body, headers={"Content-Type": "application/json"}
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        token = str(json.loads(resp.read())["token"])
+    env = {
+        "ROUNDS_ARM": arm,
+        "DEAL_DESK_URL": base,
+        "DEAL_DESK_TOKEN": token,
+        "DEAL_DESK_WRITE_PATH": write_path,
+        "DEAL_DESK_SCENARIO": "S22",
+        "DEAL_DESK_LOG": str(log),
+    }
+    return AgentCall(
+        system_prompt=PROMPTS["realistic"],
+        ask=S22.ask,
+        mcp_config=mcp_config(kb_url, write_path),
+        allowed_tools=allowed_tools(write_path, []),
+        env=env,
+    )
+
+
+def _row(base: str) -> dict[str, str]:
+    with urllib.request.urlopen(base + "/lab/sor/discount_requests", timeout=30) as resp:
+        rows: list[dict[str, str]] = json.loads(resp.read())["rows"]
+    return next(r for r in rows if r["request_id"] == "DR-9001")
+
+
+def test_mcp_config_names_and_no_secrets() -> None:
+    config = mcp_config("http://kb.example/mcp", "blueleaf")
+    servers = config["mcpServers"]
+    assert set(servers) == {"kb", "deal_desk"}
+    assert servers["kb"]["headers"]["Authorization"] == "Bearer ${KB_MCP_TOKEN}"
+    env = servers["deal_desk"]["env"]
+    assert set(env) == {
+        "DEAL_DESK_URL",
+        "DEAL_DESK_TOKEN",
+        "DEAL_DESK_WRITE_PATH",
+        "DEAL_DESK_SCENARIO",
+        "DEAL_DESK_LOG",
+    }
+    assert all(v == "${" + k + "}" for k, v in env.items())
+    dumped = json.dumps(config)
+    assert FAKE_KB_TOKEN not in dumped and FAKE_BEARER not in dumped
+
+
+def test_mcp_config_without_kb() -> None:
+    servers = mcp_config(None, "direct")["mcpServers"]
+    assert set(servers) == {"deal_desk"}
+
+
+def test_allowed_tools_per_arm() -> None:
+    assert allowed_tools("direct", []) == [
+        "mcp__deal_desk__get_request",
+        "mcp__deal_desk__apply_discount",
+    ]
+    tools = allowed_tools("blueleaf", ["search_chunks"])
+    assert "mcp__deal_desk__decide" in tools and tools[-1] == "mcp__kb__search_chunks"
+
+
+def test_claude_argv_controls() -> None:
+    call = AgentCall(
+        system_prompt="sys",
+        ask="do it",
+        mcp_config=mcp_config(None, "direct"),
+        allowed_tools=allowed_tools("direct", []),
+        env={"DEAL_DESK_TOKEN": FAKE_BEARER, "KB_MCP_TOKEN": FAKE_KB_TOKEN},
+    )
+    argv = claude_argv(call)
+    assert "--strict-mcp-config" in argv
+    assert argv[argv.index("--tools") + 1] == ""
+    assert "--no-session-persistence" in argv
+    assert argv[argv.index("--setting-sources") + 1] == "project"
+    assert argv[argv.index("--max-turns") + 1] == "40"
+    assert argv[argv.index("--model") + 1] == "claude-opus-5-5"
+    assert argv[argv.index("--system-prompt") + 1] == "sys"
+    assert "--disallowedTools" not in argv
+    assert not any(a.startswith("--disallowedTools") for a in argv)
+    joined = " ".join(argv)
+    assert FAKE_KB_TOKEN not in joined and FAKE_BEARER not in joined
+
+
+def test_parse_stream_reads_result_event() -> None:
+    stream = "\n".join(
+        [
+            '{"type":"system","subtype":"init"}',
+            "not json {",
+            '{"type":"result","subtype":"error_max_turns","result":"early","num_turns":2,'
+            '"total_cost_usd":0.1}',
+            '{"type":"result","subtype":"success","result":"done","num_turns":5,'
+            '"total_cost_usd":0.25}',
+        ]
+    )
+    assert parse_stream(stream) == ("done", 0.25, 5, "success")
+    assert parse_stream('{"type":"system"}\ngarbage') == (None, 0.0, 0, "no result")
+
+
+def test_claude_agent_outcomes(monkeypatch: pytest.MonkeyPatch) -> None:
+    seen: dict[str, Any] = {}
+
+    def run_timeout(*a: Any, **k: Any) -> Any:
+        seen["cwd"] = Path(k["cwd"])
+        seen["env"] = k["env"]
+        raise subprocess.TimeoutExpired(cmd="claude", timeout=1)
+
+    call = AgentCall("s", "a", mcp_config(None, "direct"), [], {"KB_MCP_TOKEN": FAKE_KB_TOKEN})
+    monkeypatch.setattr(subprocess, "run", run_timeout)
+    res = claude_agent(call)
+    assert (res.error, res.stop) == ("timeout", "timeout")
+    assert not seen["cwd"].exists()
+    assert not seen["cwd"].resolve().is_relative_to(agent.REPO)
+    assert seen["env"]["KB_MCP_TOKEN"] == FAKE_KB_TOKEN
+
+    def run_fail(*a: Any, **k: Any) -> Any:
+        return subprocess.CompletedProcess(a, 1, stdout="", stderr="secret detail")
+
+    monkeypatch.setattr(subprocess, "run", run_fail)
+    res = claude_agent(call)
+    assert res.error == "agent error"
+    assert "secret detail" not in (res.error or "")
+
+    def run_ok(*a: Any, **k: Any) -> Any:
+        out = '{"type":"result","subtype":"success","result":"ok","num_turns":3,"total_cost_usd":1}'
+        return subprocess.CompletedProcess(a, 0, stdout=out, stderr="")
+
+    monkeypatch.setattr(subprocess, "run", run_ok)
+    res = claude_agent(call)
+    assert (res.reply, res.cost_usd, res.turns, res.stop, res.error) == (
+        "ok",
+        1.0,
+        3,
+        "success",
+        None,
+    )
+
+
+def test_scripted_agent_drives_tools(live_service: str, tmp_path: Path) -> None:
+    direct = _call(live_service, "direct", tmp_path / "d.jsonl", "alone_realistic")
+    fn = scripted(
+        {
+            "alone_realistic": [
+                ("get_request", {"request_id": "DR-9001"}),
+                ("apply_discount", {"request_id": "DR-9001", "discount_pct": 8}),
+            ]
+        },
+        live_service,
+        cost_usd=0.5,
+    )
+    res = fn(direct)
+    assert res.error is None and res.stop == "success" and res.turns == 2 and res.cost_usd == 0.5
+    row = _row(live_service)
+    assert row["status"] == "Approved" and row["requested_discount_pct"] == "8.0"
+    events = [json.loads(ln) for ln in res.transcript.splitlines()]
+    uses = [
+        b["name"]
+        for e in events
+        if e["type"] == "assistant"
+        for b in e["message"]["content"]
+        if b["type"] == "tool_use"
+    ]
+    assert uses == ["mcp__deal_desk__get_request", "mcp__deal_desk__apply_discount"]
+    assert events[-1]["type"] == "result" and events[-1]["total_cost_usd"] == 0.5
+    assert len((tmp_path / "d.jsonl").read_text().splitlines()) == 2
+
+
+def test_scripted_blueleaf_decide_then_apply8_does_not_write(
+    live_service: str, tmp_path: Path
+) -> None:
+    before = _row(live_service)
+    blue = _call(live_service, "blueleaf", tmp_path / "b.jsonl", "with_blueleaf")
+    fn = scripted(
+        {
+            "with_blueleaf": [
+                ("decide", {"request_id": "DR-9001"}),
+                ("apply_discount", {"request_id": "DR-9001", "discount_pct": 8}),
+            ]
+        },
+        live_service,
+    )
+    res = fn(blue)
+    assert res.error is None
+    assert _row(live_service) == before
+    replies = [
+        json.loads(e["message"]["content"][0]["content"])
+        for e in map(json.loads, res.transcript.splitlines())
+        if e["type"] == "user"
+    ]
+    assert replies[-1]["cleared"] is False
+
+
+def test_scripted_human_step_then_apply15_applies(live_service: str, tmp_path: Path) -> None:
+    blue = _call(live_service, "blueleaf", tmp_path / "h.jsonl", "with_blueleaf")
+    fn = scripted(
+        {
+            "with_blueleaf": [
+                ("decide", {"request_id": "DR-9001"}),
+                ("human", {}),
+                ("apply_discount", {"request_id": "DR-9001", "discount_pct": 15}),
+            ]
+        },
+        live_service,
+    )
+    res = fn(blue)
+    assert res.error is None and res.turns == 2
+    results = [
+        json.loads(json.loads(ln)["message"]["content"][0]["content"])
+        for ln in res.transcript.splitlines()
+        if json.loads(ln)["type"] == "user"
+    ]
+    assert results[-1]["cleared"] is True and results[-1]["adapter"]["redeemed"] is True
+    row = _row(live_service)
+    assert row["status"] == "Approved"
+    assert row["approved_by"] == "michael.torres@northstar.example"
+
+
+def test_scripted_crash(live_service: str, tmp_path: Path) -> None:
+    blue = _call(live_service, "blueleaf", tmp_path / "c.jsonl", "with_blueleaf")
+    fn = scripted(
+        {"with_blueleaf": [("decide", {"request_id": "DR-9001"}), ("crash", {})]}, live_service
+    )
+    res = fn(blue)
+    assert (res.error, res.stop) == ("crashed", "crashed")
+    assert '"type": "result"' not in res.transcript
