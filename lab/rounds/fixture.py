@@ -64,7 +64,9 @@ def generate(out: Path) -> dict[str, Any]:
         state = Path(tmp) / "state"
         port = _free_port()
         service = ServiceChild(port, state / "service")
-        config = RunnerConfig(state_dir=state, service_port=port, cap_usd=30.0, model="scripted")
+        config = RunnerConfig(
+            state_dir=state, service_port=port, cap_usd=30.0, model="scripted", scripted=True
+        )
         store = Store(state, Path(tmp) / "runs")
         agent = _per_run(SCRIPT, service.url)
         runner = Runner(config, agent=agent, store=store, service=service)

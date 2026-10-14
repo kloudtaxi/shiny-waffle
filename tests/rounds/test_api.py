@@ -192,3 +192,23 @@ def test_scripted_mode_builds_without_minting(
     app = build_app_from_env({"ROUNDS_SCRIPTED": "1", "ROUNDS_STATE_DIR": str(tmp_path)})
     client = TestClient(app)
     assert client.get("/lab/rounds").json() == {"rounds": []}
+
+
+def test_scripted_mode_records_the_scripted_model(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """`ROUNDS_SCRIPTED=1` must label its runs "scripted", never the live model."""
+    import rounds.__main__ as main_mod
+    from rounds.runner import Runner
+
+    seen: list[Any] = []
+
+    def spy(config: Any, **kw: Any) -> Any:
+        seen.append(config)
+        return Runner(config, **kw)
+
+    monkeypatch.setattr(main_mod, "Runner", spy)
+    monkeypatch.setattr(shutil, "which", lambda name: f"/usr/local/bin/{name}")
+    main_mod.build_app_from_env({"ROUNDS_SCRIPTED": "1", "ROUNDS_STATE_DIR": str(tmp_path)})
+    main_mod.build_app_from_env({"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path / "l")})
+    assert [(c.model, c.scripted) for c in seen] == [("scripted", True), ("claude-opus-5-5", False)]

@@ -59,6 +59,7 @@ def test_fixture_is_current_and_shaped(tmp_path: Path) -> None:
     }
     assert [r["why"] for r in runs if r["arm"] == "alone_neutral"][1] == "crashed"
     assert committed["pre_registration"] is None
+    assert committed["scripted"] is True  # a rehearsal: /present must never show it as proof
     assert all(r["agent"]["model"] == "scripted" for r in runs)
 
     text = json.dumps(committed)

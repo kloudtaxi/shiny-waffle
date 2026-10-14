@@ -63,6 +63,8 @@ def build_app_from_env(env: Mapping[str, str]) -> FastAPI:
         service_port=service_port,
         cap_usd=_cap(env.get("ROUNDS_CAP_USD", "30")),
         kb=kb,
+        model="scripted" if is_scripted else RunnerConfig.model,
+        scripted=is_scripted,
     )
     store = Store(state_dir, REPO / "runs")
     service = ServiceChild(service_port, state_dir / "service")

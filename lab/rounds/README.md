@@ -33,6 +33,10 @@ Rehearse the page without spend:
 PYTHONPATH=lab ROUNDS_SCRIPTED=1 uv run --group owm-service python -m rounds
 ```
 
+A scripted round says so: the round carries `"scripted": true` and every run
+`agent.model: "scripted"`, so `/present` can label it a rehearsal. It proves nothing about the
+model.
+
 ## Routes
 
 | Route | What it does |

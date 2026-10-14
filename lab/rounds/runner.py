@@ -59,6 +59,7 @@ class RunnerConfig:
     cap_usd: float = 30.0
     kb: str | None = None
     model: str = "claude-opus-5-5"
+    scripted: bool = False  # a rehearsal by the scripted agent: proves nothing
     max_turns: int = 40
     timeout_s: int = 600
 
@@ -116,6 +117,7 @@ class Runner:
             "base_check": {"at_start": None, "at_end": None, "changed": None},
             "tally": {a.id: dict.fromkeys(TALLY, 0) for a in ARMS}, "runs": [],
             "source": "live", "pre_registration": None, "error": None,
+            "scripted": self.config.scripted,
         }  # fmt: skip
         self.store.save_round(r)
         return r

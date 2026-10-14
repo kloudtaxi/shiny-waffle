@@ -708,3 +708,14 @@ def test_replay_miss_is_incomplete(tmp_path: Path, child: ServiceChild) -> None:
     assert [(run["outcome"], run["why"]) for run in r["runs"]] == [
         ("incomplete", "replay miss")
     ] * 3
+
+
+def test_round_says_whether_it_was_scripted(tmp_path: Path) -> None:
+    """A rehearsal must never read as proof: the round carries `scripted`, the runs the model."""
+    store = Store(tmp_path / "live", tmp_path / "runs")
+    service = ServiceChild(_free_port(), tmp_path / "svc")
+    for flag in (True, False):
+        config = RunnerConfig(state_dir=tmp_path, model="scripted" if flag else "claude-opus-5-5",
+                              scripted=flag)  # fmt: skip
+        r = Runner(config, agent=scripted({}, "http://127.0.0.1:1"), store=store, service=service)
+        assert r.new_round(SCENARIOS["S22"], 1, {"kind": "admin", "name": "t"})["scripted"] is flag
