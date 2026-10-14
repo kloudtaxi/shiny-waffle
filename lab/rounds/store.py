@@ -4,7 +4,8 @@ A live round lives in `<live_dir>/rounds/<round_id>/`: `round.json` (the round, 
 each run's record (`R1.json`, ...), and each run's transcript and call log. Committed copies are
 `<runs_dir>/<folder>/rounds/<round_id>.json`, copied in by hand after a pre-registered round. The
 store only reads them: it never writes under `runs_dir`, and a committed copy wins when an id is in
-both places.
+both places. A finish (one agent turn plus a retry) is live state only, in
+`<live_dir>/finishes/<finish_id>/finish.json`, apart from rounds and never under `runs_dir`.
 """
 
 from __future__ import annotations
@@ -80,6 +81,41 @@ class Store:
         out = [{k: v for k, v in r.items() if k != "runs"} for r in merged.values()]
         return sorted(out, key=lambda r: (str(r.get("created_at")), str(r.get("round_id"))),
                       reverse=True)  # fmt: skip
+
+    def new_finish_id(self, today: str) -> str:
+        """`FIN-YYYYMMDD-<k>`, k past every live finish of that day."""
+        prefix = f"FIN-{today.replace('-', '')}-"
+        taken = [p.name.removeprefix(prefix) for p in self._finish_dirs()]
+        ks = [int(k) for k in taken if k.isdigit()]
+        return f"{prefix}{max(ks, default=0) + 1}"
+
+    def save_finish(self, f: dict[str, Any]) -> None:
+        folder = self.live_dir / "finishes" / f["finish_id"]
+        folder.mkdir(parents=True, exist_ok=True)
+        _write(folder / "finish.json", f)
+
+    def finish_paths(self, finish_id: str, run_id: str) -> tuple[str, str]:
+        """The transcript and call-log paths, relative to the live directory."""
+        base = f"finishes/{finish_id}/{_suffix(finish_id, run_id)}"
+        return f"{base}.transcript.jsonl", f"{base}.calls.jsonl"
+
+    def get_finish(self, finish_id: str) -> dict[str, Any] | None:
+        if not _SAFE_ID.fullmatch(finish_id):
+            return None
+        return _read(self.live_dir / "finishes" / finish_id / "finish.json")
+
+    def list_finishes(self) -> list[dict[str, Any]]:
+        """Summaries (no `turns`), newest first."""
+        out: list[dict[str, Any]] = []
+        for path in self._finish_dirs():
+            f = _read(path / "finish.json")
+            if f is not None:
+                out.append({k: v for k, v in f.items() if k != "turns"})
+        return sorted(out, key=lambda f: (str(f.get("created_at")), str(f.get("finish_id"))),
+                      reverse=True)  # fmt: skip
+
+    def _finish_dirs(self) -> list[Path]:
+        return sorted((self.live_dir / "finishes").glob("*/"))
 
     def _live(self) -> dict[str, dict[str, Any]]:
         out: dict[str, dict[str, Any]] = {}

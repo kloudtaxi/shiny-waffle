@@ -91,3 +91,58 @@ def test_ids_paths_and_run_records(tmp_path: Path) -> None:
     assert store.get_round("RND-20261013-9") is None
     assert store.get_round("../RND-20261013-1") is None
     assert store.get_round("*") is None
+
+
+def _finish(finish_id: str, created: str = "2026-10-14T10:00:00+00:00") -> dict[str, Any]:
+    return {
+        "finish_id": finish_id,
+        "status": "done",
+        "created_at": created,
+        "turns": [{"role": "user", "text": "finish it"}],
+    }
+
+
+def _store(tmp_path: Path) -> Store:
+    return Store(tmp_path / "live", tmp_path / "runs")
+
+
+def test_finish_ids_count_per_day(tmp_path: Path) -> None:
+    store = _store(tmp_path)
+    store.save_finish(_finish("FIN-20261014-1"))
+    assert store.new_finish_id("2026-10-14") == "FIN-20261014-2"
+    assert store.new_finish_id("2026-10-15") == "FIN-20261015-1"
+
+
+def test_finishes_list_without_turns_newest_first(tmp_path: Path) -> None:
+    store = _store(tmp_path)
+    store.save_finish(_finish("FIN-20261014-1", "2026-10-14T10:00:00+00:00"))
+    store.save_finish(_finish("FIN-20261014-2", "2026-10-14T11:00:00+00:00"))
+    listed = store.list_finishes()
+    assert [f["finish_id"] for f in listed] == ["FIN-20261014-2", "FIN-20261014-1"]
+    assert all("turns" not in f for f in listed)
+
+
+def test_get_finish_rejects_unsafe_ids(tmp_path: Path) -> None:
+    store = _store(tmp_path)
+    store.save_finish(_finish("FIN-20261014-1"))
+    assert store.get_finish("FIN-20261014-1") is not None
+    assert store.get_finish("../x") is None
+    assert store.get_finish("") is None
+    assert store.get_finish("FIN-20261014-9") is None
+
+
+def test_finish_paths_live_under_finishes(tmp_path: Path) -> None:
+    assert _store(tmp_path).finish_paths("FIN-20261014-1", "FIN-20261014-1-R2") == (
+        "finishes/FIN-20261014-1/R2.transcript.jsonl",
+        "finishes/FIN-20261014-1/R2.calls.jsonl",
+    )
+
+
+def test_finishes_are_not_rounds(tmp_path: Path) -> None:
+    store = _store(tmp_path)
+    store.save_round(_round("RND-20261014-1"))
+    before = store.list_rounds()
+    store.save_finish(_finish("FIN-20261014-1"))
+    assert store.list_rounds() == before
+    assert store.get_round("FIN-20261014-1") is None
+    assert not (tmp_path / "runs").exists()
