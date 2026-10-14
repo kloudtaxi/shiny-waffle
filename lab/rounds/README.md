@@ -64,6 +64,15 @@ writes under `runs/`: it only reads committed copies, serves them read-only next
 and a committed copy wins when an id is in both places. Runs are results, so add to them and
 never rewrite them.
 
+`runs/2026-10-14-b15-proof-round/scripts/copy_round.py <round_id> <rounds|shakedown> <sha>` does
+the copy. With `REDACT` set in the environment (comma-separated), it replaces those strings with
+`[operator identity]`. Claude Code shows the agent the operator's account email, and the repo is
+public. A declared trial goes to `shakedown/`, which the runner doesn't serve.
+
+**After copying, move the round's live directory out of `.owm-rounds/rounds/`.** The committed
+copy is served in its place. A trial left in live state would be listed on `/present` as a live
+round, and the live copy still holds anything `REDACT` removed.
+
 ## Fixture for web-next
 
 `tests/rounds/fixtures/round-scripted.json` is a scripted round (two runs per arm) that
