@@ -1,5 +1,6 @@
-"""`python -m owm_service` (with `lab` on the path): the service on 0.0.0.0:8000, configured from
-the environment (spec §12). Needs the `owm-service` dependency group."""
+"""`python -m owm_service` (with `lab` on the path): the service on 0.0.0.0, port `OWM_PORT`
+(default 8000), configured from the environment (spec §12). Needs the `owm-service` dependency
+group."""
 
 from __future__ import annotations
 
