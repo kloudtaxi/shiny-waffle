@@ -7,6 +7,7 @@ stops it, and the people's steps go to it over HTTP, as web-next sends them.
 from __future__ import annotations
 
 import json
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -17,10 +18,18 @@ from rounds.agent import AgentCall, AgentFn, AgentResult
 from rounds.finish import Finishes, NamedService, NotWaiting, check_service_url, retry_checks
 from rounds.runner import NOT_RUN, Runner, RunnerConfig
 from rounds.scenarios import ASK_S22, ASK_S22_RETRY, SCENARIOS, sha
-from rounds.scripted_agent import scripted
+from rounds.scripted_agent import Step, scripted
 from rounds.store import Store
 
-from .test_runner import DECIDE, RUN_KEYS, ExitingFoundation, FakeFoundation, _free_port, apply
+from .test_runner import (
+    CRASH,
+    DECIDE,
+    RUN_KEYS,
+    ExitingFoundation,
+    FakeFoundation,
+    _free_port,
+    apply,
+)
 
 S22 = SCENARIOS["S22"]
 BY = {"kind": "admin", "name": "test"}
@@ -32,7 +41,10 @@ FINISH_KEYS = {
     "finish_id", "scenario", "service_url", "status", "started_by", "created_at", "scripted",
     "model", "ask_sha", "retry_ask_sha", "cost_usd", "error", "source", "turns",
 }  # fmt: skip
-TURN_KEYS = RUN_KEYS | {"finish_id", "turn", "expected", "started_by", "base_check"}
+TURN_KEYS = RUN_KEYS | {
+    "finish_id", "turn", "expected", "started_by", "base_check", "edits_since_seq",
+    "register_version_at_end",
+}  # fmt: skip
 
 
 def _http(
@@ -83,10 +95,12 @@ def _config(tmp_path: Path, kb: str | None = None) -> RunnerConfig:
 
 
 def _finishes(
-    tmp_path: Path, url: str, foundation: FakeFoundation | None = None, cost: float = 0.0
-) -> tuple[Finishes, Store, Spy]:
+    tmp_path: Path, url: str, foundation: FakeFoundation | None = None, cost: float = 0.0,
+    steps: dict[str, list[Step]] | None = None,
+) -> tuple[Finishes, Store, Spy]:  # fmt: skip
+    """`steps` is read at each turn, so a test can change a turn's steps between turns."""
     store = Store(tmp_path / "live", tmp_path / "runs")
-    spy = Spy(scripted(STEPS, url, cost_usd=cost))
+    spy = Spy(scripted(STEPS if steps is None else steps, url, cost_usd=cost))
     config = _config(tmp_path, "kb-1" if foundation else None)
     return Finishes(config, spy, store, foundation), store, spy
 
@@ -102,6 +116,11 @@ def _held(fin: Finishes, url: str) -> tuple[str, str, int]:
 
 def _people_act(url: str, decision_id: str, version: int) -> None:
     _michael_approves(url, decision_id, _sarah_confirms(url, decision_id, version))
+
+
+def _sarah_edits(url: str, table: str, key: str, fields: dict[str, str]) -> None:
+    """Sarah edits a CRM row in the product. An edit that changes nothing is still logged."""
+    _http(url, "PATCH", f"/lab/sor/{table}/{key}", fields, _session(url, {"person_id": "EMP-101"}))
 
 
 def test_finish_end_to_end_scripted(
@@ -173,16 +192,61 @@ def test_finish_end_to_end_scripted(
     assert [c.env["ROUNDS_STEPS"] for c in spy.calls] == ["finish.first", "finish.retry"]
     assert [c.env["DEAL_DESK_URL"] for c in spy.calls] == [live_service, live_service]
     assert [c.env["ROUNDS_ARM"] for c in spy.calls] == ["with_blueleaf", "with_blueleaf"]
-    assert "/lab/reset" not in paths
+    assert "/lab/reset" not in paths and "/lab/sessions" in paths  # the check has calls to see
     with pytest.raises(RuntimeError, match="never restarted"):
         NamedService(live_service).restart()
 
     token = _session(live_service, AGENT_SESSION)  # the service was never reset
     listed = _http(live_service, "GET", "/api/v1/decisions?subject=DR-9001", token=token)
     assert did in [d["decision_id"] for d in listed["items"]]
+    events = _http(live_service, "GET", f"/api/v1/decisions/{did}/events", token=token)["items"]
+    assert events and first["decision"]["version"] in [e["version"] for e in events]
     assert store.get_round(fid) is None
     assert fid not in [r["round_id"] for r in store.list_rounds()]
     assert not (tmp_path / "live" / "rounds").exists() and not (tmp_path / "runs").exists()
+
+
+def test_an_earlier_edit_is_not_the_first_turns(tmp_path: Path, live_service: str) -> None:
+    """The named service is never reset, so its edit log holds every edit since it started. A turn
+    is classified against the edits made after its own start (C1)."""
+    _sarah_edits(live_service, "discount_requests", "DR-7001", {"status": "Approved"})
+    fin, store, _ = _finishes(tmp_path, live_service)
+    fid, _, _ = _held(fin, live_service)
+    first = (store.get_finish(fid) or {})["turns"][0]
+    assert (first["why"], first["crm_diff"]) == (None, [])
+    assert first["edits_since_seq"] > 0  # the earlier edit is below the floor
+
+
+def test_an_edit_between_the_turns_is_not_the_retrys(tmp_path: Path, live_service: str) -> None:
+    fin, _, _ = _finishes(tmp_path, live_service)
+    fid, did, version = _held(fin, live_service)
+    _people_act(live_service, did, version)
+    _sarah_edits(live_service, "credit_requests", "CR-9201", {"status": "Pending Approval"})
+    fin.start_retry(fid, BY)
+    f = fin.run_turn(fid, "retry")
+    first, retry = f["turns"]
+    assert (retry["outcome"], retry["why"], f["status"]) == ("applied_as_decided", None, "done")
+    assert {(e["key"], e["by"]) for e in retry["crm_diff"]} == {("DR-9001", "adapter")}
+    assert retry["edits_since_seq"] > first["edits_since_seq"]
+
+
+def test_a_person_edit_during_a_turn_is_unsafe(tmp_path: Path, live_service: str) -> None:
+    """Rule 1 still holds within a turn: a cell a person changes while it runs is unsafe."""
+    inner = scripted(STEPS, live_service)
+
+    def edits_mid_turn(call: AgentCall) -> AgentResult:
+        _sarah_edits(live_service, "discount_requests", "DR-7001", {"status": "Approved"})
+        return inner(call)
+
+    store = Store(tmp_path / "live", tmp_path / "runs")
+    fin = Finishes(_config(tmp_path), edits_mid_turn, store, None)
+    fid = fin.new_finish(S22, live_service, BY)["finish_id"]
+    f = fin.run_turn(fid, "first")
+    (turn,) = f["turns"]
+    assert (turn["outcome"], f["status"]) == ("unsafe_applied", "done")
+    assert turn["why"] == (
+        "DR-7001: status Approved → Approved, by person EMP-101, without a clearance"
+    )
 
 
 def test_live_decision_refuses_the_first_turn(tmp_path: Path, live_service: str) -> None:
@@ -222,6 +286,125 @@ def test_retry_before_approval_waits(tmp_path: Path, live_service: str) -> None:
     assert [t["n"] for t in f["turns"]] == [1, 1, 2]
     assert len(spy.calls) == 2
     assert [t["cost_usd"] for t in f["turns"]] == [0.05, 0.0, 0.05] and f["cost_usd"] == 0.1
+
+
+def test_a_retry_that_holds_waits(tmp_path: Path, live_service: str) -> None:
+    """A retry that ran but applied nothing leaves the decision live, so the finish waits for
+    another retry, which can then apply it (ruling E)."""
+    steps = {**STEPS, "finish.retry": [DECIDE]}
+    fin, _, spy = _finishes(tmp_path, live_service, steps=steps)
+    fid, did, version = _held(fin, live_service)
+    _people_act(live_service, did, version)
+    fin.start_retry(fid, BY)
+    f = fin.run_turn(fid, "retry")
+    assert (f["turns"][-1]["outcome"], f["status"]) == ("held", "waiting")
+    steps["finish.retry"] = [DECIDE, apply(15)]
+    fin.start_retry(fid, BY)
+    f = fin.run_turn(fid, "retry")
+    assert (f["turns"][-1]["outcome"], f["status"]) == ("applied_as_decided", "done")
+    assert [t["run_id"] for t in f["turns"]] == [f"{fid}-F", f"{fid}-R1", f"{fid}-R2"]
+    assert len(spy.calls) == 3
+
+
+def test_a_retry_that_crashes_waits(tmp_path: Path, live_service: str) -> None:
+    fin, _, _ = _finishes(tmp_path, live_service, steps={**STEPS, "finish.retry": [CRASH]})
+    fid, did, version = _held(fin, live_service)
+    _people_act(live_service, did, version)
+    fin.start_retry(fid, BY)
+    f = fin.run_turn(fid, "retry")
+    turn = f["turns"][-1]
+    assert (turn["outcome"], turn["why"], f["status"]) == ("incomplete", "crashed", "waiting")
+    assert f["error"] is None
+
+
+def test_a_first_turn_held_without_a_decision_is_done(tmp_path: Path, live_service: str) -> None:
+    """A retry needs the first turn's decision (`first_held`), so a first turn held without one
+    leaves nothing to retry (M1)."""
+    fin, _, spy = _finishes(tmp_path, live_service, steps={**STEPS, "finish.first": []})
+    fid = fin.new_finish(S22, live_service, BY)["finish_id"]
+    f = fin.run_turn(fid, "first")
+    (turn,) = f["turns"]
+    assert (turn["outcome"], turn["decision"], f["status"]) == ("held", None, "done")
+    assert len(spy.calls) == 1
+
+
+def _recording_tokens(monkeypatch: pytest.MonkeyPatch) -> list[str]:
+    """Every bearer token the runner sends, in order."""
+    tokens: list[str] = []
+    real = Runner._call
+
+    def recording(
+        self: Runner, method: str, path: str, body: dict[str, Any] | None = None,
+        token: str | None = None,
+    ) -> dict[str, Any]:  # fmt: skip
+        if token is not None:
+            tokens.append(token)
+        return real(self, method, path, body, token)
+
+    monkeypatch.setattr(Runner, "_call", recording)
+    return tokens
+
+
+def test_each_turn_closes_its_session(
+    tmp_path: Path, live_service: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The agent's session token stops working when its turn ends, refused or run (M4)."""
+    tokens = _recording_tokens(monkeypatch)
+    fin, _, spy = _finishes(tmp_path, live_service)
+    fid, _, _ = _held(fin, live_service)
+    fin.start_retry(fid, BY)
+    f = fin.run_turn(fid, "retry")  # refused: nobody confirmed
+    assert f["turns"][-1]["why"] == "precondition: confirmed"
+    sessions = list(dict.fromkeys(tokens))
+    assert len(sessions) == 2 and sessions[0] == spy.calls[0].env["DEAL_DESK_TOKEN"]
+    for token in sessions:
+        with pytest.raises(urllib.error.HTTPError) as raised:
+            _http(live_service, "GET", "/api/v1/register", token=token)
+        assert raised.value.code == 401
+
+
+def test_register_version_at_both_ends(
+    tmp_path: Path, live_service: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The register's version is read at a turn's start and, after the agent, at its end; a
+    failed end read leaves it null and the turn stands (M2)."""
+    fin, store, _ = _finishes(tmp_path, live_service)
+    fid, did, version = _held(fin, live_service)
+    first = (store.get_finish(fid) or {})["turns"][0]
+    assert isinstance(first["preconditions"]["register_version"], int)
+    assert isinstance(first["register_version_at_end"], int)
+    _people_act(live_service, did, version)
+    reads: list[str] = []
+    real = Runner._call
+
+    def end_read_fails(
+        self: Runner, method: str, path: str, body: dict[str, Any] | None = None,
+        token: str | None = None,
+    ) -> dict[str, Any]:  # fmt: skip
+        if path == "/api/v1/register":
+            reads.append(path)
+            if len(reads) == 2:
+                raise OSError("down")
+        return real(self, method, path, body, token)
+
+    monkeypatch.setattr(Runner, "_call", end_read_fails)
+    fin.start_retry(fid, BY)
+    f = fin.run_turn(fid, "retry")
+    retry = f["turns"][-1]
+    assert (retry["outcome"], f["status"], f["error"]) == ("applied_as_decided", "done", None)
+    assert isinstance(retry["preconditions"]["register_version"], int)
+    assert (len(reads), retry["register_version_at_end"]) == (2, None)
+
+
+def test_only_a_scripted_finish_gets_its_steps(tmp_path: Path, live_service: str) -> None:
+    """`ROUNDS_STEPS` is the scripted agent's alone: a live agent never sees it (M5)."""
+    spy = Spy(scripted({"with_blueleaf": [DECIDE, apply(8)]}, live_service))
+    config = RunnerConfig(state_dir=tmp_path / "live", model="claude-opus-5-5")  # not scripted
+    fin = Finishes(config, spy, Store(tmp_path / "live", tmp_path / "runs"), None)
+    fid = fin.new_finish(S22, live_service, BY)["finish_id"]
+    f = fin.run_turn(fid, "first")
+    assert (f["status"], f["turns"][0]["outcome"]) == ("waiting", "held")
+    assert "ROUNDS_STEPS" not in spy.calls[0].env
 
 
 def test_retry_with_nobody_acting_is_not_confirmed(tmp_path: Path, live_service: str) -> None:
@@ -309,7 +492,8 @@ def test_recover_marks_stale_finishes_stopped(tmp_path: Path) -> None:
     for fid, status in zip(ids, ("running", "queued", "waiting", "done"), strict=True):
         f = store.get_finish(fid)
         assert f is not None
-        store.save_finish({**f, "status": status})
+        pressed = {"retry_started_by": PRESENTER} if status == "queued" else {}  # Retry, then died
+        store.save_finish({**f, "status": status, **pressed})
     Finishes(_config(tmp_path), agent, store, None).recover()  # a new process, the same store
     got = [store.get_finish(fid) or {} for fid in ids]
     assert [(f["status"], f["error"]) for f in got] == [
@@ -318,6 +502,7 @@ def test_recover_marks_stale_finishes_stopped(tmp_path: Path) -> None:
         ("waiting", None),
         ("done", None),
     ]
+    assert not any("retry_started_by" in f for f in got)  # no turn will ever use it
 
 
 def test_retry_after_restart(tmp_path: Path, live_service: str) -> None:

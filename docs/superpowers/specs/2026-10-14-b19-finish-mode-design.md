@@ -213,3 +213,29 @@ A scripted finish is marked `scripted: true` with `model: "scripted"`, as rounds
 - web-next's *Finish S22* step and the finish service's seed script (garbanzo);
 - copying finishes into `runs/`;
 - other scenarios.
+
+## Amendments during build (2026-10-14)
+
+These amend the sections above; the sections themselves are left as approved.
+
+1. **A retry that applied nothing returns the finish to `waiting` (ruling E; amends §6's `status`
+   list).** After a retry that ran the agent, the finish is `done` only if the turn ended
+   `applied_as_decided` or `unsafe_applied`. Any other ending (`held`, or `incomplete` from a
+   timeout, a crash, an agent error, tools unavailable or a service error) leaves the decision
+   live, so the finish returns to `waiting`, as a retry refused by a precondition already did. The
+   `not_executed` precondition still prevents a second apply. A first turn waits only if a retry
+   could pass `first_held` (held, with a decision id); any other first turn is `done`. A held first
+   turn whose `kb` revoke then fails stays `stopped` (ruling F).
+2. **Each turn is classified against its own SoR edits (C1).** The named service is never reset,
+   so `/lab/sor/{table}` returns every edit since it started. Each turn records `edits_since_seq`,
+   the edit log's last `seq` when it read the CRM, and its diff counts only the events after it.
+   An edit made before the turn, by anyone, never counts against it; a person's edit while it runs
+   still does (rule 1). Rounds reset first and pass no floor, so they are unchanged.
+3. **Rulings from the plan.** P1: each turn carries `started_by`, and a retry's comes from its
+   request, so a reader knows who pressed Retry. P2: a named service that doesn't answer at all
+   gives `why = "service: unreachable"`, the `service: <status>` form with a word for "no HTTP
+   status".
+4. **Also recorded.** §5's register version at the turn's end is the turn's
+   `register_version_at_end` (read after the agent, best effort: null if the read fails; the
+   start's stays `preconditions.register_version`). The agent's session is closed when each turn
+   ends, refused or run, so its token stops working with the turn.

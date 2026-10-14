@@ -79,19 +79,24 @@ turns carry `round_id: null`. The design is in
   `no_live_decision`. Retry: `first_held`, `confirmed`, `approved`, `not_executed`, `dr_9001`,
   `demo_date`. A retry refused by a precondition returns the finish to `waiting`, so the
   presenter can fix the service and press Retry again.
-- **Statuses.** `queued`, `running`, then `waiting` (after a held first turn, or a retry refused
-  before its agent ran), `done` (after any other turn) or `stopped` ("runner error"). A restart
-  stops any finish left `queued` or `running`.
+- **Statuses.** `queued`, `running`, then `waiting`, `done` or `stopped` ("runner error"). A first
+  turn held with a decision waits for a retry; any other first turn is `done`. A retry that wrote
+  the CRM (`applied_as_decided` or `unsafe_applied`) is `done`. Any other retry (refused by a
+  precondition, held, timed out, crashed) leaves the decision live and returns the finish to
+  `waiting`; `not_executed` keeps a later retry from applying twice. A restart stops any finish
+  left `queued` or `running`.
 - **`service: unreachable`** is a `why` only a finish has: the named service didn't answer at all.
   A round's child is started by the runner, so it can't be unreachable in that way.
 - **One lock** with the rounds, so the agent never runs twice at once.
+- **Cost.** A timed-out turn reports no cost, so its cost shows as 0 and a rehearsal's total may be
+  understated.
 
 ## Where records live
 
 Live state is under `.owm-rounds/` (gitignored): `rounds/<round_id>/round.json`, each run's
 record, transcript and call log, and the service child's own state. A finish is at
-`finishes/<finish_id>/finish.json` with its turns' records beside it; the runner never serves
-finishes from `runs/`.
+`finishes/<finish_id>/finish.json` with its turns embedded; only each turn's transcript and call
+log sit beside it. The runner never serves finishes from `runs/`.
 
 A pre-registered round is copied by hand into
 `runs/<date>-b15-proof-round/rounds/<round_id>.json`, with its transcripts and call logs under

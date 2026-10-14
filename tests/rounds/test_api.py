@@ -368,6 +368,32 @@ def test_retry_route(store: Store) -> None:
     assert finishes.turns == [("F-wait", "retry")]
 
 
+def test_retry_is_busy_while_a_turn_runs(store: Store) -> None:
+    """Retry while the first turn runs, and Retry pressed twice, each get 409 `busy`: the lock is
+    taken before the finish's status is read."""
+    client, _runner, finishes = _finish_client(store)
+    fid = client.post("/lab/finishes", json=FINISH).json()["finish_id"]
+    assert finishes.started.wait(5)
+    busy = client.post(f"/lab/finishes/{fid}/retry", json=RETRY)
+    assert (busy.status_code, busy.json()) == (409, {"error": "busy"})
+    finishes.release.set()
+    for _ in range(100):  # the fake leaves the finish `queued`: a free lock answers not_waiting
+        resp = client.post(f"/lab/finishes/{fid}/retry", json=RETRY)
+        if resp.json() != {"error": "busy"}:
+            break
+        threading.Event().wait(0.05)
+    assert (resp.status_code, resp.json()) == (409, {"error": "not_waiting"})
+    finishes.release.clear()
+    finishes.started.clear()
+    store.save_finish({**(store.get_finish(fid) or {}), "status": "waiting"})
+    assert client.post(f"/lab/finishes/{fid}/retry", json=RETRY).status_code == 202
+    assert finishes.started.wait(5)
+    again = client.post(f"/lab/finishes/{fid}/retry", json=RETRY)
+    assert (again.status_code, again.json()) == (409, {"error": "busy"})
+    finishes.release.set()
+    assert finishes.turns == [(fid, "first"), (fid, "retry")]
+
+
 def test_refused_retries_free_the_lock(store: Store) -> None:
     client, _runner, finishes = _finish_client(store)
     finishes.release.set()

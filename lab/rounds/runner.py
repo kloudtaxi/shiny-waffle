@@ -255,8 +255,9 @@ class Runner:
     def _agent_turn(
         self, ctx: _Ctx, rec: dict[str, Any], arm: Arm, session: dict[str, Any], before: Tables,
         paths: tuple[str, str], *, ask: str | None = None, steps: str | None = None,
+        since_seq: int | None = None,
     ) -> None:  # fmt: skip
-        """From the agent's session to a classified record."""
+        """From the agent's session to a classified record (`since_seq`: see `_classify`)."""
         token = str(session["token"])
         rec["agent"]["mandate_version"] = (session.get("actor") or {}).get("version")
         rec["crm_before_sha"] = crm_sha(before)
@@ -272,7 +273,7 @@ class Runner:
         try:
             rec["summary"] = summarize(calls)  # a run that ran never says "Not run."
         finally:  # and a summary that raises still leaves the run classified
-            self._classify(ctx, rec, before, calls, res)
+            self._classify(ctx, rec, before, calls, res, since_seq)
         # Classified: an error from here on keeps the outcome and stops the round.
         rec.update(_from_calls(calls))
         secrets = [token, *([ctx.kb.token] if ctx.kb else [])]
@@ -287,7 +288,7 @@ class Runner:
         env = {"DEAL_DESK_URL": self.service.url, "DEAL_DESK_TOKEN": token,
                "DEAL_DESK_WRITE_PATH": arm.write_path, "DEAL_DESK_SCENARIO": ctx.scenario.id,
                "DEAL_DESK_LOG": str(log.resolve()), "ROUNDS_ARM": arm.id}  # fmt: skip
-        if steps is not None:
+        if steps is not None and self.config.scripted:  # the scripted agent's alone
             env["ROUNDS_STEPS"] = steps
         if ctx.kb is not None:
             env["KB_MCP_TOKEN"] = ctx.kb.token
@@ -305,13 +306,17 @@ class Runner:
 
     def _classify(
         self, ctx: _Ctx, rec: dict[str, Any], before: Tables, calls: list[dict[str, Any]],
-        res: AgentResult,
+        res: AgentResult, since_seq: int | None = None,
     ) -> None:  # fmt: skip
         """Classify from the CRM diff, or from the call log if the CRM can't be read or diffed.
 
         A CRM that can't be read (any error, twice) leaves the round running. Anything that
         raises after the read is a bug in the classifier: the call log decides, then it re-raises
-        so the round stops."""
+        so the round stops.
+
+        A round resets the service first, so its edit log holds only the run's own edits. A finish
+        never resets, so it passes `since_seq`, the log's last `seq` at the turn's start, and only
+        the edits after it count against the turn."""
         try:
             after, edits = self._after()
         except Exception as e:  # noqa: BLE001 - a service or IO failure; its text stays out
@@ -320,6 +325,8 @@ class Runner:
         try:
             stopped = None if res.stop == "success" else "agent error"
             failure = _unavailable(ctx, res) or res.error or _replay_miss(calls) or stopped
+            if since_seq is not None:
+                edits = {t: [e for e in es if e["seq"] > since_seq] for t, es in edits.items()}
             entries = diff(before, after, edits)
             outcome, why = classify(entries, calls, failure, res.stop)
             found = {"crm_diff": entries, "crm_after_sha": crm_sha(after),

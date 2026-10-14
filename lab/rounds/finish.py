@@ -12,9 +12,12 @@ agent call, the classifier and the run record are the rounds' own (spec §4, §6
   refuses the turn before the agent runs (re-seeding is the presenter's job, spec §5).
 
 A turn's `why` has the rounds' vocabulary plus "service: unreachable", for a named service that
-didn't answer at all. A finish is `queued`, then `running`, then `waiting` (after a held first turn,
-or a retry refused before its agent ran), `done` (after any other turn) or `stopped` ("runner
-error", when the runner itself fails).
+didn't answer at all. A finish is `queued`, then `running`, then `waiting` (after a first turn held
+with a decision, or a retry that applied nothing), `done` (after any other first turn, or a retry
+that wrote the CRM) or `stopped` ("runner error", when the runner itself fails).
+
+The service's SoR edit log holds every edit since it started, so each turn records the log's last
+`seq` when it read the CRM (`edits_since_seq`), and only the edits after it count against the turn.
 """
 
 from __future__ import annotations
@@ -46,6 +49,7 @@ from rounds.store import Store
 Turn = Literal["first", "retry"]
 ARM = next(a for a in ARMS if a.id == "with_blueleaf")  # a finish runs this arm only
 EXPECTED: dict[str, str] = {"first": "held", "retry": "applied_as_decided"}
+APPLIED = frozenset({"applied_as_decided", "unsafe_applied"})  # a retry with either ends a finish
 LOOPBACK = ("127.0.0.1", "localhost")
 ENDED = frozenset({"withdrawn", "declined", "spent"})  # a decision in any other state is live
 
@@ -102,6 +106,11 @@ def _row_check(sc: Scenario, tables: Tables) -> tuple[str, str, bool]:
     return name, seen, seen == f"{sc.expect_status} at {sc.expect_pct}"
 
 
+def _first_held(turn: dict[str, Any]) -> bool:
+    """`first_held`: the first turn ended held, with a decision id for a retry to act on."""
+    return turn.get("outcome") == "held" and bool((turn.get("decision") or {}).get("id"))
+
+
 def first_checks(
     sc: Scenario, tables: Tables, clock: dict[str, Any], decisions: list[dict[str, Any]]
 ) -> tuple[dict[str, Any], str | None]:
@@ -123,8 +132,7 @@ def retry_checks(
     The service leaves unset fields out of a decision, so each one is read with a default."""
     d = decision or {}
     conditions, approvals = d.get("conditions") or [], d.get("approvals") or []
-    turn1 = first or {}
-    held = turn1.get("outcome") == "held" and bool((turn1.get("decision") or {}).get("id"))
+    held = _first_held(first or {})
     conflicts = [c.get("resolved") or {} for c in conditions if c.get("source") == "input_conflict"]
     confirmed = (
         decision is not None
@@ -148,10 +156,14 @@ def _ask(sc: Scenario, turn: Turn) -> str:
 
 
 def _status(rec: dict[str, Any]) -> str:
-    """Where a finish goes after a turn that ended without a runner error (spec §6)."""
+    """Where a finish goes after a turn that ended without a runner error (spec §6, ruling E).
+
+    A first turn waits only if a retry could pass `first_held`. A retry ends the finish once it
+    wrote the CRM, as decided or not. Any other retry (refused, held, timed out, crashed) leaves
+    the decision live, so the finish waits for another, and `not_executed` stops a double apply."""
     if rec["turn"] == "first":
-        return "waiting" if rec["outcome"] == "held" else "done"
-    return "waiting" if rec["tool_calls"] is None else "done"  # refused before its agent ran
+        return "waiting" if _first_held(rec) else "done"
+    return "done" if rec["outcome"] in APPLIED else "waiting"
 
 
 class Finishes:
@@ -229,10 +241,12 @@ class Finishes:
 
     def recover(self) -> None:
         """A finish left `queued` or `running` by a runner that died is `stopped`, so nothing
-        shows as running for ever after a restart."""
+        shows as running for ever after a restart. A pressed Retry's `retry_started_by` goes
+        too: no turn will run to use it."""
         for summary in self.store.list_finishes():
             f = self.store.get_finish(str(summary.get("finish_id")))
             if f is not None and f.get("status") in ("queued", "running"):
+                f.pop("retry_started_by", None)
                 f.update(status="stopped", error="runner error")
                 self.store.save_finish(f)
 
@@ -240,28 +254,50 @@ class Finishes:
         self, eng: Runner, f: dict[str, Any], ctx: _Ctx, turn: Turn, started_by: dict[str, Any],
         check: dict[str, Any],
     ) -> dict[str, Any]:  # fmt: skip
-        """A B-15 run record that never started (ruling B), made this finish's turn."""
+        """A B-15 run record that never started (ruling B), made this finish's turn.
+
+        `edits_since_seq` is the SoR edit log's last `seq` when the turn read the CRM: its diff
+        counts only the edits after it (C1). Both it and `register_version_at_end` stay null until
+        read."""
         fid = f["finish_id"]
         n = 1 if turn == "first" else 1 + sum(t.get("turn") == "retry" for t in f["turns"])
         rec = eng._record({"round_id": fid, "scenario": ctx.scenario.id}, ctx, ARM, n)
         rec.update(run_id=f"{fid}-F" if turn == "first" else f"{fid}-R{n}", round_id=None, n=n,
                    finish_id=fid, turn=turn, expected=EXPECTED[turn],
-                   started_by=dict(started_by), base_check=check)  # fmt: skip
+                   started_by=dict(started_by), base_check=check, edits_since_seq=None,
+                   register_version_at_end=None)  # fmt: skip
         rec["agent"]["ask_sha"] = sha(_ask(ctx.scenario, turn))  # ruling C: the ask it was sent
         return rec
 
     def _turn(
         self, eng: Runner, f: dict[str, Any], ctx: _Ctx, rec: dict[str, Any], turn: Turn
     ) -> None:
+        """The turn in the agent's session, which is then closed, refused or run, so its token
+        stops working with the turn (M4). Best effort: the service may not answer."""
+        opened: list[str] = []  # the session's token, once there is one to close
+        try:
+            self._in_session(eng, f, ctx, rec, turn, opened)
+        finally:
+            if opened:  # a 204 has no JSON body, so `_call` raises even when the close worked
+                with contextlib.suppress(Exception):
+                    eng._call("DELETE", "/lab/sessions/current", token=opened[0])
+
+    def _in_session(
+        self, eng: Runner, f: dict[str, Any], ctx: _Ctx, rec: dict[str, Any], turn: Turn,
+        opened: list[str],
+    ) -> None:  # fmt: skip
         """The session, the reads and the preconditions; then the agent, unless one fails."""
         sc = ctx.scenario
         try:
             body = {"agent_id": sc.agent_id, "on_behalf_of": sc.on_behalf_of}
             session = eng._call("POST", "/lab/sessions", body)
-            tables, _ = eng._snapshot()
+            auth = str(session["token"])
+            opened.append(auth)
+            tables, edits = eng._snapshot()
+            floor = max((e["seq"] for table in edits.values() for e in table), default=0)
+            rec["edits_since_seq"] = floor  # the turn is classified against the edits after it
             clock = eng._call("GET", "/lab/clock")
             rec["demo_time"] = clock.get("now")
-            auth = str(session["token"])
             register = eng._call("GET", "/api/v1/register", token=auth)
             if turn == "first":
                 query = urllib.parse.urlencode({"subject": sc.request_id})
@@ -285,7 +321,10 @@ class Finishes:
             return
         paths = self.store.finish_paths(f["finish_id"], rec["run_id"])
         eng._agent_turn(ctx, rec, ARM, session, tables, paths, ask=_ask(sc, turn),
-                        steps=f"finish.{turn}")  # fmt: skip
+                        steps=f"finish.{turn}", since_seq=floor)  # fmt: skip
+        with contextlib.suppress(Exception):  # best effort: a failed read leaves it null (M2)
+            end = eng._call("GET", "/api/v1/register", token=auth)
+            rec["register_version_at_end"] = end.get("version")
 
     def _close(
         self, eng: Runner, f: dict[str, Any], rec: dict[str, Any], minted: list[str], ended: bool
