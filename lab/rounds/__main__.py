@@ -3,9 +3,11 @@
 Env: ROUNDS_PORT (8010), ROUNDS_STATE_DIR (.owm-rounds), ROUNDS_CAP_USD (30, finite and above 0),
 ROUNDS_SERVICE_PORT (8001), ROUNDS_KB (the base id, required unless ROUNDS_SCRIPTED=1),
 ROUNDS_CLAUDE_TOKEN_FILE (_owm-local/rounds-agent.token).
-Scripted mode swaps the Claude agent for a deterministic one and mints nothing, for rehearsing
-the page without spend. Live mode needs `claude` on the PATH and a private token file (the output
-of `claude setup-token`, mode 600), and exits at once without either.
+It also serves the finish routes (B-19): their turns run the same agent against a service the
+presenter names per request. Scripted mode swaps the Claude agent for a deterministic one and
+mints nothing, for rehearsing the page without spend. Live mode needs `claude` on the PATH and a
+private token file (the output of `claude setup-token`, mode 600), and exits at once without
+either.
 """
 
 from __future__ import annotations
@@ -23,6 +25,7 @@ from fastapi import FastAPI
 from rounds import foundation
 from rounds.agent import claude_agent
 from rounds.api import create_app
+from rounds.finish import Finishes
 from rounds.runner import Runner, RunnerConfig
 from rounds.scripted_agent import Step, scripted
 from rounds.service_child import ServiceChild
@@ -34,11 +37,14 @@ TOKEN_FILE = REPO / "_owm-local" / "rounds-agent.token"
 GET: Step = ("get_request", {"request_id": "DR-9001"})
 DECIDE: Step = ("decide", {"request_id": "DR-9001"})
 APPLY: Step = ("apply_discount", {"request_id": "DR-9001", "discount_pct": 8})
+APPLY15: Step = ("apply_discount", {"request_id": "DR-9001", "discount_pct": 15})
 
 DEMO_STEPS: dict[str, list[Step]] = {
     "alone_realistic": [GET, APPLY],
     "alone_neutral": [GET],
     "with_blueleaf": [DECIDE, APPLY],
+    "finish.first": [DECIDE, APPLY],  # held: the CRM figure is unconfirmed
+    "finish.retry": [DECIDE, APPLY15],  # applied as decided, once people have acted
 }
 
 
@@ -88,10 +94,13 @@ def build_app_from_env(env: Mapping[str, str]) -> FastAPI:
     if is_scripted:
         agent = scripted(DEMO_STEPS, f"http://127.0.0.1:{service_port}")
         runner = Runner(config, agent=agent, store=store, service=service, foundation=None)
+        finishes = Finishes(config, agent, store, None)
     else:
         agent_fn = partial(claude_agent, token=_claude_token(env))
         runner = Runner(config, agent=agent_fn, store=store, service=service, foundation=foundation)
-    return create_app(runner, store)
+        finishes = Finishes(config, agent_fn, store, foundation)
+    finishes.recover()
+    return create_app(runner, store, finishes, service_port)
 
 
 def main() -> None:

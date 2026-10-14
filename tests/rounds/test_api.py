@@ -242,3 +242,163 @@ def test_scripted_mode_records_the_scripted_model(
     live = {"ROUNDS_KB": "kb-1", "ROUNDS_STATE_DIR": str(tmp_path / "l"), **_token_file(tmp_path)}
     main_mod.build_app_from_env(live)
     assert [(c.model, c.scripted) for c in seen] == [("scripted", True), ("claude-opus-5-5", False)]
+
+
+FINISH = {
+    "scenario": "S22",
+    "service_url": "http://127.0.0.1:8003",
+    "started_by": {"kind": "admin", "name": "mehul"},
+}
+RETRY = {"started_by": {"kind": "admin", "name": "sarah"}}
+
+
+class FakeFinishes:
+    """Writes to the store like `Finishes` and holds each turn until released."""
+
+    def __init__(self, store: Store) -> None:
+        self.store = store
+        self.release = threading.Event()
+        self.started = threading.Event()
+        self.n = 0
+        self.urls: list[str] = []
+        self.turns: list[tuple[str, str]] = []
+
+    def new_finish(
+        self, scenario: Scenario, service_url: str, started_by: dict[str, Any]
+    ) -> dict[str, Any]:
+        self.n += 1
+        self.urls.append(service_url)
+        f: dict[str, Any] = {
+            "finish_id": f"2026-10-14-F{self.n}",
+            "scenario": scenario.id,
+            "service_url": service_url,
+            "status": "queued",
+            "started_by": started_by,
+            "turns": [],
+        }
+        self.store.save_finish(f)
+        return f
+
+    def start_retry(self, finish_id: str, started_by: dict[str, Any]) -> dict[str, Any]:
+        from rounds.finish import NotWaiting
+
+        f = self.store.get_finish(finish_id)
+        if f is None:
+            raise KeyError(finish_id)
+        if f["status"] != "waiting":
+            raise NotWaiting(finish_id)
+        f["status"] = "queued"
+        self.store.save_finish(f)
+        return f
+
+    def run_turn(self, finish_id: str, turn: str) -> dict[str, Any]:
+        self.turns.append((finish_id, turn))
+        self.started.set()
+        self.release.wait(5)
+        return {}
+
+
+def _finish_client(store: Store) -> tuple[TestClient, FakeRunner, FakeFinishes]:
+    runner, finishes = FakeRunner(store), FakeFinishes(store)
+    return TestClient(create_app(runner, store, finishes, 8001)), runner, finishes
+
+
+def test_finish_routes_share_the_rounds_lock(store: Store) -> None:
+    client, runner, finishes = _finish_client(store)
+    first = client.post("/lab/finishes", json=FINISH)
+    assert (first.status_code, first.json()) == (202, {"finish_id": "2026-10-14-F1"})
+    assert finishes.started.wait(5)
+    for resp in (client.post("/lab/rounds", json=BODY), client.post("/lab/finishes", json=FINISH)):
+        assert (resp.status_code, resp.json()) == (409, {"error": "busy"})
+    finishes.release.set()
+    for _ in range(100):  # the thread frees the lock after its turn returns
+        resp = client.post("/lab/rounds", json=BODY)
+        if resp.status_code != 409:
+            break
+        threading.Event().wait(0.05)
+    assert resp.status_code == 202
+    assert runner.started.wait(5)
+    busy = client.post("/lab/finishes", json=FINISH)
+    assert (busy.status_code, busy.json()) == (409, {"error": "busy"})
+    runner.release.set()
+
+
+def test_finish_post_validation(store: Store) -> None:
+    client, _runner, finishes = _finish_client(store)
+    finishes.release.set()
+    plain = client.post(
+        "/lab/finishes", content=json.dumps(FINISH).encode(), headers={"Content-Type": "text/plain"}
+    )
+    assert (plain.status_code, plain.json()) == (415, {"error": "unsupported_media_type"})
+    unknown = client.post("/lab/finishes", json={**FINISH, "scenario": "S99"})
+    assert (unknown.status_code, unknown.json()["detail"]) == (400, "unknown scenario")
+    bad = [
+        {**FINISH, "service_url": "http://10.0.0.5:8003"},
+        {**FINISH, "service_url": "http://127.0.0.1:8001"},
+        {**FINISH, "extra": 1},
+    ]
+    for body in bad:
+        resp = client.post("/lab/finishes", json=body)
+        assert resp.status_code == 400, body
+        assert resp.json()["error"] == "bad_request"
+        assert resp.json()["detail"]
+    assert finishes.n == 0
+    ok = client.post("/lab/finishes", json={**FINISH, "service_url": "http://localhost:8003/"})
+    assert ok.status_code == 202
+    assert finishes.urls == ["http://localhost:8003"]
+
+
+def test_retry_route(store: Store) -> None:
+    client, _runner, finishes = _finish_client(store)
+    finishes.release.set()
+    missing = client.post("/lab/finishes/nope/retry", json=RETRY)
+    assert (missing.status_code, missing.json()) == (404, {"error": "not_found"})
+    store.save_finish({"finish_id": "F-done", "status": "done", "turns": []})
+    done = client.post("/lab/finishes/F-done/retry", json=RETRY)
+    assert (done.status_code, done.json()) == (409, {"error": "not_waiting"})
+    store.save_finish({"finish_id": "F-wait", "status": "waiting", "turns": []})
+    assert client.post("/lab/finishes/F-wait/retry", json={}).status_code == 400
+    plain = client.post(
+        "/lab/finishes/F-wait/retry", content=b"{}", headers={"Content-Type": "text/plain"}
+    )
+    assert plain.status_code == 415
+    ok = client.post("/lab/finishes/F-wait/retry", json=RETRY)
+    assert (ok.status_code, ok.json()) == (202, {"finish_id": "F-wait"})
+    assert finishes.started.wait(5)
+    assert finishes.turns == [("F-wait", "retry")]
+
+
+def test_refused_retries_free_the_lock(store: Store) -> None:
+    client, _runner, finishes = _finish_client(store)
+    finishes.release.set()
+    store.save_finish({"finish_id": "F-done", "status": "done", "turns": []})
+    assert client.post("/lab/finishes/F-done/retry", json=RETRY).status_code == 409
+    assert client.post("/lab/finishes/nope/retry", json=RETRY).status_code == 404
+    assert client.post("/lab/finishes", json=FINISH).status_code == 202
+
+
+def test_get_finishes(store: Store) -> None:
+    client, _runner, finishes = _finish_client(store)
+    finishes.release.set()
+    fid = client.post("/lab/finishes", json=FINISH).json()["finish_id"]
+    listed = client.get("/lab/finishes")
+    assert listed.status_code == 200
+    assert [f["finish_id"] for f in listed.json()["finishes"]] == [fid]
+    got = client.get(f"/lab/finishes/{fid}")
+    assert (got.status_code, got.json()["finish_id"]) == (200, fid)
+    missing = client.get("/lab/finishes/nope")
+    assert (missing.status_code, missing.json()) == (404, {"error": "not_found"})
+    assert client.get("/lab/rounds").json() == {"rounds": []}
+
+
+def test_no_finish_routes_without_finishes(store: Store) -> None:
+    client = TestClient(create_app(FakeRunner(store), store))
+    assert client.get("/lab/finishes").status_code == 404
+
+
+def test_scripted_app_has_finish_routes(tmp_path: Path) -> None:
+    from rounds.__main__ import build_app_from_env
+
+    app = build_app_from_env({"ROUNDS_SCRIPTED": "1", "ROUNDS_STATE_DIR": str(tmp_path)})
+    resp = TestClient(app).get("/lab/finishes")
+    assert (resp.status_code, resp.json()) == (200, {"finishes": []})

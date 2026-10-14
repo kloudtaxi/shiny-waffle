@@ -49,17 +49,49 @@ model.
 | `POST /lab/rounds` | body `{scenario, runs_per_arm (1 to 5), started_by}` as `application/json`; 202 and `{"round_id"}`, 409 while a round runs, 400 on a bad body, 415 on any other content type |
 | `GET /lab/rounds` | live and committed rounds |
 | `GET /lab/rounds/{round_id}` | one round with its runs embedded, or 404 |
+| `POST /lab/finishes` | body `{scenario, service_url, started_by}` as `application/json`; 202 and `{"finish_id"}` and the first turn runs, 409 while a round or a finish turn runs, 400 on a bad body, an unknown scenario or a refused `service_url`, 415 on any other content type |
+| `POST /lab/finishes/{finish_id}/retry` | body `{started_by}`; 202 and `{"finish_id"}` and the retry turn runs; 404 for an unknown finish, 409 `not_waiting` unless it is `waiting`, 409 `busy` while anything runs, 400 and 415 as above |
+| `GET /lab/finishes` | the finishes as summaries (no `turns`), newest first |
+| `GET /lab/finishes/{finish_id}` | one finish with its turns embedded, or 404 |
 
 There is no auth and no CORS. web-next calls it server-side. The 415 is the guard against a web
 page in the operator's browser starting a paid round with a text/plain POST to 127.0.0.1.
 
+One lock guards all three POSTs, so a round and a finish turn never run at once.
+
 A round's `runs` are interleaved across the arms, R1, N1, B1, R2, N2, B2, and so on, so drift
 over time can't favour an arm. Group them by `arm`, never by position.
+
+## Finishes (B-19)
+
+A finish is S22 finished once in the product, by the `with_blueleaf` agent alone. Turn one runs
+Sarah's ask and is expected to be held. People then act in the product (Sarah confirms the CRM's
+figure, Michael approves), and the retry turn runs Sarah's frozen follow-up, expected to be
+applied as decided. A finish is never counted: it is not a round, has no tally and no cap, and its
+turns carry `round_id: null`. The design is in
+`docs/superpowers/specs/2026-10-14-b19-finish-mode-design.md`.
+
+- **The service is the presenter's.** `service_url` names a service already running on
+  `127.0.0.1` or `localhost` (with a port, and not the rounds' own `ROUNDS_SERVICE_PORT`). The
+  runner never resets, restarts or re-seeds it. Its checks are reads only, and the first that
+  fails refuses the turn before the agent runs.
+- **Preconditions.** First turn: `dr_9001` (the CRM row is as the scenario starts), `demo_date`,
+  `no_live_decision`. Retry: `first_held`, `confirmed`, `approved`, `not_executed`, `dr_9001`,
+  `demo_date`. A retry refused by a precondition returns the finish to `waiting`, so the
+  presenter can fix the service and press Retry again.
+- **Statuses.** `queued`, `running`, then `waiting` (after a held first turn, or a retry refused
+  before its agent ran), `done` (after any other turn) or `stopped` ("runner error"). A restart
+  stops any finish left `queued` or `running`.
+- **`service: unreachable`** is a `why` only a finish has: the named service didn't answer at all.
+  A round's child is started by the runner, so it can't be unreachable in that way.
+- **One lock** with the rounds, so the agent never runs twice at once.
 
 ## Where records live
 
 Live state is under `.owm-rounds/` (gitignored): `rounds/<round_id>/round.json`, each run's
-record, transcript and call log, and the service child's own state.
+record, transcript and call log, and the service child's own state. A finish is at
+`finishes/<finish_id>/finish.json` with its turns' records beside it; the runner never serves
+finishes from `runs/`.
 
 A pre-registered round is copied by hand into
 `runs/<date>-b15-proof-round/rounds/<round_id>.json`, with its transcripts and call logs under
