@@ -191,7 +191,8 @@ def test_scripted_mode_builds_without_minting(
     monkeypatch.setattr(foundation, "mint", boom)
     app = build_app_from_env({"ROUNDS_SCRIPTED": "1", "ROUNDS_STATE_DIR": str(tmp_path)})
     client = TestClient(app)
-    assert client.get("/lab/rounds").json() == {"rounds": []}
+    rounds = client.get("/lab/rounds").json()["rounds"]
+    assert all(r["source"].startswith("runs/") for r in rounds)  # only the committed copies
 
 
 def test_scripted_mode_records_the_scripted_model(

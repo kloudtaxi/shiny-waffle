@@ -294,7 +294,19 @@ def _shown(v: Any) -> str | None:
         return v
     if isinstance(v, date):
         return v.isoformat()
-    return json.dumps(v, sort_keys=True, default=str)
+    return json.dumps(_whole(v), sort_keys=True, default=str)
+
+
+def _whole(v: Any) -> Any:
+    """Whole floats as ints, so a term on file as 100000.0 and sent as 100000 is one value. A bool
+    stays a bool: true and 1 still differ."""
+    if isinstance(v, float) and v.is_integer():
+        return int(v)
+    if isinstance(v, Mapping):
+        return {k: _whole(x) for k, x in v.items()}
+    if isinstance(v, list | tuple):
+        return [_whole(x) for x in v]
+    return v
 
 
 def diff(action: str, fields: Mapping[str, Any], state: Any) -> list[dict[str, Any]]:

@@ -12,6 +12,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -19,7 +20,7 @@ import yaml
 from pydantic import BaseModel
 
 from owm_service import _lab
-from owm_service.changes import ChangeBody, overlap
+from owm_service.changes import ChangeBody, diff, overlap
 from owm_service.config import load_settings
 from owm_service.errors import NotFound, Refused
 from owm_service.models import Actor, RefusalFix, RegisterChange, SupersedesRelation
@@ -295,6 +296,23 @@ def test_approve_happy_path_bumps_version(org: Org, sarah: Actor, michael: Actor
     text = (CASES / "C09/c09.md").read_text()
     assert state.store[e["sha256"]] == text
     assert (org.dir / "register-store" / f"{e['sha256']}.md").read_text() == text
+
+
+def test_diff_lists_only_terms_whose_values_changed() -> None:
+    """100000.0 on file and 100000 in the change are the same term (garbanzo, round 2 pilot)."""
+    was = {"doc_id": "CREDIT-POLICY-2026", "effective_from": "2026-01-01", "effective_to": None,
+           "terms": {"bands": [100000.0, 500000.0], "concurrence": {"above_usd": 500000.0},
+                     "caps": {"Strategic": 750000.0}, "strict": True}}  # fmt: skip
+    fields = {"effective_from": "2026-10-01", "effective_to": None,
+              "relations": [{"type": "supersedes", "target": "CREDIT-POLICY-2026"}],
+              "terms": {"bands": [100000, 500000], "concurrence": {"above_usd": 500000},
+                        "caps": {"Strategic": 1000000}, "strict": 1}}  # fmt: skip
+    rows = diff("register", fields, SimpleNamespace(entries=[was]))
+    assert [(r["key"], r["was"], r["now"]) for r in rows] == [
+        ("effective_from", "2026-01-01", "2026-10-01"),
+        ("terms.caps", '{"Strategic": 750000}', '{"Strategic": 1000000}'),
+        ("terms.strict", "true", "1"),  # a flag that became a number did change
+    ]
 
 
 def test_kernel_register_cache_moves_with_the_version(
