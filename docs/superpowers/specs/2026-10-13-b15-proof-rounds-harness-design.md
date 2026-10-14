@@ -1,7 +1,7 @@
 # B-15: the proof-rounds harness (design, 2026-10-13)
 
-**Status:** design approved in conversation, section by section, on 2026-10-13. This spec waits
-for the user's review before an implementation plan is written.
+**Status:** approved by the user on 2026-10-13: the design section by section in conversation, and
+then this written spec.
 
 **Contract partner:** glowing-garbanzo `owm/docs/b15-proof-rounds.md` (web-next's `/present`,
 built against a stub in b35cc8b and 302b450). This spec is the lab's side: the agent, its tools, the
@@ -308,7 +308,7 @@ push.
 - **Other scenarios.** S22 only; `scenarios.py` keeps the door open.
 - **A stop route,** live streaming of a run, and more than 5 runs per arm.
 
-## 15. Open
+## 15. Settled after review
 
-- Whether the "blueleaf-MCP" cloud session is the skunkworks MCP server: garbanzo is asking the user.
-  It doesn't change this design.
+- The "blueleaf-MCP" cloud session is the skunkworks MCP server (the user, 2026-10-13). It doesn't
+  change this design.
