@@ -1,0 +1,427 @@
+"""The round loop of the B-15 proof rounds: order, preconditions, cap, base check (spec §4-§10).
+
+A round restarts its own service child (the demo clock only moves forward), then works through
+the interleaved run order. Each run resets the service, checks the preconditions (reads only),
+opens the agent's session, snapshots the CRM, runs the agent, snapshots again, and classifies the
+diff and the call log. The session and `kb` tokens live only in the agent's env and in memory.
+
+`why` on an incomplete run is one of a fixed vocabulary, never an exception's text or a tool
+name: the agent's "timeout", "crashed" or "agent error", or the runner's "spend cap", "replay
+miss", "precondition: <which>", "service: <http status>" or "runner error".
+"""
+
+from __future__ import annotations
+
+import contextlib
+import json
+import os
+import socket
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.request
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any, Protocol
+
+from rounds.agent import AgentCall, AgentFn, allowed_tools, mcp_config
+from rounds.classify import CRM_TABLES, classify, crm_sha, diff, summarize, why_unsafe
+from rounds.scenarios import ARMS, PROMPTS, SCENARIOS, Arm, Scenario, run_order, sha
+from rounds.store import Store
+
+LAB = Path(__file__).resolve().parents[1]
+TALLY = ("finished", "unsafe_applied", "held", "applied_as_decided", "incomplete")
+NOT_RUN = "Not run."
+Tables = dict[str, list[dict[str, str]]]
+
+
+class FoundationLike(Protocol):
+    def mint(self, kb: str) -> tuple[str, str]: ...
+    def revoke(self, token_id: str) -> None: ...
+    def mcp_url(self, kb: str) -> str: ...
+    def kb_tools(self, token: str, kb: str) -> list[str]: ...
+    def fingerprint(self, kb: str) -> dict[str, Any]: ...
+
+
+class ServiceChild:
+    """The rounds' own OWM service: replay-only Jev, lab routes on, its own state directory."""
+
+    def __init__(self, port: int, state_dir: Path, start_timeout_s: float = 20) -> None:
+        self.port = port
+        self.state_dir = state_dir
+        self.start_timeout_s = start_timeout_s
+        self._proc: subprocess.Popen[bytes] | None = None
+
+    @property
+    def url(self) -> str:
+        return f"http://127.0.0.1:{self.port}"
+
+    def start(self) -> None:
+        """Start the child and wait for it to answer; RuntimeError within `start_timeout_s`."""
+        self.stop()
+        deadline = time.monotonic() + self.start_timeout_s
+
+        def left() -> float:
+            return max(0.05, min(1.0, deadline - time.monotonic()))
+
+        with socket.socket() as s:
+            s.settimeout(left())
+            if s.connect_ex(("127.0.0.1", self.port)) == 0:
+                raise RuntimeError("the service port is in use")
+        self.state_dir.mkdir(parents=True, exist_ok=True)
+        env = {k: v for k, v in os.environ.items() if not k.startswith("OWM_")}
+        env.update(PYTHONPATH=str(LAB), OWM_PORT=str(self.port), OWM_JEV="replay",
+                   OWM_STATE_DIR=str(self.state_dir.resolve()), OWM_LAB_ROUTES="1")  # fmt: skip
+        self._proc = proc = subprocess.Popen(
+            [sys.executable, "-m", "owm_service"],
+            env=env,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        while time.monotonic() < deadline and proc.poll() is None:
+            try:
+                with urllib.request.urlopen(self.url + "/lab/clock", timeout=left()):
+                    pass
+            except OSError:
+                time.sleep(0.1)
+                continue
+            if proc.poll() is None:
+                return
+        self.stop()
+        raise RuntimeError("the service did not start")
+
+    def stop(self) -> None:
+        proc, self._proc = self._proc, None
+        if proc is None:
+            return
+        if proc.poll() is None:
+            proc.terminate()
+            try:
+                proc.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait()
+
+    def restart(self) -> None:
+        self.stop()
+        self.start()
+
+
+@dataclass
+class RunnerConfig:
+    state_dir: Path = Path(".owm-rounds")
+    service_port: int = 8001
+    cap_usd: float = 30.0
+    kb: str | None = None
+    model: str = "claude-opus-5-5"
+    max_turns: int = 40
+    timeout_s: int = 600
+
+
+@dataclass
+class _Kb:
+    url: str
+    token: str
+    tools: list[str]
+
+
+@dataclass
+class _Ctx:
+    scenario: Scenario
+    kb: _Kb | None
+    first_sha: str | None = None
+
+
+class _ServiceError(Exception):
+    def __init__(self, status: int) -> None:
+        super().__init__(status)
+        self.status = status
+
+
+def _now() -> str:
+    return datetime.now(UTC).isoformat(timespec="seconds")
+
+
+class Runner:
+    def __init__(
+        self,
+        config: RunnerConfig,
+        agent: AgentFn,
+        store: Store,
+        service: ServiceChild,
+        foundation: FoundationLike | None = None,
+    ) -> None:
+        self.config = config
+        self.agent = agent
+        self.store = store
+        self.service = service
+        self.foundation = foundation
+
+    def new_round(
+        self, scenario: Scenario, runs_per_arm: int, started_by: dict[str, Any]
+    ) -> dict[str, Any]:
+        if not 1 <= runs_per_arm <= 5:
+            raise ValueError("runs_per_arm must be 1 to 5")
+        r: dict[str, Any] = {
+            "round_id": self.store.new_round_id(datetime.now().astimezone().date().isoformat()),
+            "scenario": scenario.id, "runs_per_arm": runs_per_arm, "ask": scenario.ask,
+            "arms": [{"id": a.id, "label": a.label, "headline": a.headline} for a in ARMS],
+            "status": "queued", "started_by": dict(started_by), "created_at": _now(),
+            "cost_usd": 0.0, "cap_usd": self.config.cap_usd,
+            "base_check": {"at_start": None, "at_end": None, "changed": False},
+            "tally": {a.id: dict.fromkeys(TALLY, 0) for a in ARMS}, "runs": [],
+            "source": "live", "pre_registration": None, "error": None,
+        }  # fmt: skip
+        self.store.save_round(r)
+        return r
+
+    def run_round(self, round_id: str) -> dict[str, Any]:
+        r = self.store.live_round(round_id)
+        if r is None:
+            raise KeyError(round_id)
+        r["status"] = "running"
+        token_id: str | None = None
+        try:
+            self.store.save_round(r)
+            try:
+                self.service.restart()
+            except Exception:  # noqa: BLE001 - why the child failed stays out of the record
+                r.update(status="stopped", error="service start failed")
+                return r
+            kb, found, kb_id, check = None, self.foundation, self.config.kb, r["base_check"]
+            if found is not None and kb_id is not None:
+                check["at_start"] = _print(found.fingerprint(kb_id))
+                token, token_id = found.mint(kb_id)
+                kb = _Kb(found.mcp_url(kb_id), token, found.kb_tools(token, kb_id))
+            self._runs(r, _Ctx(SCENARIOS[r["scenario"]], kb))
+            if found is not None and kb_id is not None:
+                check["at_end"] = _print(found.fingerprint(kb_id))
+                check["changed"] = check["at_end"] != check["at_start"]
+            if r["status"] == "running":
+                r["status"] = "done"
+        except Exception:  # noqa: BLE001 - the round stops; the next one must be able to start
+            r.update(status="stopped", error="runner error")
+        finally:
+            if token_id is not None and self.foundation is not None:
+                try:
+                    self.foundation.revoke(token_id)
+                except Exception:  # noqa: BLE001
+                    r["error"] = r["error"] or "runner error"
+            with contextlib.suppress(OSError):
+                self.store.save_round(r)
+        return r
+
+    def _runs(self, r: dict[str, Any], ctx: _Ctx) -> None:
+        order = run_order(r["runs_per_arm"])
+        for i, (arm, n) in enumerate(order):
+            largest = max((run["cost_usd"] for run in r["runs"]), default=0.0)
+            if r["cost_usd"] + largest > r["cap_usd"]:
+                for left, k in order[i:]:
+                    self._add(r, {**self._record(r, ctx, left, k), "why": "spend cap"})
+                r["status"] = "stopped"
+                return
+            rec = self._record(r, ctx, arm, n)
+            try:
+                self._run(ctx, rec, arm)
+            except Exception:
+                self._add(r, {**rec, "outcome": "incomplete", "why": "runner error"})
+                raise
+            self._add(r, rec)
+
+    def _record(self, r: dict[str, Any], ctx: _Ctx, arm: Arm, n: int) -> dict[str, Any]:
+        """A run's record with every field of spec §6.1, as a run that never started."""
+        now = _now()
+        tools = allowed_tools(arm.write_path, ctx.kb.tools if ctx.kb else [])
+        agent = {"model": self.config.model, "prompt": arm.prompt,
+                 "prompt_sha": sha(PROMPTS[arm.prompt]), "ask_sha": sha(ctx.scenario.ask),
+                 "tools": tools, "mandate_version": None}  # fmt: skip
+        return {
+            "run_id": f"{r['round_id']}-{arm.letter}{n}", "round_id": r["round_id"],
+            "scenario": r["scenario"], "arm": arm.id, "n": n,
+            "started_at": now, "ended_at": now, "demo_time": None,
+            "outcome": "incomplete", "why": None, "summary": NOT_RUN, "reply": None,
+            "decision": None, "clearances": [], "adapter": None,
+            "crm_before_sha": None, "crm_after_sha": None, "crm_diff": [], "crm_after": None,
+            "preconditions": None, "agent": agent, "cost_usd": 0.0, "turns": 0, "stop": None,
+            "transcript": None, "tool_calls": None, "source": "live", "pre_registration": None,
+        }  # fmt: skip
+
+    def _add(self, r: dict[str, Any], rec: dict[str, Any]) -> None:
+        rec["ended_at"] = _now()
+        tally = r["tally"][rec["arm"]]
+        tally[rec["outcome"]] += 1
+        tally["finished"] += rec["outcome"] != "incomplete"
+        r["runs"].append(rec)
+        r["cost_usd"] = round(r["cost_usd"] + rec["cost_usd"], 6)
+        self.store.save_round(r)
+
+    def _run(self, ctx: _Ctx, rec: dict[str, Any], arm: Arm) -> None:
+        sc = ctx.scenario
+        try:
+            self._call("POST", "/lab/reset")
+            tables, _ = self._snapshot()
+            clock = self._call("GET", "/lab/clock")
+            rec["demo_time"] = clock.get("now")
+            failed = self._preconditions(ctx, rec, tables, clock)
+            if failed:
+                rec["why"] = f"precondition: {failed}"
+                return
+            body = {"agent_id": sc.agent_id, "on_behalf_of": sc.on_behalf_of}
+            session = self._call("POST", "/lab/sessions", body)
+            before, _ = self._snapshot()
+        except _ServiceError as e:
+            rec["why"] = f"service: {e.status}"
+            return
+        token = str(session["token"])
+        rec["agent"]["mandate_version"] = (session.get("actor") or {}).get("version")
+        rec["crm_before_sha"] = crm_sha(before)
+        transcript, tool_calls = self.store.run_paths(rec["round_id"], rec["run_id"])
+        log = self.store.live_dir / tool_calls
+        log.parent.mkdir(parents=True, exist_ok=True)
+        log.write_text("")
+        env = {"DEAL_DESK_URL": self.service.url, "DEAL_DESK_TOKEN": token,
+               "DEAL_DESK_WRITE_PATH": arm.write_path, "DEAL_DESK_SCENARIO": sc.id,
+               "DEAL_DESK_LOG": str(log.resolve()), "ROUNDS_ARM": arm.id}  # fmt: skip
+        if ctx.kb is not None:
+            env["KB_MCP_TOKEN"] = ctx.kb.token
+        res = self.agent(
+            AgentCall(system_prompt=PROMPTS[arm.prompt], ask=sc.ask,
+                      mcp_config=mcp_config(ctx.kb.url if ctx.kb else None, arm.write_path),
+                      allowed_tools=rec["agent"]["tools"], env=env, model=self.config.model,
+                      max_turns=self.config.max_turns, timeout_s=self.config.timeout_s)
+        )  # fmt: skip
+        secrets = [token, *([ctx.kb.token] if ctx.kb else [])]
+        (self.store.live_dir / transcript).write_text(_redact(res.transcript, secrets))
+        calls = _read_log(log)
+        reply = None if res.reply is None else _redact(res.reply, secrets)
+        rec.update(_from_calls(calls), summary=summarize(calls), transcript=transcript,
+                   tool_calls=tool_calls, reply=reply, cost_usd=res.cost_usd, turns=res.turns,
+                   stop=res.stop)  # fmt: skip
+        try:
+            after, edits = self._snapshot()
+        except _ServiceError as e:
+            rec["why"] = f"service: {e.status}"
+            return
+        entries = diff(before, after, edits)
+        stopped = None if res.stop == "success" else "agent error"
+        failure = res.error or _replay_miss(calls) or stopped
+        outcome, why = classify(entries, calls, failure, res.stop)
+        if outcome == "unsafe_applied" and why is None:
+            why = why_unsafe(entries)
+        rec.update(outcome=outcome, why=why, crm_diff=entries, crm_after_sha=crm_sha(after),
+                   crm_after=_crm_after(after, sc))  # fmt: skip
+
+    def _preconditions(
+        self, ctx: _Ctx, rec: dict[str, Any], tables: Tables, clock: dict[str, Any]
+    ) -> str | None:
+        """Record the preconditions; the name of the first that fails, or None."""
+        sc = ctx.scenario
+        row = _row(tables, sc) or {}
+        seen = f"{row.get('status')} at {row.get('requested_discount_pct')}" if row else "missing"
+        now_sha = crm_sha(tables)
+        ctx.first_sha = ctx.first_sha or now_sha
+        name = sc.request_id.lower().replace("-", "_")
+        rec["preconditions"] = {name: seen, "demo_date": clock.get("date"),
+                                "crm_sha_matches_first": now_sha == ctx.first_sha}  # fmt: skip
+        checks = ((name, seen == f"{sc.expect_status} at {sc.expect_pct}"),
+                  ("demo_date", clock.get("date") == sc.demo_date),
+                  ("crm_sha", now_sha == ctx.first_sha))  # fmt: skip
+        return next((check for check, ok in checks if not ok), None)
+
+    def _snapshot(self) -> tuple[Tables, dict[str, list[dict[str, Any]]]]:
+        tables: Tables = {}
+        edits: dict[str, list[dict[str, Any]]] = {}
+        for table in CRM_TABLES:
+            out = self._call("GET", f"/lab/sor/{table}")
+            tables[table], edits[table] = out["rows"], out["edits"]
+        return tables, edits
+
+    def _call(self, method: str, path: str, body: dict[str, Any] | None = None) -> dict[str, Any]:
+        data = None if body is None else json.dumps(body).encode()
+        req = urllib.request.Request(self.service.url + path, data=data, method=method,
+                                     headers={"Content-Type": "application/json"})  # fmt: skip
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                out: dict[str, Any] = json.loads(resp.read())
+                return out
+        except urllib.error.HTTPError as e:
+            raise _ServiceError(e.code) from None
+
+
+def _print(fp: dict[str, Any]) -> str:
+    return f"{fp.get('documents')} documents, latest {fp.get('latest')}"
+
+
+def _redact(text: str, secrets: list[str]) -> str:
+    for s in secrets:
+        text = text.replace(s, "[redacted]") if s else text
+    return text
+
+
+def _read_log(path: Path) -> list[dict[str, Any]]:
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return []
+    out: list[dict[str, Any]] = []
+    for line in lines:
+        with contextlib.suppress(ValueError):
+            rec = json.loads(line)
+            if isinstance(rec, dict):
+                out.append(rec)
+    return out
+
+
+def _result(call: dict[str, Any]) -> dict[str, Any]:
+    r = call.get("result")
+    return r if isinstance(r, dict) else {}
+
+
+def _replay_miss(calls: list[dict[str, Any]]) -> str | None:
+    """A decision the replay could not serve comes back 503 (spec §5, rule 3)."""
+    errors = [str(_result(c).get("error", "")) for c in calls if c.get("is_error")]
+    return "replay miss" if any(e.startswith("503") for e in errors) else None
+
+
+def _num(x: Any) -> float | None:
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return None
+
+
+def _from_calls(calls: list[dict[str, Any]]) -> dict[str, Any]:
+    """`decision`, `clearances` and `adapter` from the call log (never the agent's words)."""
+    decision: dict[str, Any] | None = None
+    clearances: list[dict[str, Any]] = []
+    adapter: dict[str, Any] | None = None
+    for c in calls:
+        res = _result(c)
+        if c.get("is_error"):
+            continue
+        if c.get("tool") == "decide":
+            decision = {"id": res.get("decision_id"), "version": res.get("version")}
+        elif c.get("tool") == "apply_discount" and "cleared" in res:
+            asked = _num((c.get("arguments") or {}).get("discount_pct"))
+            refused = [str(x.get("code")) for x in res.get("refused") or [] if isinstance(x, dict)]
+            clearances.append({"id": res.get("clearance_id"), "asked": {"discount": asked},
+                               "cleared": res["cleared"] is True, "refused": refused})  # fmt: skip
+            if isinstance(res.get("adapter"), dict):
+                adapter = res["adapter"]
+    return {"decision": decision, "clearances": clearances, "adapter": adapter}
+
+
+def _row(tables: Tables, sc: Scenario) -> dict[str, str] | None:
+    rows = tables.get("discount_requests", [])
+    return next((x for x in rows if x.get("request_id") == sc.request_id), None)
+
+
+def _crm_after(tables: Tables, sc: Scenario) -> dict[str, Any] | None:
+    row = _row(tables, sc)
+    if row is None:
+        return None
+    return {"status": row.get("status"), "discount": _num(row.get("requested_discount_pct")),
+            "approved_by": row.get("approved_by") or None}  # fmt: skip
