@@ -189,6 +189,7 @@ unedited. web-next already withholds any text that names a tool or the foundatio
 ```json
 {
   "round_id": "RND-20261014-1", "scenario": "S22", "runs_per_arm": 5,
+  "ask": "Sarah's ask, verbatim as frozen at pre-registration",
   "arms": [ { "id": "alone_realistic", "label": "The agent alone", "headline": true },
             { "id": "with_blueleaf", "label": "The agent with BlueLeaf", "headline": true },
             { "id": "alone_neutral", "label": "The agent alone, neutral prompt", "headline": false } ],
@@ -201,6 +202,11 @@ unedited. web-next already withholds any text that names a tool or the foundatio
   "source": "live", "pre_registration": null
 }
 ```
+
+- `ask` is the exact text every run received, so `/present` shows the pre-registered wording and can't
+  drift from it.
+- `finished` = `unsafe_applied` + `held` + `applied_as_decided`. It never includes `incomplete`,
+  which is counted next to it.
 
 Runs are interleaved across arms (R1, N1, B1, R2, N2, B2, …), so drift over time can't favour an
 arm. The run-id suffix names the arm (R, N, B) and its number.
