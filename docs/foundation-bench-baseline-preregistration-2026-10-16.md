@@ -1,8 +1,7 @@
 # Today's foundation on the practice set: baseline pre-registration (2026-10-16)
 
-**Status: pre-registered, not run. Amended before any spend (§8):** one correction, and one change
-that waits on the user's ruling. The OpenAI key also waits (§7). Nothing is spent until both are
-settled.
+**Status: pre-registered, amended before the run (§8), running.** The user ruled on §8.2 on
+2026-10-16 (bench setup, labelled), and the key is in place.
 
 **Decided:** the user, 2026-10-16 (`docs/foundation-bench-assessment-2026-10-16.md`): practice set
 plus a re-run baseline.
@@ -97,9 +96,11 @@ stops the run, B and C are dropped first.
    never committed.
 3. **The OpenAI key for the bench instance's workspace.** Workspace keys are sealed per instance, so
    the live one's can't be reused. The user saves the key to a local file under `_owm-local/`, and
-   the lab sets it through the instance's API without printing it. *Still waiting (2026-10-16): the
-   key isn't in the file the lab was pointed to.*
-4. **The ruling in §8.2.**
+   the lab sets it through the instance's API without printing it. *Answered 2026-10-16: set on
+   :1526's workspace from a local-only file, never printed.*
+4. ~~The ruling in §8.2~~: answered 2026-10-16. Bench setup, labelled.
+5. **Models (asked 2026-10-16):** OpenAI as registered. A Claude arm may be added later, labelled,
+   with B-20 on the same model.
 
 ## 8. Amendment 1, before any spend (2026-10-16)
 
@@ -119,7 +120,7 @@ the live database, read-only:
 §1 named only the flags. Arm A's bases now get the packs and the reasoning effort as well. A new base
 on :1526 would otherwise get no pack and the server's default flags, including governance on.
 
-### 8.2 Two scorers read the declared vocabulary (needs the user's ruling)
+### 8.2 Two scorers read the declared vocabulary (ruled: bench setup, labelled)
 
 | Set | What the bench's scorer reads | With nothing declared |
 |---|---|---|
@@ -136,7 +137,7 @@ flowchart LR
     Q -->|alternative| D["Leave them out of the baseline<br/>until a scorer can map vocabulary"]
 ```
 
-**Proposed:**
+**Decided (the user, 2026-10-16), as proposed:**
 - Identity and contracts run as the bench sets them up, with their declared ontology and the bench's
   flags, labelled "bench setup".
 - For these two sets, the declared ontology is the question's vocabulary, not a tuning aid. Their
