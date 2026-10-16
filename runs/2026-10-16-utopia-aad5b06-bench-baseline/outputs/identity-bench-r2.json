@@ -1,0 +1,222 @@
+{
+  "label": "bench-r2",
+  "forward": {
+    "kb": "01a14685-ac1b-7c33-b58d-a3d9cb10f656",
+    "anchors": 21,
+    "missing": [
+      "d00-zw",
+      "d02-ln",
+      "d02-p1-lead",
+      "d03-zw",
+      "d04-zw",
+      "d05-ln",
+      "d06-ln",
+      "d06-p2-lead",
+      "d06-p2-depth",
+      "d07-zw-fin",
+      "d07-zw-eng"
+    ],
+    "split_in_doc": [],
+    "pairs": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 3,
+      "tn": 39
+    },
+    "precision": 1,
+    "recall": 0.5,
+    "f1": 0.667,
+    "false_merges": [],
+    "false_splits": [
+      "d00-inst ≠ d08-inst (INST)",
+      "d00-inst ≠ d11-inst (INST)",
+      "d08-inst ≠ d11-inst (INST)"
+    ],
+    "per_entity": {
+      "INST": {
+        "entities": 3,
+        "as": [
+          "东海海洋研究所",
+          "Lanhai Research Institute",
+          "澜海研究院"
+        ]
+      },
+      "P1": {
+        "entities": 1,
+        "as": [
+          "海洋探测器1号"
+        ]
+      },
+      "P2": {
+        "entities": 1,
+        "as": [
+          "Haitan-2"
+        ]
+      },
+      "ZW_FIN": {
+        "entities": 0,
+        "as": []
+      },
+      "ZW_ENG": {
+        "entities": 0,
+        "as": []
+      },
+      "LN": {
+        "entities": 1,
+        "as": [
+          "Li Na"
+        ]
+      },
+      "TC_LH": {
+        "entities": 1,
+        "as": [
+          "澜海研究院技术中心"
+        ]
+      },
+      "TC_LJ": {
+        "entities": 1,
+        "as": [
+          "蓝鲸集团技术中心"
+        ]
+      }
+    },
+    "lookalikes": [
+      {
+        "pair": "ZW_FIN/ZW_ENG",
+        "merged": false
+      },
+      {
+        "pair": "TC_LH/TC_LJ",
+        "merged": false
+      },
+      {
+        "pair": "P1/P2",
+        "merged": false
+      }
+    ],
+    "pending_reviews": [
+      {
+        "stage": "human",
+        "reason": "escalate_unsure",
+        "n": 1
+      }
+    ],
+    "entities_in_base": 33
+  },
+  "reverse": {
+    "kb": "01a1468c-0c29-7930-b17c-db7c9f12f19f",
+    "anchors": 21,
+    "missing": [
+      "d00-zw",
+      "d02-p1-lead",
+      "d03-p1",
+      "d03-zw",
+      "d04-zw",
+      "d07-zw-fin",
+      "d07-zw-eng",
+      "d09-p1"
+    ],
+    "split_in_doc": [],
+    "pairs": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 10,
+      "tn": 66
+    },
+    "precision": 1,
+    "recall": 0.167,
+    "f1": 0.286,
+    "false_merges": [],
+    "false_splits": [
+      "d00-inst ≠ d08-inst (INST)",
+      "d00-inst ≠ d11-inst (INST)",
+      "d02-ln ≠ d05-ln (LN)",
+      "d02-ln ≠ d08-ln (LN)",
+      "d05-ln ≠ d06-ln (LN)",
+      "d05-ln ≠ d08-ln (LN)",
+      "d06-ln ≠ d08-ln (LN)",
+      "d06-p2-lead ≠ d08-p2 (P2)",
+      "d06-p2-depth ≠ d08-p2 (P2)",
+      "d08-inst ≠ d11-inst (INST)"
+    ],
+    "per_entity": {
+      "INST": {
+        "entities": 3,
+        "as": [
+          "东海海洋研究所",
+          "Lanhai Research Institute",
+          "澜海研究院"
+        ]
+      },
+      "P1": {
+        "entities": 1,
+        "as": [
+          "海洋探测器1号"
+        ]
+      },
+      "P2": {
+        "entities": 2,
+        "as": [
+          "海洋探测器2号",
+          "Haitan-2"
+        ]
+      },
+      "ZW_FIN": {
+        "entities": 0,
+        "as": []
+      },
+      "ZW_ENG": {
+        "entities": 0,
+        "as": []
+      },
+      "LN": {
+        "entities": 3,
+        "as": [
+          "李娜",
+          "李娜",
+          "Li Na"
+        ]
+      },
+      "TC_LH": {
+        "entities": 1,
+        "as": [
+          "澜海研究院技术中心"
+        ]
+      },
+      "TC_LJ": {
+        "entities": 1,
+        "as": [
+          "蓝鲸集团技术中心"
+        ]
+      }
+    },
+    "lookalikes": [
+      {
+        "pair": "ZW_FIN/ZW_ENG",
+        "merged": false
+      },
+      {
+        "pair": "TC_LH/TC_LJ",
+        "merged": false
+      },
+      {
+        "pair": "P1/P2",
+        "merged": false
+      }
+    ],
+    "pending_reviews": [
+      {
+        "stage": "human",
+        "reason": "escalate_unsure",
+        "n": 2
+      }
+    ],
+    "entities_in_base": 35
+  },
+  "order_disagreement": {
+    "compared": 28,
+    "differ": 0,
+    "rate": 0,
+    "pairs": []
+  }
+}

@@ -1,0 +1,134 @@
+--- aad5b06/scripts/bench/temporal.mjs
++++ work/temporal.mjs
+@@ -136,20 +136,98 @@
+     const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+     // **每次一个新库**：带着上一轮结果的库量出来的数字不可比（run.mjs 的头
+     // 那段坑就是这么来的）
++    // LAB PATCH (shiny-waffle B-20 baseline, arm A): BENCH_ARM=A builds the base the way
++    // BlueLeaf's base is built (schema-org + w3c-org packs, its flags) and waits for the pack's
++    // vectors before ingesting. Unset, this is the bench's own path, unchanged.
++    const ARM_A = process.env.BENCH_ARM === "A";
+     kb = (
+       await api("POST", `/api/v1/workspaces/${ws}/kbs`, {
+         name: `temporal ${label} ${stamp}`,
+-        ontology_packs: [],
++        ontology_packs: ARM_A ? ["schema-org", "w3c-org"] : [],
+       })
+     ).id;
+     await sleep(4000);
++    if (ARM_A) {
++      await api("PATCH", `/api/v1/kbs/${kb}`, {
++        auto_extend_ontology: true, ontology_lang: "en", materialize_inferences: true,
++        auto_type_resolution: true, governance: false,
++      });
++      await until(async () => {
++        const busy = num(
++          `SELECT count(*) FROM jobs WHERE payload->>'kb_id'='${kb}' AND status IN ('queued','running')`,
++        );
++        return busy === 0 ? true : busy;
++      }, 8000, 30 * 60 * 1000);
++      process.stderr.write("  arm A: BlueLeaf base settings, pack vectors ready\n");
++    }
+ 
+     // **声明是被测配置的一部分。** 时态引擎的自动闭合只按本体走，而
+     // `functional` / `inverse_functional` 永不自动推断（bootstrap_ontology.rs 写了
+     // 理由：它驱动的是自动改写账本）。所以缺省先把语料声明的那几条建出来；
+     // `--no-declare` 量的是「本体自己长出来」的那种库，两组的差就是这条声明值多少
+     const declare = !("no-declare" in args);
+-    if (declare) {
++    if (declare && ARM_A) {
++      // LAB PATCH (arm B = arm A + the corpus's declarations): the schema-org pack already
++      // holds person / organization / project and works_for / job_title, so POSTing them is a
++      // 409. Reuse the pack's types and PATCH the declared axioms onto existing relation types
++      // (the same PATCH body acceptUniqueness sends); create only what the pack lacks. A
++      // pack type keeps its own kind: the pack's job_title stays a relation.
++      const onto = await api("GET", `/api/v1/kbs/${kb}/ontology`);
++      const etByKey = new Map(onto.entity_types.map((e) => [e.key, e]));
++      const rtByKey = new Map(onto.relation_types.map((r) => [r.key, r]));
++      const classIds = new Map();
++      for (const c of corpus.classes || []) {
++        const have = etByKey.get(c.key);
++        if (have) {
++          classIds.set(c.key, have.id);
++          process.stderr.write(`  arm B: class ${c.key} from the pack\n`);
++          continue;
++        }
++        const made = await api("POST", `/api/v1/kbs/${kb}/ontology/entity-types`, {
++          key: c.key, label: c.label, description: c.description || "",
++        });
++        classIds.set(c.key, made.id);
++      }
++      for (const a of corpus.axioms || []) {
++        const r = rtByKey.get(a.key);
++        if (r) {
++          await api("PATCH", `/api/v1/kbs/${kb}/ontology/relation-types/${r.id}`, {
++            label: r.label,
++            temporal: a.temporal || "state",
++            functional: !!a.functional,
++            inverse_functional: !!a.inverse_functional,
++            is_transitive: !!a.is_transitive,
++            is_symmetric: r.is_symmetric,
++            is_asymmetric: r.is_asymmetric,
++            is_irreflexive: r.is_irreflexive,
++            inverse_of: r.inverse_of,
++            sub_property_of: r.sub_property_of,
++            description: r.description,
++            datatype: r.datatype,
++            unit: r.unit,
++          });
++          process.stderr.write(
++            `  arm B: ${a.key} from the pack (kind ${r.kind}), declared` +
++              ` functional=${!!a.functional} inverse_functional=${!!a.inverse_functional}\n`,
++          );
++          continue;
++        }
++        const body = {
++          key: a.key, label: a.label, kind: a.kind, temporal: a.temporal || "state",
++          functional: !!a.functional, inverse_functional: !!a.inverse_functional,
++          is_transitive: !!a.is_transitive, description: a.description || "",
++        };
++        if (a.kind === "attribute") {
++          body.datatype = a.datatype;
++          body.unit = a.unit;
++          body.domains = [classIds.get(a.domain)].filter(Boolean);
++        }
++        await api("POST", `/api/v1/kbs/${kb}/ontology/relation-types`, body);
++      }
++      process.stderr.write(
++        `  声明：${(corpus.classes || []).length} 个类、${(corpus.axioms || []).length} 条关系/属性\n`,
++      );
++    } else if (declare) {
+       const classIds = new Map();
+       for (const c of corpus.classes || []) {
+         const made = await api("POST", `/api/v1/kbs/${kb}/ontology/entity-types`, {
+--- aad5b06/scripts/bench/identity.mjs
++++ work/identity.mjs
+@@ -106,7 +106,9 @@
+   await api("PATCH", `/kbs/${kb}`, {
+     auto_extend_ontology: false,
+     auto_type_resolution: false,
+-    governance: false,
++    // LAB PATCH (shiny-waffle B-20 baseline, arm C): BENCH_GOVERNANCE=on turns governance on.
++    // Unset, this is the bench's own setup, unchanged.
++    governance: process.env.BENCH_GOVERNANCE === "on",
+     materialize_inferences: false,
+   });
+   const types = {};
+--- aad5b06/scripts/bench/recall.mjs
++++ work/recall-contract-view.mjs
+@@ -90,12 +90,9 @@
+            coalesce((SELECT string_agg(q.key || '=' || coalesce(fq.value #>> '{value}', '') || ' ' || coalesce(fq.value #>> '{unit}', ''), ' ')
+                        FROM fact_qualifiers fq JOIN relation_types q ON q.id = fq.qualifier_type_id
+                       WHERE fq.fact_id = f.id), '')
+-           -- 开放陈述的限定（#729）按文档自己的角色词挂着：金额、职务在这里
+-           || ' ' || coalesce((SELECT string_agg(sq.role || '=' || coalesce(sq.value #>> '{}', qe.canonical_name, ''), ' ')
+-                       FROM statement_qualifiers sq LEFT JOIN entities qe ON qe.id = sq.entity_id
+-                      WHERE sq.fact_id = f.id), '')
+-           -- 开放陈述的时间是照抄的字（time_mentions），不在 valid_from 里：日期类真值靠它命中
+-           || ' ' || coalesce((SELECT string_agg(tm.text, ' ') FROM time_mentions tm WHERE tm.fact_id = f.id), ''))
++           -- LAB COPY (B-20 baseline, contract view): statement_qualifiers and time_mentions
++           -- have no read route through the contract at aad5b06, so they are left out here.
++           )
+     FROM facts f
+     JOIN fact_evidence fe ON fe.fact_id = f.id
+     JOIN documents d ON d.id = fe.document_id

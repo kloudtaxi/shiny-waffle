@@ -1,0 +1,8 @@
+{
+ "gpt-6-luna": {
+  "calls": 43,
+  "prompt": 63673,
+  "completion": 6780,
+  "cached": 2828
+ }
+}

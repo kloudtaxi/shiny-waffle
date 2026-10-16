@@ -1,0 +1,235 @@
+{
+  "label": "C-r1",
+  "forward": {
+    "kb": "01a146c0-d529-7d40-981b-11764a88362c",
+    "anchors": 21,
+    "missing": [
+      "d02-ln",
+      "d06-ln"
+    ],
+    "split_in_doc": [],
+    "pairs": {
+      "tp": 9,
+      "fp": 2,
+      "fn": 8,
+      "tn": 152
+    },
+    "precision": 0.818,
+    "recall": 0.529,
+    "f1": 0.643,
+    "false_merges": [
+      "d03-zw(ZW_ENG) = d07-zw-fin(ZW_FIN)",
+      "d07-zw-fin(ZW_FIN) = d07-zw-eng(ZW_ENG)"
+    ],
+    "false_splits": [
+      "d00-inst ≠ d08-inst (INST)",
+      "d00-inst ≠ d11-inst (INST)",
+      "d00-zw ≠ d07-zw-fin (ZW_FIN)",
+      "d04-zw ≠ d07-zw-fin (ZW_FIN)",
+      "d05-ln ≠ d08-ln (LN)",
+      "d06-p2-lead ≠ d08-p2 (P2)",
+      "d06-p2-depth ≠ d08-p2 (P2)",
+      "d08-inst ≠ d11-inst (INST)"
+    ],
+    "per_entity": {
+      "INST": {
+        "entities": 3,
+        "as": [
+          "东海海洋研究所",
+          "Lanhai Research Institute",
+          "澜海研究院"
+        ]
+      },
+      "P1": {
+        "entities": 1,
+        "as": [
+          "海洋探测器1号"
+        ]
+      },
+      "P2": {
+        "entities": 2,
+        "as": [
+          "海洋探测器2号",
+          "Haitan-2"
+        ]
+      },
+      "ZW_FIN": {
+        "entities": 2,
+        "as": [
+          "张伟",
+          "张伟"
+        ]
+      },
+      "ZW_ENG": {
+        "entities": 1,
+        "as": [
+          "张伟"
+        ]
+      },
+      "LN": {
+        "entities": 2,
+        "as": [
+          "李娜",
+          "Li Na"
+        ]
+      },
+      "TC_LH": {
+        "entities": 1,
+        "as": [
+          "澜海研究院技术中心"
+        ]
+      },
+      "TC_LJ": {
+        "entities": 1,
+        "as": [
+          "蓝鲸集团技术中心"
+        ]
+      }
+    },
+    "lookalikes": [
+      {
+        "pair": "ZW_FIN/ZW_ENG",
+        "merged": true
+      },
+      {
+        "pair": "TC_LH/TC_LJ",
+        "merged": false
+      },
+      {
+        "pair": "P1/P2",
+        "merged": false
+      }
+    ],
+    "pending_reviews": [
+      {
+        "stage": "human",
+        "reason": "escalate_unsure",
+        "n": 1
+      },
+      {
+        "stage": "human",
+        "reason": "proposed",
+        "n": 2
+      }
+    ],
+    "entities_in_base": 32
+  },
+  "reverse": {
+    "kb": "01a146c5-75e2-7792-97bb-abe5101ebfd0",
+    "anchors": 21,
+    "missing": [
+      "d00-zw",
+      "d02-ln",
+      "d02-p1-lead",
+      "d03-p1",
+      "d03-zw",
+      "d04-zw",
+      "d05-ln",
+      "d07-zw-fin",
+      "d07-zw-eng",
+      "d09-p1"
+    ],
+    "split_in_doc": [],
+    "pairs": {
+      "tp": 1,
+      "fp": 0,
+      "fn": 6,
+      "tn": 48
+    },
+    "precision": 1,
+    "recall": 0.143,
+    "f1": 0.25,
+    "false_merges": [],
+    "false_splits": [
+      "d00-inst ≠ d08-inst (INST)",
+      "d00-inst ≠ d11-inst (INST)",
+      "d06-ln ≠ d08-ln (LN)",
+      "d06-p2-lead ≠ d08-p2 (P2)",
+      "d06-p2-depth ≠ d08-p2 (P2)",
+      "d08-inst ≠ d11-inst (INST)"
+    ],
+    "per_entity": {
+      "INST": {
+        "entities": 3,
+        "as": [
+          "东海海洋研究所",
+          "Lanhai Research Institute",
+          "澜海研究院总部"
+        ]
+      },
+      "P1": {
+        "entities": 1,
+        "as": [
+          "海洋探测器1号"
+        ]
+      },
+      "P2": {
+        "entities": 2,
+        "as": [
+          "海洋探测器2号",
+          "Haitan-2"
+        ]
+      },
+      "ZW_FIN": {
+        "entities": 0,
+        "as": []
+      },
+      "ZW_ENG": {
+        "entities": 0,
+        "as": []
+      },
+      "LN": {
+        "entities": 2,
+        "as": [
+          "李娜",
+          "Li Na"
+        ]
+      },
+      "TC_LH": {
+        "entities": 1,
+        "as": [
+          "澜海研究院技术中心"
+        ]
+      },
+      "TC_LJ": {
+        "entities": 1,
+        "as": [
+          "蓝鲸集团技术中心"
+        ]
+      }
+    },
+    "lookalikes": [
+      {
+        "pair": "ZW_FIN/ZW_ENG",
+        "merged": false
+      },
+      {
+        "pair": "TC_LH/TC_LJ",
+        "merged": false
+      },
+      {
+        "pair": "P1/P2",
+        "merged": false
+      }
+    ],
+    "pending_reviews": [
+      {
+        "stage": "human",
+        "reason": "escalate_unsure",
+        "n": 2
+      },
+      {
+        "stage": "human",
+        "reason": "proposed",
+        "n": 1
+      }
+    ],
+    "entities_in_base": 36
+  },
+  "order_disagreement": {
+    "compared": 45,
+    "differ": 0,
+    "rate": 0,
+    "pairs": []
+  }
+}

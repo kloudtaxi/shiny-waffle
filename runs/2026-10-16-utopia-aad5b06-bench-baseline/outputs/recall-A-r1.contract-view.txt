@@ -1,0 +1,38 @@
+
+总分 30/52  (57.7%)
+
+   6/7   nvda-8k-2026-06-24
+   8/15  nvda-8k-2026-08-17-exhibit
+   5/11  nvda-8k-2026-09-02
+  11/19  nvda-q2fy27-earnings-release
+
+按类别：
+   9/12  关系边
+  20/39  字面值（金额/日期/职务/票数）
+   1/1   谓词区分度
+
+没进图的：
+  [nvda-8k-2026-09-02] acq-price — 对价约 $11.9 billion
+  [nvda-8k-2026-09-02] acq-retention — 留任股权计划最高约 $1.0 billion
+  [nvda-8k-2026-09-02] acq-fy-end — 财年结束于 2026-01-25
+  [nvda-8k-2026-09-02] cfo-title — Kress 的职务 EVP / CFO
+  [nvda-8k-2026-09-02] hq — 总部地址 Santa Clara
+  [nvda-8k-2026-09-02] ticker — 股票代码 NVDA
+  [nvda-8k-2026-08-17-exhibit] oh-invest — NVIDIA 投资 SB Energy $1.5 billion
+  [nvda-8k-2026-08-17-exhibit] oh-huang-title — Jensen Huang 的职务 founder and CEO
+  [nvda-8k-2026-08-17-exhibit] oh-hossfeld-title — Rich Hossfeld 的职务 co-CEO
+  [nvda-8k-2026-08-17-exhibit] oh-gw — 至少 10 GW 新增发电
+  [nvda-8k-2026-08-17-exhibit] oh-itgw — 8 IT-GW 的 AI factory 容量
+  [nvda-8k-2026-08-17-exhibit] oh-grid — 至少 $4.2 billion 电网投入
+  [nvda-8k-2026-08-17-exhibit] oh-fund — $40 million 社区基金
+  [nvda-q2fy27-earnings-release] er-return — 返还股东约 $26.0 billion
+  [nvda-q2fy27-earnings-release] er-div — 股息 $0.25 每股
+  [nvda-q2fy27-earnings-release] er-div-record — 股息登记日 2026-09-10
+  [nvda-q2fy27-earnings-release] er-guide — Q3 指引营收 $108.0 billion
+  [nvda-q2fy27-earnings-release] er-huang-title — Jensen Huang 的职务 founder and CEO
+  [nvda-q2fy27-earnings-release] er-coreweave — Vera Rubin 合作方 CoreWeave
+  [nvda-q2fy27-earnings-release] er-nebius — Vera Rubin 合作方 Nebius
+  [nvda-q2fy27-earnings-release] er-oci — Vera Rubin 合作方 Oracle Cloud Infrastructure
+  [nvda-8k-2026-06-24] vt-for-coxe — Tench Coxe 赞成票 15,411,252,412
+
+（52 条真值，1σ ≈ 2.7 条：单轮小幅波动不作数）

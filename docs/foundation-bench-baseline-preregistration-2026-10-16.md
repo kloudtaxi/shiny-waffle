@@ -1,7 +1,9 @@
 # Today's foundation on the practice set: baseline pre-registration (2026-10-16)
 
-**Status: pre-registered, amended before the run (§8), running.** The user ruled on §8.2 on
-2026-10-16 (bench setup, labelled), and the key is in place.
+**Status: pre-registered, amended before the run (§8), run on 2026-10-16.** The bench's own
+scorers are done; the contract path is still to come. Results are in
+`runs/2026-10-16-utopia-aad5b06-bench-baseline/notes.md`. The user ruled on §8.2 on 2026-10-16
+(bench setup, labelled).
 
 **Decided:** the user, 2026-10-16 (`docs/foundation-bench-assessment-2026-10-16.md`): practice set
 plus a re-run baseline.

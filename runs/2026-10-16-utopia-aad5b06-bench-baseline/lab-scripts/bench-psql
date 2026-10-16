@@ -1,0 +1,9 @@
+#!/bin/bash
+# Bench-only psql. Drops any "-d <db>" the caller passes and always connects to utopia_bench,
+# so no bench script can reach the live "utopia" database.
+args=()
+while [ $# -gt 0 ]; do
+  if [ "$1" = "-d" ]; then shift 2; continue; fi
+  args+=("$1"); shift
+done
+exec docker exec -i utopia-db-1 psql -U utopia -d utopia_bench -X -q "${args[@]}"

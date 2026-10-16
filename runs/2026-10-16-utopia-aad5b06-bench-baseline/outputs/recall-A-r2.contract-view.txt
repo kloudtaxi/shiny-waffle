@@ -1,0 +1,34 @@
+
+总分 34/52  (65.4%)
+
+   7/7   nvda-8k-2026-06-24
+  10/15  nvda-8k-2026-08-17-exhibit
+   6/11  nvda-8k-2026-09-02
+  11/19  nvda-q2fy27-earnings-release
+
+按类别：
+   9/12  关系边
+  24/39  字面值（金额/日期/职务/票数）
+   1/1   谓词区分度
+
+没进图的：
+  [nvda-8k-2026-09-02] acq-price — 对价约 $11.9 billion
+  [nvda-8k-2026-09-02] acq-retention — 留任股权计划最高约 $1.0 billion
+  [nvda-8k-2026-09-02] acq-close — 预计 2027 年上半年交割
+  [nvda-8k-2026-09-02] cfo-title — Kress 的职务 EVP / CFO
+  [nvda-8k-2026-09-02] ticker — 股票代码 NVDA
+  [nvda-8k-2026-08-17-exhibit] oh-invest — NVIDIA 投资 SB Energy $1.5 billion
+  [nvda-8k-2026-08-17-exhibit] oh-huang-title — Jensen Huang 的职务 founder and CEO
+  [nvda-8k-2026-08-17-exhibit] oh-gw — 至少 10 GW 新增发电
+  [nvda-8k-2026-08-17-exhibit] oh-grid — 至少 $4.2 billion 电网投入
+  [nvda-8k-2026-08-17-exhibit] oh-2028 — 分阶段自 2028 年起上线
+  [nvda-q2fy27-earnings-release] er-return — 返还股东约 $26.0 billion
+  [nvda-q2fy27-earnings-release] er-buyback — 回购授权余额约 $99.0 billion
+  [nvda-q2fy27-earnings-release] er-div — 股息 $0.25 每股
+  [nvda-q2fy27-earnings-release] er-div-record — 股息登记日 2026-09-10
+  [nvda-q2fy27-earnings-release] er-guide — Q3 指引营收 $108.0 billion
+  [nvda-q2fy27-earnings-release] er-coreweave — Vera Rubin 合作方 CoreWeave
+  [nvda-q2fy27-earnings-release] er-nebius — Vera Rubin 合作方 Nebius
+  [nvda-q2fy27-earnings-release] er-oci — Vera Rubin 合作方 Oracle Cloud Infrastructure
+
+（52 条真值，1σ ≈ 2.7 条：单轮小幅波动不作数）

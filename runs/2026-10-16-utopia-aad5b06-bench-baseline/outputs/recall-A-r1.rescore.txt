@@ -1,0 +1,27 @@
+
+总分 41/52  (78.8%)
+
+   6/7   nvda-8k-2026-06-24
+  13/15  nvda-8k-2026-08-17-exhibit
+   8/11  nvda-8k-2026-09-02
+  14/19  nvda-q2fy27-earnings-release
+
+按类别：
+   9/12  关系边
+  31/39  字面值（金额/日期/职务/票数）
+   1/1   谓词区分度
+
+没进图的：
+  [nvda-8k-2026-09-02] cfo-title — Kress 的职务 EVP / CFO
+  [nvda-8k-2026-09-02] hq — 总部地址 Santa Clara
+  [nvda-8k-2026-09-02] ticker — 股票代码 NVDA
+  [nvda-8k-2026-08-17-exhibit] oh-huang-title — Jensen Huang 的职务 founder and CEO
+  [nvda-8k-2026-08-17-exhibit] oh-hossfeld-title — Rich Hossfeld 的职务 co-CEO
+  [nvda-q2fy27-earnings-release] er-guide — Q3 指引营收 $108.0 billion
+  [nvda-q2fy27-earnings-release] er-huang-title — Jensen Huang 的职务 founder and CEO
+  [nvda-q2fy27-earnings-release] er-coreweave — Vera Rubin 合作方 CoreWeave
+  [nvda-q2fy27-earnings-release] er-nebius — Vera Rubin 合作方 Nebius
+  [nvda-q2fy27-earnings-release] er-oci — Vera Rubin 合作方 Oracle Cloud Infrastructure
+  [nvda-8k-2026-06-24] vt-for-coxe — Tench Coxe 赞成票 15,411,252,412
+
+（52 条真值，1σ ≈ 2.7 条：单轮小幅波动不作数）

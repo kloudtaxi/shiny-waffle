@@ -1,0 +1,242 @@
+{
+  "label": "C-r2",
+  "forward": {
+    "kb": "01a146c9-eab3-7ff3-bded-f4d03ef8143a",
+    "anchors": 21,
+    "missing": [
+      "d02-ln",
+      "d06-ln",
+      "d11-inst"
+    ],
+    "split_in_doc": [],
+    "pairs": {
+      "tp": 11,
+      "fp": 6,
+      "fn": 4,
+      "tn": 132
+    },
+    "precision": 0.647,
+    "recall": 0.733,
+    "f1": 0.688,
+    "false_merges": [
+      "d00-zw(ZW_FIN) = d03-zw(ZW_ENG)",
+      "d00-zw(ZW_FIN) = d07-zw-eng(ZW_ENG)",
+      "d03-zw(ZW_ENG) = d04-zw(ZW_FIN)",
+      "d03-zw(ZW_ENG) = d07-zw-fin(ZW_FIN)",
+      "d04-zw(ZW_FIN) = d07-zw-eng(ZW_ENG)",
+      "d07-zw-fin(ZW_FIN) = d07-zw-eng(ZW_ENG)"
+    ],
+    "false_splits": [
+      "d00-inst ≠ d08-inst (INST)",
+      "d05-ln ≠ d08-ln (LN)",
+      "d06-p2-lead ≠ d08-p2 (P2)",
+      "d06-p2-depth ≠ d08-p2 (P2)"
+    ],
+    "per_entity": {
+      "INST": {
+        "entities": 2,
+        "as": [
+          "东海海洋研究所",
+          "Lanhai Research Institute"
+        ]
+      },
+      "P1": {
+        "entities": 1,
+        "as": [
+          "海洋探测器1号"
+        ]
+      },
+      "P2": {
+        "entities": 2,
+        "as": [
+          "海洋探测器2号",
+          "Haitan-2"
+        ]
+      },
+      "ZW_FIN": {
+        "entities": 1,
+        "as": [
+          "张伟"
+        ]
+      },
+      "ZW_ENG": {
+        "entities": 1,
+        "as": [
+          "张伟"
+        ]
+      },
+      "LN": {
+        "entities": 2,
+        "as": [
+          "李娜",
+          "Li Na"
+        ]
+      },
+      "TC_LH": {
+        "entities": 1,
+        "as": [
+          "澜海研究院技术中心"
+        ]
+      },
+      "TC_LJ": {
+        "entities": 1,
+        "as": [
+          "蓝鲸集团技术中心"
+        ]
+      }
+    },
+    "lookalikes": [
+      {
+        "pair": "ZW_FIN/ZW_ENG",
+        "merged": true
+      },
+      {
+        "pair": "TC_LH/TC_LJ",
+        "merged": false
+      },
+      {
+        "pair": "P1/P2",
+        "merged": false
+      }
+    ],
+    "pending_reviews": [
+      {
+        "stage": "human",
+        "reason": "escalate_unsure",
+        "n": 1
+      },
+      {
+        "stage": "human",
+        "reason": "proposed",
+        "n": 1
+      }
+    ],
+    "entities_in_base": 36
+  },
+  "reverse": {
+    "kb": "01a146ce-8e39-7d03-beb5-fbdf1b52c040",
+    "anchors": 21,
+    "missing": [
+      "d06-p2-lead",
+      "d09-p1"
+    ],
+    "split_in_doc": [],
+    "pairs": {
+      "tp": 6,
+      "fp": 6,
+      "fn": 11,
+      "tn": 148
+    },
+    "precision": 0.5,
+    "recall": 0.353,
+    "f1": 0.414,
+    "false_merges": [
+      "d00-zw(ZW_FIN) = d03-zw(ZW_ENG)",
+      "d00-zw(ZW_FIN) = d07-zw-eng(ZW_ENG)",
+      "d03-zw(ZW_ENG) = d04-zw(ZW_FIN)",
+      "d03-zw(ZW_ENG) = d07-zw-fin(ZW_FIN)",
+      "d04-zw(ZW_FIN) = d07-zw-eng(ZW_ENG)",
+      "d07-zw-fin(ZW_FIN) = d07-zw-eng(ZW_ENG)"
+    ],
+    "false_splits": [
+      "d00-inst ≠ d08-inst (INST)",
+      "d00-inst ≠ d11-inst (INST)",
+      "d02-p1-depth ≠ d03-p1 (P1)",
+      "d02-ln ≠ d05-ln (LN)",
+      "d02-ln ≠ d08-ln (LN)",
+      "d02-p1-lead ≠ d03-p1 (P1)",
+      "d05-ln ≠ d06-ln (LN)",
+      "d05-ln ≠ d08-ln (LN)",
+      "d06-ln ≠ d08-ln (LN)",
+      "d06-p2-depth ≠ d08-p2 (P2)",
+      "d08-inst ≠ d11-inst (INST)"
+    ],
+    "per_entity": {
+      "INST": {
+        "entities": 3,
+        "as": [
+          "东海海洋研究所",
+          "Lanhai Research Institute",
+          "澜海研究院"
+        ]
+      },
+      "P1": {
+        "entities": 2,
+        "as": [
+          "海洋探测器1号",
+          "海探1项目"
+        ]
+      },
+      "P2": {
+        "entities": 2,
+        "as": [
+          "海洋探测器2号",
+          "Haitan-2"
+        ]
+      },
+      "ZW_FIN": {
+        "entities": 1,
+        "as": [
+          "张伟"
+        ]
+      },
+      "ZW_ENG": {
+        "entities": 1,
+        "as": [
+          "张伟"
+        ]
+      },
+      "LN": {
+        "entities": 3,
+        "as": [
+          "李娜",
+          "李娜",
+          "Li Na"
+        ]
+      },
+      "TC_LH": {
+        "entities": 1,
+        "as": [
+          "澜海研究院技术中心"
+        ]
+      },
+      "TC_LJ": {
+        "entities": 1,
+        "as": [
+          "蓝鲸集团技术中心"
+        ]
+      }
+    },
+    "lookalikes": [
+      {
+        "pair": "ZW_FIN/ZW_ENG",
+        "merged": true
+      },
+      {
+        "pair": "TC_LH/TC_LJ",
+        "merged": false
+      },
+      {
+        "pair": "P1/P2",
+        "merged": false
+      }
+    ],
+    "pending_reviews": [
+      {
+        "stage": "human",
+        "reason": "escalate_unsure",
+        "n": 2
+      }
+    ],
+    "entities_in_base": 36
+  },
+  "order_disagreement": {
+    "compared": 120,
+    "differ": 2,
+    "rate": 0.017,
+    "pairs": [
+      "d02-p1-depth~d03-p1",
+      "d02-p1-lead~d03-p1"
+    ]
+  }
+}

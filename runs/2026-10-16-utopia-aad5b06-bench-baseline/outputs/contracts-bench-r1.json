@@ -1,0 +1,21 @@
+wrong    expansion option deadline, 2020-03-01    want 2020-03-17     got []
+wrong    expansion option deadline, 2020-04-01    want 2020-04-14     got []
+wrong    expansion option deadline, 2020-05-01    want 2020-05-26     got []
+wrong    expansion option deadline, 2020-06-01    want 2020-06-09     got []
+wrong    expansion option deadline, 2020-06-15    want 2020-06-23     got []
+wrong    expansion budget deadline, 2020-03-01    want 2020-05-07     got []
+wrong    expansion budget deadline, 2020-04-01    want 2020-06-04     got []
+wrong    expansion budget deadline, 2020-05-01    want 2020-07-16     got []
+wrong    expansion budget deadline, 2020-06-01    want 2020-07-30     got []
+wrong    expansion budget deadline, 2020-06-15    want 2020-08-13     got []
+wrong    landlord, 2019-01-01                     want HPBB1          got []
+wrong    landlord, 2020-07-01                     want HPBB1          got []
+wrong    landlord, 2020-09-01                     want BBHQ1          got []
+wrong    tenant, 2020-09-01                       want BLACKBAUD      got []
+wrong    premises acres, 2019-01-01               want 12.98          got []
+wrong    purchase price, 2020-08-01               want 76272484.66    got []
+wrong    purchaser, 2020-08-01                    want BBHQ1          got []
+wrong    outside closing date, 2020-08-01         want 2020-12-14     got []
+
+right 0/18, partial 0
+lease entities carrying a landlord or tenant: 0

@@ -1,0 +1,23 @@
+
+总分 45/52  (86.5%)
+
+   7/7   nvda-8k-2026-06-24
+  14/15  nvda-8k-2026-08-17-exhibit
+   9/11  nvda-8k-2026-09-02
+  15/19  nvda-q2fy27-earnings-release
+
+按类别：
+   9/12  关系边
+  35/39  字面值（金额/日期/职务/票数）
+   1/1   谓词区分度
+
+没进图的：
+  [nvda-8k-2026-09-02] acq-close — 预计 2027 年上半年交割
+  [nvda-8k-2026-09-02] cfo-title — Kress 的职务 EVP / CFO
+  [nvda-8k-2026-08-17-exhibit] oh-huang-title — Jensen Huang 的职务 founder and CEO
+  [nvda-q2fy27-earnings-release] er-guide — Q3 指引营收 $108.0 billion
+  [nvda-q2fy27-earnings-release] er-coreweave — Vera Rubin 合作方 CoreWeave
+  [nvda-q2fy27-earnings-release] er-nebius — Vera Rubin 合作方 Nebius
+  [nvda-q2fy27-earnings-release] er-oci — Vera Rubin 合作方 Oracle Cloud Infrastructure
+
+（52 条真值，1σ ≈ 2.7 条：单轮小幅波动不作数）

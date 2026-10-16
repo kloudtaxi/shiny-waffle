@@ -1,0 +1,641 @@
+{
+ "temporal": {
+  "temporal-armA-r1": {
+   "arm": "A",
+   "kb": "01a14675-b9c8-7852-9fe2-1462936c38d2",
+   "all": {
+    "asked": 37,
+    "pass": 28,
+    "rate": 0.757
+   },
+   "world": {
+    "asked": 23,
+    "pass": 14,
+    "rate": 0.609
+   },
+   "record": {
+    "asked": 14,
+    "pass": 14,
+    "rate": 1
+   },
+   "absent": [],
+   "failed": [
+    "aurora-lead-2024-08",
+    "aurora-lead-2025-06",
+    "aurora-lead-2025-10",
+    "aurora-lead-now",
+    "aurora-lead-corrected-start-2023-01-20",
+    "lin-zhao-salary-2024-06",
+    "lin-zhao-salary-now",
+    "lin-zhao-title-ended-unknown",
+    "zhou-qi-employer-2024-06"
+   ]
+  },
+  "temporal-A-r2": {
+   "arm": "A",
+   "kb": "01a14683-c820-7da2-b0de-1bb3004d59d2",
+   "all": {
+    "asked": 37,
+    "pass": 28,
+    "rate": 0.757
+   },
+   "world": {
+    "asked": 23,
+    "pass": 14,
+    "rate": 0.609
+   },
+   "record": {
+    "asked": 14,
+    "pass": 14,
+    "rate": 1
+   },
+   "absent": [],
+   "failed": [
+    "aurora-lead-2024-08",
+    "aurora-lead-2025-06",
+    "aurora-lead-2025-10",
+    "aurora-lead-now",
+    "aurora-lead-corrected-start-2023-01-20",
+    "lin-zhao-employer-2023-07",
+    "lin-zhao-salary-2024-06",
+    "lin-zhao-salary-now",
+    "lin-zhao-title-ended-unknown"
+   ]
+  },
+  "temporal-B-r1b": {
+   "arm": "B",
+   "kb": "01a146d5-7438-7961-bb17-7740bbb8d44f",
+   "all": {
+    "asked": 37,
+    "pass": 30,
+    "rate": 0.811
+   },
+   "world": {
+    "asked": 23,
+    "pass": 16,
+    "rate": 0.696
+   },
+   "record": {
+    "asked": 14,
+    "pass": 14,
+    "rate": 1
+   },
+   "absent": [],
+   "failed": [
+    "aurora-lead-2024-08",
+    "aurora-lead-2025-06",
+    "aurora-lead-2025-10",
+    "aurora-lead-now",
+    "aurora-lead-corrected-start-2023-01-20",
+    "lin-zhao-employer-2023-07",
+    "lin-zhao-title-ended-unknown"
+   ]
+  },
+  "temporal-B-r2b": {
+   "arm": "B",
+   "kb": "01a146d8-1754-7231-a8ae-7fcfc69aba40",
+   "all": {
+    "asked": 37,
+    "pass": 29,
+    "rate": 0.784
+   },
+   "world": {
+    "asked": 23,
+    "pass": 15,
+    "rate": 0.652
+   },
+   "record": {
+    "asked": 14,
+    "pass": 14,
+    "rate": 1
+   },
+   "absent": [],
+   "failed": [
+    "aurora-lead-2024-08",
+    "aurora-lead-2025-06",
+    "aurora-lead-2025-10",
+    "aurora-lead-now",
+    "aurora-lead-corrected-start-2023-01-20",
+    "lin-zhao-employer-2023-07",
+    "lin-zhao-title-ended-unknown",
+    "zhou-qi-employer-2024-06"
+   ]
+  },
+  "temporal-bench-r1": {
+   "arm": "bench setup",
+   "kb": "01a146da-648a-7252-87bd-72562c4b4434",
+   "all": {
+    "asked": 37,
+    "pass": 28,
+    "rate": 0.757
+   },
+   "world": {
+    "asked": 23,
+    "pass": 14,
+    "rate": 0.609
+   },
+   "record": {
+    "asked": 14,
+    "pass": 14,
+    "rate": 1
+   },
+   "absent": [],
+   "failed": [
+    "aurora-lead-2024-08",
+    "aurora-lead-2025-06",
+    "aurora-lead-2025-10",
+    "aurora-lead-now",
+    "aurora-lead-corrected-start-2023-01-20",
+    "lin-zhao-employer-2023-07",
+    "lin-zhao-title-ended-unknown",
+    "li-si-employer-2022",
+    "zhou-qi-employer-2024-06"
+   ]
+  },
+  "temporal-bench-r2": {
+   "arm": "bench setup",
+   "kb": "01a146dc-2317-7401-8154-82702cb2630e",
+   "all": {
+    "asked": 37,
+    "pass": 28,
+    "rate": 0.757
+   },
+   "world": {
+    "asked": 23,
+    "pass": 14,
+    "rate": 0.609
+   },
+   "record": {
+    "asked": 14,
+    "pass": 14,
+    "rate": 1
+   },
+   "absent": [],
+   "failed": [
+    "aurora-lead-2024-08",
+    "aurora-lead-2025-06",
+    "aurora-lead-2025-10",
+    "aurora-lead-now",
+    "aurora-lead-corrected-start-2023-01-20",
+    "lin-zhao-employer-2023-07",
+    "lin-zhao-title-ended-unknown",
+    "li-si-employer-2022",
+    "zhou-qi-employer-2024-06"
+   ]
+  }
+ },
+ "identity": {
+  "identity-bench-r1": {
+   "arm": "bench setup",
+   "order_disagreement": {
+    "compared": 66,
+    "differ": 2,
+    "rate": 0.03,
+    "pairs": [
+     "d02-ln~d05-ln",
+     "d05-ln~d06-ln"
+    ]
+   },
+   "forward": {
+    "kb": "01a1467a-3fc8-7643-ab18-ff4accfedd75",
+    "precision": 1,
+    "recall": 0.563,
+    "f1": 0.72,
+    "missing": [
+     "d00-zw",
+     "d03-zw",
+     "d04-zw",
+     "d06-p2-depth",
+     "d07-zw-fin",
+     "d07-zw-eng"
+    ],
+    "pairs": {
+     "tp": 9,
+     "fp": 0,
+     "fn": 7,
+     "tn": 89
+    },
+    "false_merges": 0,
+    "false_splits": 7,
+    "pending": 2
+   },
+   "reverse": {
+    "kb": "01a1467e-b1b1-7ba3-9265-663cb150503b",
+    "precision": 0.5,
+    "recall": 0.375,
+    "f1": 0.429,
+    "missing": [
+     "d02-p1-lead",
+     "d03-p1",
+     "d09-p1"
+    ],
+    "pairs": {
+     "tp": 6,
+     "fp": 6,
+     "fn": 10,
+     "tn": 131
+    },
+    "false_merges": 6,
+    "false_splits": 10,
+    "pending": 3
+   }
+  },
+  "identity-bench-r2": {
+   "arm": "bench setup",
+   "order_disagreement": {
+    "compared": 28,
+    "differ": 0,
+    "rate": 0,
+    "pairs": []
+   },
+   "forward": {
+    "kb": "01a14685-ac1b-7c33-b58d-a3d9cb10f656",
+    "precision": 1,
+    "recall": 0.5,
+    "f1": 0.667,
+    "missing": [
+     "d00-zw",
+     "d02-ln",
+     "d02-p1-lead",
+     "d03-zw",
+     "d04-zw",
+     "d05-ln",
+     "d06-ln",
+     "d06-p2-lead",
+     "d06-p2-depth",
+     "d07-zw-fin",
+     "d07-zw-eng"
+    ],
+    "pairs": {
+     "tp": 3,
+     "fp": 0,
+     "fn": 3,
+     "tn": 39
+    },
+    "false_merges": 0,
+    "false_splits": 3,
+    "pending": 1
+   },
+   "reverse": {
+    "kb": "01a1468c-0c29-7930-b17c-db7c9f12f19f",
+    "precision": 1,
+    "recall": 0.167,
+    "f1": 0.286,
+    "missing": [
+     "d00-zw",
+     "d02-p1-lead",
+     "d03-p1",
+     "d03-zw",
+     "d04-zw",
+     "d07-zw-fin",
+     "d07-zw-eng",
+     "d09-p1"
+    ],
+    "pairs": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 10,
+     "tn": 66
+    },
+    "false_merges": 0,
+    "false_splits": 10,
+    "pending": 2
+   }
+  },
+  "identity-C-r1": {
+   "arm": "C (governance on)",
+   "order_disagreement": {
+    "compared": 45,
+    "differ": 0,
+    "rate": 0,
+    "pairs": []
+   },
+   "forward": {
+    "kb": "01a146c0-d529-7d40-981b-11764a88362c",
+    "precision": 0.818,
+    "recall": 0.529,
+    "f1": 0.643,
+    "missing": [
+     "d02-ln",
+     "d06-ln"
+    ],
+    "pairs": {
+     "tp": 9,
+     "fp": 2,
+     "fn": 8,
+     "tn": 152
+    },
+    "false_merges": 2,
+    "false_splits": 8,
+    "pending": 3
+   },
+   "reverse": {
+    "kb": "01a146c5-75e2-7792-97bb-abe5101ebfd0",
+    "precision": 1,
+    "recall": 0.143,
+    "f1": 0.25,
+    "missing": [
+     "d00-zw",
+     "d02-ln",
+     "d02-p1-lead",
+     "d03-p1",
+     "d03-zw",
+     "d04-zw",
+     "d05-ln",
+     "d07-zw-fin",
+     "d07-zw-eng",
+     "d09-p1"
+    ],
+    "pairs": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 6,
+     "tn": 48
+    },
+    "false_merges": 0,
+    "false_splits": 6,
+    "pending": 3
+   }
+  },
+  "identity-C-r2": {
+   "arm": "C (governance on)",
+   "order_disagreement": {
+    "compared": 120,
+    "differ": 2,
+    "rate": 0.017,
+    "pairs": [
+     "d02-p1-depth~d03-p1",
+     "d02-p1-lead~d03-p1"
+    ]
+   },
+   "forward": {
+    "kb": "01a146c9-eab3-7ff3-bded-f4d03ef8143a",
+    "precision": 0.647,
+    "recall": 0.733,
+    "f1": 0.688,
+    "missing": [
+     "d02-ln",
+     "d06-ln",
+     "d11-inst"
+    ],
+    "pairs": {
+     "tp": 11,
+     "fp": 6,
+     "fn": 4,
+     "tn": 132
+    },
+    "false_merges": 6,
+    "false_splits": 4,
+    "pending": 2
+   },
+   "reverse": {
+    "kb": "01a146ce-8e39-7d03-beb5-fbdf1b52c040",
+    "precision": 0.5,
+    "recall": 0.353,
+    "f1": 0.414,
+    "missing": [
+     "d06-p2-lead",
+     "d09-p1"
+    ],
+    "pairs": {
+     "tp": 6,
+     "fp": 6,
+     "fn": 11,
+     "tn": 148
+    },
+    "false_merges": 6,
+    "false_splits": 11,
+    "pending": 2
+   }
+  }
+ },
+ "recall": {
+  "recall-A-r1": {
+   "arm": "A",
+   "kb": "01a14691-2cbb-75c3-abfc-fbae9a32d368",
+   "extracted": "41/52",
+   "contract_view": "30/52",
+   "missed": [
+    "[nvda-8k-2026-06-24] vt-for-coxe — Tench Coxe 赞成票 15,411,252,412",
+    "[nvda-8k-2026-08-17-exhibit] oh-hossfeld-title — Rich Hossfeld 的职务 co-CEO",
+    "[nvda-8k-2026-08-17-exhibit] oh-huang-title — Jensen Huang 的职务 founder and CEO",
+    "[nvda-8k-2026-09-02] cfo-title — Kress 的职务 EVP / CFO",
+    "[nvda-8k-2026-09-02] hq — 总部地址 Santa Clara",
+    "[nvda-8k-2026-09-02] ticker — 股票代码 NVDA",
+    "[nvda-q2fy27-earnings-release] er-coreweave — Vera Rubin 合作方 CoreWeave",
+    "[nvda-q2fy27-earnings-release] er-guide — Q3 指引营收 $108.0 billion",
+    "[nvda-q2fy27-earnings-release] er-huang-title — Jensen Huang 的职务 founder and CEO",
+    "[nvda-q2fy27-earnings-release] er-nebius — Vera Rubin 合作方 Nebius",
+    "[nvda-q2fy27-earnings-release] er-oci — Vera Rubin 合作方 Oracle Cloud Infrastructure"
+   ],
+   "only_via_qualifiers_or_time": [
+    "[nvda-8k-2026-08-17-exhibit] oh-fund — $40 million 社区基金",
+    "[nvda-8k-2026-08-17-exhibit] oh-grid — 至少 $4.2 billion 电网投入",
+    "[nvda-8k-2026-08-17-exhibit] oh-gw — 至少 10 GW 新增发电",
+    "[nvda-8k-2026-08-17-exhibit] oh-invest — NVIDIA 投资 SB Energy $1.5 billion",
+    "[nvda-8k-2026-08-17-exhibit] oh-itgw — 8 IT-GW 的 AI factory 容量",
+    "[nvda-8k-2026-09-02] acq-fy-end — 财年结束于 2026-01-25",
+    "[nvda-8k-2026-09-02] acq-price — 对价约 $11.9 billion",
+    "[nvda-8k-2026-09-02] acq-retention — 留任股权计划最高约 $1.0 billion",
+    "[nvda-q2fy27-earnings-release] er-div — 股息 $0.25 每股",
+    "[nvda-q2fy27-earnings-release] er-div-record — 股息登记日 2026-09-10",
+    "[nvda-q2fy27-earnings-release] er-return — 返还股东约 $26.0 billion"
+   ]
+  },
+  "recall-A-r2": {
+   "arm": "A",
+   "kb": "01a146a2-f120-7682-b5a1-dd75ccaef047",
+   "extracted": "45/52",
+   "contract_view": "34/52",
+   "missed": [
+    "[nvda-8k-2026-08-17-exhibit] oh-huang-title — Jensen Huang 的职务 founder and CEO",
+    "[nvda-8k-2026-09-02] acq-close — 预计 2027 年上半年交割",
+    "[nvda-8k-2026-09-02] cfo-title — Kress 的职务 EVP / CFO",
+    "[nvda-q2fy27-earnings-release] er-coreweave — Vera Rubin 合作方 CoreWeave",
+    "[nvda-q2fy27-earnings-release] er-guide — Q3 指引营收 $108.0 billion",
+    "[nvda-q2fy27-earnings-release] er-nebius — Vera Rubin 合作方 Nebius",
+    "[nvda-q2fy27-earnings-release] er-oci — Vera Rubin 合作方 Oracle Cloud Infrastructure"
+   ],
+   "only_via_qualifiers_or_time": [
+    "[nvda-8k-2026-08-17-exhibit] oh-2028 — 分阶段自 2028 年起上线",
+    "[nvda-8k-2026-08-17-exhibit] oh-grid — 至少 $4.2 billion 电网投入",
+    "[nvda-8k-2026-08-17-exhibit] oh-gw — 至少 10 GW 新增发电",
+    "[nvda-8k-2026-08-17-exhibit] oh-invest — NVIDIA 投资 SB Energy $1.5 billion",
+    "[nvda-8k-2026-09-02] acq-price — 对价约 $11.9 billion",
+    "[nvda-8k-2026-09-02] acq-retention — 留任股权计划最高约 $1.0 billion",
+    "[nvda-8k-2026-09-02] ticker — 股票代码 NVDA",
+    "[nvda-q2fy27-earnings-release] er-buyback — 回购授权余额约 $99.0 billion",
+    "[nvda-q2fy27-earnings-release] er-div — 股息 $0.25 每股",
+    "[nvda-q2fy27-earnings-release] er-div-record — 股息登记日 2026-09-10",
+    "[nvda-q2fy27-earnings-release] er-return — 返还股东约 $26.0 billion"
+   ]
+  }
+ },
+ "contracts": {
+  "contracts-bench-r1": {
+   "arm": "bench setup",
+   "kb": "01a146b0-f875-7551-ae38-d2768c21bb28",
+   "right": 0,
+   "of": 18,
+   "partial": 0,
+   "carriers": 0
+  },
+  "contracts-bench-r2": {
+   "arm": "bench setup",
+   "kb": "01a146b8-2a4d-75b1-8f9a-a97b5957d3f7",
+   "right": 0,
+   "of": 18,
+   "partial": 0,
+   "carriers": 0
+  }
+ },
+ "usage": {
+  "temporal-armA-r1": {
+   "calls": 45,
+   "prompt": 64494,
+   "completion": 7063,
+   "cached": 1414,
+   "usd": 0.01,
+   "minutes": 1.8,
+   "start": "2026-10-16T20:44:42",
+   "end": "2026-10-16T20:46:30"
+  },
+  "temporal-A-r2": {
+   "calls": 44,
+   "prompt": 63169,
+   "completion": 8983,
+   "cached": 2828,
+   "usd": 0.0108,
+   "minutes": 2.1,
+   "start": "2026-10-16T21:00:03",
+   "end": "2026-10-16T21:02:07"
+  },
+  "temporal-B-r1b": {
+   "calls": 43,
+   "prompt": 63673,
+   "completion": 6780,
+   "cached": 2828,
+   "usd": 0.0098,
+   "minutes": 2.9,
+   "start": "2026-10-16T22:29:15",
+   "end": "2026-10-16T22:32:08"
+  },
+  "temporal-B-r2b": {
+   "calls": 44,
+   "prompt": 64193,
+   "completion": 6874,
+   "cached": 1469,
+   "usd": 0.0099,
+   "minutes": 2.5,
+   "start": "2026-10-16T22:32:08",
+   "end": "2026-10-16T22:34:39"
+  },
+  "temporal-bench-r1": {
+   "calls": 41,
+   "prompt": 50939,
+   "completion": 6408,
+   "cached": 2828,
+   "usd": 0.0083,
+   "minutes": 1.9,
+   "start": "2026-10-16T22:34:39",
+   "end": "2026-10-16T22:36:33"
+  },
+  "temporal-bench-r2": {
+   "calls": 43,
+   "prompt": 51194,
+   "completion": 6133,
+   "cached": 2961,
+   "usd": 0.0082,
+   "minutes": 1.9,
+   "start": "2026-10-16T22:36:33",
+   "end": "2026-10-16T22:38:28"
+  },
+  "identity-bench-r1": {
+   "calls": 174,
+   "prompt": 185826,
+   "completion": 30594,
+   "cached": 24038,
+   "usd": 0.0339,
+   "minutes": 10.2,
+   "start": "2026-10-16T20:49:38",
+   "end": "2026-10-16T20:59:50"
+  },
+  "identity-bench-r2": {
+   "calls": 176,
+   "prompt": 189183,
+   "completion": 30520,
+   "cached": 24297,
+   "usd": 0.0342,
+   "minutes": 12.6,
+   "start": "2026-10-16T21:02:07",
+   "end": "2026-10-16T21:14:41"
+  },
+  "identity-C-r1": {
+   "calls": 188,
+   "prompt": 200480,
+   "completion": 28778,
+   "cached": 36835,
+   "usd": 0.0344,
+   "minutes": 9.9,
+   "start": "2026-10-16T22:06:44",
+   "end": "2026-10-16T22:16:39"
+  },
+  "identity-C-r2": {
+   "calls": 196,
+   "prompt": 209652,
+   "completion": 30264,
+   "cached": 40504,
+   "usd": 0.0361,
+   "minutes": 10.2,
+   "start": "2026-10-16T22:16:40",
+   "end": "2026-10-16T22:26:54"
+  },
+  "recall-A-r1": {
+   "calls": 301,
+   "prompt": 5412979,
+   "completion": 233329,
+   "cached": 36764,
+   "usd": 0.658,
+   "minutes": 19.4,
+   "start": "2026-10-16T21:14:41",
+   "end": "2026-10-16T21:34:05"
+  },
+  "recall-A-r2": {
+   "calls": 291,
+   "prompt": 4781336,
+   "completion": 221498,
+   "cached": 45248,
+   "usd": 0.5889,
+   "minutes": 15.3,
+   "start": "2026-10-16T21:34:05",
+   "end": "2026-10-16T21:49:24"
+  },
+  "contracts-bench-r1": {
+   "calls": 277,
+   "prompt": 570463,
+   "completion": 181401,
+   "cached": 91910,
+   "usd": 0.1477,
+   "minutes": 7.8,
+   "start": "2026-10-16T21:49:25",
+   "end": "2026-10-16T21:57:16"
+  },
+  "contracts-bench-r2": {
+   "calls": 277,
+   "prompt": 559530,
+   "completion": 191354,
+   "cached": 86254,
+   "usd": 0.1516,
+   "minutes": 8.9,
+   "start": "2026-10-16T21:57:16",
+   "end": "2026-10-16T22:06:08"
+  }
+ },
+ "usage_total": {
+  "calls": 2140,
+  "prompt": 12467111,
+  "completion": 989979,
+  "cached": 400178,
+  "usd": 1.7417999999999998
+ }
+}
