@@ -52,6 +52,16 @@ stops the run, B and C are dropped first.
   foundation. For recall, identity and temporal, the contract-path score must equal it. A gap
   means the adapter loses something, and it's fixed before any comparison with B-20. An
   adapter that loses facts would under-count the baseline and flatter B-20.
+- **Recall items the contract can't see** (added 2026-10-16, glowing-garbanzo f5164ee). At aad5b06,
+  today's foundation serves no read route for the role words (`statement_qualifiers`) and time
+  words (`time_mentions`) on open statements. So an item found only there is invisible through the
+  contract.
+  - These items are listed by item id once the recall bases exist.
+  - Recall is then reported two ways for today's foundation:
+    - **what it extracted:** the bench's scorer, the primary figure, compared with B-20's;
+    - **what it serves through the contract:** the contract path, without those items.
+  - The listed items are a finding about today's foundation, not an adapter bug. Any other gap
+    between the two paths is an adapter bug, fixed before comparison.
 - **Contracts:** the bench's own scorer only, until contract G1 lands. B-20 gets a port with the same
   rules, and both results are labelled.
 - **Noise:** report every run, never only the best. A gap smaller than the bench's noise (recall
