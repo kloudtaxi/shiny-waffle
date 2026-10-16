@@ -13,7 +13,7 @@ plus a re-run baseline.
 
 | | |
 |---|---|
-| **System** | Utopia at **aad5b06**, the commit the live instance runs, built from the local repo. It runs as a **throwaway instance with its own Postgres**, never the live one |
+| **System** | Utopia at **aad5b06**: the binary the live instance runs. It's a **second server process** on 127.0.0.1:1526, against an **ephemeral database `utopia_bench`** on the same Postgres server (the user's choice, 2026-10-16). It has its own data directory and its own workspace keys. The live database is never written. `utopia_bench` is dropped once both scorers have read it |
 | **Models** | Chat `gpt-6-luna`, embeddings `text-embedding-3-small`, as for BlueLeaf's base |
 | **Base settings** | **BlueLeaf's base's own settings**, read on 2026-10-16: `auto_extend_ontology` on, `ontology_lang` en, `materialize_inferences` on, `auto_type_resolution` on, **`governance` off**. A new base's default turns governance on; that is a labelled variant (§3) |
 | **Declarations** | **None** (condition 1): no declared types, no uniqueness, no functional relations. B-20 declares nothing either |
@@ -80,8 +80,10 @@ stops the run, B and C are dropped first.
 
 ## 7. Waiting on the user
 
-1. **The throwaway instance:** Utopia aad5b06 on another port with a new Postgres container. The
-   bench's scripts write to its database directly, and the live instance's database stays
-   read-only.
-2. **A contact for SEC's user-agent:** a project address, not a personal one. Without one, arm A runs
-   identity and temporal only, and recall and contracts wait.
+1. ~~The instance~~: answered 2026-10-16. A second server on the same Postgres server, with an
+   ephemeral database. It's up (no spend yet).
+2. ~~The SEC contact~~: answered 2026-10-16. A project address, kept in the run's environment only,
+   never committed.
+3. **The OpenAI key for the bench instance's workspace.** Workspace keys are sealed per instance, so
+   the live one's can't be reused. The user saves the key to a local file under `_owm-local/`, and
+   the lab sets it through the instance's API without printing it.
