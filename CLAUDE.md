@@ -115,6 +115,10 @@ conceptual OWM. Every ontology type there is tagged `layer: foundation | owm` as
   system under test.** Only `dataset/evidence/` and `dataset/evidence-variants/<name>/` go into
   Utopia, each as its own knowledge base. `site/index.html` is a self-contained landing page
   and counts as scenery.
+- **Never use `owm/`, `README.md`'s trap and scenario tables or the four design docs to shape a
+  foundation under test** (its classes, prompts or few-shot examples), whether today's foundation
+  or BlueLeaf's own. They state the hypothesis the experiment tests and encode the traps' lessons
+  (decided 2026-10-16).
 - **Dependency direction**: this lab is standalone so that Polyfactory and Faker never enter
   the OWM's dependency closure. The OWM contract must not depend on this lab or on Utopia.
 
