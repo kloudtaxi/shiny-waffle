@@ -1,7 +1,8 @@
 # Today's foundation on the practice set: baseline pre-registration (2026-10-16)
 
-**Status: pre-registered, not run.** Two items wait on the user (§7). Nothing is spent until both are
-answered.
+**Status: pre-registered, not run. Amended before any spend (§8):** one correction, and one change
+that waits on the user's ruling. The OpenAI key also waits (§7). Nothing is spent until both are
+settled.
 
 **Decided:** the user, 2026-10-16 (`docs/foundation-bench-assessment-2026-10-16.md`): practice set
 plus a re-run baseline.
@@ -96,4 +97,79 @@ stops the run, B and C are dropped first.
    never committed.
 3. **The OpenAI key for the bench instance's workspace.** Workspace keys are sealed per instance, so
    the live one's can't be reused. The user saves the key to a local file under `_owm-local/`, and
-   the lab sets it through the instance's API without printing it.
+   the lab sets it through the instance's API without printing it. *Still waiting (2026-10-16): the
+   key isn't in the file the lab was pointed to.*
+4. **The ruling in §8.2.**
+
+## 8. Amendment 1, before any spend (2026-10-16)
+
+These were found while preparing the run, before anything was spent.
+
+### 8.1 What BlueLeaf's base is (a correction)
+
+This is a correction within the user's choice of "BlueLeaf's base's own settings". It was read from
+the live database, read-only:
+
+- **Ontology packs.** The base was built from `schema-org` and `w3c-org`. On 2026-10-13 it was born
+  with 915 schema.org classes, 8 W3C Org classes and 1,589 relation types. One relation has been
+  grown since.
+- **Models.** Chat is `gpt-6-luna` at reasoning effort **`low`**. Embeddings are
+  `text-embedding-3-small`.
+
+§1 named only the flags. Arm A's bases now get the packs and the reasoning effort as well. A new base
+on :1526 would otherwise get no pack and the server's default flags, including governance on.
+
+### 8.2 Two scorers read the declared vocabulary (needs the user's ruling)
+
+| Set | What the bench's scorer reads | With nothing declared |
+|---|---|---|
+| Temporal | Entity names and fact values | Scores as registered |
+| Recall | The text of facts and statements | Scores as registered |
+| Identity | An entity counts for an anchor only if its type key equals the declared one: `person`, `organization` or `equipment` (`identity.mjs:189`) | The 7 probe anchors match only if a grown type happens to be called `equipment`. The score would fall for a reason of vocabulary, not identity |
+| Contracts | Entities of the declared classes `lease` and `purchase_agreement`, and values of declared predicates such as `expansion_option_deadline` (`lease_bench.py score`) | Close to zero by construction. `setup` has no undeclared mode |
+
+```mermaid
+flowchart LR
+    T["Temporal, recall"] --> A1["Arm A as registered:<br/>BlueLeaf's base, nothing declared"]
+    I["Identity, contracts"] --> Q{"The user's ruling"}
+    Q -->|proposed| A2["The bench's own setup:<br/>its declared ontology, its flags,<br/>labelled 'bench setup'"]
+    Q -->|alternative| D["Leave them out of the baseline<br/>until a scorer can map vocabulary"]
+```
+
+**Proposed:**
+- Identity and contracts run as the bench sets them up, with their declared ontology and the bench's
+  flags, labelled "bench setup".
+- For these two sets, the declared ontology is the question's vocabulary, not a tuning aid. Their
+  scorers can't ask in any other words.
+- B-20's ports then need a fixed mapping from B-20's classes and predicates to the same vocabulary.
+  It's written before B-20 sees any practice result, which is garbanzo's call.
+- **Arms:**
+  - B becomes temporal only, since contracts is already declared.
+  - C stays: identity with governance on, on the bench's setup.
+
+### 8.3 How the run is fenced (no ruling needed)
+
+- **The database.** Every bench script's SQL goes through a wrapper that connects only to
+  `utopia_bench`, whatever database the script names. Tested: given `-d utopia`, it still lands on
+  `utopia_bench`.
+- **The scripts.**
+  - The scripts are copied out of the Utopia repo at aad5b06, and their hashes are kept with the run.
+  - They're changed only where arm A needs it:
+    - temporal behind `BENCH_ARM=A` (packs, flags, and a wait for the pack's vectors before ingest);
+    - recall through a wrapper. It builds a fresh arm A base, uploads the four filings once, waits for
+      extraction, and calls `recall.mjs --kb <id> --score` unchanged. The bench's own loop would
+      clear the facts and extract a second time.
+- **The SEC filings** were fetched on 2026-10-16: the 4 NVIDIA filings and the 15 files of the
+  Blackbaud HQ lease chain. None is an SEC block page, and their sha256 values go in the run's notes.
+- **The sizes the guard projects from:**
+
+  | Set | Text read per base |
+  |---|---|
+  | Identity | 850 characters |
+  | Temporal | 1,254 characters |
+  | Recall | 47,203 characters |
+  | Contracts | 72,572 characters (13 files) |
+
+  Cost is driven by chunks and the size of the prompt around them, not by text. So calibration on
+  identity and temporal measures tokens per chunk, and recall and contracts are projected from their
+  chunk counts.
