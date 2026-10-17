@@ -111,7 +111,7 @@ def test_bad_arguments_are_refused_before_any_request(fake: Fake, token_file: Pa
 
 def test_read_passages_reads_the_current_version(fake: Fake, token_file: Path) -> None:
     out, err, _ = run(fake, token_file, "read_passages", {"document_id": "d1"})
-    assert not err and out["items"][0]["passage_id"] == "p1"
+    assert not err and out["items"][0] == {"seq": 0, "text": "Pelican runs it."}
     assert [s.path for s in fake.seen[-2:]] == [
         f"{PREFIX}/documents/d1",
         f"{PREFIX}/documents/d1/versions/3/passages",
@@ -141,3 +141,50 @@ def test_a_refused_sign_in_and_an_unreachable_foundation(fake: Fake, token_file:
     with pytest.raises(UnreachableError) as e:
         call(bearer("http://127.0.0.1:9", token_file), "kb1", "get_fact", {"fact_id": "f1"})
     assert TOKEN not in str(e.value) and "127.0.0.1" not in str(e.value)
+
+
+def test_answers_are_slimmed_the_same_way_for_every_foundation() -> None:
+    from contract_reader.tools import shape
+
+    fact = {
+        "fact_id": "f1",
+        "kb_id": "kb1",
+        "predicate": {"key": "operates", "label": "operates", "typed": False},
+        "qualifiers": [],
+        "valid": {
+            "from": {"value": None, "precision": "unknown"},
+            "to": {"value": "2025", "precision": "year"},
+        },
+        "retracted_at": None,
+        "recorded_at": "2026-10-17T00:00:00Z",
+        "evidence": [
+            {
+                "doc_id": "d1",
+                "version": 1,
+                "text_sha256": "abc",
+                "passage_id": "p1",
+                "span": {"start": 0, "end": 4},
+                "quote": "runs",
+                "alignment": "exact",
+                "origin": "stated",
+                "anchors": [],
+                "stale": False,
+                "document_deleted": False,
+            }
+        ],
+    }
+    assert shape(fact) == {
+        "fact_id": "f1",
+        "predicate": {"key": "operates", "label": "operates", "typed": False},
+        "valid": {"from": {"precision": "unknown"}, "to": {"value": "2025", "precision": "year"}},
+        "recorded_at": "2026-10-17T00:00:00Z",
+        "evidence": [{"doc_id": "d1", "quote": "runs", "alignment": "exact"}],
+    }
+    hit = {"passage": {"passage_id": "p", "doc_id": "d1", "seq": 2, "text": "t", "headings": []},
+           "doc": {"doc_id": "d1", "version": 1, "title": "T", "filename": "t.md"},
+           "score": 0.5, "highlights": [{"start": 0, "end": 1}]}  # fmt: skip
+    assert shape(hit) == {
+        "passage": {"doc_id": "d1", "seq": 2, "text": "t"},
+        "doc": {"doc_id": "d1", "title": "T", "filename": "t.md"},
+    }
+    assert shape({"stale": True, "origin": "ocr"}) == {"stale": True, "origin": "ocr"}

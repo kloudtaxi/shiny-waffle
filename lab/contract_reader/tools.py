@@ -3,9 +3,19 @@
 The descriptions are the lab's, name no trap and are identical for every foundation (guard 4). C2
 (graph only) hides `TEXT_TOOLS` with `--disallowedTools`, so the reader never sees them.
 
-Every answer is shaped the same way for every foundation (`shape`): `produced_by` and `raised_by`
-are dropped, because they name the tool and model that built the object, and an answer over
-`MAX_CHARS` is cut with a note saying so.
+Every answer is shaped the same way for every foundation (`shape`), and an answer over `MAX_CHARS`
+is cut with a note saying so. `shape` drops:
+- what names the tool and model that built an object (`produced_by`, `raised_by`);
+- bookkeeping the reader can't use: byte offsets (`span`, `highlights`), versions, hashes, ids no
+  tool takes (`passage_id`, `kb_id`, a document's `source`), storage times, and `anchors`;
+- a search hit's `score`. The hits' order is their rank, and today's foundation serves no score,
+  only a rank, so a score would tell the two foundations apart;
+- flags at their default (`stale` and `document_deleted` false, `origin` "stated"), and empty
+  values (null, "", [] and {}).
+
+The slimming came after the pilot (2026-10-17), whose answers cost two to four times the estimate.
+Facts keep their subject, predicate, object, qualifiers, validity, record time, status, confidence
+and evidence (each piece's document and quote, and its alignment).
 """
 
 from __future__ import annotations
@@ -17,7 +27,28 @@ from typing import Any
 from contract_reader.client import Answer, Contract
 
 MAX_CHARS = 60_000
-DROPPED = frozenset({"produced_by", "raised_by"})
+DROPPED = frozenset(
+    {
+        "produced_by",
+        "raised_by",
+        "kb_id",
+        "span",
+        "highlights",
+        "passage_id",
+        "version",
+        "current_version",
+        "text_sha256",
+        "anchors",
+        "source",
+        "media_type",
+        "created_at",
+        "updated_at",
+        "deleted_at",
+        "received_at",
+        "score",
+    }
+)
+DEFAULTS = {"stale": False, "document_deleted": False, "origin": "stated"}
 TEXT_TOOLS = ("search", "list_documents", "read_passages")
 
 _DATE = {"type": "string", "description": "A date, YYYY-MM-DD."}
@@ -164,10 +195,21 @@ def _str(args: dict[str, Any], key: str) -> str | None:
     return s or None
 
 
+def _empty(v: Any) -> bool:
+    return v is None or v == "" or v == [] or v == {}
+
+
 def shape(obj: Any) -> Any:
-    """The same view of every foundation: no producer fields."""
+    """The same view of every foundation (the module's docstring lists what goes)."""
     if isinstance(obj, dict):
-        return {k: shape(v) for k, v in obj.items() if k not in DROPPED}
+        out = {}
+        for k, v in obj.items():
+            if k in DROPPED or (k in DEFAULTS and v == DEFAULTS[k]):
+                continue
+            v = shape(v)
+            if not _empty(v):
+                out[k] = v
+        return out
     if isinstance(obj, list):
         return [shape(v) for v in obj]
     return obj

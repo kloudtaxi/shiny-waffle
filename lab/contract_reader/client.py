@@ -50,6 +50,17 @@ class Contract:
         params: Mapping[str, Any] | None = None,
         body: Mapping[str, Any] | None = None,
     ) -> Answer:
+        status, raw = self.raw(method, path, params, body)
+        return Answer(status, _parse(raw))
+
+    def raw(
+        self,
+        method: str,
+        path: str,
+        params: Mapping[str, Any] | None = None,
+        body: Mapping[str, Any] | None = None,
+    ) -> tuple[int, bytes]:
+        """The status and the body's bytes, unparsed: a version's text (K7) is counted in bytes."""
         query = urllib.parse.urlencode(
             {k: v for k, v in (params or {}).items() if v is not None and v != ""}
         )
@@ -62,11 +73,24 @@ class Contract:
         req = urllib.request.Request(url, data=data, headers=headers, method=method)
         try:
             with self.opener.open(req, timeout=TIMEOUT) as r:
-                return Answer(r.status, _parse(r.read()))
+                return r.status, r.read()
         except urllib.error.HTTPError as e:
-            return Answer(e.code, _parse(e.read()))
+            return e.code, e.read()
         except (urllib.error.URLError, TimeoutError, ConnectionError, OSError):
             raise UnreachableError("the foundation didn't answer") from None
+
+    def pages(self, path: str, params: Mapping[str, Any] | None = None) -> list[Any]:
+        """Every item of a paged list (`items`, `next_cursor`). Raises on an HTTP error."""
+        out: list[Any] = []
+        cursor = None
+        while True:
+            a = self.request("GET", path, {**(params or {}), "cursor": cursor})
+            if a.status != 200 or not isinstance(a.body, dict):
+                raise RuntimeError(f"GET {path} answered {a.status}")
+            out.extend(a.body.get("items") or [])
+            cursor = a.body.get("next_cursor")
+            if not cursor:
+                return out
 
 
 def _parse(raw: bytes) -> Any:
