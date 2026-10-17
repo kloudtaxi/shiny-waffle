@@ -223,7 +223,7 @@ A freeze named early only stops B-20 from moving while the lab builds.
 |---|---|---|
 | B-20, both arms: six bases | About $2 in all. Practice: 134k prompt tokens per recall base, and Northstar is under twice recall's text. The judge adds calls | Stop at a projected $30 for both foundations together |
 | Today's foundation, three fresh bases | About $3–5. It spent 5.4M prompt tokens on one recall base | Same guard, measured from its own log |
-| The reader, S01–S45 (47 questions) | About $50 per arm (C1 about $9, C2 about $14 a batch; SLA's answers are the longest, about $0.33 each in experiment 6). Three arms make about $150 on the Claude Code plan, plus about $7 for the pilot | Stop at $180 on the plan |
+| The reader, S01–S45 (47 questions) | ~~About $150~~. **Measured in the pilot (§10): about $520** for C1 once and C2 three times on three arms. All-tools answers cost about $0.40 after the slimming, graph-only ones $0.75 to $2.03 | ~~Stop at $180~~. **Stop at $550 on the plan** (the user, 2026-10-17, §10) |
 
 ## 9. Why all 45 (D2, the lab's call)
 
@@ -250,3 +250,56 @@ The user delegated this one: "from a product manager's perspective; cost is rela
 
 **A correction:** the options I gave the user on 2026-10-17 said no reader had ever run on credit or
 SLA. That was wrong. Experiments 5 and 6 ran one, on gold evidence, and this design reuses both.
+
+## 10. Amendment 2, after the pilot and before the exam (2026-10-17)
+
+Nothing below follows from either foundation's exam results: no exam base exists yet.
+
+### 10.1 The pilot
+
+- **What ran:** C1 once on S21 and S26–S45, on BlueLeaf's live base through web-next's adapter,
+  with that one base for every corpus. It checked the harness, not the foundation. Then six
+  answers (S01, S26 and S36, in C1 and C2) after the slimming below.
+- **Where the answers are:** local only, sealed until the exam is recorded (§6.1). They never
+  count as results.
+- **What it found:**
+  - **The harness works end to end.** Both probes passed (9 tools in C1, 6 in C2, connected, no
+    denials). Every answer was written and scored by its process's scorer.
+  - **Cost.** C1 answers cost $0.43 to $0.81 before the slimming (pilot total $12.91 for 21) and
+    about $0.35 to $0.52 after it. Graph-only (C2) answers cost $0.75 to $2.03. C2's SLA answer used
+    up all 40 turns without a decision.
+  - **Turns.** One C1 credit answer took all 40 turns and still answered.
+
+### 10.2 The contract reader slims its answers (lab ff428e1)
+
+Tool output was mostly bookkeeping the reader can't use, so `shape` now drops it the same way for
+every foundation:
+- byte offsets, versions, hashes and ids that no tool takes;
+- storage times and anchors;
+- flags at their defaults, and empty values.
+
+**A search hit's score goes too.** Today's foundation serves only a rank (1/rank), and the order
+already is the rank, so a score would tell the two foundations apart.
+
+The tool names, descriptions and routes are unchanged (guard 4).
+
+### 10.3 The user's rulings (2026-10-17)
+
+- **Part 2 runs as registered:** C1 once and C2 three times per arm, for all three arms. The stop
+  rises to **$550** on the Claude Code plan. The reader's dollar figures are Claude usage at API
+  prices; the foundations' spend is OpenAI's, about $5–7 in all.
+- **The freeze is accepted:** B-20 at **02e9cc9**.
+  - Its practice contracts were 14 right with 3 partial, and 16 right with 2 partial, against
+    faee175's 17 and 16. Garbanzo read that as no worse within noise (glowing-garbanzo 7d108d4), and
+    the user accepted it.
+  - The max-turns control stays at 40. A C2 answer that runs out of turns is scored as it stands.
+
+### 10.4 What the run names (garbanzo, at the freeze)
+
+| | |
+|---|---|
+| **B-20** | blueleaf-knowledge-foundation **02e9cc9**, clean tree. The load-lab hash check (80932fb) is an ancestor |
+| **Guard 2** | four reads, the last of 02e9cc9 (lab cb0fe40): extraction is unchanged since 56bb38e |
+| **Its stack** | Python 3.13.9, uv 0.13.1. Locked: langextract 1.7.1, openai 3.32.0, docling 2.140.0, fastapi 0.143.3, pydantic 2.14.1. `gpt-6-luna` at effort `low` for extraction and both judges; `text-embedding-3-small` |
+| **Its server** | `FOUNDATION_DATA=<fresh dir> uv run --frozen foundation serve --port 8200 --key-file <the bench key>`. K10 is hybrid with the key; K0 must say so |
+| **The adapter** | glowing-garbanzo **320cb83** (web-next at HEAD 7d108d4 is identical). Its diff from 5d5a5f7 is K10 only |
