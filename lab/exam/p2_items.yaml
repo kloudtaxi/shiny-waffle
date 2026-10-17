@@ -1,0 +1,39 @@
+# The exam's P2 and P4 items (pre-registration §3, amendment 3). Committed before any exam base exists.
+# statement: what the judge checks, from truth/facts.yaml with lab-only ids taken out (CUST-…, MSA-…),
+#   since no evidence document carries them.
+# anchors: the names the scorer looks up (K15) to gather the facts the judge reads. The same for
+#   every foundation.
+# dated: read twice, through stated validity and through x-holds where a foundation serves it.
+# u31: an identity fact, reported under the U-31 label (D1).
+p2:
+  - {id: F01, u31: true, statement: "CRM-2048 is Acme Manufacturing's account in the CRM.", anchors: [Acme Manufacturing, Acme Mfg. Holdings, CRM-2048]}
+  - {id: F02, u31: true, statement: "ERP customer C-1001 (Acme Mfg. Holdings) is Acme Manufacturing.", anchors: [Acme Mfg. Holdings, Acme Manufacturing, C-1001]}
+  - {id: F03, u31: true, statement: "ACME-MFG-2025 is the reference of the master supply agreement with Acme Manufacturing.", anchors: [ACME-MFG-2025, Master Supply Agreement, Acme Manufacturing]}
+  - {id: F04, statement: "Sarah Chen owns the Acme account.", anchors: [Sarah Chen, Acme Manufacturing]}
+  - {id: F05, statement: "Sarah Chen reports to Michael Torres.", anchors: [Sarah Chen, Michael Torres]}
+  - {id: F06, statement: "Michael Torres is VP Sales.", anchors: [Michael Torres, VP Sales]}
+  - {id: F07, statement: "Sarah Chen is an Enterprise Account Executive.", anchors: [Sarah Chen, Enterprise Account Executive]}
+  - {id: F08, statement: "In 2026, an Enterprise Account Executive's discount authority is up to 10%.", anchors: [Pricing Policy 2026, Approval Authority Matrix, Enterprise Account Executive]}
+  - {id: F09, statement: "In 2026, VP Sales's discount authority is over 10% and up to 20%.", anchors: [Pricing Policy 2026, Approval Authority Matrix, VP Sales]}
+  - {id: F10, statement: "In 2026, discounts over 20% require the CRO's approval.", anchors: [Pricing Policy 2026, Approval Authority Matrix, Chief Revenue Officer, CRO]}
+  - {id: F11, statement: "In 2025, an Enterprise Account Executive's discount authority is up to 15%.", anchors: [Pricing Policy 2025, Enterprise Account Executive]}
+  - {id: F12, statement: "Acme's NS-500 pricing exception permits a discount of up to 15%.", anchors: [pricing exception, EXC-ACME-NS500-15, NS-500, Acme Manufacturing]}
+  - {id: F13, dated: true, statement: "The 15% exception is valid from 2025-04-01 to 2028-03-31.", anchors: [pricing exception, EXC-ACME-NS500-15, NS-500, Acme Manufacturing]}
+  - {id: F14, dated: true, statement: "The Acme master supply agreement is in force from 2025-04-01 to 2028-03-31.", anchors: [Master Supply Agreement, ACME-MFG-2025, Acme Manufacturing]}
+  - {id: F15, dated: true, statement: "An older 10% NS-500 exception for Acme applied from 2023-04-01 to 2025-03-31.", anchors: [pricing exception, NS-500, Acme Manufacturing]}
+  - {id: F16, statement: "The 15% exception covers the NS-500 only.", anchors: [pricing exception, EXC-ACME-NS500-15, NS-500, NS-Cloud]}
+  - {id: F17, statement: "Acme is a strategic account.", anchors: [Acme Manufacturing, Acme Mfg. Holdings]}
+  - {id: F18, statement: "DR-9001: Sarah Chen requests a 15% discount on the NS-500 for Acme on 2026-09-23.", anchors: [DR-9001, Sarah Chen, Acme Manufacturing]}
+  - {id: F19, statement: "In 2027, an Enterprise Account Executive's discount authority is up to 5%.", anchors: [Pricing Policy 2027, Enterprise Account Executive]}
+  - {id: F20, statement: "In 2027, VP Sales's discount authority is over 5% and up to 12%.", anchors: [Pricing Policy 2027, VP Sales]}
+  - {id: F21, statement: "In 2027, discounts over 12% require the CRO's approval.", anchors: [Pricing Policy 2027, Chief Revenue Officer, CRO]}
+  - {id: F22, statement: "In 2026, credit limits above $500,000 require the Director of Finance.", anchors: [Credit Policy 2026, Director of Finance]}
+  - {id: F23, statement: "In 2026, strategic accounts' credit limits above $500,000 also need VP Sales's concurrence.", anchors: [Credit Policy 2026, VP Sales]}
+  - {id: F24, dated: true, statement: "Acme Group Holdings guarantees Acme Mfg. Holdings's payment obligations up to $400,000, for 2026 and 2027.", anchors: [Acme Group Holdings, Acme Mfg. Holdings, parent guarantee]}
+  - {id: F25, statement: "CR-9201: Sarah Chen asks to raise Acme's credit limit to $400,000, on 2026-09-23.", anchors: [CR-9201, Sarah Chen, Acme Manufacturing]}
+  - {id: F26, statement: "Acme's current credit limit is $250,000.", anchors: [Acme Mfg. Holdings, Acme Manufacturing, C-1001]}
+p4:
+  - {id: P4a, dated: true, statement: "On 2024-06-01, the Acme NS-500 pricing exception in force permits up to 10%, not 15%.", anchors: [pricing exception, NS-500, Acme Manufacturing]}
+  - {id: P4b, dated: true, statement: "On 2026-09-23, the Acme NS-500 pricing exception in force permits up to 15%, not 10%.", anchors: [pricing exception, NS-500, Acme Manufacturing]}
+  - {id: P4c, dated: true, statement: "Both exceptions are held, each with its own validity: 10% from 2023-04-01 to 2025-03-31, and 15% from 2025-04-01 to 2028-03-31.", anchors: [pricing exception, NS-500, Acme Manufacturing]}
+  - {id: P4d, dated: true, statement: "The 2023 exception (10%) stopped holding on 2025-03-31.", anchors: [pricing exception, NS-500, Acme Manufacturing]}

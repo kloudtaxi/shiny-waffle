@@ -132,11 +132,42 @@ def snapshot(c: Contract, kb: str) -> dict[str, Any]:
             if a.status == 200 and isinstance(a.body, dict):
                 wanted.add(a.body["entity_id"])
     out["identifier_lookups"] = lookups
+    # P2 and P4's anchors (p2_items.yaml): each name's entities, in the foundation's own order.
+    out["anchors"] = {}
+    for name in anchors():
+        a = c.request("GET", f"/kbs/{kb}/entities", {"q": name, "limit": 10})
+        found = (
+            [e["entity_id"] for e in (a.body or {}).get("items") or []] if a.status == 200 else []
+        )
+        out["anchors"][name] = found
+        wanted |= set(found)
+    out["x_holds"] = {}
     for eid in sorted(wanted):
         a = c.request("GET", f"/entities/{_seg(eid)}")
         if a.status == 200:
             out["entities"][eid] = a.body
+        h = c.request("GET", f"/kbs/{kb}/x-holds", {"entity": eid})
+        out["x_holds"][eid] = (
+            h.body.get("items") if h.status == 200 and isinstance(h.body, dict) else None
+        )
     return out
+
+
+def items() -> dict[str, list[dict[str, Any]]]:
+    import yaml
+
+    data: dict[str, list[dict[str, Any]]] = yaml.safe_load(
+        (LAB / "lab/exam/p2_items.yaml").read_text()
+    )
+    return data
+
+
+def anchors() -> list[str]:
+    names: list[str] = []
+    for group in items().values():
+        for it in group:
+            names += [n for n in it["anchors"] if n not in names]
+    return names
 
 
 # ------------------------------------------------------------------ P1

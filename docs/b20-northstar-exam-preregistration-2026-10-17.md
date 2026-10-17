@@ -303,3 +303,35 @@ The tool names, descriptions and routes are unchanged (guard 4).
 | **Its stack** | Python 3.13.9, uv 0.13.1. Locked: langextract 1.7.1, openai 3.32.0, docling 2.140.0, fastapi 0.143.3, pydantic 2.14.1. `gpt-6-luna` at effort `low` for extraction and both judges; `text-embedding-3-small` |
 | **Its server** | `FOUNDATION_DATA=<fresh dir> uv run --frozen foundation serve --port 8200 --key-file <the bench key>`. K10 is hybrid with the key; K0 must say so |
 | **The adapter** | glowing-garbanzo **320cb83** (web-next at HEAD 7d108d4 is identical). Its diff from 5d5a5f7 is K10 only |
+
+## 11. Amendment 3: how P2 and P4 are judged (2026-10-17, before any exam base)
+
+§3 said "one matcher per fact: the subject, found by its names in the evidence, and the value". The
+26 facts are sentences, though ("Sarah Chen reports to Michael Torres"), and the two foundations
+name predicates differently. So a matcher on predicate names would favour whichever vocabulary it
+was written in. The match is made this way instead (`lab/exam/judge.py`, `lab/exam/p2_items.yaml`):
+
+1. **Gather (deterministic, the same for both).** Each item lists anchor names. The scorer looks
+   each name up with K15 (up to 10 entities each) and draws every found entity's facts as lines:
+   subject, predicate, object, qualifiers, validity, and status. No evidence quotes are shown.
+2. **Judge (blind).** Claude Sonnet 5.5, run through `claude -p` with no tools in a fresh temp
+   directory, answers `stated`, `partly` or `not_stated` with the lines it used. Three runs; the
+   majority wins, and a three-way split counts as `partly`. It's never told which foundation it's
+   reading.
+3. **Dated items** (F13, F14, F15, F24, and P4a–d) are judged twice: with stated validity, and with
+   `x-holds` where it's served.
+4. **F01–F03** are identity facts and are reported under the U-31 label.
+5. **Everything is kept:** each reading's lines, each run's answer and the verdict. The user can
+   overrule any verdict in the Ledger.
+
+**P4 is four items:** the exception in force on 2024-06-01 (10%) and on 2026-09-23 (15%), both
+exceptions held with their own validity, and the 2023 one's end date.
+
+**Two notes from the dry runs** on BlueLeaf's live base (sealed, never counted as results):
+- **P5's categories gain `wall`:** a clock time whose zone was dropped. Its instant can't be
+  recovered, so it doesn't count as held.
+- **P1 counts through the contract, for both foundations.** On the live base that's 2,636 pieces of
+  evidence on 2,429 facts. The 1,907 of 3,241 quoted in §2 was counted inside today's foundation,
+  not through the contract, so it's a reference only.
+
+**Cost:** about $1.50 of Claude usage per base for the judge, so about $14 for the nine bases.

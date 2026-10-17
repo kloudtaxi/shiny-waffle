@@ -127,3 +127,55 @@ def test_part2_grades_with_each_process_scorer() -> None:
         ]
     )  # fmt: skip
     assert "| a | C1 | r1 | 1 / 0 / 0 | 0 / 0 / 0 | 0 / 1 / 0 | 0 | 0 | 0.75 |" in md
+
+
+def test_p2_and_p4_items_and_the_judges_reading() -> None:
+    from exam.judge import majority, readings, render
+    from exam.part1 import items
+
+    its = items()
+    assert [i["id"] for i in its["p2"]] == [f"F{n:02d}" for n in range(1, 27)]
+    assert [i["id"] for i in its["p4"]] == ["P4a", "P4b", "P4c", "P4d"]
+    for it in its["p2"] + its["p4"]:
+        assert it["anchors"] and "CUST-" not in it["statement"] and "MSA-" not in it["statement"]
+    snap = {
+        "anchors": {"Acme Manufacturing": ["e1"]},
+        "entities": {
+            "e1": {
+                "name": "Acme Manufacturing",
+                "kind": {"key": "organization"},
+                "names": [{"name": "Acme Mfg. Holdings"}],
+                "identifiers": [{"system": "CRM", "id": "CRM-2048"}],
+                "facts": [
+                    {
+                        "fact_id": "f1",
+                        "subject": {"name": "Acme Manufacturing"},
+                        "predicate": {"label": "credit limit"},
+                        "object": {
+                            "kind": "value",
+                            "value": "250000",
+                            "unit": "USD",
+                            "datatype": "money_usd",
+                        },
+                        "valid": {"from": {"value": "2026-01-01"}, "to": {"value": None}},
+                        "status": "current",
+                    }
+                ],
+            }
+        },
+        "x_holds": {"e1": [{"fact_id": "f1", "from": "2026-02-01", "to": None}]},
+    }
+    item = {"anchors": ["Acme Manufacturing", "Nobody"]}
+    stated = render(snap, item, holds=False)
+    assert stated.splitlines() == [
+        "1. E1 · Acme Manufacturing [organization] · also named: Acme Mfg. Holdings"
+        " · identifiers: CRM: CRM-2048",
+        "2. Acme Manufacturing — credit limit — 250000 USD (money_usd) · valid 2026-01-01 → …",
+    ]
+    assert render(snap, item, holds=True).endswith("· holds 2026-02-01 → …")
+    assert render(snap, {"anchors": ["Nobody"]}, holds=False) == "(no facts found)"
+    assert majority(["stated", "stated", "partly"]) == "stated"
+    assert majority(["stated", "partly", "not_stated"]) == "partly"
+    assert majority([None, None, None]) == "no answer"
+    rs = readings(snap | {"anchors": {}})
+    assert len(rs) == 26 + 4 + sum(1 for i in its["p2"] + its["p4"] if i.get("dated"))
