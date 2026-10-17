@@ -1,13 +1,13 @@
 """Summarise the B-20 baseline runs in out/ as markdown tables (stdout) and a JSON digest.
 
 Usage: python3 -I summarize.py OUT_DIR DIGEST_JSON
-Prices at gpt-6-luna's list price ($0.10 / M input, $0.50 / M output); cached input is not
-discounted here (a ceiling, not the bill).
+Prices per model at list price (third-party pages citing OpenAI): gpt-6-luna $0.10 / $0.50 per M
+input / output; gpt-5.6-luna $0.20 / $1.20. Cached input is not discounted (a ceiling, not the bill).
 """
 import json, os, re, sys
 
 OUT, DIGEST = sys.argv[1], sys.argv[2]
-P_IN, P_OUT = 0.10 / 1e6, 0.50 / 1e6
+PRICE = {"gpt-6-luna": (0.10 / 1e6, 0.50 / 1e6), "gpt-5.6-luna": (0.20 / 1e6, 1.20 / 1e6)}
 
 
 def load(name):
@@ -26,7 +26,8 @@ def usage(run):
     from datetime import datetime
     secs = (datetime.fromisoformat(end) - datetime.fromisoformat(start)).total_seconds()
     return {"calls": calls, "prompt": p, "completion": c, "cached": cached,
-            "usd": round(p * P_IN + c * P_OUT, 4), "minutes": round(secs / 60, 1),
+            "usd": round(sum(v["prompt"] * PRICE[m][0] + v["completion"] * PRICE[m][1] for m, v in u.items()), 4),
+            "models": sorted(u), "minutes": round(secs / 60, 1),
             "start": start, "end": end}
 
 
@@ -104,22 +105,23 @@ for run in ("recall-A-r1", "recall-A-r2"):
 print("\n## Contracts (18 questions, bench scorer)\n")
 print("| Arm | Run | Right | Partial | Lease entities with landlord/tenant | Base |")
 print("|---|---|---|---|---|---|")
-for run in ("contracts-bench-r1", "contracts-bench-r2"):
+for arm, run in (("bench setup", "contracts-bench-r1"), ("bench setup", "contracts-bench-r2"),
+                 ("diagnostic: gpt-5.6-luna", "contracts-bench-diag56-r1"), ("diagnostic: gpt-5.6-luna", "contracts-bench-diag56-r2")):
     p = os.path.join(OUT, f"{run}.json")
-    if not os.path.exists(p):
+    if not os.path.exists(p) or not os.path.getsize(p):
         continue
     txt = open(p).read()
     r = re.search(r"right (\d+)/(\d+), partial (\d+)", txt).groups()
     car = re.search(r"landlord or tenant: (\d+)", txt).group(1)
-    label = run.rsplit("-", 1)[1]
+    label = run[len("contracts-bench-"):]
     kb = json.load(open(os.path.join(OUT, "..", "work", "bench", "corpora", "contracts", f"lease-kb-bench-{label}.json")))["kb"]
-    digest["contracts"][run] = {"arm": "bench setup", "kb": kb, "right": int(r[0]), "of": int(r[1]), "partial": int(r[2]),
+    digest["contracts"][run] = {"arm": arm, "kb": kb, "right": int(r[0]), "of": int(r[1]), "partial": int(r[2]),
                                 "carriers": int(car)}
-    print(f"| bench setup | {run} | {r[0]}/{r[1]} | {r[2]} | {car} | `{kb}` |")
-    rows_usage.append(("contracts", "bench setup", run))
+    print(f"| {arm} | {run} | {r[0]}/{r[1]} | {r[2]} | {car} | `{kb}` |")
+    rows_usage.append(("contracts", arm, run))
 
 # ---- usage
-print("\n## Tokens and list-price dollars (gpt-6-luna, from the server log)\n")
+print("\n## Tokens and list-price dollars (from the server log)\n")
 print("| Set | Arm | Run | Calls | Prompt | Completion | Cached | $ at list | Minutes |")
 print("|---|---|---|---|---|---|---|---|---|")
 tot = {"calls": 0, "prompt": 0, "completion": 0, "cached": 0, "usd": 0.0}

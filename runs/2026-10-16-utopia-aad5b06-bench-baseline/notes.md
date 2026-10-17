@@ -1,9 +1,9 @@
 # Today's foundation on the B-20 practice set: baseline run (2026-10-16)
 
-**Status: run complete; scored with the bench's own scorers.** The contract-path scoring
-(garbanzo's scorers through web-next's adapter) is still to come. It needs a read token on the
-throwaway instance, which is the user's call. The instance and `utopia_bench` stay up until
-both scorers have read the bases.
+**Status: run complete; scored with the bench's own scorers.** A labelled contracts
+diagnostic on gpt-5.6-luna was added the same day (addendum at the end). The contract-path
+scoring (garbanzo's scorers through web-next's adapter) is still to come; its read access is in
+place. The instance and `utopia_bench` stay up until both scorers have read the bases.
 
 | | |
 |---|---|
@@ -195,7 +195,58 @@ attempts (`temporal-B-r1`, `temporal-B-r2`) made no LLM call.
 ## Still to do
 
 - [ ] **Contract-path scoring** (pre-registration §4): garbanzo's scorers through web-next's
-      adapter, against the bases above. It needs a read token on :1526, which is the user's call.
+      adapter, against the bases above. Read access is in place (addendum, "Access").
 - [ ] **The bill:** dollars from OpenAI's usage page.
 - [ ] **Teardown:** drop `utopia_bench` and stop the :1526 server once both scorers have read the
       bases.
+
+## Addendum (2026-10-16, same day): contracts diagnostic on gpt-5.6-luna
+
+**Asked by the user** after seeing 0/18: tell the model apart from the foundation. This is a
+labelled diagnostic, never the baseline. It's the bench setup as above, with only the bench
+workspace's chat model switched to `gpt-5.6-luna` (effort `low`, same embeddings), then switched
+back to `gpt-6-luna`.
+
+| Arm | Run | Right | Partial | Lease entities with landlord/tenant | Base |
+|---|---|---|---|---|---|
+| bench setup | contracts-bench-r1 | 0/18 | 0 | 0 | `01a146b0-f875-7551-ae38-d2768c21bb28` |
+| bench setup | contracts-bench-r2 | 0/18 | 0 | 0 | `01a146b8-2a4d-75b1-8f9a-a97b5957d3f7` |
+| diagnostic: gpt-5.6-luna | contracts-bench-diag56-r1 | 2/18 | 0 | 1 | `01a146ee-5289-73b3-8330-dcd4d695f3e4` |
+| diagnostic: gpt-5.6-luna | contracts-bench-diag56-r2 | 0/18 | 0 | 0 | `01a146f6-be81-76e2-94b1-f3bd416802e3` |
+
+| Run | Calls | Prompt | Completion | Cached | $ at list | Minutes |
+|---|---|---|---|---|---|---|
+| contracts-bench-diag56-r1  |  275  |  554,293  |  195,213  |  80,598  |  0.3451  |  9.2 |
+| contracts-bench-diag56-r2  |  266  |  551,680  |  197,396  |  91,952  |  0.3472  |  8.0 |
+
+gpt-5.6-luna is priced at $0.20 / $1.20 per million tokens (input / output), from third-party
+pages citing OpenAI. Spend with the diagnostic is **$2.43** in all, a ceiling (cached input not
+discounted). The server log has one more gpt-5.6-luna call than the runs: the settings test.
+
+**What it shows:**
+- **Not gpt-6-luna alone.** gpt-5.6-luna scores 2 and 0 of 18, the same near-zero.
+- **Phrase alignment works on 5.6, and it doesn't help.** gpt-5.6-luna accepts `temperature: 0`,
+  so no alignment batch failed (0, against 3 and 5 on gpt-6-luna). Alignment still bound only 12
+  of about 215 and 10 of about 192 phrases. So the 0/18 doesn't come from the failed alignment
+  batches. What remains is what the luna models extract from these amendments through this
+  pipeline. The bench's own record (DeepSeek-V3.2) is 5–12.
+- **Governance's second layer** fails on gpt-5.6-luna too: 47 times, with the same "function tools
+  with reasoning_effort" 400.
+- **The baseline bases weren't touched.** Fact, entity and pending-review counts for all 18
+  baseline bases are identical before and after the diagnostic
+  (`outputs/snapshot-before-diag.txt`, `outputs/snapshot-after-diag.txt`).
+
+### Access for the contract-path scoring (the user's choices, 2026-10-16)
+
+- **A read token**, minted by the lab from the bench account: read scope, the 18 baseline bases,
+  expires 2026-10-23. It's in a gitignored local file (`_owm-local/bench-1526-read.token`, mode
+  600), never printed.
+  - At aad5b06 a personal token is honoured on the MCP endpoint (`POST /api/v1/kbs/{id}/mcp`);
+    the REST routes take only a session. Checked: initialize and tools/list answer.
+- **A viewer account** (`webnext-viewer@test.local`) for web-next's REST reads. It has the
+  deployment `viewer` role and the `viewer` role on the bench workspace. Its login is in a
+  gitignored local file (`_owm-local/bench-1526-viewer.json`, mode 600; random password, never
+  printed).
+  - Checked: it reads a base (200) and is refused a PATCH on a base and a PUT on the workspace
+    settings (403).
+  - It goes with the instance at teardown.

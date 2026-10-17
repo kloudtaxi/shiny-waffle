@@ -487,6 +487,22 @@
    "of": 18,
    "partial": 0,
    "carriers": 0
+  },
+  "contracts-bench-diag56-r1": {
+   "arm": "diagnostic: gpt-5.6-luna",
+   "kb": "01a146ee-5289-73b3-8330-dcd4d695f3e4",
+   "right": 2,
+   "of": 18,
+   "partial": 0,
+   "carriers": 1
+  },
+  "contracts-bench-diag56-r2": {
+   "arm": "diagnostic: gpt-5.6-luna",
+   "kb": "01a146f6-be81-76e2-94b1-f3bd416802e3",
+   "right": 0,
+   "of": 18,
+   "partial": 0,
+   "carriers": 0
   }
  },
  "usage": {
@@ -496,6 +512,9 @@
    "completion": 7063,
    "cached": 1414,
    "usd": 0.01,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 1.8,
    "start": "2026-10-16T20:44:42",
    "end": "2026-10-16T20:46:30"
@@ -506,6 +525,9 @@
    "completion": 8983,
    "cached": 2828,
    "usd": 0.0108,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 2.1,
    "start": "2026-10-16T21:00:03",
    "end": "2026-10-16T21:02:07"
@@ -516,6 +538,9 @@
    "completion": 6780,
    "cached": 2828,
    "usd": 0.0098,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 2.9,
    "start": "2026-10-16T22:29:15",
    "end": "2026-10-16T22:32:08"
@@ -526,6 +551,9 @@
    "completion": 6874,
    "cached": 1469,
    "usd": 0.0099,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 2.5,
    "start": "2026-10-16T22:32:08",
    "end": "2026-10-16T22:34:39"
@@ -536,6 +564,9 @@
    "completion": 6408,
    "cached": 2828,
    "usd": 0.0083,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 1.9,
    "start": "2026-10-16T22:34:39",
    "end": "2026-10-16T22:36:33"
@@ -546,6 +577,9 @@
    "completion": 6133,
    "cached": 2961,
    "usd": 0.0082,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 1.9,
    "start": "2026-10-16T22:36:33",
    "end": "2026-10-16T22:38:28"
@@ -556,6 +590,9 @@
    "completion": 30594,
    "cached": 24038,
    "usd": 0.0339,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 10.2,
    "start": "2026-10-16T20:49:38",
    "end": "2026-10-16T20:59:50"
@@ -566,6 +603,9 @@
    "completion": 30520,
    "cached": 24297,
    "usd": 0.0342,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 12.6,
    "start": "2026-10-16T21:02:07",
    "end": "2026-10-16T21:14:41"
@@ -576,6 +616,9 @@
    "completion": 28778,
    "cached": 36835,
    "usd": 0.0344,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 9.9,
    "start": "2026-10-16T22:06:44",
    "end": "2026-10-16T22:16:39"
@@ -586,6 +629,9 @@
    "completion": 30264,
    "cached": 40504,
    "usd": 0.0361,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 10.2,
    "start": "2026-10-16T22:16:40",
    "end": "2026-10-16T22:26:54"
@@ -596,6 +642,9 @@
    "completion": 233329,
    "cached": 36764,
    "usd": 0.658,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 19.4,
    "start": "2026-10-16T21:14:41",
    "end": "2026-10-16T21:34:05"
@@ -606,6 +655,9 @@
    "completion": 221498,
    "cached": 45248,
    "usd": 0.5889,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 15.3,
    "start": "2026-10-16T21:34:05",
    "end": "2026-10-16T21:49:24"
@@ -616,6 +668,9 @@
    "completion": 181401,
    "cached": 91910,
    "usd": 0.1477,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 7.8,
    "start": "2026-10-16T21:49:25",
    "end": "2026-10-16T21:57:16"
@@ -626,16 +681,45 @@
    "completion": 191354,
    "cached": 86254,
    "usd": 0.1516,
+   "models": [
+    "gpt-6-luna"
+   ],
    "minutes": 8.9,
    "start": "2026-10-16T21:57:16",
    "end": "2026-10-16T22:06:08"
+  },
+  "contracts-bench-diag56-r1": {
+   "calls": 275,
+   "prompt": 554293,
+   "completion": 195213,
+   "cached": 80598,
+   "usd": 0.3451,
+   "models": [
+    "gpt-5.6-luna"
+   ],
+   "minutes": 9.2,
+   "start": "2026-10-16T22:56:25",
+   "end": "2026-10-16T23:05:37"
+  },
+  "contracts-bench-diag56-r2": {
+   "calls": 266,
+   "prompt": 551680,
+   "completion": 197396,
+   "cached": 91952,
+   "usd": 0.3472,
+   "models": [
+    "gpt-5.6-luna"
+   ],
+   "minutes": 8.0,
+   "start": "2026-10-16T23:05:37",
+   "end": "2026-10-16T23:13:38"
   }
  },
  "usage_total": {
-  "calls": 2140,
-  "prompt": 12467111,
-  "completion": 989979,
-  "cached": 400178,
-  "usd": 1.7417999999999998
+  "calls": 2681,
+  "prompt": 13573084,
+  "completion": 1382588,
+  "cached": 572728,
+  "usd": 2.4341
  }
 }
