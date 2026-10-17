@@ -110,3 +110,14 @@ time zones and no clocks.
 - **Not a breach of a rule as written.** Guard 2 covers few-shots, and these are code and a judge's
   prompt. Guard 3 ("tuned only on the practice set") is what it strains. It's for the user to rule
   on.
+
+**Where the flagged parts came from (garbanzo, 2026-10-17):**
+- The DUNS sentence and the `EXPORT_ERP` / `EXPORT_CRM` fixtures follow BlueLeaf's own contract,
+  v0.2 §6.2: "such as the DUNS number on the ERP customer and the CRM account (K-4)". So the pattern
+  entered through the contract, not through a lab file.
+- The judge's "two identifiers from one system → different" is garbanzo's own.
+- The practice set's only identifiers are stated ones on the SEC filings (CIK, file number, EIN,
+  ticker).
+
+**The user's ruling (2026-10-17): run B-20 both ways.** As built, and with the identifier rules off,
+from the same frozen sha. The exam's pre-registration has the arms (D3).

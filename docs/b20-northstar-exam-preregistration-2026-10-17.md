@@ -12,6 +12,18 @@ results.
 - **D1, today's foundation's bases:** fresh, on a throwaway second server (§2).
 - **D2, Part 2's scenarios:** delegated to the lab ("from a product manager's perspective; cost is
   relative to benefit"). **All 45: discount, credit and SLA** (§9 has the reasoning).
+- **D3, the identifier rules (the user, 2026-10-17): run B-20 both ways.** Guard 2's second read
+  (`docs/b20-fewshot-review-2026-10-17.md`, 7f26264) found that F4's identifier rules reach past
+  U-31, into P2, P3b and Part 2's questions about Acme. So B-20 takes the exam as two arms from the
+  same frozen sha:
+  - **B-20** as built;
+  - **B-20, ids off:** one switch in `resolve`, committed before the freeze. It makes no joins or
+    proposals from identifiers, and the judge's prompt drops its identifier clause. The extraction
+    rule stays, under the U-31 label.
+
+  **The blind comparison is B-20 ids off against today's foundation.** B-20 against B-20 ids off
+  shows what the identifier rules add. The two are separate extractions, so that difference carries
+  extraction noise as well.
 
 **Standing rulings this inherits:**
 - **Practice set and exam** (the user, 2026-10-16): Northstar is run once, on B-20's frozen sha. A
@@ -22,11 +34,14 @@ results.
 
 ```mermaid
 flowchart TB
-    E["dataset/evidence at HEAD<br/>(= 571baac: 39 files)<br/>+ two variants"] --> B20["B-20 at the frozen sha<br/>3 bases, one extraction each"]
+    E["dataset/evidence at HEAD<br/>(= 571baac: 38 files, no manifest)<br/>+ two variants"] --> B20["B-20 at the frozen sha<br/>3 bases"]
+    E --> B20X["B-20 ids off<br/>(same sha, one switch)<br/>3 bases"]
     E --> T["Today's foundation<br/>3 fresh bases (§2)"]
     B20 --> P1["Part 1: the foundation<br/>alignment · the lab's true facts ·<br/>identity · temporal traps ·<br/>SLA's operational data · cost"]
+    B20X --> P1
     T --> P1
     B20 -->|contract| CR["The contract reader<br/>(one lab tool surface)"]
+    B20X -->|contract| CR
     T -->|"contract, through<br/>web-next's adapter"| CR
     CR --> P2["Part 2: the OWM on top<br/>blind reader + procedure +<br/>request record, S01–S45"]
 ```
@@ -38,20 +53,33 @@ holds the reader's view fixed and changes only the foundation behind it.
 
 | Corpus | Files | Scenarios that need it |
 |---|---|---|
-| `base` | `dataset/evidence/` at HEAD: 39 files, byte-identical to 571baac (checked 2026-10-17) | All but the three below |
-| `missing-contract-evidence` | base less the master supply agreement and both pricing exceptions | S05, S19 |
-| `missing-guarantee-evidence` | base less the parent guarantee | S33 |
+| `base` | `dataset/evidence/{documents/*.md, structured/*.csv}` at HEAD: **38 files**, byte-identical to 571baac (checked 2026-10-17) | All but the three below |
+| `missing-contract-evidence` | The same from `dataset/evidence-variants/missing-contract-evidence/`: 35 files, base less the master supply agreement and both pricing exceptions | S05, S19 |
+| `missing-guarantee-evidence` | The same from `dataset/evidence-variants/missing-guarantee-evidence/`: 37 files, base less the parent guarantee | S33 |
 
-- **Each corpus is its own base**, in each foundation. Only `dataset/evidence/` files are loaded:
-  never the answer key, evaluation, truth or site.
-- **B-20:** one extraction per corpus, at the frozen sha. Its sha, its classes, prompt and
-  few-shots are named in the run before the first upload.
+- **Only tracked Markdown and CSV files are loaded.**
+  - **Not `MANIFEST.yaml`.** It's the lab build's own file, not a source system's, and its
+    descriptions point at answers: "a similarly named but different customer", "the current Acme
+    NS-500 … exception" against "the earlier (2023)", "legal names differ from CRM display names".
+    The lab's own runs have always uploaded only the CSVs and the Markdown. BlueLeaf's live base, and
+    B-20's plan's "39 files", include it.
+  - **Not untracked files**, such as the `.DS_Store` in one variant folder.
+  - Never the answer key, evaluation, truth or site.
+- **Each corpus is its own base**, in each foundation and arm. The names are neutral and the same in
+  every foundation: "Northstar Industrial Systems", "Northstar Industrial Systems — missing contract
+  evidence", "Northstar Industrial Systems — missing guarantee evidence". B-20 ids off adds " (2)".
+  The contract reader never shows a base's name to the reader.
+- **B-20, both arms:** one extraction per corpus per arm, at the frozen sha. The sha, its classes,
+  prompt, few-shots and the switch's state are named in the run before the first upload. Search
+  (K10) must be hybrid: K0 must say so before any reader run.
 - **Today's foundation (D1, decided):** three fresh bases on a throwaway second server, as for
   the practice baseline: the same binary, BlueLeaf's base's own settings (packs, flags, governance
   off, luna at `low`), loaded in the same window as B-20.
   - **BlueLeaf's live base** (2026-10-13: 1,907 exact of 3,241 pieces of evidence) is quoted beside
-    the fresh base as a reference, never in its place. It was loaded another way (pushed through
-    the API, not uploaded), and it has no variants.
+    the fresh base as a reference, never in its place:
+    - it was loaded another way (pushed through the API, not uploaded);
+    - it holds `MANIFEST.yaml`;
+    - it has no variants.
 
 ## 3. Part 1: the foundation
 
@@ -62,13 +90,13 @@ foundations. The scorers are committed here before the freeze (§7).
 |---|---|---|---|
 | **P1** | **Alignment.** Each fact's evidence by the contract's alignment (exact, partial, fuzzy, none), as counts and as shares | K13 over every fact, K14 for its evidence spans; a span's bytes must equal its quote (B-20's `probes/spans.py` rule) | Yes |
 | **P2** | **The lab's true facts found.** The 26 `asserted` facts in `truth/facts.yaml` | One matcher per fact: the subject, found by its names in the evidence, and the value; for facts with dates, the validity too, read both through stated validity and through `x-holds` (as the practice set did) | Yes |
-| **P3a** | **U-31: CRM-2048, C-1001 and ACME-MFG-2025 as one customer** | K16 for each identifier, then whether they're one entity | **No: a feature check** (decided) |
-| **P3b** | **Acme Industrial Supply (CRM-2091 / C-1044) stays separate**, and no two of the lab's customers are merged | K15 by name, then the entities' identifiers and facts | Yes. The practice set has namesakes (the two 张伟) |
+| **P3a** | **U-31: CRM-2048, C-1001 and ACME-MFG-2025 as one customer** | K16 for each identifier, then whether they're one entity | **No: a feature check** (decided), in every arm |
+| **P3b** | **Acme Industrial Supply (CRM-2091 / C-1044) stays separate**, and no two of the lab's customers are merged | K15 by name, then the entities' identifiers and facts | **Only for B-20 ids off and today's foundation.** In B-20 as built, the judge's "two identifiers from one system" settles it |
 | **P4** | **Temporal traps at the foundation level:** the 10% exception (2023–25) and the 15% one (2025–28) both held, each with its own validity; the 2023 exception's end date held, despite its "Status: Active" line | K13 with `valid_at` on dates either side of each boundary | Yes |
 | **P5** | **SLA's operational data, held exactly.** For the ten tickets S36–S45 name: each ticket's opened and restored times (20) and its 45 events' times, and the 11 holidays in the holiday calendar: 76 items | The value served against the evidence row's own text: the same instant, with the zone the source wrote (Cedar and Akron in EDT) | Yes |
 | **P6** | **Cost:** calls and tokens per base, from each foundation's own logs | As the practice baseline did | n/a |
 
-- **n = 1 per foundation per corpus**, as ruled. The practice set's noise is quoted beside each
+- **n = 1 per arm per corpus**, as ruled. The practice set's noise is quoted beside each
   measure (identity F1 ±0.05; recall ±2.7 of 52). P2, P4 and P5 are counts on 26, 4 and 76 items,
   so a difference of one item is reported as one item, never as a rate.
 - **Today's foundation's K16:** it can't serve K16 at all (U-31), so P3a scores it "not served".
@@ -122,7 +150,7 @@ tools and the same neutral descriptions for both foundations:
   (about $7). It checks the harness end to end (the message without evidence, the tools, the
   scorers), not either foundation. Its answers are sealed (§6.1) and never scored as results.
 
-**Runs:** C1 once and C2 three times per foundation, as the lab's reader baselines have run.
+**Runs:** C1 once and C2 three times per arm, as the lab's reader baselines have run.
 
 **Scoring:**
 - **Primary, auto-scored with each process's own scorer:**
@@ -149,10 +177,10 @@ tools and the same neutral descriptions for both foundations:
 ```mermaid
 flowchart LR
     A["This pre-registration<br/>+ scorers + the contract reader<br/>(committed)"] --> B["Guard 2's second read<br/>(the changes since faee175)"]
-    B --> C["Freeze: B-20's sha and<br/>the adapter's sha named"]
-    C --> D["Load all six bases<br/>in one window"]
+    B --> C["Freeze: B-20's sha (with<br/>the ids-off switch) and<br/>the adapter's sha named"]
+    C --> D["Load all nine bases<br/>in one window"]
     D --> E["Part 1 scored"]
-    D --> F["Probes, then Part 2:<br/>both foundations, the same day"]
+    D --> F["Probes, then Part 2:<br/>all three arms, the same day"]
     E --> G["Results recorded,<br/>then shared"]
     F --> G
 ```
@@ -186,9 +214,9 @@ flowchart LR
 
 | Item | Estimate | Guard |
 |---|---|---|
-| B-20, three bases | About $1 in all. Practice: 134k prompt tokens per recall base, and Northstar is under twice recall's text | Stop at a projected $30 for both foundations together |
+| B-20, both arms: six bases | About $2 in all. Practice: 134k prompt tokens per recall base, and Northstar is under twice recall's text. The judge adds calls | Stop at a projected $30 for both foundations together |
 | Today's foundation, three fresh bases | About $3–5. It spent 5.4M prompt tokens on one recall base | Same guard, measured from its own log |
-| The reader, S01–S45 (47 questions) | About $50 per foundation (C1 about $9, C2 about $14 a batch; SLA's answers are the longest, about $0.33 each in experiment 6), so about $100 on the Claude Code plan, plus about $7 for the pilot | Stop at $130 on the plan |
+| The reader, S01–S45 (47 questions) | About $50 per arm (C1 about $9, C2 about $14 a batch; SLA's answers are the longest, about $0.33 each in experiment 6). Three arms make about $150 on the Claude Code plan, plus about $7 for the pilot | Stop at $180 on the plan |
 
 ## 9. Why all 45 (D2, the lab's call)
 
