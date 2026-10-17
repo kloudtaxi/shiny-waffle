@@ -57,6 +57,9 @@ holds the reader's view fixed and changes only the foundation behind it.
 | `missing-contract-evidence` | The same from `dataset/evidence-variants/missing-contract-evidence/`: 35 files, base less the master supply agreement and both pricing exceptions | S05, S19 |
 | `missing-guarantee-evidence` | The same from `dataset/evidence-variants/missing-guarantee-evidence/`: 37 files, base less the parent guarantee | S33 |
 
+- **The corpus is pinned to lab commit 571baac**: `docs/b20-exam-corpus-571baac.sha256` lists every
+  file's sha256 (38, 35 and 37). HEAD's files are byte-identical. Both foundations' loaders check
+  them before the first upload.
 - **Only tracked Markdown and CSV files are loaded.**
   - **Not `MANIFEST.yaml`.** It's the lab build's own file, not a source system's, and its
     descriptions point at answers: "a similarly named but different customer", "the current Acme
@@ -184,6 +187,10 @@ flowchart LR
     E --> G["Results recorded,<br/>then shared"]
     F --> G
 ```
+
+**The freeze may come before the lab's build is done.** What must come first is the scorers and the
+contract reader, committed before the first exam upload, since no Northstar result exists until then.
+A freeze named early only stops B-20 from moving while the lab builds.
 
 ## 6. Guards
 

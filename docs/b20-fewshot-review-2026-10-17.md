@@ -121,3 +121,14 @@ time zones and no clocks.
 
 **The user's ruling (2026-10-17): run B-20 both ways.** As built, and with the identifier rules off,
 from the same frozen sha. The exam's pre-registration has the arms (D3).
+
+## Third read: 56bb38e → 28ca5d9, the freeze candidate (2026-10-17)
+
+- **Extraction:** `git diff 56bb38e 28ca5d9 -- src/foundation/extract.py src/foundation/classes.py` is
+  empty. The prompt, few-shots, classes and document line are as the second read passed them.
+  47c0ac6 tried showing extraction the base's own predicates. It made practice contracts worse
+  (9 right, 9 partial), and 28ca5d9 reverts it.
+- **The switch:** `foundation kb create … --identifier-rules off`. In `resolve.py` the only prompt
+  change is `PROMPT_WITHOUT_IDENTIFIERS`, which removes "; two identifiers from one system" (an assert
+  checks the clause exists). With the rules off, resolve reads no identifiers. Extraction still reads
+  them and K16 serves them, under the U-31 label. **Matches D3.**
