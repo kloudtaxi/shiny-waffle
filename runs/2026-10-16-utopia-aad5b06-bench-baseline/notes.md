@@ -1,9 +1,9 @@
 # Today's foundation on the B-20 practice set: baseline run (2026-10-16)
 
-**Status: run complete; scored with the bench's own scorers.** A labelled contracts
-diagnostic on gpt-5.6-luna was added the same day (addendum at the end). The contract-path
-scoring (garbanzo's scorers through web-next's adapter) is still to come; its read access is in
-place. The instance and `utopia_bench` stay up until both scorers have read the bases.
+**Status: complete and torn down (2026-10-16).** Both scorers ran: the bench's own, and
+garbanzo's reference check through web-next's adapter, which matched (addendum at the end). A
+labelled contracts diagnostic on gpt-5.6-luna was added the same day. The instance and
+`utopia_bench` are gone; a local archive is kept outside git.
 
 | | |
 |---|---|
@@ -194,11 +194,9 @@ attempts (`temporal-B-r1`, `temporal-B-r2`) made no LLM call.
 
 ## Still to do
 
-- [ ] **Contract-path scoring** (pre-registration §4): garbanzo's scorers through web-next's
-      adapter, against the bases above. Read access is in place (addendum, "Access").
+- [x] **Contract-path scoring** (pre-registration §4): passed; see the last addendum.
 - [ ] **The bill:** dollars from OpenAI's usage page.
-- [ ] **Teardown:** drop `utopia_bench` and stop the :1526 server once both scorers have read the
-      bases.
+- [x] **Teardown:** done 2026-10-16; see the last addendum.
 
 ## Addendum (2026-10-16, same day): contracts diagnostic on gpt-5.6-luna
 
@@ -250,3 +248,35 @@ discounted). The server log has one more gpt-5.6-luna call than the runs: the se
   - Checked: it reads a base (200) and is refused a PATCH on a base and a PUT on the workspace
     settings (403).
   - It goes with the instance at teardown.
+
+## Addendum (2026-10-16, same day): the contract-path reference check, and teardown
+
+**The reference check passed** (pre-registration §4). These figures are garbanzo's, reported by
+message on 2026-10-16. The write-up is glowing-garbanzo `owm/docs/b20-practice-results.md` at
+55923d2.
+
+- **How it ran:**
+  - BlueLeaf's adapter (glowing-garbanzo 5d5a5f7), a production build, read every baseline base:
+    REST with the viewer login, MCP with the read token.
+  - `evaluation/reference.py` (blueleaf-knowledge-foundation 9df594b) compared each base with
+    `results-digest.json`.
+
+| Set | Contract path against the bench scorer |
+|---|---|
+| Identity | 8 of 8 bases equal (P, R, F1 and the pair counts) |
+| Recall | 2 of 2 equal, item by item: the bench scorer's hits less the 11 qualifier and time-word items, 30 and 34 (finding 3) |
+| Temporal | 6 of 6 equal question by question, **when the adapter also serves today's foundation's own `holds_from`/`holds_to` at `x-holds`** (G1, served beside the contract as B-20 serves its own) |
+
+- **On stated validity alone, 4 of the 6 temporal runs differ.** For example, A-r2's
+  "Li Si head_of Project Aurora" has `valid_from` null and `holds_from` 2024-07-05. That's G1,
+  measured.
+- **One adapter bug was found and fixed:** K13's `known_at` compared by day. No score moved,
+  because the scorers read record time through K15.
+
+**Teardown (2026-10-16):**
+- `utopia_bench` was archived first with `pg_dump`, without the data of `llm_settings`,
+  `personal_tokens` and `oidc_identities`. The archive is in `_owm-local/`, gitignored, mode
+  600, 204 MB.
+- The :1526 server was stopped, and `DROP DATABASE utopia_bench` run.
+- The live instance (:1516) and its `utopia` database were untouched throughout.
+- The read token and viewer login files were deleted, since they died with the instance.
