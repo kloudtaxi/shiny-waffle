@@ -132,3 +132,25 @@ from the same frozen sha. The exam's pre-registration has the arms (D3).
   change is `PROMPT_WITHOUT_IDENTIFIERS`, which removes "; two identifiers from one system" (an assert
   checks the clause exists). With the rules off, resolve reads no identifiers. Extraction still reads
   them and K16 serves them, under the U-31 label. **Matches D3.**
+
+## Fourth read: 28ca5d9 → 02e9cc9, the new freeze candidate (2026-10-17)
+
+- **Extraction:** the diff of `extract.py` and `classes.py` is empty. The entity judge's prompt in
+  `resolve.py` is unchanged.
+- **New: predicate resolution** (`resolve_predicates` and `PREDICATE_PROMPT`). It joins two
+  single-valued predicates on one thing when:
+  - their names are one word apart;
+  - they hold the same kind of value;
+  - no document uses both;
+  - and the model judges them "same" from their own facts.
+
+  It's the same in both arms.
+  - **Pass.** Its example and its tests come from logistics: a shipment's `pickup_date` and
+    `pickup_deadline`, SH-1001. It names no trap.
+  - It does what superseded-fact handling needs: a later value of one term closes the earlier one.
+    But it does so for any term, and its motivation is the practice set's contract drift (the budget
+    deadlines).
+  - **Effect on the exam:** P4 reads both stated validity and `x-holds`. An alias changes only
+    which facts close which in `x-holds`, so the stated-validity read is untouched by it.
+- **Also in the diff:** load-lab's `--check` (cli.py, and its test), and aliases followed in reads
+  (facts.py, store.py).
