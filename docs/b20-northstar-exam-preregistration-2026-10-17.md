@@ -64,8 +64,9 @@ holds the reader's view fixed and changes only the foundation behind it.
   - **Not `MANIFEST.yaml`.** It's the lab build's own file, not a source system's, and its
     descriptions point at answers: "a similarly named but different customer", "the current Acme
     NS-500 … exception" against "the earlier (2023)", "legal names differ from CRM display names".
-    The lab's own runs have always uploaded only the CSVs and the Markdown. BlueLeaf's live base, and
-    B-20's plan's "39 files", include it.
+    The lab's own runs have always uploaded only the CSVs and the Markdown, and so did BlueLeaf's live
+    base: it holds 38 documents, none of them the manifest (checked through the adapter, 2026-10-17).
+    B-20's plan's "39 files" counted it.
   - **Not untracked files**, such as the `.DS_Store` in one variant folder.
   - Never the answer key, evaluation, truth or site.
 - **Each corpus is its own base**, in each foundation and arm. The names are neutral and the same in
@@ -81,7 +82,6 @@ holds the reader's view fixed and changes only the foundation behind it.
   - **BlueLeaf's live base** (2026-10-13: 1,907 exact of 3,241 pieces of evidence) is quoted beside
     the fresh base as a reference, never in its place:
     - it was loaded another way (pushed through the API, not uploaded);
-    - it holds `MANIFEST.yaml`;
     - it has no variants.
 
 ## 3. Part 1: the foundation
