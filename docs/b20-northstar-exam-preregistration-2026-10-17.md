@@ -1,13 +1,17 @@
-# B-20's Northstar exam: pre-registration (draft, 2026-10-17)
+# B-20's Northstar exam: pre-registration (2026-10-17)
 
-**Status: a draft for the user's decisions (§9).** It's committed before B-20's freeze sha is named,
-so nothing in how the exam is scored can follow B-20's practice results.
+**Status: pre-registered; the lab's build (§7) comes next, then B-20's freeze.** It's committed
+before B-20's freeze sha is named, so nothing in how the exam is scored can follow B-20's practice
+results.
 
 **Decided (the user, 2026-10-17):**
 - **Scope:** the foundation and the OWM on top of it, in one exam.
 - **Acme's three records as one customer (U-31):** reported as a **feature check**, labelled "built
   knowing the corpus". The identifier rules can't be tuned on the practice set
   (`docs/b20-fewshot-review-2026-10-17.md`).
+- **D1, today's foundation's bases:** fresh, on a throwaway second server (§2).
+- **D2, Part 2's scenarios:** delegated to the lab ("from a product manager's perspective; cost is
+  relative to benefit"). **All 45: discount, credit and SLA** (§9 has the reasoning).
 
 **Standing rulings this inherits:**
 - **Practice set and exam** (the user, 2026-10-16): Northstar is run once, on B-20's frozen sha. A
@@ -19,12 +23,12 @@ so nothing in how the exam is scored can follow B-20's practice results.
 ```mermaid
 flowchart TB
     E["dataset/evidence at HEAD<br/>(= 571baac: 39 files)<br/>+ two variants"] --> B20["B-20 at the frozen sha<br/>3 bases, one extraction each"]
-    E --> T["Today's foundation<br/>3 bases (§2, D1)"]
-    B20 --> P1["Part 1: the foundation<br/>alignment · the lab's true facts ·<br/>identity · temporal traps · cost"]
+    E --> T["Today's foundation<br/>3 fresh bases (§2)"]
+    B20 --> P1["Part 1: the foundation<br/>alignment · the lab's true facts ·<br/>identity · temporal traps ·<br/>SLA's operational data · cost"]
     T --> P1
     B20 -->|contract| CR["The contract reader<br/>(one lab tool surface)"]
     T -->|"contract, through<br/>web-next's adapter"| CR
-    CR --> P2["Part 2: the OWM on top<br/>blind reader + procedure +<br/>request record, S01–S25 (D2)"]
+    CR --> P2["Part 2: the OWM on top<br/>blind reader + procedure +<br/>request record, S01–S45"]
 ```
 
 Both parts read each foundation **only through the foundation contract (v0.2)**, so the comparison
@@ -42,7 +46,7 @@ holds the reader's view fixed and changes only the foundation behind it.
   never the answer key, evaluation, truth or site.
 - **B-20:** one extraction per corpus, at the frozen sha. Its sha, its classes, prompt and
   few-shots are named in the run before the first upload.
-- **Today's foundation (D1, recommended):** three fresh bases on a throwaway second server, as for
+- **Today's foundation (D1, decided):** three fresh bases on a throwaway second server, as for
   the practice baseline: the same binary, BlueLeaf's base's own settings (packs, flags, governance
   off, luna at `low`), loaded in the same window as B-20.
   - **BlueLeaf's live base** (2026-10-13: 1,907 exact of 3,241 pieces of evidence) is quoted beside
@@ -61,11 +65,12 @@ foundations. The scorers are committed here before the freeze (§7).
 | **P3a** | **U-31: CRM-2048, C-1001 and ACME-MFG-2025 as one customer** | K16 for each identifier, then whether they're one entity | **No: a feature check** (decided) |
 | **P3b** | **Acme Industrial Supply (CRM-2091 / C-1044) stays separate**, and no two of the lab's customers are merged | K15 by name, then the entities' identifiers and facts | Yes. The practice set has namesakes (the two 张伟) |
 | **P4** | **Temporal traps at the foundation level:** the 10% exception (2023–25) and the 15% one (2025–28) both held, each with its own validity; the 2023 exception's end date held, despite its "Status: Active" line | K13 with `valid_at` on dates either side of each boundary | Yes |
-| **P5** | **Cost:** calls and tokens per base, from each foundation's own logs | As the practice baseline did | n/a |
+| **P5** | **SLA's operational data, held exactly.** For the ten tickets S36–S45 name: each ticket's opened and restored times (20) and its 45 events' times, and the 11 holidays in the holiday calendar: 76 items | The value served against the evidence row's own text: the same instant, with the zone the source wrote (Cedar and Akron in EDT) | Yes |
+| **P6** | **Cost:** calls and tokens per base, from each foundation's own logs | As the practice baseline did | n/a |
 
 - **n = 1 per foundation per corpus**, as ruled. The practice set's noise is quoted beside each
-  measure (identity F1 ±0.05; recall ±2.7 of 52). P2 and P4 are counts on 26 and 4 items, so a
-  difference of one item is reported as one item, never as a rate.
+  measure (identity F1 ±0.05; recall ±2.7 of 52). P2, P4 and P5 are counts on 26, 4 and 76 items,
+  so a difference of one item is reported as one item, never as a rate.
 - **Today's foundation's K16:** it can't serve K16 at all (U-31), so P3a scores it "not served".
   That's a capability difference, reported as such.
 
@@ -95,29 +100,41 @@ tools and the same neutral descriptions for both foundations:
 - **B-20** is read directly, with a service token. **Today's foundation** is read through web-next's
   adapter at a sha named before the run, with a read-only login and a read token (as in the
   reference check), held in local-only files and never printed.
-- **The OWM:** `owm/procedures/discount-approval.md` appended to the system prompt, and the request
-  record in the question. With curated facts that configuration got 15/15 on S01–S05, three runs
-  each (2026-09-28). The procedure's path and sha256 go in each run's setup file.
+- **The OWM:** the scenario's procedure appended to the system prompt
+  (`owm/procedures/discount-approval.md` for S01–S25, `credit-limit.md` for S26–S35,
+  `sla-response.md` for S36–S45), and the request record in the question. Each procedure's path and
+  sha256 go in each run's setup file.
 
-**Questions (D2, recommended: S01–S25, 27 questions with S06a–c):**
+**Questions (D2, decided: S01–S45, 47 questions with S06a–c):**
 - **The existing texts, byte for byte.** Only the `kb` column changes.
   - S01–S05 and S09–S20, with their request records: `runs/2026-09-30-owm-measurements/
     01-02-procedure/questions.tsv`.
   - S06a–c, S07 and S08, which aren't decisions and have no request: `runs/2026-09-28-utopia-aad5b06/
     questions.tsv`, the texts the luna baseline asked.
   - S22–S25, the submitted requests: `runs/2026-10-02-jev-probe/j3/questions.tsv`.
-- **S21 has no text yet.** It's written from its scenario in the same form and committed with this
-  pre-registration, before any run.
-- **Not the credit and SLA scenarios (S26–S45)** unless the user chooses them: no reader has ever been
-  run on them, so they would need new texts, request records and a scorer, which is a new instrument
-  inside the exam.
+- **Credit and SLA, from experiments 5 and 6's own harnesses** (`runs/2026-10-03-exp5-credit/
+  run_reader.py`, `runs/2026-10-03-exp6-sla/run_reader.py`): the same user message, the scenario's
+  question and its request record, **less the gold evidence** those runs appended. Here the reader
+  finds the evidence through the tools instead.
+- **S21 has no text yet.** It's built from its scenario in the form `01-02-procedure/
+  build_questions.py` uses, and committed with the build (§7).
+- **A pilot** before the freeze: C1 once on S21 and S26–S45, on today's foundation's live base
+  (about $7). It checks the harness end to end (the message without evidence, the tools, the
+  scorers), not either foundation. Its answers are sealed (§6.1) and never scored as results.
 
 **Runs:** C1 once and C2 three times per foundation, as the lab's reader baselines have run.
 
 **Scoring:**
-- **Primary:** each answer's outcome against the scenario's `expected:` decision, auto-scored as in
-  `01-02-procedure/score.py`. Also the **unsafe count**: an approval where the key says review,
-  evidence or rejection.
+- **Primary, auto-scored with each process's own scorer:**
+  - discount: the outcome against the scenario's `expected:`, as in `01-02-procedure/score.py`;
+  - credit: experiment 5's pass rule (outcome, eligibility and whether the requestor is authorised;
+    for an approval, the approvers);
+  - SLA: experiment 6's strict / core / fail, where core is the outcome, severity, breach findings and
+    credit, and strict adds every obligation with its holder and due time.
+  - Also each process's **unsafe count**, by its experiment's rule.
+- **The gold-evidence ceiling.** The same reader with every document in its message got credit
+  27/30 and SLA 16/20 strict and 20/20 core (experiments 5 and 6). Each foundation's score is reported
+  beside it: what the reader loses when it has to find the evidence in that foundation.
 - **S06–S08** (fact selection, provenance, identity) are read by hand, as in the baselines.
 - **The user's grades** in the Ledger settle disagreements and stand beside the auto-score, never
   overwritten.
@@ -161,8 +178,8 @@ flowchart LR
 | Item | Proof |
 |---|---|
 | **The contract reader** (`lab/contract_reader/`, stdlib MCP over the contract's read routes) | Tests against the adapter on BlueLeaf's live base and against B-20 at faee175. K10 and K16 are added when F4 lands |
-| **P1–P4 scorers** (`lab/exam/`) | Unit tests on fixtures; a dry run on today's foundation's live base, sealed (§6.1) |
-| **S21's question** | Committed here, oracle-checked like the others |
+| **P1–P5 scorers** (`lab/exam/`) | Unit tests on fixtures; a dry run on today's foundation's live base, sealed (§6.1) |
+| **The question files:** S21 built; credit's and SLA's messages from experiments 5 and 6, less the evidence; the three scorers wired to the reader's outputs | The pilot (§4), sealed |
 | **The run scripts** (load, probe, run, score), with the spend guard | A dry run with no spend: B-20's scripted mode and a probe |
 
 ## 8. Spend
@@ -171,12 +188,30 @@ flowchart LR
 |---|---|---|
 | B-20, three bases | About $1 in all. Practice: 134k prompt tokens per recall base, and Northstar is under twice recall's text | Stop at a projected $30 for both foundations together |
 | Today's foundation, three fresh bases | About $3–5. It spent 5.4M prompt tokens on one recall base | Same guard, measured from its own log |
-| The reader, S01–S25 | About $30 per foundation (C1 about $4, C2 about $9 a batch), so about $60 on the Claude Code plan | Stop at $100 on the plan |
-| With S26–S45 added | About $105 | The same $100 stop, raised only if the user says so |
+| The reader, S01–S45 (47 questions) | About $50 per foundation (C1 about $9, C2 about $14 a batch; SLA's answers are the longest, about $0.33 each in experiment 6), so about $100 on the Claude Code plan, plus about $7 for the pilot | Stop at $130 on the plan |
 
-## 9. Decisions for the user
+## 9. Why all 45 (D2, the lab's call)
 
-| # | Decision | Recommendation |
+The user delegated this one: "from a product manager's perspective; cost is relative to benefit".
+
+| Scenarios | What the exam learns from them | Cost |
 |---|---|---|
-| **D1** | Today's foundation's bases: fresh, or BlueLeaf's live base? | **Fresh**, on a throwaway second server in the same window. The live base is quoted beside it |
-| **D2** | Which scenarios Part 2 asks | **S01–S25**, with their existing texts. Credit and SLA would make the exam the reader's first run on them |
+| **Discount, S01–S25** | The process BlueLeaf demos (the Deal Desk Agent, S22), and the lab's longest record | About $60 |
+| **Credit, S26–S35** | A second decision type. It needs what a foundation must get right: ERP rows with dates (S30–S31's late invoice), and whose guarantee is whose (S32, a similar name) | About +$20 |
+| **SLA, S36–S45** | A decision of another shape: event-triggered, driven by clocks. It rests on operational rows read exactly: ticket times in the site's zone, holidays, maintenance notices. That's where a foundation's precision shows most | About +$20 |
+
+- **Credit and SLA cost little to add.** Experiments 5 and 6 already have the messages, the
+  procedures, auto-scorers and a ceiling: the same reader on gold evidence. So no new instrument goes
+  into the exam, and the user's grading load stays where it was.
+- **What the extra $40 buys:**
+  - the claim becomes "the foundation swap holds across three processes", not "on the one we've tuned
+    around";
+  - each process gets a three-way read, gold evidence against each foundation, so the loss is
+    measured, not guessed.
+
+  That's the claim a design partner or an investor would test first.
+- **P5 stays in Part 1.** If SLA's reader results fall short of the ceiling, it shows whether the
+  times were in the foundation at all.
+
+**A correction:** the options I gave the user on 2026-10-17 said no reader had ever run on credit or
+SLA. That was wrong. Experiments 5 and 6 ran one, on gold evidence, and this design reuses both.
