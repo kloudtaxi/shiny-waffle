@@ -75,3 +75,38 @@ time zones and no clocks.
 - **This doesn't make U-31 wrong to build.** It's a product requirement, and today's foundation can't
   serve K16 at all. It's about how the exam reports it. The options are for the user (in the session
   that opened this note).
+
+## Second read: faee175 → 56bb38e (F4), 2026-10-17
+
+**Read:** the diff of `src/foundation/extract.py` and `classes.py`, plus the new `resolve.py` (its
+`PROMPT` and its rules) and `tests/test_resolve.py`, at blueleaf-knowledge-foundation **56bb38e**.
+
+| What changed | Verdict |
+|---|---|
+| **CLASSES** | Unchanged |
+| **EXAMPLES:** example 3's `Customer` is now `Shipper` (text, term and predicate) | **Pass.** It moves away from the exam's vocabulary, as note 1 suggested |
+| **PROMPT, the namesake rule:** "张伟 [财务部总监]" | **Pass for the exam.** The example is the identity practice set's own words (d00, d04, d07), so it flatters the practice score on that pair. It doesn't touch Northstar |
+| **PROMPT, the identifier rule:** an identifier gets `system`, and `record: "yes"` when the text is "that system's own record, such as a row of its own export" | Part of K16, so it's **under the U-31 label** (decided). The practice set has no exports, so "a row of its own export" is used only on the exam |
+| **The document line** ("The text is from the document '…' (file …)") | **Pass.** Every foundation holds a file's name. The code comment ties it to exports ("a system's own export says so in its name") |
+| **`resolve.py`, the judge's prompt:** a name only proposes; facts decide; a person needs a tying fact | Generic, and practice-based (namesakes, renames, translations, the dives), **except one line,** below |
+
+### The finding: the identifier rules reach beyond U-31
+
+- **The join.** `resolve.py` point 2: "a shared identifier joins without asking … (a CRM account and
+  an ERP customer that carry one DUNS number)". That's the exam's identity-drift bridge, in words.
+  - Its test (`test_resolve.py`, `EXPORT_ERP` and `EXPORT_CRM`) is that trap in logistics clothing:
+    an ERP export's legal name and a CRM export's shorter name, one DUNS, files named
+    `erp-customers.csv` and `crm-accounts.csv`.
+  - The practice set has no CRM, ERP or DUNS, so none of this is tuned on it.
+- **The judge's "different".** It includes "two identifiers from one system". That's how the
+  similar-name trap is settled (Acme Manufacturing's CRM id against Acme Industrial Supply's), and
+  the practice set has no identifiers to ground it.
+- **Why the label isn't enough.** The ruling labels **P3a** (U-31) a feature check, and "the other
+  measures carry the comparison". These rules also decide:
+  - **P3b**, Acme Industrial kept apart, which the pre-registration called blind;
+  - **P2**, where Acme's facts live;
+  - **Part 2.** S01–S05, S08, S13 and S26–S35 all ask about Acme, so the reader gets one Acme across
+    CRM, ERP and the contract because of a rule designed against the exam.
+- **Not a breach of a rule as written.** Guard 2 covers few-shots, and these are code and a judge's
+  prompt. Guard 3 ("tuned only on the practice set") is what it strains. It's for the user to rule
+  on.
