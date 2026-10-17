@@ -8,9 +8,12 @@ search (K10, glowing-garbanzo 320cb83), so this compares it with today's own sea
 (`POST /api/v1/kbs/:id/search`) on each of the three fresh bases:
 - **The queries** are every document's file name, with `_` as spaces and no extension. They come
   from the corpus's own file list, the same for every base, and are chosen by no one.
-- **A hit matches** when the adapter's passage is in today's chunk's document and holds that
-  chunk's text (whitespace aside), in today's rank order. Today's chunks that make no passage are
-  dropped by design (K0's K10 note). They're counted, and the rest must match in order.
+- **A hit matches** when the adapter's passage is in a chunk's document and has its words
+  (whitespace aside), among today's results for the same query. A CSV chunk is today's rendered
+  table and its passage the raw row, so every cell of the row must be in the chunk. Today's chunks
+  that make no passage
+  are dropped by design (K0's K10 note). They're counted. Every adapter hit must match a chunk;
+  the rank agreement is reported, not required, since today's order varies where scores tie.
 - **Also:** K2 lists as many documents as today's own documents route does.
 
 Prints and writes `parity.json` in the run folder: counts only, no text.
@@ -62,27 +65,46 @@ def queries(filenames: list[str]) -> list[str]:
     )
 
 
-def compare(today_hits: list[dict[str, Any]], adapter_hits: list[dict[str, Any]]) -> dict[str, int]:
-    """Today's chunks in rank order against the adapter's passages."""
-    matched = dropped = 0
-    i = 0
-    for chunk in today_hits:
-        if i < len(adapter_hits):
-            p = adapter_hits[i]["passage"]
-            if p.get("doc_id") == chunk.get("document_id") and _ws(chunk.get("text", "")) in _ws(
-                p.get("text", "")
-            ):
-                matched += 1
-                i += 1
-                continue
-        dropped += 1
-    wrong = len(adapter_hits) - i  # adapter hits left that matched no chunk in order
+def same(chunk: dict[str, Any], passage: dict[str, Any]) -> bool:
+    """A passage is its chunk: the same document, and the same words. A CSV's chunk is today's
+    rendered table and its passage the raw row, so there every cell of the row must be in the
+    chunk."""
+    if passage.get("doc_id") != chunk.get("document_id"):
+        return False
+    a, b = _ws(chunk.get("text", "")), _ws(passage.get("text", ""))
+    if a and b and (a in b or b in a):
+        return True
+    cells = [c.strip().strip('"') for c in re.split(r"[,\n]", passage.get("text", "")) if c.strip()]
+    return bool(cells) and all(c in a for c in cells)
+
+
+def compare(
+    today_hits: list[dict[str, Any]], adapter_hits: list[dict[str, Any]], limit: int
+) -> dict[str, int]:
+    """Each adapter hit against today's chunks for the same query, as a set. Today's own order
+    isn't stable where scores tie (seen 2026-10-17: one query's order changed between three
+    identical calls), so rank agreement is counted, not required, and today is read twice as deep
+    as the adapter, so a hit a tie pushed past the cut-off still finds its chunk. `dropped` is
+    today's top `limit` chunks that no hit matched."""
+    used: set[int] = set()
+    matched = in_order = 0
+    for rank, hit in enumerate(adapter_hits):
+        k = next(
+            (k for k, ch in enumerate(today_hits) if k not in used and same(ch, hit["passage"])),
+            None,
+        )
+        if k is None:
+            continue
+        used.add(k)
+        matched += 1
+        in_order += k == rank
     return {
-        "today": len(today_hits),
+        "today": min(len(today_hits), limit),
         "adapter": len(adapter_hits),
         "matched": matched,
-        "dropped": dropped,
-        "unmatched_adapter_hits": wrong,
+        "same_rank": in_order,
+        "dropped": sum(1 for k in range(min(len(today_hits), limit)) if k not in used),
+        "unmatched_adapter_hits": len(adapter_hits) - matched,
     }
 
 
@@ -101,11 +123,13 @@ def main() -> None:
         k2 = c.pages(f"/kbs/{kb}/documents", {"limit": 100})
         per_query: list[dict[str, Any]] = []
         for q in queries([d["filename"] for d in k2]):
-            t = today.call("POST", f"/kbs/{kb}/search", {"q": q, "top_k": a.limit})
+            t = today.call("POST", f"/kbs/{kb}/search", {"q": q, "top_k": 2 * a.limit})
             ad = c.request("POST", f"/kbs/{kb}/search", body={"q": q, "limit": a.limit})
             hits = ad.body.get("hits", []) if ad.status == 200 and isinstance(ad.body, dict) else []
-            per_query.append({"q": q, "status": ad.status, **compare(t.get("results", []), hits)})
-        keys = ("today", "adapter", "matched", "dropped", "unmatched_adapter_hits")
+            per_query.append(
+                {"q": q, "status": ad.status, **compare(t.get("results", []), hits, a.limit)}
+            )
+        keys = ("today", "adapter", "matched", "same_rank", "dropped", "unmatched_adapter_hits")
         totals = {k: sum(r[k] for r in per_query) for k in keys}
         report[corpus] = {
             "documents": {"today": native, "k2": len(k2)},

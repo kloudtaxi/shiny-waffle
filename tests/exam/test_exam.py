@@ -190,3 +190,33 @@ def test_todays_loader_checks_every_corpus_against_the_hash_list() -> None:
     assert not any("MANIFEST" in n for n in names)
     with pytest.raises(SystemExit):
         today.psql("SELECT 1", db="utopia")  # the live database is never touched
+
+
+def test_parity_matches_hits_as_a_set_and_csv_rows_by_their_cells() -> None:
+    from exam.parity import compare, queries
+
+    today = [
+        {"document_id": "d1", "text": "doc_id: X\ntitle:  Pricing"},
+        {"document_id": "d2", "text": "| id | customer |\n| INV-1 | C-1044 |"},
+        {"document_id": "d3", "text": "tie at the cut-off"},
+        {"document_id": "d4", "text": "past the cut-off"},
+    ]
+    hits = [
+        {"passage": {"doc_id": "d2", "text": "INV-1,C-1044"}},
+        {"passage": {"doc_id": "d1", "text": "doc_id: X title: Pricing"}},
+        {"passage": {"doc_id": "d4", "text": "past the cut-off"}},
+    ]
+    assert compare(today, hits, 3) == {
+        "today": 3,
+        "adapter": 3,
+        "matched": 3,
+        "same_rank": 0,
+        "dropped": 1,
+        "unmatched_adapter_hits": 0,
+    }
+    wrong = [{"passage": {"doc_id": "d9", "text": "doc_id: X title: Pricing"}}]
+    assert compare(today, wrong, 3)["unmatched_adapter_hits"] == 1
+    assert queries(["acme_pricing_exception_2023.md", "erp_invoices.csv"]) == [
+        "acme pricing exception 2023",
+        "erp invoices",
+    ]
