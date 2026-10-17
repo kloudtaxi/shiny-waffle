@@ -179,3 +179,14 @@ def test_p2_and_p4_items_and_the_judges_reading() -> None:
     assert majority([None, None, None]) == "no answer"
     rs = readings(snap | {"anchors": {}})
     assert len(rs) == 26 + 4 + sum(1 for i in its["p2"] + its["p4"] if i.get("dated"))
+
+
+def test_todays_loader_checks_every_corpus_against_the_hash_list() -> None:
+    from exam import today
+
+    counts = {c: len(today.corpus_files(c)) for c in today.NAMES}
+    assert counts == {"base": 38, "missing-contract-evidence": 35, "missing-guarantee-evidence": 37}
+    names = [rel for rel, _ in today.corpus_files("base")]
+    assert not any("MANIFEST" in n for n in names)
+    with pytest.raises(SystemExit):
+        today.psql("SELECT 1", db="utopia")  # the live database is never touched
