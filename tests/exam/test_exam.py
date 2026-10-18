@@ -213,9 +213,13 @@ def test_parity_matches_hits_as_a_set_and_csv_rows_by_their_cells() -> None:
         "same_rank": 0,
         "dropped": 1,
         "unmatched_adapter_hits": 0,
+        "empty": 0,
     }
     wrong = [{"passage": {"doc_id": "d9", "text": "doc_id: X title: Pricing"}}]
     assert compare(today, wrong, 3)["unmatched_adapter_hits"] == 1
+    # no hits where today answered isn't a pass, and no hits where today answered nothing is fine
+    assert compare(today, [], 3)["empty"] == 1
+    assert compare([], [], 3)["empty"] == 0
     assert queries(["acme_pricing_exception_2023.md", "erp_invoices.csv"]) == [
         "acme pricing exception 2023",
         "erp invoices",

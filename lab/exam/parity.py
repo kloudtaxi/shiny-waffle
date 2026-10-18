@@ -14,6 +14,9 @@ search (K10, glowing-garbanzo 320cb83), so this compares it with today's own sea
   that make no passage
   are dropped by design (K0's K10 note). They're counted. Every adapter hit must match a chunk;
   the rank agreement is reported, not required, since today's order varies where scores tie.
+- **An empty answer isn't a pass:** every query today answers must get at least one adapter hit
+  (seen 2026-10-17: the adapter answered 200 with no hits on every query, and the first version of
+  this check passed it).
 - **Also:** K2 lists as many documents as today's own documents route does.
 
 Prints and writes `parity.json` in the run folder: counts only, no text.
@@ -105,6 +108,7 @@ def compare(
         "same_rank": in_order,
         "dropped": sum(1 for k in range(min(len(today_hits), limit)) if k not in used),
         "unmatched_adapter_hits": len(adapter_hits) - matched,
+        "empty": int(bool(today_hits) and not adapter_hits),
     }
 
 
@@ -129,7 +133,15 @@ def main() -> None:
             per_query.append(
                 {"q": q, "status": ad.status, **compare(t.get("results", []), hits, a.limit)}
             )
-        keys = ("today", "adapter", "matched", "same_rank", "dropped", "unmatched_adapter_hits")
+        keys = (
+            "today",
+            "adapter",
+            "matched",
+            "same_rank",
+            "dropped",
+            "unmatched_adapter_hits",
+            "empty",
+        )
         totals = {k: sum(r[k] for r in per_query) for k in keys}
         report[corpus] = {
             "documents": {"today": native, "k2": len(k2)},
@@ -137,6 +149,7 @@ def main() -> None:
             "search": totals,
             "non_200": sum(r["status"] != 200 for r in per_query),
             "pass": totals["unmatched_adapter_hits"] == 0
+            and totals["empty"] == 0
             and all(r["status"] == 200 for r in per_query)
             and native == len(k2),
         }
