@@ -1,0 +1,38 @@
+{
+ "arms": {
+  "b20": {
+   "mode": "bearer",
+   "url": "http://127.0.0.1:8200",
+   "token_file": "_owm-local/b20-reader.token",
+   "kbs": {
+    "base": "acdb1d91-df97-4fe9-83e7-fab543523170",
+    "missing-contract-evidence": "2c9a91bd-efd8-46e7-a2db-d8f4c0341577",
+    "missing-guarantee-evidence": "afb87795-a57f-4480-881e-1b65349e84e1"
+   },
+   "foundation": "B-20, blueleaf-knowledge-foundation 02e9cc9, identifier rules on, store data/exam-02e9cc9, :8200 (K10 hybrid)"
+  },
+  "b20-ids-off": {
+   "mode": "bearer",
+   "url": "http://127.0.0.1:8200",
+   "token_file": "_owm-local/b20-reader.token",
+   "kbs": {
+    "base": "b48dcbaa-299b-4865-8346-990f0bb5067a",
+    "missing-contract-evidence": "2f3c13a9-9ffb-497c-95cf-de18293e123f",
+    "missing-guarantee-evidence": "c73da094-2a17-4065-9bdc-344037bbdd70"
+   },
+   "foundation": "B-20, blueleaf-knowledge-foundation 02e9cc9, identifier rules off (the ' (2)' bases), same store and server"
+  },
+  "today": {
+   "mode": "adapter",
+   "url": "http://127.0.0.1:3200",
+   "person": "sarah.chen@northstar.example",
+   "kbs": {
+    "base": "01a14c97-2de1-7de0-a1cb-79adb046f3ae",
+    "missing-contract-evidence": "01a14c97-302d-70f0-9609-d1fedb5c1fa4",
+    "missing-guarantee-evidence": "01a14c97-3248-73b3-8819-db7ecc840620"
+   },
+   "foundation": "today's foundation (binary sha256 162f6891…) through web-next 7d108d4's adapter (producer aad5b06)"
+  }
+ },
+ "kb_ids_from": "each foundation's own K1, read by the lab on 2026-10-17 and matched by name"
+}

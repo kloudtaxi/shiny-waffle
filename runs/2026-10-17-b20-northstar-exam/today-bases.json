@@ -1,0 +1,26 @@
+{
+ "workspace": "01a14c97-2cdd-7663-9e9a-810288dc20a8",
+ "kbs": {
+  "base": "01a14c97-2de1-7de0-a1cb-79adb046f3ae",
+  "missing-contract-evidence": "01a14c97-302d-70f0-9609-d1fedb5c1fa4",
+  "missing-guarantee-evidence": "01a14c97-3248-73b3-8819-db7ecc840620"
+ },
+ "names": {
+  "base": "Northstar Industrial Systems",
+  "missing-contract-evidence": "Northstar Industrial Systems — missing contract evidence",
+  "missing-guarantee-evidence": "Northstar Industrial Systems — missing guarantee evidence"
+ },
+ "settings": {
+  "auto_extend_ontology": true,
+  "ontology_lang": "en",
+  "materialize_inferences": true,
+  "auto_type_resolution": true,
+  "governance": false
+ },
+ "models": {
+  "chat_model": "gpt-6-luna",
+  "chat_reasoning_effort": "low",
+  "embed_model": "text-embedding-3-small"
+ },
+ "made": "2026-10-17T21:19:20-0400"
+}

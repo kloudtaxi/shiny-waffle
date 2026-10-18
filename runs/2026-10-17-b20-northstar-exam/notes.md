@@ -1,7 +1,7 @@
-> **STATUS: READY, WAITING FOR THE USER'S GO (2026-10-17).** B-20 is frozen at 02e9cc9 (the user
-> accepted it). The lab's harness is built and dry-run on BlueLeaf's live base, sealed. Nothing from
-> Northstar has been loaded into an exam base yet. Pre-registration:
-> `docs/b20-northstar-exam-preregistration-2026-10-17.md` (amendments 2 and 3 in §§10–11).
+> **STATUS: RUNNING (2026-10-17, from 21:16 EDT).** The user gave the go. Every base is loaded,
+> parity passes (after amendment 4), and Part 1 and Part 2 are running on all three arms. Results
+> are sealed from garbanzo until the run is recorded. Pre-registration:
+> `docs/b20-northstar-exam-preregistration-2026-10-17.md` (amendments 2–4 in §§10–12).
 
 # B-20's Northstar exam
 
@@ -65,3 +65,48 @@ flowchart TB
 - **The source tree:** Utopia's HEAD is aad5b06. Its uncommitted diff now hashes to `7248adc6…`, not
   the `c4da9cc3…` the luna baseline recorded. The extra changes are in `web/`, Docker and env
   files, none of them part of the server binary. So the binary's sha256 is what identifies it.
+
+## The run's log (2026-10-17, EDT)
+
+**The lab: today's foundation**
+- 21:16: `today.py check`. The binary is unchanged: sha256 `162f6891…`; Utopia HEAD aad5b06; diff
+  `7248adc6…`.
+- 21:18: `utopia_exam` created, and the server started on :1526.
+- 21:19: three bases made (`today-bases.json`): packs `schema-org` and `w3c-org`, `gpt-6-luna` at
+  effort low, `text-embedding-3-small`.
+- 21:19–21:41: every corpus matched the hash list before the first upload; 38, 35 and 37 documents
+  loaded, none failed.
+- 21:20: the read token and the viewer were made. Garbanzo started web-next 7d108d4 on :3200
+  against them (BLUELEAF_ORG northstar).
+
+**Parity, and amendment 4**
+- First run: the adapter answered no hits on any query, and the first version of `parity.py`
+  passed that (its record is kept in the lab's scratchpad, `parity-first-vacuous.json`). The fix is
+  lab 4caf4fd: an empty answer now fails.
+- Cause: today's file upload records no version, and the adapter reads text, passages, hits and
+  evidence only for a recorded one. The user chose the fix: version 1 rows in `utopia_exam`
+  (`today.py versions`, lab ae2098d; pre-registration §12). Garbanzo restarted :3200, at the same
+  build, to drop the adapter's cached empty version lists.
+- Second run: passes on all three bases. All 1,100 adapter hits matched today's chunks (1,032 at
+  the same rank), with the same document counts (`parity.json`).
+
+**B-20 (garbanzo, at 02e9cc9, store `data/exam-02e9cc9`, :8200)**
+- Garbanzo's own permission check held its exam script until the user allowed it in that session.
+- A first attempt stopped before loading anything: macOS bash 3.2 treats an empty array under
+  `set -u` as unbound. That left one empty base. Garbanzo deleted the store, fixed the line in its
+  script (not in B-20), and started again from a fresh store.
+- Six bases, each loaded only after its files matched the hash list. Ids on, then ids off; the
+  ids-off arm is the " (2)" bases. None failed. The model calls, for the record: 656 calls;
+  2,302,890 prompt, 1,278,134 completion and 119,296 embedding tokens.
+- Garbanzo first relayed six wrong kb ids from a progress notice, then corrected them from its
+  store. The lab took the ids from :8200's own K1, read with the reader token, and matched them by
+  name (`arms.json`).
+- The lab's K0 check: contract 0.2, producer blueleaf-knowledge-foundation 0.1.0. It serves
+  K0–K10 and K13–K17. K10 is hybrid; its only note is that valid_at is taken but not applied.
+
+**Probes:** all six pass: C1 shows 9 tools and C2 6, on every arm.
+
+**A rule set before any B-20 answer (22:3x).** An answer that ends on an API error with no answer
+(a rate limit, an overload, a server error) is not an answer. It's moved aside as
+`<id>.infra-error.jsonl` and asked once more. Anything the reader finished stands as it is,
+including running out of turns. The same rule applies on every arm.
