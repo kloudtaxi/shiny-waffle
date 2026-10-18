@@ -240,6 +240,10 @@ def test_an_api_error_is_not_an_answer() -> None:
     answered = {"type": "result", "subtype": "success", "is_error": False, "result": "Approve."}
     assert reader.infra(limit) and reader.infra({})
     assert not reader.infra(out_of_turns) and not reader.infra(answered)
+    # the account's limit never counts toward a question's two infra errors
+    assert reader.account_limit(limit)
+    assert not reader.account_limit({**limit, "result": "API Error: 529 overloaded"})
+    assert not reader.account_limit(answered)
 
     from exam.judge import hollow, is_infra
 

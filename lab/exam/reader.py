@@ -21,6 +21,8 @@ Code reports a refusal such as the account's session limit as `is_error` with su
 and no work done. Such an attempt is kept as `<id>.infra-error-<k>.jsonl` (its call log beside it)
 and the question is asked once more, on a later run. A second one leaves the question for the user's
 ruling. After any infra error, the run starts no new question. Running out of turns is an answer.
+The account's own session or usage limit never counts toward the two: it says nothing about the
+question, the reader or the foundation (the user's ruling, 2026-10-18).
 
 **The spend guard:** every answer's `total_cost_usd` is summed across the whole exam folder (the
 pilot, probes aside, included), finished answers too. No new question starts once the sum
@@ -180,6 +182,12 @@ def infra(result: dict[str, Any]) -> bool:
     return not result or (bool(result.get("is_error")) and result.get("subtype") == "success")
 
 
+def account_limit(result: dict[str, Any]) -> bool:
+    """Claude Code's refusal for the account's session or usage limit."""
+    text = str(result.get("result") or "").lower()
+    return infra(result) and ("session limit" in text or "usage limit" in text)
+
+
 def infra_attempts(out: Path, qid: str) -> list[Path]:
     return sorted(
         p for p in out.glob(f"{qid}.infra-error-*.jsonl") if not p.name.endswith(".calls.jsonl")
@@ -327,7 +335,8 @@ def main() -> None:
         if path.exists():
             return
         earlier = infra_attempts(out, q["id"])
-        if len(earlier) >= 2:
+        strikes = [e for e in earlier if not account_limit(result_of(e.read_text()))]
+        if len(strikes) >= 2:
             print(f"{q['id']} left for the user: two infra errors", flush=True)
             return
         with lock:

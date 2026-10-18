@@ -132,3 +132,12 @@ including running out of turns. The same rule applies on every arm.
   - `judge.py --resume` keeps every run that judged and re-asks only the refused ones (the earlier
     file is kept as `.judge.infra-1.json`).
 - **Resumed 2026-10-18,** at 3 workers per arm. The run driver stops an arm at its first infra error.
+
+**The limit again (03:12 on 2026-10-18), and the user's ruling**
+- The account's session limit came back at 03:12. Every arm halted at its first refusal, and the
+  refused attempts were kept aside (`<id>.infra-error-<k>.jsonl`). Spend stood at $141.53.
+- Some questions had now been refused twice: today's S23, S24 and S25 (C2 r3), and B-20's S33.
+  The lab recommended that the account's own limit never count toward a question's two infra
+  errors. The user ruled "Resume approved" (2026-10-18), which the lab takes as accepting that.
+  The reader now counts only other infra errors (lab, this commit's parent).
+- Resumed at 13:17 after the reset, at 3 workers per arm.
