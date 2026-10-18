@@ -8,6 +8,9 @@
     uv run python lab/exam/today.py access --run runs/<exam>   # a read token and a viewer
     uv run python lab/exam/today.py versions --run runs/<exam> # version 1 rows (amendment 4)
 
+`load` now runs `versions` itself once extraction is done (after the exam, 2026-10-18), so a fresh
+instance's bases can be read through the adapter at once. The exam ran it by hand.
+
 As the practice baseline was run (shiny-waffle 3cbf3c2): the live instance's own binary, a second
 process on :1526, and its own data directory, against an ephemeral database on the same Postgres
 server. The live database is never written: every SQL statement here names `utopia_exam`.
@@ -350,6 +353,7 @@ def cmd_load(run: Path) -> None:
         print(f"{corpus}: {len(files)} files uploaded", flush=True)
     for corpus in plan:
         drain(rec["kbs"][corpus], f"{corpus}: extraction")
+    cmd_versions(run)  # amendment 4: an upload records no version, and the adapter needs one
     summary = {
         c: psql(
             "SELECT count(*) || ' documents, ' || count(*) FILTER (WHERE status='failed' OR "

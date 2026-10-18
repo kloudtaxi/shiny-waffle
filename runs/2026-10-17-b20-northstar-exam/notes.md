@@ -159,3 +159,19 @@ tree.
 - Part 2 was auto-scored with `score_part2.py`, and the tables come from `lab/exam/summarize.py`.
 - S06a–c, S07 and S08 were read blind: a shuffled packet with no arm labels, graded by Claude
   Sonnet against the answer key's rubric (`hand/`). The user's grades in the Ledger settle them.
+
+**Teardown (2026-10-18, after the record)**
+- **Shared with garbanzo** once e74b561 was pushed.
+- **Today's side (the lab):**
+  - the read token revoked and the viewer deactivated;
+  - `utopia_exam` archived to `_owm-local/exam-1526-utopia_exam-2026-10-18.sql.gz` (85 MB, local
+    only), without the data of `llm_settings`, `personal_tokens` or `deployment_settings`, and
+    checked for no key or token;
+  - :1526 stopped, and `utopia_exam` dropped (the live `utopia` and :1516 untouched);
+  - the local admin, token and viewer files deleted.
+  - `_owm-local/exam-1526/` (the server's data directory and log) is kept.
+- **B-20's side (garbanzo):**
+  - :3200 and :8200 stopped;
+  - the b20-reader grant removed from the exam store's tokens, and its file deleted;
+  - the exam store `data/exam-02e9cc9` kept as the record behind Part 1.
+- **Garbanzo's open action 2 is done:** `today.py load` now writes the version 1 rows itself.
