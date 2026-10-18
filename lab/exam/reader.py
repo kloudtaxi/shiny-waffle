@@ -16,6 +16,12 @@ secret is in it: a bearer token stays in its file, which only the MCP server rea
 - C2's text tools are hidden with `--disallowedTools`, never only left off the allowlist;
 - a question whose `.jsonl` exists is never asked again.
 
+**An API error isn't an answer** (the exam's rule, set 2026-10-17 before any B-20 answer). Claude
+Code reports a refusal such as the account's session limit as `is_error` with subtype `success`
+and no work done. Such an attempt is kept as `<id>.infra-error-<k>.jsonl` (its call log beside it)
+and the question is asked once more, on a later run. A second one leaves the question for the user's
+ruling. After any infra error, the run starts no new question. Running out of turns is an answer.
+
 **The spend guard:** every answer's `total_cost_usd` is summed across the whole exam folder (the
 pilot, probes aside, included), finished answers too. No new question starts once the sum
 reaches `--cap-usd`.
@@ -168,6 +174,18 @@ def result_of(stream: str) -> dict[str, Any]:
     return next((e for e in events(stream) if e.get("type") == "result"), {})
 
 
+def infra(result: dict[str, Any]) -> bool:
+    """An attempt that ended on an API error, not an answer: no result at all, or an error that
+    isn't the reader's running out of turns."""
+    return not result or (bool(result.get("is_error")) and result.get("subtype") == "success")
+
+
+def infra_attempts(out: Path, qid: str) -> list[Path]:
+    return sorted(
+        p for p in out.glob(f"{qid}.infra-error-*.jsonl") if not p.name.endswith(".calls.jsonl")
+    )
+
+
 def cost_so_far(run: Path) -> float:
     total = 0.0
     for p in run.rglob("*.jsonl"):
@@ -295,16 +313,27 @@ def main() -> None:
         "cap_usd": a.cap_usd,
         "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
     }
-    (out / "setup.json").write_text(json.dumps(setup, indent=1, ensure_ascii=False) + "\n")
+    name = "setup.json"
+    if (out / name).exists():  # a resume keeps the first setup and adds its own
+        name = f"setup-resume-{len(list(out.glob('setup-resume-*.json'))) + 1}.json"
+    (out / name).write_text(json.dumps(setup, indent=1, ensure_ascii=False) + "\n")
 
     lock = threading.Lock()
     spent = [cost_so_far(run)]
+    halted = [False]
 
     def one(q: dict[str, str]) -> None:
         path = out / f"{q['id']}.jsonl"
         if path.exists():
             return
+        earlier = infra_attempts(out, q["id"])
+        if len(earlier) >= 2:
+            print(f"{q['id']} left for the user: two infra errors", flush=True)
+            return
         with lock:
+            if halted[0]:
+                print(f"{q['id']} skipped: an infra error halted this run", flush=True)
+                return
             if spent[0] >= a.cap_usd:
                 print(f"{q['id']} skipped: the spend guard is at ${spent[0]:.2f}", flush=True)
                 return
@@ -318,9 +347,20 @@ def main() -> None:
             (out / f"{q['id']}.error.txt").write_text(str(exc)[:4000])
             print(f"{q['id']} FAILED: {str(exc)[:200]}", flush=True)
             return
+        res = result_of(stream)
+        c = float(res.get("total_cost_usd") or 0)
+        if infra(res):
+            k = len(earlier) + 1
+            (out / f"{q['id']}.infra-error-{k}.jsonl").write_text(stream)
+            if log.exists():
+                log.rename(out / f"{q['id']}.infra-error-{k}.calls.jsonl")
+            with lock:
+                spent[0] += c
+                halted[0] = True
+            print(f"{q['id']} INFRA ERROR {k}: {str(res.get('result'))[:120]}", flush=True)
+            return
         path.write_text(stream)
         (out / f"{q['id']}.md").write_text(summarize(q, a.arm, a.variant, kb, stream))
-        c = float(result_of(stream).get("total_cost_usd") or 0)
         with lock:
             spent[0] += c
         print(

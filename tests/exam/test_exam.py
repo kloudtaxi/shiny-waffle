@@ -224,3 +224,41 @@ def test_parity_matches_hits_as_a_set_and_csv_rows_by_their_cells() -> None:
         "acme pricing exception 2023",
         "erp invoices",
     ]
+
+
+def test_an_api_error_is_not_an_answer() -> None:
+    # Claude Code's session-limit refusal, as the exam recorded it on 2026-10-17
+    limit = {
+        "type": "result",
+        "subtype": "success",
+        "is_error": True,
+        "num_turns": 1,
+        "total_cost_usd": 0,
+        "result": "You've hit your session limit · resets 2:40am (America/New_York)",
+    }
+    out_of_turns = {"type": "result", "subtype": "error_max_turns", "is_error": True}
+    answered = {"type": "result", "subtype": "success", "is_error": False, "result": "Approve."}
+    assert reader.infra(limit) and reader.infra({})
+    assert not reader.infra(out_of_turns) and not reader.infra(answered)
+
+    from exam.judge import hollow, is_infra
+
+    assert is_infra(limit) and is_infra({}) and not is_infra({**answered, "total_cost_usd": 0.01})
+    assert hollow({"verdict": None, "cost_usd": 0}) and hollow({"infra": True})
+    # a judge that answered badly is still a judge's answer
+    assert not hollow({"verdict": None, "cost_usd": 0.004})
+
+
+def test_the_scorer_skips_infra_attempts(tmp_path: Path) -> None:
+    from exam.score_part2 import score
+
+    folder = tmp_path / "part2" / "b20" / "C1" / "r1"
+    folder.mkdir(parents=True)
+    (folder / "S99.infra-error-1.jsonl").write_text('{"type":"result","is_error":true}\n')
+    (folder / "S99.infra-error-1.calls.jsonl").write_text("")
+
+    class Never:
+        def grade(self, sid: str, text: str) -> dict[str, Any]:
+            raise AssertionError(f"graded {sid}")
+
+    assert score(tmp_path / "part2", Never()) == []  # type: ignore[arg-type]

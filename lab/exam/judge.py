@@ -15,6 +15,10 @@ For each item of `p2_items.yaml`:
 
 Writes `<snapshot>.judge.json`: every reading's rendered facts, each run's answer, and the verdict,
 so every verdict can be audited and overruled.
+
+**`--resume`** (the exam's infra rule): a run that ended on an API error (the account's session
+limit, say) did no judging. It's marked `infra`. A resume keeps every other run, asks the infra ones
+once more, and keeps the earlier file as `<snapshot>.judge.infra-<k>.json`.
 """
 
 from __future__ import annotations
@@ -137,7 +141,23 @@ def ask(statement: str, facts: str) -> dict[str, Any]:
     except json.JSONDecodeError:
         answer = {}
     verdict = answer.get("verdict") if answer.get("verdict") in VERDICTS else None
-    return {"verdict": verdict, "answer": answer, "cost_usd": out.get("total_cost_usd")}
+    return {
+        "verdict": verdict,
+        "answer": answer,
+        "cost_usd": out.get("total_cost_usd"),
+        "infra": is_infra(out),
+    }
+
+
+def is_infra(out: dict[str, Any]) -> bool:
+    """No judging happened: no result, or an API error (subtype `success`, nothing spent)."""
+    return not out or (bool(out.get("is_error")) and not out.get("total_cost_usd"))
+
+
+def hollow(run: dict[str, Any]) -> bool:
+    """A kept run that did no judging. Files from before `infra` was recorded are read by their
+    traces: no verdict and nothing spent."""
+    return bool(run.get("infra")) or (run.get("verdict") is None and not run.get("cost_usd"))
 
 
 def majority(verdicts: list[str | None]) -> str:
@@ -172,26 +192,40 @@ def main() -> None:
     ap.add_argument("snapshot", type=Path)
     ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--resume", action="store_true")
     a = ap.parse_args()
     snap = json.loads(a.snapshot.read_text())
     rs = readings(snap)
-    jobs = [(i, r) for i, _ in enumerate(rs) for r in range(a.runs)]
+    out = a.snapshot.with_suffix(".judge.json")
+    answers: dict[int, list[dict[str, Any]]] = {i: [] for i in range(len(rs))}
+    if a.resume:
+        before = json.loads(out.read_text())
+        if [(r["id"], r["reading"], r["facts"]) for r in before["readings"]] != [
+            (r["id"], r["reading"], r["facts"]) for r in rs
+        ]:
+            raise SystemExit("the snapshot's readings differ from the judged ones; refusing")
+        k = len(list(out.parent.glob(out.name.replace(".judge.json", ".judge.infra-*.json")))) + 1
+        out.rename(out.with_name(out.name.replace(".judge.json", f".judge.infra-{k}.json")))
+        for i, r in enumerate(before["readings"]):
+            answers[i] = [x for x in r["runs"] if not hollow(x)]
+    jobs = [(i, r) for i in range(len(rs)) for r in range(a.runs - len(answers[i]))]
 
     def go(job: tuple[int, int]) -> tuple[int, dict[str, Any]]:
         i, _ = job
         return i, ask(rs[i]["statement"], rs[i]["facts"])
 
-    answers: dict[int, list[dict[str, Any]]] = {i: [] for i in range(len(rs))}
     with cf.ThreadPoolExecutor(a.workers) as pool:
         for i, ans in pool.map(go, jobs):
             answers[i].append(ans)
     for i, r in enumerate(rs):
         r["runs"] = answers[i]
         r["verdict"] = majority([x["verdict"] for x in answers[i]])
-    out = a.snapshot.with_suffix(".judge.json")
     out.write_text(json.dumps({"model": MODEL, "prompt": PROMPT, "readings": rs}, indent=1,
                               ensure_ascii=False) + "\n")  # fmt: skip
     cost = sum(float(x.get("cost_usd") or 0) for v in answers.values() for x in v)
+    left = sum(hollow(x) for v in answers.values() for x in v)
+    if left:
+        print(f"{left} runs ended on an API error: resume once more, or leave them for the user")
     tally = Counter((r["part"], r["reading"], r["verdict"]) for r in rs)
     print(json.dumps({f"{p} {w} {v}": n for (p, w, v), n in sorted(tally.items())}, indent=1))
     print(f"judge cost ${cost:.2f} -> {out}")

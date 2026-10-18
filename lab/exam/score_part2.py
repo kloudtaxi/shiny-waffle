@@ -90,7 +90,7 @@ def result_of(path: Path) -> dict[str, Any]:
 def score(folder: Path, scorers: Scorers) -> list[dict[str, Any]]:
     rows = []
     for path in sorted(folder.rglob("S*.jsonl")):
-        if path.name.endswith(".calls.jsonl"):
+        if path.name.endswith(".calls.jsonl") or ".infra-error-" in path.name:
             continue
         rep, variant, arm = (
             path.parent.name,
