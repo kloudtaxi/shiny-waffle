@@ -335,3 +335,34 @@ exceptions held with their own validity, and the 2023 one's end date.
   not through the contract, so it's a reference only.
 
 **Cost:** about $1.50 of Claude usage per base for the judge, so about $14 for the nine bases.
+
+## 12. Amendment 4: today's foundation's uploads get a version 1 (2026-10-17, before any score)
+
+**What the parity check found.** After the go, today's three bases loaded cleanly: 38, 35 and 37
+documents, none failed. Guard 3 then failed, though its first version passed:
+- the adapter answered 200 with **no hits** on every one of the 110 file-name queries, where today's
+  own search answered 1,100 chunks;
+- the first version of `parity.py` passed this, since nothing failed to match. It now fails any
+  query today answers and the adapter doesn't (lab 4caf4fd).
+
+**Why.** Today's foundation records no version for a file upload: `create_from_upload` (utopia-store
+`documents.rs`) inserts the document row only, so `GET /documents/:id/versions` answers `[]`. The
+adapter (web-next 7d108d4) serves a document's text (K7), passages (K8), search hits (K10) and fact
+evidence only for a recorded version, so it answered "no version 1" everywhere. BlueLeaf's live
+base, where the harness was dry-run, has version rows, which is why the dry run didn't show it.
+
+**The fix (the user's ruling, 2026-10-17).** In `utopia_exam` only, each exam document gets its
+version 1 (`today.py versions`, lab ae2098d), written as today's own `record_version` writes one
+when it adopts an older document: the document's own sha256 and size, and its doc_time. Its
+`ingested_at` is the document's upload time. Nothing extracted is touched: no fact, chunk,
+embedding or entity. Web-next is restarted, at the same commit and settings, to drop its cached
+empty version lists. Parity is then run again and must pass before Part 1 or Part 2.
+
+**The rejected options:**
+- **A patched adapter:** it would change the instrument after the freeze.
+- **A reload through today's source route:** that route records versions, but it dates documents
+  differently from a file upload, so the swap isn't neutral.
+
+**What it means for the comparison.** Nothing from Northstar had been read through the adapter
+when the fault was found: only parity's counts. B-20 is untouched. Today's foundation's answers
+are its own, and the adapter can now show them.
