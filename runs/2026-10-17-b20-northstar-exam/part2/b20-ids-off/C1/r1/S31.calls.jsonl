@@ -1,0 +1,11 @@
+{"at": "2026-10-18T02:58:16-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 200, "is_error": false, "chars": 472, "ms": 52}
+{"at": "2026-10-18T02:58:18-0400", "tool": "search", "arguments": {"query": "CR-9206 credit limit request"}, "status": 200, "is_error": false, "chars": 6782, "ms": 215}
+{"at": "2026-10-18T02:58:18-0400", "tool": "search", "arguments": {"query": "credit policy approval bands account tier maximum limit"}, "status": 200, "is_error": false, "chars": 5280, "ms": 210}
+{"at": "2026-10-18T02:58:21-0400", "tool": "read_passages", "arguments": {"document_id": "83d2cfb3-5a56-4584-8269-b1070898dc1f"}, "status": 200, "is_error": false, "chars": 1788, "ms": 9}
+{"at": "2026-10-18T02:58:22-0400", "tool": "read_passages", "arguments": {"document_id": "16e97ea9-6819-4f0f-b1c7-0998001910ee"}, "status": 200, "is_error": false, "chars": 2253, "ms": 5}
+{"at": "2026-10-18T02:58:22-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 58}
+{"at": "2026-10-18T02:58:22-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 20}
+{"at": "2026-10-18T02:58:25-0400", "tool": "search", "arguments": {"query": "C-1002 customer BlueRiver ERP CRM mapping"}, "status": 200, "is_error": false, "chars": 11089, "ms": 207}
+{"at": "2026-10-18T02:58:26-0400", "tool": "read_passages", "arguments": {"document_id": "6fb7dca2-6bc2-4805-9f2c-a1cd5e491745"}, "status": 200, "is_error": false, "chars": 2462, "ms": 4}
+{"at": "2026-10-18T02:58:26-0400", "tool": "read_passages", "arguments": {"document_id": "5ceb84cf-baa1-4881-a100-628661578636"}, "status": 200, "is_error": false, "chars": 2464, "ms": 3}
+{"at": "2026-10-18T02:58:26-0400", "tool": "read_passages", "arguments": {"document_id": "0d3e3471-11cf-4d23-b92c-eb73231d7c3f"}, "status": 200, "is_error": false, "chars": 2403, "ms": 3}

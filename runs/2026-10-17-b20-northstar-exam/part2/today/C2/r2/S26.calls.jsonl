@@ -1,0 +1,71 @@
+{"at": "2026-10-17T22:53:25-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "CR-9201"}, "status": 501, "is_error": true, "chars": 144, "ms": 49}
+{"at": "2026-10-17T22:53:26-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 501, "is_error": true, "chars": 143, "ms": 19}
+{"at": "2026-10-17T22:53:28-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 134}
+{"at": "2026-10-17T22:53:28-0400", "tool": "find_entities", "arguments": {"q": "CR-9201"}, "status": 200, "is_error": false, "chars": 156, "ms": 40}
+{"at": "2026-10-17T22:53:30-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-dcc0-7e62-95b8-a3c7c719e556"}, "status": 200, "is_error": false, "chars": 6424, "ms": 46}
+{"at": "2026-10-17T22:53:31-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-beae-7412-8ee8-05f326c05004"}, "status": 200, "is_error": false, "chars": 12915, "ms": 42}
+{"at": "2026-10-17T22:53:34-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-26b8-7c71-8224-f86cbd017a5c"}, "status": 200, "is_error": false, "chars": 5893, "ms": 84}
+{"at": "2026-10-17T22:53:34-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-dae4-7ef0-a507-7f48900447bc"}, "status": 200, "is_error": false, "chars": 6748, "ms": 71}
+{"at": "2026-10-17T22:53:34-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 11, "ms": 18}
+{"at": "2026-10-17T22:53:37-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 3138, "ms": 135}
+{"at": "2026-10-17T22:53:37-0400", "tool": "find_entities", "arguments": {"q": "guarant"}, "status": 200, "is_error": false, "chars": 1086, "ms": 97}
+{"at": "2026-10-17T22:53:38-0400", "tool": "find_entities", "arguments": {"q": "INV-"}, "status": 200, "is_error": false, "chars": 3662, "ms": 90}
+{"at": "2026-10-17T22:53:41-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-d29b-7cd0-be53-d2e2a8b2f5f7"}, "status": 200, "is_error": false, "chars": 1509, "ms": 71}
+{"at": "2026-10-17T22:53:42-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c83b-7cc3-841d-fb708f7f0194"}, "status": 200, "is_error": false, "chars": 1564, "ms": 106}
+{"at": "2026-10-17T22:53:42-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c719-7871-bbb0-164650020ca9"}, "status": 200, "is_error": false, "chars": 5094, "ms": 109}
+{"at": "2026-10-17T22:53:46-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-d29b-7cd0-be53-d2e2a8b2f5f7", "hops": 2}, "status": 200, "is_error": false, "chars": 692, "ms": 382}
+{"at": "2026-10-17T22:53:46-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a48c-7601-8f66-4d205e23b12d"}, "status": 200, "is_error": false, "chars": 1558, "ms": 64}
+{"at": "2026-10-17T22:53:47-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-2699-7a12-aeb7-2b389e5bd568"}, "status": 200, "is_error": false, "chars": 1645, "ms": 104}
+{"at": "2026-10-17T22:53:50-0400", "tool": "find_entities", "arguments": {"q": "approv"}, "status": 200, "is_error": false, "chars": 3278, "ms": 108}
+{"at": "2026-10-17T22:53:50-0400", "tool": "find_entities", "arguments": {"q": "late"}, "status": 200, "is_error": false, "chars": 321, "ms": 102}
+{"at": "2026-10-17T22:53:50-0400", "tool": "find_entities", "arguments": {"q": "Controller"}, "status": 200, "is_error": false, "chars": 629, "ms": 60}
+{"at": "2026-10-17T22:53:53-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a5b2-74e0-85ff-dc706c315ea3"}, "status": 200, "is_error": false, "chars": 928, "ms": 898}
+{"at": "2026-10-17T22:53:53-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a595-71d3-933c-0a4798e56b37"}, "status": 200, "is_error": false, "chars": 1574, "ms": 37}
+{"at": "2026-10-17T22:53:53-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a5a5-7b30-bd4d-b8576f45ff81"}, "status": 200, "is_error": false, "chars": 1650, "ms": 34}
+{"at": "2026-10-17T22:53:56-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-d416-7072-a8d0-c606fed08922"}, "status": 200, "is_error": false, "chars": 882, "ms": 47}
+{"at": "2026-10-17T22:53:56-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-d49e-7793-9aaf-cbdf5005062e"}, "status": 200, "is_error": false, "chars": 865, "ms": 42}
+{"at": "2026-10-17T22:53:57-0400", "tool": "find_entities", "arguments": {"q": "concur"}, "status": 200, "is_error": false, "chars": 783, "ms": 77}
+{"at": "2026-10-17T22:53:57-0400", "tool": "find_entities", "arguments": {"q": "paid"}, "status": 200, "is_error": false, "chars": 11, "ms": 34}
+{"at": "2026-10-17T22:53:59-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-d4e0-7531-b113-3de7dd3dfd8d"}, "status": 200, "is_error": false, "chars": 966, "ms": 75}
+{"at": "2026-10-17T22:53:59-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a5b8-7090-b917-978aa833e32e"}, "status": 200, "is_error": false, "chars": 1041, "ms": 100}
+{"at": "2026-10-17T22:54:00-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a5be-7ec2-bfaa-2c87b208c02b"}, "status": 200, "is_error": false, "chars": 196, "ms": 97}
+{"at": "2026-10-17T22:54:00-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-d3ab-7321-baf5-896fa80225cc"}, "status": 200, "is_error": false, "chars": 2831, "ms": 104}
+{"at": "2026-10-17T22:54:03-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 395, "ms": 50}
+{"at": "2026-10-17T22:54:03-0400", "tool": "find_entities", "arguments": {"q": "payment"}, "status": 200, "is_error": false, "chars": 331, "ms": 88}
+{"at": "2026-10-17T22:54:03-0400", "tool": "find_entities", "arguments": {"q": "invoice"}, "status": 200, "is_error": false, "chars": 750, "ms": 57}
+{"at": "2026-10-17T22:54:05-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a467-7da0-a4a9-c6fec0c2909f"}, "status": 200, "is_error": false, "chars": 1107, "ms": 99}
+{"at": "2026-10-17T22:54:06-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a55c-7d43-954e-5d5bd8d1e185"}, "status": 200, "is_error": false, "chars": 1882, "ms": 88}
+{"at": "2026-10-17T22:54:07-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-c0fc-7b43-9103-148701565b85"}, "status": 200, "is_error": false, "chars": 291, "ms": 415}
+{"at": "2026-10-17T22:54:10-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-48c2-7083-9572-b7206bc27eb8"}, "status": 200, "is_error": false, "chars": 10491, "ms": 68}
+{"at": "2026-10-17T22:54:11-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-26b8-7c71-8224-f86cbd017a5c", "hops": 2}, "status": 200, "is_error": false, "chars": 4219, "ms": 410}
+{"at": "2026-10-17T22:54:15-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-de17-7ab0-8350-b892b496810c"}, "status": 200, "is_error": false, "chars": 2688, "ms": 59}
+{"at": "2026-10-17T22:54:15-0400", "tool": "find_entities", "arguments": {"kind": "person"}, "status": 200, "is_error": false, "chars": 3728, "ms": 84}
+{"at": "2026-10-17T22:54:18-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-f240-7f71-9fc3-3cacf70140a6"}, "status": 200, "is_error": false, "chars": 816, "ms": 57}
+{"at": "2026-10-17T22:54:19-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e6bd-7932-a919-2085226389d8"}, "status": 200, "is_error": false, "chars": 668, "ms": 49}
+{"at": "2026-10-17T22:54:19-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-c87a-7ab0-9e2a-d3f741464739"}, "status": 200, "is_error": false, "chars": 3360, "ms": 61}
+{"at": "2026-10-17T22:54:20-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e68b-7590-9e9b-6aa2e45b07f2"}, "status": 200, "is_error": false, "chars": 1997, "ms": 31}
+{"at": "2026-10-17T22:54:20-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-d8e3-75f2-a746-656826149f28"}, "status": 200, "is_error": false, "chars": 1445, "ms": 72}
+{"at": "2026-10-17T22:54:23-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e6cc-7e43-ae6c-231b9489968f"}, "status": 200, "is_error": false, "chars": 668, "ms": 38}
+{"at": "2026-10-17T22:54:24-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e69c-7731-960d-bbd839120c27"}, "status": 200, "is_error": false, "chars": 660, "ms": 85}
+{"at": "2026-10-17T22:54:24-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e6ad-7910-a354-389e474cd446"}, "status": 200, "is_error": false, "chars": 666, "ms": 77}
+{"at": "2026-10-17T22:54:25-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e708-76d2-a712-9b1638172183"}, "status": 200, "is_error": false, "chars": 648, "ms": 93}
+{"at": "2026-10-17T22:54:25-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e717-7fb0-9584-63d74a3dd896"}, "status": 200, "is_error": false, "chars": 662, "ms": 77}
+{"at": "2026-10-17T22:54:26-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e726-79a1-9c46-8440e1ddbaad"}, "status": 200, "is_error": false, "chars": 650, "ms": 94}
+{"at": "2026-10-17T22:54:28-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c98-0825-7ff2-9652-0d77d942f694"}, "status": 200, "is_error": false, "chars": 1470, "ms": 64}
+{"at": "2026-10-17T22:54:29-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c98-07c5-7022-9da3-1545452cfcc4"}, "status": 200, "is_error": false, "chars": 1490, "ms": 92}
+{"at": "2026-10-17T22:54:29-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c98-07fc-71e1-b2a3-e9f1147d9330"}, "status": 200, "is_error": false, "chars": 1482, "ms": 91}
+{"at": "2026-10-17T22:54:30-0400", "tool": "find_entities", "arguments": {"q": "Finance"}, "status": 200, "is_error": false, "chars": 731, "ms": 107}
+{"at": "2026-10-17T22:54:30-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c0fc-7b43-9103-148701565b85"}, "status": 200, "is_error": false, "chars": 242, "ms": 54}
+{"at": "2026-10-17T22:54:32-0400", "tool": "find_entities", "arguments": {"q": "Manager"}, "status": 200, "is_error": false, "chars": 2506, "ms": 56}
+{"at": "2026-10-17T22:54:32-0400", "tool": "find_entities", "arguments": {"q": "Accounts Receivable"}, "status": 200, "is_error": false, "chars": 204, "ms": 44}
+{"at": "2026-10-17T22:54:36-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-e726-79a1-9c46-8440e1ddbaad", "hops": 2}, "status": 200, "is_error": false, "chars": 274, "ms": 365}
+{"at": "2026-10-17T22:54:36-0400", "tool": "find_entities", "arguments": {"q": "northstar.example"}, "status": 200, "is_error": false, "chars": 2805, "ms": 65}
+{"at": "2026-10-17T22:54:38-0400", "tool": "find_entities", "arguments": {"q": "Priya"}, "status": 200, "is_error": false, "chars": 574, "ms": 43}
+{"at": "2026-10-17T22:54:38-0400", "tool": "find_entities", "arguments": {"q": "Zachary"}, "status": 200, "is_error": false, "chars": 589, "ms": 91}
+{"at": "2026-10-17T22:54:39-0400", "tool": "find_entities", "arguments": {"q": "Paul Brennan"}, "status": 200, "is_error": false, "chars": 403, "ms": 52}
+{"at": "2026-10-17T22:54:41-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-3620-7221-89f0-24aef0fca221"}, "status": 200, "is_error": false, "chars": 3365, "ms": 55}
+{"at": "2026-10-17T22:54:41-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-e74c-7401-95af-19779894c5ab"}, "status": 200, "is_error": false, "chars": 810, "ms": 51}
+{"at": "2026-10-17T22:54:42-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c99-749d-7aa2-89af-60116937f250"}, "status": 200, "is_error": false, "chars": 3497, "ms": 80}
+{"at": "2026-10-17T22:54:42-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-e6f8-7870-88f8-82fae5cb18a1"}, "status": 200, "is_error": false, "chars": 2479, "ms": 58}
+{"at": "2026-10-17T22:54:45-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 73}
+{"at": "2026-10-17T22:54:47-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-35a5-7ff3-a35b-e5128808d47e"}, "status": 200, "is_error": false, "chars": 3431, "ms": 33}

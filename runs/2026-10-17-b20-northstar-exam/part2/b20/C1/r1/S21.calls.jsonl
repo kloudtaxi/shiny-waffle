@@ -1,0 +1,17 @@
+{"at": "2026-10-18T02:56:30-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9113"}, "status": 404, "is_error": true, "chars": 135, "ms": 117}
+{"at": "2026-10-18T02:56:30-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 64}
+{"at": "2026-10-18T02:56:31-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 25}
+{"at": "2026-10-18T02:56:31-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 23}
+{"at": "2026-10-18T02:56:34-0400", "tool": "search", "arguments": {"query": "DR-9113"}, "status": 200, "is_error": false, "chars": 12691, "ms": 230}
+{"at": "2026-10-18T02:56:34-0400", "tool": "read_passages", "arguments": {"document_id": "d8141025-a943-4046-bb3c-ed40c55c199d"}, "status": 200, "is_error": false, "chars": 5108, "ms": 3}
+{"at": "2026-10-18T02:56:36-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 37464, "ms": 23}
+{"at": "2026-10-18T02:56:37-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 24}
+{"at": "2026-10-18T02:56:37-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 21}
+{"at": "2026-10-18T02:56:37-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 2}
+{"at": "2026-10-18T02:56:40-0400", "tool": "read_passages", "arguments": {"document_id": "1744c3aa-c279-472c-a5f5-0215855bdb9a"}, "status": 200, "is_error": false, "chars": 2007, "ms": 16}
+{"at": "2026-10-18T02:56:41-0400", "tool": "read_passages", "arguments": {"document_id": "1772878e-d507-4f77-9077-5d13e2c94f81"}, "status": 200, "is_error": false, "chars": 1192, "ms": 65}
+{"at": "2026-10-18T02:56:41-0400", "tool": "read_passages", "arguments": {"document_id": "5ca4944a-ff12-4819-a702-46d5180aa3c4"}, "status": 200, "is_error": false, "chars": 1360, "ms": 23}
+{"at": "2026-10-18T02:56:42-0400", "tool": "read_passages", "arguments": {"document_id": "bed39aa5-c9be-416e-9c88-7f98d2045e3e"}, "status": 200, "is_error": false, "chars": 581, "ms": 63}
+{"at": "2026-10-18T02:56:43-0400", "tool": "read_passages", "arguments": {"document_id": "b163ab62-9cea-4283-9f30-6fe54b4ff5de"}, "status": 200, "is_error": false, "chars": 1239, "ms": 3}
+{"at": "2026-10-18T02:56:43-0400", "tool": "read_passages", "arguments": {"document_id": "d50752d0-b5c0-45d3-ac0b-192fb29ac5ce"}, "status": 200, "is_error": false, "chars": 967, "ms": 3}
+{"at": "2026-10-18T02:56:44-0400", "tool": "read_passages", "arguments": {"document_id": "cc68d7bd-1ba4-4d7f-8072-5f94d7da89cf"}, "status": 200, "is_error": false, "chars": 2462, "ms": 5}

@@ -1,0 +1,19 @@
+{"at": "2026-10-18T03:12:01-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "CR-9207"}, "status": 404, "is_error": true, "chars": 135, "ms": 60}
+{"at": "2026-10-18T03:12:02-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1044"}, "status": 200, "is_error": false, "chars": 2416, "ms": 101}
+{"at": "2026-10-18T03:12:02-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 59}
+{"at": "2026-10-18T03:12:03-0400", "tool": "get_entity", "arguments": {"entity_id": "389e8898-95e9-445f-85f9-4b4a9b239722"}, "status": 200, "is_error": false, "chars": 2282, "ms": 39}
+{"at": "2026-10-18T03:12:04-0400", "tool": "list_facts", "arguments": {"entity_id": "cfd5c5ff-b946-409a-9195-7d0e5570d2b3"}, "status": 200, "is_error": false, "chars": 27790, "ms": 48}
+{"at": "2026-10-18T03:12:04-0400", "tool": "get_entity", "arguments": {"entity_id": "6f10bd52-c8b8-4648-ad7e-05026b43f8f7"}, "status": 200, "is_error": false, "chars": 4038, "ms": 20}
+{"at": "2026-10-18T03:12:06-0400", "tool": "get_entity", "arguments": {"entity_id": "72a00cd1-8d96-4457-87a5-2c09f57fe121"}, "status": 200, "is_error": false, "chars": 11210, "ms": 21}
+{"at": "2026-10-18T03:12:06-0400", "tool": "find_entities", "arguments": {"q": "Credit"}, "status": 200, "is_error": false, "chars": 12874, "ms": 26}
+{"at": "2026-10-18T03:12:06-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 32}
+{"at": "2026-10-18T03:12:08-0400", "tool": "get_entity", "arguments": {"entity_id": "6ce915c6-5aa6-4166-bdb4-c5c435c0abcf"}, "status": 200, "is_error": false, "chars": 15960, "ms": 20}
+{"at": "2026-10-18T03:12:08-0400", "tool": "get_entity", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 9177, "ms": 20}
+{"at": "2026-10-18T03:12:11-0400", "tool": "get_fact", "arguments": {"fact_id": "ae6d9500-1297-42e2-b9b9-55b45c474218"}, "status": 200, "is_error": false, "chars": 781, "ms": 20}
+{"at": "2026-10-18T03:12:11-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 225, "ms": 36}
+{"at": "2026-10-18T03:12:11-0400", "tool": "find_entities", "arguments": {"q": "INV"}, "status": 200, "is_error": false, "chars": 3723, "ms": 36}
+{"at": "2026-10-18T03:12:14-0400", "tool": "neighbourhood", "arguments": {"entity_id": "cfd5c5ff-b946-409a-9195-7d0e5570d2b3", "hops": 1}, "status": 200, "is_error": false, "chars": 4134, "ms": 22}
+{"at": "2026-10-18T03:12:15-0400", "tool": "neighbourhood", "arguments": {"entity_id": "61cd137d-25d5-47df-8da7-89c68892a315", "hops": 1}, "status": 200, "is_error": false, "chars": 984, "ms": 32}
+{"at": "2026-10-18T03:12:18-0400", "tool": "find_entities", "arguments": {"q": "Priya Shah"}, "status": 200, "is_error": false, "chars": 203, "ms": 283}
+{"at": "2026-10-18T03:12:19-0400", "tool": "list_facts", "arguments": {"entity_id": "ccdc6d4c-aebc-419f-a5d3-7524bd388c82", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 5001, "ms": 24}
+{"at": "2026-10-18T03:12:23-0400", "tool": "list_facts", "arguments": {"entity_id": "d7ca5922-fb7e-4b83-a034-dcf1042ab7f4"}, "status": 200, "is_error": false, "chars": 3759, "ms": 21}

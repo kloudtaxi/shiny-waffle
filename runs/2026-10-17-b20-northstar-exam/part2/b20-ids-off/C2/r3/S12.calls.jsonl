@@ -1,0 +1,14 @@
+{"at": "2026-10-18T14:50:01-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9104"}, "status": 404, "is_error": true, "chars": 135, "ms": 122}
+{"at": "2026-10-18T14:50:02-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 656, "ms": 68}
+{"at": "2026-10-18T14:50:02-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 18}
+{"at": "2026-10-18T14:50:03-0400", "tool": "find_entities", "arguments": {"q": "NS-CLOUD"}, "status": 200, "is_error": false, "chars": 843, "ms": 114}
+{"at": "2026-10-18T14:50:05-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f"}, "status": 200, "is_error": false, "chars": 1276, "ms": 40}
+{"at": "2026-10-18T14:50:05-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 20}
+{"at": "2026-10-18T14:50:06-0400", "tool": "find_entities", "arguments": {"q": "DR-"}, "status": 200, "is_error": false, "chars": 7694, "ms": 21}
+{"at": "2026-10-18T14:50:07-0400", "tool": "find_entities", "arguments": {"q": "policy"}, "status": 200, "is_error": false, "chars": 1866, "ms": 33}
+{"at": "2026-10-18T14:50:07-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 20}
+{"at": "2026-10-18T14:50:09-0400", "tool": "get_entity", "arguments": {"entity_id": "9fbb1b14-aebf-4687-82d4-78779d9e8553"}, "status": 200, "is_error": false, "chars": 13381, "ms": 21}
+{"at": "2026-10-18T14:50:10-0400", "tool": "get_entity", "arguments": {"entity_id": "ba3c2a57-bd85-408d-9003-4be8a085db18"}, "status": 200, "is_error": false, "chars": 12199, "ms": 54}
+{"at": "2026-10-18T14:50:10-0400", "tool": "get_entity", "arguments": {"entity_id": "f80f4308-d3ba-4643-9183-420db8396f94"}, "status": 200, "is_error": false, "chars": 11489, "ms": 69}
+{"at": "2026-10-18T14:50:13-0400", "tool": "get_entity", "arguments": {"entity_id": "157a6397-e5db-4e4a-8b2e-488ebe7dbe40"}, "status": 200, "is_error": false, "chars": 8168, "ms": 49}
+{"at": "2026-10-18T14:50:14-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 17}

@@ -1,0 +1,15 @@
+{"at": "2026-10-17T22:58:33-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9104"}, "status": 404, "is_error": true, "chars": 135, "ms": 77}
+{"at": "2026-10-17T22:58:33-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 656, "ms": 52}
+{"at": "2026-10-17T22:58:33-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 22}
+{"at": "2026-10-17T22:58:34-0400", "tool": "find_entities", "arguments": {"q": "NS-Cloud"}, "status": 200, "is_error": false, "chars": 843, "ms": 20}
+{"at": "2026-10-17T22:58:36-0400", "tool": "search", "arguments": {"query": "DR-9104"}, "status": 200, "is_error": false, "chars": 11925, "ms": 209}
+{"at": "2026-10-17T22:58:36-0400", "tool": "list_facts", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f"}, "status": 200, "is_error": false, "chars": 6296, "ms": 20}
+{"at": "2026-10-17T22:58:36-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 41}
+{"at": "2026-10-17T22:58:39-0400", "tool": "read_passages", "arguments": {"document_id": "b14127a1-fe35-43b9-8ea9-9172145cf99d"}, "status": 200, "is_error": false, "chars": 5108, "ms": 3}
+{"at": "2026-10-17T22:58:39-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 3}
+{"at": "2026-10-17T22:58:41-0400", "tool": "read_passages", "arguments": {"document_id": "4da0406d-ba99-4bbc-b6be-0b41cd368930"}, "status": 200, "is_error": false, "chars": 1239, "ms": 3}
+{"at": "2026-10-17T22:58:42-0400", "tool": "read_passages", "arguments": {"document_id": "c20c1cca-1d1e-450c-8a10-f65e5448d975"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-17T22:58:42-0400", "tool": "read_passages", "arguments": {"document_id": "478b5825-2d7d-44d7-a117-5f230f0eb2f2"}, "status": 200, "is_error": false, "chars": 1192, "ms": 3}
+{"at": "2026-10-17T22:58:43-0400", "tool": "read_passages", "arguments": {"document_id": "1068f825-1e69-47d6-8ddc-460004510208"}, "status": 200, "is_error": false, "chars": 581, "ms": 3}
+{"at": "2026-10-17T22:58:48-0400", "tool": "read_passages", "arguments": {"document_id": "85ee8d7a-6e30-4d39-b332-946eb2253194"}, "status": 200, "is_error": false, "chars": 967, "ms": 6}
+{"at": "2026-10-17T22:58:48-0400", "tool": "read_passages", "arguments": {"document_id": "ae236fc9-8e01-430e-8963-25a878cbc109"}, "status": 200, "is_error": false, "chars": 754, "ms": 3}

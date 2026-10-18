@@ -1,0 +1,26 @@
+{"at": "2026-10-18T13:34:13-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 2801, "ms": 70}
+{"at": "2026-10-18T13:34:13-0400", "tool": "find_entities", "arguments": {"q": "CR-9204"}, "status": 200, "is_error": false, "chars": 11, "ms": 43}
+{"at": "2026-10-18T13:34:15-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 37464, "ms": 25}
+{"at": "2026-10-18T13:34:15-0400", "tool": "find_entities", "arguments": {"q": "guarantee"}, "status": 200, "is_error": false, "chars": 678, "ms": 22}
+{"at": "2026-10-18T13:34:15-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 12874, "ms": 28}
+{"at": "2026-10-18T13:34:18-0400", "tool": "find_entities", "arguments": {"q": "credit", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 12874, "ms": 39}
+{"at": "2026-10-18T13:34:18-0400", "tool": "find_entities", "arguments": {"q": "9204"}, "status": 200, "is_error": false, "chars": 11, "ms": 20}
+{"at": "2026-10-18T13:34:19-0400", "tool": "get_entity", "arguments": {"entity_id": "72a00cd1-8d96-4457-87a5-2c09f57fe121"}, "status": 200, "is_error": false, "chars": 11210, "ms": 23}
+{"at": "2026-10-18T13:34:19-0400", "tool": "get_entity", "arguments": {"entity_id": "389e8898-95e9-445f-85f9-4b4a9b239722"}, "status": 200, "is_error": false, "chars": 2282, "ms": 66}
+{"at": "2026-10-18T13:34:21-0400", "tool": "get_entity", "arguments": {"entity_id": "6ce915c6-5aa6-4166-bdb4-c5c435c0abcf"}, "status": 200, "is_error": false, "chars": 15960, "ms": 33}
+{"at": "2026-10-18T13:34:24-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 8117, "ms": 46}
+{"at": "2026-10-18T13:34:25-0400", "tool": "get_entity", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 9177, "ms": 29}
+{"at": "2026-10-18T13:34:26-0400", "tool": "find_entities", "arguments": {"q": "invoice"}, "status": 200, "is_error": false, "chars": 11, "ms": 21}
+{"at": "2026-10-18T13:34:28-0400", "tool": "find_entities", "arguments": {"q": "INV"}, "status": 200, "is_error": false, "chars": 3723, "ms": 76}
+{"at": "2026-10-18T13:34:28-0400", "tool": "find_entities", "arguments": {"q": "Director of Finance"}, "status": 200, "is_error": false, "chars": 233, "ms": 50}
+{"at": "2026-10-18T13:34:29-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 118}
+{"at": "2026-10-18T13:34:31-0400", "tool": "neighbourhood", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "hops": 1}, "status": 200, "is_error": false, "chars": 18046, "ms": 26}
+{"at": "2026-10-18T13:34:32-0400", "tool": "neighbourhood", "arguments": {"entity_id": "b6dd20ba-e616-4791-a389-0efdeacbe38f", "hops": 1}, "status": 200, "is_error": false, "chars": 2761, "ms": 22}
+{"at": "2026-10-18T13:34:32-0400", "tool": "neighbourhood", "arguments": {"entity_id": "f729b731-4e9b-464e-a577-b6f9b0dbf797", "hops": 1}, "status": 200, "is_error": false, "chars": 956, "ms": 21}
+{"at": "2026-10-18T13:34:34-0400", "tool": "get_entity", "arguments": {"entity_id": "d7ca5922-fb7e-4b83-a034-dcf1042ab7f4"}, "status": 200, "is_error": false, "chars": 3931, "ms": 35}
+{"at": "2026-10-18T13:34:38-0400", "tool": "find_entities", "arguments": {"q": "INV", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 3723, "ms": 42}
+{"at": "2026-10-18T13:34:40-0400", "tool": "find_entities", "arguments": {"q": "INV-3002"}, "status": 200, "is_error": false, "chars": 205, "ms": 51}
+{"at": "2026-10-18T13:34:40-0400", "tool": "find_entities", "arguments": {"q": "INV-3003"}, "status": 200, "is_error": false, "chars": 11, "ms": 26}
+{"at": "2026-10-18T13:34:42-0400", "tool": "find_entities", "arguments": {"q": "INV-9"}, "status": 200, "is_error": false, "chars": 11, "ms": 27}
+{"at": "2026-10-18T13:34:42-0400", "tool": "find_entities", "arguments": {"q": "INV-1"}, "status": 200, "is_error": false, "chars": 11, "ms": 29}
+{"at": "2026-10-18T13:34:45-0400", "tool": "get_entity", "arguments": {"entity_id": "db195ada-3b15-4a00-99e8-4e863467f3f4"}, "status": 200, "is_error": false, "chars": 3282, "ms": 22}

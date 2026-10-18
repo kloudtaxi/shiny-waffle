@@ -1,0 +1,18 @@
+{"at": "2026-10-17T22:21:22-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9001"}, "status": 501, "is_error": true, "chars": 144, "ms": 28}
+{"at": "2026-10-17T22:21:23-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 18}
+{"at": "2026-10-17T22:21:24-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 90}
+{"at": "2026-10-17T22:21:24-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 13}
+{"at": "2026-10-17T22:21:26-0400", "tool": "search", "arguments": {"query": "DR-9001"}, "status": 200, "is_error": false, "chars": 6935, "ms": 277}
+{"at": "2026-10-17T22:21:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 49}
+{"at": "2026-10-17T22:21:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0fe-7ca1-83e3-76b95516e020"}, "status": 200, "is_error": false, "chars": 1262, "ms": 35}
+{"at": "2026-10-17T22:21:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9dec-7373-856b-fe62ede4b9dc"}, "status": 200, "is_error": false, "chars": 1126, "ms": 26}
+{"at": "2026-10-17T22:21:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 38}
+{"at": "2026-10-17T22:21:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e05-7ee1-ac36-15bd55b240d9"}, "status": 200, "is_error": false, "chars": 500, "ms": 25}
+{"at": "2026-10-17T22:21:35-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0ad-70d0-952d-9e9e582dc3f3"}, "status": 200, "is_error": false, "chars": 1166, "ms": 25}
+{"at": "2026-10-17T22:21:36-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 36}
+{"at": "2026-10-17T22:21:36-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 60}
+{"at": "2026-10-17T22:21:40-0400", "tool": "search", "arguments": {"query": "CRM-2048 Acme Manufacturing account", "limit": 6}, "status": 200, "is_error": false, "chars": 5561, "ms": 388}
+{"at": "2026-10-17T22:21:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 41}
+{"at": "2026-10-17T22:21:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a04d-7d23-b918-93e8f88aa1d8"}, "status": 200, "is_error": false, "chars": 824, "ms": 71}
+{"at": "2026-10-17T22:21:41-0400", "tool": "search", "arguments": {"query": "NS-500 Industrial Controller list price", "limit": 4}, "status": 200, "is_error": false, "chars": 3578, "ms": 395}
+{"at": "2026-10-17T22:21:45-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0d7-7041-b236-c03e6f9f8278"}, "status": 200, "is_error": false, "chars": 1079, "ms": 74}

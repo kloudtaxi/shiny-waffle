@@ -1,0 +1,17 @@
+{"at": "2026-10-18T03:07:59-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9113"}, "status": 404, "is_error": true, "chars": 135, "ms": 75}
+{"at": "2026-10-18T03:07:59-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 73}
+{"at": "2026-10-18T03:08:00-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1364, "ms": 23}
+{"at": "2026-10-18T03:08:00-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 33}
+{"at": "2026-10-18T03:08:03-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 37464, "ms": 40}
+{"at": "2026-10-18T03:08:03-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 99}
+{"at": "2026-10-18T03:08:04-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 45}
+{"at": "2026-10-18T03:08:04-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 32}
+{"at": "2026-10-18T03:08:08-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 25}
+{"at": "2026-10-18T03:08:08-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 1896, "ms": 20}
+{"at": "2026-10-18T03:08:09-0400", "tool": "find_entities", "arguments": {"q": "polic"}, "status": 200, "is_error": false, "chars": 2202, "ms": 20}
+{"at": "2026-10-18T03:08:09-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 897, "ms": 48}
+{"at": "2026-10-18T03:08:11-0400", "tool": "get_entity", "arguments": {"entity_id": "e6f65404-5857-42dd-bb43-544e945dc665"}, "status": 200, "is_error": false, "chars": 12395, "ms": 30}
+{"at": "2026-10-18T03:08:12-0400", "tool": "get_entity", "arguments": {"entity_id": "34e7f09a-0e4b-41ba-baa6-e864b2fd92dc"}, "status": 200, "is_error": false, "chars": 11227, "ms": 37}
+{"at": "2026-10-18T03:08:13-0400", "tool": "get_entity", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15"}, "status": 200, "is_error": false, "chars": 4934, "ms": 40}
+{"at": "2026-10-18T03:08:16-0400", "tool": "find_entities", "arguments": {"q": "Chief Revenue Officer"}, "status": 200, "is_error": false, "chars": 571, "ms": 19}
+{"at": "2026-10-18T03:08:16-0400", "tool": "list_facts", "arguments": {"entity_id": "8a6141f8-e852-4d82-a9a8-b3446c6254d3"}, "status": 200, "is_error": false, "chars": 4849, "ms": 19}

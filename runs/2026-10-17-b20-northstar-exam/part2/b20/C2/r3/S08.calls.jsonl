@@ -1,0 +1,7 @@
+{"at": "2026-10-18T14:51:40-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 56}
+{"at": "2026-10-18T14:51:41-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 87}
+{"at": "2026-10-18T14:51:41-0400", "tool": "lookup_identifier", "arguments": {"system": "ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 2801, "ms": 76}
+{"at": "2026-10-18T14:51:44-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 19}
+{"at": "2026-10-18T14:51:45-0400", "tool": "neighbourhood", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1328, "ms": 20}
+{"at": "2026-10-18T14:51:47-0400", "tool": "neighbourhood", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 4713, "ms": 51}
+{"at": "2026-10-18T14:51:48-0400", "tool": "list_facts", "arguments": {"entity_id": "86b5fadc-21c3-4c4b-82f1-5c3961102e3c"}, "status": 200, "is_error": false, "chars": 13422, "ms": 26}

@@ -1,0 +1,12 @@
+{"at": "2026-10-17T22:31:34-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 120}
+{"at": "2026-10-17T22:31:34-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 135, "ms": 26}
+{"at": "2026-10-17T22:31:35-0400", "tool": "lookup_identifier", "arguments": {"system": "ERP", "id": "C-1001"}, "status": 501, "is_error": true, "chars": 133, "ms": 30}
+{"at": "2026-10-17T22:31:37-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-beae-7412-8ee8-05f326c05004"}, "status": 200, "is_error": false, "chars": 12915, "ms": 64}
+{"at": "2026-10-17T22:31:37-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-4936-7260-b2ea-c4673b5be72f"}, "status": 200, "is_error": false, "chars": 11587, "ms": 40}
+{"at": "2026-10-17T22:31:38-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c669-7271-9d09-333915ce5c38"}, "status": 200, "is_error": false, "chars": 184, "ms": 95}
+{"at": "2026-10-17T22:31:38-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-48c2-7083-9572-b7206bc27eb8"}, "status": 200, "is_error": false, "chars": 10491, "ms": 112}
+{"at": "2026-10-17T22:31:39-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-d3be-7802-a07e-ddae59190a14"}, "status": 200, "is_error": false, "chars": 16485, "ms": 68}
+{"at": "2026-10-17T22:31:43-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-c669-7271-9d09-333915ce5c38"}, "status": 200, "is_error": false, "chars": 235, "ms": 430}
+{"at": "2026-10-17T22:31:43-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-cfd3-7bc0-8026-9a48001fe985"}, "status": 200, "is_error": false, "chars": 1572, "ms": 40}
+{"at": "2026-10-17T22:31:48-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 70}
+{"at": "2026-10-17T22:31:48-0400", "tool": "find_entities", "arguments": {"q": "MFG-2025"}, "status": 200, "is_error": false, "chars": 168, "ms": 93}

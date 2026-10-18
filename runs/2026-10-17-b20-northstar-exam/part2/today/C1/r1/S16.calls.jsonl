@@ -1,0 +1,14 @@
+{"at": "2026-10-17T22:23:23-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9108"}, "status": 501, "is_error": true, "chars": 144, "ms": 21}
+{"at": "2026-10-17T22:23:23-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2091"}, "status": 501, "is_error": true, "chars": 145, "ms": 26}
+{"at": "2026-10-17T22:23:23-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 51}
+{"at": "2026-10-17T22:23:24-0400", "tool": "find_entities", "arguments": {"q": "NS-Edge"}, "status": 200, "is_error": false, "chars": 650, "ms": 98}
+{"at": "2026-10-17T22:23:28-0400", "tool": "search", "arguments": {"query": "DR-9108"}, "status": 200, "is_error": false, "chars": 7057, "ms": 378}
+{"at": "2026-10-17T22:23:28-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-35a5-7ff3-a35b-e5128808d47e"}, "status": 200, "is_error": false, "chars": 3431, "ms": 107}
+{"at": "2026-10-17T22:23:28-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-dae4-7ef0-a507-7f48900447bc"}, "status": 200, "is_error": false, "chars": 6748, "ms": 106}
+{"at": "2026-10-17T22:23:28-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 104}
+{"at": "2026-10-17T22:23:31-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 45}
+{"at": "2026-10-17T22:23:31-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-4936-7260-b2ea-c4673b5be72f"}, "status": 200, "is_error": false, "chars": 11587, "ms": 106}
+{"at": "2026-10-17T22:23:32-0400", "tool": "search", "arguments": {"query": "Sales Discount SOP approval bands authority"}, "status": 200, "is_error": false, "chars": 11082, "ms": 378}
+{"at": "2026-10-17T22:23:37-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e2a-7143-9a69-036a9fe8f393"}, "status": 200, "is_error": false, "chars": 1479, "ms": 57}
+{"at": "2026-10-17T22:23:37-0400", "tool": "search", "arguments": {"query": "Sarah Chen role change promotion leave delegation", "limit": 8}, "status": 200, "is_error": false, "chars": 8832, "ms": 382}
+{"at": "2026-10-17T22:23:42-0400", "tool": "search", "arguments": {"query": "C-1044 contract Acme Industrial Supply agreement", "limit": 6}, "status": 200, "is_error": false, "chars": 6109, "ms": 357}

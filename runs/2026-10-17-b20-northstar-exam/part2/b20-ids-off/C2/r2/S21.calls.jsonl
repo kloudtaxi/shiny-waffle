@@ -1,0 +1,23 @@
+{"at": "2026-10-18T13:30:14-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 426, "ms": 57}
+{"at": "2026-10-18T13:30:15-0400", "tool": "find_entities", "arguments": {"q": "DR-9113"}, "status": 200, "is_error": false, "chars": 11, "ms": 19}
+{"at": "2026-10-18T13:30:15-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 21}
+{"at": "2026-10-18T13:30:15-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 19}
+{"at": "2026-10-18T13:30:17-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 24}
+{"at": "2026-10-18T13:30:18-0400", "tool": "get_entity", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12790, "ms": 567}
+{"at": "2026-10-18T13:30:18-0400", "tool": "get_entity", "arguments": {"entity_id": "c817032b-a762-45f0-8e89-15dd26cc4c58"}, "status": 200, "is_error": false, "chars": 4841, "ms": 133}
+{"at": "2026-10-18T13:30:19-0400", "tool": "list_facts", "arguments": {"entity_id": "b117dc06-05b0-4386-8e23-1c40de8fbf00"}, "status": 200, "is_error": false, "chars": 5451, "ms": 26}
+{"at": "2026-10-18T13:30:22-0400", "tool": "get_entity", "arguments": {"entity_id": "359ed0b4-af49-4a9c-9904-4ebf23c287e9"}, "status": 200, "is_error": false, "chars": 1699, "ms": 26}
+{"at": "2026-10-18T13:30:22-0400", "tool": "find_entities", "arguments": {"q": "Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 236, "ms": 19}
+{"at": "2026-10-18T13:30:23-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 914, "ms": 48}
+{"at": "2026-10-18T13:30:23-0400", "tool": "list_facts", "arguments": {"entity_id": "c4586a04-367f-4722-be10-5da02b077030"}, "status": 200, "is_error": false, "chars": 29092, "ms": 21}
+{"at": "2026-10-18T13:30:25-0400", "tool": "get_entity", "arguments": {"entity_id": "e9177f69-ab32-4f58-983f-0d89af76c612"}, "status": 200, "is_error": false, "chars": 11559, "ms": 19}
+{"at": "2026-10-18T13:30:26-0400", "tool": "get_entity", "arguments": {"entity_id": "157a6397-e5db-4e4a-8b2e-488ebe7dbe40"}, "status": 200, "is_error": false, "chars": 8168, "ms": 25}
+{"at": "2026-10-18T13:30:26-0400", "tool": "get_entity", "arguments": {"entity_id": "93d61b3f-41a7-416f-a860-2900b913398e"}, "status": 200, "is_error": false, "chars": 825, "ms": 29}
+{"at": "2026-10-18T13:30:29-0400", "tool": "find_entities", "arguments": {"q": "Pricing Policy"}, "status": 200, "is_error": false, "chars": 890, "ms": 34}
+{"at": "2026-10-18T13:30:29-0400", "tool": "find_entities", "arguments": {"q": "2027"}, "status": 200, "is_error": false, "chars": 246, "ms": 34}
+{"at": "2026-10-18T13:30:30-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 42}
+{"at": "2026-10-18T13:30:30-0400", "tool": "get_entity", "arguments": {"entity_id": "7a33790f-1b49-4064-b4f8-d3c03bc8b093"}, "status": 200, "is_error": false, "chars": 3365, "ms": 30}
+{"at": "2026-10-18T13:30:32-0400", "tool": "get_entity", "arguments": {"entity_id": "ba3c2a57-bd85-408d-9003-4be8a085db18"}, "status": 200, "is_error": false, "chars": 12199, "ms": 21}
+{"at": "2026-10-18T13:30:33-0400", "tool": "get_entity", "arguments": {"entity_id": "baba7cff-f3b5-4176-a4b8-ffcb5e8e3354"}, "status": 200, "is_error": false, "chars": 2161, "ms": 63}
+{"at": "2026-10-18T13:30:35-0400", "tool": "find_entities", "arguments": {"q": "Chief Revenue Officer"}, "status": 200, "is_error": false, "chars": 11, "ms": 33}
+{"at": "2026-10-18T13:30:35-0400", "tool": "list_facts", "arguments": {"entity_id": "9939f337-fd39-4dcb-a0d0-bf03b29b85b6"}, "status": 200, "is_error": false, "chars": 4182, "ms": 23}

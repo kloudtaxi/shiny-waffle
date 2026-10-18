@@ -1,0 +1,7 @@
+{"at": "2026-10-17T22:22:01-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 148}
+{"at": "2026-10-17T22:22:01-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 888, "ms": 50}
+{"at": "2026-10-17T22:22:05-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c044-79b2-a966-62b57217402e"}, "status": 200, "is_error": false, "chars": 1468, "ms": 73}
+{"at": "2026-10-17T22:22:06-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 71}
+{"at": "2026-10-17T22:22:06-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-beae-7412-8ee8-05f326c05004"}, "status": 200, "is_error": false, "chars": 12915, "ms": 61}
+{"at": "2026-10-17T22:22:09-0400", "tool": "search", "arguments": {"query": "Acme NS-500 discount exception amended revoked terminated", "limit": 10}, "status": 200, "is_error": false, "chars": 8883, "ms": 296}
+{"at": "2026-10-17T22:22:15-0400", "tool": "search", "arguments": {"query": "Acme agreement termination notice Section 9", "limit": 5}, "status": 200, "is_error": false, "chars": 4925, "ms": 376}

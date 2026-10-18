@@ -1,0 +1,56 @@
+{
+ "base": {
+  "documents": {
+   "today": 38,
+   "k2": 38
+  },
+  "queries": 38,
+  "search": {
+   "today": 380,
+   "adapter": 380,
+   "matched": 380,
+   "same_rank": 355,
+   "dropped": 1,
+   "unmatched_adapter_hits": 0,
+   "empty": 0
+  },
+  "non_200": 0,
+  "pass": true
+ },
+ "missing-contract-evidence": {
+  "documents": {
+   "today": 35,
+   "k2": 35
+  },
+  "queries": 35,
+  "search": {
+   "today": 350,
+   "adapter": 350,
+   "matched": 350,
+   "same_rank": 332,
+   "dropped": 2,
+   "unmatched_adapter_hits": 0,
+   "empty": 0
+  },
+  "non_200": 0,
+  "pass": true
+ },
+ "missing-guarantee-evidence": {
+  "documents": {
+   "today": 37,
+   "k2": 37
+  },
+  "queries": 37,
+  "search": {
+   "today": 370,
+   "adapter": 370,
+   "matched": 370,
+   "same_rank": 345,
+   "dropped": 1,
+   "unmatched_adapter_hits": 0,
+   "empty": 0
+  },
+  "non_200": 0,
+  "pass": true
+ }
+}

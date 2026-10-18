@@ -1,0 +1,18 @@
+{"at": "2026-10-17T22:32:40-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 39}
+{"at": "2026-10-17T22:32:41-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 47}
+{"at": "2026-10-17T22:32:41-0400", "tool": "find_entities", "arguments": {"q": "NS-EDGE"}, "status": 200, "is_error": false, "chars": 650, "ms": 55}
+{"at": "2026-10-17T22:32:41-0400", "tool": "find_entities", "arguments": {"q": "DR-9106"}, "status": 200, "is_error": false, "chars": 11, "ms": 36}
+{"at": "2026-10-17T22:32:43-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 133}
+{"at": "2026-10-17T22:32:44-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-dae4-7ef0-a507-7f48900447bc"}, "status": 200, "is_error": false, "chars": 6748, "ms": 56}
+{"at": "2026-10-17T22:32:44-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-35a5-7ff3-a35b-e5128808d47e"}, "status": 200, "is_error": false, "chars": 3431, "ms": 51}
+{"at": "2026-10-17T22:32:44-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 11, "ms": 16}
+{"at": "2026-10-17T22:32:47-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-4d81-7532-8788-25cdae158109"}, "status": 200, "is_error": false, "chars": 7794, "ms": 95}
+{"at": "2026-10-17T22:32:47-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c865-7761-9f94-6fccc2604158"}, "status": 200, "is_error": false, "chars": 6917, "ms": 70}
+{"at": "2026-10-17T22:32:48-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 1874, "ms": 62}
+{"at": "2026-10-17T22:32:48-0400", "tool": "find_entities", "arguments": {"q": "DR-9"}, "status": 200, "is_error": false, "chars": 156, "ms": 43}
+{"at": "2026-10-17T22:32:52-0400", "tool": "find_entities", "arguments": {"q": "Policy"}, "status": 200, "is_error": false, "chars": 1686, "ms": 66}
+{"at": "2026-10-17T22:32:52-0400", "tool": "find_entities", "arguments": {"q": "Account Executive"}, "status": 200, "is_error": false, "chars": 735, "ms": 52}
+{"at": "2026-10-17T22:32:54-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-bd93-7632-ac9c-758bb9f9450e"}, "status": 200, "is_error": false, "chars": 1565, "ms": 68}
+{"at": "2026-10-17T22:32:54-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-bdd0-7c62-80e6-c37a7566de15"}, "status": 200, "is_error": false, "chars": 802, "ms": 46}
+{"at": "2026-10-17T22:32:55-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-e0b1-71a0-a1c9-709487c3804e"}, "status": 200, "is_error": false, "chars": 2178, "ms": 121}
+{"at": "2026-10-17T22:32:59-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-bd93-7632-ac9c-758bb9f9450e", "hops": 2}, "status": 200, "is_error": false, "chars": 1550, "ms": 361}

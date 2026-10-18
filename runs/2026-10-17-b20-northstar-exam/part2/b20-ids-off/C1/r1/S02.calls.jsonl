@@ -1,0 +1,17 @@
+{"at": "2026-10-17T22:56:08-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9001"}, "status": 200, "is_error": false, "chars": 466, "ms": 72}
+{"at": "2026-10-17T22:56:09-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 426, "ms": 58}
+{"at": "2026-10-17T22:56:09-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 36}
+{"at": "2026-10-17T22:56:09-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 21}
+{"at": "2026-10-17T22:56:12-0400", "tool": "get_entity", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12790, "ms": 37}
+{"at": "2026-10-17T22:56:13-0400", "tool": "get_entity", "arguments": {"entity_id": "c817032b-a762-45f0-8e89-15dd26cc4c58"}, "status": 200, "is_error": false, "chars": 4841, "ms": 21}
+{"at": "2026-10-17T22:56:13-0400", "tool": "list_documents", "arguments": {"q": "discount"}, "status": 200, "is_error": false, "chars": 649, "ms": 2}
+{"at": "2026-10-17T22:56:16-0400", "tool": "read_passages", "arguments": {"document_id": "b14127a1-fe35-43b9-8ea9-9172145cf99d"}, "status": 200, "is_error": false, "chars": 5108, "ms": 9}
+{"at": "2026-10-17T22:56:17-0400", "tool": "read_passages", "arguments": {"document_id": "4da0406d-ba99-4bbc-b6be-0b41cd368930"}, "status": 200, "is_error": false, "chars": 1239, "ms": 2}
+{"at": "2026-10-17T22:56:17-0400", "tool": "read_passages", "arguments": {"document_id": "1068f825-1e69-47d6-8ddc-460004510208"}, "status": 200, "is_error": false, "chars": 581, "ms": 3}
+{"at": "2026-10-17T22:56:18-0400", "tool": "read_passages", "arguments": {"document_id": "0501798b-359a-4b5a-a3ae-679b20711503"}, "status": 200, "is_error": false, "chars": 1360, "ms": 3}
+{"at": "2026-10-17T22:56:25-0400", "tool": "get_entity", "arguments": {"entity_id": "359ed0b4-af49-4a9c-9904-4ebf23c287e9"}, "status": 200, "is_error": false, "chars": 1699, "ms": 60}
+{"at": "2026-10-17T22:56:26-0400", "tool": "get_entity", "arguments": {"entity_id": "b117dc06-05b0-4386-8e23-1c40de8fbf00", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 8794, "ms": 26}
+{"at": "2026-10-17T22:56:27-0400", "tool": "search", "arguments": {"query": "VP Sales", "limit": 10}, "status": 200, "is_error": false, "chars": 7678, "ms": 172}
+{"at": "2026-10-17T22:56:27-0400", "tool": "search", "arguments": {"query": "Northstar Pricing Policy effective", "limit": 10}, "status": 200, "is_error": false, "chars": 4102, "ms": 211}
+{"at": "2026-10-17T22:56:31-0400", "tool": "search", "arguments": {"query": "Acme Master Supply Agreement term ACME-MFG-2025", "limit": 10}, "status": 200, "is_error": false, "chars": 5678, "ms": 226}
+{"at": "2026-10-17T22:56:31-0400", "tool": "read_passages", "arguments": {"document_id": "08e7d5a6-0d28-4a2c-b97a-d31608570ccd"}, "status": 200, "is_error": false, "chars": 646, "ms": 7}

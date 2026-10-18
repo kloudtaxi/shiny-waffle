@@ -1,0 +1,15 @@
+{"at": "2026-10-17T18:17:21-0400", "tool": "search", "arguments": {"query": "SR-39207"}, "status": 200, "is_error": false, "chars": 16324, "ms": 327}
+{"at": "2026-10-17T18:17:22-0400", "tool": "find_entities", "arguments": {"q": "Cedar Health"}, "status": 200, "is_error": false, "chars": 1389, "ms": 259}
+{"at": "2026-10-17T18:17:24-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2063"}, "status": 501, "is_error": true, "chars": 135, "ms": 10}
+{"at": "2026-10-17T18:17:24-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 16}
+{"at": "2026-10-17T18:17:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-238c-7023-9975-1264e959774c"}, "status": 200, "is_error": false, "chars": 1087, "ms": 58}
+{"at": "2026-10-17T18:17:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2af2-7132-8c92-deb0a57fdc08"}, "status": 200, "is_error": false, "chars": 2585, "ms": 26}
+{"at": "2026-10-17T18:17:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-299e-7f22-abe9-1d68518b05dc"}, "status": 200, "is_error": false, "chars": 12850, "ms": 28}
+{"at": "2026-10-17T18:17:31-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-262a-7853-997b-6cec1f21e014"}, "status": 200, "is_error": false, "chars": 1018, "ms": 54}
+{"at": "2026-10-17T18:17:31-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a2c-7cc3-a848-596f82b4d25e"}, "status": 200, "is_error": false, "chars": 4775, "ms": 31}
+{"at": "2026-10-17T18:17:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 3624, "ms": 31}
+{"at": "2026-10-17T18:17:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1c95-78f2-ac69-96fb2e316d20"}, "status": 200, "is_error": false, "chars": 487, "ms": 27}
+{"at": "2026-10-17T18:17:38-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a85-7a80-af9e-705bee27ad24"}, "status": 200, "is_error": false, "chars": 1161, "ms": 52}
+{"at": "2026-10-17T18:17:39-0400", "tool": "search", "arguments": {"query": "SR-39207 credit claim decision"}, "status": 200, "is_error": false, "chars": 18040, "ms": 374}
+{"at": "2026-10-17T18:17:39-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9b3e-c70224f958ce"}, "status": 200, "is_error": false, "chars": 2952, "ms": 35}
+{"at": "2026-10-17T18:17:41-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1dc1-7b61-929a-af3ec0f70533"}, "status": 200, "is_error": false, "chars": 537, "ms": 65}

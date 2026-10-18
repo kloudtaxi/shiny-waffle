@@ -1,0 +1,16 @@
+{"at": "2026-10-18T14:54:15-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2846, "ms": 77}
+{"at": "2026-10-18T14:54:15-0400", "tool": "find_entities", "arguments": {"q": "DR-9111"}, "status": 200, "is_error": false, "chars": 11, "ms": 17}
+{"at": "2026-10-18T14:54:15-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 663, "ms": 19}
+{"at": "2026-10-18T14:54:15-0400", "tool": "find_entities", "arguments": {"q": "NS-CLOUD"}, "status": 200, "is_error": false, "chars": 709, "ms": 18}
+{"at": "2026-10-18T14:54:19-0400", "tool": "list_facts", "arguments": {"entity_id": "a5d284c8-fe8b-42fd-ae57-9ecb0233fc71", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 5170, "ms": 70}
+{"at": "2026-10-18T14:54:19-0400", "tool": "find_entities", "arguments": {"q": "DR-91"}, "status": 200, "is_error": false, "chars": 11, "ms": 19}
+{"at": "2026-10-18T14:54:19-0400", "tool": "find_entities", "arguments": {"q": "policy"}, "status": 200, "is_error": false, "chars": 1912, "ms": 20}
+{"at": "2026-10-18T14:54:20-0400", "tool": "neighbourhood", "arguments": {"entity_id": "f238fee4-af3c-40c0-96c4-8213ad53cd04", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 14165, "ms": 43}
+{"at": "2026-10-18T14:54:23-0400", "tool": "get_entity", "arguments": {"entity_id": "4edc560f-4c30-49bb-b214-ce9e5c1d132e"}, "status": 200, "is_error": false, "chars": 14702, "ms": 51}
+{"at": "2026-10-18T14:54:24-0400", "tool": "get_entity", "arguments": {"entity_id": "2e644b3c-1731-4e51-b033-4bc0e34a32d3"}, "status": 200, "is_error": false, "chars": 11401, "ms": 21}
+{"at": "2026-10-18T14:54:24-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 1137, "ms": 97}
+{"at": "2026-10-18T14:54:28-0400", "tool": "find_entities", "arguments": {"q": "DR-"}, "status": 200, "is_error": false, "chars": 11585, "ms": 40}
+{"at": "2026-10-18T14:54:29-0400", "tool": "find_entities", "arguments": {"q": "Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 11, "ms": 49}
+{"at": "2026-10-18T14:54:29-0400", "tool": "find_entities", "arguments": {"q": "exception"}, "status": 200, "is_error": false, "chars": 11, "ms": 20}
+{"at": "2026-10-18T14:54:32-0400", "tool": "find_entities", "arguments": {"q": "DR-", "kind": "event"}, "status": 200, "is_error": false, "chars": 1595, "ms": 29}
+{"at": "2026-10-18T14:54:32-0400", "tool": "find_entities", "arguments": {"q": "DR-9"}, "status": 200, "is_error": false, "chars": 3076, "ms": 19}

@@ -1,0 +1,10 @@
+{"at": "2026-10-18T02:57:14-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 593, "ms": 130}
+{"at": "2026-10-18T02:57:14-0400", "tool": "search", "arguments": {"query": "CR-9201 credit limit request"}, "status": 200, "is_error": false, "chars": 6782, "ms": 489}
+{"at": "2026-10-18T02:57:14-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 44}
+{"at": "2026-10-18T02:57:17-0400", "tool": "read_passages", "arguments": {"document_id": "4cd0ade4-51a7-45b3-9de6-57df85cffb7f"}, "status": 200, "is_error": false, "chars": 2314, "ms": 7}
+{"at": "2026-10-18T02:57:17-0400", "tool": "read_passages", "arguments": {"document_id": "0d3e3471-11cf-4d23-b92c-eb73231d7c3f"}, "status": 200, "is_error": false, "chars": 2403, "ms": 3}
+{"at": "2026-10-18T02:57:18-0400", "tool": "read_passages", "arguments": {"document_id": "349e5092-7f81-44c0-8225-d0d6dea62abc"}, "status": 200, "is_error": false, "chars": 1671, "ms": 4}
+{"at": "2026-10-18T02:57:18-0400", "tool": "read_passages", "arguments": {"document_id": "5ceb84cf-baa1-4881-a100-628661578636"}, "status": 200, "is_error": false, "chars": 2464, "ms": 3}
+{"at": "2026-10-18T02:57:19-0400", "tool": "read_passages", "arguments": {"document_id": "85ee8d7a-6e30-4d39-b332-946eb2253194"}, "status": 200, "is_error": false, "chars": 967, "ms": 3}
+{"at": "2026-10-18T02:57:19-0400", "tool": "read_passages", "arguments": {"document_id": "63345892-0edd-41e0-b317-26d50ec88375"}, "status": 200, "is_error": false, "chars": 1363, "ms": 7}
+{"at": "2026-10-18T02:57:24-0400", "tool": "read_passages", "arguments": {"document_id": "6fb7dca2-6bc2-4805-9f2c-a1cd5e491745"}, "status": 200, "is_error": false, "chars": 2462, "ms": 3}

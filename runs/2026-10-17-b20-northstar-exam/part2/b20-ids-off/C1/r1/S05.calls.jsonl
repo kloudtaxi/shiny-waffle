@@ -1,0 +1,18 @@
+{"at": "2026-10-17T22:56:51-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9001"}, "status": 200, "is_error": false, "chars": 459, "ms": 67}
+{"at": "2026-10-17T22:56:52-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 649, "ms": 51}
+{"at": "2026-10-17T22:56:52-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7455, "ms": 21}
+{"at": "2026-10-17T22:56:52-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7038, "ms": 3}
+{"at": "2026-10-17T22:57:01-0400", "tool": "read_passages", "arguments": {"document_id": "683d9ece-137a-465a-b309-0bd3af5b27e4"}, "status": 200, "is_error": false, "chars": 5108, "ms": 5}
+{"at": "2026-10-17T22:57:02-0400", "tool": "read_passages", "arguments": {"document_id": "38949879-6837-46d8-bbef-bdd8577dfd33"}, "status": 200, "is_error": false, "chars": 646, "ms": 2}
+{"at": "2026-10-17T22:57:02-0400", "tool": "read_passages", "arguments": {"document_id": "1c10242f-5a42-48fc-80dc-d56ab85d2974"}, "status": 200, "is_error": false, "chars": 1239, "ms": 3}
+{"at": "2026-10-17T22:57:05-0400", "tool": "search", "arguments": {"query": "Acme Master Supply Agreement pricing exception NS-500 discount", "limit": 15}, "status": 200, "is_error": false, "chars": 12506, "ms": 192}
+{"at": "2026-10-17T22:57:06-0400", "tool": "read_passages", "arguments": {"document_id": "7e58f7d8-4286-494a-9397-3b195a39d5d3"}, "status": 200, "is_error": false, "chars": 1573, "ms": 6}
+{"at": "2026-10-17T22:57:07-0400", "tool": "read_passages", "arguments": {"document_id": "9556193a-3cf1-4b95-9aa6-646e7de010ab"}, "status": 200, "is_error": false, "chars": 1279, "ms": 14}
+{"at": "2026-10-17T22:57:07-0400", "tool": "read_passages", "arguments": {"document_id": "4deeaf6d-2029-4b25-9e87-965fc5417513"}, "status": 200, "is_error": false, "chars": 1192, "ms": 10}
+{"at": "2026-10-17T22:57:20-0400", "tool": "read_passages", "arguments": {"document_id": "b8babf38-2b6a-4d99-99b7-073c37f0e2ce"}, "status": 200, "is_error": false, "chars": 581, "ms": 6}
+{"at": "2026-10-17T22:57:21-0400", "tool": "read_passages", "arguments": {"document_id": "94e8651c-c97c-4146-aa7c-38c94c6d34e8"}, "status": 200, "is_error": false, "chars": 967, "ms": 3}
+{"at": "2026-10-17T22:57:22-0400", "tool": "read_passages", "arguments": {"document_id": "62aae37a-5ec2-44f0-81e2-ad37f5860a64"}, "status": 200, "is_error": false, "chars": 2462, "ms": 3}
+{"at": "2026-10-17T22:57:22-0400", "tool": "get_entity", "arguments": {"entity_id": "49da4202-5e9f-4656-9cf7-359484d918a5"}, "status": 200, "is_error": false, "chars": 992, "ms": 39}
+{"at": "2026-10-17T22:57:23-0400", "tool": "search", "arguments": {"query": "NS-500 Industrial Controller list price", "limit": 5}, "status": 200, "is_error": false, "chars": 4564, "ms": 344}
+{"at": "2026-10-17T22:57:31-0400", "tool": "search", "arguments": {"query": "contract effective date expiry Acme agreement term preferential pricing", "limit": 8}, "status": 200, "is_error": false, "chars": 4267, "ms": 229}
+{"at": "2026-10-17T22:57:37-0400", "tool": "read_passages", "arguments": {"document_id": "7ccd4f28-6e28-4832-ad28-d8578d1e7591"}, "status": 200, "is_error": false, "chars": 937, "ms": 8}

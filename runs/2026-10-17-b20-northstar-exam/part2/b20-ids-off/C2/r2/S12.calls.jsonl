@@ -1,0 +1,20 @@
+{"at": "2026-10-18T13:28:10-0400", "tool": "find_entities", "arguments": {"q": "DR-9104"}, "status": 200, "is_error": false, "chars": 11, "ms": 25}
+{"at": "2026-10-18T13:28:11-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 656, "ms": 189}
+{"at": "2026-10-18T13:28:11-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 40}
+{"at": "2026-10-18T13:28:11-0400", "tool": "find_entities", "arguments": {"q": "NS-CLOUD"}, "status": 200, "is_error": false, "chars": 843, "ms": 37}
+{"at": "2026-10-18T13:28:14-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f", "hops": 1}, "status": 200, "is_error": false, "chars": 1276, "ms": 21}
+{"at": "2026-10-18T13:28:14-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 20}
+{"at": "2026-10-18T13:28:16-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 2335, "ms": 48}
+{"at": "2026-10-18T13:28:16-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 6018, "ms": 41}
+{"at": "2026-10-18T13:28:17-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 20}
+{"at": "2026-10-18T13:28:21-0400", "tool": "list_facts", "arguments": {"entity_id": "157a6397-e5db-4e4a-8b2e-488ebe7dbe40"}, "status": 200, "is_error": false, "chars": 7918, "ms": 72}
+{"at": "2026-10-18T13:28:22-0400", "tool": "list_facts", "arguments": {"entity_id": "30c0b8e8-1cf9-463e-aebd-c8ef56897050"}, "status": 200, "is_error": false, "chars": 700, "ms": 24}
+{"at": "2026-10-18T13:28:22-0400", "tool": "list_facts", "arguments": {"entity_id": "f80f4308-d3ba-4643-9183-420db8396f94"}, "status": 200, "is_error": false, "chars": 11269, "ms": 25}
+{"at": "2026-10-18T13:28:27-0400", "tool": "list_facts", "arguments": {"entity_id": "9fbb1b14-aebf-4687-82d4-78779d9e8553"}, "status": 200, "is_error": false, "chars": 11664, "ms": 21}
+{"at": "2026-10-18T13:28:28-0400", "tool": "list_facts", "arguments": {"entity_id": "a0096fa6-bfbb-480a-adb1-f7f5bff78dd5"}, "status": 200, "is_error": false, "chars": 7798, "ms": 394}
+{"at": "2026-10-18T13:28:28-0400", "tool": "find_entities", "arguments": {"q": "DR-91"}, "status": 200, "is_error": false, "chars": 11, "ms": 72}
+{"at": "2026-10-18T13:28:34-0400", "tool": "find_entities", "arguments": {"q": "discount request"}, "status": 200, "is_error": false, "chars": 443, "ms": 31}
+{"at": "2026-10-18T13:28:34-0400", "tool": "find_entities", "arguments": {"q": "DR-"}, "status": 200, "is_error": false, "chars": 7694, "ms": 23}
+{"at": "2026-10-18T13:28:34-0400", "tool": "find_entities", "arguments": {"q": "Blue River Logistics LLC"}, "status": 200, "is_error": false, "chars": 925, "ms": 32}
+{"at": "2026-10-18T13:28:38-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "DR-9104"}, "status": 404, "is_error": true, "chars": 125, "ms": 88}
+{"at": "2026-10-18T13:28:39-0400", "tool": "list_facts", "arguments": {"entity_id": "287d6545-3bbc-44da-b260-1bebfb462cc2"}, "status": 200, "is_error": false, "chars": 8928, "ms": 22}

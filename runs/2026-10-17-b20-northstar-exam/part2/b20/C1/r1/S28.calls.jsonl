@@ -1,0 +1,13 @@
+{"at": "2026-10-18T02:57:52-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 2801, "ms": 96}
+{"at": "2026-10-18T02:57:52-0400", "tool": "find_entities", "arguments": {"q": "CR-9203"}, "status": 200, "is_error": false, "chars": 11, "ms": 21}
+{"at": "2026-10-18T02:57:52-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 31}
+{"at": "2026-10-18T02:57:54-0400", "tool": "get_entity", "arguments": {"entity_id": "389e8898-95e9-445f-85f9-4b4a9b239722"}, "status": 200, "is_error": false, "chars": 2282, "ms": 69}
+{"at": "2026-10-18T02:57:55-0400", "tool": "search", "arguments": {"query": "parent guarantee Acme Group Holdings", "limit": 10}, "status": 200, "is_error": false, "chars": 5771, "ms": 168}
+{"at": "2026-10-18T02:57:55-0400", "tool": "search", "arguments": {"query": "CR-9203 credit limit request", "limit": 10}, "status": 200, "is_error": false, "chars": 6782, "ms": 216}
+{"at": "2026-10-18T02:57:59-0400", "tool": "read_passages", "arguments": {"document_id": "f5d55e46-fa30-4d84-b1c0-19a5263ddbdb"}, "status": 200, "is_error": false, "chars": 1788, "ms": 2}
+{"at": "2026-10-18T02:57:59-0400", "tool": "read_passages", "arguments": {"document_id": "8b3597c3-1603-4f76-86eb-6fcec730394b"}, "status": 200, "is_error": false, "chars": 2314, "ms": 2}
+{"at": "2026-10-18T02:58:00-0400", "tool": "read_passages", "arguments": {"document_id": "6d82c716-075a-4274-9375-f68326521527"}, "status": 200, "is_error": false, "chars": 1363, "ms": 2}
+{"at": "2026-10-18T02:58:03-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 5}
+{"at": "2026-10-18T02:58:05-0400", "tool": "search", "arguments": {"query": "invoices C-1001 due date paid date", "limit": 10}, "status": 200, "is_error": false, "chars": 10655, "ms": 485}
+{"at": "2026-10-18T02:58:05-0400", "tool": "search", "arguments": {"query": "Director of Finance VP Sales manager reports to", "limit": 10}, "status": 200, "is_error": false, "chars": 8068, "ms": 256}
+{"at": "2026-10-18T02:58:11-0400", "tool": "get_entity", "arguments": {"entity_id": "99b5de95-5344-4aa3-9f80-830d4f338192"}, "status": 200, "is_error": false, "chars": 1002, "ms": 62}

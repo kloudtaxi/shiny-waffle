@@ -1,0 +1,302 @@
+{
+ "A001": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A002": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A003": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A004": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A005": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A006": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A007": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A008": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A009": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A010": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A011": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A012": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A013": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A014": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A015": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A016": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A017": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A018": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A019": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A020": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A021": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A022": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A023": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A024": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A025": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A026": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A027": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A028": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A029": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A030": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A031": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A032": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A033": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A034": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A035": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A036": {
+  "q": "S08",
+  "grade": "partial",
+  "why": "Industrial Supply right and CRM/ERP right, but leaves ACME-MFG-2025 unconfirmed."
+ },
+ "A037": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A038": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A039": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A040": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A041": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A042": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A043": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A044": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A045": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A046": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A047": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A048": {
+  "q": "S07",
+  "grade": "pass",
+  "why": "Basis is EXC-ACME-NS500-15 under the Acme agreement; hearsay not treated as basis."
+ },
+ "A049": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A050": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A051": {
+  "q": "S07",
+  "grade": "partial",
+  "why": "Right exception but dismisses the MSA as a source (wrongly says it states no rate)."
+ },
+ "A052": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A053": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A054": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A055": {
+  "q": "S08",
+  "grade": "pass",
+  "why": "Three IDs to Acme Manufacturing; Industrial Supply separate."
+ },
+ "A056": {
+  "q": "S08",
+  "grade": "partial",
+  "why": "Industrial Supply right and CRM/ERP right, but leaves ACME-MFG-2025 unconfirmed."
+ },
+ "A057": {
+  "q": "S06b",
+  "grade": "pass",
+  "why": "10% under the older exception, window covers date."
+ },
+ "A058": {
+  "q": "S06c",
+  "grade": "pass",
+  "why": "No contractual discount on that date; later terms not applied backwards."
+ },
+ "A059": {
+  "q": "S06a",
+  "grade": "pass",
+  "why": "15% from the 15% exception."
+ },
+ "A060": {
+  "q": "S08",
+  "grade": "partial",
+  "why": "Industrial Supply right and CRM/ERP right, but leaves ACME-MFG-2025 unconfirmed."
+ }
+}

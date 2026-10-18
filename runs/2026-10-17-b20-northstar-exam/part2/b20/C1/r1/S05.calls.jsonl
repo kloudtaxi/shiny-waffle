@@ -1,0 +1,18 @@
+{"at": "2026-10-17T22:56:45-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2846, "ms": 136}
+{"at": "2026-10-17T22:56:45-0400", "tool": "find_entities", "arguments": {"q": "DR-9001"}, "status": 200, "is_error": false, "chars": 3076, "ms": 22}
+{"at": "2026-10-17T22:56:46-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1261, "ms": 23}
+{"at": "2026-10-17T22:56:46-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 663, "ms": 20}
+{"at": "2026-10-17T22:56:49-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7038, "ms": 3}
+{"at": "2026-10-17T22:56:50-0400", "tool": "list_facts", "arguments": {"entity_id": "f238fee4-af3c-40c0-96c4-8213ad53cd04"}, "status": 200, "is_error": false, "chars": 35973, "ms": 26}
+{"at": "2026-10-17T22:56:50-0400", "tool": "list_facts", "arguments": {"entity_id": "a5d284c8-fe8b-42fd-ae57-9ecb0233fc71"}, "status": 200, "is_error": false, "chars": 5170, "ms": 26}
+{"at": "2026-10-17T22:57:01-0400", "tool": "search", "arguments": {"query": "Acme Master Supply Agreement NS-500 discount pricing exception", "limit": 15}, "status": 200, "is_error": false, "chars": 12847, "ms": 219}
+{"at": "2026-10-17T22:57:01-0400", "tool": "read_passages", "arguments": {"document_id": "b7fae163-3ea6-435a-adfc-f67239854e50"}, "status": 200, "is_error": false, "chars": 1239, "ms": 3}
+{"at": "2026-10-17T22:57:02-0400", "tool": "read_passages", "arguments": {"document_id": "5914fb8c-bb0f-43d4-b7b5-28da8fb4d6e7"}, "status": 200, "is_error": false, "chars": 646, "ms": 4}
+{"at": "2026-10-17T22:57:03-0400", "tool": "read_passages", "arguments": {"document_id": "bf903fc8-a9be-42e5-bcdf-d09fa13110e9"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-17T22:57:03-0400", "tool": "read_passages", "arguments": {"document_id": "5d1ccae5-799d-42e4-85d4-ecdfcbb26d83"}, "status": 200, "is_error": false, "chars": 1192, "ms": 3}
+{"at": "2026-10-17T22:57:04-0400", "tool": "read_passages", "arguments": {"document_id": "ac4908f1-befd-4f03-888e-b8b98a3c8c53"}, "status": 200, "is_error": false, "chars": 581, "ms": 3}
+{"at": "2026-10-17T22:57:08-0400", "tool": "search", "arguments": {"query": "ACME-MFG-2025 agreement term effective expiry", "limit": 10}, "status": 200, "is_error": false, "chars": 5364, "ms": 255}
+{"at": "2026-10-17T22:57:08-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 1137, "ms": 33}
+{"at": "2026-10-17T22:57:09-0400", "tool": "read_passages", "arguments": {"document_id": "b5e6a8d1-6fd6-4268-a0e6-bbe8da62b746"}, "status": 200, "is_error": false, "chars": 967, "ms": 9}
+{"at": "2026-10-17T22:57:13-0400", "tool": "read_passages", "arguments": {"document_id": "9a4034be-aa3b-45e9-9169-a0a411e78ed3"}, "status": 200, "is_error": false, "chars": 937, "ms": 3}
+{"at": "2026-10-17T22:57:13-0400", "tool": "list_facts", "arguments": {"entity_id": "6b65480f-f1e2-4399-874e-6530c49e012b"}, "status": 200, "is_error": false, "chars": 721, "ms": 29}

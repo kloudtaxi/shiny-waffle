@@ -1,0 +1,27 @@
+{"at": "2026-10-17T18:15:19-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1044"}, "status": 501, "is_error": true, "chars": 143, "ms": 46}
+{"at": "2026-10-17T18:15:20-0400", "tool": "find_entities", "arguments": {"q": "CR-9207"}, "status": 200, "is_error": false, "chars": 41, "ms": 220}
+{"at": "2026-10-17T18:15:20-0400", "tool": "find_entities", "arguments": {"q": "guarantee"}, "status": 200, "is_error": false, "chars": 1449, "ms": 205}
+{"at": "2026-10-17T18:15:24-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 36}
+{"at": "2026-10-17T18:15:24-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 5028, "ms": 264}
+{"at": "2026-10-17T18:15:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2033-7c83-9620-c18c1de2f4c3"}, "status": 200, "is_error": false, "chars": 1294, "ms": 60}
+{"at": "2026-10-17T18:15:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9b3e-c70224f958ce"}, "status": 200, "is_error": false, "chars": 2952, "ms": 32}
+{"at": "2026-10-17T18:15:28-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-245d-7e61-ae2f-4512de9120a1"}, "status": 200, "is_error": false, "chars": 2424, "ms": 44}
+{"at": "2026-10-17T18:15:32-0400", "tool": "search", "arguments": {"query": "Northstar Credit Policy 2026 maximum credit limit Strategic accounts effective 2026-01-01", "limit": 10}, "status": 200, "is_error": false, "chars": 17819, "ms": 373}
+{"at": "2026-10-17T18:15:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1943-7a33-b788-358dd135d389"}, "status": 200, "is_error": false, "chars": 2657, "ms": 35}
+{"at": "2026-10-17T18:15:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 3624, "ms": 36}
+{"at": "2026-10-17T18:15:40-0400", "tool": "find_entities", "arguments": {"q": "Credit Policy 2026"}, "status": 200, "is_error": false, "chars": 717, "ms": 227}
+{"at": "2026-10-17T18:15:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-24ca-7a93-8187-3c8fbbe0a325"}, "status": 200, "is_error": false, "chars": 965, "ms": 35}
+{"at": "2026-10-17T18:15:41-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1b11-7520-aa1b-3647453a4522"}, "status": 200, "is_error": false, "chars": 1580, "ms": 39}
+{"at": "2026-10-17T18:15:44-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-6387-7e90-b22b-e98113a5364e"}, "status": 200, "is_error": false, "chars": 2192, "ms": 54}
+{"at": "2026-10-17T18:15:55-0400", "tool": "get_entity", "arguments": {"entity_id": "01a13637-6387-7e90-b22b-e98113a5364e", "known_at": "2026-10-13T18:00:00Z"}, "status": 200, "is_error": false, "chars": 2454, "ms": 10893}
+{"at": "2026-10-17T18:15:58-0400", "tool": "find_entities", "arguments": {"q": "Accounts Receivable Specialist"}, "status": 200, "is_error": false, "chars": 660, "ms": 253}
+{"at": "2026-10-17T18:15:59-0400", "tool": "find_entities", "arguments": {"q": "Strategic accounts"}, "status": 200, "is_error": false, "chars": 596, "ms": 198}
+{"at": "2026-10-17T18:15:59-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 457, "ms": 214}
+{"at": "2026-10-17T18:16:05-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-63c1-7c72-ae6a-788c08ae16d5"}, "status": 200, "is_error": false, "chars": 2285, "ms": 74}
+{"at": "2026-10-17T18:16:05-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-6404-7a12-84c5-3f2e6689639e"}, "status": 200, "is_error": false, "chars": 1161, "ms": 65}
+{"at": "2026-10-17T18:16:06-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13638-d074-7b12-9a00-88e6f10e59ec"}, "status": 200, "is_error": false, "chars": 1167, "ms": 58}
+{"at": "2026-10-17T18:16:06-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1a7d-7b51-b6d9-d4630534976b"}, "status": 200, "is_error": false, "chars": 4319, "ms": 49}
+{"at": "2026-10-17T18:16:14-0400", "tool": "search", "arguments": {"query": "C-1044 invoice", "limit": 10}, "status": 200, "is_error": false, "chars": 13522, "ms": 340}
+{"at": "2026-10-17T18:16:14-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 895, "ms": 243}
+{"at": "2026-10-17T18:16:19-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-63f0-7381-aa8d-aeb398424d57"}, "status": 200, "is_error": false, "chars": 811, "ms": 366}
+{"at": "2026-10-17T18:16:25-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-63e8-7230-88fa-2b2a2d6c26b4"}, "status": 200, "is_error": false, "chars": 3326, "ms": 41}

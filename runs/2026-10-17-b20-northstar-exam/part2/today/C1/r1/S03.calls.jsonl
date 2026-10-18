@@ -1,0 +1,18 @@
+{"at": "2026-10-17T22:21:23-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 24}
+{"at": "2026-10-17T22:21:23-0400", "tool": "find_entities", "arguments": {"q": "DR-9001"}, "status": 200, "is_error": false, "chars": 156, "ms": 63}
+{"at": "2026-10-17T22:21:24-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 67}
+{"at": "2026-10-17T22:21:24-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 29}
+{"at": "2026-10-17T22:21:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 82}
+{"at": "2026-10-17T22:21:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0fe-7ca1-83e3-76b95516e020"}, "status": 200, "is_error": false, "chars": 1262, "ms": 63}
+{"at": "2026-10-17T22:21:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9dec-7373-856b-fe62ede4b9dc"}, "status": 200, "is_error": false, "chars": 1126, "ms": 25}
+{"at": "2026-10-17T22:21:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 65}
+{"at": "2026-10-17T22:21:31-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0ad-70d0-952d-9e9e582dc3f3"}, "status": 200, "is_error": false, "chars": 1166, "ms": 66}
+{"at": "2026-10-17T22:21:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0d7-7041-b236-c03e6f9f8278"}, "status": 200, "is_error": false, "chars": 1079, "ms": 48}
+{"at": "2026-10-17T22:21:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 29}
+{"at": "2026-10-17T22:21:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 33}
+{"at": "2026-10-17T22:21:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 46}
+{"at": "2026-10-17T22:21:35-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f43-7070-9106-fdeece6b182b"}, "status": 200, "is_error": false, "chars": 804, "ms": 52}
+{"at": "2026-10-17T22:21:36-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f68-7421-a202-7e4cb45c4168"}, "status": 200, "is_error": false, "chars": 735, "ms": 65}
+{"at": "2026-10-17T22:21:36-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a282-7f02-bb68-97f4ce30142c"}, "status": 200, "is_error": false, "chars": 2171, "ms": 49}
+{"at": "2026-10-17T22:21:37-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a38f-70b3-977d-d17e77271bb4"}, "status": 200, "is_error": false, "chars": 628, "ms": 66}
+{"at": "2026-10-17T22:21:43-0400", "tool": "search", "arguments": {"query": "Acme Mfg. Holdings ERP customer", "limit": 5}, "status": 200, "is_error": false, "chars": 5399, "ms": 410}

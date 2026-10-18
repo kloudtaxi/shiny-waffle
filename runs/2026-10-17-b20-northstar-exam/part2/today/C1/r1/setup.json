@@ -1,0 +1,222 @@
+{
+ "arm": "today",
+ "foundation": {
+  "mode": "adapter",
+  "url": "http://127.0.0.1:3200",
+  "person": "sarah.chen@northstar.example",
+  "kbs": {
+   "base": "01a14c97-2de1-7de0-a1cb-79adb046f3ae",
+   "missing-contract-evidence": "01a14c97-302d-70f0-9609-d1fedb5c1fa4",
+   "missing-guarantee-evidence": "01a14c97-3248-73b3-8819-db7ecc840620"
+  },
+  "foundation": "today's foundation (binary sha256 162f6891…) through web-next 7d108d4's adapter (producer aad5b06)"
+ },
+ "variant": "C1",
+ "hidden_via_disallowedTools": [],
+ "tools": [
+  {
+   "name": "find_entities",
+   "description": "Find things in the knowledge base by name: people, organizations, places, products, events, documents and agreements. Returns each match with its id. Give q (all or part of a name), kind (one of person, organization, place, product, event, document, agreement), or both.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "q": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  {
+   "name": "get_entity",
+   "description": "One entity: its names, its identifiers in other systems, and the facts about it, each with its evidence. valid_at keeps the facts that hold on that date, as the documents state it. known_at shows what the knowledge base held at that moment.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "entity_id": {
+      "type": "string"
+     },
+     "valid_at": {
+      "type": "string",
+      "description": "A date, YYYY-MM-DD."
+     },
+     "known_at": {
+      "type": "string",
+      "description": "A moment, as an ISO 8601 timestamp."
+     }
+    },
+    "required": [
+     "entity_id"
+    ]
+   }
+  },
+  {
+   "name": "list_facts",
+   "description": "The facts whose subject is one entity, optionally only those with one predicate. Each fact has its object, qualifiers, the dates it holds from and to, its status and its evidence. valid_at and known_at work as in get_entity.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "entity_id": {
+      "type": "string"
+     },
+     "predicate": {
+      "type": "string"
+     },
+     "valid_at": {
+      "type": "string",
+      "description": "A date, YYYY-MM-DD."
+     },
+     "known_at": {
+      "type": "string",
+      "description": "A moment, as an ISO 8601 timestamp."
+     },
+     "cursor": {
+      "type": "string",
+      "description": "The next_cursor of a previous result, for more."
+     }
+    },
+    "required": [
+     "entity_id"
+    ]
+   }
+  },
+  {
+   "name": "get_fact",
+   "description": "One fact by its id, with its evidence: the quoted words and the document they're in. A fact a rule derived comes with its premises.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "fact_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "fact_id"
+    ]
+   }
+  },
+  {
+   "name": "lookup_identifier",
+   "description": "The entity that another system's identifier refers to, such as an account, customer or registration number. Give the system's name and the identifier. The answer is not_known when the knowledge base holds no such identifier.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "system": {
+      "type": "string"
+     },
+     "id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "system",
+     "id"
+    ]
+   }
+  },
+  {
+   "name": "neighbourhood",
+   "description": "The entities connected to one entity and the facts between them, one or two hops out.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "entity_id": {
+      "type": "string"
+     },
+     "hops": {
+      "type": "integer",
+      "enum": [
+       1,
+       2
+      ]
+     },
+     "valid_at": {
+      "type": "string",
+      "description": "A date, YYYY-MM-DD."
+     }
+    },
+    "required": [
+     "entity_id"
+    ]
+   }
+  },
+  {
+   "name": "search",
+   "description": "Search the documents' text. Returns the closest passages, each with its document and the words that matched.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string"
+     },
+     "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  },
+  {
+   "name": "list_documents",
+   "description": "The documents in the knowledge base, with their titles, file names and dates. q keeps the documents whose title or file name contains it.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "q": {
+      "type": "string"
+     },
+     "cursor": {
+      "type": "string",
+      "description": "The next_cursor of a previous result, for more."
+     }
+    }
+   }
+  },
+  {
+   "name": "read_passages",
+   "description": "One document's text, passage by passage, in order.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "document_id": {
+      "type": "string"
+     },
+     "cursor": {
+      "type": "string",
+      "description": "The next_cursor of a previous result, for more."
+     }
+    },
+    "required": [
+     "document_id"
+    ]
+   }
+  }
+ ],
+ "model": "claude-opus-5-5",
+ "system_prompt": "You answer questions about an organization. Your only source of information is the organization's knowledge base, which you can reach through the tools provided. Answer the question you are asked.",
+ "procedures": {
+  "discount": {
+   "path": "owm/procedures/discount-approval.md",
+   "sha256": "f553967ce51fffff677a98b0298a16ba73c33159f415134b7d035dbc2283e311"
+  },
+  "credit": {
+   "path": "owm/procedures/credit-limit.md",
+   "sha256": "b4b716c16dcaea6b1918282d551daa72f22d6ed2810c06ab41983ae5f00a026c"
+  },
+  "sla": {
+   "path": "owm/procedures/sla-response.md",
+   "sha256": "e6ef55401ed3ca4627a682fb7cdc5f6e71cba9c63842586cae606f3beb9a8a7c"
+  }
+ },
+ "questions_sha256": "fd4a63fc3818bee7e34d2e122a676a273fd73a5b197524acd1ff85e58f86ad35",
+ "lab_commit": "a4e8554fb58f6c02ed50513840b43ae572b6087e",
+ "flags": "--tools '' --strict-mcp-config --setting-sources project --no-session-persistence --max-turns 40; cwd = fresh temp dir outside the repo",
+ "cap_usd": 550.0,
+ "started": "2026-10-17T22:21:20-0400"
+}

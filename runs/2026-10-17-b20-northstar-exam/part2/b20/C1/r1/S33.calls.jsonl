@@ -1,0 +1,12 @@
+{"at": "2026-10-18T02:58:50-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 4014, "ms": 98}
+{"at": "2026-10-18T02:58:50-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 10440, "ms": 43}
+{"at": "2026-10-18T02:58:50-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7480, "ms": 6}
+{"at": "2026-10-18T02:58:53-0400", "tool": "read_passages", "arguments": {"document_id": "05e84d77-31b1-4618-9c6b-a57bf5630a0d"}, "status": 200, "is_error": false, "chars": 1788, "ms": 11}
+{"at": "2026-10-18T02:58:54-0400", "tool": "read_passages", "arguments": {"document_id": "5fda9710-6688-47f7-8594-9ad473d107d5"}, "status": 200, "is_error": false, "chars": 2314, "ms": 3}
+{"at": "2026-10-18T02:58:54-0400", "tool": "read_passages", "arguments": {"document_id": "0a584cf6-f160-487b-9773-e751c6d5f03a"}, "status": 200, "is_error": false, "chars": 514, "ms": 3}
+{"at": "2026-10-18T02:58:55-0400", "tool": "search", "arguments": {"query": "Acme Group parent guarantee", "limit": 10}, "status": 200, "is_error": false, "chars": 6561, "ms": 237}
+{"at": "2026-10-18T02:59:00-0400", "tool": "search", "arguments": {"query": "guarantee guarantor guaranteed amount", "limit": 10}, "status": 200, "is_error": false, "chars": 8346, "ms": 201}
+{"at": "2026-10-18T02:59:00-0400", "tool": "read_passages", "arguments": {"document_id": "e19fdc63-6f67-42da-a514-ddf5c71d556f"}, "status": 200, "is_error": false, "chars": 2464, "ms": 8}
+{"at": "2026-10-18T02:59:01-0400", "tool": "read_passages", "arguments": {"document_id": "b838870e-b692-4454-b8ed-958559dc7b6c"}, "status": 200, "is_error": false, "chars": 967, "ms": 5}
+{"at": "2026-10-18T02:59:08-0400", "tool": "read_passages", "arguments": {"document_id": "24580885-d21f-43d0-aa7f-fd47fd944369"}, "status": 200, "is_error": false, "chars": 2462, "ms": 9}
+{"at": "2026-10-18T02:59:08-0400", "tool": "find_entities", "arguments": {"q": "Gina"}, "status": 200, "is_error": false, "chars": 191, "ms": 52}

@@ -1,0 +1,18 @@
+{"at": "2026-10-17T18:19:14-0400", "tool": "search", "arguments": {"query": "SR-39857", "limit": 10}, "status": 200, "is_error": false, "chars": 15032, "ms": 295}
+{"at": "2026-10-17T18:19:14-0400", "tool": "find_entities", "arguments": {"q": "SR-39857"}, "status": 200, "is_error": false, "chars": 293, "ms": 200}
+{"at": "2026-10-17T18:19:16-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 18}
+{"at": "2026-10-17T18:19:20-0400", "tool": "get_entity", "arguments": {"entity_id": "01a1363a-5427-7381-80d0-15aff18451e3"}, "status": 200, "is_error": false, "chars": 24639, "ms": 3515}
+{"at": "2026-10-17T18:19:23-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-21a0-7762-aece-7bc2bf994417"}, "status": 200, "is_error": false, "chars": 1771, "ms": 33}
+{"at": "2026-10-17T18:19:23-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-299e-7f22-abe9-1d68518b05dc"}, "status": 200, "is_error": false, "chars": 12850, "ms": 43}
+{"at": "2026-10-17T18:19:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2af2-7132-8c92-deb0a57fdc08"}, "status": 200, "is_error": false, "chars": 2585, "ms": 57}
+{"at": "2026-10-17T18:19:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a2c-7cc3-a848-596f82b4d25e"}, "status": 200, "is_error": false, "chars": 4775, "ms": 32}
+{"at": "2026-10-17T18:19:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-262a-7853-997b-6cec1f21e014"}, "status": 200, "is_error": false, "chars": 1018, "ms": 24}
+{"at": "2026-10-17T18:19:30-0400", "tool": "search", "arguments": {"query": "CRM-2048 account owner tier DUNS", "limit": 10}, "status": 200, "is_error": false, "chars": 13541, "ms": 423}
+{"at": "2026-10-17T18:19:30-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 3624, "ms": 25}
+{"at": "2026-10-17T18:19:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1c95-78f2-ac69-96fb2e316d20"}, "status": 200, "is_error": false, "chars": 487, "ms": 60}
+{"at": "2026-10-17T18:19:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a85-7a80-af9e-705bee27ad24"}, "status": 200, "is_error": false, "chars": 1161, "ms": 54}
+{"at": "2026-10-17T18:19:41-0400", "tool": "search", "arguments": {"query": "root-cause finding Support Engineering Lead VLAN SR-39857", "limit": 10}, "status": 200, "is_error": false, "chars": 15294, "ms": 323}
+{"at": "2026-10-17T18:19:44-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1e2e-7b81-914d-07c602a7ce7e"}, "status": 200, "is_error": false, "chars": 5468, "ms": 70}
+{"at": "2026-10-17T18:19:45-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1dc1-7b61-929a-af3ec0f70533"}, "status": 200, "is_error": false, "chars": 537, "ms": 52}
+{"at": "2026-10-17T18:19:46-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9b3e-c70224f958ce"}, "status": 200, "is_error": false, "chars": 2952, "ms": 23}
+{"at": "2026-10-17T18:19:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2680-71c2-a6aa-e2f8898e2cfb"}, "status": 200, "is_error": false, "chars": 1249, "ms": 63}

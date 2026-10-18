@@ -1,0 +1,14 @@
+{"at": "2026-10-18T02:58:42-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 429, "ms": 85}
+{"at": "2026-10-18T02:58:43-0400", "tool": "find_entities", "arguments": {"q": "CR-9203"}, "status": 200, "is_error": false, "chars": 11, "ms": 19}
+{"at": "2026-10-18T02:58:43-0400", "tool": "find_entities", "arguments": {"q": "guarantee"}, "status": 200, "is_error": false, "chars": 221, "ms": 19}
+{"at": "2026-10-18T02:58:43-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7480, "ms": 4}
+{"at": "2026-10-18T02:58:45-0400", "tool": "read_passages", "arguments": {"document_id": "f70eb56b-63b6-4480-9976-23df3d2e7130"}, "status": 200, "is_error": false, "chars": 1788, "ms": 5}
+{"at": "2026-10-18T02:58:46-0400", "tool": "read_passages", "arguments": {"document_id": "79b87b16-b42c-4347-aa14-c8fa961c1ee6"}, "status": 200, "is_error": false, "chars": 2314, "ms": 8}
+{"at": "2026-10-18T02:58:47-0400", "tool": "read_passages", "arguments": {"document_id": "15847690-7be1-4ce7-a9a4-11e66519c64b"}, "status": 200, "is_error": false, "chars": 514, "ms": 2}
+{"at": "2026-10-18T02:58:47-0400", "tool": "read_passages", "arguments": {"document_id": "d5040cf3-a5b6-478a-8f68-91e1df7d803b"}, "status": 200, "is_error": false, "chars": 1671, "ms": 3}
+{"at": "2026-10-18T02:58:50-0400", "tool": "get_entity", "arguments": {"entity_id": "3abba88a-97ff-404c-913f-65b04db20c88"}, "status": 200, "is_error": false, "chars": 2229, "ms": 45}
+{"at": "2026-10-18T02:58:51-0400", "tool": "search", "arguments": {"query": "parent guarantee Acme Group guaranteed amount", "limit": 10}, "status": 200, "is_error": false, "chars": 6578, "ms": 172}
+{"at": "2026-10-18T02:58:51-0400", "tool": "read_passages", "arguments": {"document_id": "fa76c135-47fc-4630-86e2-392479a855a3"}, "status": 200, "is_error": false, "chars": 2403, "ms": 21}
+{"at": "2026-10-18T02:58:52-0400", "tool": "read_passages", "arguments": {"document_id": "5927859c-c692-44d7-b6eb-5a530d543f8a"}, "status": 200, "is_error": false, "chars": 967, "ms": 7}
+{"at": "2026-10-18T02:58:58-0400", "tool": "read_passages", "arguments": {"document_id": "b19e888e-6941-4e24-a4b9-61551c63e63c"}, "status": 200, "is_error": false, "chars": 2464, "ms": 5}
+{"at": "2026-10-18T02:58:58-0400", "tool": "read_passages", "arguments": {"document_id": "42e5f102-d185-4624-9231-60aec074b9f3"}, "status": 200, "is_error": false, "chars": 2462, "ms": 2}

@@ -1,0 +1,15 @@
+{"at": "2026-10-17T22:24:22-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 31}
+{"at": "2026-10-17T22:24:23-0400", "tool": "search", "arguments": {"query": "DR-9113"}, "status": 200, "is_error": false, "chars": 7301, "ms": 361}
+{"at": "2026-10-17T22:24:23-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 37}
+{"at": "2026-10-17T22:24:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 74}
+{"at": "2026-10-17T22:24:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0fe-7ca1-83e3-76b95516e020"}, "status": 200, "is_error": false, "chars": 1262, "ms": 77}
+{"at": "2026-10-17T22:24:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 63}
+{"at": "2026-10-17T22:24:28-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9dec-7373-856b-fe62ede4b9dc"}, "status": 200, "is_error": false, "chars": 1126, "ms": 53}
+{"at": "2026-10-17T22:24:28-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0d7-7041-b236-c03e6f9f8278"}, "status": 200, "is_error": false, "chars": 1079, "ms": 40}
+{"at": "2026-10-17T22:24:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 39}
+{"at": "2026-10-17T22:24:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 86}
+{"at": "2026-10-17T22:24:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a282-7f02-bb68-97f4ce30142c"}, "status": 200, "is_error": false, "chars": 2171, "ms": 35}
+{"at": "2026-10-17T22:24:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 38}
+{"at": "2026-10-17T22:24:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d28-7453-98e6-d915d8305dac"}, "status": 200, "is_error": false, "chars": 1224, "ms": 32}
+{"at": "2026-10-17T22:24:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f68-7421-a202-7e4cb45c4168"}, "status": 200, "is_error": false, "chars": 735, "ms": 34}
+{"at": "2026-10-17T22:24:40-0400", "tool": "search", "arguments": {"query": "NS-500 Industrial Controller list price", "limit": 3}, "status": 200, "is_error": false, "chars": 2652, "ms": 429}

@@ -1,0 +1,10 @@
+{"at": "2026-10-17T22:24:40-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 135, "ms": 30}
+{"at": "2026-10-17T22:24:41-0400", "tool": "search", "arguments": {"query": "DR-9001 discount request"}, "status": 200, "is_error": false, "chars": 7556, "ms": 346}
+{"at": "2026-10-17T22:24:41-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 124}
+{"at": "2026-10-17T22:24:44-0400", "tool": "search", "arguments": {"query": "pricing exception Acme NS-500 maximum discount effective expiry", "limit": 10}, "status": 200, "is_error": false, "chars": 9839, "ms": 455}
+{"at": "2026-10-17T22:24:44-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 109}
+{"at": "2026-10-17T22:24:44-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c044-79b2-a966-62b57217402e"}, "status": 200, "is_error": false, "chars": 1468, "ms": 71}
+{"at": "2026-10-17T22:24:46-0400", "tool": "search", "arguments": {"query": "Northstar Pricing Policy 2026 approval authority", "limit": 8}, "status": 200, "is_error": false, "chars": 8484, "ms": 327}
+{"at": "2026-10-17T22:24:47-0400", "tool": "search", "arguments": {"query": "Sarah Chen role title Enterprise Account Executive", "limit": 8}, "status": 200, "is_error": false, "chars": 8682, "ms": 363}
+{"at": "2026-10-17T22:24:47-0400", "tool": "search", "arguments": {"query": "Acme agreement termination amendment ACME-MFG-2025", "limit": 8}, "status": 200, "is_error": false, "chars": 8547, "ms": 417}
+{"at": "2026-10-17T22:24:49-0400", "tool": "search", "arguments": {"query": "NS-500 list price product catalog", "limit": 5}, "status": 200, "is_error": false, "chars": 3285, "ms": 479}

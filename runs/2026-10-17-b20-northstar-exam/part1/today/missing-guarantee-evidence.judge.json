@@ -1,0 +1,1857 @@
+{
+ "model": "claude-sonnet-5-5",
+ "prompt": "You check whether a knowledge base states a fact. You get a statement and the facts the knowledge base holds about the things the statement names, drawn one per line. Judge only from those facts, by what they say, not by their wording: a fact can use other words, split one statement over several facts, or hold a value as a qualifier. Answer `stated` when the facts say everything the statement says, `partly` when they say some of it (a value without its dates, say, or the right value on the wrong thing), and `not_stated` when they don't say it or say otherwise. Answer with one JSON object and nothing else: {\"verdict\": \"stated\" | \"partly\" | \"not_stated\", \"lines\": [the numbers of the lines you used], \"why\": \"<a few words>\"}",
+ "readings": [
+  {
+   "part": "p2",
+   "id": "F01",
+   "u31": true,
+   "reading": "stated",
+   "statement": "CRM-2048 is Acme Manufacturing's account in the CRM.",
+   "facts": "1. E1 · Acme Manufacturing [corporation]\n2. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n3. exception — Customer — Acme Manufacturing [corporation]\n4. Acme Manufacturing — account_id — CRM-2048 (string)\n5. Acme Manufacturing — account_tier — Strategic (string)\n6. Acme Manufacturing — segment — Midwest (string)\n7. Acme Manufacturing — industry — Industrial Manufacturing (string)\n8. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n9. Acme Manufacturing — billing_city — Milwaukee (string)\n10. Acme Manufacturing — billing_state — WI (string)\n11. Acme Manufacturing — account_owner — Sarah Chen [person]\n12. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n13. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n14. Acme Manufacturing — duns — 04-812-7730 (string)\n15. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n16. Northstar Industrial Systems — provides support to — Acme Mfg. Holdings [corporation]\n17. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n18. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n19. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n20. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n21. Acme Mfg. Holdings — bill_to_state — WI (string)\n22. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n23. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n24. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n25. E3 · CRM-2048 [unclassified]\n26. SCR-38655 — account_id — CRM-2048\n27. SCR-38790 — account_id — CRM-2048\n28. DR-8104 — account_id — CRM-2048\n29. SR-39857 — account_id — CRM-2048\n30. DR-9001 — account_id — CRM-2048",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       4
+      ],
+      "why": "Fact 4 gives Acme Manufacturing account_id CRM-2048; the account is in the CRM per the account fields."
+     },
+     "cost_usd": 0.007434
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       1,
+       4
+      ],
+      "why": "Fact 4 gives Acme Manufacturing's account_id as CRM-2048; the CRM context comes from the account_id attribute and other records referencing it."
+     },
+     "cost_usd": 0.0075580000000000005
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       4
+      ],
+      "why": "Acme Manufacturing has account_id CRM-2048, which is its CRM account identifier."
+     },
+     "cost_usd": 0.007332
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F02",
+   "u31": true,
+   "reading": "stated",
+   "statement": "ERP customer C-1001 (Acme Mfg. Holdings) is Acme Manufacturing.",
+   "facts": "1. E1 · Acme Mfg. Holdings [corporation] · also named: Customer\n2. Northstar Industrial Systems — provides support to — Acme Mfg. Holdings [corporation]\n3. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n4. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n5. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n6. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n7. Acme Mfg. Holdings — bill_to_state — WI (string)\n8. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n9. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n10. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n11. E2 · Acme Manufacturing [corporation]\n12. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n13. exception — Customer — Acme Manufacturing [corporation]\n14. Acme Manufacturing — account_id — CRM-2048 (string)\n15. Acme Manufacturing — account_tier — Strategic (string)\n16. Acme Manufacturing — segment — Midwest (string)\n17. Acme Manufacturing — industry — Industrial Manufacturing (string)\n18. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n19. Acme Manufacturing — billing_city — Milwaukee (string)\n20. Acme Manufacturing — billing_state — WI (string)\n21. Acme Manufacturing — account_owner — Sarah Chen [person]\n22. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n23. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n24. Acme Manufacturing — duns — 04-812-7730 (string)\n25. E3 · C-1001 [unclassified]\n26. CR-9201 — erp_customer_id — C-1001\n27. C-1001 — credit_limit_usd — 250000 (string)\n28. C-1001 — last_reviewed — 2026-01-15 (string)\n29. INV-60412 — erp_customer_id — C-1001\n30. SO-7001 — erp_customer_id — C-1001\n31. SO-7002 — erp_customer_id — C-1001\n32. INV-62011 — erp_customer_id — C-1001\n33. INV-62305 — erp_customer_id — C-1001",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       3,
+       10,
+       24,
+       11
+      ],
+      "why": "C-1001 belongs to Acme Mfg. Holdings (E1), but Acme Manufacturing is a separate entity (E2) and no fact says they are the same. They share only a DUNS number and address."
+     },
+     "cost_usd": 0.010844
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       3,
+       10,
+       24,
+       1,
+       11
+      ],
+      "why": "C-1001 is tied to Acme Mfg. Holdings, but the KB lists Acme Manufacturing as a separate entity. The shared DUNS and address suggest they are the same company, but no fact says so."
+     },
+     "cost_usd": 0.010418
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       3,
+       10,
+       24,
+       11
+      ],
+      "why": "C-1001 is Acme Mfg. Holdings' ERP ID, but no fact says Acme Manufacturing is the same entity. They are separate entities that only share a DUNS number and address."
+     },
+     "cost_usd": 0.010368
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F03",
+   "u31": true,
+   "reading": "stated",
+   "statement": "ACME-MFG-2025 is the reference of the master supply agreement with Acme Manufacturing.",
+   "facts": "1. E1 · ACME-MFG-2025 [unclassified]\n2. E2 · Master Supply Agreement [unclassified]\n3. David Morgan — signed — Master Supply Agreement · valid 2025-03-20 → 2025-03-20\n4. Edward Floyd — signed — Master Supply Agreement · valid 2025-03-22 → 2025-03-22\n5. Master Supply Agreement — is effective — April 1, 2025 (string) · valid 2025-04-01 → …\n6. Master Supply Agreement — expires — March 31, 2028 (string) · valid … → 2028-03-31\n7. Either party — may terminate — Master Supply Agreement\n8. E3 · Acme Master Supply Agreement [unclassified]\n9. E4 · Acme Manufacturing [corporation]\n10. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n11. exception — Customer — Acme Manufacturing [corporation]\n12. Acme Manufacturing — account_id — CRM-2048 (string)\n13. Acme Manufacturing — account_tier — Strategic (string)\n14. Acme Manufacturing — segment — Midwest (string)\n15. Acme Manufacturing — industry — Industrial Manufacturing (string)\n16. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n17. Acme Manufacturing — billing_city — Milwaukee (string)\n18. Acme Manufacturing — billing_state — WI (string)\n19. Acme Manufacturing — account_owner — Sarah Chen [person]\n20. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n21. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n22. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       2,
+       8,
+       9
+      ],
+      "why": "Entities ACME-MFG-2025, a Master Supply Agreement, and Acme Manufacturing exist, but no fact links the reference to the agreement or to Acme Manufacturing."
+     },
+     "cost_usd": 0.007012000000000001
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       2,
+       8,
+       9
+      ],
+      "why": "Entities ACME-MFG-2025, a Master Supply Agreement, and Acme Manufacturing exist, but no fact links the reference to the agreement or ties the agreement to Acme Manufacturing."
+     },
+     "cost_usd": 0.007068
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       2,
+       8,
+       9
+      ],
+      "why": "Entities ACME-MFG-2025, a Master Supply Agreement, and Acme Manufacturing exist, but no fact links the reference ACME-MFG-2025 to the agreement or to Acme Manufacturing."
+     },
+     "cost_usd": 0.007078
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F04",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Sarah Chen owns the Acme account.",
+   "facts": "1. E1 · Sarah Chen [person]\n2. Acme Manufacturing — account_owner — Sarah Chen [person]\n3. Sarah Chen — employee_id — EMP-101 (string)\n4. Sarah Chen — title — Enterprise Account Executive (string)\n5. Sarah Chen — department — Sales (string)\n6. Sarah Chen — manager_id — EMP-200 (string)\n7. Sarah Chen — location — Chicago, IL (string)\n8. Sarah Chen — email — sarah.chen@northstar.example (string)\n9. E2 · Sarah Chen [person]\n10. Sarah Chen — title — Enterprise Account Executive (string)\n11. Sarah Chen — reportsTo — Michael Torres [person]\n12. E3 · Sarah Chen [person]\n13. exception — Prepared by — Sarah Chen [person]\n14. Sarah Chen — raised — CR-9201\n15. E4 · Acme Manufacturing [corporation]\n16. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n17. exception — Customer — Acme Manufacturing [corporation]\n18. Acme Manufacturing — account_id — CRM-2048 (string)\n19. Acme Manufacturing — account_tier — Strategic (string)\n20. Acme Manufacturing — segment — Midwest (string)\n21. Acme Manufacturing — industry — Industrial Manufacturing (string)\n22. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n23. Acme Manufacturing — billing_city — Milwaukee (string)\n24. Acme Manufacturing — billing_state — WI (string)\n25. Acme Manufacturing — account_owner — Sarah Chen [person]\n26. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n27. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n28. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       25
+      ],
+      "why": "Acme Manufacturing's account_owner is Sarah Chen, stated twice."
+     },
+     "cost_usd": 0.006778
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       25
+      ],
+      "why": "Acme Manufacturing's account_owner is Sarah Chen"
+     },
+     "cost_usd": 0.006732
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       25
+      ],
+      "why": "Acme Manufacturing's account_owner is Sarah Chen, stated directly."
+     },
+     "cost_usd": 0.0021527
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F05",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Sarah Chen reports to Michael Torres.",
+   "facts": "1. E1 · Sarah Chen [person]\n2. Acme Manufacturing — account_owner — Sarah Chen [person]\n3. Sarah Chen — employee_id — EMP-101 (string)\n4. Sarah Chen — title — Enterprise Account Executive (string)\n5. Sarah Chen — department — Sales (string)\n6. Sarah Chen — manager_id — EMP-200 (string)\n7. Sarah Chen — location — Chicago, IL (string)\n8. Sarah Chen — email — sarah.chen@northstar.example (string)\n9. E2 · Sarah Chen [person]\n10. Sarah Chen — title — Enterprise Account Executive (string)\n11. Sarah Chen — reportsTo — Michael Torres [person]\n12. E3 · Sarah Chen [person]\n13. exception — Prepared by — Sarah Chen [person]\n14. Sarah Chen — raised — CR-9201\n15. E4 · Michael Torres [person] · also named: Mike\n16. Michael Torres — title — VP Sales (string)\n17. Michael Torres — employee_id — EMP-200 (string)\n18. Michael Torres — department — Sales (string)\n19. Michael Torres — manager_id — EMP-300 (string)\n20. Michael Torres — location — Chicago, IL (string)\n21. Kelly Floyd — knows — Michael Torres [person]\n22. Zachary Brown — knows — Michael Torres [person]\n23. Bryan Rivera — knows — Michael Torres [person]\n24. Courtney Barron — knows — Michael Torres [person]\n25. Glenn Hayes — knows — Michael Torres [person]\n26. Misty Peterson — knows — Michael Torres [person]\n27. Michael Torres — role — VP Sales\n28. Michael Torres — email — michael.torres@northstar.example (string)\n29. Anthony Day — knows — Michael Torres [person]\n30. Michael Torres — alternateName — Mike (string)\n31. Michael Torres — reportsTo — David Morgan [person]\n32. Glenn Hayes — reportsTo — Michael Torres [person]\n33. Misty Peterson — reportsTo — Michael Torres [person]\n34. Anthony Day — reportsTo — Michael Torres [person]\n35. Kelly Floyd — reportsTo — Michael Torres [person]\n36. Sarah Chen — reportsTo — Michael Torres [person]\n37. Zachary Brown — reportsTo — Michael Torres [person]\n38. Courtney Barron — reportsTo — Michael Torres [person]\n39. Bryan Rivera — reportsTo — Michael Torres [person]",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       11,
+       36
+      ],
+      "why": "Sarah Chen reportsTo Michael Torres is stated directly; manager_id EMP-200 also matches Michael Torres's employee_id."
+     },
+     "cost_usd": 0.0077399999999999995
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       11,
+       36,
+       6,
+       17
+      ],
+      "why": "Sarah Chen reportsTo Michael Torres directly; manager_id EMP-200 is also Michael Torres's employee_id."
+     },
+     "cost_usd": 0.007788
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       11,
+       36
+      ],
+      "why": "Sarah Chen reportsTo Michael Torres directly stated; also manager_id EMP-200 matches Torres's employee_id."
+     },
+     "cost_usd": 0.0023421
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F06",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Michael Torres is VP Sales.",
+   "facts": "1. E1 · Michael Torres [person] · also named: Mike\n2. Michael Torres — title — VP Sales (string)\n3. Michael Torres — employee_id — EMP-200 (string)\n4. Michael Torres — department — Sales (string)\n5. Michael Torres — manager_id — EMP-300 (string)\n6. Michael Torres — location — Chicago, IL (string)\n7. Kelly Floyd — knows — Michael Torres [person]\n8. Zachary Brown — knows — Michael Torres [person]\n9. Bryan Rivera — knows — Michael Torres [person]\n10. Courtney Barron — knows — Michael Torres [person]\n11. Glenn Hayes — knows — Michael Torres [person]\n12. Misty Peterson — knows — Michael Torres [person]\n13. Michael Torres — role — VP Sales\n14. Michael Torres — email — michael.torres@northstar.example (string)\n15. Anthony Day — knows — Michael Torres [person]\n16. Michael Torres — alternateName — Mike (string)\n17. Michael Torres — reportsTo — David Morgan [person]\n18. Glenn Hayes — reportsTo — Michael Torres [person]\n19. Misty Peterson — reportsTo — Michael Torres [person]\n20. Anthony Day — reportsTo — Michael Torres [person]\n21. Kelly Floyd — reportsTo — Michael Torres [person]\n22. Sarah Chen — reportsTo — Michael Torres [person]\n23. Zachary Brown — reportsTo — Michael Torres [person]\n24. Courtney Barron — reportsTo — Michael Torres [person]\n25. Bryan Rivera — reportsTo — Michael Torres [person]\n26. E2 · VP Sales [organization_role]\n27. discounts — require — VP Sales [organization_role]\n28. discounts — require — VP Sales [organization_role]\n29. Escalation — Notify — VP Sales [organization_role]\n30. E3 · VP Sales [org_role]\n31. Michael Torres — role — VP Sales [org_role]\n32. E4 · VP Sales [org_role]\n33. VP Sales — has discount authority — >10% and ≤20% (string)\n34. E5 · VP Sales approval [unclassified]\n35. discounts — require — VP Sales approval\n36. E6 · VP Sales concurrence [unclassified]\n37. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       13,
+       31
+      ],
+      "why": "Facts give Michael Torres the title and role VP Sales."
+     },
+     "cost_usd": 0.007184
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       13,
+       31
+      ],
+      "why": "Facts list Michael Torres's title and role as VP Sales."
+     },
+     "cost_usd": 0.007189999999999999
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       13,
+       31
+      ],
+      "why": "Facts directly give Michael Torres's title and role as VP Sales."
+     },
+     "cost_usd": 0.002148
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F07",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Sarah Chen is an Enterprise Account Executive.",
+   "facts": "1. E1 · Sarah Chen [person]\n2. Acme Manufacturing — account_owner — Sarah Chen [person]\n3. Sarah Chen — employee_id — EMP-101 (string)\n4. Sarah Chen — title — Enterprise Account Executive (string)\n5. Sarah Chen — department — Sales (string)\n6. Sarah Chen — manager_id — EMP-200 (string)\n7. Sarah Chen — location — Chicago, IL (string)\n8. Sarah Chen — email — sarah.chen@northstar.example (string)\n9. E2 · Sarah Chen [person]\n10. Sarah Chen — title — Enterprise Account Executive (string)\n11. Sarah Chen — reportsTo — Michael Torres [person]\n12. E3 · Sarah Chen [person]\n13. exception — Prepared by — Sarah Chen [person]\n14. Sarah Chen — raised — CR-9201\n15. E4 · Enterprise Account Executive [org_role]\n16. Enterprise Account Executive — has discount authority — ≤10% (string)\n17. E5 · Enterprise Account Executives [employee_role]\n18. Enterprise Account Executives — approve — discounts\n19. E6 · Enterprise Account Executives [employee_role]\n20. Enterprise Account Executives — may approve — discounts\n21. E7 · Enterprise Account Executives [employee_role]\n22. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       4,
+       10
+      ],
+      "why": "Sarah Chen's title is stated as Enterprise Account Executive in two entries."
+     },
+     "cost_usd": 0.005922
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       4,
+       10
+      ],
+      "why": "Sarah Chen's title is stated as Enterprise Account Executive (lines 4 and 10)."
+     },
+     "cost_usd": 0.005986
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       4,
+       10
+      ],
+      "why": "Sarah Chen's title is Enterprise Account Executive, stated directly in lines 4 and 10."
+     },
+     "cost_usd": 0.0022053000000000003
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F08",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, an Enterprise Account Executive's discount authority is up to 10%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2026 [unclassified]\n2. Northstar Pricing Policy 2026 — is effective — effective (string) · valid 2026-01-01 → 2026-12-31\n3. Northstar Pricing Policy 2026 — governed — discount requests\n4. Northstar Pricing Policy 2026 — sets — discount approval authority\n5. Northstar Pricing Policy 2026 — replaces — Northstar Pricing Policy 2025\n6. Northstar Pricing Policy 2027 — replaces — Northstar Pricing Policy 2026\n7. E2 · Approval Authority Matrix [unclassified]\n8. Approval Authority Matrix — is the operational reference for — thresholds\n9. E3 · Enterprise Account Executive [org_role]\n10. Enterprise Account Executive — has discount authority — ≤10% (string)\n11. E4 · Enterprise Account Executives [employee_role]\n12. Enterprise Account Executives — approve — discounts\n13. E5 · Enterprise Account Executives [employee_role]\n14. Enterprise Account Executives — may approve — discounts\n15. E6 · Enterprise Account Executives [employee_role]\n16. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       4,
+       10
+      ],
+      "why": "Line 10 gives the Enterprise Account Executive's ≤10% discount authority, but with no 2026 date. The 2026 policy (line 4) sets discount approval authority only generally, so nothing ties the 10% to 2026."
+     },
+     "cost_usd": 0.007726
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       3,
+       4,
+       10
+      ],
+      "why": "Line 10 gives the ≤10% discount authority, but it carries no 2026 date. The 2026 policy only generally sets discount approval authority, so nothing ties the value to 2026."
+     },
+     "cost_usd": 0.007196
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       10,
+       3,
+       4
+      ],
+      "why": "The role's discount authority of ≤10% is stated (line 10), but it has no date or link to 2026. The 2026 policy only generally 'sets discount approval authority'."
+     },
+     "cost_usd": 0.0039895
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F09",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, VP Sales's discount authority is over 10% and up to 20%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2026 [unclassified]\n2. Northstar Pricing Policy 2026 — is effective — effective (string) · valid 2026-01-01 → 2026-12-31\n3. Northstar Pricing Policy 2026 — governed — discount requests\n4. Northstar Pricing Policy 2026 — sets — discount approval authority\n5. Northstar Pricing Policy 2026 — replaces — Northstar Pricing Policy 2025\n6. Northstar Pricing Policy 2027 — replaces — Northstar Pricing Policy 2026\n7. E2 · Approval Authority Matrix [unclassified]\n8. Approval Authority Matrix — is the operational reference for — thresholds\n9. E3 · VP Sales [organization_role]\n10. discounts — require — VP Sales [organization_role]\n11. discounts — require — VP Sales [organization_role]\n12. Escalation — Notify — VP Sales [organization_role]\n13. E4 · VP Sales [org_role]\n14. Michael Torres — role — VP Sales [org_role]\n15. E5 · VP Sales [org_role]\n16. VP Sales — has discount authority — >10% and ≤20% (string)\n17. E6 · VP Sales approval [unclassified]\n18. discounts — require — VP Sales approval\n19. E7 · VP Sales concurrence [unclassified]\n20. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       16,
+       4,
+       2
+      ],
+      "why": "Line 16 gives the >10% and ≤20% authority for VP Sales, but with no 2026 validity or link to the 2026 policy."
+     },
+     "cost_usd": 0.007509999999999999
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       4,
+       16
+      ],
+      "why": "Line 16 gives the >10% and ≤20% discount authority for VP Sales, but with no 2026 date. Only the 2026 policy generally 'sets discount approval authority' (line 4), so the link to 2026 is not explicit."
+     },
+     "cost_usd": 0.00836
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       16,
+       2,
+       4
+      ],
+      "why": "Line 16 gives the >10% and ≤20% authority, but with no 2026 dates. Nothing ties it to the 2026 policy."
+     },
+     "cost_usd": 0.0042914
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F10",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, discounts over 20% require the CRO's approval.",
+   "facts": "1. E1 · Northstar Pricing Policy 2026 [unclassified]\n2. Northstar Pricing Policy 2026 — is effective — effective (string) · valid 2026-01-01 → 2026-12-31\n3. Northstar Pricing Policy 2026 — governed — discount requests\n4. Northstar Pricing Policy 2026 — sets — discount approval authority\n5. Northstar Pricing Policy 2026 — replaces — Northstar Pricing Policy 2025\n6. Northstar Pricing Policy 2027 — replaces — Northstar Pricing Policy 2026\n7. E2 · Approval Authority Matrix [unclassified]\n8. Approval Authority Matrix — is the operational reference for — thresholds\n9. E3 · Chief Revenue Officer [organization_role]\n10. discounts — require — Chief Revenue Officer [organization_role]\n11. discounts — require — Chief Revenue Officer [organization_role]\n12. Escalation — Notify — Chief Revenue Officer [organization_role]\n13. E4 · Chief Revenue Officer [org_role]\n14. David Morgan — role — Chief Revenue Officer [org_role]\n15. E5 · Chief Revenue Officer [organization_role]\n16. David Morgan — hasDesignation — Chief Revenue Officer [organization_role]\n17. E6 · Chief Revenue Officer [org_role]\n18. Chief Revenue Officer — has discount authority — >20% (string)",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       2,
+       4,
+       10,
+       11,
+       18
+      ],
+      "why": "The facts link discounts to the CRO and give the CRO authority over discounts above 20%, but none ties that threshold to the 2026 policy or to a requirement for approval."
+     },
+     "cost_usd": 0.008926
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       4,
+       10,
+       18
+      ],
+      "why": "The CRO's discount authority is listed as >20%, and the 2026 policy sets discount approval authority. No fact ties the 20% threshold to the 2026 policy, and none says approval is required."
+     },
+     "cost_usd": 0.009134
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       4,
+       10,
+       18
+      ],
+      "why": "The CRO has discount authority over >20%, and discounts require the CRO. But no fact ties the 20% threshold to the 2026 policy or to 2026."
+     },
+     "cost_usd": 0.008956
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F11",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2025, an Enterprise Account Executive's discount authority is up to 15%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2025 [unclassified]\n2. Northstar Pricing Policy 2026 — replaces — Northstar Pricing Policy 2025\n3. E2 · Enterprise Account Executive [org_role]\n4. Enterprise Account Executive — has discount authority — ≤10% (string)\n5. E3 · Enterprise Account Executives [employee_role]\n6. Enterprise Account Executives — approve — discounts\n7. E4 · Enterprise Account Executives [employee_role]\n8. Enterprise Account Executives — may approve — discounts\n9. E5 · Enterprise Account Executives [employee_role]\n10. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       4
+      ],
+      "why": "KB says discount authority is ≤10%, not up to 15%; no 2025-specific value given"
+     },
+     "cost_usd": 0.004962
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       4
+      ],
+      "why": "KB says discount authority is ≤10%, not up to 15%; no 2025 dating either"
+     },
+     "cost_usd": 0.00496
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       4
+      ],
+      "why": "KB gives Enterprise AE discount authority as ≤10%, not 15%, and no year tie; contradicts the statement."
+     },
+     "cost_usd": 0.005066
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F12",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme's NS-500 pricing exception permits a discount of up to 15%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation]\n42. Acme Manufacturing — account_id — CRM-2048 (string)\n43. Acme Manufacturing — account_tier — Strategic (string)\n44. Acme Manufacturing — segment — Midwest (string)\n45. Acme Manufacturing — industry — Industrial Manufacturing (string)\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n47. Acme Manufacturing — billing_city — Milwaukee (string)\n48. Acme Manufacturing — billing_state — WI (string)\n49. Acme Manufacturing — account_owner — Sarah Chen [person]\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n52. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40,
+       34,
+       35
+      ],
+      "why": "The only discount figure is up to 10% off list for Acme Manufacturing (2023-04-01 to 2025-03-31), and it is not tied to NS-500. No 15% figure appears. The NS-500 pricing was negotiated, but no discount percentage is given."
+     },
+     "cost_usd": 0.010168
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       34,
+       40
+      ],
+      "why": "No 15% discount for an NS-500 exception; only Acme's up to 10% off list price (2023-2025) and negotiated NS-500 pricing without a figure."
+     },
+     "cost_usd": 0.009822000000000001
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40,
+       34
+      ],
+      "why": "No fact gives a 15% discount for the NS-500 exception; Acme's only stated discount is up to 10% off list (2023-2025), and the NS-500 pricing is negotiated with no figure."
+     },
+     "cost_usd": 0.0026081999999999998
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F13",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The 15% exception is valid from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation]\n42. Acme Manufacturing — account_id — CRM-2048 (string)\n43. Acme Manufacturing — account_tier — Strategic (string)\n44. Acme Manufacturing — segment — Midwest (string)\n45. Acme Manufacturing — industry — Industrial Manufacturing (string)\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n47. Acme Manufacturing — billing_city — Milwaukee (string)\n48. Acme Manufacturing — billing_state — WI (string)\n49. Acme Manufacturing — account_owner — Sarah Chen [person]\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n52. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount valid 2023-04-01 to 2025-03-31 is stated; no 15% exception or its 2025-2028 validity dates."
+     },
+     "cost_usd": 0.009772000000000001
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount valid 2023-04-01 to 2025-03-31 is stated; no 15% exception or its 2025-2028 validity appears."
+     },
+     "cost_usd": 0.0024283
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount valid 2023-04-01 to 2025-03-31 is stated; no 15% exception with 2025-04-01 to 2028-03-31 validity appears."
+     },
+     "cost_usd": 0.0025223
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F13",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "The 15% exception is valid from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product · holds 2026-10-18 → …\n3. pricing exception — is scoped to — product · holds 2026-10-18 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B · holds 2026-10-18 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller · holds 2026-10-18 → …\n14. exception — Product — NS-500 Industrial Controller · holds 2026-10-18 → …\n15. support plan — covers — NS-500 Industrial Controller · holds 2026-10-18 → …\n16. orders — are — NS-500 Industrial Controller · holds 2026-10-18 → …\n17. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-18 → …\n18. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-18 → …\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-18 → …\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-18 → …\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string) · holds 2026-10-18 → …\n22. NS-500 Industrial Controller — lost communication with — the line HMI · holds 2026-10-18 → …\n23. DR-8104 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n24. DR-7015 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n25. DR-7016 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n26. SR-39857 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n27. DR-7019 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n28. DR-7020 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n29. DR-9001 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · holds 2025-01-01 → 2025-01-01\n32. Gina — want to move ahead with — NS-500 controller · holds 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing · holds 2026-10-18 → …\n35. NS-500 pricing — confirming — Deal Desk · holds 2026-10-18 → …\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string) · holds 2026-10-18 → …\n38. Third-plant NS-500 rollout — expect — controller orders · holds 2026-10-18 → …\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · holds 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n42. Acme Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-18 → …\n43. Acme Manufacturing — account_tier — Strategic (string) · holds 2026-10-18 → …\n44. Acme Manufacturing — segment — Midwest (string) · holds 2026-10-18 → …\n45. Acme Manufacturing — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n47. Acme Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-18 → …\n48. Acme Manufacturing — billing_state — WI (string) · holds 2026-10-18 → …\n49. Acme Manufacturing — account_owner — Sarah Chen [person] · holds 2026-10-18 → …\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string) · holds 2026-10-18 → …\n52. Acme Manufacturing — duns — 04-812-7730 (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "No 15% exception or its 2025-04-01 to 2028-03-31 validity is stated; the only discount is up to 10% for 2023-04-01 to 2025-03-31."
+     },
+     "cost_usd": 0.011922
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "No fact gives a 15% exception or its 2025-04-01 to 2028-03-31 validity; the only discount is up to 10% for 2023-04-01 to 2025-03-31."
+     },
+     "cost_usd": 0.011940000000000001
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "No fact gives a 15% exception or its 2025-04-01 to 2028-03-31 validity. Only a 10% discount for 2023-04-01 to 2025-03-31 is stated."
+     },
+     "cost_usd": 0.0025998
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F14",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The Acme master supply agreement is in force from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · Master Supply Agreement [unclassified]\n2. David Morgan — signed — Master Supply Agreement · valid 2025-03-20 → 2025-03-20\n3. Edward Floyd — signed — Master Supply Agreement · valid 2025-03-22 → 2025-03-22\n4. Master Supply Agreement — is effective — April 1, 2025 (string) · valid 2025-04-01 → …\n5. Master Supply Agreement — expires — March 31, 2028 (string) · valid … → 2028-03-31\n6. Either party — may terminate — Master Supply Agreement\n7. E2 · Acme Master Supply Agreement [unclassified]\n8. E3 · ACME-MFG-2025 [unclassified]\n9. E4 · Acme Manufacturing [corporation]\n10. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n11. exception — Customer — Acme Manufacturing [corporation]\n12. Acme Manufacturing — account_id — CRM-2048 (string)\n13. Acme Manufacturing — account_tier — Strategic (string)\n14. Acme Manufacturing — segment — Midwest (string)\n15. Acme Manufacturing — industry — Industrial Manufacturing (string)\n16. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n17. Acme Manufacturing — billing_city — Milwaukee (string)\n18. Acme Manufacturing — billing_state — WI (string)\n19. Acme Manufacturing — account_owner — Sarah Chen [person]\n20. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n21. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n22. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       4,
+       5,
+       7
+      ],
+      "why": "Master Supply Agreement effective 2025-04-01 and expires 2028-03-31; the Acme-named agreement is an entity in the KB, though the facts attach dates to the generic Master Supply Agreement."
+     },
+     "cost_usd": 0.007039999999999999
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       4,
+       5,
+       7
+      ],
+      "why": "The dates match (effective 2025-04-01, expires 2028-03-31), but they attach to 'Master Supply Agreement', not the separate 'Acme Master Supply Agreement' entity. Nothing links the two."
+     },
+     "cost_usd": 0.0057319
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       4,
+       5,
+       7
+      ],
+      "why": "The dates match (effective 2025-04-01, expires 2028-03-31). But they are attached to 'Master Supply Agreement', a separate entity from 'Acme Master Supply Agreement', and no fact links the two."
+     },
+     "cost_usd": 0.005839899999999999
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F14",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "The Acme master supply agreement is in force from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · Master Supply Agreement [unclassified]\n2. David Morgan — signed — Master Supply Agreement · holds 2025-03-20 → 2025-03-20\n3. Edward Floyd — signed — Master Supply Agreement · holds 2025-03-22 → 2025-03-22\n4. Master Supply Agreement — is effective — April 1, 2025 (string) · holds 2025-04-01 → …\n5. Master Supply Agreement — expires — March 31, 2028 (string) · holds 2026-10-18 → 2028-03-31\n6. Either party — may terminate — Master Supply Agreement · holds 2026-10-18 → …\n7. E2 · Acme Master Supply Agreement [unclassified]\n8. E3 · ACME-MFG-2025 [unclassified]\n9. E4 · Acme Manufacturing [corporation]\n10. Acme Manufacturing — may receive — up to **10%** off list price (string) · holds 2023-04-01 → 2025-03-31\n11. exception — Customer — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n12. Acme Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-18 → …\n13. Acme Manufacturing — account_tier — Strategic (string) · holds 2026-10-18 → …\n14. Acme Manufacturing — segment — Midwest (string) · holds 2026-10-18 → …\n15. Acme Manufacturing — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n16. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n17. Acme Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-18 → …\n18. Acme Manufacturing — billing_state — WI (string) · holds 2026-10-18 → …\n19. Acme Manufacturing — account_owner — Sarah Chen [person] · holds 2026-10-18 → …\n20. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n21. Acme Manufacturing — email — sarah.chen@northstar.example (string) · holds 2026-10-18 → …\n22. Acme Manufacturing — duns — 04-812-7730 (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       4,
+       5,
+       7
+      ],
+      "why": "The dates 2025-04-01 and 2028-03-31 are held on the generic 'Master Supply Agreement' (E1). Nothing ties them to the 'Acme Master Supply Agreement' (E2)."
+     },
+     "cost_usd": 0.010524
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       4,
+       5,
+       7
+      ],
+      "why": "The dates (effective 2025-04-01, expires 2028-03-31) are stated for 'Master Supply Agreement' (E1), but nothing links it to the separate 'Acme Master Supply Agreement' (E2), which has no facts of its own."
+     },
+     "cost_usd": 0.006845499999999999
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       4,
+       5,
+       7
+      ],
+      "why": "The effective date (2025-04-01) and expiry (2028-03-31) are stated, but only for the generic 'Master Supply Agreement', which is not linked to the Acme Master Supply Agreement entity."
+     },
+     "cost_usd": 0.0063955
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F15",
+   "u31": false,
+   "reading": "stated",
+   "statement": "An older 10% NS-500 exception for Acme applied from 2023-04-01 to 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation]\n42. Acme Manufacturing — account_id — CRM-2048 (string)\n43. Acme Manufacturing — account_tier — Strategic (string)\n44. Acme Manufacturing — segment — Midwest (string)\n45. Acme Manufacturing — industry — Industrial Manufacturing (string)\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n47. Acme Manufacturing — billing_city — Milwaukee (string)\n48. Acme Manufacturing — billing_state — WI (string)\n49. Acme Manufacturing — account_owner — Sarah Chen [person]\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n52. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       14,
+       40,
+       41
+      ],
+      "why": "Acme may get up to 10% off list, valid 2023-04-01 to 2025-03-31; the exception is tied to Acme and the NS-500."
+     },
+     "cost_usd": 0.011798
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       14,
+       40,
+       41
+      ],
+      "why": "Acme may receive up to 10% off, valid 2023-04-01 to 2025-03-31; the exception is tied to Acme and the NS-500 product. The facts don't explicitly link line 40 to the NS-500, so that link is inferred."
+     },
+     "cost_usd": 0.0050432
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       14,
+       40,
+       41
+      ],
+      "why": "Acme may receive up to 10% off, valid 2023-04-01 to 2025-03-31; the exception is tied to Acme and the NS-500. The link between the 10% and the NS-500 is inferred from the shared 'exception' node."
+     },
+     "cost_usd": 0.005655199999999999
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F15",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "An older 10% NS-500 exception for Acme applied from 2023-04-01 to 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product · holds 2026-10-18 → …\n3. pricing exception — is scoped to — product · holds 2026-10-18 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B · holds 2026-10-18 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller · holds 2026-10-18 → …\n14. exception — Product — NS-500 Industrial Controller · holds 2026-10-18 → …\n15. support plan — covers — NS-500 Industrial Controller · holds 2026-10-18 → …\n16. orders — are — NS-500 Industrial Controller · holds 2026-10-18 → …\n17. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-18 → …\n18. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-18 → …\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-18 → …\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-18 → …\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string) · holds 2026-10-18 → …\n22. NS-500 Industrial Controller — lost communication with — the line HMI · holds 2026-10-18 → …\n23. DR-8104 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n24. DR-7015 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n25. DR-7016 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n26. SR-39857 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n27. DR-7019 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n28. DR-7020 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n29. DR-9001 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · holds 2025-01-01 → 2025-01-01\n32. Gina — want to move ahead with — NS-500 controller · holds 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing · holds 2026-10-18 → …\n35. NS-500 pricing — confirming — Deal Desk · holds 2026-10-18 → …\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string) · holds 2026-10-18 → …\n38. Third-plant NS-500 rollout — expect — controller orders · holds 2026-10-18 → …\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · holds 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n42. Acme Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-18 → …\n43. Acme Manufacturing — account_tier — Strategic (string) · holds 2026-10-18 → …\n44. Acme Manufacturing — segment — Midwest (string) · holds 2026-10-18 → …\n45. Acme Manufacturing — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n47. Acme Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-18 → …\n48. Acme Manufacturing — billing_state — WI (string) · holds 2026-10-18 → …\n49. Acme Manufacturing — account_owner — Sarah Chen [person] · holds 2026-10-18 → …\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string) · holds 2026-10-18 → …\n52. Acme Manufacturing — duns — 04-812-7730 (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40,
+       14,
+       41
+      ],
+      "why": "Acme's up-to-10% discount with dates 2023-04-01 to 2025-03-31 is stated (40), but it is not tied to NS-500; the exception-to-NS-500 link (14) is a separate fact with different dates."
+     },
+     "cost_usd": 0.014467999999999998
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40,
+       41,
+       14
+      ],
+      "why": "Acme may receive up to 10% off list price 2023-04-01 to 2025-03-31, but fact doesn't tie that to NS-500 or an exception; the link to NS-500 is only via an undated exception record."
+     },
+     "cost_usd": 0.012116
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40,
+       14,
+       41
+      ],
+      "why": "Acme's up-to-10% discount for 2023-04-01 to 2025-03-31 is stated, but nothing ties that period to NS-500; the NS-500 exception facts carry only the current date."
+     },
+     "cost_usd": 0.0045287
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F16",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The 15% exception covers the NS-500 only.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · NS-CLOUD [unclassified] · also named: NS-Cloud\n40. NS-CLOUD — was down at — two sites (string) · valid 2026-06-01 → 2026-06-01\n41. NS-CLOUD — available to — all users · valid 2026-06-10 → 2026-06-10\n42. Acme — are evaluating — NS-CLOUD\n43. NS-CLOUD — unavailable to — all of the customer's users\n44. NS-CLOUD — is unavailable to — some, but not all, of the customer's users or sites\n45. NS-CLOUD — is unavailable — Fishers and Carmel outpatient centers [medical_clinic]\n46. NS-CLOUD — has been down — users\n47. NS-CLOUD — won't load — anyone (string)\n48. MN-2607 — hasProduct — NS-CLOUD\n49. DR-7022 — hasProduct — NS-CLOUD\n50. DR-7003 — hasProduct — NS-CLOUD\n51. SR-39561 — hasProduct — NS-CLOUD\n52. SR-39340 — hasProduct — NS-CLOUD\n53. DR-7007 — hasProduct — NS-CLOUD\n54. DR-7009 — hasProduct — NS-CLOUD\n55. SR-39881 — hasProduct — NS-CLOUD\n56. DR-7010 — hasProduct — NS-CLOUD\n57. DR-7011 — hasProduct — NS-CLOUD\n58. E11 · NS-Cloud Operations Suite [software_application]\n59. Northstar Support — will supply — NS-Cloud Operations Suite [software_application]\n60. covered products — covered product — NS-Cloud Operations Suite [software_application]\n61. NS-Cloud Operations Suite — product_id — PROD-002 (string)\n62. NS-Cloud Operations Suite — sku — NS-CLOUD (string)\n63. NS-Cloud Operations Suite — list_price_usd — 120000 (string)\n64. NS-Cloud Operations Suite — is not — covered product (string)\n65. NS-Cloud Operations Suite — could be added — Schedule\n66. Covered products — hasProduct — NS-Cloud Operations Suite [software_application]\n67. E12 · NS-Cloud access [unclassified]\n68. Northstar support engineer — restored — NS-Cloud access · valid 2026-05-26 → 2026-05-26\n69. E13 · NS-Cloud pilot [project]\n70. Acme — Land — NS-Cloud pilot [project]",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       3,
+       14
+      ],
+      "why": "An exception is scoped to a product and tied to the NS-500, but no fact gives the 15% figure or says it covers only the NS-500."
+     },
+     "cost_usd": 0.012652
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       3,
+       14
+      ],
+      "why": "Facts link an exception to the NS-500 and scope it to a product, but no 15% figure appears and nothing ties this exception to the 15% one."
+     },
+     "cost_usd": 0.0037528
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       3,
+       14
+      ],
+      "why": "An exception is scoped to a product and linked to the NS-500, but no fact mentions 15% or says 'only'."
+     },
+     "cost_usd": 0.0032588
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F17",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme is a strategic account.",
+   "facts": "1. E1 · Acme Manufacturing [corporation]\n2. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n3. exception — Customer — Acme Manufacturing [corporation]\n4. Acme Manufacturing — account_id — CRM-2048 (string)\n5. Acme Manufacturing — account_tier — Strategic (string)\n6. Acme Manufacturing — segment — Midwest (string)\n7. Acme Manufacturing — industry — Industrial Manufacturing (string)\n8. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n9. Acme Manufacturing — billing_city — Milwaukee (string)\n10. Acme Manufacturing — billing_state — WI (string)\n11. Acme Manufacturing — account_owner — Sarah Chen [person]\n12. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n13. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n14. Acme Manufacturing — duns — 04-812-7730 (string)\n15. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n16. Northstar Industrial Systems — provides support to — Acme Mfg. Holdings [corporation]\n17. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n18. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n19. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n20. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n21. Acme Mfg. Holdings — bill_to_state — WI (string)\n22. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n23. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n24. Acme Mfg. Holdings — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       1,
+       5
+      ],
+      "why": "Acme Manufacturing has account_tier Strategic."
+     },
+     "cost_usd": 0.006684
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       1,
+       5
+      ],
+      "why": "Acme Manufacturing has account_tier Strategic."
+     },
+     "cost_usd": 0.006684
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       1,
+       5
+      ],
+      "why": "Acme Manufacturing has account_tier Strategic."
+     },
+     "cost_usd": 0.0067
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F18",
+   "u31": false,
+   "reading": "stated",
+   "statement": "DR-9001: Sarah Chen requests a 15% discount on the NS-500 for Acme on 2026-09-23.",
+   "facts": "1. E1 · DR-9001 [unclassified]\n2. DR-9001 — logged in — CRM [software_application]\n3. DR-9001 — account_id — CRM-2048\n4. DR-9001 — requested_discount_pct — 15.0 (string)\n5. DR-9001 — list_value_usd — 250000 (string)\n6. DR-9001 — discount_value_usd — 37500 (string)\n7. DR-9001 — net_value_usd — 212500 (string)\n8. DR-9001 — requested_by — sarah.chen@northstar.example\n9. DR-9001 — request_date — 2026-09-23 (string)\n10. DR-9001 — justification — Contract pricing per Acme Master Supply Agreement (string)\n11. DR-9001 — status — Pending Approval (string)\n12. DR-9001 — hasProduct — NS-500 Industrial Controller\n13. E2 · Sarah Chen [person]\n14. Acme Manufacturing — account_owner — Sarah Chen [person]\n15. Sarah Chen — employee_id — EMP-101 (string)\n16. Sarah Chen — title — Enterprise Account Executive (string)\n17. Sarah Chen — department — Sales (string)\n18. Sarah Chen — manager_id — EMP-200 (string)\n19. Sarah Chen — location — Chicago, IL (string)\n20. Sarah Chen — email — sarah.chen@northstar.example (string)\n21. E3 · Sarah Chen [person]\n22. Sarah Chen — title — Enterprise Account Executive (string)\n23. Sarah Chen — reportsTo — Michael Torres [person]\n24. E4 · Sarah Chen [person]\n25. exception — Prepared by — Sarah Chen [person]\n26. Sarah Chen — raised — CR-9201\n27. E5 · Acme Manufacturing [corporation]\n28. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n29. exception — Customer — Acme Manufacturing [corporation]\n30. Acme Manufacturing — account_id — CRM-2048 (string)\n31. Acme Manufacturing — account_tier — Strategic (string)\n32. Acme Manufacturing — segment — Midwest (string)\n33. Acme Manufacturing — industry — Industrial Manufacturing (string)\n34. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n35. Acme Manufacturing — billing_city — Milwaukee (string)\n36. Acme Manufacturing — billing_state — WI (string)\n37. Acme Manufacturing — account_owner — Sarah Chen [person]\n38. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n39. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n40. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       4,
+       8,
+       9,
+       12,
+       20,
+       30
+      ],
+      "why": "DR-9001 has a 15% requested discount, product NS-500, request date 2026-09-23, and was requested by Sarah Chen's email. Its account CRM-2048 is Acme Manufacturing's account."
+     },
+     "cost_usd": 0.01021
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       4,
+       8,
+       9,
+       12,
+       20,
+       30
+      ],
+      "why": "DR-9001 has a 15% requested discount, product NS-500, request date 2026-09-23, and was requested by Sarah Chen's email. Its account CRM-2048 is Acme Manufacturing."
+     },
+     "cost_usd": 0.004125
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       4,
+       8,
+       9,
+       12,
+       20,
+       30
+      ],
+      "why": "DR-9001 has 15% discount, product NS-500, date 2026-09-23, requested by Sarah Chen's email, and account CRM-2048 which is Acme."
+     },
+     "cost_usd": 0.003995
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F19",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2027, an Enterprise Account Executive's discount authority is up to 5%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2027 [unclassified] · also named: It; This policy\n2. Northstar Pricing Policy 2027 — is effective — effective (string) · valid 2027-01-01 → 2027-12-31\n3. Northstar Pricing Policy 2027 — sets — discount approval authority (string)\n4. Northstar Pricing Policy 2027 — replaces — Northstar Pricing Policy 2026\n5. E2 · Enterprise Account Executive [org_role]\n6. Enterprise Account Executive — has discount authority — ≤10% (string)\n7. E3 · Enterprise Account Executives [employee_role]\n8. Enterprise Account Executives — approve — discounts\n9. E4 · Enterprise Account Executives [employee_role]\n10. Enterprise Account Executives — may approve — discounts\n11. E5 · Enterprise Account Executives [employee_role]\n12. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       6
+      ],
+      "why": "KB gives Enterprise AE discount authority as ≤10%, not 5%; no 5% value stated."
+     },
+     "cost_usd": 0.005358
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       6
+      ],
+      "why": "KB gives Enterprise AE discount authority as ≤10%, not 5%, so the statement's value conflicts."
+     },
+     "cost_usd": 0.0053879999999999996
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       6
+      ],
+      "why": "KB says Enterprise Account Executive discount authority is ≤10%, not 5%; contradicts the statement."
+     },
+     "cost_usd": 0.005378
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F20",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2027, VP Sales's discount authority is over 5% and up to 12%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2027 [unclassified] · also named: It; This policy\n2. Northstar Pricing Policy 2027 — is effective — effective (string) · valid 2027-01-01 → 2027-12-31\n3. Northstar Pricing Policy 2027 — sets — discount approval authority (string)\n4. Northstar Pricing Policy 2027 — replaces — Northstar Pricing Policy 2026\n5. E2 · VP Sales [organization_role]\n6. discounts — require — VP Sales [organization_role]\n7. discounts — require — VP Sales [organization_role]\n8. Escalation — Notify — VP Sales [organization_role]\n9. E3 · VP Sales [org_role]\n10. Michael Torres — role — VP Sales [org_role]\n11. E4 · VP Sales [org_role]\n12. VP Sales — has discount authority — >10% and ≤20% (string)\n13. E5 · VP Sales approval [unclassified]\n14. discounts — require — VP Sales approval\n15. E6 · VP Sales concurrence [unclassified]\n16. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       12
+      ],
+      "why": "KB says VP Sales authority is >10% and ≤20%, not >5% and ≤12%; no 2027 range matches the statement"
+     },
+     "cost_usd": 0.00568
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       12
+      ],
+      "why": "KB says VP Sales authority is >10% and ≤20%, not >5% and ≤12%"
+     },
+     "cost_usd": 0.0021474
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       12
+      ],
+      "why": "KB says VP Sales authority is >10% and ≤20%, not >5% and ≤12%; no 2027 range matching the statement"
+     },
+     "cost_usd": 0.0022614
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F21",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2027, discounts over 12% require the CRO's approval.",
+   "facts": "1. E1 · Northstar Pricing Policy 2027 [unclassified] · also named: It; This policy\n2. Northstar Pricing Policy 2027 — is effective — effective (string) · valid 2027-01-01 → 2027-12-31\n3. Northstar Pricing Policy 2027 — sets — discount approval authority (string)\n4. Northstar Pricing Policy 2027 — replaces — Northstar Pricing Policy 2026\n5. E2 · Chief Revenue Officer [organization_role]\n6. discounts — require — Chief Revenue Officer [organization_role]\n7. discounts — require — Chief Revenue Officer [organization_role]\n8. Escalation — Notify — Chief Revenue Officer [organization_role]\n9. E3 · Chief Revenue Officer [org_role]\n10. David Morgan — role — Chief Revenue Officer [org_role]\n11. E4 · Chief Revenue Officer [organization_role]\n12. David Morgan — hasDesignation — Chief Revenue Officer [organization_role]\n13. E5 · Chief Revenue Officer [org_role]\n14. Chief Revenue Officer — has discount authority — >20% (string)",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       6,
+       7,
+       14
+      ],
+      "why": "Facts say discounts require the CRO but give no 12% threshold; the only threshold is CRO authority at >20%, which conflicts."
+     },
+     "cost_usd": 0.005756
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       3,
+       6,
+       7,
+       14
+      ],
+      "why": "Policy for 2027 sets discount approval authority and discounts require the CRO, but the only threshold stated is >20% for CRO authority, not 12%."
+     },
+     "cost_usd": 0.005809999999999999
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       3,
+       6,
+       7,
+       14
+      ],
+      "why": "Policy 2027 sets discount approval authority and discounts require the CRO, but the CRO's authority is stated as >20%, not over 12%; the 12% threshold is not stated."
+     },
+     "cost_usd": 0.005954
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F22",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, credit limits above $500,000 require the Director of Finance.",
+   "facts": "1. E1 · Northstar Credit Policy 2026 [unclassified]\n2. Northstar Credit Policy 2026 — is effective from — 2026-01-01 (string) · valid 2026-01-01 → 2026-12-31\n3. Northstar Credit Policy 2026 — replaces — previous credit policy\n4. E2 · Director of Finance [organization_role]\n5. E3 · Director of Finance approval [unclassified]\n6. credit limits — require — Director of Finance approval\n7. E4 · Director of Finance approval [unclassified]\n8. credit limits — require — Director of Finance approval",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       6,
+       8
+      ],
+      "why": "Credit limits require Director of Finance approval and the 2026 policy is effective, but the $500,000 threshold is not stated."
+     },
+     "cost_usd": 0.00493
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       6,
+       8
+      ],
+      "why": "Credit limits require Director of Finance approval, and the 2026 policy is valid, but the $500,000 threshold is not stated and the link between this requirement and the 2026 policy is not explicit."
+     },
+     "cost_usd": 0.0051459999999999995
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       6,
+       8
+      ],
+      "why": "Facts say credit limits require Director of Finance approval and the 2026 policy is in effect, but no $500,000 threshold is stated and no link ties the requirement to the policy."
+     },
+     "cost_usd": 0.0023923
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F23",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, strategic accounts' credit limits above $500,000 also need VP Sales's concurrence.",
+   "facts": "1. E1 · Northstar Credit Policy 2026 [unclassified]\n2. Northstar Credit Policy 2026 — is effective from — 2026-01-01 (string) · valid 2026-01-01 → 2026-12-31\n3. Northstar Credit Policy 2026 — replaces — previous credit policy\n4. E2 · VP Sales [organization_role]\n5. discounts — require — VP Sales [organization_role]\n6. discounts — require — VP Sales [organization_role]\n7. Escalation — Notify — VP Sales [organization_role]\n8. E3 · VP Sales [org_role]\n9. Michael Torres — role — VP Sales [org_role]\n10. E4 · VP Sales [org_role]\n11. VP Sales — has discount authority — >10% and ≤20% (string)\n12. E5 · VP Sales approval [unclassified]\n13. discounts — require — VP Sales approval\n14. E6 · VP Sales concurrence [unclassified]\n15. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       2,
+       14,
+       15
+      ],
+      "why": "Credit limits require VP Sales concurrence and the 2026 policy exists, but nothing ties it to strategic accounts, the $500,000 threshold, or this policy."
+     },
+     "cost_usd": 0.00569
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       14,
+       15,
+       2
+      ],
+      "why": "Credit limits require VP Sales concurrence, and the policy is effective in 2026, but nothing mentions the strategic accounts or the $500,000 threshold."
+     },
+     "cost_usd": 0.005632
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       15,
+       2
+      ],
+      "why": "Credit limits require VP Sales concurrence, and the policy is effective in 2026, but nothing mentions strategic accounts or the $500,000 threshold."
+     },
+     "cost_usd": 0.0023338
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F24",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme Group Holdings guarantees Acme Mfg. Holdings's payment obligations up to $400,000, for 2026 and 2027.",
+   "facts": "1. E1 · Acme Group Holdings, Inc. [corporation]\n2. coverage — does not extend to — Acme Group Holdings, Inc. [corporation]\n3. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n4. Northstar Industrial Systems — provides support to — Acme Mfg. Holdings [corporation]\n5. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n6. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n7. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n8. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n9. Acme Mfg. Holdings — bill_to_state — WI (string)\n10. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n11. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n12. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n13. E3 · parent guarantee [unclassified]\n14. Acme Group — has — parent guarantee\n15. parent guarantee — should cover — headroom\n16. Gina — says — parent guarantee\n17. parent guarantee — is in place — still in place (string)",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       13,
+       14,
+       15,
+       17
+      ],
+      "why": "A parent guarantee is mentioned (held by 'Acme Group', still in place), but no guarantee of Acme Mfg. Holdings' payment obligations, no $400,000 cap, and no 2026–2027 dates are stated."
+     },
+     "cost_usd": 0.00646
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       13,
+       14,
+       15,
+       17
+      ],
+      "why": "A parent guarantee exists (held by 'Acme Group') but nothing says it guarantees Acme Mfg. payment obligations, the $400,000 cap, or 2026–2027; line 2 says coverage does not extend to Acme Group Holdings."
+     },
+     "cost_usd": 0.0065260000000000006
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       13,
+       14,
+       15,
+       17
+      ],
+      "why": "A parent guarantee exists (held by 'Acme Group'), but no amount of $400,000, no 2026–2027 period, and no guarantee of Acme Mfg. Holdings's payment obligations is stated. Line 2 says coverage does not extend to Acme Group Holdings."
+     },
+     "cost_usd": 0.0028353000000000002
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F24",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "Acme Group Holdings guarantees Acme Mfg. Holdings's payment obligations up to $400,000, for 2026 and 2027.",
+   "facts": "1. E1 · Acme Group Holdings, Inc. [corporation]\n2. coverage — does not extend to — Acme Group Holdings, Inc. [corporation] · holds 2026-10-18 → …\n3. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n4. Northstar Industrial Systems — provides support to — Acme Mfg. Holdings [corporation] · holds 2026-10-18 → …\n5. Acme Mfg. Holdings — erp_customer_id — C-1001 (string) · holds 2026-10-18 → …\n6. Acme Mfg. Holdings — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n7. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n8. Acme Mfg. Holdings — bill_to_city — Milwaukee (string) · holds 2026-10-18 → …\n9. Acme Mfg. Holdings — bill_to_state — WI (string) · holds 2026-10-18 → …\n10. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string) · holds 2026-10-18 → …\n11. Acme Mfg. Holdings — payment_terms — Net 45 (string) · holds 2026-10-18 → …\n12. Acme Mfg. Holdings — duns — 04-812-7730 (string) · holds 2026-10-18 → …\n13. E3 · parent guarantee [unclassified]\n14. Acme Group — has — parent guarantee · holds 2026-10-18 → …\n15. parent guarantee — should cover — headroom · holds 2026-10-18 → …\n16. Gina — says — parent guarantee · holds 2026-10-18 → …\n17. parent guarantee — is in place — still in place (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       2,
+       14,
+       15,
+       17
+      ],
+      "why": "Facts mention only a vague parent guarantee ('Acme Group', not clearly the same entity) with no $400,000 cap, no 2026–2027 term, and no guarantee of Acme Mfg.'s payment obligations; line 2 says coverage does not extend to Acme Group Holdings."
+     },
+     "cost_usd": 0.007394
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       2,
+       14,
+       15,
+       17
+      ],
+      "why": "A parent guarantee exists and is in place, but no guarantor/beneficiary link to Acme Mfg. Holdings, no $400,000 cap, and no 2026–2027 term; line 2 says coverage does not extend to Acme Group Holdings."
+     },
+     "cost_usd": 0.007294
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       14,
+       15,
+       17
+      ],
+      "why": "A parent guarantee exists and should cover headroom, but nothing states Acme Group Holdings guarantees Acme Mfg. Holdings's payments, nor the $400,000 cap or the 2026-2027 period. Line 2 says coverage does not extend to Acme Group Holdings."
+     },
+     "cost_usd": 0.0028495
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F25",
+   "u31": false,
+   "reading": "stated",
+   "statement": "CR-9201: Sarah Chen asks to raise Acme's credit limit to $400,000, on 2026-09-23.",
+   "facts": "1. E1 · CR-9201 [unclassified]\n2. Sarah Chen — raised — CR-9201\n3. CR-9201 — to take — credit limit\n4. CR-9201 — erp_customer_id — C-1001\n5. CR-9201 — current_limit_usd — 250000 (string)\n6. CR-9201 — requested_limit_usd — 400000 (string)\n7. CR-9201 — requested_by — sarah.chen@northstar.example\n8. CR-9201 — request_date — 2026-09-23 (string)\n9. CR-9201 — justification — Third-plant ramp-up: higher NS-500 order volume through Q1 2027 (string)\n10. CR-9201 — status — Pending Approval (string)\n11. E2 · Sarah Chen [person]\n12. Acme Manufacturing — account_owner — Sarah Chen [person]\n13. Sarah Chen — employee_id — EMP-101 (string)\n14. Sarah Chen — title — Enterprise Account Executive (string)\n15. Sarah Chen — department — Sales (string)\n16. Sarah Chen — manager_id — EMP-200 (string)\n17. Sarah Chen — location — Chicago, IL (string)\n18. Sarah Chen — email — sarah.chen@northstar.example (string)\n19. E3 · Sarah Chen [person]\n20. Sarah Chen — title — Enterprise Account Executive (string)\n21. Sarah Chen — reportsTo — Michael Torres [person]\n22. E4 · Sarah Chen [person]\n23. exception — Prepared by — Sarah Chen [person]\n24. Sarah Chen — raised — CR-9201\n25. E5 · Acme Manufacturing [corporation]\n26. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n27. exception — Customer — Acme Manufacturing [corporation]\n28. Acme Manufacturing — account_id — CRM-2048 (string)\n29. Acme Manufacturing — account_tier — Strategic (string)\n30. Acme Manufacturing — segment — Midwest (string)\n31. Acme Manufacturing — industry — Industrial Manufacturing (string)\n32. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n33. Acme Manufacturing — billing_city — Milwaukee (string)\n34. Acme Manufacturing — billing_state — WI (string)\n35. Acme Manufacturing — account_owner — Sarah Chen [person]\n36. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n37. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n38. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       3,
+       6,
+       7,
+       8
+      ],
+      "why": "Sarah Chen's request, the $400,000 limit and the 2026-09-23 date are stated, but nothing ties CR-9201 to Acme. It only has ERP id C-1001, while Acme's account id is CRM-2048."
+     },
+     "cost_usd": 0.0112
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       3,
+       6,
+       8
+      ],
+      "why": "Sarah Chen raised CR-9201 for a $400,000 credit limit on 2026-09-23, but no fact ties the request to Acme. Its ERP customer ID C-1001 doesn't match Acme's account ID CRM-2048."
+     },
+     "cost_usd": 0.01086
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       3,
+       4,
+       6,
+       8,
+       35
+      ],
+      "why": "Sarah Chen raised CR-9201 for credit limit; requested 400000 USD on 2026-09-23; ERP customer C-1001 and Acme account owner Sarah Chen link it to Acme."
+     },
+     "cost_usd": 0.008336
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F26",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme's current credit limit is $250,000.",
+   "facts": "1. E1 · Acme Mfg. Holdings [corporation] · also named: Customer\n2. Northstar Industrial Systems — provides support to — Acme Mfg. Holdings [corporation]\n3. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n4. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n5. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n6. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n7. Acme Mfg. Holdings — bill_to_state — WI (string)\n8. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n9. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n10. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n11. E2 · Acme Manufacturing [corporation]\n12. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n13. exception — Customer — Acme Manufacturing [corporation]\n14. Acme Manufacturing — account_id — CRM-2048 (string)\n15. Acme Manufacturing — account_tier — Strategic (string)\n16. Acme Manufacturing — segment — Midwest (string)\n17. Acme Manufacturing — industry — Industrial Manufacturing (string)\n18. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n19. Acme Manufacturing — billing_city — Milwaukee (string)\n20. Acme Manufacturing — billing_state — WI (string)\n21. Acme Manufacturing — account_owner — Sarah Chen [person]\n22. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n23. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n24. Acme Manufacturing — duns — 04-812-7730 (string)\n25. E3 · C-1001 [unclassified]\n26. CR-9201 — erp_customer_id — C-1001\n27. C-1001 — credit_limit_usd — 250000 (string)\n28. C-1001 — last_reviewed — 2026-01-15 (string)\n29. INV-60412 — erp_customer_id — C-1001\n30. SO-7001 — erp_customer_id — C-1001\n31. SO-7002 — erp_customer_id — C-1001\n32. INV-62011 — erp_customer_id — C-1001\n33. INV-62305 — erp_customer_id — C-1001",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       27,
+       28
+      ],
+      "why": "Acme Mfg. Holdings has ERP ID C-1001, and C-1001 has a credit limit of 250000 USD, last reviewed 2026-01-15."
+     },
+     "cost_usd": 0.010058000000000001
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       27,
+       28
+      ],
+      "why": "Acme Mfg. Holdings has ERP ID C-1001, whose credit limit is 250000 USD, last reviewed 2026-01-15."
+     },
+     "cost_usd": 0.010052
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       27,
+       28
+      ],
+      "why": "Acme Mfg. Holdings has ERP ID C-1001, and C-1001 has a credit_limit_usd of 250000, last reviewed 2026-01-15."
+     },
+     "cost_usd": 0.0045716
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4a",
+   "u31": false,
+   "reading": "stated",
+   "statement": "On 2024-06-01, the Acme NS-500 pricing exception in force permits up to 10%, not 15%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation]\n42. Acme Manufacturing — account_id — CRM-2048 (string)\n43. Acme Manufacturing — account_tier — Strategic (string)\n44. Acme Manufacturing — segment — Midwest (string)\n45. Acme Manufacturing — industry — Industrial Manufacturing (string)\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n47. Acme Manufacturing — billing_city — Milwaukee (string)\n48. Acme Manufacturing — billing_state — WI (string)\n49. Acme Manufacturing — account_owner — Sarah Chen [person]\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n52. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": null,
+     "answer": {},
+     "cost_usd": 0.011626
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       14,
+       40,
+       41
+      ],
+      "why": "The exception for Acme Manufacturing on the NS-500 allows up to 10% off list, valid 2023-04-01 to 2025-03-31, which covers 2024-06-01. That rules out 15%."
+     },
+     "cost_usd": 0.0045474
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       14,
+       40,
+       41
+      ],
+      "why": "Acme's exception, for the NS-500, allows up to 10% off list, valid 2023-04-01 to 2025-03-31, which covers 2024-06-01. No 15% figure appears."
+     },
+     "cost_usd": 0.004499400000000001
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4a",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "On 2024-06-01, the Acme NS-500 pricing exception in force permits up to 10%, not 15%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product · holds 2026-10-18 → …\n3. pricing exception — is scoped to — product · holds 2026-10-18 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B · holds 2026-10-18 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller · holds 2026-10-18 → …\n14. exception — Product — NS-500 Industrial Controller · holds 2026-10-18 → …\n15. support plan — covers — NS-500 Industrial Controller · holds 2026-10-18 → …\n16. orders — are — NS-500 Industrial Controller · holds 2026-10-18 → …\n17. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-18 → …\n18. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-18 → …\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-18 → …\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-18 → …\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string) · holds 2026-10-18 → …\n22. NS-500 Industrial Controller — lost communication with — the line HMI · holds 2026-10-18 → …\n23. DR-8104 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n24. DR-7015 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n25. DR-7016 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n26. SR-39857 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n27. DR-7019 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n28. DR-7020 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n29. DR-9001 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · holds 2025-01-01 → 2025-01-01\n32. Gina — want to move ahead with — NS-500 controller · holds 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing · holds 2026-10-18 → …\n35. NS-500 pricing — confirming — Deal Desk · holds 2026-10-18 → …\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string) · holds 2026-10-18 → …\n38. Third-plant NS-500 rollout — expect — controller orders · holds 2026-10-18 → …\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · holds 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n42. Acme Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-18 → …\n43. Acme Manufacturing — account_tier — Strategic (string) · holds 2026-10-18 → …\n44. Acme Manufacturing — segment — Midwest (string) · holds 2026-10-18 → …\n45. Acme Manufacturing — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n47. Acme Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-18 → …\n48. Acme Manufacturing — billing_state — WI (string) · holds 2026-10-18 → …\n49. Acme Manufacturing — account_owner — Sarah Chen [person] · holds 2026-10-18 → …\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string) · holds 2026-10-18 → …\n52. Acme Manufacturing — duns — 04-812-7730 (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40,
+       14,
+       41
+      ],
+      "why": "Acme 10% off list is held for 2023-04-01 to 2025-03-31, which covers the date. But it is not tied to the NS-500 exception, and the exception's NS-500 and Acme links only start 2026-10-18."
+     },
+     "cost_usd": 0.014816000000000001
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40,
+       14,
+       41
+      ],
+      "why": "Acme may get up to 10% off list for 2023-04-01 to 2025-03-31, which covers 2024-06-01. But that fact doesn't name the NS-500, and the exception's product and customer links only hold from 2026-10-18. Nothing mentions 15%."
+     },
+     "cost_usd": 0.014513999999999999
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40,
+       14,
+       41
+      ],
+      "why": "Acme's up-to-10% discount is stated for 2023-04-01 to 2025-03-31, which covers 2024-06-01. But that fact isn't tied to the NS-500, and the exception's links to Acme and the NS-500 only hold from 2026-10-18. Nothing mentions 15%."
+     },
+     "cost_usd": 0.0051649
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4b",
+   "u31": false,
+   "reading": "stated",
+   "statement": "On 2026-09-23, the Acme NS-500 pricing exception in force permits up to 15%, not 10%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation]\n42. Acme Manufacturing — account_id — CRM-2048 (string)\n43. Acme Manufacturing — account_tier — Strategic (string)\n44. Acme Manufacturing — segment — Midwest (string)\n45. Acme Manufacturing — industry — Industrial Manufacturing (string)\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n47. Acme Manufacturing — billing_city — Milwaukee (string)\n48. Acme Manufacturing — billing_state — WI (string)\n49. Acme Manufacturing — account_owner — Sarah Chen [person]\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n52. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount for Acme valid 2023-04-01 to 2025-03-31 is stated; no 15% exception in force on 2026-09-23."
+     },
+     "cost_usd": 0.00983
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount for Acme, valid 2023-04-01 to 2025-03-31; no 15% exception in force on 2026-09-23."
+     },
+     "cost_usd": 0.0098
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount valid 2023-04-01 to 2025-03-31 is stated; no 15% exception in force on 2026-09-23."
+     },
+     "cost_usd": 0.0024174
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4b",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "On 2026-09-23, the Acme NS-500 pricing exception in force permits up to 15%, not 10%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product · holds 2026-10-18 → …\n3. pricing exception — is scoped to — product · holds 2026-10-18 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B · holds 2026-10-18 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller · holds 2026-10-18 → …\n14. exception — Product — NS-500 Industrial Controller · holds 2026-10-18 → …\n15. support plan — covers — NS-500 Industrial Controller · holds 2026-10-18 → …\n16. orders — are — NS-500 Industrial Controller · holds 2026-10-18 → …\n17. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-18 → …\n18. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-18 → …\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-18 → …\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-18 → …\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string) · holds 2026-10-18 → …\n22. NS-500 Industrial Controller — lost communication with — the line HMI · holds 2026-10-18 → …\n23. DR-8104 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n24. DR-7015 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n25. DR-7016 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n26. SR-39857 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n27. DR-7019 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n28. DR-7020 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n29. DR-9001 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · holds 2025-01-01 → 2025-01-01\n32. Gina — want to move ahead with — NS-500 controller · holds 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing · holds 2026-10-18 → …\n35. NS-500 pricing — confirming — Deal Desk · holds 2026-10-18 → …\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string) · holds 2026-10-18 → …\n38. Third-plant NS-500 rollout — expect — controller orders · holds 2026-10-18 → …\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · holds 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n42. Acme Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-18 → …\n43. Acme Manufacturing — account_tier — Strategic (string) · holds 2026-10-18 → …\n44. Acme Manufacturing — segment — Midwest (string) · holds 2026-10-18 → …\n45. Acme Manufacturing — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n47. Acme Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-18 → …\n48. Acme Manufacturing — billing_state — WI (string) · holds 2026-10-18 → …\n49. Acme Manufacturing — account_owner — Sarah Chen [person] · holds 2026-10-18 → …\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string) · holds 2026-10-18 → …\n52. Acme Manufacturing — duns — 04-812-7730 (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount for Acme Manufacturing, valid 2023-04-01 to 2025-03-31, is stated. Nothing gives a 15% exception or its force on 2026-09-23."
+     },
+     "cost_usd": 0.012034
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount for Acme, valid 2023-04-01 to 2025-03-31; no 15% exception stated for 2026-09-23."
+     },
+     "cost_usd": 0.011866
+    },
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       40
+      ],
+      "why": "Only a 10% discount for Acme, valid 2023-04-01 to 2025-03-31; no 15% exception stated for 2026-09-23."
+     },
+     "cost_usd": 0.011874
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4c",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Both exceptions are held, each with its own validity: 10% from 2023-04-01 to 2025-03-31, and 15% from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation]\n42. Acme Manufacturing — account_id — CRM-2048 (string)\n43. Acme Manufacturing — account_tier — Strategic (string)\n44. Acme Manufacturing — segment — Midwest (string)\n45. Acme Manufacturing — industry — Industrial Manufacturing (string)\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n47. Acme Manufacturing — billing_city — Milwaukee (string)\n48. Acme Manufacturing — billing_state — WI (string)\n49. Acme Manufacturing — account_owner — Sarah Chen [person]\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n52. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40
+      ],
+      "why": "Only the 10% exception with 2023-04-01 to 2025-03-31 is held; the 15% exception for 2025-04-01 to 2028-03-31 is not stated."
+     },
+     "cost_usd": 0.009958
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40
+      ],
+      "why": "Only the 10% exception with 2023-04-01 to 2025-03-31 is held; the 15% exception for 2025-04-01 to 2028-03-31 is not stated."
+     },
+     "cost_usd": 0.009958
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40
+      ],
+      "why": "Only the 10% exception with 2023-04-01 to 2025-03-31 validity is held; the 15% one (2025-04-01 to 2028-03-31) is not stated."
+     },
+     "cost_usd": 0.009958
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4c",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "Both exceptions are held, each with its own validity: 10% from 2023-04-01 to 2025-03-31, and 15% from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product · holds 2026-10-18 → …\n3. pricing exception — is scoped to — product · holds 2026-10-18 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B · holds 2026-10-18 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller · holds 2026-10-18 → …\n14. exception — Product — NS-500 Industrial Controller · holds 2026-10-18 → …\n15. support plan — covers — NS-500 Industrial Controller · holds 2026-10-18 → …\n16. orders — are — NS-500 Industrial Controller · holds 2026-10-18 → …\n17. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-18 → …\n18. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-18 → …\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-18 → …\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-18 → …\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string) · holds 2026-10-18 → …\n22. NS-500 Industrial Controller — lost communication with — the line HMI · holds 2026-10-18 → …\n23. DR-8104 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n24. DR-7015 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n25. DR-7016 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n26. SR-39857 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n27. DR-7019 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n28. DR-7020 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n29. DR-9001 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · holds 2025-01-01 → 2025-01-01\n32. Gina — want to move ahead with — NS-500 controller · holds 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing · holds 2026-10-18 → …\n35. NS-500 pricing — confirming — Deal Desk · holds 2026-10-18 → …\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string) · holds 2026-10-18 → …\n38. Third-plant NS-500 rollout — expect — controller orders · holds 2026-10-18 → …\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · holds 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n42. Acme Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-18 → …\n43. Acme Manufacturing — account_tier — Strategic (string) · holds 2026-10-18 → …\n44. Acme Manufacturing — segment — Midwest (string) · holds 2026-10-18 → …\n45. Acme Manufacturing — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n47. Acme Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-18 → …\n48. Acme Manufacturing — billing_state — WI (string) · holds 2026-10-18 → …\n49. Acme Manufacturing — account_owner — Sarah Chen [person] · holds 2026-10-18 → …\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string) · holds 2026-10-18 → …\n52. Acme Manufacturing — duns — 04-812-7730 (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40
+      ],
+      "why": "Only the 10% (up to 10% off list) for 2023-04-01 to 2025-03-31 is held; the 15% exception for 2025-04-01 to 2028-03-31 is not stated."
+     },
+     "cost_usd": 0.012094
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40
+      ],
+      "why": "Only the 10% exception (2023-04-01 to 2025-03-31) is held; the 15% exception from 2025-04-01 to 2028-03-31 is absent."
+     },
+     "cost_usd": 0.011994
+    },
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       40
+      ],
+      "why": "Only the 10% from 2023-04-01 to 2025-03-31 is held for Acme; the 15% from 2025-04-01 to 2028-03-31 is not stated."
+     },
+     "cost_usd": 0.012014
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4d",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The 2023 exception (10%) stopped holding on 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product\n3. pricing exception — is scoped to — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller\n14. exception — Product — NS-500 Industrial Controller\n15. support plan — covers — NS-500 Industrial Controller\n16. orders — are — NS-500 Industrial Controller\n17. NS-500 Industrial Controller — product_id — PROD-001 (string)\n18. NS-500 Industrial Controller — sku — NS-500 (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string)\n22. NS-500 Industrial Controller — lost communication with — the line HMI\n23. DR-8104 — hasProduct — NS-500 Industrial Controller\n24. DR-7015 — hasProduct — NS-500 Industrial Controller\n25. DR-7016 — hasProduct — NS-500 Industrial Controller\n26. SR-39857 — hasProduct — NS-500 Industrial Controller\n27. DR-7019 — hasProduct — NS-500 Industrial Controller\n28. DR-7020 — hasProduct — NS-500 Industrial Controller\n29. DR-9001 — hasProduct — NS-500 Industrial Controller\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · valid 2025 → 2025\n32. Gina — want to move ahead with — NS-500 controller · valid 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing\n35. NS-500 pricing — confirming — Deal Desk\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string)\n38. Third-plant NS-500 rollout — expect — controller orders\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · valid 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation]\n42. Acme Manufacturing — account_id — CRM-2048 (string)\n43. Acme Manufacturing — account_tier — Strategic (string)\n44. Acme Manufacturing — segment — Midwest (string)\n45. Acme Manufacturing — industry — Industrial Manufacturing (string)\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n47. Acme Manufacturing — billing_city — Milwaukee (string)\n48. Acme Manufacturing — billing_state — WI (string)\n49. Acme Manufacturing — account_owner — Sarah Chen [person]\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation]\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string)\n52. Acme Manufacturing — duns — 04-812-7730 (string)",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       40,
+       41
+      ],
+      "why": "Acme Manufacturing may receive up to 10% off list, valid 2023-04-01 to 2025-03-31, so the exception ended on 2025-03-31."
+     },
+     "cost_usd": 0.009806
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       40
+      ],
+      "why": "Acme's up to 10% off list price is valid 2023-04-01 to 2025-03-31, so it ended on that date."
+     },
+     "cost_usd": 0.01059
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       39,
+       40,
+       41
+      ],
+      "why": "Acme Manufacturing may receive up to 10% off list price, valid 2023-04-01 to 2025-03-31; linked to an exception for that customer."
+     },
+     "cost_usd": 0.009788
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4d",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "The 2023 exception (10%) stopped holding on 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. pricing exception — covering — product · holds 2026-10-18 → …\n3. pricing exception — is scoped to — product · holds 2026-10-18 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — attached as — Schedule B · holds 2026-10-18 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-18 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 Industrial Controller (NS-500)\n13. Northstar Support — will supply — NS-500 Industrial Controller · holds 2026-10-18 → …\n14. exception — Product — NS-500 Industrial Controller · holds 2026-10-18 → …\n15. support plan — covers — NS-500 Industrial Controller · holds 2026-10-18 → …\n16. orders — are — NS-500 Industrial Controller · holds 2026-10-18 → …\n17. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-18 → …\n18. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-18 → …\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-18 → …\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-18 → …\n21. NS-500 Industrial Controller — is rebooting in a loop — rebooting in a loop (string) · holds 2026-10-18 → …\n22. NS-500 Industrial Controller — lost communication with — the line HMI · holds 2026-10-18 → …\n23. DR-8104 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n24. DR-7015 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n25. DR-7016 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n26. SR-39857 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n27. DR-7019 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n28. DR-7020 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n29. DR-9001 — hasProduct — NS-500 Industrial Controller · holds 2026-10-18 → …\n30. E7 · NS-500 controller [unclassified]\n31. Acme — standardised on — NS-500 controller · holds 2025-01-01 → 2025-01-01\n32. Gina — want to move ahead with — NS-500 controller · holds 2026-09-23 → 2026-09-23\n33. E8 · NS-500 pricing [unclassified]\n34. Acme — negotiated — NS-500 pricing · holds 2026-10-18 → …\n35. NS-500 pricing — confirming — Deal Desk · holds 2026-10-18 → …\n36. E9 · Third-plant NS-500 rollout [unclassified]\n37. Third-plant NS-500 rollout — is planned for — Q3 (string) · holds 2026-10-18 → …\n38. Third-plant NS-500 rollout — expect — controller orders · holds 2026-10-18 → …\n39. E10 · Acme Manufacturing [corporation]\n40. Acme Manufacturing — may receive — up to **10%** off list price (string) · holds 2023-04-01 → 2025-03-31\n41. exception — Customer — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n42. Acme Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-18 → …\n43. Acme Manufacturing — account_tier — Strategic (string) · holds 2026-10-18 → …\n44. Acme Manufacturing — segment — Midwest (string) · holds 2026-10-18 → …\n45. Acme Manufacturing — industry — Industrial Manufacturing (string) · holds 2026-10-18 → …\n46. Acme Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-18 → …\n47. Acme Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-18 → …\n48. Acme Manufacturing — billing_state — WI (string) · holds 2026-10-18 → …\n49. Acme Manufacturing — account_owner — Sarah Chen [person] · holds 2026-10-18 → …\n50. SR-39857 — customer_on_ticket — Acme Manufacturing [corporation] · holds 2026-10-18 → …\n51. Acme Manufacturing — email — sarah.chen@northstar.example (string) · holds 2026-10-18 → …\n52. Acme Manufacturing — duns — 04-812-7730 (string) · holds 2026-10-18 → …",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       40
+      ],
+      "why": "Acme Manufacturing may receive up to 10% off list price, held 2023-04-01 to 2025-03-31."
+     },
+     "cost_usd": 0.011698
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       40
+      ],
+      "why": "Acme may receive up to 10% off list price, held 2023-04-01 to 2025-03-31, so it ended on 2025-03-31."
+     },
+     "cost_usd": 0.011772
+    },
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       40
+      ],
+      "why": "Acme's up to 10% off list price fact holds 2023-04-01 → 2025-03-31, so it ended on that date."
+     },
+     "cost_usd": 0.012554000000000001
+    }
+   ],
+   "verdict": "stated"
+  }
+ ]
+}

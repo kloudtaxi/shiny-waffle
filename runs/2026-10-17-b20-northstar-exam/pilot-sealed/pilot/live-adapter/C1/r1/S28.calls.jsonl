@@ -1,0 +1,32 @@
+{"at": "2026-10-17T18:13:34-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 501, "is_error": true, "chars": 143, "ms": 29}
+{"at": "2026-10-17T18:13:34-0400", "tool": "search", "arguments": {"query": "CR-9203 credit limit request"}, "status": 200, "is_error": false, "chars": 15141, "ms": 363}
+{"at": "2026-10-17T18:13:35-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 5028, "ms": 343}
+{"at": "2026-10-17T18:13:38-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9b3e-c70224f958ce"}, "status": 200, "is_error": false, "chars": 2952, "ms": 39}
+{"at": "2026-10-17T18:13:39-0400", "tool": "search", "arguments": {"query": "parent guarantee Acme Group Holdings guaranteed amount"}, "status": 200, "is_error": false, "chars": 14276, "ms": 407}
+{"at": "2026-10-17T18:13:39-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 15}
+{"at": "2026-10-17T18:13:43-0400", "tool": "get_entity", "arguments": {"entity_id": "01a13636-245d-7e61-ae2f-4512de9120a1", "known_at": "2026-10-13T18:00:00Z"}, "status": 404, "is_error": true, "chars": 66, "ms": 39}
+{"at": "2026-10-17T18:13:44-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 3624, "ms": 51}
+{"at": "2026-10-17T18:13:44-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1b6e-73f0-aabd-78e3ec01cbe5"}, "status": 200, "is_error": false, "chars": 5933, "ms": 47}
+{"at": "2026-10-17T18:13:46-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1b11-7520-aa1b-3647453a4522"}, "status": 200, "is_error": false, "chars": 1580, "ms": 49}
+{"at": "2026-10-17T18:13:46-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-24ca-7a93-8187-3c8fbbe0a325"}, "status": 200, "is_error": false, "chars": 965, "ms": 36}
+{"at": "2026-10-17T18:13:46-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2680-71c2-a6aa-e2f8898e2cfb"}, "status": 200, "is_error": false, "chars": 1249, "ms": 46}
+{"at": "2026-10-17T18:13:49-0400", "tool": "find_entities", "arguments": {"q": "Credit Policy 2026"}, "status": 200, "is_error": false, "chars": 717, "ms": 279}
+{"at": "2026-10-17T18:13:50-0400", "tool": "search", "arguments": {"query": "CREDIT-POLICY-2026 effective 2026-01-01 maximum credit limit Strategic accounts"}, "status": 200, "is_error": false, "chars": 17284, "ms": 343}
+{"at": "2026-10-17T18:13:52-0400", "tool": "get_entity", "arguments": {"entity_id": "01a13637-6387-7e90-b22b-e98113a5364e"}, "status": 200, "is_error": false, "chars": 3681, "ms": 41}
+{"at": "2026-10-17T18:13:57-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-6387-7e90-b22b-e98113a5364e", "hops": 2}, "status": 200, "is_error": false, "chars": 1870, "ms": 473}
+{"at": "2026-10-17T18:13:59-0400", "tool": "list_facts", "arguments": {"entity_id": "01a136c5-8f78-7751-a927-743ffaf94764"}, "status": 200, "is_error": false, "chars": 2427, "ms": 49}
+{"at": "2026-10-17T18:14:00-0400", "tool": "find_entities", "arguments": {"q": "Strategic"}, "status": 200, "is_error": false, "chars": 1708, "ms": 301}
+{"at": "2026-10-17T18:14:23-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-6404-7a12-84c5-3f2e6689639e", "known_at": "2026-10-13T18:00:00Z"}, "status": 200, "is_error": false, "chars": 1161, "ms": 20592}
+{"at": "2026-10-17T18:14:43-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13638-d074-7b12-9a00-88e6f10e59ec", "known_at": "2026-10-13T18:00:00Z"}, "status": 200, "is_error": false, "chars": 1167, "ms": 20075}
+{"at": "2026-10-17T18:14:47-0400", "tool": "find_entities", "arguments": {"q": "Director of Finance"}, "status": 200, "is_error": false, "chars": 919, "ms": 216}
+{"at": "2026-10-17T18:14:48-0400", "tool": "find_entities", "arguments": {"q": "concurrence"}, "status": 200, "is_error": false, "chars": 1232, "ms": 238}
+{"at": "2026-10-17T18:14:48-0400", "tool": "find_entities", "arguments": {"q": "payment history"}, "status": 200, "is_error": false, "chars": 307, "ms": 198}
+{"at": "2026-10-17T18:14:48-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 895, "ms": 215}
+{"at": "2026-10-17T18:14:52-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-63fa-71f3-ac73-229c10370968"}, "status": 200, "is_error": false, "chars": 815, "ms": 352}
+{"at": "2026-10-17T18:14:53-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-6403-7cc1-96e5-653efa112779"}, "status": 200, "is_error": false, "chars": 847, "ms": 281}
+{"at": "2026-10-17T18:14:53-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13638-d19d-7e00-8cc0-b94e7285ef8c"}, "status": 200, "is_error": false, "chars": 1453, "ms": 296}
+{"at": "2026-10-17T18:14:53-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-63f0-7381-aa8d-aeb398424d57"}, "status": 200, "is_error": false, "chars": 811, "ms": 285}
+{"at": "2026-10-17T18:14:57-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-63e8-7230-88fa-2b2a2d6c26b4"}, "status": 200, "is_error": false, "chars": 3326, "ms": 53}
+{"at": "2026-10-17T18:14:57-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13638-d19d-7e00-8cc0-b94e7285ef8c"}, "status": 200, "is_error": false, "chars": 2646, "ms": 49}
+{"at": "2026-10-17T18:15:02-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1a7d-7b51-b6d9-d4630534976b"}, "status": 200, "is_error": false, "chars": 4319, "ms": 47}
+{"at": "2026-10-17T18:15:03-0400", "tool": "search", "arguments": {"query": "No one may approve or concur on a credit request they submitted", "limit": 5}, "status": 200, "is_error": false, "chars": 9096, "ms": 401}

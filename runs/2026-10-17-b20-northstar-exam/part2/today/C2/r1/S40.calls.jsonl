@@ -1,0 +1,86 @@
+{"at": "2026-10-17T22:41:08-0400", "tool": "find_entities", "arguments": {"q": "SR-39881"}, "status": 200, "is_error": false, "chars": 199, "ms": 67}
+{"at": "2026-10-17T22:41:08-0400", "tool": "find_entities", "arguments": {"q": "Blue River"}, "status": 200, "is_error": false, "chars": 241, "ms": 38}
+{"at": "2026-10-17T22:41:09-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c9b-d717-7030-8e5e-6944166228c5"}, "status": 200, "is_error": false, "chars": 9730, "ms": 65}
+{"at": "2026-10-17T22:41:10-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-490a-7f62-be18-4f3924eae00c"}, "status": 200, "is_error": false, "chars": 7648, "ms": 65}
+{"at": "2026-10-17T22:41:13-0400", "tool": "lookup_identifier", "arguments": {"system": "crm", "id": "CRM-2051"}, "status": 501, "is_error": true, "chars": 135, "ms": 22}
+{"at": "2026-10-17T22:41:13-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 11, "ms": 28}
+{"at": "2026-10-17T22:41:15-0400", "tool": "find_entities", "arguments": {"q": "CRM-2051"}, "status": 200, "is_error": false, "chars": 158, "ms": 89}
+{"at": "2026-10-17T22:41:15-0400", "tool": "find_entities", "arguments": {"q": "Service Level"}, "status": 200, "is_error": false, "chars": 740, "ms": 101}
+{"at": "2026-10-17T22:41:15-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 11, "ms": 16}
+{"at": "2026-10-17T22:41:17-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-2a43-76f0-98b5-68352abbb8ba"}, "status": 200, "is_error": false, "chars": 1505, "ms": 350}
+{"at": "2026-10-17T22:41:18-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c48f-7782-8fc1-3b084ad21810"}, "status": 200, "is_error": false, "chars": 5586, "ms": 44}
+{"at": "2026-10-17T22:41:21-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-2a2a-72f2-bc51-44146f3400de"}, "status": 200, "is_error": false, "chars": 4539, "ms": 113}
+{"at": "2026-10-17T22:41:21-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-2a43-76f0-98b5-68352abbb8ba"}, "status": 200, "is_error": false, "chars": 2355, "ms": 96}
+{"at": "2026-10-17T22:41:26-0400", "tool": "find_entities", "arguments": {"q": "CRM-"}, "status": 200, "is_error": false, "chars": 1666, "ms": 113}
+{"at": "2026-10-17T22:41:26-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-490a-7f62-be18-4f3924eae00c"}, "status": 200, "is_error": false, "chars": 1275, "ms": 382}
+{"at": "2026-10-17T22:41:31-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 839, "ms": 109}
+{"at": "2026-10-17T22:41:31-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-44f3-7f41-9ec4-e639b8bd1f10"}, "status": 200, "is_error": false, "chars": 3512, "ms": 51}
+{"at": "2026-10-17T22:41:32-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-f1a4-7713-b357-c280bb8ba5c9"}, "status": 200, "is_error": false, "chars": 836, "ms": 40}
+{"at": "2026-10-17T22:41:34-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-516c-75e2-a8d2-522ce3c5e9e8"}, "status": 200, "is_error": false, "chars": 7099, "ms": 67}
+{"at": "2026-10-17T22:41:34-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-7cfc-7dd2-a012-aee6a8e72765"}, "status": 200, "is_error": false, "chars": 26270, "ms": 65}
+{"at": "2026-10-17T22:41:38-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-c26a-79f3-9d53-f6023ceecadd"}, "status": 200, "is_error": false, "chars": 6424, "ms": 105}
+{"at": "2026-10-17T22:41:42-0400", "tool": "find_entities", "arguments": {"q": "plan"}, "status": 200, "is_error": false, "chars": 3308, "ms": 62}
+{"at": "2026-10-17T22:41:42-0400", "tool": "find_entities", "arguments": {"q": "NS-Cloud"}, "status": 200, "is_error": false, "chars": 985, "ms": 57}
+{"at": "2026-10-17T22:41:42-0400", "tool": "find_entities", "arguments": {"q": "support terms"}, "status": 200, "is_error": false, "chars": 11, "ms": 63}
+{"at": "2026-10-17T22:41:46-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c371-7d92-85ea-638f59951bb9"}, "status": 200, "is_error": false, "chars": 182, "ms": 47}
+{"at": "2026-10-17T22:41:47-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c3c7-7d90-94cd-696b9ba4ea15"}, "status": 200, "is_error": false, "chars": 18985, "ms": 79}
+{"at": "2026-10-17T22:41:51-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c32f-7d91-ad33-cdb4274cf6ed"}, "status": 200, "is_error": false, "chars": 874, "ms": 71}
+{"at": "2026-10-17T22:41:56-0400", "tool": "find_entities", "arguments": {"q": "coverage"}, "status": 200, "is_error": false, "chars": 444, "ms": 57}
+{"at": "2026-10-17T22:41:56-0400", "tool": "find_entities", "arguments": {"q": "Gold"}, "status": 200, "is_error": false, "chars": 11, "ms": 51}
+{"at": "2026-10-17T22:41:56-0400", "tool": "find_entities", "arguments": {"q": "Standard"}, "status": 200, "is_error": false, "chars": 494, "ms": 49}
+{"at": "2026-10-17T22:41:59-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-512b-7dc1-940f-c2e12b43589a"}, "status": 200, "is_error": false, "chars": 1177, "ms": 432}
+{"at": "2026-10-17T22:42:00-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-c98d-75e0-b94d-997f71f3ac1a"}, "status": 200, "is_error": false, "chars": 230, "ms": 393}
+{"at": "2026-10-17T22:42:00-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c9a-92cf-7c51-84ab-119d2b39a3bd"}, "status": 200, "is_error": false, "chars": 708, "ms": 368}
+{"at": "2026-10-17T22:42:04-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c9c-34a2-7cb2-a1c2-84d68c7a960b"}, "status": 200, "is_error": false, "chars": 180, "ms": 43}
+{"at": "2026-10-17T22:42:04-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c9c-5a44-7a80-8e4b-3242756d7e46"}, "status": 200, "is_error": false, "chars": 180, "ms": 131}
+{"at": "2026-10-17T22:42:04-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c8f3-7bb3-b79c-772075c02ac5"}, "status": 200, "is_error": false, "chars": 2132, "ms": 106}
+{"at": "2026-10-17T22:42:09-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-c80f-79c0-8845-4b01884b0a62"}, "status": 200, "is_error": false, "chars": 733, "ms": 448}
+{"at": "2026-10-17T22:42:09-0400", "tool": "find_entities", "arguments": {"kind": "member_program_tier"}, "status": 200, "is_error": false, "chars": 643, "ms": 38}
+{"at": "2026-10-17T22:42:11-0400", "tool": "find_entities", "arguments": {"q": "Platinum"}, "status": 200, "is_error": false, "chars": 635, "ms": 111}
+{"at": "2026-10-17T22:42:11-0400", "tool": "find_entities", "arguments": {"q": "Customer"}, "status": 200, "is_error": false, "chars": 3693, "ms": 138}
+{"at": "2026-10-17T22:42:15-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-0841-7811-b8f9-8eb7647a6142"}, "status": 200, "is_error": false, "chars": 4151, "ms": 85}
+{"at": "2026-10-17T22:42:15-0400", "tool": "find_entities", "arguments": {"q": "Effective"}, "status": 200, "is_error": false, "chars": 11, "ms": 88}
+{"at": "2026-10-17T22:42:15-0400", "tool": "find_entities", "arguments": {"q": "Bronze"}, "status": 200, "is_error": false, "chars": 11, "ms": 74}
+{"at": "2026-10-17T22:42:18-0400", "tool": "find_entities", "arguments": {"q": "Premier"}, "status": 200, "is_error": false, "chars": 11, "ms": 65}
+{"at": "2026-10-17T22:42:18-0400", "tool": "find_entities", "arguments": {"q": "Essential"}, "status": 200, "is_error": false, "chars": 11, "ms": 79}
+{"at": "2026-10-17T22:42:18-0400", "tool": "find_entities", "arguments": {"q": "business hours"}, "status": 200, "is_error": false, "chars": 835, "ms": 109}
+{"at": "2026-10-17T22:42:22-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c9c-3484-7b91-b703-6921711b624b", "hops": 2}, "status": 200, "is_error": false, "chars": 235, "ms": 406}
+{"at": "2026-10-17T22:42:25-0400", "tool": "find_entities", "arguments": {"q": "Severity 2"}, "status": 200, "is_error": false, "chars": 327, "ms": 117}
+{"at": "2026-10-17T22:42:25-0400", "tool": "find_entities", "arguments": {"q": "version"}, "status": 200, "is_error": false, "chars": 901, "ms": 104}
+{"at": "2026-10-17T22:42:25-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 3138, "ms": 98}
+{"at": "2026-10-17T22:42:28-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-0b35-7382-8e3e-69536953e1b2"}, "status": 200, "is_error": false, "chars": 3770, "ms": 385}
+{"at": "2026-10-17T22:42:30-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c98-0b35-7382-8e3e-69536953e1b2"}, "status": 200, "is_error": false, "chars": 9319, "ms": 56}
+{"at": "2026-10-17T22:42:33-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c99-2053-74c3-a7bd-5ff244e0be47"}, "status": 200, "is_error": false, "chars": 773, "ms": 45}
+{"at": "2026-10-17T22:42:33-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c9a-6d44-7f30-950d-a312e1ff7995"}, "status": 200, "is_error": false, "chars": 2092, "ms": 124}
+{"at": "2026-10-17T22:42:34-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c9a-66e5-7911-a34a-4a898481c639"}, "status": 200, "is_error": false, "chars": 650, "ms": 88}
+{"at": "2026-10-17T22:42:36-0400", "tool": "find_entities", "arguments": {"q": "Schedule"}, "status": 200, "is_error": false, "chars": 752, "ms": 105}
+{"at": "2026-10-17T22:42:36-0400", "tool": "find_entities", "arguments": {"q": "effective"}, "status": 200, "is_error": false, "chars": 11, "ms": 72}
+{"at": "2026-10-17T22:42:41-0400", "tool": "find_entities", "arguments": {"q": "tickets opened"}, "status": 200, "is_error": false, "chars": 11, "ms": 29}
+{"at": "2026-10-17T22:42:42-0400", "tool": "find_entities", "arguments": {"q": "2026"}, "status": 200, "is_error": false, "chars": 518, "ms": 41}
+{"at": "2026-10-17T22:42:44-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-f479-7fa2-a95d-d1edc53ee99c"}, "status": 200, "is_error": false, "chars": 2452, "ms": 392}
+{"at": "2026-10-17T22:42:45-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-08af-7d00-b3b3-2b1f1f941eee"}, "status": 200, "is_error": false, "chars": 247, "ms": 365}
+{"at": "2026-10-17T22:42:46-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c9a-6d71-72e2-bea6-ce837a10db38", "hops": 2}, "status": 200, "is_error": false, "chars": 8079, "ms": 423}
+{"at": "2026-10-17T22:42:50-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-f47c-79b3-8c05-640f41540125"}, "status": 200, "is_error": false, "chars": 1611, "ms": 120}
+{"at": "2026-10-17T22:42:50-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-f4ce-7c23-9f67-7b62585f6e6b"}, "status": 200, "is_error": false, "chars": 886, "ms": 54}
+{"at": "2026-10-17T22:42:50-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-f0c3-7120-80b8-0f16a852bae5"}, "status": 200, "is_error": false, "chars": 4233, "ms": 71}
+{"at": "2026-10-17T22:42:56-0400", "tool": "find_entities", "arguments": {"q": "Silver"}, "status": 200, "is_error": false, "chars": 505, "ms": 74}
+{"at": "2026-10-17T22:42:56-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c9d-c9e9-7e90-8d9e-b9648bb0f957"}, "status": 200, "is_error": false, "chars": 914, "ms": 48}
+{"at": "2026-10-17T22:42:59-0400", "tool": "find_entities", "arguments": {"q": "fee"}, "status": 200, "is_error": false, "chars": 663, "ms": 55}
+{"at": "2026-10-17T22:42:59-0400", "tool": "find_entities", "arguments": {"q": "technical contact"}, "status": 200, "is_error": false, "chars": 530, "ms": 53}
+{"at": "2026-10-17T22:43:03-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-c9e7-7142-b42d-2529b073d5fa", "hops": 2}, "status": 200, "is_error": false, "chars": 241, "ms": 416}
+{"at": "2026-10-17T22:43:09-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c9e7-7142-b42d-2529b073d5fa"}, "status": 200, "is_error": false, "chars": 787, "ms": 59}
+{"at": "2026-10-17T22:43:09-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c90d-7341-868a-0e1e5310d6e3"}, "status": 200, "is_error": false, "chars": 1756, "ms": 109}
+{"at": "2026-10-17T22:43:13-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-caab-70e3-acd5-8ac184899a16"}, "status": 200, "is_error": false, "chars": 5107, "ms": 91}
+{"at": "2026-10-17T22:43:14-0400", "tool": "find_entities", "arguments": {"q": "Monthly support fee"}, "status": 200, "is_error": false, "chars": 520, "ms": 87}
+{"at": "2026-10-17T22:43:17-0400", "tool": "find_entities", "arguments": {"q": "Coverage starts"}, "status": 200, "is_error": false, "chars": 11, "ms": 87}
+{"at": "2026-10-17T22:43:17-0400", "tool": "find_entities", "arguments": {"q": "St. Louis"}, "status": 200, "is_error": false, "chars": 198, "ms": 110}
+{"at": "2026-10-17T22:43:17-0400", "tool": "find_entities", "arguments": {"q": "depot"}, "status": 200, "is_error": false, "chars": 343, "ms": 78}
+{"at": "2026-10-17T22:43:21-0400", "tool": "find_entities", "arguments": {"q": "Logistics"}, "status": 200, "is_error": false, "chars": 581, "ms": 46}
+{"at": "2026-10-17T22:43:21-0400", "tool": "find_entities", "arguments": {"q": "support agreement"}, "status": 200, "is_error": false, "chars": 176, "ms": 84}
+{"at": "2026-10-17T22:43:24-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c98-512d-7b73-8558-9bae6d48fbf9"}, "status": 200, "is_error": false, "chars": 641, "ms": 25}
+{"at": "2026-10-17T22:43:29-0400", "tool": "find_entities", "arguments": {"q": "Support"}, "status": 200, "is_error": false, "chars": 3716, "ms": 136}
+{"at": "2026-10-17T22:43:40-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c9b-6779-76f0-88f7-9435a60521bf"}, "status": 200, "is_error": false, "chars": 5803, "ms": 835}
+{"at": "2026-10-17T22:43:40-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c9a-6d82-7e70-950e-ab3c52728b7a"}, "status": 200, "is_error": false, "chars": 2191, "ms": 40}
+{"at": "2026-10-17T22:43:44-0400", "tool": "find_entities", "arguments": {"q": "holiday"}, "status": 200, "is_error": false, "chars": 488, "ms": 69}
+{"at": "2026-10-17T22:43:44-0400", "tool": "find_entities", "arguments": {"q": "initial response"}, "status": 200, "is_error": false, "chars": 174, "ms": 63}
+{"at": "2026-10-17T22:43:45-0400", "tool": "find_entities", "arguments": {"q": "Escalation"}, "status": 200, "is_error": false, "chars": 1148, "ms": 104}

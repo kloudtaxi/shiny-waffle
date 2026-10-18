@@ -1,0 +1,20 @@
+{"at": "2026-10-18T13:31:26-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9113"}, "status": 404, "is_error": true, "chars": 135, "ms": 75}
+{"at": "2026-10-18T13:31:26-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 61}
+{"at": "2026-10-18T13:31:26-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 19}
+{"at": "2026-10-18T13:31:27-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1364, "ms": 23}
+{"at": "2026-10-18T13:31:29-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 37464, "ms": 23}
+{"at": "2026-10-18T13:31:29-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 22}
+{"at": "2026-10-18T13:31:30-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 85}
+{"at": "2026-10-18T13:31:30-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 21}
+{"at": "2026-10-18T13:31:32-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 20}
+{"at": "2026-10-18T13:31:33-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 897, "ms": 35}
+{"at": "2026-10-18T13:31:33-0400", "tool": "find_entities", "arguments": {"q": "Policy"}, "status": 200, "is_error": false, "chars": 2202, "ms": 30}
+{"at": "2026-10-18T13:31:33-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 8117, "ms": 25}
+{"at": "2026-10-18T13:31:36-0400", "tool": "find_entities", "arguments": {"q": "Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 236, "ms": 44}
+{"at": "2026-10-18T13:31:36-0400", "tool": "get_entity", "arguments": {"entity_id": "34e7f09a-0e4b-41ba-baa6-e864b2fd92dc"}, "status": 200, "is_error": false, "chars": 11227, "ms": 22}
+{"at": "2026-10-18T13:31:36-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 1896, "ms": 22}
+{"at": "2026-10-18T13:31:38-0400", "tool": "get_entity", "arguments": {"entity_id": "e6f65404-5857-42dd-bb43-544e945dc665"}, "status": 200, "is_error": false, "chars": 12395, "ms": 22}
+{"at": "2026-10-18T13:31:39-0400", "tool": "find_entities", "arguments": {"q": "Chief Revenue Officer"}, "status": 200, "is_error": false, "chars": 571, "ms": 40}
+{"at": "2026-10-18T13:31:39-0400", "tool": "find_entities", "arguments": {"q": "DR-91"}, "status": 200, "is_error": false, "chars": 11, "ms": 46}
+{"at": "2026-10-18T13:31:41-0400", "tool": "list_facts", "arguments": {"entity_id": "8a6141f8-e852-4d82-a9a8-b3446c6254d3"}, "status": 200, "is_error": false, "chars": 4849, "ms": 27}
+{"at": "2026-10-18T13:31:42-0400", "tool": "get_entity", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15"}, "status": 200, "is_error": false, "chars": 4934, "ms": 22}

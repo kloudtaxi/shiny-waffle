@@ -1,0 +1,2 @@
+{"at": "2026-10-17T22:22:24-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 93}
+{"at": "2026-10-17T22:22:25-0400", "tool": "search", "arguments": {"query": "CRM-2048 C-1001 ACME-MFG-2025"}, "status": 200, "is_error": false, "chars": 10104, "ms": 515}

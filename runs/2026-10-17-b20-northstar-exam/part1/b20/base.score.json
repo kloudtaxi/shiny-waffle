@@ -1,0 +1,593 @@
+{
+ "kb": "acdb1d91-df97-4fe9-83e7-fab543523170",
+ "p1": {
+  "facts": 2041,
+  "evidence": 2260,
+  "by_alignment": {
+   "exact": 2241,
+   "partial": 12,
+   "fuzzy": 7,
+   "none": 0
+  },
+  "exact_share": 0.9916,
+  "exact_verified": 2241,
+  "exact_span_mismatch": 0
+ },
+ "p3a": {
+  "label": "feature check: built knowing the corpus (D3)",
+  "served": true,
+  "ids_on_one_entity": 2,
+  "grade": "2 of 3",
+  "lookups": [
+   {
+    "system": "CRM",
+    "id": "CRM-2048",
+    "status": 200
+   },
+   {
+    "system": "Northstar CRM",
+    "id": "CRM-2048",
+    "status": 200
+   },
+   {
+    "system": "ERP",
+    "id": "C-1001",
+    "status": 200
+   },
+   {
+    "system": "Northstar ERP",
+    "id": "C-1001",
+    "status": 200
+   }
+  ]
+ },
+ "p3b": {
+  "grade": "pass",
+  "acme_industrial_kept_apart": true,
+  "false_merges": [],
+  "entities_checked": 50
+ },
+ "p5": {
+  "items": 76,
+  "held": 32,
+  "exact": 32,
+  "instant": 0,
+  "wall_time_no_zone": 0,
+  "date_only": 42,
+  "missing": 2,
+  "rows": [
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39385",
+    "value": "2026-06-16T02:14:00-05:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39385",
+    "value": "2026-06-16T10:58:00-05:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39207",
+    "value": "2026-05-22T16:20:00-04:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39207",
+    "value": "2026-05-26T18:05:00-04:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39561",
+    "value": "2026-07-11T23:20:00-05:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39561",
+    "value": "2026-07-12T05:05:00-05:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39340",
+    "value": "2026-06-10T07:05:00-04:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39340",
+    "value": "2026-06-10T12:35:00-04:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39881",
+    "value": "2026-08-20T19:45:00-05:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39881",
+    "value": "2026-08-24T10:40:00-05:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39644",
+    "value": "2026-07-23T13:10:00-05:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39644",
+    "value": "2026-07-24T18:40:00-05:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-38862",
+    "value": "2026-03-31T22:50:00-05:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-38862",
+    "value": "2026-04-01T05:35:00-05:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39802",
+    "value": "2026-08-10T06:05:00-04:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39802",
+    "value": "2026-08-10T14:20:00-04:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39690",
+    "value": "2026-07-28T10:30:00-04:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39690",
+    "value": "2026-07-31T00:50:00-04:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39857",
+    "value": "2026-08-17T09:20:00-05:00",
+    "what": "opened_at",
+    "match": "date"
+   },
+   {
+    "doc": "service_tickets.csv",
+    "key": "SR-39857",
+    "value": "2026-08-17T15:05:00-05:00",
+    "what": "restored_at",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39385",
+    "value": "2026-06-16T02:14:00-05:00",
+    "what": "created",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39385",
+    "value": "2026-06-16T02:31:00-05:00",
+    "what": "engineer_response",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39385",
+    "value": "2026-06-16T10:58:00-05:00",
+    "what": "restored",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39385",
+    "value": "2026-06-24T10:12:00-05:00",
+    "what": "credit_claim",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39207",
+    "value": "2026-05-22T16:20:00-04:00",
+    "what": "created",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39207",
+    "value": "2026-05-22T18:10:00-04:00",
+    "what": "engineer_response",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39207",
+    "value": "2026-05-26T18:05:00-04:00",
+    "what": "restored",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39207",
+    "value": "2026-06-01T09:30:00-04:00",
+    "what": "credit_claim",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39561",
+    "value": "2026-07-11T23:20:00-05:00",
+    "what": "created",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39561",
+    "value": "2026-07-11T23:35:00-05:00",
+    "what": "engineer_response",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39561",
+    "value": "2026-07-12T05:05:00-05:00",
+    "what": "restored",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39561",
+    "value": "2026-07-12T05:20:00-05:00",
+    "what": "note",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39561",
+    "value": "2026-07-14T08:45:00-05:00",
+    "what": "credit_claim",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39340",
+    "value": "2026-06-10T07:05:00-04:00",
+    "what": "created",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39340",
+    "value": "2026-06-10T09:20:00-04:00",
+    "what": "engineer_response",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39340",
+    "value": "2026-06-10T12:35:00-04:00",
+    "what": "restored",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39340",
+    "value": "2026-06-29T11:00:00-04:00",
+    "what": "credit_claim",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39881",
+    "value": "2026-08-20T19:45:00-05:00",
+    "what": "created",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39881",
+    "value": "2026-08-20T19:46:00-05:00",
+    "what": "auto_acknowledgment",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39881",
+    "value": "2026-08-21T10:20:00-05:00",
+    "what": "engineer_response",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39881",
+    "value": "2026-08-24T10:40:00-05:00",
+    "what": "restored",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39881",
+    "value": "2026-08-28T14:05:00-05:00",
+    "what": "credit_claim",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39644",
+    "value": "2026-07-23T13:10:00-05:00",
+    "what": "created",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39644",
+    "value": "2026-07-23T15:00:00-05:00",
+    "what": "engineer_response",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39644",
+    "value": "2026-07-23T15:00:00-05:00",
+    "what": "status_change",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39644",
+    "value": "2026-07-24T08:30:00-05:00",
+    "what": "status_change",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39644",
+    "value": "2026-07-24T18:40:00-05:00",
+    "what": "restored",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-38862",
+    "value": "2026-03-31T22:50:00-05:00",
+    "what": "created",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-38862",
+    "value": "2026-03-31T22:50:00-05:00",
+    "what": "note",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-38862",
+    "value": "2026-03-31T23:58:00-05:00",
+    "what": "engineer_response",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-38862",
+    "value": "2026-04-01T05:35:00-05:00",
+    "what": "restored",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-38862",
+    "value": "2026-05-12T09:00:00-05:00",
+    "what": "credit_claim",
+    "match": "date"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39802",
+    "value": "2026-08-10T06:05:00-04:00",
+    "what": "created",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39802",
+    "value": "2026-08-10T07:40:00-04:00",
+    "what": "engineer_response",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39802",
+    "value": "2026-08-10T14:20:00-04:00",
+    "what": "restored",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39802",
+    "value": "2026-08-14T10:00:00-04:00",
+    "what": "credit_claim",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39690",
+    "value": "2026-07-28T10:30:00-04:00",
+    "what": "created",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39690",
+    "value": "2026-07-28T12:05:00-04:00",
+    "what": "engineer_response",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39690",
+    "value": "2026-07-31T00:50:00-04:00",
+    "what": "restored",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39690",
+    "value": "2026-08-30T09:12:00-04:00",
+    "what": "credit_claim",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39857",
+    "value": "2026-08-17T09:20:00-05:00",
+    "what": "created",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39857",
+    "value": "2026-08-17T09:38:00-05:00",
+    "what": "engineer_response",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39857",
+    "value": "2026-08-17T15:05:00-05:00",
+    "what": "restored",
+    "match": "exact"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39857",
+    "value": "2026-08-17T15:30:00-05:00",
+    "what": "note",
+    "match": "no"
+   },
+   {
+    "doc": "ticket_events.csv",
+    "key": "SR-39857",
+    "value": "2026-08-20T08:40:00-05:00",
+    "what": "credit_claim",
+    "match": "no"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2025-01-01",
+    "what": "New Year's Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2025-05-26",
+    "what": "Memorial Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2025-07-04",
+    "what": "Independence Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2025-09-01",
+    "what": "Labor Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2025-11-27",
+    "what": "Thanksgiving Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2025-11-28",
+    "what": "Day after Thanksgiving",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2025-12-25",
+    "what": "Christmas Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2026-01-01",
+    "what": "New Year's Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2026-05-25",
+    "what": "Memorial Day",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2026-07-03",
+    "what": "Independence Day (observed; July 4 is a Saturday)",
+    "match": "exact"
+   },
+   {
+    "doc": "holiday_calendar.md",
+    "key": "",
+    "value": "2026-09-07",
+    "what": "Labor Day",
+    "match": "exact"
+   }
+  ]
+ }
+}

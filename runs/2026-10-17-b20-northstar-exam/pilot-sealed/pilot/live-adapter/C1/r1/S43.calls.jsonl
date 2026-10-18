@@ -1,0 +1,15 @@
+{"at": "2026-10-17T18:18:56-0400", "tool": "search", "arguments": {"query": "SR-39802", "limit": 10}, "status": 200, "is_error": false, "chars": 14734, "ms": 347}
+{"at": "2026-10-17T18:18:56-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 5028, "ms": 241}
+{"at": "2026-10-17T18:18:58-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2091"}, "status": 501, "is_error": true, "chars": 135, "ms": 31}
+{"at": "2026-10-17T18:18:58-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 25}
+{"at": "2026-10-17T18:19:00-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 3624, "ms": 44}
+{"at": "2026-10-17T18:19:00-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1943-7a33-b788-358dd135d389"}, "status": 200, "is_error": false, "chars": 2657, "ms": 43}
+{"at": "2026-10-17T18:19:00-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-21a0-7762-aece-7bc2bf994417"}, "status": 200, "is_error": false, "chars": 1771, "ms": 30}
+{"at": "2026-10-17T18:19:03-0400", "tool": "search", "arguments": {"query": "Acme Industrial Supply support terms coverage plan", "limit": 10}, "status": 200, "is_error": false, "chars": 14825, "ms": 387}
+{"at": "2026-10-17T18:19:03-0400", "tool": "search", "arguments": {"query": "out of scope ticket no support terms handling", "limit": 10}, "status": 200, "is_error": false, "chars": 16566, "ms": 350}
+{"at": "2026-10-17T18:19:06-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-299e-7f22-abe9-1d68518b05dc"}, "status": 200, "is_error": false, "chars": 12850, "ms": 27}
+{"at": "2026-10-17T18:19:06-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2af2-7132-8c92-deb0a57fdc08"}, "status": 200, "is_error": false, "chars": 2585, "ms": 28}
+{"at": "2026-10-17T18:19:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-262a-7853-997b-6cec1f21e014"}, "status": 200, "is_error": false, "chars": 1018, "ms": 63}
+{"at": "2026-10-17T18:19:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a85-7a80-af9e-705bee27ad24"}, "status": 200, "is_error": false, "chars": 1161, "ms": 41}
+{"at": "2026-10-17T18:19:12-0400", "tool": "search", "arguments": {"query": "Zachary Brown account owner", "limit": 5}, "status": 200, "is_error": false, "chars": 7899, "ms": 357}
+{"at": "2026-10-17T18:19:16-0400", "tool": "search", "arguments": {"query": "SR-39802 credit request decision declined", "limit": 8}, "status": 200, "is_error": false, "chars": 14092, "ms": 101}

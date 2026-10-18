@@ -1,0 +1,11 @@
+{"at": "2026-10-18T02:58:08-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 200, "is_error": false, "chars": 472, "ms": 68}
+{"at": "2026-10-18T02:58:10-0400", "tool": "search", "arguments": {"query": "CR-9205"}, "status": 200, "is_error": false, "chars": 11668, "ms": 225}
+{"at": "2026-10-18T02:58:10-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 3}
+{"at": "2026-10-18T02:58:13-0400", "tool": "read_passages", "arguments": {"document_id": "83d2cfb3-5a56-4584-8269-b1070898dc1f"}, "status": 200, "is_error": false, "chars": 1788, "ms": 5}
+{"at": "2026-10-18T02:58:14-0400", "tool": "read_passages", "arguments": {"document_id": "349e5092-7f81-44c0-8225-d0d6dea62abc"}, "status": 200, "is_error": false, "chars": 1671, "ms": 8}
+{"at": "2026-10-18T02:58:14-0400", "tool": "read_passages", "arguments": {"document_id": "8f3138db-536c-4a15-a6b7-48f2778dc6c1"}, "status": 200, "is_error": false, "chars": 514, "ms": 2}
+{"at": "2026-10-18T02:58:15-0400", "tool": "read_passages", "arguments": {"document_id": "4cd0ade4-51a7-45b3-9de6-57df85cffb7f"}, "status": 200, "is_error": false, "chars": 2314, "ms": 2}
+{"at": "2026-10-18T02:58:18-0400", "tool": "read_passages", "arguments": {"document_id": "0d3e3471-11cf-4d23-b92c-eb73231d7c3f"}, "status": 200, "is_error": false, "chars": 2403, "ms": 3}
+{"at": "2026-10-18T02:58:19-0400", "tool": "search", "arguments": {"query": "C-1002 invoice", "limit": 20}, "status": 200, "is_error": false, "chars": 21140, "ms": 226}
+{"at": "2026-10-18T02:58:20-0400", "tool": "read_passages", "arguments": {"document_id": "6fb7dca2-6bc2-4805-9f2c-a1cd5e491745"}, "status": 200, "is_error": false, "chars": 2462, "ms": 5}
+{"at": "2026-10-18T02:58:20-0400", "tool": "read_passages", "arguments": {"document_id": "85ee8d7a-6e30-4d39-b332-946eb2253194"}, "status": 200, "is_error": false, "chars": 967, "ms": 60}

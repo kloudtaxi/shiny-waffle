@@ -1,0 +1,8 @@
+{"at": "2026-10-18T02:56:23-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9111"}, "status": 404, "is_error": true, "chars": 135, "ms": 260}
+{"at": "2026-10-18T02:56:24-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2846, "ms": 263}
+{"at": "2026-10-18T02:56:24-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 663, "ms": 291}
+{"at": "2026-10-18T02:56:25-0400", "tool": "search", "arguments": {"query": "DR-9111"}, "status": 200, "is_error": false, "chars": 11925, "ms": 421}
+{"at": "2026-10-18T02:56:28-0400", "tool": "list_facts", "arguments": {"entity_id": "a5d284c8-fe8b-42fd-ae57-9ecb0233fc71"}, "status": 200, "is_error": false, "chars": 5170, "ms": 27}
+{"at": "2026-10-18T02:56:28-0400", "tool": "search", "arguments": {"query": "discount approval authority bands policy", "limit": 10}, "status": 200, "is_error": false, "chars": 5464, "ms": 193}
+{"at": "2026-10-18T02:56:31-0400", "tool": "read_passages", "arguments": {"document_id": "bf903fc8-a9be-42e5-bcdf-d09fa13110e9"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-18T02:56:32-0400", "tool": "search", "arguments": {"query": "policy amendment effective superseded interim discount authority", "limit": 8}, "status": 200, "is_error": false, "chars": 3659, "ms": 206}

@@ -1,0 +1,17 @@
+{"at": "2026-10-17T18:18:08-0400", "tool": "search", "arguments": {"query": "SR-39340"}, "status": 200, "is_error": false, "chars": 14163, "ms": 417}
+{"at": "2026-10-17T18:18:08-0400", "tool": "find_entities", "arguments": {"q": "Cedar Health"}, "status": 200, "is_error": false, "chars": 1389, "ms": 246}
+{"at": "2026-10-17T18:18:11-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2063"}, "status": 501, "is_error": true, "chars": 135, "ms": 20}
+{"at": "2026-10-17T18:18:12-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 25}
+{"at": "2026-10-17T18:18:15-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-238c-7023-9975-1264e959774c"}, "status": 200, "is_error": false, "chars": 1087, "ms": 58}
+{"at": "2026-10-17T18:18:15-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2af2-7132-8c92-deb0a57fdc08"}, "status": 200, "is_error": false, "chars": 2585, "ms": 42}
+{"at": "2026-10-17T18:18:16-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-299e-7f22-abe9-1d68518b05dc"}, "status": 200, "is_error": false, "chars": 12850, "ms": 29}
+{"at": "2026-10-17T18:18:21-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a2c-7cc3-a848-596f82b4d25e"}, "status": 200, "is_error": false, "chars": 4775, "ms": 55}
+{"at": "2026-10-17T18:18:22-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1c95-78f2-ac69-96fb2e316d20"}, "status": 200, "is_error": false, "chars": 487, "ms": 49}
+{"at": "2026-10-17T18:18:22-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1e2e-7b81-914d-07c602a7ce7e"}, "status": 200, "is_error": false, "chars": 5468, "ms": 69}
+{"at": "2026-10-17T18:18:23-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1ecf-71c0-8f1b-e991fb828866"}, "status": 200, "is_error": false, "chars": 11567, "ms": 47}
+{"at": "2026-10-17T18:18:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 3624, "ms": 63}
+{"at": "2026-10-17T18:18:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1dc1-7b61-929a-af3ec0f70533"}, "status": 200, "is_error": false, "chars": 537, "ms": 31}
+{"at": "2026-10-17T18:18:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a85-7a80-af9e-705bee27ad24"}, "status": 200, "is_error": false, "chars": 1161, "ms": 35}
+{"at": "2026-10-17T18:18:28-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1943-7a33-b788-358dd135d389"}, "status": 200, "is_error": false, "chars": 2657, "ms": 41}
+{"at": "2026-10-17T18:18:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9975-1264e959774c"}, "status": 404, "is_error": true, "chars": 63, "ms": 16}
+{"at": "2026-10-17T18:18:42-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9b3e-c70224f958ce"}, "status": 200, "is_error": false, "chars": 2952, "ms": 43}

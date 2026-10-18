@@ -1,0 +1,20 @@
+{"at": "2026-10-18T13:28:59-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 656, "ms": 149}
+{"at": "2026-10-18T13:29:00-0400", "tool": "find_entities", "arguments": {"q": "DR-9107"}, "status": 200, "is_error": false, "chars": 11, "ms": 34}
+{"at": "2026-10-18T13:29:01-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 21}
+{"at": "2026-10-18T13:29:01-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 18}
+{"at": "2026-10-18T13:29:04-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 1276, "ms": 20}
+{"at": "2026-10-18T13:29:04-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 20}
+{"at": "2026-10-18T13:29:04-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 22}
+{"at": "2026-10-18T13:29:04-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 20}
+{"at": "2026-10-18T13:29:08-0400", "tool": "list_facts", "arguments": {"entity_id": "f80f4308-d3ba-4643-9183-420db8396f94"}, "status": 200, "is_error": false, "chars": 11269, "ms": 30}
+{"at": "2026-10-18T13:29:08-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 914, "ms": 18}
+{"at": "2026-10-18T13:29:08-0400", "tool": "find_entities", "arguments": {"q": "Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 236, "ms": 20}
+{"at": "2026-10-18T13:29:11-0400", "tool": "list_facts", "arguments": {"entity_id": "157a6397-e5db-4e4a-8b2e-488ebe7dbe40"}, "status": 200, "is_error": false, "chars": 7918, "ms": 19}
+{"at": "2026-10-18T13:29:12-0400", "tool": "list_facts", "arguments": {"entity_id": "93d61b3f-41a7-416f-a860-2900b913398e"}, "status": 200, "is_error": false, "chars": 629, "ms": 18}
+{"at": "2026-10-18T13:29:12-0400", "tool": "list_facts", "arguments": {"entity_id": "e9177f69-ab32-4f58-983f-0d89af76c612"}, "status": 200, "is_error": false, "chars": 11357, "ms": 19}
+{"at": "2026-10-18T13:29:13-0400", "tool": "list_facts", "arguments": {"entity_id": "4b1fa43b-257e-4171-83fd-557f346e0c7c"}, "status": 200, "is_error": false, "chars": 4378, "ms": 22}
+{"at": "2026-10-18T13:29:16-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "DR-9107"}, "status": 404, "is_error": true, "chars": 125, "ms": 46}
+{"at": "2026-10-18T13:29:16-0400", "tool": "find_entities", "arguments": {"q": "Pricing Policy"}, "status": 200, "is_error": false, "chars": 890, "ms": 21}
+{"at": "2026-10-18T13:29:17-0400", "tool": "find_entities", "arguments": {"q": "Blue River"}, "status": 200, "is_error": false, "chars": 925, "ms": 18}
+{"at": "2026-10-18T13:29:20-0400", "tool": "list_facts", "arguments": {"entity_id": "9fbb1b14-aebf-4687-82d4-78779d9e8553"}, "status": 200, "is_error": false, "chars": 11664, "ms": 32}
+{"at": "2026-10-18T13:29:20-0400", "tool": "neighbourhood", "arguments": {"entity_id": "287d6545-3bbc-44da-b260-1bebfb462cc2"}, "status": 200, "is_error": false, "chars": 3089, "ms": 26}

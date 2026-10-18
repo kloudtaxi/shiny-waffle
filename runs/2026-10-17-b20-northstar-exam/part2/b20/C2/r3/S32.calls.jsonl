@@ -1,0 +1,25 @@
+{"at": "2026-10-18T14:58:47-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1044"}, "status": 200, "is_error": false, "chars": 2416, "ms": 111}
+{"at": "2026-10-18T14:58:47-0400", "tool": "find_entities", "arguments": {"q": "CR-9207"}, "status": 200, "is_error": false, "chars": 11, "ms": 25}
+{"at": "2026-10-18T14:58:47-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 24}
+{"at": "2026-10-18T14:58:49-0400", "tool": "get_entity", "arguments": {"entity_id": "389e8898-95e9-445f-85f9-4b4a9b239722"}, "status": 200, "is_error": false, "chars": 2282, "ms": 89}
+{"at": "2026-10-18T14:58:49-0400", "tool": "list_facts", "arguments": {"entity_id": "cfd5c5ff-b946-409a-9195-7d0e5570d2b3"}, "status": 200, "is_error": false, "chars": 27790, "ms": 39}
+{"at": "2026-10-18T14:58:50-0400", "tool": "get_entity", "arguments": {"entity_id": "6f10bd52-c8b8-4648-ad7e-05026b43f8f7"}, "status": 200, "is_error": false, "chars": 4038, "ms": 20}
+{"at": "2026-10-18T14:58:51-0400", "tool": "get_entity", "arguments": {"entity_id": "72a00cd1-8d96-4457-87a5-2c09f57fe121"}, "status": 200, "is_error": false, "chars": 11210, "ms": 29}
+{"at": "2026-10-18T14:58:52-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 12874, "ms": 59}
+{"at": "2026-10-18T14:58:52-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 20}
+{"at": "2026-10-18T14:58:54-0400", "tool": "get_entity", "arguments": {"entity_id": "6ce915c6-5aa6-4166-bdb4-c5c435c0abcf"}, "status": 200, "is_error": false, "chars": 15960, "ms": 25}
+{"at": "2026-10-18T14:58:55-0400", "tool": "get_entity", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 9177, "ms": 21}
+{"at": "2026-10-18T14:59:03-0400", "tool": "get_fact", "arguments": {"fact_id": "ae6d9500-1297-42e2-b9b9-55b45c474218"}, "status": 200, "is_error": false, "chars": 781, "ms": 18}
+{"at": "2026-10-18T14:59:04-0400", "tool": "get_entity", "arguments": {"entity_id": "9785b1b5-5a9c-489f-8ae0-12cd6eccfb22"}, "status": 200, "is_error": false, "chars": 873, "ms": 25}
+{"at": "2026-10-18T14:59:04-0400", "tool": "find_entities", "arguments": {"q": "invoice"}, "status": 200, "is_error": false, "chars": 11, "ms": 22}
+{"at": "2026-10-18T14:59:06-0400", "tool": "find_entities", "arguments": {"q": "INV-"}, "status": 200, "is_error": false, "chars": 3723, "ms": 167}
+{"at": "2026-10-18T14:59:07-0400", "tool": "neighbourhood", "arguments": {"entity_id": "cfd5c5ff-b946-409a-9195-7d0e5570d2b3", "hops": 1}, "status": 200, "is_error": false, "chars": 4134, "ms": 28}
+{"at": "2026-10-18T14:59:08-0400", "tool": "get_entity", "arguments": {"entity_id": "d7ca5922-fb7e-4b83-a034-dcf1042ab7f4"}, "status": 200, "is_error": false, "chars": 3931, "ms": 24}
+{"at": "2026-10-18T14:59:11-0400", "tool": "find_entities", "arguments": {"q": "INV-", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 3723, "ms": 85}
+{"at": "2026-10-18T14:59:11-0400", "tool": "get_entity", "arguments": {"entity_id": "a85bf402-e69b-47cf-b2b1-772d47763ea5"}, "status": 200, "is_error": false, "chars": 3931, "ms": 76}
+{"at": "2026-10-18T14:59:13-0400", "tool": "get_entity", "arguments": {"entity_id": "cc407166-1b10-4c01-bd34-0ddf17f39599"}, "status": 200, "is_error": false, "chars": 3931, "ms": 26}
+{"at": "2026-10-18T14:59:14-0400", "tool": "get_entity", "arguments": {"entity_id": "ec5b26bc-50b4-4479-8866-d15ef21105ce"}, "status": 200, "is_error": false, "chars": 3931, "ms": 48}
+{"at": "2026-10-18T14:59:19-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 225, "ms": 22}
+{"at": "2026-10-18T14:59:21-0400", "tool": "neighbourhood", "arguments": {"entity_id": "61cd137d-25d5-47df-8da7-89c68892a315", "hops": 1}, "status": 200, "is_error": false, "chars": 984, "ms": 161}
+{"at": "2026-10-18T14:59:22-0400", "tool": "find_entities", "arguments": {"q": "Priya Shah"}, "status": 200, "is_error": false, "chars": 203, "ms": 33}
+{"at": "2026-10-18T14:59:24-0400", "tool": "list_facts", "arguments": {"entity_id": "ccdc6d4c-aebc-419f-a5d3-7524bd388c82", "predicate": "job_title"}, "status": 200, "is_error": false, "chars": 822, "ms": 19}

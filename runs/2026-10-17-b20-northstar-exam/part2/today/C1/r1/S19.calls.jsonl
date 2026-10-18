@@ -1,0 +1,12 @@
+{"at": "2026-10-17T22:24:04-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9111"}, "status": 501, "is_error": true, "chars": 144, "ms": 37}
+{"at": "2026-10-17T22:24:05-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 26}
+{"at": "2026-10-17T22:24:05-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 523, "ms": 125}
+{"at": "2026-10-17T22:24:05-0400", "tool": "list_documents", "arguments": {"q": "discount"}, "status": 200, "is_error": false, "chars": 405, "ms": 29}
+{"at": "2026-10-17T22:24:08-0400", "tool": "search", "arguments": {"query": "DR-9111"}, "status": 200, "is_error": false, "chars": 7336, "ms": 391}
+{"at": "2026-10-17T22:24:08-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a77a-72a3-887d-7e5047867316"}, "status": 200, "is_error": false, "chars": 1262, "ms": 68}
+{"at": "2026-10-17T22:24:09-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-823a-7761-81a5-d31aca12d176"}, "status": 200, "is_error": false, "chars": 5320, "ms": 771}
+{"at": "2026-10-17T22:24:10-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-ee17-7683-b31a-634348d25a20"}, "status": 200, "is_error": false, "chars": 3431, "ms": 42}
+{"at": "2026-10-17T22:24:14-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a94b-7923-a103-40963d71f59c"}, "status": 200, "is_error": false, "chars": 4674, "ms": 73}
+{"at": "2026-10-17T22:24:15-0400", "tool": "search", "arguments": {"query": "pricing policy approval authority matrix discount bands", "limit": 10}, "status": 200, "is_error": false, "chars": 9437, "ms": 416}
+{"at": "2026-10-17T22:24:22-0400", "tool": "search", "arguments": {"query": "Acme Manufacturing NS-CLOUD pricing exception contract", "limit": 8}, "status": 200, "is_error": false, "chars": 7307, "ms": 354}
+{"at": "2026-10-17T22:24:22-0400", "tool": "find_entities", "arguments": {"q": "NS-CLOUD"}, "status": 200, "is_error": false, "chars": 1876, "ms": 78}

@@ -1,0 +1,9 @@
+{"at": "2026-10-18T02:58:23-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1044"}, "status": 200, "is_error": false, "chars": 451, "ms": 56}
+{"at": "2026-10-18T02:58:23-0400", "tool": "search", "arguments": {"query": "CR-9207"}, "status": 200, "is_error": false, "chars": 11652, "ms": 257}
+{"at": "2026-10-18T02:58:23-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 23}
+{"at": "2026-10-18T02:58:26-0400", "tool": "search", "arguments": {"query": "parent guarantee Acme Group Holdings guaranteed subsidiaries", "limit": 10}, "status": 200, "is_error": false, "chars": 5983, "ms": 152}
+{"at": "2026-10-18T02:58:26-0400", "tool": "search", "arguments": {"query": "credit policy maximum limit account tier approval bands", "limit": 10}, "status": 200, "is_error": false, "chars": 5561, "ms": 237}
+{"at": "2026-10-18T02:58:29-0400", "tool": "read_passages", "arguments": {"document_id": "4cd0ade4-51a7-45b3-9de6-57df85cffb7f"}, "status": 200, "is_error": false, "chars": 2314, "ms": 5}
+{"at": "2026-10-18T02:58:30-0400", "tool": "search", "arguments": {"query": "CRM-2091 Acme Industrial Supply Co. account tier", "limit": 5}, "status": 200, "is_error": false, "chars": 5960, "ms": 249}
+{"at": "2026-10-18T02:58:30-0400", "tool": "search", "arguments": {"query": "C-1044 invoice due paid", "limit": 10}, "status": 200, "is_error": false, "chars": 10018, "ms": 229}
+{"at": "2026-10-18T02:58:36-0400", "tool": "search", "arguments": {"query": "Finance Manager Priya Shah role reports to; Sarah Chen title", "limit": 8}, "status": 200, "is_error": false, "chars": 8116, "ms": 289}

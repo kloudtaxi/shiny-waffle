@@ -1,0 +1,24 @@
+{"at": "2026-10-18T13:31:43-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 593, "ms": 55}
+{"at": "2026-10-18T13:31:44-0400", "tool": "find_entities", "arguments": {"q": "CR-9202"}, "status": 200, "is_error": false, "chars": 11, "ms": 20}
+{"at": "2026-10-18T13:31:46-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 61}
+{"at": "2026-10-18T13:31:46-0400", "tool": "find_entities", "arguments": {"q": "9202"}, "status": 200, "is_error": false, "chars": 11, "ms": 20}
+{"at": "2026-10-18T13:31:46-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 2335, "ms": 27}
+{"at": "2026-10-18T13:31:49-0400", "tool": "get_entity", "arguments": {"entity_id": "c4586a04-367f-4722-be10-5da02b077030", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 38865, "ms": 21}
+{"at": "2026-10-18T13:31:50-0400", "tool": "find_entities", "arguments": {"q": "CR-"}, "status": 200, "is_error": false, "chars": 6869, "ms": 33}
+{"at": "2026-10-18T13:31:50-0400", "tool": "find_entities", "arguments": {"q": "Credit Policy"}, "status": 200, "is_error": false, "chars": 997, "ms": 34}
+{"at": "2026-10-18T13:31:55-0400", "tool": "list_facts", "arguments": {"entity_id": "a0b81968-44a7-4b55-bda4-4fff37e07402"}, "status": 200, "is_error": false, "chars": 16723, "ms": 232}
+{"at": "2026-10-18T13:31:55-0400", "tool": "get_entity", "arguments": {"entity_id": "16294f0a-7b48-48b8-a0be-c44b04a5b037"}, "status": 200, "is_error": false, "chars": 5758, "ms": 32}
+{"at": "2026-10-18T13:31:59-0400", "tool": "neighbourhood", "arguments": {"entity_id": "b117dc06-05b0-4386-8e23-1c40de8fbf00", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 5091, "ms": 24}
+{"at": "2026-10-18T13:32:00-0400", "tool": "find_entities", "arguments": {"q": "Director of Finance"}, "status": 200, "is_error": false, "chars": 11, "ms": 18}
+{"at": "2026-10-18T13:32:00-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 20}
+{"at": "2026-10-18T13:32:04-0400", "tool": "get_entity", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 12609, "ms": 70}
+{"at": "2026-10-18T13:32:04-0400", "tool": "find_entities", "arguments": {"kind": "person"}, "status": 200, "is_error": false, "chars": 6720, "ms": 20}
+{"at": "2026-10-18T13:32:05-0400", "tool": "list_facts", "arguments": {"entity_id": "a0b81968-44a7-4b55-bda4-4fff37e07402", "cursor": "MjI="}, "status": 200, "is_error": false, "chars": 701, "ms": 30}
+{"at": "2026-10-18T13:32:08-0400", "tool": "get_entity", "arguments": {"entity_id": "dd5b7e90-ce9a-40ff-a80f-971f2fc797a8", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 6996, "ms": 20}
+{"at": "2026-10-18T13:32:08-0400", "tool": "find_entities", "arguments": {"q": "INV-"}, "status": 200, "is_error": false, "chars": 9934, "ms": 21}
+{"at": "2026-10-18T13:32:11-0400", "tool": "find_entities", "arguments": {"q": "INV-", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 9934, "ms": 84}
+{"at": "2026-10-18T13:32:11-0400", "tool": "get_entity", "arguments": {"entity_id": "26993705-3e86-4441-bf29-4c12ceedd3a2"}, "status": 200, "is_error": false, "chars": 4579, "ms": 25}
+{"at": "2026-10-18T13:32:14-0400", "tool": "find_entities", "arguments": {"q": "INV-6"}, "status": 200, "is_error": false, "chars": 5230, "ms": 19}
+{"at": "2026-10-18T13:32:14-0400", "tool": "find_entities", "arguments": {"q": "INV-3002"}, "status": 200, "is_error": false, "chars": 615, "ms": 32}
+{"at": "2026-10-18T13:32:15-0400", "tool": "find_entities", "arguments": {"q": "INV-3003"}, "status": 200, "is_error": false, "chars": 11, "ms": 18}
+{"at": "2026-10-18T13:32:18-0400", "tool": "get_entity", "arguments": {"entity_id": "d6526bd7-19b1-4000-a9a3-803702b52599"}, "status": 200, "is_error": false, "chars": 4013, "ms": 40}

@@ -1,0 +1,16 @@
+{"at": "2026-10-17T22:25:28-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 501, "is_error": true, "chars": 143, "ms": 44}
+{"at": "2026-10-17T22:25:28-0400", "tool": "find_entities", "arguments": {"q": "CR-9203"}, "status": 200, "is_error": false, "chars": 11, "ms": 67}
+{"at": "2026-10-17T22:25:29-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 136}
+{"at": "2026-10-17T22:25:35-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-beae-7412-8ee8-05f326c05004"}, "status": 200, "is_error": false, "chars": 12915, "ms": 118}
+{"at": "2026-10-17T22:25:36-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c719-7871-bbb0-164650020ca9"}, "status": 200, "is_error": false, "chars": 5094, "ms": 105}
+{"at": "2026-10-17T22:25:36-0400", "tool": "search", "arguments": {"query": "parent guarantee Acme Group Holdings guaranteed obligations", "limit": 10}, "status": 200, "is_error": false, "chars": 10478, "ms": 387}
+{"at": "2026-10-17T22:25:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f1c-7ae0-9073-9971a90a867c"}, "status": 200, "is_error": false, "chars": 1983, "ms": 45}
+{"at": "2026-10-17T22:25:41-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 18}
+{"at": "2026-10-17T22:25:41-0400", "tool": "search", "arguments": {"query": "CR-9203 credit request", "limit": 10}, "status": 200, "is_error": false, "chars": 8901, "ms": 371}
+{"at": "2026-10-17T22:25:44-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a259-7831-8044-e12e5d9b8eaa"}, "status": 200, "is_error": false, "chars": 1552, "ms": 36}
+{"at": "2026-10-17T22:25:44-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a333-7fe1-a5cd-9cc8ac2496ef"}, "status": 200, "is_error": false, "chars": 443, "ms": 69}
+{"at": "2026-10-17T22:25:45-0400", "tool": "search", "arguments": {"query": "C-1001 invoice due date paid", "limit": 20}, "status": 200, "is_error": false, "chars": 14591, "ms": 382}
+{"at": "2026-10-17T22:25:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 68}
+{"at": "2026-10-17T22:25:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 68}
+{"at": "2026-10-17T22:25:53-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f43-7070-9106-fdeece6b182b"}, "status": 200, "is_error": false, "chars": 804, "ms": 78}
+{"at": "2026-10-17T22:25:54-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 75}

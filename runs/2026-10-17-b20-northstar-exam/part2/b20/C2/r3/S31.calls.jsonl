@@ -1,0 +1,43 @@
+{"at": "2026-10-18T14:58:43-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 200, "is_error": false, "chars": 1264, "ms": 78}
+{"at": "2026-10-18T14:58:43-0400", "tool": "find_entities", "arguments": {"q": "CR-9206"}, "status": 200, "is_error": false, "chars": 11, "ms": 40}
+{"at": "2026-10-18T14:58:43-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 212, "ms": 21}
+{"at": "2026-10-18T14:58:45-0400", "tool": "list_facts", "arguments": {"entity_id": "7565f05b-afc3-4e8b-9c9d-c5d4193bc51a"}, "status": 200, "is_error": false, "chars": 11051, "ms": 19}
+{"at": "2026-10-18T14:58:45-0400", "tool": "list_facts", "arguments": {"entity_id": "b8bd47ea-f76b-4f00-9f2e-7a1bca24c189"}, "status": 200, "is_error": false, "chars": 5445, "ms": 21}
+{"at": "2026-10-18T14:58:45-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 9844, "ms": 33}
+{"at": "2026-10-18T14:58:47-0400", "tool": "find_entities", "arguments": {"q": "CR-92"}, "status": 200, "is_error": false, "chars": 759, "ms": 117}
+{"at": "2026-10-18T14:58:47-0400", "tool": "find_entities", "arguments": {"q": "Credit Policy"}, "status": 200, "is_error": false, "chars": 997, "ms": 19}
+{"at": "2026-10-18T14:58:47-0400", "tool": "find_entities", "arguments": {"q": "guarant"}, "status": 200, "is_error": false, "chars": 678, "ms": 24}
+{"at": "2026-10-18T14:58:50-0400", "tool": "get_entity", "arguments": {"entity_id": "46d00aac-5414-4b4f-9dd6-66a6ad683581"}, "status": 200, "is_error": false, "chars": 21165, "ms": 21}
+{"at": "2026-10-18T14:58:50-0400", "tool": "get_entity", "arguments": {"entity_id": "6ce915c6-5aa6-4166-bdb4-c5c435c0abcf"}, "status": 200, "is_error": false, "chars": 15960, "ms": 22}
+{"at": "2026-10-18T14:58:53-0400", "tool": "neighbourhood", "arguments": {"entity_id": "7565f05b-afc3-4e8b-9c9d-c5d4193bc51a"}, "status": 200, "is_error": false, "chars": 1764, "ms": 22}
+{"at": "2026-10-18T14:58:53-0400", "tool": "find_entities", "arguments": {"q": "Blue River"}, "status": 200, "is_error": false, "chars": 2626, "ms": 20}
+{"at": "2026-10-18T14:58:53-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 225, "ms": 75}
+{"at": "2026-10-18T14:58:56-0400", "tool": "find_entities", "arguments": {"q": "Priya Shah"}, "status": 200, "is_error": false, "chars": 203, "ms": 80}
+{"at": "2026-10-18T14:58:56-0400", "tool": "find_entities", "arguments": {"q": "INV"}, "status": 200, "is_error": false, "chars": 3723, "ms": 27}
+{"at": "2026-10-18T14:58:57-0400", "tool": "list_facts", "arguments": {"entity_id": "d7ca5922-fb7e-4b83-a034-dcf1042ab7f4"}, "status": 200, "is_error": false, "chars": 3759, "ms": 20}
+{"at": "2026-10-18T14:58:58-0400", "tool": "list_facts", "arguments": {"entity_id": "ccdc6d4c-aebc-419f-a5d3-7524bd388c82"}, "status": 200, "is_error": false, "chars": 5001, "ms": 41}
+{"at": "2026-10-18T14:59:01-0400", "tool": "find_entities", "arguments": {"q": "C-1002"}, "status": 200, "is_error": false, "chars": 207, "ms": 48}
+{"at": "2026-10-18T14:59:02-0400", "tool": "find_entities", "arguments": {"q": "INV", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 3723, "ms": 34}
+{"at": "2026-10-18T14:59:03-0400", "tool": "neighbourhood", "arguments": {"entity_id": "c7d41cdb-fe51-4fa2-97bd-7664eaacc8ce"}, "status": 200, "is_error": false, "chars": 281, "ms": 20}
+{"at": "2026-10-18T14:59:04-0400", "tool": "get_entity", "arguments": {"entity_id": "c7d41cdb-fe51-4fa2-97bd-7664eaacc8ce"}, "status": 200, "is_error": false, "chars": 2000, "ms": 31}
+{"at": "2026-10-18T14:59:07-0400", "tool": "find_entities", "arguments": {"q": "INV-3002"}, "status": 200, "is_error": false, "chars": 205, "ms": 20}
+{"at": "2026-10-18T14:59:07-0400", "tool": "find_entities", "arguments": {"q": "INV-3003"}, "status": 200, "is_error": false, "chars": 11, "ms": 19}
+{"at": "2026-10-18T14:59:09-0400", "tool": "list_facts", "arguments": {"entity_id": "eda59984-f89c-4a52-a2f3-bfa1cdda04a6", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 76}
+{"at": "2026-10-18T14:59:10-0400", "tool": "list_facts", "arguments": {"entity_id": "cc407166-1b10-4c01-bd34-0ddf17f39599", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 48}
+{"at": "2026-10-18T14:59:11-0400", "tool": "list_facts", "arguments": {"entity_id": "ec5b26bc-50b4-4479-8866-d15ef21105ce", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 20}
+{"at": "2026-10-18T14:59:11-0400", "tool": "list_facts", "arguments": {"entity_id": "a85bf402-e69b-47cf-b2b1-772d47763ea5", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 20}
+{"at": "2026-10-18T14:59:12-0400", "tool": "list_facts", "arguments": {"entity_id": "3b4f3cc1-8f73-43a0-b2d9-904c5005c92b", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 21}
+{"at": "2026-10-18T14:59:13-0400", "tool": "list_facts", "arguments": {"entity_id": "71c2a36d-a943-4a3c-858a-7bcb9b89beca", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 35}
+{"at": "2026-10-18T14:59:14-0400", "tool": "list_facts", "arguments": {"entity_id": "b74f5ec0-1565-40af-9103-5e3102fa4003", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 682, "ms": 26}
+{"at": "2026-10-18T14:59:15-0400", "tool": "list_facts", "arguments": {"entity_id": "9fe084e0-88af-4354-8d6f-b190acfdaeb4", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 45}
+{"at": "2026-10-18T14:59:15-0400", "tool": "list_facts", "arguments": {"entity_id": "0fa770ca-d70a-41ed-9ca8-b654e731f664", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 94}
+{"at": "2026-10-18T14:59:16-0400", "tool": "list_facts", "arguments": {"entity_id": "901c7233-2ac8-4a0b-b1c4-b3b6266d4902", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 49}
+{"at": "2026-10-18T14:59:17-0400", "tool": "list_facts", "arguments": {"entity_id": "6c8317fd-75ed-42a1-8d8d-24432fea3afe", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 42}
+{"at": "2026-10-18T14:59:18-0400", "tool": "list_facts", "arguments": {"entity_id": "31265d21-5a64-4ca5-8920-d3a8d0d4b33d", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 48}
+{"at": "2026-10-18T14:59:18-0400", "tool": "list_facts", "arguments": {"entity_id": "bb6a19f8-25d7-41c6-939b-3c5070ef676a", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 20}
+{"at": "2026-10-18T14:59:19-0400", "tool": "list_facts", "arguments": {"entity_id": "26ca28a9-35eb-4689-80cb-ea578efb81ce", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 19}
+{"at": "2026-10-18T14:59:20-0400", "tool": "list_facts", "arguments": {"entity_id": "677906f0-9dbf-4597-b06e-f011e4e7950c", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 48}
+{"at": "2026-10-18T14:59:21-0400", "tool": "list_facts", "arguments": {"entity_id": "56061839-d1fc-4d9e-866e-44179361938f", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 156}
+{"at": "2026-10-18T14:59:21-0400", "tool": "list_facts", "arguments": {"entity_id": "1af3dcf6-21a8-4cb5-8199-c219f012fb7a", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 22}
+{"at": "2026-10-18T14:59:22-0400", "tool": "list_facts", "arguments": {"entity_id": "295766d7-53ab-4135-985b-50fc86846ce6", "predicate": "erp_customer_id"}, "status": 200, "is_error": false, "chars": 683, "ms": 32}
+{"at": "2026-10-18T14:59:23-0400", "tool": "list_facts", "arguments": {"entity_id": "db195ada-3b15-4a00-99e8-4e863467f3f4"}, "status": 200, "is_error": false, "chars": 3110, "ms": 21}

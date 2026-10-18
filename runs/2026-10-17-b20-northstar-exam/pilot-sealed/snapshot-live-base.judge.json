@@ -1,0 +1,936 @@
+{
+ "model": "claude-sonnet-5-5",
+ "prompt": "You check whether a knowledge base states a fact. You get a statement and the facts the knowledge base holds about the things the statement names, drawn one per line. Judge only from those facts, by what they say, not by their wording: a fact can use other words, split one statement over several facts, or hold a value as a qualifier. Answer `stated` when the facts say everything the statement says, `partly` when they say some of it (a value without its dates, say, or the right value on the wrong thing), and `not_stated` when they don't say it or say otherwise. Answer with one JSON object and nothing else: {\"verdict\": \"stated\" | \"partly\" | \"not_stated\", \"lines\": [the numbers of the lines you used], \"why\": \"<a few words>\"}",
+ "readings": [
+  {
+   "part": "p2",
+   "id": "F01",
+   "u31": true,
+   "reading": "stated",
+   "statement": "CRM-2048 is Acme Manufacturing's account in the CRM.",
+   "facts": "1. E1 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n2. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n3. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n4. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n5. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n6. ACME Manufacturing — has CRM account — CRM-2048\n7. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n8. ACME Manufacturing — revenue — ~$125,000,000 (string)\n9. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n10. ACME Manufacturing — are evaluating — NS-CLOUD\n11. ACME Manufacturing — has key contact — Edward Floyd [person]\n12. ACME Manufacturing — has key contact — Johnny Johnson [person]\n13. ACME Manufacturing — has key contact — Kelly Ballard [person]\n14. ACME Manufacturing — expects — third-plant NS-500 rollout\n15. ACME Manufacturing — expects — controller orders\n16. ACME Manufacturing — Land — NS-Cloud pilot [project]\n17. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n18. ACME Manufacturing — negotiated — NS-500 pricing\n19. ACME Manufacturing — has — third plant [place]\n20. ACME Manufacturing — has — NS-500 orders\n21. ACME Manufacturing — has — credit limit\n22. ACME Manufacturing — asking for — 15% (string)\n23. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n24. ACME Manufacturing — account_id — CRM-2048 (string)\n25. ACME Manufacturing — account_tier — Strategic (string)\n26. ACME Manufacturing — segment — Midwest (string)\n27. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n28. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n29. ACME Manufacturing — billing_city — Milwaukee (string)\n30. ACME Manufacturing — billing_state — WI (string)\n31. ACME Manufacturing — duns_number — 04-812-7730 (string)\n32. ACME Manufacturing — account_owner — Sarah Chen (string)\n33. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n35. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n36. Platinum plan — belongs to — ACME Manufacturing\n37. SR-39857 — customer_on_ticket — ACME Manufacturing\n38. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n39. ACME Manufacturing — hasDesignation — Industrial Manufacturing\n40. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n41. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n42. support — is provided to — Acme Mfg. Holdings [corporation]\n43. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation]\n44. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n45. Acme Mfg. Holdings — postal address — WI 53209 [postal_address]\n46. Acme Mfg. Holdings — is eligible for — discounts\n47. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n48. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n49. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n50. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n51. Acme Mfg. Holdings — bill_to_state — WI (string)\n52. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n53. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n54. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n55. Acme Mfg. Holdings — address — 2200 N Industrial Pkwy [postal_address]\n56. Acme Mfg. Holdings — location — Milwaukee, WI [city]\n57. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n58. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation]\n59. E3 · CRM-2048 [unclassified]\n60. ACME Manufacturing — has CRM account — CRM-2048\n61. CRM-2048 — has status — Strategic\n62. CRM-2048 — has segment — Midwest Enterprise\n63. SCR-38655 — account_id — CRM-2048\n64. SCR-38790 — account_id — CRM-2048\n65. DR-8104 — account_id — CRM-2048",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       6,
+       24,
+       60
+      ],
+      "why": "ACME Manufacturing (also named Acme) has CRM account CRM-2048, stated directly."
+     },
+     "cost_usd": 0.011684
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F02",
+   "u31": true,
+   "reading": "stated",
+   "statement": "ERP customer C-1001 (Acme Mfg. Holdings) is Acme Manufacturing.",
+   "facts": "1. E1 · Acme Mfg. Holdings [corporation] · also named: Customer\n2. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n3. support — is provided to — Acme Mfg. Holdings [corporation]\n4. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation]\n5. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n6. Acme Mfg. Holdings — postal address — WI 53209 [postal_address]\n7. Acme Mfg. Holdings — is eligible for — discounts\n8. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n9. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n10. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n11. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n12. Acme Mfg. Holdings — bill_to_state — WI (string)\n13. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n14. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n15. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n16. Acme Mfg. Holdings — address — 2200 N Industrial Pkwy [postal_address]\n17. Acme Mfg. Holdings — location — Milwaukee, WI [city]\n18. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n19. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation]\n20. E2 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n21. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n22. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n23. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n24. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n25. ACME Manufacturing — has CRM account — CRM-2048\n26. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n27. ACME Manufacturing — revenue — ~$125,000,000 (string)\n28. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n29. ACME Manufacturing — are evaluating — NS-CLOUD\n30. ACME Manufacturing — has key contact — Edward Floyd [person]\n31. ACME Manufacturing — has key contact — Johnny Johnson [person]\n32. ACME Manufacturing — has key contact — Kelly Ballard [person]\n33. ACME Manufacturing — expects — third-plant NS-500 rollout\n34. ACME Manufacturing — expects — controller orders\n35. ACME Manufacturing — Land — NS-Cloud pilot [project]\n36. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n37. ACME Manufacturing — negotiated — NS-500 pricing\n38. ACME Manufacturing — has — third plant [place]\n39. ACME Manufacturing — has — NS-500 orders\n40. ACME Manufacturing — has — credit limit\n41. ACME Manufacturing — asking for — 15% (string)\n42. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n43. ACME Manufacturing — account_id — CRM-2048 (string)\n44. ACME Manufacturing — account_tier — Strategic (string)\n45. ACME Manufacturing — segment — Midwest (string)\n46. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n47. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n48. ACME Manufacturing — billing_city — Milwaukee (string)\n49. ACME Manufacturing — billing_state — WI (string)\n50. ACME Manufacturing — duns_number — 04-812-7730 (string)\n51. ACME Manufacturing — account_owner — Sarah Chen (string)\n52. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n53. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n54. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n55. Platinum plan — belongs to — ACME Manufacturing\n56. SR-39857 — customer_on_ticket — ACME Manufacturing\n57. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n58. ACME Manufacturing — hasDesignation — Industrial Manufacturing\n59. E3 · C-1001 [unclassified]\n60. CR-9201 — erp_customer_id — C-1001\n61. C-1001 — credit_limit_usd — 250000 (string)\n62. C-1001 — currency — USD (string)\n63. C-1001 — last_reviewed — 2026-01-15 (string)\n64. SO-7001 — erp_customer_id — C-1001\n65. INV-60412 — erp_customer_id — C-1001\n66. SO-7002 — erp_customer_id — C-1001\n67. INV-62011 — erp_customer_id — C-1001",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       5,
+       8,
+       15
+      ],
+      "why": "Acme Mfg. Holdings has erp_customer_id C-1001 and does business as ACME Manufacturing."
+     },
+     "cost_usd": 0.011972
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F03",
+   "u31": true,
+   "reading": "stated",
+   "statement": "ACME-MFG-2025 is the reference of the master supply agreement with Acme Manufacturing.",
+   "facts": "1. E1 · ACME-MFG-2025 [unclassified]\n2. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n3. E2 · Master Supply Agreement [unclassified]\n4. Master Supply Agreement — is entered into between — Northstar Industrial Systems\n5. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation]\n6. Master Supply Agreement — is effective — April 1, 2025 (string)\n7. Master Supply Agreement — expires — March 31, 2028 (string)\n8. Either party — may terminate — Master Supply Agreement\n9. E3 · Acme Master Supply Agreement [unclassified]\n10. E4 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n11. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n12. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n13. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n14. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n15. ACME Manufacturing — has CRM account — CRM-2048\n16. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n17. ACME Manufacturing — revenue — ~$125,000,000 (string)\n18. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n19. ACME Manufacturing — are evaluating — NS-CLOUD\n20. ACME Manufacturing — has key contact — Edward Floyd [person]\n21. ACME Manufacturing — has key contact — Johnny Johnson [person]\n22. ACME Manufacturing — has key contact — Kelly Ballard [person]\n23. ACME Manufacturing — expects — third-plant NS-500 rollout\n24. ACME Manufacturing — expects — controller orders\n25. ACME Manufacturing — Land — NS-Cloud pilot [project]\n26. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n27. ACME Manufacturing — negotiated — NS-500 pricing\n28. ACME Manufacturing — has — third plant [place]\n29. ACME Manufacturing — has — NS-500 orders\n30. ACME Manufacturing — has — credit limit\n31. ACME Manufacturing — asking for — 15% (string)\n32. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n33. ACME Manufacturing — account_id — CRM-2048 (string)\n34. ACME Manufacturing — account_tier — Strategic (string)\n35. ACME Manufacturing — segment — Midwest (string)\n36. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n37. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n38. ACME Manufacturing — billing_city — Milwaukee (string)\n39. ACME Manufacturing — billing_state — WI (string)\n40. ACME Manufacturing — duns_number — 04-812-7730 (string)\n41. ACME Manufacturing — account_owner — Sarah Chen (string)\n42. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n43. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n44. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n45. Platinum plan — belongs to — ACME Manufacturing\n46. SR-39857 — customer_on_ticket — ACME Manufacturing\n47. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n48. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       1,
+       2,
+       4,
+       5,
+       32
+      ],
+      "why": "The facts show a Master Supply Agreement with Acme Mfg. Holdings (d/b/a ACME Manufacturing), and that ACME-MFG-2025 has a Schedule B. None of them says ACME-MFG-2025 is that agreement's reference."
+     },
+     "cost_usd": 0.01227
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F04",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Sarah Chen owns the Acme account.",
+   "facts": "1. E1 · Sarah Chen [person] · also named: Sarah; sarah.chen@northstar.example\n2. CR-9201 — requested_by — Sarah Chen [person]\n3. Sarah Chen — raised — CR-9201\n4. Sarah Chen — employee_id — EMP-101 (string)\n5. Sarah Chen — title — Enterprise Account Executive (string)\n6. Sarah Chen — department — Sales (string)\n7. Sarah Chen — location — Chicago, IL (string)\n8. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n9. DR-8104 — requested_by — Sarah Chen [person]\n10. DR-8104 — approved_by — Sarah Chen [person]\n11. DR-9001 — requested_by — Sarah Chen [person]\n12. Sarah Chen — knows — Michael Torres [person]\n13. Sarah Chen — email — sarah.chen@northstar.example (string)\n14. E2 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n15. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n16. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n17. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n18. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n19. ACME Manufacturing — has CRM account — CRM-2048\n20. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n21. ACME Manufacturing — revenue — ~$125,000,000 (string)\n22. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n23. ACME Manufacturing — are evaluating — NS-CLOUD\n24. ACME Manufacturing — has key contact — Edward Floyd [person]\n25. ACME Manufacturing — has key contact — Johnny Johnson [person]\n26. ACME Manufacturing — has key contact — Kelly Ballard [person]\n27. ACME Manufacturing — expects — third-plant NS-500 rollout\n28. ACME Manufacturing — expects — controller orders\n29. ACME Manufacturing — Land — NS-Cloud pilot [project]\n30. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n31. ACME Manufacturing — negotiated — NS-500 pricing\n32. ACME Manufacturing — has — third plant [place]\n33. ACME Manufacturing — has — NS-500 orders\n34. ACME Manufacturing — has — credit limit\n35. ACME Manufacturing — asking for — 15% (string)\n36. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n37. ACME Manufacturing — account_id — CRM-2048 (string)\n38. ACME Manufacturing — account_tier — Strategic (string)\n39. ACME Manufacturing — segment — Midwest (string)\n40. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n41. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n42. ACME Manufacturing — billing_city — Milwaukee (string)\n43. ACME Manufacturing — billing_state — WI (string)\n44. ACME Manufacturing — duns_number — 04-812-7730 (string)\n45. ACME Manufacturing — account_owner — Sarah Chen (string)\n46. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n47. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n48. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n49. Platinum plan — belongs to — ACME Manufacturing\n50. SR-39857 — customer_on_ticket — ACME Manufacturing\n51. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n52. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       1,
+       14,
+       45
+      ],
+      "why": "ACME Manufacturing (aka Acme) has account_owner Sarah Chen."
+     },
+     "cost_usd": 0.009872
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F05",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Sarah Chen reports to Michael Torres.",
+   "facts": "1. E1 · Sarah Chen [person] · also named: Sarah; sarah.chen@northstar.example\n2. CR-9201 — requested_by — Sarah Chen [person]\n3. Sarah Chen — raised — CR-9201\n4. Sarah Chen — employee_id — EMP-101 (string)\n5. Sarah Chen — title — Enterprise Account Executive (string)\n6. Sarah Chen — department — Sales (string)\n7. Sarah Chen — location — Chicago, IL (string)\n8. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n9. DR-8104 — requested_by — Sarah Chen [person]\n10. DR-8104 — approved_by — Sarah Chen [person]\n11. DR-9001 — requested_by — Sarah Chen [person]\n12. Sarah Chen — knows — Michael Torres [person]\n13. Sarah Chen — email — sarah.chen@northstar.example (string)\n14. E2 · Michael Torres [person] · also named: Mike\n15. Michael Torres — employee_id — EMP-200 (string)\n16. Michael Torres — title — VP Sales (string)\n17. Michael Torres — department — Sales (string)\n18. Michael Torres — location — Chicago, IL (string)\n19. Michael Torres — role — VP Sales (string)\n20. Michael Torres — reportsTo — David Morgan [person]\n21. Glenn Hayes — reportsTo — Michael Torres [person]\n22. Misty Peterson — reportsTo — Michael Torres [person]\n23. Anthony Day — reportsTo — Michael Torres [person]\n24. Kelly Floyd — reportsTo — Michael Torres [person]\n25. Zachary Brown — reportsTo — Michael Torres [person]\n26. Courtney Barron — reportsTo — Michael Torres [person]\n27. Bryan Rivera — reportsTo — Michael Torres [person]\n28. Sarah Chen — knows — Michael Torres [person]\n29. Michael Torres — knows — David Morgan [person]\n30. Michael Torres — email — michael.torres@northstar.example (string)\n31. Michael Torres — hasDesignation — VP Sales [organization_role]",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       12,
+       28
+      ],
+      "why": "Facts only say Sarah Chen knows Michael Torres; no reportsTo link from her to him. Other people report to Torres, not her."
+     },
+     "cost_usd": 0.007164
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F06",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Michael Torres is VP Sales.",
+   "facts": "1. E1 · Michael Torres [person] · also named: Mike\n2. Michael Torres — employee_id — EMP-200 (string)\n3. Michael Torres — title — VP Sales (string)\n4. Michael Torres — department — Sales (string)\n5. Michael Torres — location — Chicago, IL (string)\n6. Michael Torres — role — VP Sales (string)\n7. Michael Torres — reportsTo — David Morgan [person]\n8. Glenn Hayes — reportsTo — Michael Torres [person]\n9. Misty Peterson — reportsTo — Michael Torres [person]\n10. Anthony Day — reportsTo — Michael Torres [person]\n11. Kelly Floyd — reportsTo — Michael Torres [person]\n12. Zachary Brown — reportsTo — Michael Torres [person]\n13. Courtney Barron — reportsTo — Michael Torres [person]\n14. Bryan Rivera — reportsTo — Michael Torres [person]\n15. Sarah Chen — knows — Michael Torres [person]\n16. Michael Torres — knows — David Morgan [person]\n17. Michael Torres — email — michael.torres@northstar.example (string)\n18. Michael Torres — hasDesignation — VP Sales [organization_role]\n19. E2 · VP Sales [organization_role]\n20. discounts — require — VP Sales [organization_role]\n21. VP Sales — Discount authority — >10% and ≤20% (string)\n22. discounts — require — VP Sales [organization_role]\n23. ticket — notify — VP Sales [organization_role]\n24. E3 · VP Sales [organization_role]\n25. Michael Torres — hasDesignation — VP Sales [organization_role]\n26. E4 · VP Sales concurrence [agree_action]\n27. credit limits — require — VP Sales concurrence [agree_action]\n28. E5 · VP Sales concurrence [unclassified]\n29. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       6,
+       18
+      ],
+      "why": "Facts give Michael Torres's title and role as VP Sales, plus a VP Sales designation."
+     },
+     "cost_usd": 0.006664
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F07",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Sarah Chen is an Enterprise Account Executive.",
+   "facts": "1. E1 · Sarah Chen [person] · also named: Sarah; sarah.chen@northstar.example\n2. CR-9201 — requested_by — Sarah Chen [person]\n3. Sarah Chen — raised — CR-9201\n4. Sarah Chen — employee_id — EMP-101 (string)\n5. Sarah Chen — title — Enterprise Account Executive (string)\n6. Sarah Chen — department — Sales (string)\n7. Sarah Chen — location — Chicago, IL (string)\n8. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n9. DR-8104 — requested_by — Sarah Chen [person]\n10. DR-8104 — approved_by — Sarah Chen [person]\n11. DR-9001 — requested_by — Sarah Chen [person]\n12. Sarah Chen — knows — Michael Torres [person]\n13. Sarah Chen — email — sarah.chen@northstar.example (string)\n14. E2 · Enterprise Account Executives [employee_role] · also named: Enterprise Account Executive\n15. Enterprise Account Executives — may approve — discounts\n16. Enterprise Account Executives — Discount authority — ≤10% (string)\n17. E3 · Enterprise Account Executives [unclassified]\n18. Enterprise Account Executives — approve — discounts\n19. E4 · Enterprise Account Executives [employee_role]\n20. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       5
+      ],
+      "why": "Line 5 gives Sarah Chen's title as Enterprise Account Executive."
+     },
+     "cost_usd": 0.0059240000000000004
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F08",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, an Enterprise Account Executive's discount authority is up to 10%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2026 [unclassified]\n2. Northstar Pricing Policy 2026 — sets — discount approval authority (string) · valid 2026 → 2026\n3. Northstar Pricing Policy 2026 — repeals — Northstar Pricing Policy 2025 · valid 2026-01-01 → …\n4. Northstar Pricing Policy 2026 — is effective — 2026-01-01 through 2026-12-31 (string)\n5. discount requests — governed by — Northstar Pricing Policy 2026\n6. Northstar Pricing Policy 2027 — repeals — Northstar Pricing Policy 2026\n7. E2 · Approval Authority Matrix [unclassified]\n8. Approval Authority Matrix — refersTo — thresholds\n9. E3 · Enterprise Account Executives [employee_role] · also named: Enterprise Account Executive\n10. Enterprise Account Executives — may approve — discounts\n11. Enterprise Account Executives — Discount authority — ≤10% (string)\n12. E4 · Enterprise Account Executives [unclassified]\n13. Enterprise Account Executives — approve — discounts\n14. E5 · Enterprise Account Executives [employee_role]\n15. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       9,
+       11,
+       2
+      ],
+      "why": "Line 11 gives Enterprise Account Executives a discount authority of ≤10%, but with no 2026 date. Line 2 ties the 2026 policy to discount approval authority without giving the value."
+     },
+     "cost_usd": 0.008018
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F09",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, VP Sales's discount authority is over 10% and up to 20%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2026 [unclassified]\n2. Northstar Pricing Policy 2026 — sets — discount approval authority (string) · valid 2026 → 2026\n3. Northstar Pricing Policy 2026 — repeals — Northstar Pricing Policy 2025 · valid 2026-01-01 → …\n4. Northstar Pricing Policy 2026 — is effective — 2026-01-01 through 2026-12-31 (string)\n5. discount requests — governed by — Northstar Pricing Policy 2026\n6. Northstar Pricing Policy 2027 — repeals — Northstar Pricing Policy 2026\n7. E2 · Approval Authority Matrix [unclassified]\n8. Approval Authority Matrix — refersTo — thresholds\n9. E3 · VP Sales [organization_role]\n10. discounts — require — VP Sales [organization_role]\n11. VP Sales — Discount authority — >10% and ≤20% (string)\n12. discounts — require — VP Sales [organization_role]\n13. ticket — notify — VP Sales [organization_role]\n14. E4 · VP Sales [organization_role]\n15. Michael Torres — hasDesignation — VP Sales [organization_role]\n16. E5 · VP Sales concurrence [agree_action]\n17. credit limits — require — VP Sales concurrence [agree_action]\n18. E6 · VP Sales concurrence [unclassified]\n19. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       11,
+       2
+      ],
+      "why": "Line 11 gives VP Sales discount authority >10% and ≤20%, but with no 2026 validity. Line 2 ties the 2026 policy to discount approval authority without giving the value."
+     },
+     "cost_usd": 0.00818
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F10",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, discounts over 20% require the CRO's approval.",
+   "facts": "1. E1 · Northstar Pricing Policy 2026 [unclassified]\n2. Northstar Pricing Policy 2026 — sets — discount approval authority (string) · valid 2026 → 2026\n3. Northstar Pricing Policy 2026 — repeals — Northstar Pricing Policy 2025 · valid 2026-01-01 → …\n4. Northstar Pricing Policy 2026 — is effective — 2026-01-01 through 2026-12-31 (string)\n5. discount requests — governed by — Northstar Pricing Policy 2026\n6. Northstar Pricing Policy 2027 — repeals — Northstar Pricing Policy 2026\n7. E2 · Approval Authority Matrix [unclassified]\n8. Approval Authority Matrix — refersTo — thresholds\n9. E3 · Chief Revenue Officer [unclassified]\n10. Chief Revenue Officer — Discount authority — >20% (string)\n11. discounts — require — Chief Revenue Officer\n12. ticket — notify — Chief Revenue Officer\n13. E4 · Chief Revenue Officer [organization_role]\n14. David Morgan — hasDesignation — Chief Revenue Officer [organization_role]\n15. E5 · Chief Revenue Officer [organization_role]\n16. David Morgan — hasDesignation — Chief Revenue Officer [organization_role]",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       2,
+       4,
+       10,
+       11
+      ],
+      "why": "The facts say discounts over 20% fall under the CRO's authority, but that fact has no 2026 date. Nothing ties it to the 2026 policy, which only 'sets discount approval authority' without saying what it is."
+     },
+     "cost_usd": 0.009684
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F11",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2025, an Enterprise Account Executive's discount authority is up to 15%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2025 [unclassified]\n2. Northstar Pricing Policy 2026 — repeals — Northstar Pricing Policy 2025 · valid 2026-01-01 → …\n3. E2 · Enterprise Account Executives [employee_role] · also named: Enterprise Account Executive\n4. Enterprise Account Executives — may approve — discounts\n5. Enterprise Account Executives — Discount authority — ≤10% (string)\n6. E3 · Enterprise Account Executives [unclassified]\n7. Enterprise Account Executives — approve — discounts\n8. E4 · Enterprise Account Executives [employee_role]\n9. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       5
+      ],
+      "why": "KB says discount authority ≤10%, not 15%, and no 2025 date is attached"
+     },
+     "cost_usd": 0.004974
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F12",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme's NS-500 pricing exception permits a discount of up to 15%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · EXC-ACME-NS500-15 [unclassified]\n13. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n14. E7 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n15. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n16. NS-500 Industrial Controller — product_id — PROD-001 (string)\n17. NS-500 Industrial Controller — sku — NS-500 (string)\n18. NS-500 Industrial Controller — category — Equipment (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n22. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n23. DR-8104 — product_sku — NS-500 Industrial Controller\n24. DR-7015 — product_sku — NS-500 Industrial Controller\n25. DR-7016 — product_sku — NS-500 Industrial Controller\n26. DR-7019 — product_sku — NS-500 Industrial Controller\n27. DR-7020 — product_sku — NS-500 Industrial Controller\n28. DR-9001 — product_sku — NS-500 Industrial Controller\n29. support plan — hasProduct — NS-500 Industrial Controller\n30. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n31. E8 · Acme NS-500 Strategic Account Exception [unclassified]\n32. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n33. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n34. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n35. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n36. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n37. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n38. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n39. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n40. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n41. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n42. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n43. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n44. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n45. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n46. E9 · NS-500 pricing [unclassified]\n47. ACME Manufacturing — negotiated — NS-500 pricing\n48. NS-500 pricing — is believed to be — 15% (string)\n49. NS-500 pricing — Worth confirming with — Deal Desk\n50. E10 · NS-500 orders [unclassified]\n51. ACME Manufacturing — has — NS-500 orders\n52. NS-500 orders — will step up — step up (string)\n53. E11 · third-plant NS-500 rollout [unclassified]\n54. ACME Manufacturing — expects — third-plant NS-500 rollout\n55. E12 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n56. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n57. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n58. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n59. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n60. ACME Manufacturing — has CRM account — CRM-2048\n61. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n62. ACME Manufacturing — revenue — ~$125,000,000 (string)\n63. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n64. ACME Manufacturing — are evaluating — NS-CLOUD\n65. ACME Manufacturing — has key contact — Edward Floyd [person]\n66. ACME Manufacturing — has key contact — Johnny Johnson [person]\n67. ACME Manufacturing — has key contact — Kelly Ballard [person]\n68. ACME Manufacturing — expects — third-plant NS-500 rollout\n69. ACME Manufacturing — expects — controller orders\n70. ACME Manufacturing — Land — NS-Cloud pilot [project]\n71. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n72. ACME Manufacturing — negotiated — NS-500 pricing\n73. ACME Manufacturing — has — third plant [place]\n74. ACME Manufacturing — has — NS-500 orders\n75. ACME Manufacturing — has — credit limit\n76. ACME Manufacturing — asking for — 15% (string)\n77. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n78. ACME Manufacturing — account_id — CRM-2048 (string)\n79. ACME Manufacturing — account_tier — Strategic (string)\n80. ACME Manufacturing — segment — Midwest (string)\n81. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n82. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n83. ACME Manufacturing — billing_city — Milwaukee (string)\n84. ACME Manufacturing — billing_state — WI (string)\n85. ACME Manufacturing — duns_number — 04-812-7730 (string)\n86. ACME Manufacturing — account_owner — Sarah Chen (string)\n87. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n88. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n89. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n90. Platinum plan — belongs to — ACME Manufacturing\n91. SR-39857 — customer_on_ticket — ACME Manufacturing\n92. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n93. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       22,
+       37,
+       36,
+       40
+      ],
+      "why": "The Acme NS-500 Strategic Account Exception has a maximum eligible discount of 15%, applies to the NS-500 Industrial Controller, and has ACME Manufacturing as customer."
+     },
+     "cost_usd": 0.01538
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F13",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The 15% exception is valid from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · EXC-ACME-NS500-15 [unclassified]\n13. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n14. E7 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n15. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n16. NS-500 Industrial Controller — product_id — PROD-001 (string)\n17. NS-500 Industrial Controller — sku — NS-500 (string)\n18. NS-500 Industrial Controller — category — Equipment (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n22. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n23. DR-8104 — product_sku — NS-500 Industrial Controller\n24. DR-7015 — product_sku — NS-500 Industrial Controller\n25. DR-7016 — product_sku — NS-500 Industrial Controller\n26. DR-7019 — product_sku — NS-500 Industrial Controller\n27. DR-7020 — product_sku — NS-500 Industrial Controller\n28. DR-9001 — product_sku — NS-500 Industrial Controller\n29. support plan — hasProduct — NS-500 Industrial Controller\n30. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n31. E8 · Acme NS-500 Strategic Account Exception [unclassified]\n32. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n33. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n34. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n35. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n36. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n37. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n38. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n39. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n40. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n41. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n42. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n43. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n44. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n45. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n46. E9 · NS-500 pricing [unclassified]\n47. ACME Manufacturing — negotiated — NS-500 pricing\n48. NS-500 pricing — is believed to be — 15% (string)\n49. NS-500 pricing — Worth confirming with — Deal Desk\n50. E10 · NS-500 orders [unclassified]\n51. ACME Manufacturing — has — NS-500 orders\n52. NS-500 orders — will step up — step up (string)\n53. E11 · third-plant NS-500 rollout [unclassified]\n54. ACME Manufacturing — expects — third-plant NS-500 rollout\n55. E12 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n56. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n57. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n58. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n59. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n60. ACME Manufacturing — has CRM account — CRM-2048\n61. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n62. ACME Manufacturing — revenue — ~$125,000,000 (string)\n63. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n64. ACME Manufacturing — are evaluating — NS-CLOUD\n65. ACME Manufacturing — has key contact — Edward Floyd [person]\n66. ACME Manufacturing — has key contact — Johnny Johnson [person]\n67. ACME Manufacturing — has key contact — Kelly Ballard [person]\n68. ACME Manufacturing — expects — third-plant NS-500 rollout\n69. ACME Manufacturing — expects — controller orders\n70. ACME Manufacturing — Land — NS-Cloud pilot [project]\n71. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n72. ACME Manufacturing — negotiated — NS-500 pricing\n73. ACME Manufacturing — has — third plant [place]\n74. ACME Manufacturing — has — NS-500 orders\n75. ACME Manufacturing — has — credit limit\n76. ACME Manufacturing — asking for — 15% (string)\n77. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n78. ACME Manufacturing — account_id — CRM-2048 (string)\n79. ACME Manufacturing — account_tier — Strategic (string)\n80. ACME Manufacturing — segment — Midwest (string)\n81. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n82. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n83. ACME Manufacturing — billing_city — Milwaukee (string)\n84. ACME Manufacturing — billing_state — WI (string)\n85. ACME Manufacturing — duns_number — 04-812-7730 (string)\n86. ACME Manufacturing — account_owner — Sarah Chen (string)\n87. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n88. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n89. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n90. Platinum plan — belongs to — ACME Manufacturing\n91. SR-39857 — customer_on_ticket — ACME Manufacturing\n92. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n93. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       35,
+       37,
+       38,
+       39
+      ],
+      "why": "Exception EXC-ACME-NS500-15 has max discount 15%, effective 2025-04-01, expires 2028-03-31."
+     },
+     "cost_usd": 0.015192
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F13",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "The 15% exception is valid from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception · holds 2026-10-13 → …\n3. pricing exception — hasProduct — product · holds 2026-10-13 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B · holds 2026-10-13 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n12. E6 · EXC-ACME-NS500-15 [unclassified]\n13. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15 · holds 2026-10-13 → …\n14. E7 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n15. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n16. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-13 → …\n17. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-13 → …\n18. NS-500 Industrial Controller — category — Equipment (string) · holds 2026-10-13 → …\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-13 → …\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-13 → …\n21. Northstar Industrial Systems — supply — NS-500 Industrial Controller · holds 2026-10-13 → …\n22. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n23. DR-8104 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n24. DR-7015 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n25. DR-7016 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n26. DR-7019 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n27. DR-7020 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n28. DR-9001 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n29. support plan — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n30. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n31. E8 · Acme NS-500 Strategic Account Exception [unclassified]\n32. David Morgan — approved — Acme NS-500 Strategic Account Exception · holds 2025-03-20 → 2025-03-20\n33. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · holds 2025-04-01 → …\n34. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025 · holds 2026-10-13 → …\n35. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15 · holds 2026-10-13 → …\n36. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n37. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string) · holds 2026-10-13 → …\n38. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string) · holds 2026-10-13 → …\n39. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string) · holds 2026-10-13 → …\n40. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n41. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product · holds 2026-10-13 → …\n42. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility · holds 2026-10-13 → …\n43. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string) · holds 2026-10-13 → …\n44. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception · holds 2026-10-13 → …\n45. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n46. E9 · NS-500 pricing [unclassified]\n47. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n48. NS-500 pricing — is believed to be — 15% (string) · holds 2026-10-13 → …\n49. NS-500 pricing — Worth confirming with — Deal Desk · holds 2026-10-13 → …\n50. E10 · NS-500 orders [unclassified]\n51. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n52. NS-500 orders — will step up — step up (string) · holds 2026-10-13 → …\n53. E11 · third-plant NS-500 rollout [unclassified]\n54. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n55. E12 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n56. ACME Manufacturing — may receive off — list price · holds 2023-04-01 → 2025-03-31\n57. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n58. ACME Manufacturing — reverted — VLAN change · holds 2026-08-17 → 2026-08-17\n59. Gina — confirmed — ACME Manufacturing · holds 2026-09-23 → 2026-09-23\n60. ACME Manufacturing — has CRM account — CRM-2048 · holds 2026-10-13 → …\n61. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n62. ACME Manufacturing — revenue — ~$125,000,000 (string) · holds 2026-10-13 → …\n63. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string) · holds 2026-10-13 → …\n64. ACME Manufacturing — are evaluating — NS-CLOUD · holds 2026-10-13 → …\n65. ACME Manufacturing — has key contact — Edward Floyd [person] · holds 2026-10-13 → …\n66. ACME Manufacturing — has key contact — Johnny Johnson [person] · holds 2026-10-13 → …\n67. ACME Manufacturing — has key contact — Kelly Ballard [person] · holds 2026-10-13 → …\n68. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n69. ACME Manufacturing — expects — controller orders · holds 2026-10-13 → …\n70. ACME Manufacturing — Land — NS-Cloud pilot [project] · holds 2026-10-13 → …\n71. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string) · holds 2026-10-13 → …\n72. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n73. ACME Manufacturing — has — third plant [place] · holds 2026-10-13 → …\n74. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n75. ACME Manufacturing — has — credit limit · holds 2026-10-13 → …\n76. ACME Manufacturing — asking for — 15% (string) · holds 2026-10-13 → …\n77. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n78. ACME Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-13 → …\n79. ACME Manufacturing — account_tier — Strategic (string) · holds 2026-10-13 → …\n80. ACME Manufacturing — segment — Midwest (string) · holds 2026-10-13 → …\n81. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string) · holds 2026-10-13 → …\n82. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n83. ACME Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-13 → …\n84. ACME Manufacturing — billing_state — WI (string) · holds 2026-10-13 → …\n85. ACME Manufacturing — duns_number — 04-812-7730 (string) · holds 2026-10-13 → …\n86. ACME Manufacturing — account_owner — Sarah Chen (string) · holds 2026-10-13 → …\n87. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string) · holds 2026-10-13 → …\n88. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n89. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n90. Platinum plan — belongs to — ACME Manufacturing · holds 2026-10-13 → …\n91. SR-39857 — customer_on_ticket — ACME Manufacturing · holds 2026-10-13 → …\n92. ACME Manufacturing — hasLocation — Milwaukee, WI [city] · holds 2026-10-13 → …\n93. ACME Manufacturing — hasDesignation — Industrial Manufacturing · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       37,
+       38,
+       39
+      ],
+      "why": "The Acme NS-500 Strategic Account Exception has a max eligible discount of 15%, effective 2025-04-01 and expiring 2028-03-31."
+     },
+     "cost_usd": 0.019167999999999998
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F14",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The Acme master supply agreement is in force from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · Master Supply Agreement [unclassified]\n2. Master Supply Agreement — is entered into between — Northstar Industrial Systems\n3. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation]\n4. Master Supply Agreement — is effective — April 1, 2025 (string)\n5. Master Supply Agreement — expires — March 31, 2028 (string)\n6. Either party — may terminate — Master Supply Agreement\n7. E2 · Acme Master Supply Agreement [unclassified]\n8. E3 · ACME-MFG-2025 [unclassified]\n9. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n10. E4 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n11. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n12. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n13. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n14. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n15. ACME Manufacturing — has CRM account — CRM-2048\n16. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n17. ACME Manufacturing — revenue — ~$125,000,000 (string)\n18. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n19. ACME Manufacturing — are evaluating — NS-CLOUD\n20. ACME Manufacturing — has key contact — Edward Floyd [person]\n21. ACME Manufacturing — has key contact — Johnny Johnson [person]\n22. ACME Manufacturing — has key contact — Kelly Ballard [person]\n23. ACME Manufacturing — expects — third-plant NS-500 rollout\n24. ACME Manufacturing — expects — controller orders\n25. ACME Manufacturing — Land — NS-Cloud pilot [project]\n26. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n27. ACME Manufacturing — negotiated — NS-500 pricing\n28. ACME Manufacturing — has — third plant [place]\n29. ACME Manufacturing — has — NS-500 orders\n30. ACME Manufacturing — has — credit limit\n31. ACME Manufacturing — asking for — 15% (string)\n32. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n33. ACME Manufacturing — account_id — CRM-2048 (string)\n34. ACME Manufacturing — account_tier — Strategic (string)\n35. ACME Manufacturing — segment — Midwest (string)\n36. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n37. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n38. ACME Manufacturing — billing_city — Milwaukee (string)\n39. ACME Manufacturing — billing_state — WI (string)\n40. ACME Manufacturing — duns_number — 04-812-7730 (string)\n41. ACME Manufacturing — account_owner — Sarah Chen (string)\n42. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n43. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n44. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n45. Platinum plan — belongs to — ACME Manufacturing\n46. SR-39857 — customer_on_ticket — ACME Manufacturing\n47. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n48. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       3,
+       4,
+       5
+      ],
+      "why": "The Master Supply Agreement with Acme Mfg. Holdings is effective April 1, 2025 and expires March 31, 2028."
+     },
+     "cost_usd": 0.01144
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F14",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "The Acme master supply agreement is in force from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · Master Supply Agreement [unclassified]\n2. Master Supply Agreement — is entered into between — Northstar Industrial Systems · holds 2026-10-13 → …\n3. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n4. Master Supply Agreement — is effective — April 1, 2025 (string) · holds 2026-10-13 → …\n5. Master Supply Agreement — expires — March 31, 2028 (string) · holds 2026-10-13 → …\n6. Either party — may terminate — Master Supply Agreement · holds 2026-10-13 → …\n7. E2 · Acme Master Supply Agreement [unclassified]\n8. E3 · ACME-MFG-2025 [unclassified]\n9. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025 · holds 2026-10-13 → …\n10. E4 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n11. ACME Manufacturing — may receive off — list price · holds 2023-04-01 → 2025-03-31\n12. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n13. ACME Manufacturing — reverted — VLAN change · holds 2026-08-17 → 2026-08-17\n14. Gina — confirmed — ACME Manufacturing · holds 2026-09-23 → 2026-09-23\n15. ACME Manufacturing — has CRM account — CRM-2048 · holds 2026-10-13 → …\n16. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n17. ACME Manufacturing — revenue — ~$125,000,000 (string) · holds 2026-10-13 → …\n18. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string) · holds 2026-10-13 → …\n19. ACME Manufacturing — are evaluating — NS-CLOUD · holds 2026-10-13 → …\n20. ACME Manufacturing — has key contact — Edward Floyd [person] · holds 2026-10-13 → …\n21. ACME Manufacturing — has key contact — Johnny Johnson [person] · holds 2026-10-13 → …\n22. ACME Manufacturing — has key contact — Kelly Ballard [person] · holds 2026-10-13 → …\n23. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n24. ACME Manufacturing — expects — controller orders · holds 2026-10-13 → …\n25. ACME Manufacturing — Land — NS-Cloud pilot [project] · holds 2026-10-13 → …\n26. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string) · holds 2026-10-13 → …\n27. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n28. ACME Manufacturing — has — third plant [place] · holds 2026-10-13 → …\n29. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n30. ACME Manufacturing — has — credit limit · holds 2026-10-13 → …\n31. ACME Manufacturing — asking for — 15% (string) · holds 2026-10-13 → …\n32. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n33. ACME Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-13 → …\n34. ACME Manufacturing — account_tier — Strategic (string) · holds 2026-10-13 → …\n35. ACME Manufacturing — segment — Midwest (string) · holds 2026-10-13 → …\n36. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string) · holds 2026-10-13 → …\n37. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n38. ACME Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-13 → …\n39. ACME Manufacturing — billing_state — WI (string) · holds 2026-10-13 → …\n40. ACME Manufacturing — duns_number — 04-812-7730 (string) · holds 2026-10-13 → …\n41. ACME Manufacturing — account_owner — Sarah Chen (string) · holds 2026-10-13 → …\n42. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string) · holds 2026-10-13 → …\n43. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n44. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n45. Platinum plan — belongs to — ACME Manufacturing · holds 2026-10-13 → …\n46. SR-39857 — customer_on_ticket — ACME Manufacturing · holds 2026-10-13 → …\n47. ACME Manufacturing — hasLocation — Milwaukee, WI [city] · holds 2026-10-13 → …\n48. ACME Manufacturing — hasDesignation — Industrial Manufacturing · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       3,
+       4,
+       5
+      ],
+      "why": "The Master Supply Agreement between Northstar and Acme Mfg. Holdings is effective April 1, 2025 and expires March 31, 2028. The facts never link it to the separate entity 'Acme Master Supply Agreement', so I treated the two as the same agreement."
+     },
+     "cost_usd": 0.014318
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F15",
+   "u31": false,
+   "reading": "stated",
+   "statement": "An older 10% NS-500 exception for Acme applied from 2023-04-01 to 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n14. NS-500 Industrial Controller — product_id — PROD-001 (string)\n15. NS-500 Industrial Controller — sku — NS-500 (string)\n16. NS-500 Industrial Controller — category — Equipment (string)\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n21. DR-8104 — product_sku — NS-500 Industrial Controller\n22. DR-7015 — product_sku — NS-500 Industrial Controller\n23. DR-7016 — product_sku — NS-500 Industrial Controller\n24. DR-7019 — product_sku — NS-500 Industrial Controller\n25. DR-7020 — product_sku — NS-500 Industrial Controller\n26. DR-9001 — product_sku — NS-500 Industrial Controller\n27. support plan — hasProduct — NS-500 Industrial Controller\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing\n46. NS-500 pricing — is believed to be — 15% (string)\n47. NS-500 pricing — Worth confirming with — Deal Desk\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders\n50. NS-500 orders — will step up — step up (string)\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n56. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n60. ACME Manufacturing — revenue — ~$125,000,000 (string)\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n62. ACME Manufacturing — are evaluating — NS-CLOUD\n63. ACME Manufacturing — has key contact — Edward Floyd [person]\n64. ACME Manufacturing — has key contact — Johnny Johnson [person]\n65. ACME Manufacturing — has key contact — Kelly Ballard [person]\n66. ACME Manufacturing — expects — third-plant NS-500 rollout\n67. ACME Manufacturing — expects — controller orders\n68. ACME Manufacturing — Land — NS-Cloud pilot [project]\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n70. ACME Manufacturing — negotiated — NS-500 pricing\n71. ACME Manufacturing — has — third plant [place]\n72. ACME Manufacturing — has — NS-500 orders\n73. ACME Manufacturing — has — credit limit\n74. ACME Manufacturing — asking for — 15% (string)\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n76. ACME Manufacturing — account_id — CRM-2048 (string)\n77. ACME Manufacturing — account_tier — Strategic (string)\n78. ACME Manufacturing — segment — Midwest (string)\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n81. ACME Manufacturing — billing_city — Milwaukee (string)\n82. ACME Manufacturing — billing_state — WI (string)\n83. ACME Manufacturing — duns_number — 04-812-7730 (string)\n84. ACME Manufacturing — account_owner — Sarah Chen (string)\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n88. Platinum plan — belongs to — ACME Manufacturing\n89. SR-39857 — customer_on_ticket — ACME Manufacturing\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       54
+      ],
+      "why": "The new exception supersedes EXC-ACME-NS500-10, and Acme could receive a discount off list for 2023-04-01 to 2025-03-31. No fact gives the older exception's 10% or its own dates."
+     },
+     "cost_usd": 0.01711
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F15",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "An older 10% NS-500 exception for Acme applied from 2023-04-01 to 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception · holds 2026-10-13 → …\n3. pricing exception — hasProduct — product · holds 2026-10-13 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B · holds 2026-10-13 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n14. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-13 → …\n15. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-13 → …\n16. NS-500 Industrial Controller — category — Equipment (string) · holds 2026-10-13 → …\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-13 → …\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-13 → …\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller · holds 2026-10-13 → …\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n21. DR-8104 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n22. DR-7015 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n23. DR-7016 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n24. DR-7019 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n25. DR-7020 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n26. DR-9001 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n27. support plan — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · holds 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · holds 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025 · holds 2026-10-13 → …\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15 · holds 2026-10-13 → …\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string) · holds 2026-10-13 → …\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string) · holds 2026-10-13 → …\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string) · holds 2026-10-13 → …\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product · holds 2026-10-13 → …\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility · holds 2026-10-13 → …\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string) · holds 2026-10-13 → …\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception · holds 2026-10-13 → …\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n46. NS-500 pricing — is believed to be — 15% (string) · holds 2026-10-13 → …\n47. NS-500 pricing — Worth confirming with — Deal Desk · holds 2026-10-13 → …\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n50. NS-500 orders — will step up — step up (string) · holds 2026-10-13 → …\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · holds 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n56. ACME Manufacturing — reverted — VLAN change · holds 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · holds 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048 · holds 2026-10-13 → …\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n60. ACME Manufacturing — revenue — ~$125,000,000 (string) · holds 2026-10-13 → …\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string) · holds 2026-10-13 → …\n62. ACME Manufacturing — are evaluating — NS-CLOUD · holds 2026-10-13 → …\n63. ACME Manufacturing — has key contact — Edward Floyd [person] · holds 2026-10-13 → …\n64. ACME Manufacturing — has key contact — Johnny Johnson [person] · holds 2026-10-13 → …\n65. ACME Manufacturing — has key contact — Kelly Ballard [person] · holds 2026-10-13 → …\n66. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n67. ACME Manufacturing — expects — controller orders · holds 2026-10-13 → …\n68. ACME Manufacturing — Land — NS-Cloud pilot [project] · holds 2026-10-13 → …\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string) · holds 2026-10-13 → …\n70. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n71. ACME Manufacturing — has — third plant [place] · holds 2026-10-13 → …\n72. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n73. ACME Manufacturing — has — credit limit · holds 2026-10-13 → …\n74. ACME Manufacturing — asking for — 15% (string) · holds 2026-10-13 → …\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n76. ACME Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-13 → …\n77. ACME Manufacturing — account_tier — Strategic (string) · holds 2026-10-13 → …\n78. ACME Manufacturing — segment — Midwest (string) · holds 2026-10-13 → …\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string) · holds 2026-10-13 → …\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n81. ACME Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-13 → …\n82. ACME Manufacturing — billing_state — WI (string) · holds 2026-10-13 → …\n83. ACME Manufacturing — duns_number — 04-812-7730 (string) · holds 2026-10-13 → …\n84. ACME Manufacturing — account_owner — Sarah Chen (string) · holds 2026-10-13 → …\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string) · holds 2026-10-13 → …\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n88. Platinum plan — belongs to — ACME Manufacturing · holds 2026-10-13 → …\n89. SR-39857 — customer_on_ticket — ACME Manufacturing · holds 2026-10-13 → …\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city] · holds 2026-10-13 → …\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       54
+      ],
+      "why": "The current exception supersedes EXC-ACME-NS500-10, and Acme may receive a discount off list price for 2023-04-01 to 2025-03-31. No fact gives the older exception's 10% value or ties it to those dates."
+     },
+     "cost_usd": 0.020722
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F16",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The 15% exception covers the NS-500 only.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · EXC-ACME-NS500-15 [unclassified]\n13. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n14. E7 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n15. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n16. NS-500 Industrial Controller — product_id — PROD-001 (string)\n17. NS-500 Industrial Controller — sku — NS-500 (string)\n18. NS-500 Industrial Controller — category — Equipment (string)\n19. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n20. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n21. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n22. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n23. DR-8104 — product_sku — NS-500 Industrial Controller\n24. DR-7015 — product_sku — NS-500 Industrial Controller\n25. DR-7016 — product_sku — NS-500 Industrial Controller\n26. DR-7019 — product_sku — NS-500 Industrial Controller\n27. DR-7020 — product_sku — NS-500 Industrial Controller\n28. DR-9001 — product_sku — NS-500 Industrial Controller\n29. support plan — hasProduct — NS-500 Industrial Controller\n30. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n31. E8 · Acme NS-500 Strategic Account Exception [unclassified]\n32. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n33. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n34. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n35. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n36. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n37. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n38. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n39. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n40. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n41. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n42. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n43. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n44. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n45. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n46. E9 · NS-500 pricing [unclassified]\n47. ACME Manufacturing — negotiated — NS-500 pricing\n48. NS-500 pricing — is believed to be — 15% (string)\n49. NS-500 pricing — Worth confirming with — Deal Desk\n50. E10 · NS-500 orders [unclassified]\n51. ACME Manufacturing — has — NS-500 orders\n52. NS-500 orders — will step up — step up (string)\n53. E11 · third-plant NS-500 rollout [unclassified]\n54. ACME Manufacturing — expects — third-plant NS-500 rollout\n55. E12 · NS-CLOUD [unclassified] · also named: NS-Cloud; NS-Cloud Operations Suite\n56. NS-CLOUD — available — all users · valid 2026-07-12 → 2026-07-12\n57. NS-CLOUD — product_id — PROD-002 (string)\n58. NS-CLOUD — sku — NS-CLOUD (string)\n59. NS-CLOUD — category — Software (string)\n60. NS-CLOUD — list_price_usd — 120000 (string)\n61. NS-CLOUD — is unavailable — all users (string)\n62. ACME Manufacturing — are evaluating — NS-CLOUD\n63. DR-7003 — product_sku — NS-CLOUD\n64. Northstar Industrial Systems — supply — NS-CLOUD\n65. SR-39561 — product_sku — NS-CLOUD\n66. NS-CLOUD — has been down — all our users (string)\n67. SR-39340 — product_sku — NS-CLOUD\n68. NS-CLOUD — won't load — anyone (string)\n69. Northstar product failure — makes — NS-CLOUD\n70. NS-CLOUD — is unavailable to — some, but not all, of the customer's users or sites (string)\n71. NS-CLOUD — was down — two sites [site]\n72. NS-CLOUD — is not — covered product\n73. NS-CLOUD — could be added to — this Schedule\n74. DR-7007 — product_sku — NS-CLOUD\n75. DR-7009 — product_sku — NS-CLOUD\n76. DR-7010 — product_sku — NS-CLOUD\n77. DR-7011 — product_sku — NS-CLOUD\n78. DR-7022 — product_sku — NS-CLOUD\n79. support plan — hasProduct — NS-CLOUD\n80. support plan — hasProduct — NS-CLOUD\n81. E13 · NS-CLOUD subscription 2025-Q2 [unclassified]\n82. INV-61210 — refersTo — NS-CLOUD subscription 2025-Q2\n83. E14 · NS-CLOUD subscription 2025-Q3 [unclassified]\n84. INV-61433 — refersTo — NS-CLOUD subscription 2025-Q3\n85. E15 · NS-CLOUD subscription 2025-Q4 [unclassified]\n86. INV-61688 — refersTo — NS-CLOUD subscription 2025-Q4\n87. E16 · NS-CLOUD subscription 2026-Q1 [unclassified]\n88. INV-61902 — refersTo — NS-CLOUD subscription 2026-Q1\n89. E17 · NS-CLOUD subscription 2026-Q2 [unclassified]\n90. INV-62147 — refersTo — NS-CLOUD subscription 2026-Q2\n91. E18 · NS-CLOUD subscription 2026-Q3 [unclassified]\n92. INV-62391 — refersTo — NS-CLOUD subscription 2026-Q3\n93. E19 · NS-Cloud access [unclassified]\n94. NS-Cloud access — restored — both centers\n95. E20 · NS-Cloud pilot [project]\n96. ACME Manufacturing — Land — NS-Cloud pilot [project]",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       37,
+       40,
+       41
+      ],
+      "why": "Exception has 15% max discount, applies to NS-500 Industrial Controller, and does not apply to other Northstar products."
+     },
+     "cost_usd": 0.014976
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F17",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme is a strategic account.",
+   "facts": "1. E1 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n2. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n3. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n4. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n5. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n6. ACME Manufacturing — has CRM account — CRM-2048\n7. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n8. ACME Manufacturing — revenue — ~$125,000,000 (string)\n9. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n10. ACME Manufacturing — are evaluating — NS-CLOUD\n11. ACME Manufacturing — has key contact — Edward Floyd [person]\n12. ACME Manufacturing — has key contact — Johnny Johnson [person]\n13. ACME Manufacturing — has key contact — Kelly Ballard [person]\n14. ACME Manufacturing — expects — third-plant NS-500 rollout\n15. ACME Manufacturing — expects — controller orders\n16. ACME Manufacturing — Land — NS-Cloud pilot [project]\n17. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n18. ACME Manufacturing — negotiated — NS-500 pricing\n19. ACME Manufacturing — has — third plant [place]\n20. ACME Manufacturing — has — NS-500 orders\n21. ACME Manufacturing — has — credit limit\n22. ACME Manufacturing — asking for — 15% (string)\n23. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n24. ACME Manufacturing — account_id — CRM-2048 (string)\n25. ACME Manufacturing — account_tier — Strategic (string)\n26. ACME Manufacturing — segment — Midwest (string)\n27. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n28. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n29. ACME Manufacturing — billing_city — Milwaukee (string)\n30. ACME Manufacturing — billing_state — WI (string)\n31. ACME Manufacturing — duns_number — 04-812-7730 (string)\n32. ACME Manufacturing — account_owner — Sarah Chen (string)\n33. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n35. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n36. Platinum plan — belongs to — ACME Manufacturing\n37. SR-39857 — customer_on_ticket — ACME Manufacturing\n38. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n39. ACME Manufacturing — hasDesignation — Industrial Manufacturing\n40. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n41. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n42. support — is provided to — Acme Mfg. Holdings [corporation]\n43. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation]\n44. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n45. Acme Mfg. Holdings — postal address — WI 53209 [postal_address]\n46. Acme Mfg. Holdings — is eligible for — discounts\n47. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n48. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n49. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n50. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n51. Acme Mfg. Holdings — bill_to_state — WI (string)\n52. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n53. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n54. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n55. Acme Mfg. Holdings — address — 2200 N Industrial Pkwy [postal_address]\n56. Acme Mfg. Holdings — location — Milwaukee, WI [city]\n57. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n58. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation]",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       1,
+       9,
+       25
+      ],
+      "why": "ACME Manufacturing (also named Acme) is one of our strategic accounts; account_tier is Strategic."
+     },
+     "cost_usd": 0.011097999999999998
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F18",
+   "u31": false,
+   "reading": "stated",
+   "statement": "DR-9001: Sarah Chen requests a 15% discount on the NS-500 for Acme on 2026-09-23.",
+   "facts": "1. E1 · DR-9001 [unclassified]\n2. DR-9001 — account_id — CRM-2048\n3. DR-9001 — product_sku — NS-500 Industrial Controller\n4. DR-9001 — requested_discount_pct — 15.0 (string)\n5. DR-9001 — list_value_usd — 250000 (string)\n6. DR-9001 — discount_value_usd — 37500 (string)\n7. DR-9001 — net_value_usd — 212500 (string)\n8. DR-9001 — requested_by — Sarah Chen [person]\n9. DR-9001 — request_date — 2026-09-23 (string)\n10. DR-9001 — justification — Contract pricing per Acme Master Supply Agreement (string)\n11. DR-9001 — status — Pending Approval (string)\n12. E2 · Sarah Chen [person] · also named: Sarah; sarah.chen@northstar.example\n13. CR-9201 — requested_by — Sarah Chen [person]\n14. Sarah Chen — raised — CR-9201\n15. Sarah Chen — employee_id — EMP-101 (string)\n16. Sarah Chen — title — Enterprise Account Executive (string)\n17. Sarah Chen — department — Sales (string)\n18. Sarah Chen — location — Chicago, IL (string)\n19. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n20. DR-8104 — requested_by — Sarah Chen [person]\n21. DR-8104 — approved_by — Sarah Chen [person]\n22. DR-9001 — requested_by — Sarah Chen [person]\n23. Sarah Chen — knows — Michael Torres [person]\n24. Sarah Chen — email — sarah.chen@northstar.example (string)\n25. E3 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n26. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n27. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n28. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n29. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n30. ACME Manufacturing — has CRM account — CRM-2048\n31. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n32. ACME Manufacturing — revenue — ~$125,000,000 (string)\n33. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n34. ACME Manufacturing — are evaluating — NS-CLOUD\n35. ACME Manufacturing — has key contact — Edward Floyd [person]\n36. ACME Manufacturing — has key contact — Johnny Johnson [person]\n37. ACME Manufacturing — has key contact — Kelly Ballard [person]\n38. ACME Manufacturing — expects — third-plant NS-500 rollout\n39. ACME Manufacturing — expects — controller orders\n40. ACME Manufacturing — Land — NS-Cloud pilot [project]\n41. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n42. ACME Manufacturing — negotiated — NS-500 pricing\n43. ACME Manufacturing — has — third plant [place]\n44. ACME Manufacturing — has — NS-500 orders\n45. ACME Manufacturing — has — credit limit\n46. ACME Manufacturing — asking for — 15% (string)\n47. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n48. ACME Manufacturing — account_id — CRM-2048 (string)\n49. ACME Manufacturing — account_tier — Strategic (string)\n50. ACME Manufacturing — segment — Midwest (string)\n51. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n52. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n53. ACME Manufacturing — billing_city — Milwaukee (string)\n54. ACME Manufacturing — billing_state — WI (string)\n55. ACME Manufacturing — duns_number — 04-812-7730 (string)\n56. ACME Manufacturing — account_owner — Sarah Chen (string)\n57. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n58. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n59. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n60. Platinum plan — belongs to — ACME Manufacturing\n61. SR-39857 — customer_on_ticket — ACME Manufacturing\n62. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n63. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       2,
+       3,
+       4,
+       8,
+       9,
+       30,
+       48
+      ],
+      "why": "DR-9001 requested by Sarah Chen, 15% discount, NS-500, on 2026-09-23; account CRM-2048 is ACME Manufacturing (Acme)."
+     },
+     "cost_usd": 0.01146
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p2",
+   "id": "F19",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2027, an Enterprise Account Executive's discount authority is up to 5%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2027 [unclassified]\n2. Northstar Pricing Policy 2027 — sets — discount approval authority · valid 2027 → 2027\n3. Northstar Pricing Policy 2027 — is effective — 2027-01-01 through 2027-12-31 (string)\n4. Northstar Pricing Policy 2027 — repeals — Northstar Pricing Policy 2026\n5. E2 · Enterprise Account Executives [employee_role] · also named: Enterprise Account Executive\n6. Enterprise Account Executives — may approve — discounts\n7. Enterprise Account Executives — Discount authority — ≤10% (string)\n8. E3 · Enterprise Account Executives [unclassified]\n9. Enterprise Account Executives — approve — discounts\n10. E4 · Enterprise Account Executives [employee_role]\n11. Enterprise Account Executives — may approve — discounts",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       7
+      ],
+      "why": "KB gives discount authority ≤10% for Enterprise Account Executives, not 5%"
+     },
+     "cost_usd": 0.005252000000000001
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F20",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2027, VP Sales's discount authority is over 5% and up to 12%.",
+   "facts": "1. E1 · Northstar Pricing Policy 2027 [unclassified]\n2. Northstar Pricing Policy 2027 — sets — discount approval authority · valid 2027 → 2027\n3. Northstar Pricing Policy 2027 — is effective — 2027-01-01 through 2027-12-31 (string)\n4. Northstar Pricing Policy 2027 — repeals — Northstar Pricing Policy 2026\n5. E2 · VP Sales [organization_role]\n6. discounts — require — VP Sales [organization_role]\n7. VP Sales — Discount authority — >10% and ≤20% (string)\n8. discounts — require — VP Sales [organization_role]\n9. ticket — notify — VP Sales [organization_role]\n10. E3 · VP Sales [organization_role]\n11. Michael Torres — hasDesignation — VP Sales [organization_role]\n12. E4 · VP Sales concurrence [agree_action]\n13. credit limits — require — VP Sales concurrence [agree_action]\n14. E5 · VP Sales concurrence [unclassified]\n15. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       7
+      ],
+      "why": "KB gives VP Sales discount authority as >10% and ≤20%, not >5% and ≤12%."
+     },
+     "cost_usd": 0.005556
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F21",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2027, discounts over 12% require the CRO's approval.",
+   "facts": "1. E1 · Northstar Pricing Policy 2027 [unclassified]\n2. Northstar Pricing Policy 2027 — sets — discount approval authority · valid 2027 → 2027\n3. Northstar Pricing Policy 2027 — is effective — 2027-01-01 through 2027-12-31 (string)\n4. Northstar Pricing Policy 2027 — repeals — Northstar Pricing Policy 2026\n5. E2 · Chief Revenue Officer [unclassified]\n6. Chief Revenue Officer — Discount authority — >20% (string)\n7. discounts — require — Chief Revenue Officer\n8. ticket — notify — Chief Revenue Officer\n9. E3 · Chief Revenue Officer [organization_role]\n10. David Morgan — hasDesignation — Chief Revenue Officer [organization_role]\n11. E4 · Chief Revenue Officer [organization_role]\n12. David Morgan — hasDesignation — Chief Revenue Officer [organization_role]",
+   "runs": [
+    {
+     "verdict": "not_stated",
+     "answer": {
+      "verdict": "not_stated",
+      "lines": [
+       2,
+       6,
+       7
+      ],
+      "why": "KB gives CRO discount authority at >20%, not >12%; no 12% threshold stated"
+     },
+     "cost_usd": 0.00536
+    }
+   ],
+   "verdict": "not_stated"
+  },
+  {
+   "part": "p2",
+   "id": "F22",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, credit limits above $500,000 require the Director of Finance.",
+   "facts": "1. E1 · Northstar Credit Policy 2026 [unclassified] · also named: CREDIT-POLICY-2026\n2. Northstar Credit Policy 2026 — is effective — 2026-01-01 through 2026-12-31 (string)\n3. Northstar Credit Policy 2026 — repeals — previous credit policy\n4. Northstar Credit Policy 2026, revision 2 — repeals — Northstar Credit Policy 2026\n5. E2 · Northstar Credit Policy 2026, revision 2 [unclassified]\n6. Northstar Credit Policy 2026, revision 2 — sets — approval authority (string)\n7. Northstar Credit Policy 2026, revision 2 — raises — maximum credit limit\n8. Northstar Credit Policy 2026, revision 2 — is effective — 2026-10-01 through 2026-12-31 (string)\n9. Northstar Credit Policy 2026, revision 2 — repeals — Northstar Credit Policy 2026\n10. E3 · Director of Finance approval [unclassified]\n11. Credit limits — require — Director of Finance approval\n12. E4 · Director of Finance approval [unclassified]\n13. credit limits — require — Director of Finance approval\n14. E5 · Director of Finance approval [unclassified]\n15. credit limits — require — Director of Finance approval",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       11,
+       13,
+       15
+      ],
+      "why": "Credit limits require Director of Finance approval, but no $500,000 threshold is stated, and the year/policy applicability is unclear."
+     },
+     "cost_usd": 0.00595
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F23",
+   "u31": false,
+   "reading": "stated",
+   "statement": "In 2026, strategic accounts' credit limits above $500,000 also need VP Sales's concurrence.",
+   "facts": "1. E1 · Northstar Credit Policy 2026 [unclassified] · also named: CREDIT-POLICY-2026\n2. Northstar Credit Policy 2026 — is effective — 2026-01-01 through 2026-12-31 (string)\n3. Northstar Credit Policy 2026 — repeals — previous credit policy\n4. Northstar Credit Policy 2026, revision 2 — repeals — Northstar Credit Policy 2026\n5. E2 · Northstar Credit Policy 2026, revision 2 [unclassified]\n6. Northstar Credit Policy 2026, revision 2 — sets — approval authority (string)\n7. Northstar Credit Policy 2026, revision 2 — raises — maximum credit limit\n8. Northstar Credit Policy 2026, revision 2 — is effective — 2026-10-01 through 2026-12-31 (string)\n9. Northstar Credit Policy 2026, revision 2 — repeals — Northstar Credit Policy 2026\n10. E3 · VP Sales [organization_role]\n11. discounts — require — VP Sales [organization_role]\n12. VP Sales — Discount authority — >10% and ≤20% (string)\n13. discounts — require — VP Sales [organization_role]\n14. ticket — notify — VP Sales [organization_role]\n15. E4 · VP Sales [organization_role]\n16. Michael Torres — hasDesignation — VP Sales [organization_role]\n17. E5 · VP Sales concurrence [agree_action]\n18. credit limits — require — VP Sales concurrence [agree_action]\n19. E6 · VP Sales concurrence [unclassified]\n20. credit limits — require — VP Sales concurrence",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       18,
+       20
+      ],
+      "why": "Credit limits require VP Sales concurrence, but nothing mentions strategic accounts, the $500,000 threshold, or the 2026 scope."
+     },
+     "cost_usd": 0.007236
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F24",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme Group Holdings guarantees Acme Mfg. Holdings's payment obligations up to $400,000, for 2026 and 2027.",
+   "facts": "1. E1 · Acme Group Holdings, Inc. [corporation] · also named: Guarantor\n2. Laura Whitfield — is Chief Financial Officer of — Acme Group Holdings, Inc. [corporation] · valid 2025-12-16 → 2025-12-16\n3. Parent Company Guarantee — is given by — Acme Group Holdings, Inc. [corporation]\n4. Acme Group Holdings, Inc. — guarantees — payment obligations\n5. Acme Group Holdings, Inc. — is limited to — $400,000 [monetary_amount]\n6. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation]\n7. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n8. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n9. support — is provided to — Acme Mfg. Holdings [corporation]\n10. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation]\n11. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n12. Acme Mfg. Holdings — postal address — WI 53209 [postal_address]\n13. Acme Mfg. Holdings — is eligible for — discounts\n14. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n15. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n16. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n17. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n18. Acme Mfg. Holdings — bill_to_state — WI (string)\n19. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n20. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n21. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n22. Acme Mfg. Holdings — address — 2200 N Industrial Pkwy [postal_address]\n23. Acme Mfg. Holdings — location — Milwaukee, WI [city]\n24. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n25. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation]\n26. E3 · parent guarantee [unclassified]\n27. Acme Group — has — parent guarantee\n28. parent guarantee — should cover — credit limit\n29. parent guarantee — is in place — in place (string)",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       4,
+       5,
+       6,
+       25
+      ],
+      "why": "Facts say Acme Group Holdings guarantees payment obligations, limited to $400,000, and that Acme Mfg. Holdings is its subsidiary. Nothing links the guarantee to Acme Mfg.'s obligations specifically, and no 2026-2027 dates appear."
+     },
+     "cost_usd": 0.008484
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F24",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "Acme Group Holdings guarantees Acme Mfg. Holdings's payment obligations up to $400,000, for 2026 and 2027.",
+   "facts": "1. E1 · Acme Group Holdings, Inc. [corporation] · also named: Guarantor\n2. Laura Whitfield — is Chief Financial Officer of — Acme Group Holdings, Inc. [corporation] · holds 2025-12-16 → 2025-12-16\n3. Parent Company Guarantee — is given by — Acme Group Holdings, Inc. [corporation] · holds 2026-10-13 → …\n4. Acme Group Holdings, Inc. — guarantees — payment obligations · holds 2026-10-13 → …\n5. Acme Group Holdings, Inc. — is limited to — $400,000 [monetary_amount] · holds 2026-10-13 → …\n6. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n7. E2 · Acme Mfg. Holdings [corporation] · also named: Customer\n8. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n9. support — is provided to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n10. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n11. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n12. Acme Mfg. Holdings — postal address — WI 53209 [postal_address] · holds 2026-10-13 → …\n13. Acme Mfg. Holdings — is eligible for — discounts · holds 2026-10-13 → …\n14. Acme Mfg. Holdings — erp_customer_id — C-1001 (string) · holds 2026-10-13 → …\n15. Acme Mfg. Holdings — industry — Industrial Manufacturing (string) · holds 2026-10-13 → …\n16. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n17. Acme Mfg. Holdings — bill_to_city — Milwaukee (string) · holds 2026-10-13 → …\n18. Acme Mfg. Holdings — bill_to_state — WI (string) · holds 2026-10-13 → …\n19. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string) · holds 2026-10-13 → …\n20. Acme Mfg. Holdings — payment_terms — Net 45 (string) · holds 2026-10-13 → …\n21. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n22. Acme Mfg. Holdings — address — 2200 N Industrial Pkwy [postal_address] · holds 2026-10-13 → …\n23. Acme Mfg. Holdings — location — Milwaukee, WI [city] · holds 2026-10-13 → …\n24. Acme Mfg. Holdings — duns — 04-812-7730 (string) · holds 2026-10-13 → …\n25. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n26. E3 · parent guarantee [unclassified]\n27. Acme Group — has — parent guarantee · holds 2026-10-13 → …\n28. parent guarantee — should cover — credit limit · holds 2026-10-13 → …\n29. parent guarantee — is in place — in place (string) · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       3,
+       4,
+       5,
+       6
+      ],
+      "why": "Guarantee of payment obligations capped at $400,000 is stated, but the facts don't tie it explicitly to Acme Mfg. Holdings, and the period is open-ended from 2026-10-13, not stated as 2026 and 2027."
+     },
+     "cost_usd": 0.011624
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F25",
+   "u31": false,
+   "reading": "stated",
+   "statement": "CR-9201: Sarah Chen asks to raise Acme's credit limit to $400,000, on 2026-09-23.",
+   "facts": "1. E1 · CR-9201 [unclassified]\n2. CR-9201 — erp_customer_id — C-1001\n3. CR-9201 — current_limit_usd — 250000 (string)\n4. CR-9201 — requested_limit_usd — 400000 (string)\n5. CR-9201 — requested_by — Sarah Chen [person]\n6. CR-9201 — request_date — 2026-09-23 (string)\n7. CR-9201 — justification — Third-plant ramp-up: higher NS-500 order volume through Q1 2027 (string)\n8. CR-9201 — status — Pending Approval (string)\n9. Sarah Chen — raised — CR-9201\n10. E2 · Sarah Chen [person] · also named: Sarah; sarah.chen@northstar.example\n11. CR-9201 — requested_by — Sarah Chen [person]\n12. Sarah Chen — raised — CR-9201\n13. Sarah Chen — employee_id — EMP-101 (string)\n14. Sarah Chen — title — Enterprise Account Executive (string)\n15. Sarah Chen — department — Sales (string)\n16. Sarah Chen — location — Chicago, IL (string)\n17. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n18. DR-8104 — requested_by — Sarah Chen [person]\n19. DR-8104 — approved_by — Sarah Chen [person]\n20. DR-9001 — requested_by — Sarah Chen [person]\n21. Sarah Chen — knows — Michael Torres [person]\n22. Sarah Chen — email — sarah.chen@northstar.example (string)\n23. E3 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n24. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n25. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n26. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n27. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n28. ACME Manufacturing — has CRM account — CRM-2048\n29. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n30. ACME Manufacturing — revenue — ~$125,000,000 (string)\n31. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n32. ACME Manufacturing — are evaluating — NS-CLOUD\n33. ACME Manufacturing — has key contact — Edward Floyd [person]\n34. ACME Manufacturing — has key contact — Johnny Johnson [person]\n35. ACME Manufacturing — has key contact — Kelly Ballard [person]\n36. ACME Manufacturing — expects — third-plant NS-500 rollout\n37. ACME Manufacturing — expects — controller orders\n38. ACME Manufacturing — Land — NS-Cloud pilot [project]\n39. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n40. ACME Manufacturing — negotiated — NS-500 pricing\n41. ACME Manufacturing — has — third plant [place]\n42. ACME Manufacturing — has — NS-500 orders\n43. ACME Manufacturing — has — credit limit\n44. ACME Manufacturing — asking for — 15% (string)\n45. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n46. ACME Manufacturing — account_id — CRM-2048 (string)\n47. ACME Manufacturing — account_tier — Strategic (string)\n48. ACME Manufacturing — segment — Midwest (string)\n49. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n50. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n51. ACME Manufacturing — billing_city — Milwaukee (string)\n52. ACME Manufacturing — billing_state — WI (string)\n53. ACME Manufacturing — duns_number — 04-812-7730 (string)\n54. ACME Manufacturing — account_owner — Sarah Chen (string)\n55. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n56. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n57. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n58. Platinum plan — belongs to — ACME Manufacturing\n59. SR-39857 — customer_on_ticket — ACME Manufacturing\n60. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n61. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       4,
+       5,
+       6,
+       2,
+       7,
+       36,
+       41
+      ],
+      "why": "CR-9201 is requested by Sarah Chen for a $400,000 limit on 2026-09-23. No fact ties CR-9201 or customer C-1001 to Acme; only the justification (third plant, NS-500) loosely hints at it."
+     },
+     "cost_usd": 0.013724
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p2",
+   "id": "F26",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Acme's current credit limit is $250,000.",
+   "facts": "1. E1 · Acme Mfg. Holdings [corporation] · also named: Customer\n2. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n3. support — is provided to — Acme Mfg. Holdings [corporation]\n4. Master Supply Agreement — is entered into between — Acme Mfg. Holdings [corporation]\n5. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n6. Acme Mfg. Holdings — postal address — WI 53209 [postal_address]\n7. Acme Mfg. Holdings — is eligible for — discounts\n8. Acme Mfg. Holdings — erp_customer_id — C-1001 (string)\n9. Acme Mfg. Holdings — industry — Industrial Manufacturing (string)\n10. Acme Mfg. Holdings — bill_to_street — 2200 N Industrial Pkwy (string)\n11. Acme Mfg. Holdings — bill_to_city — Milwaukee (string)\n12. Acme Mfg. Holdings — bill_to_state — WI (string)\n13. Acme Mfg. Holdings — bill_to_postal_code — 53209 (string)\n14. Acme Mfg. Holdings — payment_terms — Net 45 (string)\n15. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n16. Acme Mfg. Holdings — address — 2200 N Industrial Pkwy [postal_address]\n17. Acme Mfg. Holdings — location — Milwaukee, WI [city]\n18. Acme Mfg. Holdings — duns — 04-812-7730 (string)\n19. Acme Group Holdings, Inc. — subOrganization — Acme Mfg. Holdings [corporation]\n20. E2 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n21. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n22. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n23. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n24. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n25. ACME Manufacturing — has CRM account — CRM-2048\n26. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n27. ACME Manufacturing — revenue — ~$125,000,000 (string)\n28. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n29. ACME Manufacturing — are evaluating — NS-CLOUD\n30. ACME Manufacturing — has key contact — Edward Floyd [person]\n31. ACME Manufacturing — has key contact — Johnny Johnson [person]\n32. ACME Manufacturing — has key contact — Kelly Ballard [person]\n33. ACME Manufacturing — expects — third-plant NS-500 rollout\n34. ACME Manufacturing — expects — controller orders\n35. ACME Manufacturing — Land — NS-Cloud pilot [project]\n36. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n37. ACME Manufacturing — negotiated — NS-500 pricing\n38. ACME Manufacturing — has — third plant [place]\n39. ACME Manufacturing — has — NS-500 orders\n40. ACME Manufacturing — has — credit limit\n41. ACME Manufacturing — asking for — 15% (string)\n42. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n43. ACME Manufacturing — account_id — CRM-2048 (string)\n44. ACME Manufacturing — account_tier — Strategic (string)\n45. ACME Manufacturing — segment — Midwest (string)\n46. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n47. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n48. ACME Manufacturing — billing_city — Milwaukee (string)\n49. ACME Manufacturing — billing_state — WI (string)\n50. ACME Manufacturing — duns_number — 04-812-7730 (string)\n51. ACME Manufacturing — account_owner — Sarah Chen (string)\n52. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n53. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n54. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n55. Platinum plan — belongs to — ACME Manufacturing\n56. SR-39857 — customer_on_ticket — ACME Manufacturing\n57. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n58. ACME Manufacturing — hasDesignation — Industrial Manufacturing\n59. E3 · C-1001 [unclassified]\n60. CR-9201 — erp_customer_id — C-1001\n61. C-1001 — credit_limit_usd — 250000 (string)\n62. C-1001 — currency — USD (string)\n63. C-1001 — last_reviewed — 2026-01-15 (string)\n64. SO-7001 — erp_customer_id — C-1001\n65. INV-60412 — erp_customer_id — C-1001\n66. SO-7002 — erp_customer_id — C-1001\n67. INV-62011 — erp_customer_id — C-1001",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       5,
+       8,
+       40,
+       61,
+       62,
+       63
+      ],
+      "why": "Acme (ACME Manufacturing, dba of Acme Mfg. Holdings, ERP id C-1001) has a credit limit; C-1001 credit_limit_usd is 250000 USD, last reviewed 2026-01-15."
+     },
+     "cost_usd": 0.012426000000000001
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4a",
+   "u31": false,
+   "reading": "stated",
+   "statement": "On 2024-06-01, the Acme NS-500 pricing exception in force permits up to 10%, not 15%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n14. NS-500 Industrial Controller — product_id — PROD-001 (string)\n15. NS-500 Industrial Controller — sku — NS-500 (string)\n16. NS-500 Industrial Controller — category — Equipment (string)\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n21. DR-8104 — product_sku — NS-500 Industrial Controller\n22. DR-7015 — product_sku — NS-500 Industrial Controller\n23. DR-7016 — product_sku — NS-500 Industrial Controller\n24. DR-7019 — product_sku — NS-500 Industrial Controller\n25. DR-7020 — product_sku — NS-500 Industrial Controller\n26. DR-9001 — product_sku — NS-500 Industrial Controller\n27. support plan — hasProduct — NS-500 Industrial Controller\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing\n46. NS-500 pricing — is believed to be — 15% (string)\n47. NS-500 pricing — Worth confirming with — Deal Desk\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders\n50. NS-500 orders — will step up — step up (string)\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n56. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n60. ACME Manufacturing — revenue — ~$125,000,000 (string)\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n62. ACME Manufacturing — are evaluating — NS-CLOUD\n63. ACME Manufacturing — has key contact — Edward Floyd [person]\n64. ACME Manufacturing — has key contact — Johnny Johnson [person]\n65. ACME Manufacturing — has key contact — Kelly Ballard [person]\n66. ACME Manufacturing — expects — third-plant NS-500 rollout\n67. ACME Manufacturing — expects — controller orders\n68. ACME Manufacturing — Land — NS-Cloud pilot [project]\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n70. ACME Manufacturing — negotiated — NS-500 pricing\n71. ACME Manufacturing — has — third plant [place]\n72. ACME Manufacturing — has — NS-500 orders\n73. ACME Manufacturing — has — credit limit\n74. ACME Manufacturing — asking for — 15% (string)\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n76. ACME Manufacturing — account_id — CRM-2048 (string)\n77. ACME Manufacturing — account_tier — Strategic (string)\n78. ACME Manufacturing — segment — Midwest (string)\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n81. ACME Manufacturing — billing_city — Milwaukee (string)\n82. ACME Manufacturing — billing_state — WI (string)\n83. ACME Manufacturing — duns_number — 04-812-7730 (string)\n84. ACME Manufacturing — account_owner — Sarah Chen (string)\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n88. Platinum plan — belongs to — ACME Manufacturing\n89. SR-39857 — customer_on_ticket — ACME Manufacturing\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       33,
+       35,
+       36
+      ],
+      "why": "The 15% exception only took effect 2025-04-01 and superseded EXC-ACME-NS500-10. That implies a 10% exception existed earlier, but no fact gives its 10% maximum or its dates, so 2024-06-01 isn't covered."
+     },
+     "cost_usd": 0.017634
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4a",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "On 2024-06-01, the Acme NS-500 pricing exception in force permits up to 10%, not 15%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception · holds 2026-10-13 → …\n3. pricing exception — hasProduct — product · holds 2026-10-13 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B · holds 2026-10-13 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n14. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-13 → …\n15. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-13 → …\n16. NS-500 Industrial Controller — category — Equipment (string) · holds 2026-10-13 → …\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-13 → …\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-13 → …\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller · holds 2026-10-13 → …\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n21. DR-8104 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n22. DR-7015 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n23. DR-7016 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n24. DR-7019 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n25. DR-7020 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n26. DR-9001 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n27. support plan — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · holds 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · holds 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025 · holds 2026-10-13 → …\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15 · holds 2026-10-13 → …\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string) · holds 2026-10-13 → …\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string) · holds 2026-10-13 → …\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string) · holds 2026-10-13 → …\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product · holds 2026-10-13 → …\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility · holds 2026-10-13 → …\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string) · holds 2026-10-13 → …\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception · holds 2026-10-13 → …\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n46. NS-500 pricing — is believed to be — 15% (string) · holds 2026-10-13 → …\n47. NS-500 pricing — Worth confirming with — Deal Desk · holds 2026-10-13 → …\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n50. NS-500 orders — will step up — step up (string) · holds 2026-10-13 → …\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · holds 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n56. ACME Manufacturing — reverted — VLAN change · holds 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · holds 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048 · holds 2026-10-13 → …\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n60. ACME Manufacturing — revenue — ~$125,000,000 (string) · holds 2026-10-13 → …\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string) · holds 2026-10-13 → …\n62. ACME Manufacturing — are evaluating — NS-CLOUD · holds 2026-10-13 → …\n63. ACME Manufacturing — has key contact — Edward Floyd [person] · holds 2026-10-13 → …\n64. ACME Manufacturing — has key contact — Johnny Johnson [person] · holds 2026-10-13 → …\n65. ACME Manufacturing — has key contact — Kelly Ballard [person] · holds 2026-10-13 → …\n66. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n67. ACME Manufacturing — expects — controller orders · holds 2026-10-13 → …\n68. ACME Manufacturing — Land — NS-Cloud pilot [project] · holds 2026-10-13 → …\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string) · holds 2026-10-13 → …\n70. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n71. ACME Manufacturing — has — third plant [place] · holds 2026-10-13 → …\n72. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n73. ACME Manufacturing — has — credit limit · holds 2026-10-13 → …\n74. ACME Manufacturing — asking for — 15% (string) · holds 2026-10-13 → …\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n76. ACME Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-13 → …\n77. ACME Manufacturing — account_tier — Strategic (string) · holds 2026-10-13 → …\n78. ACME Manufacturing — segment — Midwest (string) · holds 2026-10-13 → …\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string) · holds 2026-10-13 → …\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n81. ACME Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-13 → …\n82. ACME Manufacturing — billing_state — WI (string) · holds 2026-10-13 → …\n83. ACME Manufacturing — duns_number — 04-812-7730 (string) · holds 2026-10-13 → …\n84. ACME Manufacturing — account_owner — Sarah Chen (string) · holds 2026-10-13 → …\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string) · holds 2026-10-13 → …\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n88. Platinum plan — belongs to — ACME Manufacturing · holds 2026-10-13 → …\n89. SR-39857 — customer_on_ticket — ACME Manufacturing · holds 2026-10-13 → …\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city] · holds 2026-10-13 → …\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       33,
+       35,
+       36
+      ],
+      "why": "The 15% exception only took effect 2025-04-01 and supersedes EXC-ACME-NS500-10. This implies the earlier one applied before then, but its 10% cap and its dates are not stated."
+     },
+     "cost_usd": 0.021766
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4b",
+   "u31": false,
+   "reading": "stated",
+   "statement": "On 2026-09-23, the Acme NS-500 pricing exception in force permits up to 15%, not 10%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n14. NS-500 Industrial Controller — product_id — PROD-001 (string)\n15. NS-500 Industrial Controller — sku — NS-500 (string)\n16. NS-500 Industrial Controller — category — Equipment (string)\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n21. DR-8104 — product_sku — NS-500 Industrial Controller\n22. DR-7015 — product_sku — NS-500 Industrial Controller\n23. DR-7016 — product_sku — NS-500 Industrial Controller\n24. DR-7019 — product_sku — NS-500 Industrial Controller\n25. DR-7020 — product_sku — NS-500 Industrial Controller\n26. DR-9001 — product_sku — NS-500 Industrial Controller\n27. support plan — hasProduct — NS-500 Industrial Controller\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing\n46. NS-500 pricing — is believed to be — 15% (string)\n47. NS-500 pricing — Worth confirming with — Deal Desk\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders\n50. NS-500 orders — will step up — step up (string)\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n56. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n60. ACME Manufacturing — revenue — ~$125,000,000 (string)\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n62. ACME Manufacturing — are evaluating — NS-CLOUD\n63. ACME Manufacturing — has key contact — Edward Floyd [person]\n64. ACME Manufacturing — has key contact — Johnny Johnson [person]\n65. ACME Manufacturing — has key contact — Kelly Ballard [person]\n66. ACME Manufacturing — expects — third-plant NS-500 rollout\n67. ACME Manufacturing — expects — controller orders\n68. ACME Manufacturing — Land — NS-Cloud pilot [project]\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n70. ACME Manufacturing — negotiated — NS-500 pricing\n71. ACME Manufacturing — has — third plant [place]\n72. ACME Manufacturing — has — NS-500 orders\n73. ACME Manufacturing — has — credit limit\n74. ACME Manufacturing — asking for — 15% (string)\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n76. ACME Manufacturing — account_id — CRM-2048 (string)\n77. ACME Manufacturing — account_tier — Strategic (string)\n78. ACME Manufacturing — segment — Midwest (string)\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n81. ACME Manufacturing — billing_city — Milwaukee (string)\n82. ACME Manufacturing — billing_state — WI (string)\n83. ACME Manufacturing — duns_number — 04-812-7730 (string)\n84. ACME Manufacturing — account_owner — Sarah Chen (string)\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n88. Platinum plan — belongs to — ACME Manufacturing\n89. SR-39857 — customer_on_ticket — ACME Manufacturing\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       28,
+       31,
+       33,
+       35,
+       36,
+       37,
+       38
+      ],
+      "why": "The Acme NS-500 exception EXC-ACME-NS500-15 allows a max 15% discount, effective 2025-04-01 to 2028-03-31, so it covers 2026-09-23. It supersedes the earlier 10% exception, EXC-ACME-NS500-10."
+     },
+     "cost_usd": 0.015519999999999999
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4b",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "On 2026-09-23, the Acme NS-500 pricing exception in force permits up to 15%, not 10%.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception · holds 2026-10-13 → …\n3. pricing exception — hasProduct — product · holds 2026-10-13 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B · holds 2026-10-13 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n14. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-13 → …\n15. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-13 → …\n16. NS-500 Industrial Controller — category — Equipment (string) · holds 2026-10-13 → …\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-13 → …\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-13 → …\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller · holds 2026-10-13 → …\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n21. DR-8104 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n22. DR-7015 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n23. DR-7016 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n24. DR-7019 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n25. DR-7020 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n26. DR-9001 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n27. support plan — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · holds 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · holds 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025 · holds 2026-10-13 → …\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15 · holds 2026-10-13 → …\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string) · holds 2026-10-13 → …\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string) · holds 2026-10-13 → …\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string) · holds 2026-10-13 → …\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product · holds 2026-10-13 → …\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility · holds 2026-10-13 → …\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string) · holds 2026-10-13 → …\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception · holds 2026-10-13 → …\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n46. NS-500 pricing — is believed to be — 15% (string) · holds 2026-10-13 → …\n47. NS-500 pricing — Worth confirming with — Deal Desk · holds 2026-10-13 → …\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n50. NS-500 orders — will step up — step up (string) · holds 2026-10-13 → …\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · holds 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n56. ACME Manufacturing — reverted — VLAN change · holds 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · holds 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048 · holds 2026-10-13 → …\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n60. ACME Manufacturing — revenue — ~$125,000,000 (string) · holds 2026-10-13 → …\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string) · holds 2026-10-13 → …\n62. ACME Manufacturing — are evaluating — NS-CLOUD · holds 2026-10-13 → …\n63. ACME Manufacturing — has key contact — Edward Floyd [person] · holds 2026-10-13 → …\n64. ACME Manufacturing — has key contact — Johnny Johnson [person] · holds 2026-10-13 → …\n65. ACME Manufacturing — has key contact — Kelly Ballard [person] · holds 2026-10-13 → …\n66. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n67. ACME Manufacturing — expects — controller orders · holds 2026-10-13 → …\n68. ACME Manufacturing — Land — NS-Cloud pilot [project] · holds 2026-10-13 → …\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string) · holds 2026-10-13 → …\n70. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n71. ACME Manufacturing — has — third plant [place] · holds 2026-10-13 → …\n72. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n73. ACME Manufacturing — has — credit limit · holds 2026-10-13 → …\n74. ACME Manufacturing — asking for — 15% (string) · holds 2026-10-13 → …\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n76. ACME Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-13 → …\n77. ACME Manufacturing — account_tier — Strategic (string) · holds 2026-10-13 → …\n78. ACME Manufacturing — segment — Midwest (string) · holds 2026-10-13 → …\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string) · holds 2026-10-13 → …\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n81. ACME Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-13 → …\n82. ACME Manufacturing — billing_state — WI (string) · holds 2026-10-13 → …\n83. ACME Manufacturing — duns_number — 04-812-7730 (string) · holds 2026-10-13 → …\n84. ACME Manufacturing — account_owner — Sarah Chen (string) · holds 2026-10-13 → …\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string) · holds 2026-10-13 → …\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n88. Platinum plan — belongs to — ACME Manufacturing · holds 2026-10-13 → …\n89. SR-39857 — customer_on_ticket — ACME Manufacturing · holds 2026-10-13 → …\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city] · holds 2026-10-13 → …\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "stated",
+     "answer": {
+      "verdict": "stated",
+      "lines": [
+       31,
+       33,
+       35,
+       36,
+       37
+      ],
+      "why": "The Acme NS-500 exception (EXC-ACME-NS500-15) allows a maximum 15% discount, is effective 2025-04-01 to 2028-03-31 (covering 2026-09-23), and supersedes the 10% exception (EXC-ACME-NS500-10)."
+     },
+     "cost_usd": 0.020906
+    }
+   ],
+   "verdict": "stated"
+  },
+  {
+   "part": "p4",
+   "id": "P4c",
+   "u31": false,
+   "reading": "stated",
+   "statement": "Both exceptions are held, each with its own validity: 10% from 2023-04-01 to 2025-03-31, and 15% from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n14. NS-500 Industrial Controller — product_id — PROD-001 (string)\n15. NS-500 Industrial Controller — sku — NS-500 (string)\n16. NS-500 Industrial Controller — category — Equipment (string)\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n21. DR-8104 — product_sku — NS-500 Industrial Controller\n22. DR-7015 — product_sku — NS-500 Industrial Controller\n23. DR-7016 — product_sku — NS-500 Industrial Controller\n24. DR-7019 — product_sku — NS-500 Industrial Controller\n25. DR-7020 — product_sku — NS-500 Industrial Controller\n26. DR-9001 — product_sku — NS-500 Industrial Controller\n27. support plan — hasProduct — NS-500 Industrial Controller\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing\n46. NS-500 pricing — is believed to be — 15% (string)\n47. NS-500 pricing — Worth confirming with — Deal Desk\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders\n50. NS-500 orders — will step up — step up (string)\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n56. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n60. ACME Manufacturing — revenue — ~$125,000,000 (string)\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n62. ACME Manufacturing — are evaluating — NS-CLOUD\n63. ACME Manufacturing — has key contact — Edward Floyd [person]\n64. ACME Manufacturing — has key contact — Johnny Johnson [person]\n65. ACME Manufacturing — has key contact — Kelly Ballard [person]\n66. ACME Manufacturing — expects — third-plant NS-500 rollout\n67. ACME Manufacturing — expects — controller orders\n68. ACME Manufacturing — Land — NS-Cloud pilot [project]\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n70. ACME Manufacturing — negotiated — NS-500 pricing\n71. ACME Manufacturing — has — third plant [place]\n72. ACME Manufacturing — has — NS-500 orders\n73. ACME Manufacturing — has — credit limit\n74. ACME Manufacturing — asking for — 15% (string)\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n76. ACME Manufacturing — account_id — CRM-2048 (string)\n77. ACME Manufacturing — account_tier — Strategic (string)\n78. ACME Manufacturing — segment — Midwest (string)\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n81. ACME Manufacturing — billing_city — Milwaukee (string)\n82. ACME Manufacturing — billing_state — WI (string)\n83. ACME Manufacturing — duns_number — 04-812-7730 (string)\n84. ACME Manufacturing — account_owner — Sarah Chen (string)\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n88. Platinum plan — belongs to — ACME Manufacturing\n89. SR-39857 — customer_on_ticket — ACME Manufacturing\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       33,
+       35,
+       36,
+       37,
+       54
+      ],
+      "why": "The 15% exception is stated with its dates (2025-04-01 to 2028-03-31). The earlier exception EXC-ACME-NS500-10 appears only as superseded, and no fact gives its 10% or its 2023-04-01 to 2025-03-31 validity as an exception."
+     },
+     "cost_usd": 0.017721999999999998
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4c",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "Both exceptions are held, each with its own validity: 10% from 2023-04-01 to 2025-03-31, and 15% from 2025-04-01 to 2028-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception · holds 2026-10-13 → …\n3. pricing exception — hasProduct — product · holds 2026-10-13 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B · holds 2026-10-13 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n14. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-13 → …\n15. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-13 → …\n16. NS-500 Industrial Controller — category — Equipment (string) · holds 2026-10-13 → …\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-13 → …\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-13 → …\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller · holds 2026-10-13 → …\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n21. DR-8104 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n22. DR-7015 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n23. DR-7016 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n24. DR-7019 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n25. DR-7020 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n26. DR-9001 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n27. support plan — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · holds 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · holds 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025 · holds 2026-10-13 → …\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15 · holds 2026-10-13 → …\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string) · holds 2026-10-13 → …\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string) · holds 2026-10-13 → …\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string) · holds 2026-10-13 → …\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product · holds 2026-10-13 → …\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility · holds 2026-10-13 → …\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string) · holds 2026-10-13 → …\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception · holds 2026-10-13 → …\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n46. NS-500 pricing — is believed to be — 15% (string) · holds 2026-10-13 → …\n47. NS-500 pricing — Worth confirming with — Deal Desk · holds 2026-10-13 → …\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n50. NS-500 orders — will step up — step up (string) · holds 2026-10-13 → …\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · holds 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n56. ACME Manufacturing — reverted — VLAN change · holds 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · holds 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048 · holds 2026-10-13 → …\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n60. ACME Manufacturing — revenue — ~$125,000,000 (string) · holds 2026-10-13 → …\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string) · holds 2026-10-13 → …\n62. ACME Manufacturing — are evaluating — NS-CLOUD · holds 2026-10-13 → …\n63. ACME Manufacturing — has key contact — Edward Floyd [person] · holds 2026-10-13 → …\n64. ACME Manufacturing — has key contact — Johnny Johnson [person] · holds 2026-10-13 → …\n65. ACME Manufacturing — has key contact — Kelly Ballard [person] · holds 2026-10-13 → …\n66. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n67. ACME Manufacturing — expects — controller orders · holds 2026-10-13 → …\n68. ACME Manufacturing — Land — NS-Cloud pilot [project] · holds 2026-10-13 → …\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string) · holds 2026-10-13 → …\n70. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n71. ACME Manufacturing — has — third plant [place] · holds 2026-10-13 → …\n72. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n73. ACME Manufacturing — has — credit limit · holds 2026-10-13 → …\n74. ACME Manufacturing — asking for — 15% (string) · holds 2026-10-13 → …\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n76. ACME Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-13 → …\n77. ACME Manufacturing — account_tier — Strategic (string) · holds 2026-10-13 → …\n78. ACME Manufacturing — segment — Midwest (string) · holds 2026-10-13 → …\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string) · holds 2026-10-13 → …\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n81. ACME Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-13 → …\n82. ACME Manufacturing — billing_state — WI (string) · holds 2026-10-13 → …\n83. ACME Manufacturing — duns_number — 04-812-7730 (string) · holds 2026-10-13 → …\n84. ACME Manufacturing — account_owner — Sarah Chen (string) · holds 2026-10-13 → …\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string) · holds 2026-10-13 → …\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n88. Platinum plan — belongs to — ACME Manufacturing · holds 2026-10-13 → …\n89. SR-39857 — customer_on_ticket — ACME Manufacturing · holds 2026-10-13 → …\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city] · holds 2026-10-13 → …\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       33,
+       35,
+       36,
+       37,
+       54
+      ],
+      "why": "The 15% exception with 2025-04-01 to 2028-03-31 is stated. The earlier exception (EXC-ACME-NS500-10) is only said to be superseded. The 10% value is not stated, and the 2023-04-01 to 2025-03-31 dates attach to a general 'may receive off list price' fact."
+     },
+     "cost_usd": 0.02137
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4d",
+   "u31": false,
+   "reading": "stated",
+   "statement": "The 2023 exception (10%) stopped holding on 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception\n3. pricing exception — hasProduct — product\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string)\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string)\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n14. NS-500 Industrial Controller — product_id — PROD-001 (string)\n15. NS-500 Industrial Controller — sku — NS-500 (string)\n16. NS-500 Industrial Controller — category — Equipment (string)\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string)\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place]\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n21. DR-8104 — product_sku — NS-500 Industrial Controller\n22. DR-7015 — product_sku — NS-500 Industrial Controller\n23. DR-7016 — product_sku — NS-500 Industrial Controller\n24. DR-7019 — product_sku — NS-500 Industrial Controller\n25. DR-7020 — product_sku — NS-500 Industrial Controller\n26. DR-9001 — product_sku — NS-500 Industrial Controller\n27. support plan — hasProduct — NS-500 Industrial Controller\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · valid 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · valid 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string)\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string)\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string)\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string)\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing\n46. NS-500 pricing — is believed to be — 15% (string)\n47. NS-500 pricing — Worth confirming with — Deal Desk\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders\n50. NS-500 orders — will step up — step up (string)\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · valid 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · valid 2025 → 2025\n56. ACME Manufacturing — reverted — VLAN change · valid 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · valid 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation]\n60. ACME Manufacturing — revenue — ~$125,000,000 (string)\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string)\n62. ACME Manufacturing — are evaluating — NS-CLOUD\n63. ACME Manufacturing — has key contact — Edward Floyd [person]\n64. ACME Manufacturing — has key contact — Johnny Johnson [person]\n65. ACME Manufacturing — has key contact — Kelly Ballard [person]\n66. ACME Manufacturing — expects — third-plant NS-500 rollout\n67. ACME Manufacturing — expects — controller orders\n68. ACME Manufacturing — Land — NS-Cloud pilot [project]\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string)\n70. ACME Manufacturing — negotiated — NS-500 pricing\n71. ACME Manufacturing — has — third plant [place]\n72. ACME Manufacturing — has — NS-500 orders\n73. ACME Manufacturing — has — credit limit\n74. ACME Manufacturing — asking for — 15% (string)\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing\n76. ACME Manufacturing — account_id — CRM-2048 (string)\n77. ACME Manufacturing — account_tier — Strategic (string)\n78. ACME Manufacturing — segment — Midwest (string)\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string)\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string)\n81. ACME Manufacturing — billing_city — Milwaukee (string)\n82. ACME Manufacturing — billing_state — WI (string)\n83. ACME Manufacturing — duns_number — 04-812-7730 (string)\n84. ACME Manufacturing — account_owner — Sarah Chen (string)\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string)\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing\n88. Platinum plan — belongs to — ACME Manufacturing\n89. SR-39857 — customer_on_ticket — ACME Manufacturing\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city]\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       54
+      ],
+      "why": "Line 54 gives a 2023-04-01 → 2025-03-31 validity for an Acme discount off list price, and line 31 shows the new exception superseding EXC-ACME-NS500-10 from 2025-04-01. No fact states the 10% figure or ties that discount to the 2023 exception."
+     },
+     "cost_usd": 0.017678
+    }
+   ],
+   "verdict": "partly"
+  },
+  {
+   "part": "p4",
+   "id": "P4d",
+   "u31": false,
+   "reading": "x-holds",
+   "statement": "The 2023 exception (10%) stopped holding on 2025-03-31.",
+   "facts": "1. E1 · pricing exception [unclassified]\n2. discount request — check for — pricing exception · holds 2026-10-13 → …\n3. pricing exception — hasProduct — product · holds 2026-10-13 → …\n4. E2 · pricing exception [unclassified]\n5. pricing exception — hasDesignation — Schedule B · holds 2026-10-13 → …\n6. E3 · contract-specific pricing exceptions [unclassified]\n7. contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n8. E4 · Contract-specific pricing exceptions [unclassified]\n9. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n10. E5 · Contract-specific pricing exceptions [unclassified]\n11. Contract-specific pricing exceptions — must be reviewed — reviewed (string) · holds 2026-10-13 → …\n12. E6 · NS-500 Industrial Controller [unclassified] · also named: NS-500; NS-500 controller\n13. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n14. NS-500 Industrial Controller — product_id — PROD-001 (string) · holds 2026-10-13 → …\n15. NS-500 Industrial Controller — sku — NS-500 (string) · holds 2026-10-13 → …\n16. NS-500 Industrial Controller — category — Equipment (string) · holds 2026-10-13 → …\n17. NS-500 Industrial Controller — list_price_usd — 250000 (string) · holds 2026-10-13 → …\n18. NS-500 Industrial Controller — faulted — stamping line 4 [place] · holds 2026-10-13 → …\n19. Northstar Industrial Systems — supply — NS-500 Industrial Controller · holds 2026-10-13 → …\n20. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n21. DR-8104 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n22. DR-7015 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n23. DR-7016 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n24. DR-7019 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n25. DR-7020 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n26. DR-9001 — product_sku — NS-500 Industrial Controller · holds 2026-10-13 → …\n27. support plan — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n28. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n29. E7 · Acme NS-500 Strategic Account Exception [unclassified]\n30. David Morgan — approved — Acme NS-500 Strategic Account Exception · holds 2025-03-20 → 2025-03-20\n31. Acme NS-500 Strategic Account Exception — Supersedes — EXC-ACME-NS500-10 · holds 2025-04-01 → …\n32. Acme NS-500 Strategic Account Exception — is Schedule B to — ACME-MFG-2025 · holds 2026-10-13 → …\n33. Acme NS-500 Strategic Account Exception — has exception ID — EXC-ACME-NS500-15 · holds 2026-10-13 → …\n34. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n35. Acme NS-500 Strategic Account Exception — maximum eligible discount — 15% (string) · holds 2026-10-13 → …\n36. Acme NS-500 Strategic Account Exception — effective — 2025-04-01 (string) · holds 2026-10-13 → …\n37. Acme NS-500 Strategic Account Exception — expires — 2028-03-31 (string) · holds 2026-10-13 → …\n38. Acme NS-500 Strategic Account Exception — applies to — NS-500 Industrial Controller · holds 2026-10-13 → …\n39. Acme NS-500 Strategic Account Exception — does not apply to — Northstar product · holds 2026-10-13 → …\n40. Acme NS-500 Strategic Account Exception — establishes — commercial eligibility · holds 2026-10-13 → …\n41. Acme NS-500 Strategic Account Exception — does not grant — approval authority (string) · holds 2026-10-13 → …\n42. Sarah Chen — prepared — Acme NS-500 Strategic Account Exception · holds 2026-10-13 → …\n43. Acme NS-500 Strategic Account Exception — hasProduct — NS-500 Industrial Controller · holds 2026-10-13 → …\n44. E8 · NS-500 pricing [unclassified]\n45. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n46. NS-500 pricing — is believed to be — 15% (string) · holds 2026-10-13 → …\n47. NS-500 pricing — Worth confirming with — Deal Desk · holds 2026-10-13 → …\n48. E9 · NS-500 orders [unclassified]\n49. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n50. NS-500 orders — will step up — step up (string) · holds 2026-10-13 → …\n51. E10 · third-plant NS-500 rollout [unclassified]\n52. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n53. E11 · ACME Manufacturing [unclassified] · also named: Acme; Acme Manufacturing\n54. ACME Manufacturing — may receive off — list price · holds 2023-04-01 → 2025-03-31\n55. ACME Manufacturing — implements — NS-500 Industrial Controller · holds 2025-01-01 → 2025-01-01\n56. ACME Manufacturing — reverted — VLAN change · holds 2026-08-17 → 2026-08-17\n57. Gina — confirmed — ACME Manufacturing · holds 2026-09-23 → 2026-09-23\n58. ACME Manufacturing — has CRM account — CRM-2048 · holds 2026-10-13 → …\n59. ACME Manufacturing — has ERP bill-to — Acme Mfg. Holdings [corporation] · holds 2026-10-13 → …\n60. ACME Manufacturing — revenue — ~$125,000,000 (string) · holds 2026-10-13 → …\n61. ACME Manufacturing — is one of our strategic accounts — one of our strategic accounts (string) · holds 2026-10-13 → …\n62. ACME Manufacturing — are evaluating — NS-CLOUD · holds 2026-10-13 → …\n63. ACME Manufacturing — has key contact — Edward Floyd [person] · holds 2026-10-13 → …\n64. ACME Manufacturing — has key contact — Johnny Johnson [person] · holds 2026-10-13 → …\n65. ACME Manufacturing — has key contact — Kelly Ballard [person] · holds 2026-10-13 → …\n66. ACME Manufacturing — expects — third-plant NS-500 rollout · holds 2026-10-13 → …\n67. ACME Manufacturing — expects — controller orders · holds 2026-10-13 → …\n68. ACME Manufacturing — Land — NS-Cloud pilot [project] · holds 2026-10-13 → …\n69. ACME Manufacturing — Target FY26 bookings — above $1,200,000 (string) · holds 2026-10-13 → …\n70. ACME Manufacturing — negotiated — NS-500 pricing · holds 2026-10-13 → …\n71. ACME Manufacturing — has — third plant [place] · holds 2026-10-13 → …\n72. ACME Manufacturing — has — NS-500 orders · holds 2026-10-13 → …\n73. ACME Manufacturing — has — credit limit · holds 2026-10-13 → …\n74. ACME Manufacturing — asking for — 15% (string) · holds 2026-10-13 → …\n75. Acme Mfg. Holdings — doing business as — ACME Manufacturing · holds 2026-10-13 → …\n76. ACME Manufacturing — account_id — CRM-2048 (string) · holds 2026-10-13 → …\n77. ACME Manufacturing — account_tier — Strategic (string) · holds 2026-10-13 → …\n78. ACME Manufacturing — segment — Midwest (string) · holds 2026-10-13 → …\n79. ACME Manufacturing — industry — Enterprise Industrial Manufacturing (string) · holds 2026-10-13 → …\n80. ACME Manufacturing — billing_street — 2200 N Industrial Pkwy (string) · holds 2026-10-13 → …\n81. ACME Manufacturing — billing_city — Milwaukee (string) · holds 2026-10-13 → …\n82. ACME Manufacturing — billing_state — WI (string) · holds 2026-10-13 → …\n83. ACME Manufacturing — duns_number — 04-812-7730 (string) · holds 2026-10-13 → …\n84. ACME Manufacturing — account_owner — Sarah Chen (string) · holds 2026-10-13 → …\n85. ACME Manufacturing — owner_email — sarah.chen@northstar.example (string) · holds 2026-10-13 → …\n86. Acme NS-500 Strategic Account Exception — has customer — ACME Manufacturing · holds 2026-10-13 → …\n87. Acme Mfg. Holdings — is doing business as — ACME Manufacturing · holds 2026-10-13 → …\n88. Platinum plan — belongs to — ACME Manufacturing · holds 2026-10-13 → …\n89. SR-39857 — customer_on_ticket — ACME Manufacturing · holds 2026-10-13 → …\n90. ACME Manufacturing — hasLocation — Milwaukee, WI [city] · holds 2026-10-13 → …\n91. ACME Manufacturing — hasDesignation — Industrial Manufacturing · holds 2026-10-13 → …",
+   "runs": [
+    {
+     "verdict": "partly",
+     "answer": {
+      "verdict": "partly",
+      "lines": [
+       31,
+       54
+      ],
+      "why": "Line 54 gives a 2023-04-01 to 2025-03-31 span for ACME getting a discount off list price, and line 31 says the new exception supersedes EXC-ACME-NS500-10 from 2025-04-01. No fact states the 10% value or ties the 2023 exception to that span."
+     },
+     "cost_usd": 0.021354
+    }
+   ],
+   "verdict": "partly"
+  }
+ ]
+}

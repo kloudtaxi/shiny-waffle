@@ -1,0 +1,10 @@
+{"at": "2026-10-18T02:55:11-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 1339, "ms": 302}
+{"at": "2026-10-18T02:55:11-0400", "tool": "search", "arguments": {"query": "DR-9107"}, "status": 200, "is_error": false, "chars": 11925, "ms": 231}
+{"at": "2026-10-18T02:55:11-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 2074, "ms": 206}
+{"at": "2026-10-18T02:55:14-0400", "tool": "read_passages", "arguments": {"document_id": "d8141025-a943-4046-bb3c-ed40c55c199d", "cursor": "4"}, "status": 400, "is_error": true, "chars": 91, "ms": 3}
+{"at": "2026-10-18T02:55:15-0400", "tool": "search", "arguments": {"query": "discount approval bands authority policy", "limit": 10}, "status": 200, "is_error": false, "chars": 6017, "ms": 418}
+{"at": "2026-10-18T02:55:15-0400", "tool": "search", "arguments": {"query": "BlueRiver contract pricing exception discount", "limit": 10}, "status": 200, "is_error": false, "chars": 5540, "ms": 220}
+{"at": "2026-10-18T02:55:20-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 212, "ms": 22}
+{"at": "2026-10-18T02:55:21-0400", "tool": "list_facts", "arguments": {"entity_id": "56080932-a6f8-47bd-b20b-e1cbfd755b11"}, "status": 200, "is_error": false, "chars": 10530, "ms": 23}
+{"at": "2026-10-18T02:55:22-0400", "tool": "search", "arguments": {"query": "VP Sales", "limit": 8}, "status": 200, "is_error": false, "chars": 5628, "ms": 684}
+{"at": "2026-10-18T02:55:27-0400", "tool": "search", "arguments": {"query": "Blue River Logistics agreement pricing NS-500", "limit": 6}, "status": 200, "is_error": false, "chars": 3687, "ms": 176}

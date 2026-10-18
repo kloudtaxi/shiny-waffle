@@ -1,0 +1,13 @@
+{"at": "2026-10-18T03:04:06-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 30}
+{"at": "2026-10-18T03:04:06-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 21}
+{"at": "2026-10-18T03:04:12-0400", "tool": "list_facts", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12558, "ms": 18}
+{"at": "2026-10-18T03:04:13-0400", "tool": "list_facts", "arguments": {"entity_id": "c817032b-a762-45f0-8e89-15dd26cc4c58"}, "status": 200, "is_error": false, "chars": 4615, "ms": 19}
+{"at": "2026-10-18T03:04:16-0400", "tool": "list_facts", "arguments": {"entity_id": "2eee59da-b1bb-4b82-a87c-96cdbbf803cd"}, "status": 200, "is_error": false, "chars": 49, "ms": 19}
+{"at": "2026-10-18T03:04:17-0400", "tool": "list_facts", "arguments": {"entity_id": "2545f0e1-3fbf-403e-a5ab-c218e77ef3df"}, "status": 200, "is_error": false, "chars": 49, "ms": 21}
+{"at": "2026-10-18T03:04:20-0400", "tool": "list_facts", "arguments": {"entity_id": "c4586a04-367f-4722-be10-5da02b077030", "valid_at": "2022-10-01"}, "status": 200, "is_error": false, "chars": 27669, "ms": 21}
+{"at": "2026-10-18T03:04:20-0400", "tool": "find_entities", "arguments": {"kind": "agreement", "q": "ACME"}, "status": 200, "is_error": false, "chars": 1039, "ms": 22}
+{"at": "2026-10-18T03:04:24-0400", "tool": "list_facts", "arguments": {"entity_id": "c8b86c3b-c195-4dad-a1fb-3ca7c5211ea4"}, "status": 200, "is_error": false, "chars": 641, "ms": 27}
+{"at": "2026-10-18T03:04:25-0400", "tool": "list_facts", "arguments": {"entity_id": "359ed0b4-af49-4a9c-9904-4ebf23c287e9"}, "status": 200, "is_error": false, "chars": 49, "ms": 42}
+{"at": "2026-10-18T03:04:25-0400", "tool": "list_facts", "arguments": {"entity_id": "281e99ce-3000-4d0e-bb71-e69721f53253"}, "status": 200, "is_error": false, "chars": 1491, "ms": 32}
+{"at": "2026-10-18T03:04:31-0400", "tool": "neighbourhood", "arguments": {"entity_id": "c4586a04-367f-4722-be10-5da02b077030", "hops": 1}, "status": 200, "is_error": false, "chars": 17499, "ms": 22}
+{"at": "2026-10-18T03:04:35-0400", "tool": "list_facts", "arguments": {"entity_id": "e9177f69-ab32-4f58-983f-0d89af76c612"}, "status": 200, "is_error": false, "chars": 11357, "ms": 21}

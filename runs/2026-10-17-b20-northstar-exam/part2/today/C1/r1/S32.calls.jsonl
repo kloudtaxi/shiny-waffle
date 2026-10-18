@@ -1,0 +1,12 @@
+{"at": "2026-10-17T22:26:14-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1044"}, "status": 501, "is_error": true, "chars": 143, "ms": 38}
+{"at": "2026-10-17T22:26:14-0400", "tool": "find_entities", "arguments": {"q": "CR-9207"}, "status": 200, "is_error": false, "chars": 11, "ms": 55}
+{"at": "2026-10-17T22:26:15-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 144}
+{"at": "2026-10-17T22:26:17-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-4936-7260-b2ea-c4673b5be72f"}, "status": 200, "is_error": false, "chars": 11587, "ms": 55}
+{"at": "2026-10-17T22:26:18-0400", "tool": "search", "arguments": {"query": "Acme parent guarantee", "limit": 10}, "status": 200, "is_error": false, "chars": 10060, "ms": 471}
+{"at": "2026-10-17T22:26:18-0400", "tool": "search", "arguments": {"query": "CR-9207 credit limit request", "limit": 10}, "status": 200, "is_error": false, "chars": 8282, "ms": 315}
+{"at": "2026-10-17T22:26:24-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a259-7831-8044-e12e5d9b8eaa"}, "status": 200, "is_error": false, "chars": 1552, "ms": 54}
+{"at": "2026-10-17T22:26:24-0400", "tool": "search", "arguments": {"query": "C-1044 invoice", "limit": 20}, "status": 200, "is_error": false, "chars": 14739, "ms": 287}
+{"at": "2026-10-17T22:26:24-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 41}
+{"at": "2026-10-17T22:26:30-0400", "tool": "search", "arguments": {"query": "guarantee Acme Industrial Supply", "limit": 10}, "status": 200, "is_error": false, "chars": 10050, "ms": 427}
+{"at": "2026-10-17T22:26:31-0400", "tool": "search", "arguments": {"query": "employee directory role manager Finance Manager", "limit": 10}, "status": 200, "is_error": false, "chars": 10334, "ms": 432}
+{"at": "2026-10-17T22:26:31-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-35a5-7ff3-a35b-e5128808d47e"}, "status": 200, "is_error": false, "chars": 3431, "ms": 49}

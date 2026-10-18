@@ -1,0 +1,15 @@
+{"at": "2026-10-18T14:59:43-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 2801, "ms": 71}
+{"at": "2026-10-18T14:59:44-0400", "tool": "find_entities", "arguments": {"q": "CR-9208"}, "status": 200, "is_error": false, "chars": 11, "ms": 22}
+{"at": "2026-10-18T14:59:45-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 37464, "ms": 35}
+{"at": "2026-10-18T14:59:45-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 12874, "ms": 72}
+{"at": "2026-10-18T14:59:47-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 8117, "ms": 19}
+{"at": "2026-10-18T14:59:48-0400", "tool": "list_facts", "arguments": {"entity_id": "6ce915c6-5aa6-4166-bdb4-c5c435c0abcf"}, "status": 200, "is_error": false, "chars": 15750, "ms": 19}
+{"at": "2026-10-18T14:59:48-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 212, "ms": 18}
+{"at": "2026-10-18T14:59:50-0400", "tool": "list_facts", "arguments": {"entity_id": "b8bd47ea-f76b-4f00-9f2e-7a1bca24c189"}, "status": 200, "is_error": false, "chars": 5445, "ms": 109}
+{"at": "2026-10-18T14:59:50-0400", "tool": "find_entities", "arguments": {"q": "Director of Finance"}, "status": 200, "is_error": false, "chars": 233, "ms": 27}
+{"at": "2026-10-18T14:59:51-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 58}
+{"at": "2026-10-18T14:59:51-0400", "tool": "find_entities", "arguments": {"q": "invoice"}, "status": 200, "is_error": false, "chars": 11, "ms": 31}
+{"at": "2026-10-18T14:59:53-0400", "tool": "neighbourhood", "arguments": {"entity_id": "f729b731-4e9b-464e-a577-b6f9b0dbf797"}, "status": 200, "is_error": false, "chars": 956, "ms": 21}
+{"at": "2026-10-18T14:59:54-0400", "tool": "neighbourhood", "arguments": {"entity_id": "b6dd20ba-e616-4791-a389-0efdeacbe38f"}, "status": 200, "is_error": false, "chars": 2761, "ms": 42}
+{"at": "2026-10-18T14:59:54-0400", "tool": "find_entities", "arguments": {"q": "INV"}, "status": 200, "is_error": false, "chars": 3723, "ms": 21}
+{"at": "2026-10-18T14:59:55-0400", "tool": "find_entities", "arguments": {"q": "guarantee"}, "status": 200, "is_error": false, "chars": 678, "ms": 52}

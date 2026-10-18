@@ -1,0 +1,14 @@
+{"at": "2026-10-17T22:57:57-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9101"}, "status": 404, "is_error": true, "chars": 135, "ms": 92}
+{"at": "2026-10-17T22:57:58-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 65}
+{"at": "2026-10-17T22:57:58-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 22}
+{"at": "2026-10-17T22:57:58-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1364, "ms": 26}
+{"at": "2026-10-17T22:58:01-0400", "tool": "search", "arguments": {"query": "DR-9101"}, "status": 200, "is_error": false, "chars": 11916, "ms": 248}
+{"at": "2026-10-17T22:58:01-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 3}
+{"at": "2026-10-17T22:58:04-0400", "tool": "read_passages", "arguments": {"document_id": "1744c3aa-c279-472c-a5f5-0215855bdb9a"}, "status": 200, "is_error": false, "chars": 2007, "ms": 5}
+{"at": "2026-10-17T22:58:05-0400", "tool": "read_passages", "arguments": {"document_id": "5ca4944a-ff12-4819-a702-46d5180aa3c4"}, "status": 200, "is_error": false, "chars": 1360, "ms": 4}
+{"at": "2026-10-17T22:58:05-0400", "tool": "read_passages", "arguments": {"document_id": "04f6e5ee-c5c6-4777-a369-8a2061703472"}, "status": 200, "is_error": false, "chars": 390, "ms": 4}
+{"at": "2026-10-17T22:58:06-0400", "tool": "read_passages", "arguments": {"document_id": "277f5508-9b31-4d3f-9728-c783806c5f8b"}, "status": 200, "is_error": false, "chars": 937, "ms": 14}
+{"at": "2026-10-17T22:58:06-0400", "tool": "read_passages", "arguments": {"document_id": "b163ab62-9cea-4283-9f30-6fe54b4ff5de"}, "status": 200, "is_error": false, "chars": 1239, "ms": 10}
+{"at": "2026-10-17T22:58:07-0400", "tool": "read_passages", "arguments": {"document_id": "bed39aa5-c9be-416e-9c88-7f98d2045e3e"}, "status": 200, "is_error": false, "chars": 581, "ms": 9}
+{"at": "2026-10-17T22:58:13-0400", "tool": "search", "arguments": {"query": "Sarah Chen title role employee", "limit": 5}, "status": 200, "is_error": false, "chars": 4283, "ms": 260}
+{"at": "2026-10-17T22:58:13-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b", "valid_at": "2025-03-31"}, "status": 200, "is_error": false, "chars": 6128, "ms": 43}

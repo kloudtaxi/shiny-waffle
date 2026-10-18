@@ -1,0 +1,12 @@
+{"at": "2026-10-18T02:58:35-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1044"}, "status": 200, "is_error": false, "chars": 2416, "ms": 78}
+{"at": "2026-10-18T02:58:36-0400", "tool": "find_entities", "arguments": {"q": "CR-9207"}, "status": 200, "is_error": false, "chars": 11, "ms": 121}
+{"at": "2026-10-18T02:58:36-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 131}
+{"at": "2026-10-18T02:58:36-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 144}
+{"at": "2026-10-18T02:58:38-0400", "tool": "get_entity", "arguments": {"entity_id": "389e8898-95e9-445f-85f9-4b4a9b239722"}, "status": 200, "is_error": false, "chars": 2282, "ms": 22}
+{"at": "2026-10-18T02:58:38-0400", "tool": "search", "arguments": {"query": "parent guarantee Acme Group Holdings guaranteed obligations", "limit": 10}, "status": 200, "is_error": false, "chars": 6133, "ms": 215}
+{"at": "2026-10-18T02:58:39-0400", "tool": "search", "arguments": {"query": "CR-9207 credit limit request", "limit": 10}, "status": 200, "is_error": false, "chars": 6782, "ms": 172}
+{"at": "2026-10-18T02:58:42-0400", "tool": "read_passages", "arguments": {"document_id": "f5d55e46-fa30-4d84-b1c0-19a5263ddbdb"}, "status": 200, "is_error": false, "chars": 1788, "ms": 2}
+{"at": "2026-10-18T02:58:42-0400", "tool": "read_passages", "arguments": {"document_id": "8b3597c3-1603-4f76-86eb-6fcec730394b"}, "status": 200, "is_error": false, "chars": 2314, "ms": 3}
+{"at": "2026-10-18T02:58:46-0400", "tool": "search", "arguments": {"query": "invoices C-1044 due date paid date", "limit": 10}, "status": 200, "is_error": false, "chars": 10655, "ms": 266}
+{"at": "2026-10-18T02:58:46-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 39}
+{"at": "2026-10-18T02:58:47-0400", "tool": "search", "arguments": {"query": "Finance Manager Director of Finance title reports to", "limit": 10}, "status": 200, "is_error": false, "chars": 8149, "ms": 194}

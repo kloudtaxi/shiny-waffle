@@ -1,0 +1,15 @@
+{"at": "2026-10-18T02:55:45-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9108"}, "status": 404, "is_error": true, "chars": 135, "ms": 73}
+{"at": "2026-10-18T02:55:45-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2091"}, "status": 200, "is_error": false, "chars": 2416, "ms": 60}
+{"at": "2026-10-18T02:55:46-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 451}
+{"at": "2026-10-18T02:55:46-0400", "tool": "find_entities", "arguments": {"q": "NS-EDGE"}, "status": 200, "is_error": false, "chars": 726, "ms": 21}
+{"at": "2026-10-18T02:55:49-0400", "tool": "search", "arguments": {"query": "DR-9108"}, "status": 200, "is_error": false, "chars": 11925, "ms": 277}
+{"at": "2026-10-18T02:55:49-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 24}
+{"at": "2026-10-18T02:55:50-0400", "tool": "list_facts", "arguments": {"entity_id": "cfd5c5ff-b946-409a-9195-7d0e5570d2b3"}, "status": 200, "is_error": false, "chars": 27790, "ms": 23}
+{"at": "2026-10-18T02:55:54-0400", "tool": "read_passages", "arguments": {"document_id": "d8141025-a943-4046-bb3c-ed40c55c199d"}, "status": 200, "is_error": false, "chars": 5108, "ms": 7}
+{"at": "2026-10-18T02:55:54-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 3}
+{"at": "2026-10-18T02:55:56-0400", "tool": "read_passages", "arguments": {"document_id": "b163ab62-9cea-4283-9f30-6fe54b4ff5de"}, "status": 200, "is_error": false, "chars": 1239, "ms": 3}
+{"at": "2026-10-18T02:55:57-0400", "tool": "read_passages", "arguments": {"document_id": "461e29bf-bbce-41e7-a3a3-6b4e18b43f49"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-18T02:55:57-0400", "tool": "read_passages", "arguments": {"document_id": "1772878e-d507-4f77-9077-5d13e2c94f81"}, "status": 200, "is_error": false, "chars": 1192, "ms": 2}
+{"at": "2026-10-18T02:55:58-0400", "tool": "read_passages", "arguments": {"document_id": "bed39aa5-c9be-416e-9c88-7f98d2045e3e"}, "status": 200, "is_error": false, "chars": 581, "ms": 3}
+{"at": "2026-10-18T02:55:59-0400", "tool": "read_passages", "arguments": {"document_id": "d50752d0-b5c0-45d3-ac0b-192fb29ac5ce"}, "status": 200, "is_error": false, "chars": 967, "ms": 2}
+{"at": "2026-10-18T02:56:02-0400", "tool": "search", "arguments": {"query": "Acme Industrial Supply contract pricing exception NS-EDGE", "limit": 5}, "status": 200, "is_error": false, "chars": 2746, "ms": 173}

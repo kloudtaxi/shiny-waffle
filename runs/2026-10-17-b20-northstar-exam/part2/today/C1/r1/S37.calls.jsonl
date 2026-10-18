@@ -1,0 +1,12 @@
+{"at": "2026-10-17T22:27:04-0400", "tool": "search", "arguments": {"query": "SR-39207", "limit": 20}, "status": 200, "is_error": false, "chars": 16392, "ms": 426}
+{"at": "2026-10-17T22:27:04-0400", "tool": "find_entities", "arguments": {"q": "Cedar Health"}, "status": 200, "is_error": false, "chars": 735, "ms": 85}
+{"at": "2026-10-17T22:27:07-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2063"}, "status": 501, "is_error": true, "chars": 135, "ms": 31}
+{"at": "2026-10-17T22:27:07-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a179-74a0-b361-5bbac7a91e67"}, "status": 200, "is_error": false, "chars": 11368, "ms": 49}
+{"at": "2026-10-17T22:27:07-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 30}
+{"at": "2026-10-17T22:27:10-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ec2-7e11-8c20-2ea1f3460330"}, "status": 200, "is_error": false, "chars": 926, "ms": 56}
+{"at": "2026-10-17T22:27:10-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a222-7410-b067-b0fda71f9451"}, "status": 200, "is_error": false, "chars": 2291, "ms": 38}
+{"at": "2026-10-17T22:27:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1ab-7941-b30a-7e9afd3fccd9"}, "status": 200, "is_error": false, "chars": 4219, "ms": 61}
+{"at": "2026-10-17T22:27:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f91-7060-a3e3-83a1a766035f"}, "status": 200, "is_error": false, "chars": 857, "ms": 50}
+{"at": "2026-10-17T22:27:20-0400", "tool": "search", "arguments": {"query": "CRM-2063 Cedar Health DUNS 02-906-4418", "limit": 10}, "status": 200, "is_error": false, "chars": 8740, "ms": 385}
+{"at": "2026-10-17T22:27:20-0400", "tool": "search", "arguments": {"query": "Director of Customer Support", "limit": 10}, "status": 200, "is_error": false, "chars": 12195, "ms": 323}
+{"at": "2026-10-17T22:27:20-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a36d-78c2-ac79-fb47df21b940"}, "status": 200, "is_error": false, "chars": 236, "ms": 27}

@@ -1,0 +1,25 @@
+{"at": "2026-10-18T13:26:29-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9001"}, "status": 200, "is_error": false, "chars": 459, "ms": 82}
+{"at": "2026-10-18T13:26:30-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 649, "ms": 46}
+{"at": "2026-10-18T13:26:30-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7455, "ms": 21}
+{"at": "2026-10-18T13:26:31-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 20}
+{"at": "2026-10-18T13:26:31-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 681, "ms": 19}
+{"at": "2026-10-18T13:26:33-0400", "tool": "neighbourhood", "arguments": {"entity_id": "b0b64fd2-f5ff-425c-a9b3-d54d74db2461", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 14451, "ms": 20}
+{"at": "2026-10-18T13:26:34-0400", "tool": "get_entity", "arguments": {"entity_id": "e84917bf-485a-4a5e-8861-5c63e075aa5a"}, "status": 200, "is_error": false, "chars": 842, "ms": 19}
+{"at": "2026-10-18T13:26:34-0400", "tool": "list_facts", "arguments": {"entity_id": "0bd684aa-3c72-4791-bf3f-fc88777a2168"}, "status": 200, "is_error": false, "chars": 5410, "ms": 23}
+{"at": "2026-10-18T13:26:37-0400", "tool": "find_entities", "arguments": {"q": "Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 11, "ms": 37}
+{"at": "2026-10-18T13:26:37-0400", "tool": "find_entities", "arguments": {"q": "discount"}, "status": 200, "is_error": false, "chars": 1108, "ms": 25}
+{"at": "2026-10-18T13:26:37-0400", "tool": "find_entities", "arguments": {"q": "exception"}, "status": 200, "is_error": false, "chars": 221, "ms": 18}
+{"at": "2026-10-18T13:26:37-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 1386, "ms": 21}
+{"at": "2026-10-18T13:26:39-0400", "tool": "get_entity", "arguments": {"entity_id": "49da4202-5e9f-4656-9cf7-359484d918a5"}, "status": 200, "is_error": false, "chars": 992, "ms": 19}
+{"at": "2026-10-18T13:26:40-0400", "tool": "get_entity", "arguments": {"entity_id": "7ead30ed-46ac-4ab9-bdbe-278c96161db2"}, "status": 200, "is_error": false, "chars": 882, "ms": 23}
+{"at": "2026-10-18T13:26:40-0400", "tool": "get_entity", "arguments": {"entity_id": "d3aa7ed1-6129-46e8-bf1c-217145e6daae"}, "status": 200, "is_error": false, "chars": 8158, "ms": 21}
+{"at": "2026-10-18T13:26:41-0400", "tool": "get_entity", "arguments": {"entity_id": "8ab4c06d-9f50-4c8c-a453-e0b741ed0644"}, "status": 200, "is_error": false, "chars": 839, "ms": 18}
+{"at": "2026-10-18T13:26:42-0400", "tool": "get_entity", "arguments": {"entity_id": "bce5034e-1cbb-4ef4-a91a-22a8a13f284d"}, "status": 200, "is_error": false, "chars": 2744, "ms": 108}
+{"at": "2026-10-18T13:26:48-0400", "tool": "find_entities", "arguments": {"q": "Pricing Policy"}, "status": 200, "is_error": false, "chars": 696, "ms": 48}
+{"at": "2026-10-18T13:26:48-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 30}
+{"at": "2026-10-18T13:26:48-0400", "tool": "get_entity", "arguments": {"entity_id": "1a2dd751-2a7f-446d-b1f2-0a0d32bdfdd8"}, "status": 200, "is_error": false, "chars": 12523, "ms": 22}
+{"at": "2026-10-18T13:26:49-0400", "tool": "neighbourhood", "arguments": {"entity_id": "f45dd79e-f890-491a-b3cc-5a74fd8ebc2e"}, "status": 200, "is_error": false, "chars": 5405, "ms": 20}
+{"at": "2026-10-18T13:26:53-0400", "tool": "get_entity", "arguments": {"entity_id": "5db28bee-61a0-4305-a4fe-8e50cbb72382"}, "status": 200, "is_error": false, "chars": 14221, "ms": 118}
+{"at": "2026-10-18T13:26:53-0400", "tool": "get_entity", "arguments": {"entity_id": "345a3927-7713-4cd3-beff-379771a0da98"}, "status": 200, "is_error": false, "chars": 11578, "ms": 21}
+{"at": "2026-10-18T13:26:54-0400", "tool": "get_entity", "arguments": {"entity_id": "d5513781-5813-4112-aa9d-c2366b52cd77"}, "status": 200, "is_error": false, "chars": 14335, "ms": 21}
+{"at": "2026-10-18T13:26:55-0400", "tool": "get_entity", "arguments": {"entity_id": "8a181090-ae94-415f-9cb0-9477e71fcfe1"}, "status": 200, "is_error": false, "chars": 9495, "ms": 21}

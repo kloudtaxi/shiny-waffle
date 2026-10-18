@@ -1,0 +1,15 @@
+{"at": "2026-10-17T22:56:47-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9001"}, "status": 200, "is_error": false, "chars": 466, "ms": 77}
+{"at": "2026-10-17T22:56:48-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 426, "ms": 53}
+{"at": "2026-10-17T22:56:48-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 21}
+{"at": "2026-10-17T22:56:48-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 23}
+{"at": "2026-10-17T22:56:48-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 19}
+{"at": "2026-10-17T22:56:51-0400", "tool": "search", "arguments": {"query": "DR-9001 discount request", "limit": 10}, "status": 200, "is_error": false, "chars": 9824, "ms": 228}
+{"at": "2026-10-17T22:56:51-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 3}
+{"at": "2026-10-17T22:56:54-0400", "tool": "read_passages", "arguments": {"document_id": "c20c1cca-1d1e-450c-8a10-f65e5448d975"}, "status": 200, "is_error": false, "chars": 1279, "ms": 7}
+{"at": "2026-10-17T22:56:55-0400", "tool": "read_passages", "arguments": {"document_id": "478b5825-2d7d-44d7-a117-5f230f0eb2f2"}, "status": 200, "is_error": false, "chars": 1192, "ms": 3}
+{"at": "2026-10-17T22:56:55-0400", "tool": "read_passages", "arguments": {"document_id": "1068f825-1e69-47d6-8ddc-460004510208"}, "status": 200, "is_error": false, "chars": 581, "ms": 3}
+{"at": "2026-10-17T22:56:56-0400", "tool": "read_passages", "arguments": {"document_id": "e4fd5977-c1bf-4221-b8bb-9e63dfd699c2"}, "status": 200, "is_error": false, "chars": 2007, "ms": 3}
+{"at": "2026-10-17T22:56:56-0400", "tool": "read_passages", "arguments": {"document_id": "0501798b-359a-4b5a-a3ae-679b20711503"}, "status": 200, "is_error": false, "chars": 1360, "ms": 3}
+{"at": "2026-10-17T22:56:57-0400", "tool": "read_passages", "arguments": {"document_id": "85ee8d7a-6e30-4d39-b332-946eb2253194"}, "status": 200, "is_error": false, "chars": 967, "ms": 3}
+{"at": "2026-10-17T22:57:00-0400", "tool": "read_passages", "arguments": {"document_id": "1fede1b8-8e03-484a-bc36-04c47b08ccc6"}, "status": 200, "is_error": false, "chars": 937, "ms": 4}
+{"at": "2026-10-17T22:57:00-0400", "tool": "search", "arguments": {"query": "Michael Torres VP Sales employees", "limit": 5}, "status": 200, "is_error": false, "chars": 4596, "ms": 264}

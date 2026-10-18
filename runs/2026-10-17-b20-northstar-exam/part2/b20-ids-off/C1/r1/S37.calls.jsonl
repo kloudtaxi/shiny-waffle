@@ -1,0 +1,10 @@
+{"at": "2026-10-18T02:59:29-0400", "tool": "search", "arguments": {"query": "SR-39207", "limit": 20}, "status": 200, "is_error": false, "chars": 23443, "ms": 241}
+{"at": "2026-10-18T02:59:29-0400", "tool": "find_entities", "arguments": {"q": "Cedar Health"}, "status": 200, "is_error": false, "chars": 2626, "ms": 19}
+{"at": "2026-10-18T02:59:32-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 2}
+{"at": "2026-10-18T02:59:33-0400", "tool": "read_passages", "arguments": {"document_id": "185f509c-dbc3-4693-a3ee-a7a098548306"}, "status": 200, "is_error": false, "chars": 797, "ms": 3}
+{"at": "2026-10-18T02:59:34-0400", "tool": "read_passages", "arguments": {"document_id": "c3457f70-372d-475e-80c3-18bfd4037194"}, "status": 200, "is_error": false, "chars": 11253, "ms": 3}
+{"at": "2026-10-18T02:59:35-0400", "tool": "read_passages", "arguments": {"document_id": "b12e71cf-cafa-4cf8-b96a-1d05ed66fb5b"}, "status": 200, "is_error": false, "chars": 2579, "ms": 3}
+{"at": "2026-10-18T02:59:35-0400", "tool": "read_passages", "arguments": {"document_id": "6c12d2b9-eec0-450c-a948-71504d218881"}, "status": 200, "is_error": false, "chars": 747, "ms": 2}
+{"at": "2026-10-18T02:59:42-0400", "tool": "read_passages", "arguments": {"document_id": "2ec9d1dd-8f5b-4bb7-bd62-8d505a431c37"}, "status": 200, "is_error": false, "chars": 4424, "ms": 3}
+{"at": "2026-10-18T02:59:43-0400", "tool": "read_passages", "arguments": {"document_id": "38b83dbf-7e30-46d3-85b9-07211a42e59f"}, "status": 200, "is_error": false, "chars": 875, "ms": 2}
+{"at": "2026-10-18T02:59:43-0400", "tool": "read_passages", "arguments": {"document_id": "5ad4fbe8-b400-45cf-9117-2e3db6341ca5"}, "status": 200, "is_error": false, "chars": 320, "ms": 3}

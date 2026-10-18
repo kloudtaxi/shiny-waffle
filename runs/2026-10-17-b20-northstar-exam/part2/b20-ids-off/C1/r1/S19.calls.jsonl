@@ -1,0 +1,12 @@
+{"at": "2026-10-18T02:55:48-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9111"}, "status": 404, "is_error": true, "chars": 135, "ms": 246}
+{"at": "2026-10-18T02:55:49-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 649, "ms": 217}
+{"at": "2026-10-18T02:55:49-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 102}
+{"at": "2026-10-18T02:55:49-0400", "tool": "search", "arguments": {"query": "discount approval policy approval bands", "limit": 10}, "status": 200, "is_error": false, "chars": 5807, "ms": 275}
+{"at": "2026-10-18T02:55:52-0400", "tool": "read_passages", "arguments": {"document_id": "683d9ece-137a-465a-b309-0bd3af5b27e4"}, "status": 200, "is_error": false, "chars": 5108, "ms": 3}
+{"at": "2026-10-18T02:55:52-0400", "tool": "read_passages", "arguments": {"document_id": "9556193a-3cf1-4b95-9aa6-646e7de010ab"}, "status": 200, "is_error": false, "chars": 1279, "ms": 2}
+{"at": "2026-10-18T02:55:53-0400", "tool": "read_passages", "arguments": {"document_id": "1c10242f-5a42-48fc-80dc-d56ab85d2974"}, "status": 200, "is_error": false, "chars": 1239, "ms": 4}
+{"at": "2026-10-18T02:55:57-0400", "tool": "list_facts", "arguments": {"entity_id": "0bd684aa-3c72-4791-bf3f-fc88777a2168", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 5410, "ms": 27}
+{"at": "2026-10-18T02:55:57-0400", "tool": "find_entities", "arguments": {"q": "NS-CLOUD"}, "status": 200, "is_error": false, "chars": 709, "ms": 26}
+{"at": "2026-10-18T02:55:58-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7455, "ms": 21}
+{"at": "2026-10-18T02:56:01-0400", "tool": "search", "arguments": {"query": "Acme pricing exception NS-CLOUD", "limit": 8}, "status": 200, "is_error": false, "chars": 7964, "ms": 239}
+{"at": "2026-10-18T02:56:01-0400", "tool": "search", "arguments": {"query": "NS-CLOUD list price", "limit": 5}, "status": 200, "is_error": false, "chars": 4117, "ms": 177}

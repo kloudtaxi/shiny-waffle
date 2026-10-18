@@ -1,0 +1,14 @@
+{"at": "2026-10-17T22:27:59-0400", "tool": "search", "arguments": {"query": "SR-39802", "limit": 10}, "status": 200, "is_error": false, "chars": 8426, "ms": 389}
+{"at": "2026-10-17T22:27:59-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 68}
+{"at": "2026-10-17T22:28:01-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2091"}, "status": 501, "is_error": true, "chars": 135, "ms": 32}
+{"at": "2026-10-17T22:28:03-0400", "tool": "search", "arguments": {"query": "CRM-2091 support terms plan coverage", "limit": 10}, "status": 200, "is_error": false, "chars": 9550, "ms": 669}
+{"at": "2026-10-17T22:28:06-0400", "tool": "search", "arguments": {"query": "CRM-2091 account owner Acme Industrial Supply", "limit": 10}, "status": 200, "is_error": false, "chars": 8803, "ms": 383}
+{"at": "2026-10-17T22:28:06-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-4936-7260-b2ea-c4673b5be72f"}, "status": 200, "is_error": false, "chars": 11587, "ms": 91}
+{"at": "2026-10-17T22:28:08-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 27}
+{"at": "2026-10-17T22:28:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a179-74a0-b361-5bbac7a91e67"}, "status": 200, "is_error": false, "chars": 11368, "ms": 79}
+{"at": "2026-10-17T22:28:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a222-7410-b067-b0fda71f9451"}, "status": 200, "is_error": false, "chars": 2291, "ms": 72}
+{"at": "2026-10-17T22:28:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1ab-7941-b30a-7e9afd3fccd9"}, "status": 200, "is_error": false, "chars": 4219, "ms": 57}
+{"at": "2026-10-17T22:28:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f91-7060-a3e3-83a1a766035f"}, "status": 200, "is_error": false, "chars": 857, "ms": 45}
+{"at": "2026-10-17T22:28:19-0400", "tool": "search", "arguments": {"query": "SR-39802 credit request decision", "limit": 5}, "status": 200, "is_error": false, "chars": 4490, "ms": 379}
+{"at": "2026-10-17T22:28:19-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1f3-78a3-9c69-0090c5e40731"}, "status": 200, "is_error": false, "chars": 1000, "ms": 67}
+{"at": "2026-10-17T22:28:19-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 68}

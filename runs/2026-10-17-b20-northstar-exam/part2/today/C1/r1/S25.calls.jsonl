@@ -1,0 +1,15 @@
+{"at": "2026-10-17T22:25:04-0400", "tool": "search", "arguments": {"query": "DR-9001"}, "status": 200, "is_error": false, "chars": 6935, "ms": 303}
+{"at": "2026-10-17T22:25:04-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 116}
+{"at": "2026-10-17T22:25:04-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 14}
+{"at": "2026-10-17T22:25:06-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9dec-7373-856b-fe62ede4b9dc"}, "status": 200, "is_error": false, "chars": 1126, "ms": 78}
+{"at": "2026-10-17T22:25:07-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 108}
+{"at": "2026-10-17T22:25:07-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0fe-7ca1-83e3-76b95516e020"}, "status": 200, "is_error": false, "chars": 1262, "ms": 56}
+{"at": "2026-10-17T22:25:08-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f68-7421-a202-7e4cb45c4168"}, "status": 200, "is_error": false, "chars": 735, "ms": 83}
+{"at": "2026-10-17T22:25:10-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0ad-70d0-952d-9e9e582dc3f3"}, "status": 200, "is_error": false, "chars": 1166, "ms": 41}
+{"at": "2026-10-17T22:25:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0d7-7041-b236-c03e6f9f8278"}, "status": 200, "is_error": false, "chars": 1079, "ms": 72}
+{"at": "2026-10-17T22:25:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 69}
+{"at": "2026-10-17T22:25:12-0400", "tool": "search", "arguments": {"query": "CRM-2048 Acme Manufacturing account", "limit": 5}, "status": 200, "is_error": false, "chars": 4861, "ms": 364}
+{"at": "2026-10-17T22:25:15-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 75}
+{"at": "2026-10-17T22:25:16-0400", "tool": "search", "arguments": {"query": "Sarah Chen Michael Torres title role employees", "limit": 6}, "status": 200, "is_error": false, "chars": 6240, "ms": 393}
+{"at": "2026-10-17T22:25:16-0400", "tool": "search", "arguments": {"query": "NS-500 Industrial Controller list price", "limit": 5}, "status": 200, "is_error": false, "chars": 4278, "ms": 363}
+{"at": "2026-10-17T22:25:17-0400", "tool": "search", "arguments": {"query": "Acme agreement termination notice amendment", "limit": 5}, "status": 200, "is_error": false, "chars": 4154, "ms": 424}

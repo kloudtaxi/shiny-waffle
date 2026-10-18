@@ -1,0 +1,15 @@
+{"at": "2026-10-17T18:15:07-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 501, "is_error": true, "chars": 143, "ms": 35}
+{"at": "2026-10-17T18:15:08-0400", "tool": "find_entities", "arguments": {"q": "CR-9206"}, "status": 200, "is_error": false, "chars": 41, "ms": 211}
+{"at": "2026-10-17T18:15:08-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1592, "ms": 205}
+{"at": "2026-10-17T18:15:09-0400", "tool": "get_entity", "arguments": {"entity_id": "01a13637-faf5-7383-b430-a69b2c065331"}, "status": 200, "is_error": false, "chars": 13968, "ms": 86}
+{"at": "2026-10-17T18:15:09-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 14}
+{"at": "2026-10-17T18:15:10-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9b3e-c70224f958ce"}, "status": 200, "is_error": false, "chars": 2952, "ms": 36}
+{"at": "2026-10-17T18:15:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-23dc-76e0-91f6-10ee98e537f3"}, "status": 200, "is_error": false, "chars": 2214, "ms": 37}
+{"at": "2026-10-17T18:15:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1b11-7520-aa1b-3647453a4522"}, "status": 200, "is_error": false, "chars": 1580, "ms": 38}
+{"at": "2026-10-17T18:15:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1943-7a33-b788-358dd135d389"}, "status": 200, "is_error": false, "chars": 2657, "ms": 27}
+{"at": "2026-10-17T18:15:15-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1b6e-73f0-aabd-78e3ec01cbe5"}, "status": 200, "is_error": false, "chars": 5933, "ms": 65}
+{"at": "2026-10-17T18:15:16-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1a7d-7b51-b6d9-d4630534976b"}, "status": 200, "is_error": false, "chars": 4319, "ms": 49}
+{"at": "2026-10-17T18:15:16-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2680-71c2-a6aa-e2f8898e2cfb"}, "status": 200, "is_error": false, "chars": 1249, "ms": 44}
+{"at": "2026-10-17T18:15:17-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-24ca-7a93-8187-3c8fbbe0a325"}, "status": 200, "is_error": false, "chars": 965, "ms": 52}
+{"at": "2026-10-17T18:15:22-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-229e-7361-9e72-0066202db9e9"}, "status": 200, "is_error": false, "chars": 929, "ms": 52}
+{"at": "2026-10-17T18:15:23-0400", "tool": "search", "arguments": {"query": "CR-9206 BlueRiver credit limit"}, "status": 200, "is_error": false, "chars": 14889, "ms": 317}

@@ -1,0 +1,21 @@
+{"at": "2026-10-18T03:05:23-0400", "tool": "find_entities", "arguments": {"q": "DR-9104"}, "status": 200, "is_error": false, "chars": 11, "ms": 39}
+{"at": "2026-10-18T03:05:23-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 656, "ms": 46}
+{"at": "2026-10-18T03:05:23-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 21}
+{"at": "2026-10-18T03:05:24-0400", "tool": "find_entities", "arguments": {"q": "NS-Cloud"}, "status": 200, "is_error": false, "chars": 843, "ms": 22}
+{"at": "2026-10-18T03:05:25-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f"}, "status": 200, "is_error": false, "chars": 1276, "ms": 19}
+{"at": "2026-10-18T03:05:26-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 33}
+{"at": "2026-10-18T03:05:28-0400", "tool": "find_entities", "arguments": {"q": "discount"}, "status": 200, "is_error": false, "chars": 914, "ms": 22}
+{"at": "2026-10-18T03:05:29-0400", "tool": "find_entities", "arguments": {"q": "policy"}, "status": 200, "is_error": false, "chars": 1866, "ms": 18}
+{"at": "2026-10-18T03:05:29-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 2335, "ms": 63}
+{"at": "2026-10-18T03:05:29-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 109}
+{"at": "2026-10-18T03:05:32-0400", "tool": "list_facts", "arguments": {"entity_id": "9fbb1b14-aebf-4687-82d4-78779d9e8553"}, "status": 200, "is_error": false, "chars": 11664, "ms": 25}
+{"at": "2026-10-18T03:05:32-0400", "tool": "list_facts", "arguments": {"entity_id": "ba3c2a57-bd85-408d-9003-4be8a085db18"}, "status": 200, "is_error": false, "chars": 11987, "ms": 21}
+{"at": "2026-10-18T03:05:33-0400", "tool": "list_facts", "arguments": {"entity_id": "93d61b3f-41a7-416f-a860-2900b913398e"}, "status": 200, "is_error": false, "chars": 629, "ms": 20}
+{"at": "2026-10-18T03:05:33-0400", "tool": "list_facts", "arguments": {"entity_id": "f80f4308-d3ba-4643-9183-420db8396f94"}, "status": 200, "is_error": false, "chars": 11269, "ms": 91}
+{"at": "2026-10-18T03:05:39-0400", "tool": "list_facts", "arguments": {"entity_id": "7a33790f-1b49-4064-b4f8-d3c03bc8b093"}, "status": 200, "is_error": false, "chars": 3153, "ms": 25}
+{"at": "2026-10-18T03:05:39-0400", "tool": "list_facts", "arguments": {"entity_id": "157a6397-e5db-4e4a-8b2e-488ebe7dbe40"}, "status": 200, "is_error": false, "chars": 7918, "ms": 36}
+{"at": "2026-10-18T03:05:40-0400", "tool": "list_facts", "arguments": {"entity_id": "4b1fa43b-257e-4171-83fd-557f346e0c7c"}, "status": 200, "is_error": false, "chars": 4378, "ms": 37}
+{"at": "2026-10-18T03:05:45-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9104"}, "status": 404, "is_error": true, "chars": 135, "ms": 310}
+{"at": "2026-10-18T03:05:45-0400", "tool": "neighbourhood", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 9047, "ms": 46}
+{"at": "2026-10-18T03:05:46-0400", "tool": "find_entities", "arguments": {"q": "DR-"}, "status": 200, "is_error": false, "chars": 7694, "ms": 106}
+{"at": "2026-10-18T03:05:46-0400", "tool": "find_entities", "arguments": {"q": "exception"}, "status": 200, "is_error": false, "chars": 978, "ms": 22}

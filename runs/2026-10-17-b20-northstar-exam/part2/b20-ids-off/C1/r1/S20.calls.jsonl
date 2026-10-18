@@ -1,0 +1,16 @@
+{"at": "2026-10-18T02:55:48-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 426, "ms": 226}
+{"at": "2026-10-18T02:55:49-0400", "tool": "find_entities", "arguments": {"q": "DR-9112"}, "status": 200, "is_error": false, "chars": 11, "ms": 82}
+{"at": "2026-10-18T02:55:49-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 50}
+{"at": "2026-10-18T02:55:49-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 22}
+{"at": "2026-10-18T02:55:53-0400", "tool": "search", "arguments": {"query": "DR-9112"}, "status": 200, "is_error": false, "chars": 11925, "ms": 178}
+{"at": "2026-10-18T02:55:54-0400", "tool": "get_entity", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12790, "ms": 31}
+{"at": "2026-10-18T02:55:54-0400", "tool": "get_entity", "arguments": {"entity_id": "c817032b-a762-45f0-8e89-15dd26cc4c58"}, "status": 200, "is_error": false, "chars": 4841, "ms": 22}
+{"at": "2026-10-18T02:55:54-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 3}
+{"at": "2026-10-18T02:55:59-0400", "tool": "read_passages", "arguments": {"document_id": "c20c1cca-1d1e-450c-8a10-f65e5448d975"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-18T02:55:59-0400", "tool": "read_passages", "arguments": {"document_id": "478b5825-2d7d-44d7-a117-5f230f0eb2f2"}, "status": 200, "is_error": false, "chars": 1192, "ms": 2}
+{"at": "2026-10-18T02:56:00-0400", "tool": "read_passages", "arguments": {"document_id": "e4fd5977-c1bf-4221-b8bb-9e63dfd699c2"}, "status": 200, "is_error": false, "chars": 2007, "ms": 3}
+{"at": "2026-10-18T02:56:00-0400", "tool": "read_passages", "arguments": {"document_id": "0501798b-359a-4b5a-a3ae-679b20711503"}, "status": 200, "is_error": false, "chars": 1360, "ms": 2}
+{"at": "2026-10-18T02:56:01-0400", "tool": "read_passages", "arguments": {"document_id": "4da0406d-ba99-4bbc-b6be-0b41cd368930"}, "status": 200, "is_error": false, "chars": 1239, "ms": 2}
+{"at": "2026-10-18T02:56:01-0400", "tool": "read_passages", "arguments": {"document_id": "1068f825-1e69-47d6-8ddc-460004510208"}, "status": 200, "is_error": false, "chars": 581, "ms": 2}
+{"at": "2026-10-18T02:56:08-0400", "tool": "read_passages", "arguments": {"document_id": "0d3e3471-11cf-4d23-b92c-eb73231d7c3f"}, "status": 200, "is_error": false, "chars": 2403, "ms": 4}
+{"at": "2026-10-18T02:56:08-0400", "tool": "read_passages", "arguments": {"document_id": "85ee8d7a-6e30-4d39-b332-946eb2253194"}, "status": 200, "is_error": false, "chars": 967, "ms": 6}

@@ -1,0 +1,24 @@
+{"at": "2026-10-18T13:28:56-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 72}
+{"at": "2026-10-18T13:28:56-0400", "tool": "find_entities", "arguments": {"q": "DR-9103"}, "status": 200, "is_error": false, "chars": 11, "ms": 18}
+{"at": "2026-10-18T13:28:57-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 20}
+{"at": "2026-10-18T13:28:57-0400", "tool": "find_entities", "arguments": {"q": "NS-EDGE"}, "status": 200, "is_error": false, "chars": 726, "ms": 20}
+{"at": "2026-10-18T13:28:59-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 37464, "ms": 85}
+{"at": "2026-10-18T13:29:00-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 28}
+{"at": "2026-10-18T13:29:00-0400", "tool": "list_facts", "arguments": {"entity_id": "ccc1d6ed-416e-4b47-8296-e045faf589bf"}, "status": 200, "is_error": false, "chars": 5385, "ms": 40}
+{"at": "2026-10-18T13:29:03-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 8117, "ms": 23}
+{"at": "2026-10-18T13:29:03-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 1896, "ms": 20}
+{"at": "2026-10-18T13:29:04-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 9844, "ms": 31}
+{"at": "2026-10-18T13:29:06-0400", "tool": "find_entities", "arguments": {"q": "DR-91"}, "status": 200, "is_error": false, "chars": 11, "ms": 30}
+{"at": "2026-10-18T13:29:06-0400", "tool": "find_entities", "arguments": {"q": "9103"}, "status": 200, "is_error": false, "chars": 11, "ms": 22}
+{"at": "2026-10-18T13:29:07-0400", "tool": "find_entities", "arguments": {"q": "Edge"}, "status": 200, "is_error": false, "chars": 726, "ms": 29}
+{"at": "2026-10-18T13:29:07-0400", "tool": "get_entity", "arguments": {"entity_id": "e6f65404-5857-42dd-bb43-544e945dc665"}, "status": 200, "is_error": false, "chars": 12395, "ms": 56}
+{"at": "2026-10-18T13:29:07-0400", "tool": "get_entity", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15"}, "status": 200, "is_error": false, "chars": 4934, "ms": 40}
+{"at": "2026-10-18T13:29:12-0400", "tool": "get_entity", "arguments": {"entity_id": "23c0e134-afe4-461b-85d1-d54afe61bfe5"}, "status": 200, "is_error": false, "chars": 1659, "ms": 33}
+{"at": "2026-10-18T13:29:12-0400", "tool": "find_entities", "arguments": {"q": "Pricing Policy"}, "status": 200, "is_error": false, "chars": 1226, "ms": 20}
+{"at": "2026-10-18T13:29:12-0400", "tool": "find_entities", "arguments": {"q": "2025"}, "status": 200, "is_error": false, "chars": 1195, "ms": 20}
+{"at": "2026-10-18T13:29:15-0400", "tool": "get_entity", "arguments": {"entity_id": "85e19a62-b084-4884-baf8-13661bfcba2c"}, "status": 200, "is_error": false, "chars": 8475, "ms": 99}
+{"at": "2026-10-18T13:29:15-0400", "tool": "get_entity", "arguments": {"entity_id": "45d82ad2-be80-46ce-bbec-a8809539386c"}, "status": 200, "is_error": false, "chars": 1237, "ms": 60}
+{"at": "2026-10-18T13:29:18-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 19}
+{"at": "2026-10-18T13:29:18-0400", "tool": "get_entity", "arguments": {"entity_id": "b8bd47ea-f76b-4f00-9f2e-7a1bca24c189"}, "status": 200, "is_error": false, "chars": 15496, "ms": 20}
+{"at": "2026-10-18T13:29:19-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 46}
+{"at": "2026-10-18T13:29:20-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 89}

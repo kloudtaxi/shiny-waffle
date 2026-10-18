@@ -1,0 +1,26 @@
+{"at": "2026-10-18T14:55:32-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 200, "is_error": false, "chars": 472, "ms": 90}
+{"at": "2026-10-18T14:55:33-0400", "tool": "find_entities", "arguments": {"q": "CR-9206"}, "status": 200, "is_error": false, "chars": 11, "ms": 19}
+{"at": "2026-10-18T14:55:33-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 7857, "ms": 20}
+{"at": "2026-10-18T14:55:36-0400", "tool": "find_entities", "arguments": {"q": "credit", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 7857, "ms": 20}
+{"at": "2026-10-18T14:55:36-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 31}
+{"at": "2026-10-18T14:55:39-0400", "tool": "find_entities", "arguments": {"q": "CR-92"}, "status": 200, "is_error": false, "chars": 759, "ms": 46}
+{"at": "2026-10-18T14:55:39-0400", "tool": "get_entity", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f"}, "status": 200, "is_error": false, "chars": 7627, "ms": 41}
+{"at": "2026-10-18T14:55:40-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 23}
+{"at": "2026-10-18T14:55:44-0400", "tool": "find_entities", "arguments": {"q": "C-1002"}, "status": 200, "is_error": false, "chars": 225, "ms": 18}
+{"at": "2026-10-18T14:55:44-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f"}, "status": 200, "is_error": false, "chars": 1276, "ms": 19}
+{"at": "2026-10-18T14:55:47-0400", "tool": "get_entity", "arguments": {"entity_id": "9236cea3-1e43-4572-a746-44645cf576c9"}, "status": 200, "is_error": false, "chars": 2045, "ms": 25}
+{"at": "2026-10-18T14:55:47-0400", "tool": "get_entity", "arguments": {"entity_id": "749c5ac0-24ac-4f29-bc49-e1564695627d"}, "status": 200, "is_error": false, "chars": 15114, "ms": 19}
+{"at": "2026-10-18T14:55:55-0400", "tool": "neighbourhood", "arguments": {"entity_id": "9236cea3-1e43-4572-a746-44645cf576c9", "hops": 2}, "status": 200, "is_error": false, "chars": 290, "ms": 40}
+{"at": "2026-10-18T14:55:55-0400", "tool": "get_entity", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 12609, "ms": 32}
+{"at": "2026-10-18T14:55:59-0400", "tool": "find_entities", "arguments": {"q": "Blue River"}, "status": 200, "is_error": false, "chars": 925, "ms": 43}
+{"at": "2026-10-18T14:55:59-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 11, "ms": 58}
+{"at": "2026-10-18T14:55:59-0400", "tool": "find_entities", "arguments": {"q": "customers", "kind": "document"}, "status": 200, "is_error": false, "chars": 11, "ms": 41}
+{"at": "2026-10-18T14:56:03-0400", "tool": "neighbourhood", "arguments": {"entity_id": "287d6545-3bbc-44da-b260-1bebfb462cc2"}, "status": 200, "is_error": false, "chars": 3089, "ms": 43}
+{"at": "2026-10-18T14:56:03-0400", "tool": "find_entities", "arguments": {"q": "INV-"}, "status": 200, "is_error": false, "chars": 9934, "ms": 21}
+{"at": "2026-10-18T14:56:03-0400", "tool": "find_entities", "arguments": {"q": "guarantee"}, "status": 200, "is_error": false, "chars": 464, "ms": 18}
+{"at": "2026-10-18T14:56:07-0400", "tool": "find_entities", "arguments": {"q": "INV-", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 9934, "ms": 33}
+{"at": "2026-10-18T14:56:08-0400", "tool": "find_entities", "arguments": {"q": "INV-6"}, "status": 200, "is_error": false, "chars": 5230, "ms": 27}
+{"at": "2026-10-18T14:56:12-0400", "tool": "list_facts", "arguments": {"entity_id": "4204bf25-5b60-4e8e-9bdb-b643f51e8e2a"}, "status": 200, "is_error": false, "chars": 3431, "ms": 47}
+{"at": "2026-10-18T14:56:12-0400", "tool": "find_entities", "arguments": {"q": "Finance", "kind": "person"}, "status": 200, "is_error": false, "chars": 11, "ms": 41}
+{"at": "2026-10-18T14:56:15-0400", "tool": "find_entities", "arguments": {"q": "Priya Shah"}, "status": 200, "is_error": false, "chars": 524, "ms": 48}
+{"at": "2026-10-18T14:56:17-0400", "tool": "list_facts", "arguments": {"entity_id": "5d6c2c45-a1c2-429c-aec1-003582d88d55"}, "status": 200, "is_error": false, "chars": 4447, "ms": 18}

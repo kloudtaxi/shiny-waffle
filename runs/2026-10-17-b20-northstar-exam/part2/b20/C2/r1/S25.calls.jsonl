@@ -1,0 +1,23 @@
+{"at": "2026-10-18T03:08:48-0400", "tool": "find_entities", "arguments": {"q": "DR-9001"}, "status": 200, "is_error": false, "chars": 3031, "ms": 29}
+{"at": "2026-10-18T03:08:49-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 62}
+{"at": "2026-10-18T03:08:50-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 332}
+{"at": "2026-10-18T03:08:50-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 26}
+{"at": "2026-10-18T03:08:53-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 37464, "ms": 26}
+{"at": "2026-10-18T03:08:54-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 21}
+{"at": "2026-10-18T03:08:54-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 21}
+{"at": "2026-10-18T03:08:55-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 21}
+{"at": "2026-10-18T03:09:00-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 22}
+{"at": "2026-10-18T03:09:00-0400", "tool": "find_entities", "arguments": {"q": "Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 236, "ms": 19}
+{"at": "2026-10-18T03:09:01-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 897, "ms": 28}
+{"at": "2026-10-18T03:09:01-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 8117, "ms": 70}
+{"at": "2026-10-18T03:09:04-0400", "tool": "get_entity", "arguments": {"entity_id": "e6f65404-5857-42dd-bb43-544e945dc665"}, "status": 200, "is_error": false, "chars": 12395, "ms": 97}
+{"at": "2026-10-18T03:09:04-0400", "tool": "get_entity", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15"}, "status": 200, "is_error": false, "chars": 4934, "ms": 25}
+{"at": "2026-10-18T03:09:05-0400", "tool": "get_entity", "arguments": {"entity_id": "0bec24e5-eddf-4ff6-8bc3-711ed288ffc8"}, "status": 200, "is_error": false, "chars": 2744, "ms": 19}
+{"at": "2026-10-18T03:09:05-0400", "tool": "get_entity", "arguments": {"entity_id": "72aef21e-b1eb-4615-8c90-7040e84ea814"}, "status": 200, "is_error": false, "chars": 9976, "ms": 22}
+{"at": "2026-10-18T03:09:09-0400", "tool": "find_entities", "arguments": {"q": "Pricing Policy"}, "status": 200, "is_error": false, "chars": 1226, "ms": 21}
+{"at": "2026-10-18T03:09:10-0400", "tool": "neighbourhood", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15", "hops": 1}, "status": 200, "is_error": false, "chars": 811, "ms": 24}
+{"at": "2026-10-18T03:09:19-0400", "tool": "get_entity", "arguments": {"entity_id": "f9316095-ecfe-459e-b40e-8aeaa27814c0"}, "status": 200, "is_error": false, "chars": 12302, "ms": 23}
+{"at": "2026-10-18T03:09:26-0400", "tool": "neighbourhood", "arguments": {"entity_id": "b6dd20ba-e616-4791-a389-0efdeacbe38f", "hops": 1}, "status": 200, "is_error": false, "chars": 2761, "ms": 22}
+{"at": "2026-10-18T03:09:27-0400", "tool": "list_facts", "arguments": {"entity_id": "b8bd47ea-f76b-4f00-9f2e-7a1bca24c189"}, "status": 200, "is_error": false, "chars": 5445, "ms": 20}
+{"at": "2026-10-18T03:09:27-0400", "tool": "list_facts", "arguments": {"entity_id": "34e7f09a-0e4b-41ba-baa6-e864b2fd92dc", "predicate": "effective_from"}, "status": 200, "is_error": false, "chars": 807, "ms": 20}
+{"at": "2026-10-18T03:09:31-0400", "tool": "list_facts", "arguments": {"entity_id": "a294bd2a-376b-42b8-88b3-edf58a212437"}, "status": 200, "is_error": false, "chars": 5929, "ms": 134}

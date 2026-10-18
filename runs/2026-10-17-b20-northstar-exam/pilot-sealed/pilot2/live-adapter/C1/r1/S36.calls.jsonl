@@ -1,0 +1,20 @@
+{"at": "2026-10-17T18:22:33-0400", "tool": "search", "arguments": {"query": "SR-39385"}, "status": 200, "is_error": false, "chars": 8670, "ms": 332}
+{"at": "2026-10-17T18:22:34-0400", "tool": "find_entities", "arguments": {"q": "SR-39385"}, "status": 200, "is_error": false, "chars": 358, "ms": 228}
+{"at": "2026-10-17T18:22:42-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 135, "ms": 17}
+{"at": "2026-10-17T18:22:42-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 24}
+{"at": "2026-10-17T18:22:44-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-21a0-7762-aece-7bc2bf994417"}, "status": 200, "is_error": false, "chars": 1479, "ms": 47}
+{"at": "2026-10-17T18:22:45-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-299e-7f22-abe9-1d68518b05dc"}, "status": 200, "is_error": false, "chars": 11368, "ms": 47}
+{"at": "2026-10-17T18:22:45-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2af2-7132-8c92-deb0a57fdc08"}, "status": 200, "is_error": false, "chars": 2291, "ms": 22}
+{"at": "2026-10-17T18:22:46-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a2c-7cc3-a848-596f82b4d25e"}, "status": 200, "is_error": false, "chars": 4219, "ms": 29}
+{"at": "2026-10-17T18:22:49-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 2171, "ms": 42}
+{"at": "2026-10-17T18:22:49-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1943-7a33-b788-358dd135d389"}, "status": 200, "is_error": false, "chars": 1387, "ms": 25}
+{"at": "2026-10-17T18:22:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1c95-78f2-ac69-96fb2e316d20"}, "status": 200, "is_error": false, "chars": 236, "ms": 24}
+{"at": "2026-10-17T18:22:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1dc1-7b61-929a-af3ec0f70533"}, "status": 200, "is_error": false, "chars": 204, "ms": 32}
+{"at": "2026-10-17T18:22:51-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1ecf-71c0-8f1b-e991fb828866"}, "status": 200, "is_error": false, "chars": 6575, "ms": 28}
+{"at": "2026-10-17T18:22:57-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1828-7623-9b3e-c70224f958ce"}, "status": 200, "is_error": false, "chars": 1552, "ms": 30}
+{"at": "2026-10-17T18:22:58-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a85-7a80-af9e-705bee27ad24"}, "status": 200, "is_error": false, "chars": 1000, "ms": 33}
+{"at": "2026-10-17T18:22:58-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2680-71c2-a6aa-e2f8898e2cfb"}, "status": 200, "is_error": false, "chars": 1087, "ms": 22}
+{"at": "2026-10-17T18:22:59-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-25a7-7522-ac4d-493d2f67796d"}, "status": 200, "is_error": false, "chars": 735, "ms": 38}
+{"at": "2026-10-17T18:22:59-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-24ca-7a93-8187-3c8fbbe0a325"}, "status": 200, "is_error": false, "chars": 804, "ms": 41}
+{"at": "2026-10-17T18:23:02-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1e2e-7b81-914d-07c602a7ce7e"}, "status": 200, "is_error": false, "chars": 3720, "ms": 24}
+{"at": "2026-10-17T18:23:03-0400", "tool": "find_entities", "arguments": {"q": "Acme", "kind": "organization"}, "status": 200, "is_error": false, "chars": 215, "ms": 230}

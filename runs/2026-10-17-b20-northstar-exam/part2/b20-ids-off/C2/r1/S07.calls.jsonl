@@ -1,0 +1,12 @@
+{"at": "2026-10-18T03:04:18-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 30}
+{"at": "2026-10-18T03:04:18-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 21}
+{"at": "2026-10-18T03:04:21-0400", "tool": "get_entity", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12790, "ms": 50}
+{"at": "2026-10-18T03:04:21-0400", "tool": "get_entity", "arguments": {"entity_id": "c817032b-a762-45f0-8e89-15dd26cc4c58"}, "status": 200, "is_error": false, "chars": 4841, "ms": 19}
+{"at": "2026-10-18T03:04:25-0400", "tool": "get_entity", "arguments": {"entity_id": "359ed0b4-af49-4a9c-9904-4ebf23c287e9"}, "status": 200, "is_error": false, "chars": 1699, "ms": 38}
+{"at": "2026-10-18T03:04:25-0400", "tool": "list_facts", "arguments": {"entity_id": "c4586a04-367f-4722-be10-5da02b077030"}, "status": 200, "is_error": false, "chars": 29092, "ms": 34}
+{"at": "2026-10-18T03:04:31-0400", "tool": "find_entities", "arguments": {"kind": "agreement", "q": "Acme"}, "status": 200, "is_error": false, "chars": 1039, "ms": 56}
+{"at": "2026-10-18T03:04:31-0400", "tool": "get_entity", "arguments": {"entity_id": "281e99ce-3000-4d0e-bb71-e69721f53253"}, "status": 200, "is_error": false, "chars": 2402, "ms": 26}
+{"at": "2026-10-18T03:04:35-0400", "tool": "find_entities", "arguments": {"kind": "document", "q": "Agreement"}, "status": 200, "is_error": false, "chars": 11, "ms": 23}
+{"at": "2026-10-18T03:04:37-0400", "tool": "find_entities", "arguments": {"q": "Master"}, "status": 200, "is_error": false, "chars": 236, "ms": 18}
+{"at": "2026-10-18T03:04:38-0400", "tool": "get_entity", "arguments": {"entity_id": "c8b86c3b-c195-4dad-a1fb-3ca7c5211ea4"}, "status": 200, "is_error": false, "chars": 829, "ms": 19}
+{"at": "2026-10-18T03:04:40-0400", "tool": "get_entity", "arguments": {"entity_id": "e9177f69-ab32-4f58-983f-0d89af76c612"}, "status": 200, "is_error": false, "chars": 11559, "ms": 41}

@@ -1,0 +1,6 @@
+{"at": "2026-10-17T22:57:40-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 426, "ms": 82}
+{"at": "2026-10-17T22:57:40-0400", "tool": "lookup_identifier", "arguments": {"system": "ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 593, "ms": 47}
+{"at": "2026-10-17T22:57:40-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 24}
+{"at": "2026-10-17T22:57:43-0400", "tool": "get_entity", "arguments": {"entity_id": "359ed0b4-af49-4a9c-9904-4ebf23c287e9"}, "status": 200, "is_error": false, "chars": 1699, "ms": 105}
+{"at": "2026-10-17T22:57:43-0400", "tool": "search", "arguments": {"query": "ACME-MFG-2025 master agreement Acme Manufacturing", "limit": 6}, "status": 200, "is_error": false, "chars": 3100, "ms": 182}
+{"at": "2026-10-17T22:57:46-0400", "tool": "search", "arguments": {"query": "Acme Industrial Supply Co. Akron", "limit": 8}, "status": 200, "is_error": false, "chars": 7812, "ms": 201}

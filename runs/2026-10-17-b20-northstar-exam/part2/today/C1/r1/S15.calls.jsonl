@@ -1,0 +1,16 @@
+{"at": "2026-10-17T22:23:22-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 501, "is_error": true, "chars": 145, "ms": 28}
+{"at": "2026-10-17T22:23:23-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 839, "ms": 93}
+{"at": "2026-10-17T22:23:23-0400", "tool": "search", "arguments": {"query": "DR-9107"}, "status": 200, "is_error": false, "chars": 6936, "ms": 270}
+{"at": "2026-10-17T22:23:25-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 40}
+{"at": "2026-10-17T22:23:26-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-516c-75e2-a8d2-522ce3c5e9e8"}, "status": 200, "is_error": false, "chars": 720, "ms": 423}
+{"at": "2026-10-17T22:23:26-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 15}
+{"at": "2026-10-17T22:23:29-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0fe-7ca1-83e3-76b95516e020"}, "status": 200, "is_error": false, "chars": 1262, "ms": 63}
+{"at": "2026-10-17T22:23:30-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0ad-70d0-952d-9e9e582dc3f3"}, "status": 200, "is_error": false, "chars": 1166, "ms": 74}
+{"at": "2026-10-17T22:23:30-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0d7-7041-b236-c03e6f9f8278"}, "status": 200, "is_error": false, "chars": 1079, "ms": 81}
+{"at": "2026-10-17T22:23:31-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 43}
+{"at": "2026-10-17T22:23:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a282-7f02-bb68-97f4ce30142c"}, "status": 200, "is_error": false, "chars": 2171, "ms": 26}
+{"at": "2026-10-17T22:23:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 35}
+{"at": "2026-10-17T22:23:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 31}
+{"at": "2026-10-17T22:23:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9dec-7373-856b-fe62ede4b9dc"}, "status": 200, "is_error": false, "chars": 1126, "ms": 53}
+{"at": "2026-10-17T22:23:37-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ea5-79b1-b0d3-87e2be324333"}, "status": 200, "is_error": false, "chars": 882, "ms": 77}
+{"at": "2026-10-17T22:23:37-0400", "tool": "search", "arguments": {"query": "BlueRiver pricing discount agreement", "limit": 8}, "status": 200, "is_error": false, "chars": 7780, "ms": 356}

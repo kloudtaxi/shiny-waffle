@@ -1,0 +1,14 @@
+{"at": "2026-10-18T02:55:07-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 656, "ms": 101}
+{"at": "2026-10-18T02:55:08-0400", "tool": "search", "arguments": {"query": "DR-9107"}, "status": 200, "is_error": false, "chars": 11925, "ms": 1180}
+{"at": "2026-10-18T02:55:08-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 36}
+{"at": "2026-10-18T02:55:11-0400", "tool": "read_passages", "arguments": {"document_id": "b14127a1-fe35-43b9-8ea9-9172145cf99d"}, "status": 200, "is_error": false, "chars": 5108, "ms": 193}
+{"at": "2026-10-18T02:55:11-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 1276, "ms": 25}
+{"at": "2026-10-18T02:55:12-0400", "tool": "search", "arguments": {"query": "Sales Discount SOP approval bands discount authority"}, "status": 200, "is_error": false, "chars": 6017, "ms": 290}
+{"at": "2026-10-18T02:55:14-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 33}
+{"at": "2026-10-18T02:55:15-0400", "tool": "search", "arguments": {"query": "Acme Master Supply Agreement parties discount NS-500", "limit": 10}, "status": 200, "is_error": false, "chars": 6916, "ms": 180}
+{"at": "2026-10-18T02:55:15-0400", "tool": "search", "arguments": {"query": "BlueRiver contract pricing exception agreement", "limit": 10}, "status": 200, "is_error": false, "chars": 5186, "ms": 210}
+{"at": "2026-10-18T02:55:21-0400", "tool": "read_passages", "arguments": {"document_id": "4da0406d-ba99-4bbc-b6be-0b41cd368930"}, "status": 200, "is_error": false, "chars": 1239, "ms": 3}
+{"at": "2026-10-18T02:55:21-0400", "tool": "read_passages", "arguments": {"document_id": "c20c1cca-1d1e-450c-8a10-f65e5448d975"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-18T02:55:22-0400", "tool": "list_facts", "arguments": {"entity_id": "f80f4308-d3ba-4643-9183-420db8396f94"}, "status": 200, "is_error": false, "chars": 11269, "ms": 23}
+{"at": "2026-10-18T02:55:22-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 5642, "ms": 21}
+{"at": "2026-10-18T02:55:26-0400", "tool": "read_passages", "arguments": {"document_id": "0d3e3471-11cf-4d23-b92c-eb73231d7c3f"}, "status": 200, "is_error": false, "chars": 2403, "ms": 3}

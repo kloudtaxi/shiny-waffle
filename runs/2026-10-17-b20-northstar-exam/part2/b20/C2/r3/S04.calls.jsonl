@@ -1,0 +1,19 @@
+{"at": "2026-10-18T14:50:33-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 196}
+{"at": "2026-10-18T14:50:33-0400", "tool": "find_entities", "arguments": {"q": "DR-9001"}, "status": 200, "is_error": false, "chars": 3031, "ms": 24}
+{"at": "2026-10-18T14:50:34-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 22}
+{"at": "2026-10-18T14:50:34-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1364, "ms": 19}
+{"at": "2026-10-18T14:50:37-0400", "tool": "get_entity", "arguments": {"entity_id": "9616bf34-d6d0-467a-9c61-dd0de6b5b76f"}, "status": 200, "is_error": false, "chars": 2060, "ms": 22}
+{"at": "2026-10-18T14:50:38-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 20}
+{"at": "2026-10-18T14:50:38-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 102}
+{"at": "2026-10-18T14:50:39-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 27}
+{"at": "2026-10-18T14:50:41-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 34}
+{"at": "2026-10-18T14:50:42-0400", "tool": "find_entities", "arguments": {"q": "policy"}, "status": 200, "is_error": false, "chars": 2202, "ms": 28}
+{"at": "2026-10-18T14:50:42-0400", "tool": "find_entities", "arguments": {"q": "discount"}, "status": 200, "is_error": false, "chars": 897, "ms": 33}
+{"at": "2026-10-18T14:50:44-0400", "tool": "get_entity", "arguments": {"entity_id": "f9316095-ecfe-459e-b40e-8aeaa27814c0"}, "status": 200, "is_error": false, "chars": 12302, "ms": 47}
+{"at": "2026-10-18T14:50:45-0400", "tool": "get_entity", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15"}, "status": 200, "is_error": false, "chars": 4934, "ms": 40}
+{"at": "2026-10-18T14:50:45-0400", "tool": "get_entity", "arguments": {"entity_id": "85e19a62-b084-4884-baf8-13661bfcba2c"}, "status": 200, "is_error": false, "chars": 8475, "ms": 21}
+{"at": "2026-10-18T14:50:49-0400", "tool": "get_entity", "arguments": {"entity_id": "b8bd47ea-f76b-4f00-9f2e-7a1bca24c189"}, "status": 200, "is_error": false, "chars": 15496, "ms": 67}
+{"at": "2026-10-18T14:50:49-0400", "tool": "neighbourhood", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 18046, "ms": 22}
+{"at": "2026-10-18T14:50:50-0400", "tool": "get_entity", "arguments": {"entity_id": "b6dd20ba-e616-4791-a389-0efdeacbe38f"}, "status": 200, "is_error": false, "chars": 3652, "ms": 66}
+{"at": "2026-10-18T14:50:53-0400", "tool": "get_entity", "arguments": {"entity_id": "e6f65404-5857-42dd-bb43-544e945dc665"}, "status": 200, "is_error": false, "chars": 12395, "ms": 19}
+{"at": "2026-10-18T14:50:53-0400", "tool": "get_entity", "arguments": {"entity_id": "a2356877-2473-47d0-a48b-7ae3e875ac83"}, "status": 200, "is_error": false, "chars": 2893, "ms": 35}

@@ -1,0 +1,13 @@
+{"at": "2026-10-17T22:26:16-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 501, "is_error": true, "chars": 143, "ms": 45}
+{"at": "2026-10-17T22:26:17-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2576, "ms": 102}
+{"at": "2026-10-17T22:26:17-0400", "tool": "find_entities", "arguments": {"q": "CR-9203"}, "status": 200, "is_error": false, "chars": 11, "ms": 39}
+{"at": "2026-10-17T22:26:22-0400", "tool": "search", "arguments": {"query": "Acme Group parent guarantee", "limit": 10}, "status": 200, "is_error": false, "chars": 9566, "ms": 411}
+{"at": "2026-10-17T22:26:23-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c9a-4c8f-7d90-81ca-96b3cba719cd"}, "status": 200, "is_error": false, "chars": 10214, "ms": 815}
+{"at": "2026-10-17T22:26:23-0400", "tool": "search", "arguments": {"query": "CR-9203 credit limit request", "limit": 10}, "status": 200, "is_error": false, "chars": 8282, "ms": 316}
+{"at": "2026-10-17T22:26:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-b087-7cc3-a59e-c9df676f081a"}, "status": 200, "is_error": false, "chars": 1552, "ms": 57}
+{"at": "2026-10-17T22:26:27-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7282, "ms": 19}
+{"at": "2026-10-17T22:26:28-0400", "tool": "search", "arguments": {"query": "guarantee guarantor guaranteed amount", "limit": 10}, "status": 200, "is_error": false, "chars": 6486, "ms": 399}
+{"at": "2026-10-17T22:26:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-ab32-7cc2-8b41-a0eb393a40a5"}, "status": 200, "is_error": false, "chars": 1224, "ms": 39}
+{"at": "2026-10-17T22:26:33-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-ad9f-7392-a3cf-61913e3728c2"}, "status": 200, "is_error": false, "chars": 1087, "ms": 41}
+{"at": "2026-10-17T22:26:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-b0d2-71d1-9455-284e46fa828c"}, "status": 200, "is_error": false, "chars": 1387, "ms": 38}
+{"at": "2026-10-17T22:26:37-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-ac3c-7f13-9d1a-a6d94bec5d95"}, "status": 200, "is_error": false, "chars": 768, "ms": 84}

@@ -1,0 +1,35 @@
+{"at": "2026-10-17T22:29:54-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 52}
+{"at": "2026-10-17T22:29:54-0400", "tool": "find_entities", "arguments": {"q": "DR-9001"}, "status": 200, "is_error": false, "chars": 156, "ms": 152}
+{"at": "2026-10-17T22:29:55-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 74}
+{"at": "2026-10-17T22:29:55-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 888, "ms": 58}
+{"at": "2026-10-17T22:29:57-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-da7d-7110-82a4-1166078c5218"}, "status": 200, "is_error": false, "chars": 7342, "ms": 45}
+{"at": "2026-10-17T22:29:57-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 95}
+{"at": "2026-10-17T22:29:58-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-35a5-7ff3-a35b-e5128808d47e"}, "status": 200, "is_error": false, "chars": 3431, "ms": 66}
+{"at": "2026-10-17T22:29:58-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-dae4-7ef0-a507-7f48900447bc"}, "status": 200, "is_error": false, "chars": 6748, "ms": 96}
+{"at": "2026-10-17T22:30:01-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 63}
+{"at": "2026-10-17T22:30:01-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c044-79b2-a966-62b57217402e"}, "status": 200, "is_error": false, "chars": 1468, "ms": 108}
+{"at": "2026-10-17T22:30:01-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-cfd3-7bc0-8026-9a48001fe985"}, "status": 200, "is_error": false, "chars": 1572, "ms": 47}
+{"at": "2026-10-17T22:30:02-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-beae-7412-8ee8-05f326c05004"}, "status": 200, "is_error": false, "chars": 12915, "ms": 63}
+{"at": "2026-10-17T22:30:03-0400", "tool": "find_entities", "arguments": {"q": "policy"}, "status": 200, "is_error": false, "chars": 1686, "ms": 67}
+{"at": "2026-10-17T22:30:04-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 1874, "ms": 56}
+{"at": "2026-10-17T22:30:04-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-35d2-7fc3-9811-67c9e4020c4c"}, "status": 200, "is_error": false, "chars": 8777, "ms": 48}
+{"at": "2026-10-17T22:30:05-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-bd93-7632-ac9c-758bb9f9450e"}, "status": 200, "is_error": false, "chars": 1565, "ms": 51}
+{"at": "2026-10-17T22:30:06-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-fe72-7412-b9a6-7f078c6fd2a2"}, "status": 200, "is_error": false, "chars": 891, "ms": 51}
+{"at": "2026-10-17T22:30:06-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-e0b1-71a0-a1c9-709487c3804e"}, "status": 200, "is_error": false, "chars": 2178, "ms": 47}
+{"at": "2026-10-17T22:30:09-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-fedd-7653-b6ad-16aa56c7aff0"}, "status": 200, "is_error": false, "chars": 1103, "ms": 393}
+{"at": "2026-10-17T22:30:11-0400", "tool": "find_entities", "arguments": {"q": "Account Executive"}, "status": 200, "is_error": false, "chars": 735, "ms": 69}
+{"at": "2026-10-17T22:30:11-0400", "tool": "find_entities", "arguments": {"q": "band"}, "status": 200, "is_error": false, "chars": 547, "ms": 46}
+{"at": "2026-10-17T22:30:11-0400", "tool": "find_entities", "arguments": {"q": "Director"}, "status": 200, "is_error": false, "chars": 1816, "ms": 53}
+{"at": "2026-10-17T22:30:14-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-ff1d-71f0-8bbd-abb5d4d02e1f"}, "status": 200, "is_error": false, "chars": 682, "ms": 355}
+{"at": "2026-10-17T22:30:15-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-ddbd-7731-a19c-56157c8de5b4"}, "status": 200, "is_error": false, "chars": 682, "ms": 395}
+{"at": "2026-10-17T22:30:15-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-bdd0-7c62-80e6-c37a7566de15"}, "status": 200, "is_error": false, "chars": 250, "ms": 405}
+{"at": "2026-10-17T22:30:17-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c97-ff26-79b2-be35-b4a5781d01af"}, "status": 200, "is_error": false, "chars": 604, "ms": 27}
+{"at": "2026-10-17T22:30:17-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c97-ddc2-73b0-9a95-df18b6875cb0"}, "status": 200, "is_error": false, "chars": 604, "ms": 24}
+{"at": "2026-10-17T22:30:18-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-ff21-7070-9d1b-0f9af6e86f84"}, "status": 200, "is_error": false, "chars": 2463, "ms": 365}
+{"at": "2026-10-17T22:30:18-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-ddbf-76a1-8662-72babc62daaf"}, "status": 200, "is_error": false, "chars": 1563, "ms": 369}
+{"at": "2026-10-17T22:30:21-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c97-ff38-7680-bcf5-46bb7aa19acf"}, "status": 200, "is_error": false, "chars": 580, "ms": 24}
+{"at": "2026-10-17T22:30:21-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c97-ff4b-7422-b451-5534ef3ac576"}, "status": 200, "is_error": false, "chars": 578, "ms": 35}
+{"at": "2026-10-17T22:30:22-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c97-fee9-70c1-bc78-a65c80266c5c"}, "status": 200, "is_error": false, "chars": 593, "ms": 29}
+{"at": "2026-10-17T22:30:22-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c97-ff7a-72c3-8a98-a0cf10cca1fd"}, "status": 200, "is_error": false, "chars": 579, "ms": 58}
+{"at": "2026-10-17T22:30:25-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 1136, "ms": 112}
+{"at": "2026-10-17T22:30:27-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c97-bde9-7762-b169-09d4cd7b65d6"}, "status": 200, "is_error": false, "chars": 230, "ms": 411}

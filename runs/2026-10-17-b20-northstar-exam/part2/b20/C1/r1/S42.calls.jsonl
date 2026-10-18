@@ -1,0 +1,12 @@
+{"at": "2026-10-18T03:01:18-0400", "tool": "search", "arguments": {"query": "SR-38862", "limit": 10}, "status": 200, "is_error": false, "chars": 11162, "ms": 204}
+{"at": "2026-10-18T03:01:18-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 36}
+{"at": "2026-10-18T03:01:19-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 5}
+{"at": "2026-10-18T03:01:21-0400", "tool": "read_passages", "arguments": {"document_id": "419a134d-7786-46f1-ad89-41563e61bdbb"}, "status": 200, "is_error": false, "chars": 1186, "ms": 7}
+{"at": "2026-10-18T03:01:22-0400", "tool": "read_passages", "arguments": {"document_id": "c2652e1e-ff71-41bd-ab35-083f42ec12e5"}, "status": 200, "is_error": false, "chars": 11013, "ms": 3}
+{"at": "2026-10-18T03:01:23-0400", "tool": "read_passages", "arguments": {"document_id": "6930332e-19c8-4302-b8cf-f07dc4fb55e7"}, "status": 200, "is_error": false, "chars": 11253, "ms": 3}
+{"at": "2026-10-18T03:01:27-0400", "tool": "read_passages", "arguments": {"document_id": "29b218d9-56a1-461e-84a4-55bb0a40ebd3"}, "status": 200, "is_error": false, "chars": 2579, "ms": 4}
+{"at": "2026-10-18T03:01:28-0400", "tool": "read_passages", "arguments": {"document_id": "bbd1c136-5fa5-4be9-a501-b0e0a6f534b9"}, "status": 200, "is_error": false, "chars": 4424, "ms": 2}
+{"at": "2026-10-18T03:01:29-0400", "tool": "read_passages", "arguments": {"document_id": "16303d84-098e-4caa-be6a-346be842fd3a"}, "status": 200, "is_error": false, "chars": 875, "ms": 3}
+{"at": "2026-10-18T03:01:29-0400", "tool": "read_passages", "arguments": {"document_id": "b6965a75-6a27-4eb4-9022-e7a7a5ac7dfc"}, "status": 200, "is_error": false, "chars": 287, "ms": 3}
+{"at": "2026-10-18T03:01:30-0400", "tool": "read_passages", "arguments": {"document_id": "f5d55e46-fa30-4d84-b1c0-19a5263ddbdb"}, "status": 200, "is_error": false, "chars": 1788, "ms": 2}
+{"at": "2026-10-18T03:01:31-0400", "tool": "read_passages", "arguments": {"document_id": "a88dc7d0-06a1-48fe-b8ed-199b81311b55"}, "status": 200, "is_error": false, "chars": 320, "ms": 2}

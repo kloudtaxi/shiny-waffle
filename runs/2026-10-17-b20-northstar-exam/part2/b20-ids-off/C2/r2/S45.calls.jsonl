@@ -1,0 +1,59 @@
+{"at": "2026-10-18T14:45:19-0400", "tool": "find_entities", "arguments": {"q": "SR-39857"}, "status": 200, "is_error": false, "chars": 198, "ms": 37}
+{"at": "2026-10-18T14:45:19-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 46}
+{"at": "2026-10-18T14:45:20-0400", "tool": "list_facts", "arguments": {"entity_id": "610fca8a-483e-4aec-b266-0a3e35294293"}, "status": 200, "is_error": false, "chars": 17201, "ms": 44}
+{"at": "2026-10-18T14:45:23-0400", "tool": "get_fact", "arguments": {"fact_id": "49318d82-1eaa-49ac-8347-c9ac5075f08d"}, "status": 200, "is_error": false, "chars": 579, "ms": 17}
+{"at": "2026-10-18T14:45:24-0400", "tool": "get_fact", "arguments": {"fact_id": "3089bb23-aade-4528-9413-f3b379c35bad"}, "status": 200, "is_error": false, "chars": 606, "ms": 22}
+{"at": "2026-10-18T14:45:24-0400", "tool": "get_entity", "arguments": {"entity_id": "c4586a04-367f-4722-be10-5da02b077030"}, "status": 200, "is_error": false, "chars": 38865, "ms": 20}
+{"at": "2026-10-18T14:45:26-0400", "tool": "list_facts", "arguments": {"entity_id": "0ebefab9-95b9-4bc4-b787-bca2c79b9a80"}, "status": 200, "is_error": false, "chars": 16500, "ms": 58}
+{"at": "2026-10-18T14:45:27-0400", "tool": "find_entities", "arguments": {"q": "Service Level Schedule"}, "status": 200, "is_error": false, "chars": 991, "ms": 17}
+{"at": "2026-10-18T14:45:28-0400", "tool": "list_facts", "arguments": {"entity_id": "d62da4cf-b050-493a-b512-450538a0d0e8"}, "status": 200, "is_error": false, "chars": 49, "ms": 18}
+{"at": "2026-10-18T14:45:29-0400", "tool": "list_facts", "arguments": {"entity_id": "b45da296-003c-40dd-ba8f-a4d2e13f51db"}, "status": 200, "is_error": false, "chars": 39926, "ms": 19}
+{"at": "2026-10-18T14:45:31-0400", "tool": "list_facts", "arguments": {"entity_id": "b45da296-003c-40dd-ba8f-a4d2e13f51db", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 25476, "ms": 34}
+{"at": "2026-10-18T14:45:33-0400", "tool": "find_entities", "arguments": {"q": "severity"}, "status": 200, "is_error": false, "chars": 2006, "ms": 40}
+{"at": "2026-10-18T14:45:34-0400", "tool": "find_entities", "arguments": {"q": "escalation"}, "status": 200, "is_error": false, "chars": 701, "ms": 39}
+{"at": "2026-10-18T14:45:34-0400", "tool": "find_entities", "arguments": {"q": "customer-caused"}, "status": 200, "is_error": false, "chars": 11, "ms": 45}
+{"at": "2026-10-18T14:45:36-0400", "tool": "list_facts", "arguments": {"entity_id": "d2185298-b288-4347-8f79-5d04b344eded"}, "status": 200, "is_error": false, "chars": 1918, "ms": 33}
+{"at": "2026-10-18T14:45:36-0400", "tool": "list_facts", "arguments": {"entity_id": "56c597b4-b15a-4467-b3f9-396a2d7b6bfd"}, "status": 200, "is_error": false, "chars": 3959, "ms": 33}
+{"at": "2026-10-18T14:45:36-0400", "tool": "list_facts", "arguments": {"entity_id": "853dbd1c-6407-4e51-9817-ef8cc58252c0"}, "status": 200, "is_error": false, "chars": 2023, "ms": 48}
+{"at": "2026-10-18T14:45:38-0400", "tool": "list_facts", "arguments": {"entity_id": "b98793a0-39bf-40b8-a2d8-5888377d865a"}, "status": 200, "is_error": false, "chars": 5839, "ms": 22}
+{"at": "2026-10-18T14:45:39-0400", "tool": "neighbourhood", "arguments": {"entity_id": "56c597b4-b15a-4467-b3f9-396a2d7b6bfd"}, "status": 200, "is_error": false, "chars": 789, "ms": 56}
+{"at": "2026-10-18T14:45:41-0400", "tool": "find_entities", "arguments": {"q": "Manager"}, "status": 200, "is_error": false, "chars": 659, "ms": 31}
+{"at": "2026-10-18T14:45:41-0400", "tool": "find_entities", "arguments": {"q": "Director"}, "status": 200, "is_error": false, "chars": 251, "ms": 17}
+{"at": "2026-10-18T14:45:41-0400", "tool": "find_entities", "arguments": {"q": "root cause"}, "status": 200, "is_error": false, "chars": 11, "ms": 71}
+{"at": "2026-10-18T14:45:43-0400", "tool": "neighbourhood", "arguments": {"entity_id": "6077632e-54bc-4112-9007-6951fabd05a7"}, "status": 200, "is_error": false, "chars": 5738, "ms": 19}
+{"at": "2026-10-18T14:45:44-0400", "tool": "neighbourhood", "arguments": {"entity_id": "ef61e559-a48c-41f4-a92a-8365c78300c7"}, "status": 200, "is_error": false, "chars": 303, "ms": 18}
+{"at": "2026-10-18T14:45:44-0400", "tool": "list_facts", "arguments": {"entity_id": "7cdd89a8-58dc-49a7-a970-1b13cba91cb2"}, "status": 200, "is_error": false, "chars": 49, "ms": 18}
+{"at": "2026-10-18T14:45:46-0400", "tool": "get_entity", "arguments": {"entity_id": "b0938c12-999f-4fa8-bdb1-06b80c395748"}, "status": 200, "is_error": false, "chars": 7893, "ms": 24}
+{"at": "2026-10-18T14:45:46-0400", "tool": "get_entity", "arguments": {"entity_id": "a8d76dbd-de4d-440d-a10b-0527a38a01b1"}, "status": 200, "is_error": false, "chars": 5474, "ms": 66}
+{"at": "2026-10-18T14:45:47-0400", "tool": "get_entity", "arguments": {"entity_id": "d86092ab-266c-4003-b83a-c7313c3075b5"}, "status": 200, "is_error": false, "chars": 5400, "ms": 28}
+{"at": "2026-10-18T14:45:47-0400", "tool": "get_entity", "arguments": {"entity_id": "746c1677-da12-471a-9b9c-5e4f7ddf48cb"}, "status": 200, "is_error": false, "chars": 5336, "ms": 20}
+{"at": "2026-10-18T14:45:50-0400", "tool": "neighbourhood", "arguments": {"entity_id": "0c3d4534-2500-4d77-8d04-4954645dd66c"}, "status": 200, "is_error": false, "chars": 290, "ms": 19}
+{"at": "2026-10-18T14:45:51-0400", "tool": "list_facts", "arguments": {"entity_id": "0c46b154-2b3a-49d3-bc0b-39ca734c7f4a"}, "status": 200, "is_error": false, "chars": 2159, "ms": 23}
+{"at": "2026-10-18T14:45:52-0400", "tool": "list_facts", "arguments": {"entity_id": "c1db8b84-6a02-424a-8929-c003004a3b22"}, "status": 200, "is_error": false, "chars": 49, "ms": 30}
+{"at": "2026-10-18T14:45:53-0400", "tool": "find_entities", "arguments": {"q": "Escalation Manager"}, "status": 200, "is_error": false, "chars": 11, "ms": 17}
+{"at": "2026-10-18T14:45:54-0400", "tool": "find_entities", "arguments": {"q": "Support Engineering"}, "status": 200, "is_error": false, "chars": 455, "ms": 19}
+{"at": "2026-10-18T14:45:54-0400", "tool": "find_entities", "arguments": {"q": "exclusion"}, "status": 200, "is_error": false, "chars": 617, "ms": 17}
+{"at": "2026-10-18T14:45:55-0400", "tool": "list_facts", "arguments": {"entity_id": "1df06576-f2c5-403e-acde-3cb5944a49e6"}, "status": 200, "is_error": false, "chars": 1768, "ms": 27}
+{"at": "2026-10-18T14:45:56-0400", "tool": "list_facts", "arguments": {"entity_id": "172cbff8-f490-4fc1-aa79-4e42ae4c29e0"}, "status": 200, "is_error": false, "chars": 672, "ms": 232}
+{"at": "2026-10-18T14:45:57-0400", "tool": "neighbourhood", "arguments": {"entity_id": "610fca8a-483e-4aec-b266-0a3e35294293", "hops": 2}, "status": 200, "is_error": false, "chars": 22457, "ms": 39}
+{"at": "2026-10-18T14:45:59-0400", "tool": "find_entities", "arguments": {"q": "root-cause"}, "status": 200, "is_error": false, "chars": 223, "ms": 18}
+{"at": "2026-10-18T14:45:59-0400", "tool": "list_facts", "arguments": {"entity_id": "1de08df8-9dc4-4f20-9441-689c893616c5"}, "status": 200, "is_error": false, "chars": 720, "ms": 18}
+{"at": "2026-10-18T14:46:00-0400", "tool": "find_entities", "arguments": {"q": "incident"}, "status": 200, "is_error": false, "chars": 643, "ms": 26}
+{"at": "2026-10-18T14:46:01-0400", "tool": "list_facts", "arguments": {"entity_id": "ab732d1e-2756-43ca-9095-b57739d3dbd1"}, "status": 200, "is_error": false, "chars": 751, "ms": 21}
+{"at": "2026-10-18T14:46:02-0400", "tool": "list_facts", "arguments": {"entity_id": "25c7b328-c769-4f77-bed1-be7f809f413d"}, "status": 200, "is_error": false, "chars": 2130, "ms": 31}
+{"at": "2026-10-18T14:46:07-0400", "tool": "list_facts", "arguments": {"entity_id": "0effd13d-addd-41d0-8cc0-794567cbb27c"}, "status": 200, "is_error": false, "chars": 2811, "ms": 51}
+{"at": "2026-10-18T14:46:08-0400", "tool": "list_facts", "arguments": {"entity_id": "37adc859-22e5-494c-b60e-c72486b8bdaf"}, "status": 200, "is_error": false, "chars": 1247, "ms": 31}
+{"at": "2026-10-18T14:46:11-0400", "tool": "find_entities", "arguments": {"q": "engage"}, "status": 200, "is_error": false, "chars": 11, "ms": 17}
+{"at": "2026-10-18T14:46:11-0400", "tool": "find_entities", "arguments": {"q": "account owner"}, "status": 200, "is_error": false, "chars": 223, "ms": 20}
+{"at": "2026-10-18T14:46:11-0400", "tool": "find_entities", "arguments": {"q": "holiday"}, "status": 200, "is_error": false, "chars": 787, "ms": 18}
+{"at": "2026-10-18T14:46:13-0400", "tool": "list_facts", "arguments": {"entity_id": "3cbe3b0b-e3cc-4018-946a-725decaf2ec0"}, "status": 200, "is_error": false, "chars": 8602, "ms": 48}
+{"at": "2026-10-18T14:46:13-0400", "tool": "list_facts", "arguments": {"entity_id": "ebb73220-53ee-4da1-b68e-8340388a88e2"}, "status": 200, "is_error": false, "chars": 773, "ms": 45}
+{"at": "2026-10-18T14:46:17-0400", "tool": "find_entities", "arguments": {"q": "Support Escalation"}, "status": 200, "is_error": false, "chars": 243, "ms": 21}
+{"at": "2026-10-18T14:46:18-0400", "tool": "list_facts", "arguments": {"entity_id": "6485bbb5-e468-4078-ae25-53c8139bfd29"}, "status": 200, "is_error": false, "chars": 9534, "ms": 23}
+{"at": "2026-10-18T14:46:18-0400", "tool": "list_facts", "arguments": {"entity_id": "b117dc06-05b0-4386-8e23-1c40de8fbf00"}, "status": 200, "is_error": false, "chars": 5451, "ms": 48}
+{"at": "2026-10-18T14:46:22-0400", "tool": "find_entities", "arguments": {"q": "notif"}, "status": 200, "is_error": false, "chars": 11, "ms": 45}
+{"at": "2026-10-18T14:46:22-0400", "tool": "find_entities", "arguments": {"q": "target"}, "status": 200, "is_error": false, "chars": 193, "ms": 18}
+{"at": "2026-10-18T14:46:24-0400", "tool": "list_facts", "arguments": {"entity_id": "c7923eb9-4003-421b-ac68-d4496e7be88d"}, "status": 200, "is_error": false, "chars": 4354, "ms": 21}
+{"at": "2026-10-18T14:46:31-0400", "tool": "list_facts", "arguments": {"entity_id": "4f7ec5cf-bf16-4b98-8530-7a8c9c87ab34"}, "status": 200, "is_error": false, "chars": 18371, "ms": 45}
+{"at": "2026-10-18T14:46:31-0400", "tool": "list_facts", "arguments": {"entity_id": "6c2e65a6-ae39-4765-95d0-484ee18d273e"}, "status": 200, "is_error": false, "chars": 7155, "ms": 45}
+{"at": "2026-10-18T14:46:32-0400", "tool": "list_facts", "arguments": {"entity_id": "74199f0a-e482-4735-ae75-c66541459836"}, "status": 200, "is_error": false, "chars": 17960, "ms": 33}

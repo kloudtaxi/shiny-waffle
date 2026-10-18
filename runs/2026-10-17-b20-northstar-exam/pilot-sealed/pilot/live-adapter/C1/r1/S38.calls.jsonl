@@ -1,0 +1,16 @@
+{"at": "2026-10-17T18:17:42-0400", "tool": "search", "arguments": {"query": "SR-39561", "limit": 10}, "status": 200, "is_error": false, "chars": 14718, "ms": 367}
+{"at": "2026-10-17T18:17:42-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1592, "ms": 257}
+{"at": "2026-10-17T18:17:44-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 20607, "ms": 43}
+{"at": "2026-10-17T18:17:44-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2051"}, "status": 501, "is_error": true, "chars": 135, "ms": 18}
+{"at": "2026-10-17T18:17:49-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-231e-7d33-9dc5-0e8294bb4ae6"}, "status": 200, "is_error": false, "chars": 1043, "ms": 126}
+{"at": "2026-10-17T18:17:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-299e-7f22-abe9-1d68518b05dc"}, "status": 200, "is_error": false, "chars": 12850, "ms": 55}
+{"at": "2026-10-17T18:17:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1c95-78f2-ac69-96fb2e316d20"}, "status": 200, "is_error": false, "chars": 487, "ms": 43}
+{"at": "2026-10-17T18:17:57-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2af2-7132-8c92-deb0a57fdc08"}, "status": 200, "is_error": false, "chars": 2585, "ms": 77}
+{"at": "2026-10-17T18:17:57-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a2c-7cc3-a848-596f82b4d25e"}, "status": 200, "is_error": false, "chars": 4775, "ms": 45}
+{"at": "2026-10-17T18:17:58-0400", "tool": "search", "arguments": {"query": "maintenance notice sent to designated support contacts columns notice_id sent_at window_start", "limit": 5}, "status": 200, "is_error": false, "chars": 8030, "ms": 414}
+{"at": "2026-10-17T18:17:59-0400", "tool": "search", "arguments": {"query": "CRM-2051 BlueRiver ERP DUNS", "limit": 8}, "status": 200, "is_error": false, "chars": 11329, "ms": 383}
+{"at": "2026-10-17T18:18:05-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-262a-7853-997b-6cec1f21e014"}, "status": 200, "is_error": false, "chars": 1018, "ms": 62}
+{"at": "2026-10-17T18:18:05-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2a85-7a80-af9e-705bee27ad24"}, "status": 200, "is_error": false, "chars": 1161, "ms": 47}
+{"at": "2026-10-17T18:18:06-0400", "tool": "search", "arguments": {"query": "Support Escalation Manager Director of Customer Support 2026", "limit": 8}, "status": 200, "is_error": false, "chars": 14722, "ms": 338}
+{"at": "2026-10-17T18:18:10-0400", "tool": "search", "arguments": {"query": "SR-39561 credit request decision memo", "limit": 5}, "status": 200, "is_error": false, "chars": 8024, "ms": 353}
+{"at": "2026-10-17T18:18:10-0400", "tool": "get_entity", "arguments": {"entity_id": "01a13637-faf5-7383-b430-a69b2c065331"}, "status": 200, "is_error": false, "chars": 13968, "ms": 65}

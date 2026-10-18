@@ -1,0 +1,14 @@
+{"at": "2026-10-18T13:29:43-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9106"}, "status": 404, "is_error": true, "chars": 135, "ms": 75}
+{"at": "2026-10-18T13:29:44-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 59}
+{"at": "2026-10-18T13:29:45-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 86}
+{"at": "2026-10-18T13:29:45-0400", "tool": "find_entities", "arguments": {"q": "NS-EDGE"}, "status": 200, "is_error": false, "chars": 726, "ms": 52}
+{"at": "2026-10-18T13:29:47-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "DR-9106"}, "status": 404, "is_error": true, "chars": 125, "ms": 55}
+{"at": "2026-10-18T13:29:48-0400", "tool": "list_facts", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 6128, "ms": 21}
+{"at": "2026-10-18T13:29:48-0400", "tool": "list_facts", "arguments": {"entity_id": "ccc1d6ed-416e-4b47-8296-e045faf589bf"}, "status": 200, "is_error": false, "chars": 5385, "ms": 28}
+{"at": "2026-10-18T13:29:48-0400", "tool": "find_entities", "arguments": {"q": "DR-91"}, "status": 200, "is_error": false, "chars": 11, "ms": 19}
+{"at": "2026-10-18T13:29:51-0400", "tool": "find_entities", "arguments": {"q": "policy"}, "status": 200, "is_error": false, "chars": 2202, "ms": 33}
+{"at": "2026-10-18T13:29:51-0400", "tool": "find_entities", "arguments": {"q": "discount"}, "status": 200, "is_error": false, "chars": 897, "ms": 51}
+{"at": "2026-10-18T13:29:52-0400", "tool": "neighbourhood", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 18046, "ms": 22}
+{"at": "2026-10-18T13:29:55-0400", "tool": "get_entity", "arguments": {"entity_id": "f9316095-ecfe-459e-b40e-8aeaa27814c0"}, "status": 200, "is_error": false, "chars": 12302, "ms": 23}
+{"at": "2026-10-18T13:29:55-0400", "tool": "get_entity", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15"}, "status": 200, "is_error": false, "chars": 4934, "ms": 26}
+{"at": "2026-10-18T13:29:56-0400", "tool": "get_entity", "arguments": {"entity_id": "34e7f09a-0e4b-41ba-baa6-e864b2fd92dc"}, "status": 200, "is_error": false, "chars": 11227, "ms": 41}

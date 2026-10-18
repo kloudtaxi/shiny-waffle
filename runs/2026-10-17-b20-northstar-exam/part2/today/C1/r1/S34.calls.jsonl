@@ -1,0 +1,13 @@
+{"at": "2026-10-17T22:26:27-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 501, "is_error": true, "chars": 143, "ms": 51}
+{"at": "2026-10-17T22:26:28-0400", "tool": "search", "arguments": {"query": "CR-9208"}, "status": 200, "is_error": false, "chars": 7486, "ms": 325}
+{"at": "2026-10-17T22:26:28-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 29}
+{"at": "2026-10-17T22:26:30-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a259-7831-8044-e12e5d9b8eaa"}, "status": 200, "is_error": false, "chars": 1552, "ms": 73}
+{"at": "2026-10-17T22:26:31-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f43-7070-9106-fdeece6b182b"}, "status": 200, "is_error": false, "chars": 804, "ms": 57}
+{"at": "2026-10-17T22:26:31-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f1c-7ae0-9073-9971a90a867c"}, "status": 200, "is_error": false, "chars": 1983, "ms": 27}
+{"at": "2026-10-17T22:26:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a297-7182-b409-e666af3560ad"}, "status": 200, "is_error": false, "chars": 1387, "ms": 38}
+{"at": "2026-10-17T22:26:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a282-7f02-bb68-97f4ce30142c"}, "status": 200, "is_error": false, "chars": 2171, "ms": 44}
+{"at": "2026-10-17T22:26:35-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 70}
+{"at": "2026-10-17T22:26:35-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a333-7fe1-a5cd-9cc8ac2496ef"}, "status": 200, "is_error": false, "chars": 443, "ms": 71}
+{"at": "2026-10-17T22:26:39-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a355-7230-947c-757b5c11f362"}, "status": 200, "is_error": false, "chars": 2538, "ms": 78}
+{"at": "2026-10-17T22:26:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 56}
+{"at": "2026-10-17T22:26:40-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 44}

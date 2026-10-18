@@ -1,0 +1,23 @@
+{"at": "2026-10-17T22:24:40-0400", "tool": "find_entities", "arguments": {"q": "DR-9001"}, "status": 200, "is_error": false, "chars": 156, "ms": 99}
+{"at": "2026-10-17T22:24:41-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 135, "ms": 31}
+{"at": "2026-10-17T22:24:42-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 191}
+{"at": "2026-10-17T22:24:42-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 40}
+{"at": "2026-10-17T22:24:44-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-da7d-7110-82a4-1166078c5218"}, "status": 200, "is_error": false, "chars": 7342, "ms": 111}
+{"at": "2026-10-17T22:24:45-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 116}
+{"at": "2026-10-17T22:24:45-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c044-79b2-a966-62b57217402e"}, "status": 200, "is_error": false, "chars": 1468, "ms": 49}
+{"at": "2026-10-17T22:24:45-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-cfd3-7bc0-8026-9a48001fe985"}, "status": 200, "is_error": false, "chars": 1572, "ms": 57}
+{"at": "2026-10-17T22:24:48-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 60}
+{"at": "2026-10-17T22:24:49-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9dec-7373-856b-fe62ede4b9dc"}, "status": 200, "is_error": false, "chars": 1126, "ms": 81}
+{"at": "2026-10-17T22:24:49-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 22}
+{"at": "2026-10-17T22:24:51-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0fe-7ca1-83e3-76b95516e020"}, "status": 200, "is_error": false, "chars": 1262, "ms": 59}
+{"at": "2026-10-17T22:24:52-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0ad-70d0-952d-9e9e582dc3f3"}, "status": 200, "is_error": false, "chars": 1166, "ms": 61}
+{"at": "2026-10-17T22:24:52-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0d7-7041-b236-c03e6f9f8278"}, "status": 200, "is_error": false, "chars": 1079, "ms": 83}
+{"at": "2026-10-17T22:24:53-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 72}
+{"at": "2026-10-17T22:24:55-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 70}
+{"at": "2026-10-17T22:24:55-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f68-7421-a202-7e4cb45c4168"}, "status": 200, "is_error": false, "chars": 735, "ms": 66}
+{"at": "2026-10-17T22:24:56-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f43-7070-9106-fdeece6b182b"}, "status": 200, "is_error": false, "chars": 804, "ms": 62}
+{"at": "2026-10-17T22:24:56-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 46}
+{"at": "2026-10-17T22:24:57-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 37}
+{"at": "2026-10-17T22:25:00-0400", "tool": "search", "arguments": {"query": "CRM-2048 Acme Manufacturing account", "limit": 8}, "status": 200, "is_error": false, "chars": 7387, "ms": 382}
+{"at": "2026-10-17T22:25:00-0400", "tool": "search", "arguments": {"query": "NS-500 Industrial Controller list price", "limit": 5}, "status": 200, "is_error": false, "chars": 4278, "ms": 380}
+{"at": "2026-10-17T22:25:06-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a04d-7d23-b918-93e8f88aa1d8"}, "status": 200, "is_error": false, "chars": 824, "ms": 83}

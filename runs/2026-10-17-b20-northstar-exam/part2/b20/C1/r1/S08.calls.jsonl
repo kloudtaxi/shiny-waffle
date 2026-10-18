@@ -1,0 +1,5 @@
+{"at": "2026-10-17T22:57:43-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 55}
+{"at": "2026-10-17T22:57:43-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 57}
+{"at": "2026-10-17T22:57:44-0400", "tool": "lookup_identifier", "arguments": {"system": "ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 2801, "ms": 65}
+{"at": "2026-10-17T22:57:47-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 24}
+{"at": "2026-10-17T22:57:47-0400", "tool": "search", "arguments": {"query": "ACME-MFG-2025", "limit": 8}, "status": 200, "is_error": false, "chars": 4979, "ms": 206}

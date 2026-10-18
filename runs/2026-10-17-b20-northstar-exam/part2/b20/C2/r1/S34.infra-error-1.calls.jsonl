@@ -1,0 +1,2 @@
+{"at": "2026-10-18T03:12:37-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "CR-9208"}, "status": 404, "is_error": true, "chars": 135, "ms": 73}
+{"at": "2026-10-18T03:12:38-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 2801, "ms": 60}

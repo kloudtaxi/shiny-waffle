@@ -1,0 +1,16 @@
+{"at": "2026-10-18T13:31:19-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 82}
+{"at": "2026-10-18T13:31:19-0400", "tool": "find_entities", "arguments": {"q": "DR-9112"}, "status": 200, "is_error": false, "chars": 11, "ms": 42}
+{"at": "2026-10-18T13:31:20-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 212, "ms": 20}
+{"at": "2026-10-18T13:31:20-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1364, "ms": 21}
+{"at": "2026-10-18T13:31:23-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 22}
+{"at": "2026-10-18T13:31:23-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 23}
+{"at": "2026-10-18T13:31:24-0400", "tool": "get_entity", "arguments": {"entity_id": "b8bd47ea-f76b-4f00-9f2e-7a1bca24c189", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 15496, "ms": 327}
+{"at": "2026-10-18T13:31:25-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 37464, "ms": 211}
+{"at": "2026-10-18T13:31:29-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 1722, "ms": 21}
+{"at": "2026-10-18T13:31:30-0400", "tool": "find_entities", "arguments": {"q": "Discount", "kind": "document"}, "status": 200, "is_error": false, "chars": 507, "ms": 22}
+{"at": "2026-10-18T13:31:30-0400", "tool": "find_entities", "arguments": {"q": "Policy"}, "status": 200, "is_error": false, "chars": 2202, "ms": 51}
+{"at": "2026-10-18T13:31:33-0400", "tool": "get_entity", "arguments": {"entity_id": "f9316095-ecfe-459e-b40e-8aeaa27814c0"}, "status": 200, "is_error": false, "chars": 12302, "ms": 42}
+{"at": "2026-10-18T13:31:34-0400", "tool": "get_entity", "arguments": {"entity_id": "34e7f09a-0e4b-41ba-baa6-e864b2fd92dc"}, "status": 200, "is_error": false, "chars": 11227, "ms": 40}
+{"at": "2026-10-18T13:31:34-0400", "tool": "get_entity", "arguments": {"entity_id": "d2cb042a-4c84-4f60-8a82-471d8fefef15"}, "status": 200, "is_error": false, "chars": 4934, "ms": 33}
+{"at": "2026-10-18T13:31:40-0400", "tool": "find_entities", "arguments": {"q": "Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 236, "ms": 124}
+{"at": "2026-10-18T13:31:42-0400", "tool": "get_entity", "arguments": {"entity_id": "e6f65404-5857-42dd-bb43-544e945dc665"}, "status": 200, "is_error": false, "chars": 12395, "ms": 30}

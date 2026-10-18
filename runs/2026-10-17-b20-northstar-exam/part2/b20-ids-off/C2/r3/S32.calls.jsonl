@@ -1,0 +1,24 @@
+{"at": "2026-10-18T14:55:44-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1044"}, "status": 200, "is_error": false, "chars": 451, "ms": 50}
+{"at": "2026-10-18T14:55:45-0400", "tool": "find_entities", "arguments": {"q": "CR-9207"}, "status": 200, "is_error": false, "chars": 11, "ms": 17}
+{"at": "2026-10-18T14:55:45-0400", "tool": "find_entities", "arguments": {"q": "guarantee"}, "status": 200, "is_error": false, "chars": 464, "ms": 17}
+{"at": "2026-10-18T14:55:45-0400", "tool": "find_entities", "arguments": {"q": "credit policy"}, "status": 200, "is_error": false, "chars": 997, "ms": 18}
+{"at": "2026-10-18T14:55:48-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 40}
+{"at": "2026-10-18T14:55:49-0400", "tool": "get_entity", "arguments": {"entity_id": "dc8fa56d-8264-4ba7-8a12-b33b4dc31607"}, "status": 200, "is_error": false, "chars": 2290, "ms": 18}
+{"at": "2026-10-18T14:55:49-0400", "tool": "get_entity", "arguments": {"entity_id": "43be5137-8ac4-404d-b931-a9c1daa3fada"}, "status": 200, "is_error": false, "chars": 9399, "ms": 19}
+{"at": "2026-10-18T14:55:50-0400", "tool": "get_entity", "arguments": {"entity_id": "a0b81968-44a7-4b55-bda4-4fff37e07402"}, "status": 200, "is_error": false, "chars": 16933, "ms": 22}
+{"at": "2026-10-18T14:55:54-0400", "tool": "neighbourhood", "arguments": {"entity_id": "a2141e55-fa46-43aa-a803-b5df9566a325"}, "status": 200, "is_error": false, "chars": 2705, "ms": 180}
+{"at": "2026-10-18T14:55:55-0400", "tool": "neighbourhood", "arguments": {"entity_id": "d863d21e-03dc-4acd-a494-a86e9db2073a"}, "status": 200, "is_error": false, "chars": 839, "ms": 40}
+{"at": "2026-10-18T14:55:55-0400", "tool": "get_fact", "arguments": {"fact_id": "c690f6c3-70e7-4344-be25-3efc2e727d07"}, "status": 200, "is_error": false, "chars": 710, "ms": 40}
+{"at": "2026-10-18T14:55:55-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 19}
+{"at": "2026-10-18T14:56:01-0400", "tool": "list_facts", "arguments": {"entity_id": "d863d21e-03dc-4acd-a494-a86e9db2073a"}, "status": 200, "is_error": false, "chars": 5796, "ms": 18}
+{"at": "2026-10-18T14:56:01-0400", "tool": "list_facts", "arguments": {"entity_id": "a2141e55-fa46-43aa-a803-b5df9566a325"}, "status": 200, "is_error": false, "chars": 6419, "ms": 19}
+{"at": "2026-10-18T14:56:02-0400", "tool": "list_facts", "arguments": {"entity_id": "d1300289-09c6-4deb-8e13-2ee3db0dc2d4"}, "status": 200, "is_error": false, "chars": 2070, "ms": 36}
+{"at": "2026-10-18T14:56:02-0400", "tool": "list_facts", "arguments": {"entity_id": "17c74ad3-24c9-4b03-b4b3-f1c136e78cfe"}, "status": 200, "is_error": false, "chars": 781, "ms": 20}
+{"at": "2026-10-18T14:56:08-0400", "tool": "find_entities", "arguments": {"q": "INV-", "kind": "document"}, "status": 200, "is_error": false, "chars": 9934, "ms": 26}
+{"at": "2026-10-18T14:56:09-0400", "tool": "get_entity", "arguments": {"entity_id": "3e31fdef-3a23-4697-982e-30d06abe3434"}, "status": 200, "is_error": false, "chars": 4199, "ms": 20}
+{"at": "2026-10-18T14:56:13-0400", "tool": "find_entities", "arguments": {"q": "INV-", "kind": "document", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 9934, "ms": 43}
+{"at": "2026-10-18T14:56:17-0400", "tool": "find_entities", "arguments": {"q": "INV-3002"}, "status": 200, "is_error": false, "chars": 615, "ms": 17}
+{"at": "2026-10-18T14:56:17-0400", "tool": "find_entities", "arguments": {"q": "INV-3003"}, "status": 200, "is_error": false, "chars": 11, "ms": 17}
+{"at": "2026-10-18T14:56:23-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 11, "ms": 33}
+{"at": "2026-10-18T14:56:23-0400", "tool": "list_facts", "arguments": {"entity_id": "b117dc06-05b0-4386-8e23-1c40de8fbf00"}, "status": 200, "is_error": false, "chars": 5451, "ms": 19}
+{"at": "2026-10-18T14:56:28-0400", "tool": "get_entity", "arguments": {"entity_id": "3dfd9c7b-8c19-4b4a-b724-8c644a0c0d06"}, "status": 200, "is_error": false, "chars": 873, "ms": 25}

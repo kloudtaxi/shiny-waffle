@@ -1,0 +1,16 @@
+{"at": "2026-10-17T22:23:15-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9105"}, "status": 501, "is_error": true, "chars": 144, "ms": 52}
+{"at": "2026-10-17T22:23:15-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2091"}, "status": 501, "is_error": true, "chars": 145, "ms": 36}
+{"at": "2026-10-17T22:23:16-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 888, "ms": 371}
+{"at": "2026-10-17T22:23:16-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 84}
+{"at": "2026-10-17T22:23:18-0400", "tool": "search", "arguments": {"query": "DR-9105"}, "status": 200, "is_error": false, "chars": 7089, "ms": 381}
+{"at": "2026-10-17T22:23:18-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-4936-7260-b2ea-c4673b5be72f"}, "status": 200, "is_error": false, "chars": 11587, "ms": 81}
+{"at": "2026-10-17T22:23:19-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 100}
+{"at": "2026-10-17T22:23:19-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c044-79b2-a966-62b57217402e"}, "status": 200, "is_error": false, "chars": 1468, "ms": 39}
+{"at": "2026-10-17T22:23:23-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 47}
+{"at": "2026-10-17T22:23:23-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e2a-7143-9a69-036a9fe8f393"}, "status": 200, "is_error": false, "chars": 1479, "ms": 41}
+{"at": "2026-10-17T22:23:28-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-cfd3-7bc0-8026-9a48001fe985"}, "status": 200, "is_error": false, "chars": 1572, "ms": 75}
+{"at": "2026-10-17T22:23:29-0400", "tool": "search", "arguments": {"query": "discount approval bands authority sales policy", "limit": 10}, "status": 200, "is_error": false, "chars": 9452, "ms": 409}
+{"at": "2026-10-17T22:23:29-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 77}
+{"at": "2026-10-17T22:23:32-0400", "tool": "search", "arguments": {"query": "employee roster role title Sarah Chen VP Sales", "limit": 6}, "status": 200, "is_error": false, "chars": 6163, "ms": 373}
+{"at": "2026-10-17T22:23:32-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 46}
+{"at": "2026-10-17T22:23:35-0400", "tool": "search", "arguments": {"query": "Acme Industrial Supply agreement pricing exception CRM-2091 C-1044", "limit": 8}, "status": 200, "is_error": false, "chars": 6734, "ms": 334}

@@ -1,0 +1,8 @@
+{"at": "2026-10-17T22:22:24-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 124}
+{"at": "2026-10-17T22:22:24-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 888, "ms": 71}
+{"at": "2026-10-17T22:22:27-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 788}
+{"at": "2026-10-17T22:22:27-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c044-79b2-a966-62b57217402e"}, "status": 200, "is_error": false, "chars": 1468, "ms": 33}
+{"at": "2026-10-17T22:22:27-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-beae-7412-8ee8-05f326c05004"}, "status": 200, "is_error": false, "chars": 12915, "ms": 43}
+{"at": "2026-10-17T22:22:30-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9dec-7373-856b-fe62ede4b9dc"}, "status": 200, "is_error": false, "chars": 1126, "ms": 75}
+{"at": "2026-10-17T22:22:31-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c669-7271-9d09-333915ce5c38"}, "status": 200, "is_error": false, "chars": 184, "ms": 104}
+{"at": "2026-10-17T22:22:33-0400", "tool": "search", "arguments": {"query": "ACME-MFG-2025 Master Supply Agreement term effective date", "limit": 6}, "status": 200, "is_error": false, "chars": 6211, "ms": 336}

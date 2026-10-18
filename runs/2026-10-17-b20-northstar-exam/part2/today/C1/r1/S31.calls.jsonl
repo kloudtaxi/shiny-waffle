@@ -1,0 +1,16 @@
+{"at": "2026-10-17T22:26:02-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 501, "is_error": true, "chars": 143, "ms": 52}
+{"at": "2026-10-17T22:26:03-0400", "tool": "find_entities", "arguments": {"q": "CR-9206"}, "status": 200, "is_error": false, "chars": 11, "ms": 93}
+{"at": "2026-10-17T22:26:03-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 462, "ms": 85}
+{"at": "2026-10-17T22:26:04-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 839, "ms": 116}
+{"at": "2026-10-17T22:26:04-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 19}
+{"at": "2026-10-17T22:26:05-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c98-35d2-7fc3-9811-67c9e4020c4c"}, "status": 200, "is_error": false, "chars": 3193, "ms": 122}
+{"at": "2026-10-17T22:26:05-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-e68b-7590-9e9b-6aa2e45b07f2"}, "status": 200, "is_error": false, "chars": 1997, "ms": 109}
+{"at": "2026-10-17T22:26:07-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a259-7831-8044-e12e5d9b8eaa"}, "status": 200, "is_error": false, "chars": 1552, "ms": 120}
+{"at": "2026-10-17T22:26:07-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ef5-7d22-bf91-17d065d63ece"}, "status": 200, "is_error": false, "chars": 1922, "ms": 55}
+{"at": "2026-10-17T22:26:08-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a297-7182-b409-e666af3560ad"}, "status": 200, "is_error": false, "chars": 1387, "ms": 61}
+{"at": "2026-10-17T22:26:08-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a333-7fe1-a5cd-9cc8ac2496ef"}, "status": 200, "is_error": false, "chars": 443, "ms": 57}
+{"at": "2026-10-17T22:26:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a282-7f02-bb68-97f4ce30142c"}, "status": 200, "is_error": false, "chars": 2171, "ms": 83}
+{"at": "2026-10-17T22:26:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a355-7230-947c-757b5c11f362"}, "status": 200, "is_error": false, "chars": 2538, "ms": 46}
+{"at": "2026-10-17T22:26:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2f5-7600-8aec-b35f668080f3"}, "status": 200, "is_error": false, "chars": 2338, "ms": 45}
+{"at": "2026-10-17T22:26:12-0400", "tool": "search", "arguments": {"query": "CR-9206"}, "status": 200, "is_error": false, "chars": 8667, "ms": 403}
+{"at": "2026-10-17T22:26:17-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e58-77f2-852c-fd9f5a4e1001"}, "status": 200, "is_error": false, "chars": 768, "ms": 62}

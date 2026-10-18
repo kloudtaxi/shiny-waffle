@@ -1,0 +1,5 @@
+{"at": "2026-10-17T22:58:56-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9106"}, "status": 404, "is_error": true, "chars": 135, "ms": 93}
+{"at": "2026-10-17T22:58:56-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 56}
+{"at": "2026-10-17T22:58:57-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 204, "ms": 22}
+{"at": "2026-10-17T22:58:57-0400", "tool": "find_entities", "arguments": {"q": "NS-Edge"}, "status": 200, "is_error": false, "chars": 726, "ms": 25}
+{"at": "2026-10-17T22:58:57-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 8}

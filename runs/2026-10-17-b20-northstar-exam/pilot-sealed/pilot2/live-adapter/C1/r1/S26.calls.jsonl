@@ -1,0 +1,37 @@
+{"at": "2026-10-17T18:22:35-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 501, "is_error": true, "chars": 143, "ms": 24}
+{"at": "2026-10-17T18:22:35-0400", "tool": "search", "arguments": {"query": "CR-9201 credit limit request"}, "status": 200, "is_error": false, "chars": 10020, "ms": 308}
+{"at": "2026-10-17T18:22:36-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 16}
+{"at": "2026-10-17T18:22:38-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-245d-7e61-ae2f-4512de9120a1"}, "status": 200, "is_error": false, "chars": 2130, "ms": 24}
+{"at": "2026-10-17T18:22:39-0400", "tool": "search", "arguments": {"query": "Northstar Credit Policy 2026 effective from 2026-01-01"}, "status": 200, "is_error": false, "chars": 10779, "ms": 384}
+{"at": "2026-10-17T18:22:39-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-24ca-7a93-8187-3c8fbbe0a325"}, "status": 200, "is_error": false, "chars": 804, "ms": 32}
+{"at": "2026-10-17T18:22:42-0400", "tool": "find_entities", "arguments": {"q": "Credit Policy"}, "status": 200, "is_error": false, "chars": 804, "ms": 237}
+{"at": "2026-10-17T18:22:42-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 3201, "ms": 248}
+{"at": "2026-10-17T18:22:43-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 334, "ms": 236}
+{"at": "2026-10-17T18:22:44-0400", "tool": "get_entity", "arguments": {"entity_id": "01a13637-6387-7e90-b22b-e98113a5364e"}, "status": 200, "is_error": false, "chars": 2305, "ms": 53}
+{"at": "2026-10-17T18:22:46-0400", "tool": "get_entity", "arguments": {"entity_id": "01a13637-6387-7e90-b22b-e98113a5364e", "known_at": "2026-09-23T12:00:00Z"}, "status": 200, "is_error": false, "chars": 214, "ms": 1414}
+{"at": "2026-10-17T18:22:50-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-229e-7361-9e72-0066202db9e9"}, "status": 200, "is_error": false, "chars": 768, "ms": 26}
+{"at": "2026-10-17T18:22:50-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-6387-7e90-b22b-e98113a5364e"}, "status": 200, "is_error": false, "chars": 1128, "ms": 327}
+{"at": "2026-10-17T18:23:00-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 528, "ms": 218}
+{"at": "2026-10-17T18:23:00-0400", "tool": "find_entities", "arguments": {"q": "Accounts Receivable"}, "status": 200, "is_error": false, "chars": 451, "ms": 221}
+{"at": "2026-10-17T18:23:00-0400", "tool": "find_entities", "arguments": {"q": "Strategic"}, "status": 200, "is_error": false, "chars": 1014, "ms": 210}
+{"at": "2026-10-17T18:23:04-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-63c1-7c72-ae6a-788c08ae16d5"}, "status": 200, "is_error": false, "chars": 1404, "ms": 38}
+{"at": "2026-10-17T18:23:04-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-6404-7a12-84c5-3f2e6689639e"}, "status": 200, "is_error": false, "chars": 728, "ms": 28}
+{"at": "2026-10-17T18:23:05-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-63f0-7381-aa8d-aeb398424d57"}, "status": 200, "is_error": false, "chars": 49, "ms": 27}
+{"at": "2026-10-17T18:23:10-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-564b-7e23-96f8-8568dd3f2e5f"}, "status": 200, "is_error": false, "chars": 49, "ms": 38}
+{"at": "2026-10-17T18:23:10-0400", "tool": "list_facts", "arguments": {"entity_id": "01a136c5-8faf-7ed0-a7f5-618855018849"}, "status": 200, "is_error": false, "chars": 49, "ms": 45}
+{"at": "2026-10-17T18:23:11-0400", "tool": "find_entities", "arguments": {"q": "concurrence"}, "status": 200, "is_error": false, "chars": 785, "ms": 204}
+{"at": "2026-10-17T18:23:11-0400", "tool": "find_entities", "arguments": {"q": "Payment history"}, "status": 200, "is_error": false, "chars": 172, "ms": 195}
+{"at": "2026-10-17T18:23:13-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-6403-7cc1-96e5-653efa112779"}, "status": 200, "is_error": false, "chars": 721, "ms": 301}
+{"at": "2026-10-17T18:23:14-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13637-63f0-7381-aa8d-aeb398424d57"}, "status": 200, "is_error": false, "chars": 673, "ms": 297}
+{"at": "2026-10-17T18:23:14-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a13638-d19d-7e00-8cc0-b94e7285ef8c"}, "status": 200, "is_error": false, "chars": 1269, "ms": 287}
+{"at": "2026-10-17T18:23:16-0400", "tool": "get_fact", "arguments": {"fact_id": "01a13637-63f3-7960-b087-96a4ce525205"}, "status": 404, "is_error": true, "chars": 94, "ms": 26}
+{"at": "2026-10-17T18:23:17-0400", "tool": "get_fact", "arguments": {"fact_id": "01a13637-6406-7d52-a24d-a738376b1e90"}, "status": 404, "is_error": true, "chars": 94, "ms": 40}
+{"at": "2026-10-17T18:23:17-0400", "tool": "get_fact", "arguments": {"fact_id": "01a13638-d1ab-73e0-95e5-1ac3d3a2db81"}, "status": 404, "is_error": true, "chars": 94, "ms": 25}
+{"at": "2026-10-17T18:23:17-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13637-63e8-7230-88fa-2b2a2d6c26b4"}, "status": 200, "is_error": false, "chars": 2111, "ms": 51}
+{"at": "2026-10-17T18:23:23-0400", "tool": "list_facts", "arguments": {"entity_id": "01a13638-d19d-7e00-8cc0-b94e7285ef8c"}, "status": 200, "is_error": false, "chars": 1837, "ms": 43}
+{"at": "2026-10-17T18:23:24-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1900-7872-95e9-45dc62aa0f1e"}, "status": 200, "is_error": false, "chars": 2171, "ms": 26}
+{"at": "2026-10-17T18:23:24-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1943-7a33-b788-358dd135d389"}, "status": 200, "is_error": false, "chars": 1387, "ms": 29}
+{"at": "2026-10-17T18:23:25-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1b11-7520-aa1b-3647453a4522"}, "status": 200, "is_error": false, "chars": 443, "ms": 27}
+{"at": "2026-10-17T18:23:28-0400", "tool": "search", "arguments": {"query": "C-1001 invoice due date paid date", "limit": 20}, "status": 200, "is_error": false, "chars": 14605, "ms": 329}
+{"at": "2026-10-17T18:23:28-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-2680-71c2-a6aa-e2f8898e2cfb"}, "status": 200, "is_error": false, "chars": 1087, "ms": 24}
+{"at": "2026-10-17T18:23:28-0400", "tool": "read_passages", "arguments": {"document_id": "01a13636-1a7d-7b51-b6d9-d4630534976b"}, "status": 200, "is_error": false, "chars": 2338, "ms": 32}

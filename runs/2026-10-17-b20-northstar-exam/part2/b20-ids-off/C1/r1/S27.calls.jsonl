@@ -1,0 +1,9 @@
+{"at": "2026-10-18T02:57:33-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1001"}, "status": 200, "is_error": false, "chars": 593, "ms": 83}
+{"at": "2026-10-18T02:57:33-0400", "tool": "search", "arguments": {"query": "CR-9202"}, "status": 200, "is_error": false, "chars": 11652, "ms": 204}
+{"at": "2026-10-18T02:57:36-0400", "tool": "search", "arguments": {"query": "credit policy maximum limit account tier approval bands", "limit": 10}, "status": 200, "is_error": false, "chars": 5561, "ms": 236}
+{"at": "2026-10-18T02:57:37-0400", "tool": "search", "arguments": {"query": "Acme Group parent guarantee", "limit": 10}, "status": 200, "is_error": false, "chars": 5672, "ms": 167}
+{"at": "2026-10-18T02:57:37-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 38}
+{"at": "2026-10-18T02:57:39-0400", "tool": "read_passages", "arguments": {"document_id": "4cd0ade4-51a7-45b3-9de6-57df85cffb7f"}, "status": 200, "is_error": false, "chars": 2314, "ms": 7}
+{"at": "2026-10-18T02:57:40-0400", "tool": "search", "arguments": {"query": "CRM-2048 account tier Strategic", "limit": 5}, "status": 200, "is_error": false, "chars": 5081, "ms": 184}
+{"at": "2026-10-18T02:57:41-0400", "tool": "search", "arguments": {"query": "C-1001 invoice due date paid date", "limit": 10}, "status": 200, "is_error": false, "chars": 10655, "ms": 193}
+{"at": "2026-10-18T02:57:45-0400", "tool": "search", "arguments": {"query": "Director of Finance VP Sales Finance Manager reports to org chart", "limit": 10}, "status": 200, "is_error": false, "chars": 8068, "ms": 202}

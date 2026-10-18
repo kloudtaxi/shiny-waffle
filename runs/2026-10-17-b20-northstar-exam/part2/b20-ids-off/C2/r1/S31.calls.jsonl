@@ -1,0 +1,30 @@
+{"at": "2026-10-18T03:10:31-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 200, "is_error": false, "chars": 472, "ms": 55}
+{"at": "2026-10-18T03:10:32-0400", "tool": "find_entities", "arguments": {"q": "CR-9206"}, "status": 200, "is_error": false, "chars": 11, "ms": 18}
+{"at": "2026-10-18T03:10:32-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 7857, "ms": 24}
+{"at": "2026-10-18T03:10:34-0400", "tool": "find_entities", "arguments": {"q": "credit", "kind": "document"}, "status": 200, "is_error": false, "chars": 7863, "ms": 21}
+{"at": "2026-10-18T03:10:34-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 18}
+{"at": "2026-10-18T03:10:35-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 35}
+{"at": "2026-10-18T03:10:37-0400", "tool": "find_entities", "arguments": {"q": "credit", "kind": "document", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 7863, "ms": 31}
+{"at": "2026-10-18T03:10:38-0400", "tool": "find_entities", "arguments": {"q": "CR-92"}, "status": 200, "is_error": false, "chars": 759, "ms": 21}
+{"at": "2026-10-18T03:10:38-0400", "tool": "get_entity", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f"}, "status": 200, "is_error": false, "chars": 7627, "ms": 21}
+{"at": "2026-10-18T03:10:41-0400", "tool": "find_entities", "arguments": {"q": "C-1002"}, "status": 200, "is_error": false, "chars": 225, "ms": 18}
+{"at": "2026-10-18T03:10:43-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f", "hops": 2}, "status": 200, "is_error": false, "chars": 5038, "ms": 438}
+{"at": "2026-10-18T03:10:43-0400", "tool": "get_entity", "arguments": {"entity_id": "749c5ac0-24ac-4f29-bc49-e1564695627d"}, "status": 200, "is_error": false, "chars": 15114, "ms": 75}
+{"at": "2026-10-18T03:10:46-0400", "tool": "get_entity", "arguments": {"entity_id": "9236cea3-1e43-4572-a746-44645cf576c9"}, "status": 200, "is_error": false, "chars": 2045, "ms": 22}
+{"at": "2026-10-18T03:10:46-0400", "tool": "find_entities", "arguments": {"q": "C-100"}, "status": 200, "is_error": false, "chars": 633, "ms": 19}
+{"at": "2026-10-18T03:10:47-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 19}
+{"at": "2026-10-18T03:10:52-0400", "tool": "find_entities", "arguments": {"q": "Finance Manager"}, "status": 200, "is_error": false, "chars": 11, "ms": 66}
+{"at": "2026-10-18T03:10:52-0400", "tool": "get_entity", "arguments": {"entity_id": "078a7ecb-0ca5-41de-be49-77df3c152143"}, "status": 200, "is_error": false, "chars": 4367, "ms": 27}
+{"at": "2026-10-18T03:10:52-0400", "tool": "find_entities", "arguments": {"q": "INV-610"}, "status": 200, "is_error": false, "chars": 494, "ms": 37}
+{"at": "2026-10-18T03:10:55-0400", "tool": "find_entities", "arguments": {"q": "INV-"}, "status": 200, "is_error": false, "chars": 9934, "ms": 36}
+{"at": "2026-10-18T03:10:56-0400", "tool": "find_entities", "arguments": {"q": "Priya"}, "status": 200, "is_error": false, "chars": 524, "ms": 40}
+{"at": "2026-10-18T03:10:56-0400", "tool": "find_entities", "arguments": {"q": "guarantee"}, "status": 200, "is_error": false, "chars": 464, "ms": 91}
+{"at": "2026-10-18T03:10:59-0400", "tool": "find_entities", "arguments": {"q": "INV-", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 9934, "ms": 194}
+{"at": "2026-10-18T03:11:00-0400", "tool": "get_entity", "arguments": {"entity_id": "4204bf25-5b60-4e8e-9bdb-b643f51e8e2a"}, "status": 200, "is_error": false, "chars": 4013, "ms": 77}
+{"at": "2026-10-18T03:11:00-0400", "tool": "list_facts", "arguments": {"entity_id": "5d6c2c45-a1c2-429c-aec1-003582d88d55"}, "status": 200, "is_error": false, "chars": 4447, "ms": 35}
+{"at": "2026-10-18T03:11:04-0400", "tool": "find_entities", "arguments": {"q": "INV-6"}, "status": 200, "is_error": false, "chars": 5230, "ms": 20}
+{"at": "2026-10-18T03:11:04-0400", "tool": "find_entities", "arguments": {"q": "INV-3002"}, "status": 200, "is_error": false, "chars": 615, "ms": 116}
+{"at": "2026-10-18T03:11:05-0400", "tool": "find_entities", "arguments": {"q": "ERP customer"}, "status": 200, "is_error": false, "chars": 219, "ms": 18}
+{"at": "2026-10-18T03:11:09-0400", "tool": "neighbourhood", "arguments": {"entity_id": "5d96e556-1dc9-4a36-a27e-f617b3f49230"}, "status": 200, "is_error": false, "chars": 822, "ms": 42}
+{"at": "2026-10-18T03:11:09-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "C-1002"}, "status": 404, "is_error": true, "chars": 124, "ms": 73}
+{"at": "2026-10-18T03:11:10-0400", "tool": "neighbourhood", "arguments": {"entity_id": "9236cea3-1e43-4572-a746-44645cf576c9", "hops": 2}, "status": 200, "is_error": false, "chars": 290, "ms": 34}

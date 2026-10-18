@@ -1,0 +1,20 @@
+{"at": "2026-10-18T03:10:42-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9111"}, "status": 501, "is_error": true, "chars": 144, "ms": 21}
+{"at": "2026-10-18T03:10:42-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 53}
+{"at": "2026-10-18T03:10:43-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 523, "ms": 209}
+{"at": "2026-10-18T03:10:43-0400", "tool": "find_entities", "arguments": {"q": "NS-CLOUD"}, "status": 200, "is_error": false, "chars": 1876, "ms": 143}
+{"at": "2026-10-18T03:10:44-0400", "tool": "find_entities", "arguments": {"q": "DR-9111"}, "status": 200, "is_error": false, "chars": 11, "ms": 54}
+{"at": "2026-10-18T03:10:45-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2421, "ms": 92}
+{"at": "2026-10-18T03:10:45-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-823a-7761-81a5-d31aca12d176", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 5320, "ms": 64}
+{"at": "2026-10-18T03:10:46-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-ee17-7683-b31a-634348d25a20", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 3431, "ms": 57}
+{"at": "2026-10-18T03:10:46-0400", "tool": "find_entities", "arguments": {"q": "Discount"}, "status": 200, "is_error": false, "chars": 1636, "ms": 81}
+{"at": "2026-10-18T03:10:48-0400", "tool": "find_entities", "arguments": {"q": "policy"}, "status": 200, "is_error": false, "chars": 1391, "ms": 66}
+{"at": "2026-10-18T03:10:48-0400", "tool": "find_entities", "arguments": {"q": "DR-9"}, "status": 200, "is_error": false, "chars": 156, "ms": 61}
+{"at": "2026-10-18T03:10:48-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-5eb1-7df1-983c-68e11bc2a478"}, "status": 200, "is_error": false, "chars": 14396, "ms": 63}
+{"at": "2026-10-18T03:10:50-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-5f56-7ee0-a28d-7968ca2214eb"}, "status": 200, "is_error": false, "chars": 3525, "ms": 179}
+{"at": "2026-10-18T03:10:50-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-a4dd-7243-bb21-2c4b818f3124"}, "status": 200, "is_error": false, "chars": 2183, "ms": 75}
+{"at": "2026-10-18T03:10:52-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-9e20-7dc3-84ad-c09f06d83c68"}, "status": 200, "is_error": false, "chars": 686, "ms": 403}
+{"at": "2026-10-18T03:10:52-0400", "tool": "find_entities", "arguments": {"q": "Account Executive"}, "status": 200, "is_error": false, "chars": 860, "ms": 51}
+{"at": "2026-10-18T03:10:54-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-5f6a-7b23-960b-b07de4ab89fa"}, "status": 200, "is_error": false, "chars": 743, "ms": 383}
+{"at": "2026-10-18T03:10:54-0400", "tool": "find_entities", "arguments": {"q": "Enterprise Account Executives"}, "status": 200, "is_error": false, "chars": 860, "ms": 49}
+{"at": "2026-10-18T03:10:56-0400", "tool": "neighbourhood", "arguments": {"entity_id": "01a14c98-9e32-7952-b1da-4e5d91f93fc9"}, "status": 200, "is_error": false, "chars": 2656, "ms": 396}
+{"at": "2026-10-18T03:10:56-0400", "tool": "get_fact", "arguments": {"fact_id": "01a14c98-9e34-7190-8a25-ca04815abdd9"}, "status": 200, "is_error": false, "chars": 605, "ms": 25}

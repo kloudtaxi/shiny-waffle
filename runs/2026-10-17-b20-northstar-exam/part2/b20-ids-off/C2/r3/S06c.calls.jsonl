@@ -1,0 +1,8 @@
+{"at": "2026-10-18T14:48:43-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 44}
+{"at": "2026-10-18T14:48:44-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 28}
+{"at": "2026-10-18T14:48:46-0400", "tool": "list_facts", "arguments": {"entity_id": "c4586a04-367f-4722-be10-5da02b077030", "valid_at": "2022-10-01"}, "status": 200, "is_error": false, "chars": 27669, "ms": 26}
+{"at": "2026-10-18T14:48:47-0400", "tool": "get_entity", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12790, "ms": 19}
+{"at": "2026-10-18T14:48:47-0400", "tool": "get_entity", "arguments": {"entity_id": "c817032b-a762-45f0-8e89-15dd26cc4c58"}, "status": 200, "is_error": false, "chars": 4841, "ms": 18}
+{"at": "2026-10-18T14:48:50-0400", "tool": "neighbourhood", "arguments": {"entity_id": "2545f0e1-3fbf-403e-a5ab-c218e77ef3df"}, "status": 200, "is_error": false, "chars": 793, "ms": 24}
+{"at": "2026-10-18T14:48:50-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 2335, "ms": 19}
+{"at": "2026-10-18T14:48:52-0400", "tool": "get_entity", "arguments": {"entity_id": "e9177f69-ab32-4f58-983f-0d89af76c612"}, "status": 200, "is_error": false, "chars": 11559, "ms": 450}

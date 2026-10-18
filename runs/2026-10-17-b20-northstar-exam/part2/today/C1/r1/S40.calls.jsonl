@@ -1,0 +1,16 @@
+{"at": "2026-10-17T22:27:51-0400", "tool": "search", "arguments": {"query": "SR-39881", "limit": 10}, "status": 200, "is_error": false, "chars": 8213, "ms": 356}
+{"at": "2026-10-17T22:27:51-0400", "tool": "find_entities", "arguments": {"q": "Blue River"}, "status": 200, "is_error": false, "chars": 241, "ms": 66}
+{"at": "2026-10-17T22:27:56-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2051"}, "status": 501, "is_error": true, "chars": 135, "ms": 35}
+{"at": "2026-10-17T22:27:57-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-490a-7f62-be18-4f3924eae00c"}, "status": 200, "is_error": false, "chars": 7648, "ms": 771}
+{"at": "2026-10-17T22:27:57-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 14}
+{"at": "2026-10-17T22:27:59-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ea5-79b1-b0d3-87e2be324333"}, "status": 200, "is_error": false, "chars": 882, "ms": 50}
+{"at": "2026-10-17T22:28:00-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a179-74a0-b361-5bbac7a91e67"}, "status": 200, "is_error": false, "chars": 11368, "ms": 95}
+{"at": "2026-10-17T22:28:00-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a222-7410-b067-b0fda71f9451"}, "status": 200, "is_error": false, "chars": 2291, "ms": 51}
+{"at": "2026-10-17T22:28:05-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9f91-7060-a3e3-83a1a766035f"}, "status": 200, "is_error": false, "chars": 857, "ms": 80}
+{"at": "2026-10-17T22:28:05-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1ab-7941-b30a-7e9afd3fccd9"}, "status": 200, "is_error": false, "chars": 4219, "ms": 72}
+{"at": "2026-10-17T22:28:06-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a36d-78c2-ac79-fb47df21b940"}, "status": 200, "is_error": false, "chars": 236, "ms": 76}
+{"at": "2026-10-17T22:28:06-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a3c7-7170-a6b5-ecf9b5819be0"}, "status": 200, "is_error": false, "chars": 204, "ms": 65}
+{"at": "2026-10-17T22:28:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a282-7f02-bb68-97f4ce30142c"}, "status": 200, "is_error": false, "chars": 2171, "ms": 44}
+{"at": "2026-10-17T22:28:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1f3-78a3-9c69-0090c5e40731"}, "status": 200, "is_error": false, "chars": 1000, "ms": 43}
+{"at": "2026-10-17T22:28:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 52}
+{"at": "2026-10-17T22:28:14-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a421-7e21-8b58-1a406ae69bc9"}, "status": 200, "is_error": false, "chars": 6575, "ms": 40}

@@ -1,0 +1,9 @@
+{"at": "2026-10-18T13:34:51-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar ERP", "id": "C-1002"}, "status": 200, "is_error": false, "chars": 1264, "ms": 76}
+{"at": "2026-10-18T13:34:52-0400", "tool": "find_entities", "arguments": {"q": "CR-9206"}, "status": 200, "is_error": false, "chars": 11, "ms": 68}
+{"at": "2026-10-18T13:34:52-0400", "tool": "find_entities", "arguments": {"q": "credit"}, "status": 200, "is_error": false, "chars": 12874, "ms": 24}
+{"at": "2026-10-18T13:34:54-0400", "tool": "list_facts", "arguments": {"entity_id": "7565f05b-afc3-4e8b-9c9d-c5d4193bc51a"}, "status": 200, "is_error": false, "chars": 11051, "ms": 47}
+{"at": "2026-10-18T13:34:55-0400", "tool": "find_entities", "arguments": {"q": "CR-92"}, "status": 200, "is_error": false, "chars": 759, "ms": 33}
+{"at": "2026-10-18T13:34:55-0400", "tool": "find_entities", "arguments": {"q": "Torres"}, "status": 200, "is_error": false, "chars": 212, "ms": 67}
+{"at": "2026-10-18T13:34:57-0400", "tool": "get_entity", "arguments": {"entity_id": "b8bd47ea-f76b-4f00-9f2e-7a1bca24c189", "valid_at": "2025-09-23"}, "status": 200, "is_error": false, "chars": 15496, "ms": 21}
+{"at": "2026-10-18T13:34:58-0400", "tool": "get_entity", "arguments": {"entity_id": "46d00aac-5414-4b4f-9dd6-66a6ad683581"}, "status": 200, "is_error": false, "chars": 21165, "ms": 23}
+{"at": "2026-10-18T13:34:58-0400", "tool": "get_entity", "arguments": {"entity_id": "6ce915c6-5aa6-4166-bdb4-c5c435c0abcf"}, "status": 200, "is_error": false, "chars": 15960, "ms": 33}

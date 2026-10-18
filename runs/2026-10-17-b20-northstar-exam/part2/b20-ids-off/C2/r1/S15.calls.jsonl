@@ -1,0 +1,15 @@
+{"at": "2026-10-18T03:06:13-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2051"}, "status": 200, "is_error": false, "chars": 656, "ms": 61}
+{"at": "2026-10-18T03:06:13-0400", "tool": "find_entities", "arguments": {"q": "DR-9107"}, "status": 200, "is_error": false, "chars": 11, "ms": 17}
+{"at": "2026-10-18T03:06:14-0400", "tool": "find_entities", "arguments": {"q": "Michael Torres"}, "status": 200, "is_error": false, "chars": 589, "ms": 57}
+{"at": "2026-10-18T03:06:14-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 22}
+{"at": "2026-10-18T03:06:18-0400", "tool": "neighbourhood", "arguments": {"entity_id": "68e54c49-d7c5-41b8-afef-8795464fde1f"}, "status": 200, "is_error": false, "chars": 1276, "ms": 71}
+{"at": "2026-10-18T03:06:19-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 39}
+{"at": "2026-10-18T03:06:19-0400", "tool": "find_entities", "arguments": {"q": "Acme Master Supply Agreement"}, "status": 200, "is_error": false, "chars": 11, "ms": 22}
+{"at": "2026-10-18T03:06:19-0400", "tool": "find_entities", "arguments": {"kind": "document", "q": "Policy"}, "status": 200, "is_error": false, "chars": 1866, "ms": 53}
+{"at": "2026-10-18T03:06:26-0400", "tool": "get_entity", "arguments": {"entity_id": "9fbb1b14-aebf-4687-82d4-78779d9e8553"}, "status": 200, "is_error": false, "chars": 13381, "ms": 40}
+{"at": "2026-10-18T03:06:26-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 37}
+{"at": "2026-10-18T03:06:27-0400", "tool": "find_entities", "arguments": {"q": "BlueRiver"}, "status": 200, "is_error": false, "chars": 1595, "ms": 22}
+{"at": "2026-10-18T03:06:31-0400", "tool": "get_entity", "arguments": {"entity_id": "f80f4308-d3ba-4643-9183-420db8396f94"}, "status": 200, "is_error": false, "chars": 11489, "ms": 21}
+{"at": "2026-10-18T03:06:31-0400", "tool": "get_entity", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12790, "ms": 21}
+{"at": "2026-10-18T03:06:40-0400", "tool": "get_entity", "arguments": {"entity_id": "157a6397-e5db-4e4a-8b2e-488ebe7dbe40"}, "status": 200, "is_error": false, "chars": 8168, "ms": 59}
+{"at": "2026-10-18T03:06:40-0400", "tool": "get_entity", "arguments": {"entity_id": "359ed0b4-af49-4a9c-9904-4ebf23c287e9"}, "status": 200, "is_error": false, "chars": 1699, "ms": 34}

@@ -1,0 +1,9 @@
+{"at": "2026-10-17T22:56:53-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 67}
+{"at": "2026-10-17T22:56:53-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1364, "ms": 24}
+{"at": "2026-10-17T22:56:59-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 60}
+{"at": "2026-10-17T22:57:00-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 27}
+{"at": "2026-10-17T22:57:00-0400", "tool": "list_documents", "arguments": {"q": "xception"}, "status": 200, "is_error": false, "chars": 471, "ms": 2}
+{"at": "2026-10-17T22:57:04-0400", "tool": "read_passages", "arguments": {"document_id": "04f6e5ee-c5c6-4777-a369-8a2061703472"}, "status": 200, "is_error": false, "chars": 390, "ms": 3}
+{"at": "2026-10-17T22:57:04-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 51}
+{"at": "2026-10-17T22:57:07-0400", "tool": "search", "arguments": {"query": "ACME-MFG-2025 master supply agreement term effective date expiration", "limit": 8}, "status": 200, "is_error": false, "chars": 4672, "ms": 229}
+{"at": "2026-10-17T22:57:09-0400", "tool": "search", "arguments": {"query": "Acme NS-500 exception amendment revoked terminated", "limit": 6}, "status": 200, "is_error": false, "chars": 3816, "ms": 246}

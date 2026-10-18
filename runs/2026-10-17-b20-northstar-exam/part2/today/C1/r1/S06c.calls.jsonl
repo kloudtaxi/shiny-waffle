@@ -1,0 +1,8 @@
+{"at": "2026-10-17T22:22:06-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 119}
+{"at": "2026-10-17T22:22:06-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 888, "ms": 40}
+{"at": "2026-10-17T22:22:07-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c044-79b2-a966-62b57217402e"}, "status": 200, "is_error": false, "chars": 1468, "ms": 47}
+{"at": "2026-10-17T22:22:08-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-c715-7450-89f8-f07ba6dc94e9"}, "status": 200, "is_error": false, "chars": 7032, "ms": 110}
+{"at": "2026-10-17T22:22:08-0400", "tool": "list_facts", "arguments": {"entity_id": "01a14c97-beae-7412-8ee8-05f326c05004"}, "status": 200, "is_error": false, "chars": 9751, "ms": 100}
+{"at": "2026-10-17T22:22:11-0400", "tool": "search", "arguments": {"query": "Acme NS-500 discount 2022", "limit": 10}, "status": 200, "is_error": false, "chars": 9322, "ms": 368}
+{"at": "2026-10-17T22:22:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e05-7ee1-ac36-15bd55b240d9"}, "status": 200, "is_error": false, "chars": 500, "ms": 55}
+{"at": "2026-10-17T22:22:16-0400", "tool": "search", "arguments": {"query": "Acme agreement 2021 2022 pricing term", "limit": 8}, "status": 200, "is_error": false, "chars": 8481, "ms": 327}

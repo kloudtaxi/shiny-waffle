@@ -1,0 +1,15 @@
+{"at": "2026-10-18T02:55:07-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9109"}, "status": 404, "is_error": true, "chars": 135, "ms": 127}
+{"at": "2026-10-18T02:55:07-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 426, "ms": 57}
+{"at": "2026-10-18T02:55:08-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 28}
+{"at": "2026-10-18T02:55:08-0400", "tool": "find_entities", "arguments": {"q": "NS-EDGE"}, "status": 200, "is_error": false, "chars": 725, "ms": 25}
+{"at": "2026-10-18T02:55:11-0400", "tool": "search", "arguments": {"query": "DR-9109"}, "status": 200, "is_error": false, "chars": 11916, "ms": 645}
+{"at": "2026-10-18T02:55:11-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 4}
+{"at": "2026-10-18T02:55:14-0400", "tool": "read_passages", "arguments": {"document_id": "b14127a1-fe35-43b9-8ea9-9172145cf99d"}, "status": 200, "is_error": false, "chars": 5108, "ms": 4}
+{"at": "2026-10-18T02:55:15-0400", "tool": "read_passages", "arguments": {"document_id": "e4fd5977-c1bf-4221-b8bb-9e63dfd699c2"}, "status": 200, "is_error": false, "chars": 2007, "ms": 2}
+{"at": "2026-10-18T02:55:16-0400", "tool": "read_passages", "arguments": {"document_id": "0501798b-359a-4b5a-a3ae-679b20711503"}, "status": 200, "is_error": false, "chars": 1360, "ms": 3}
+{"at": "2026-10-18T02:55:16-0400", "tool": "read_passages", "arguments": {"document_id": "c20c1cca-1d1e-450c-8a10-f65e5448d975"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-18T02:55:17-0400", "tool": "read_passages", "arguments": {"document_id": "4da0406d-ba99-4bbc-b6be-0b41cd368930"}, "status": 200, "is_error": false, "chars": 1239, "ms": 5}
+{"at": "2026-10-18T02:55:20-0400", "tool": "read_passages", "arguments": {"document_id": "0d3e3471-11cf-4d23-b92c-eb73231d7c3f"}, "status": 200, "is_error": false, "chars": 2403, "ms": 7}
+{"at": "2026-10-18T02:55:21-0400", "tool": "read_passages", "arguments": {"document_id": "1068f825-1e69-47d6-8ddc-460004510208"}, "status": 200, "is_error": false, "chars": 581, "ms": 2}
+{"at": "2026-10-18T02:55:21-0400", "tool": "read_passages", "arguments": {"document_id": "85ee8d7a-6e30-4d39-b332-946eb2253194"}, "status": 200, "is_error": false, "chars": 967, "ms": 2}
+{"at": "2026-10-18T02:55:24-0400", "tool": "search", "arguments": {"query": "Acme NS-EDGE discount pricing exception", "limit": 8}, "status": 200, "is_error": false, "chars": 5955, "ms": 259}

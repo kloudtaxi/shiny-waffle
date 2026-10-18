@@ -1,0 +1,11 @@
+{"at": "2026-10-17T22:24:50-0400", "tool": "search", "arguments": {"query": "DR-9001 discount request", "limit": 10}, "status": 200, "is_error": false, "chars": 7556, "ms": 426}
+{"at": "2026-10-17T22:24:51-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 135, "ms": 24}
+{"at": "2026-10-17T22:24:51-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 90}
+{"at": "2026-10-17T22:24:53-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a0fe-7ca1-83e3-76b95516e020"}, "status": 200, "is_error": false, "chars": 1262, "ms": 75}
+{"at": "2026-10-17T22:24:54-0400", "tool": "search", "arguments": {"query": "pricing exception Acme NS-500 maximum discount effective expiry", "limit": 10}, "status": 200, "is_error": false, "chars": 9839, "ms": 376}
+{"at": "2026-10-17T22:24:55-0400", "tool": "search", "arguments": {"query": "Approval Authority Matrix discount bands account executive limit", "limit": 10}, "status": 200, "is_error": false, "chars": 8407, "ms": 370}
+{"at": "2026-10-17T22:24:59-0400", "tool": "search", "arguments": {"query": "VP Sales appointed role effective", "limit": 10}, "status": 200, "is_error": false, "chars": 11184, "ms": 411}
+{"at": "2026-10-17T22:24:59-0400", "tool": "search", "arguments": {"query": "Sarah Chen Enterprise Account Executive", "limit": 8}, "status": 200, "is_error": false, "chars": 8808, "ms": 380}
+{"at": "2026-10-17T22:25:00-0400", "tool": "search", "arguments": {"query": "CRM-2048 account Acme ERP customer", "limit": 8}, "status": 200, "is_error": false, "chars": 7182, "ms": 529}
+{"at": "2026-10-17T22:25:00-0400", "tool": "search", "arguments": {"query": "Acme agreement termination amendment notice", "limit": 8}, "status": 200, "is_error": false, "chars": 7700, "ms": 390}
+{"at": "2026-10-17T22:25:02-0400", "tool": "search", "arguments": {"query": "NS-500 Industrial Controller list price", "limit": 5}, "status": 200, "is_error": false, "chars": 4278, "ms": 394}

@@ -1,0 +1,14 @@
+{"at": "2026-10-17T22:27:11-0400", "tool": "search", "arguments": {"query": "SR-39340"}, "status": 200, "is_error": false, "chars": 8301, "ms": 372}
+{"at": "2026-10-17T22:27:11-0400", "tool": "find_entities", "arguments": {"q": "Cedar Health"}, "status": 200, "is_error": false, "chars": 735, "ms": 57}
+{"at": "2026-10-17T22:27:13-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2063"}, "status": 501, "is_error": true, "chars": 135, "ms": 30}
+{"at": "2026-10-17T22:27:13-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 44}
+{"at": "2026-10-17T22:27:15-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ec2-7e11-8c20-2ea1f3460330"}, "status": 200, "is_error": false, "chars": 926, "ms": 75}
+{"at": "2026-10-17T22:27:16-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a179-74a0-b361-5bbac7a91e67"}, "status": 200, "is_error": false, "chars": 11368, "ms": 80}
+{"at": "2026-10-17T22:27:17-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a222-7410-b067-b0fda71f9451"}, "status": 200, "is_error": false, "chars": 2291, "ms": 68}
+{"at": "2026-10-17T22:27:17-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1ab-7941-b30a-7e9afd3fccd9"}, "status": 200, "is_error": false, "chars": 4219, "ms": 56}
+{"at": "2026-10-17T22:27:23-0400", "tool": "search", "arguments": {"query": "CRM-2063 Cedar Health account owner tier", "limit": 10}, "status": 200, "is_error": false, "chars": 8840, "ms": 337}
+{"at": "2026-10-17T22:27:23-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a36d-78c2-ac79-fb47df21b940"}, "status": 200, "is_error": false, "chars": 236, "ms": 67}
+{"at": "2026-10-17T22:27:24-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a3c7-7170-a6b5-ecf9b5819be0"}, "status": 200, "is_error": false, "chars": 204, "ms": 75}
+{"at": "2026-10-17T22:27:27-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a405-7252-bc46-f42f4e4ce142"}, "status": 200, "is_error": false, "chars": 3720, "ms": 79}
+{"at": "2026-10-17T22:27:28-0400", "tool": "search", "arguments": {"query": "Support Escalation Manager Director of Customer Support Support Billing Manager", "limit": 8}, "status": 200, "is_error": false, "chars": 9518, "ms": 374}
+{"at": "2026-10-17T22:27:34-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a421-7e21-8b58-1a406ae69bc9"}, "status": 200, "is_error": false, "chars": 6575, "ms": 72}

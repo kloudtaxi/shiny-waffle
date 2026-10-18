@@ -1,0 +1,15 @@
+{"at": "2026-10-17T22:27:54-0400", "tool": "search", "arguments": {"query": "SR-38862", "limit": 10}, "status": 200, "is_error": false, "chars": 8664, "ms": 436}
+{"at": "2026-10-17T22:27:54-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 2796, "ms": 134}
+{"at": "2026-10-17T22:27:57-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 135, "ms": 14}
+{"at": "2026-10-17T22:27:57-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7470, "ms": 27}
+{"at": "2026-10-17T22:27:59-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9e2a-7143-9a69-036a9fe8f393"}, "status": 200, "is_error": false, "chars": 1479, "ms": 32}
+{"at": "2026-10-17T22:28:00-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a179-74a0-b361-5bbac7a91e67"}, "status": 200, "is_error": false, "chars": 11368, "ms": 31}
+{"at": "2026-10-17T22:28:00-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a282-7f02-bb68-97f4ce30142c"}, "status": 200, "is_error": false, "chars": 2171, "ms": 27}
+{"at": "2026-10-17T22:28:04-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a14e-7ed0-96cc-cd179654452f"}, "status": 200, "is_error": false, "chars": 11128, "ms": 72}
+{"at": "2026-10-17T22:28:04-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a222-7410-b067-b0fda71f9451"}, "status": 200, "is_error": false, "chars": 2291, "ms": 67}
+{"at": "2026-10-17T22:28:04-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1ab-7941-b30a-7e9afd3fccd9"}, "status": 200, "is_error": false, "chars": 4219, "ms": 68}
+{"at": "2026-10-17T22:28:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a36d-78c2-ac79-fb47df21b940"}, "status": 200, "is_error": false, "chars": 236, "ms": 74}
+{"at": "2026-10-17T22:28:11-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a3c7-7170-a6b5-ecf9b5819be0"}, "status": 200, "is_error": false, "chars": 204, "ms": 59}
+{"at": "2026-10-17T22:28:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a1f3-78a3-9c69-0090c5e40731"}, "status": 200, "is_error": false, "chars": 1000, "ms": 37}
+{"at": "2026-10-17T22:28:12-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9ff8-7832-93b1-979872158b9a"}, "status": 200, "is_error": false, "chars": 1087, "ms": 66}
+{"at": "2026-10-17T22:28:18-0400", "tool": "search", "arguments": {"query": "service credit SR-38655 approved amount", "limit": 5}, "status": 200, "is_error": false, "chars": 5545, "ms": 422}

@@ -1,0 +1,14 @@
+{"at": "2026-10-17T22:58:00-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9103"}, "status": 404, "is_error": true, "chars": 135, "ms": 54}
+{"at": "2026-10-17T22:58:01-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 426, "ms": 46}
+{"at": "2026-10-17T22:58:01-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 20}
+{"at": "2026-10-17T22:58:01-0400", "tool": "find_entities", "arguments": {"q": "NS-Edge"}, "status": 200, "is_error": false, "chars": 725, "ms": 21}
+{"at": "2026-10-17T22:58:03-0400", "tool": "search", "arguments": {"query": "DR-9103 discount request"}, "status": 200, "is_error": false, "chars": 9939, "ms": 187}
+{"at": "2026-10-17T22:58:03-0400", "tool": "list_documents", "arguments": {}, "status": 200, "is_error": false, "chars": 7709, "ms": 3}
+{"at": "2026-10-17T22:58:06-0400", "tool": "read_passages", "arguments": {"document_id": "b14127a1-fe35-43b9-8ea9-9172145cf99d"}, "status": 200, "is_error": false, "chars": 5108, "ms": 3}
+{"at": "2026-10-17T22:58:07-0400", "tool": "read_passages", "arguments": {"document_id": "1fede1b8-8e03-484a-bc36-04c47b08ccc6"}, "status": 200, "is_error": false, "chars": 937, "ms": 6}
+{"at": "2026-10-17T22:58:07-0400", "tool": "read_passages", "arguments": {"document_id": "1068f825-1e69-47d6-8ddc-460004510208"}, "status": 200, "is_error": false, "chars": 581, "ms": 8}
+{"at": "2026-10-17T22:58:07-0400", "tool": "read_passages", "arguments": {"document_id": "0d3e3471-11cf-4d23-b92c-eb73231d7c3f"}, "status": 200, "is_error": false, "chars": 2403, "ms": 4}
+{"at": "2026-10-17T22:58:11-0400", "tool": "read_passages", "arguments": {"document_id": "85ee8d7a-6e30-4d39-b332-946eb2253194"}, "status": 200, "is_error": false, "chars": 967, "ms": 5}
+{"at": "2026-10-17T22:58:12-0400", "tool": "read_passages", "arguments": {"document_id": "6fb7dca2-6bc2-4805-9f2c-a1cd5e491745"}, "status": 200, "is_error": false, "chars": 2462, "ms": 3}
+{"at": "2026-10-17T22:58:12-0400", "tool": "search", "arguments": {"query": "NS-EDGE list price", "limit": 5}, "status": 200, "is_error": false, "chars": 3879, "ms": 187}
+{"at": "2026-10-17T22:58:16-0400", "tool": "read_passages", "arguments": {"document_id": "e4fd5977-c1bf-4221-b8bb-9e63dfd699c2"}, "status": 200, "is_error": false, "chars": 2007, "ms": 13}

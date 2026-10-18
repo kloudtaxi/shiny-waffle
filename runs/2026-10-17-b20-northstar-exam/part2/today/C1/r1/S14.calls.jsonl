@@ -1,0 +1,10 @@
+{"at": "2026-10-17T22:23:16-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 501, "is_error": true, "chars": 145, "ms": 33}
+{"at": "2026-10-17T22:23:16-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 573, "ms": 72}
+{"at": "2026-10-17T22:23:17-0400", "tool": "find_entities", "arguments": {"q": "NS-EDGE"}, "status": 200, "is_error": false, "chars": 650, "ms": 111}
+{"at": "2026-10-17T22:23:18-0400", "tool": "search", "arguments": {"query": "DR-9106"}, "status": 200, "is_error": false, "chars": 6936, "ms": 418}
+{"at": "2026-10-17T22:23:20-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-a2ca-7d92-abdb-033321c7e78f"}, "status": 200, "is_error": false, "chars": 4674, "ms": 47}
+{"at": "2026-10-17T22:23:20-0400", "tool": "search", "arguments": {"query": "Sales Discount SOP approval bands authority", "limit": 10}, "status": 200, "is_error": false, "chars": 11082, "ms": 357}
+{"at": "2026-10-17T22:23:23-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c98-35a5-7ff3-a35b-e5128808d47e"}, "status": 200, "is_error": false, "chars": 3431, "ms": 38}
+{"at": "2026-10-17T22:23:23-0400", "tool": "get_entity", "arguments": {"entity_id": "01a14c97-dae4-7ef0-a507-7f48900447bc", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 6029, "ms": 91}
+{"at": "2026-10-17T22:23:24-0400", "tool": "search", "arguments": {"query": "Sarah Chen role title employee", "limit": 8}, "status": 200, "is_error": false, "chars": 8458, "ms": 404}
+{"at": "2026-10-17T22:23:26-0400", "tool": "read_passages", "arguments": {"document_id": "01a14c97-9d37-7e52-bad2-206670d13915"}, "status": 200, "is_error": false, "chars": 1782, "ms": 33}

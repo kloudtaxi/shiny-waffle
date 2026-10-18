@@ -1,0 +1,17 @@
+{"at": "2026-10-18T13:29:44-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9111"}, "status": 404, "is_error": true, "chars": 135, "ms": 65}
+{"at": "2026-10-18T13:29:44-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 649, "ms": 117}
+{"at": "2026-10-18T13:29:45-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 98}
+{"at": "2026-10-18T13:29:45-0400", "tool": "find_entities", "arguments": {"q": "NS-CLOUD"}, "status": 200, "is_error": false, "chars": 709, "ms": 196}
+{"at": "2026-10-18T13:29:47-0400", "tool": "find_entities", "arguments": {"q": "DR-"}, "status": 200, "is_error": false, "chars": 6489, "ms": 25}
+{"at": "2026-10-18T13:29:47-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7455, "ms": 21}
+{"at": "2026-10-18T13:29:48-0400", "tool": "find_entities", "arguments": {"q": "polic"}, "status": 200, "is_error": false, "chars": 1672, "ms": 22}
+{"at": "2026-10-18T13:29:48-0400", "tool": "list_facts", "arguments": {"entity_id": "0bd684aa-3c72-4791-bf3f-fc88777a2168"}, "status": 200, "is_error": false, "chars": 5410, "ms": 24}
+{"at": "2026-10-18T13:29:50-0400", "tool": "find_entities", "arguments": {"q": "DR-", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 6489, "ms": 57}
+{"at": "2026-10-18T13:29:50-0400", "tool": "list_facts", "arguments": {"entity_id": "5db28bee-61a0-4305-a4fe-8e50cbb72382"}, "status": 200, "is_error": false, "chars": 12443, "ms": 20}
+{"at": "2026-10-18T13:29:51-0400", "tool": "list_facts", "arguments": {"entity_id": "b0b64fd2-f5ff-425c-a9b3-d54d74db2461"}, "status": 200, "is_error": false, "chars": 32935, "ms": 20}
+{"at": "2026-10-18T13:29:52-0400", "tool": "find_entities", "arguments": {"q": "DR-91"}, "status": 200, "is_error": false, "chars": 11, "ms": 20}
+{"at": "2026-10-18T13:29:53-0400", "tool": "find_entities", "arguments": {"q": "DR-9"}, "status": 200, "is_error": false, "chars": 410, "ms": 116}
+{"at": "2026-10-18T13:29:53-0400", "tool": "lookup_identifier", "arguments": {"system": "CRM", "id": "DR-9111"}, "status": 404, "is_error": true, "chars": 125, "ms": 53}
+{"at": "2026-10-18T13:29:56-0400", "tool": "list_facts", "arguments": {"entity_id": "d9c6786d-250a-4656-a169-24a1bb11b99c"}, "status": 200, "is_error": false, "chars": 49, "ms": 28}
+{"at": "2026-10-18T13:29:57-0400", "tool": "find_entities", "arguments": {"q": "exception"}, "status": 200, "is_error": false, "chars": 221, "ms": 21}
+{"at": "2026-10-18T13:29:58-0400", "tool": "neighbourhood", "arguments": {"entity_id": "7ead30ed-46ac-4ab9-bdbe-278c96161db2"}, "status": 200, "is_error": false, "chars": 284, "ms": 25}

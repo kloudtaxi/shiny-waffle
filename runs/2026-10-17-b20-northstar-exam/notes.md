@@ -1,6 +1,6 @@
-> **STATUS: RUNNING (2026-10-17, from 21:16 EDT).** The user gave the go. Every base is loaded,
-> parity passes (after amendment 4), and Part 1 and Part 2 are running on all three arms. Results
-> are sealed from garbanzo until the run is recorded. Pre-registration:
+> **STATUS: RECORDED (2026-10-18, 19:37 EDT).** Every part ran on all three arms: Part 1 on
+> nine bases, and Part 2's 564 answers. **Results: `results.md`.** The pilot and dry runs, sealed
+> until now, are in `pilot-sealed/`. Pre-registration:
 > `docs/b20-northstar-exam-preregistration-2026-10-17.md` (amendments 2–4 in §§10–12).
 
 # B-20's Northstar exam
@@ -139,5 +139,23 @@ including running out of turns. The same rule applies on every arm.
 - Some questions had now been refused twice: today's S23, S24 and S25 (C2 r3), and B-20's S33.
   The lab recommended that the account's own limit never count toward a question's two infra
   errors. The user ruled "Resume approved" (2026-10-18), which the lab takes as accepting that.
-  The reader now counts only other infra errors (lab, this commit's parent).
+  The reader now counts only other infra errors (lab 70054d8).
 - Resumed at 13:17 after the reset, at 3 workers per arm.
+
+**The limit twice more, then the end (2026-10-18)**
+- 13:35: the limit came back, both B-20 arms halted, and Anthropic reset the account's usage. The
+  user approved the estimate of about $115 more ("GO").
+- 15:00: the limit came back again, and both arms halted. They resumed at 19:25.
+- 19:37: every pass complete, 47 answers each on every arm. 203 refused attempts in all ($13.98),
+  every one the account's limit, every one re-asked, and none scored.
+- Reader spend: $402.39 of the $550 stop. Judge: $12.57.
+
+**Garbanzo during the run.** glowing-garbanzo moved to f292d67, a docs-only commit (a
+retrospective and a lessons file). The lab checked it: `git diff 7d108d4 f292d67 -- web-next` is
+empty, :3200 still runs the gg-exam worktree at 7d108d4, and B-20 is still at 02e9cc9 with a clean
+tree.
+
+**Scoring**
+- Part 2 was auto-scored with `score_part2.py`, and the tables come from `lab/exam/summarize.py`.
+- S06a–c, S07 and S08 were read blind: a shuffled packet with no arm labels, graded by Claude
+  Sonnet against the answer key's rubric (`hand/`). The user's grades in the Ledger settle them.

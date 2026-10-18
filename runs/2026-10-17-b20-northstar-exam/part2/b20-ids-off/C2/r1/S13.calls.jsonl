@@ -1,0 +1,24 @@
+{"at": "2026-10-18T03:05:37-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9105"}, "status": 404, "is_error": true, "chars": 135, "ms": 82}
+{"at": "2026-10-18T03:05:37-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2091"}, "status": 200, "is_error": false, "chars": 721, "ms": 66}
+{"at": "2026-10-18T03:05:38-0400", "tool": "find_entities", "arguments": {"q": "NS-500"}, "status": 200, "is_error": false, "chars": 1401, "ms": 31}
+{"at": "2026-10-18T03:05:38-0400", "tool": "find_entities", "arguments": {"q": "Sarah Chen"}, "status": 200, "is_error": false, "chars": 536, "ms": 21}
+{"at": "2026-10-18T03:05:39-0400", "tool": "find_entities", "arguments": {"q": "DR-9105"}, "status": 200, "is_error": false, "chars": 11, "ms": 41}
+{"at": "2026-10-18T03:05:40-0400", "tool": "neighbourhood", "arguments": {"entity_id": "d863d21e-03dc-4acd-a494-a86e9db2073a", "valid_at": "2026-09-23"}, "status": 200, "is_error": false, "chars": 839, "ms": 39}
+{"at": "2026-10-18T03:05:40-0400", "tool": "list_facts", "arguments": {"entity_id": "b117dc06-05b0-4386-8e23-1c40de8fbf00"}, "status": 200, "is_error": false, "chars": 5451, "ms": 31}
+{"at": "2026-10-18T03:05:42-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 7606, "ms": 23}
+{"at": "2026-10-18T03:05:42-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 6018, "ms": 31}
+{"at": "2026-10-18T03:05:42-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 2335, "ms": 19}
+{"at": "2026-10-18T03:05:44-0400", "tool": "get_entity", "arguments": {"entity_id": "e9177f69-ab32-4f58-983f-0d89af76c612"}, "status": 200, "is_error": false, "chars": 11559, "ms": 67}
+{"at": "2026-10-18T03:05:45-0400", "tool": "get_entity", "arguments": {"entity_id": "00498f4c-3c80-4cae-b09b-26a7997b75ed"}, "status": 200, "is_error": false, "chars": 12790, "ms": 347}
+{"at": "2026-10-18T03:05:45-0400", "tool": "get_entity", "arguments": {"entity_id": "c817032b-a762-45f0-8e89-15dd26cc4c58"}, "status": 200, "is_error": false, "chars": 4841, "ms": 27}
+{"at": "2026-10-18T03:05:46-0400", "tool": "get_entity", "arguments": {"entity_id": "d1300289-09c6-4deb-8e13-2ee3db0dc2d4"}, "status": 200, "is_error": false, "chars": 3913, "ms": 76}
+{"at": "2026-10-18T03:05:49-0400", "tool": "neighbourhood", "arguments": {"entity_id": "a2141e55-fa46-43aa-a803-b5df9566a325"}, "status": 200, "is_error": false, "chars": 2705, "ms": 19}
+{"at": "2026-10-18T03:05:49-0400", "tool": "neighbourhood", "arguments": {"entity_id": "9749c10a-3ee7-4c12-be18-65d3f3d90625"}, "status": 200, "is_error": false, "chars": 3826, "ms": 19}
+{"at": "2026-10-18T03:05:50-0400", "tool": "get_entity", "arguments": {"entity_id": "157a6397-e5db-4e4a-8b2e-488ebe7dbe40"}, "status": 200, "is_error": false, "chars": 8168, "ms": 21}
+{"at": "2026-10-18T03:05:53-0400", "tool": "get_fact", "arguments": {"fact_id": "bedbc612-2c7b-4429-ae8d-ca937a12b271"}, "status": 200, "is_error": false, "chars": 738, "ms": 43}
+{"at": "2026-10-18T03:05:53-0400", "tool": "get_entity", "arguments": {"entity_id": "30c0b8e8-1cf9-463e-aebd-c8ef56897050"}, "status": 200, "is_error": false, "chars": 1659, "ms": 41}
+{"at": "2026-10-18T03:05:54-0400", "tool": "get_entity", "arguments": {"entity_id": "9fbb1b14-aebf-4687-82d4-78779d9e8553"}, "status": 200, "is_error": false, "chars": 13381, "ms": 38}
+{"at": "2026-10-18T03:05:54-0400", "tool": "find_entities", "arguments": {"q": "VP Sales"}, "status": 200, "is_error": false, "chars": 211, "ms": 35}
+{"at": "2026-10-18T03:05:57-0400", "tool": "list_facts", "arguments": {"entity_id": "ba3c2a57-bd85-408d-9003-4be8a085db18", "predicate": "effective_from"}, "status": 200, "is_error": false, "chars": 667, "ms": 21}
+{"at": "2026-10-18T03:05:57-0400", "tool": "neighbourhood", "arguments": {"entity_id": "baba7cff-f3b5-4176-a4b8-ffcb5e8e3354"}, "status": 200, "is_error": false, "chars": 1736, "ms": 21}
+{"at": "2026-10-18T03:05:58-0400", "tool": "list_facts", "arguments": {"entity_id": "f49574a5-73fd-4f41-9d88-42c1dbf16110"}, "status": 200, "is_error": false, "chars": 5642, "ms": 39}

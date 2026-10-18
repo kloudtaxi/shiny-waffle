@@ -1,0 +1,14 @@
+{"at": "2026-10-17T22:56:05-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "DR-9001"}, "status": 200, "is_error": false, "chars": 481, "ms": 72}
+{"at": "2026-10-17T22:56:06-0400", "tool": "lookup_identifier", "arguments": {"system": "Northstar CRM", "id": "CRM-2048"}, "status": 200, "is_error": false, "chars": 2801, "ms": 78}
+{"at": "2026-10-17T22:56:06-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9477, "ms": 113}
+{"at": "2026-10-17T22:56:09-0400", "tool": "get_entity", "arguments": {"entity_id": "9958bbc3-5e11-47a5-a811-eba936c0e17c"}, "status": 200, "is_error": false, "chars": 12266, "ms": 58}
+{"at": "2026-10-17T22:56:09-0400", "tool": "get_entity", "arguments": {"entity_id": "a9e63620-dcbb-41b0-b316-a764f8c3b1a1"}, "status": 200, "is_error": false, "chars": 2285, "ms": 37}
+{"at": "2026-10-17T22:56:09-0400", "tool": "list_facts", "arguments": {"entity_id": "66781aab-b7f6-49c7-9276-f1c749080af3"}, "status": 200, "is_error": false, "chars": 37464, "ms": 24}
+{"at": "2026-10-17T22:56:12-0400", "tool": "get_entity", "arguments": {"entity_id": "bdca2945-0906-4544-8d38-1abe87c5c83a"}, "status": 200, "is_error": false, "chars": 1722, "ms": 21}
+{"at": "2026-10-17T22:56:12-0400", "tool": "list_documents", "arguments": {"q": "polic"}, "status": 200, "is_error": false, "chars": 1072, "ms": 2}
+{"at": "2026-10-17T22:56:12-0400", "tool": "get_entity", "arguments": {"entity_id": "e470ff96-db89-44e0-bcd9-f1eef36fcd6b"}, "status": 200, "is_error": false, "chars": 9177, "ms": 30}
+{"at": "2026-10-17T22:56:15-0400", "tool": "read_passages", "arguments": {"document_id": "1772878e-d507-4f77-9077-5d13e2c94f81"}, "status": 200, "is_error": false, "chars": 1192, "ms": 3}
+{"at": "2026-10-17T22:56:15-0400", "tool": "read_passages", "arguments": {"document_id": "461e29bf-bbce-41e7-a3a3-6b4e18b43f49"}, "status": 200, "is_error": false, "chars": 1279, "ms": 3}
+{"at": "2026-10-17T22:56:17-0400", "tool": "search", "arguments": {"query": "VP Sales", "limit": 10}, "status": 200, "is_error": false, "chars": 7678, "ms": 183}
+{"at": "2026-10-17T22:56:18-0400", "tool": "search", "arguments": {"query": "Acme Master Supply Agreement term effective date termination", "limit": 10}, "status": 200, "is_error": false, "chars": 6363, "ms": 196}
+{"at": "2026-10-17T22:56:20-0400", "tool": "search", "arguments": {"query": "Acme NS-500 18% amendment discount", "limit": 8}, "status": 200, "is_error": false, "chars": 7587, "ms": 575}
