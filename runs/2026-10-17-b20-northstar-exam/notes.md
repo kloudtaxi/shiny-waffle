@@ -106,7 +106,7 @@ flowchart TB
 
 **Probes:** all six pass: C1 shows 9 tools and C2 6, on every arm.
 
-**A rule set before any B-20 answer (22:3x).** An answer that ends on an API error with no answer
+**A rule set before any B-20 answer** (committed in 356141f at 22:56, as B-20's Part 2 started at 22:56:03 and before any of its answers finished; today's 47 C1 answers and some of C2 r1 were in by then, none of them ended by an API error). An answer that ends on an API error with no answer
 (a rate limit, an overload, a server error) is not an answer. It's moved aside as
 `<id>.infra-error.jsonl` and asked once more. Anything the reader finished stands as it is,
 including running out of turns. The same rule applies on every arm.
