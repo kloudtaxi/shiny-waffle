@@ -1,0 +1,1121 @@
+{
+ "rule": "notes.md, 'A rule set before any B-20 answer'; lab 901da02",
+ "moved": [
+  {
+   "answer": "part2/b20/C1/r1/S13.jsonl",
+   "turns": 14,
+   "cost_usd": 0.3430398,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S14.jsonl",
+   "turns": 6,
+   "cost_usd": 0.0110548,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S15.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S16.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S17.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S18.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S19.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S20.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S21.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S22.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S23.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S24.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S25.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S26.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S27.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S28.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S29.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S30.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S31.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S32.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S33.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S34.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S35.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S36.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S37.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S38.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S39.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S40.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S41.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S42.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S43.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S44.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C1/r1/S45.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S01.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S02.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S03.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S04.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S05.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S06a.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S06b.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S06c.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S07.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S08.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S09.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S10.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S11.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S12.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S13.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S14.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S15.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S16.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S17.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S18.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S19.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S20.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S21.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S22.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S23.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S24.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S25.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S26.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S27.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S28.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S29.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S30.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S31.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S32.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20/C2/r1/S33.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S15.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S16.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S17.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S18.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S19.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S20.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S21.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S22.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S23.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S24.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S25.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S26.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S27.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S28.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S29.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S30.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S31.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S32.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S33.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S34.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S35.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S36.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S37.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S38.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S39.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S40.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S41.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S42.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S43.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S44.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C1/r1/S45.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S01.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S02.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S03.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S04.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S05.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S06a.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S06b.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S06c.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S07.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S08.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S09.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S10.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S11.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S12.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S13.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S14.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S15.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S16.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S17.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S18.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S19.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S20.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S21.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S22.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S23.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S24.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S25.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S26.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S27.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/b20-ids-off/C2/r1/S28.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S36.jsonl",
+   "turns": 56,
+   "cost_usd": 1.2401810000000002,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S37.jsonl",
+   "turns": 64,
+   "cost_usd": 1.1690220000000002,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S38.jsonl",
+   "turns": 43,
+   "cost_usd": 0.6632429999999999,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S39.jsonl",
+   "turns": 31,
+   "cost_usd": 0.4987770000000001,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S40.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S41.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S42.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S43.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S44.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r2/S45.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S01.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S02.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S03.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S04.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S05.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S06a.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S06b.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S06c.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S07.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S08.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S09.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S10.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S11.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S12.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S13.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S14.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S15.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S16.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S17.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S18.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S19.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S20.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S21.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S22.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S23.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S24.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S25.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S26.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S27.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S28.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S29.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S30.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S31.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S32.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S33.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S34.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S35.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S36.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S37.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S38.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S39.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S40.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S41.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S42.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S43.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S44.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  },
+  {
+   "answer": "part2/today/C2/r3/S45.jsonl",
+   "turns": 1,
+   "cost_usd": 0,
+   "result": "You've hit your session limit · resets 2:40am (America/New_York)"
+  }
+ ]
+}

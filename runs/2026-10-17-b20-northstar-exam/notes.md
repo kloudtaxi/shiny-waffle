@@ -110,3 +110,25 @@ flowchart TB
 (a rate limit, an overload, a server error) is not an answer. It's moved aside as
 `<id>.infra-error.jsonl` and asked once more. Anything the reader finished stands as it is,
 including running out of turns. The same rule applies on every arm.
+
+**The account's session limit (22:58:57 on 2026-10-17, to the user's resume on 2026-10-18)**
+- From 22:58:57, every `claude -p` call got Claude Code's refusal: "You've hit your session limit".
+  Claude Code reports that as `is_error` with subtype `success`. So the reader saved those
+  attempts as answers, and the lab's first watch missed them. The lab stopped every run when its
+  own session hit the limit.
+- **Part 2:** 186 attempts were refused (`infra-errors-2026-10-17.json`): today's C2 r2 10 and r3
+  47; B-20 ids on, C1 33 and C2 r1 35; B-20 ids off, C1 31 and C2 r1 30. A few had done some work
+  before the refusal; together they cost $3.93, which still counts toward the stop.
+- **No real answer was touched.** Kept as they were: today's C1 (47), C2 r1 (47) and C2 r2 (37);
+  B-20 ids on C1 (14); B-20 ids off C1 (16). They include the 8 C2 r1 answers that ran out of turns.
+- **Part 1's judge:** 17 of 114 runs on B-20's missing-guarantee base, and all 114 on ids-off's
+  base, were refused. Today's three bases and B-20's other two were judged before 22:58.
+- **The rule applied as written:** each refused attempt was moved aside as
+  `<id>.infra-error-1.jsonl` and is asked once more. The lab's code now does this itself (lab
+  901da02):
+  - the reader keeps an infra error aside and halts its run;
+  - a question with two infra errors is left for the user;
+  - the scorer skips them;
+  - `judge.py --resume` keeps every run that judged and re-asks only the refused ones (the earlier
+    file is kept as `.judge.infra-1.json`).
+- **Resumed 2026-10-18,** at 3 workers per arm. The run driver stops an arm at its first infra error.
