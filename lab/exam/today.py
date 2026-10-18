@@ -6,6 +6,7 @@
     uv run python lab/exam/today.py setup --run runs/<exam>    # admin, models, the three bases
     uv run python lab/exam/today.py load --run runs/<exam>     # hash-checked corpora, then wait
     uv run python lab/exam/today.py access --run runs/<exam>   # a read token and a viewer
+    uv run python lab/exam/today.py versions --run runs/<exam> # version 1 rows (amendment 4)
 
 As the practice baseline was run (shiny-waffle 3cbf3c2): the live instance's own binary, a second
 process on :1526, and its own data directory, against an ephemeral database on the same Postgres
@@ -397,12 +398,43 @@ def cmd_access(run: Path) -> None:
     )
 
 
+def cmd_versions(run: Path) -> None:
+    """Amendment 4: today's foundation records no version for a file upload (`create_from_upload`
+    writes the document row only), and the adapter serves a document's text, passages and search
+    hits only for a recorded version. So each exam document without one gets its version 1, as
+    today's own `record_version` writes it when it adopts an older document: its own sha256 and
+    size, and its doc_time; received when it was uploaded. Nothing extracted is touched."""
+    rec = json.loads(bases_file(run).read_text())
+    kbs = ",".join(f"'{kb}'" for kb in rec["kbs"].values())
+    before = psql(
+        f"SELECT count(*) FROM document_versions v JOIN documents d ON d.id = v.document_id"
+        f" WHERE d.kb_id IN ({kbs})"
+    )
+    if before != "0":
+        raise SystemExit(f"{before} version rows exist already; refusing")
+    psql(
+        "INSERT INTO document_versions (id, document_id, version, sha256, size_bytes,"
+        " ingested_at, doc_time)"
+        " SELECT gen_random_uuid(), d.id, 1, d.sha256, d.size_bytes, d.created_at, d.doc_time"
+        f" FROM documents d WHERE d.kb_id IN ({kbs})"
+    )
+    out = {
+        corpus: psql(
+            "SELECT count(*) || ' documents, ' || count(v.id) || ' with version 1'"
+            " FROM documents d LEFT JOIN document_versions v"
+            f" ON v.document_id = d.id AND v.version = 1 WHERE d.kb_id = '{kb}'"
+        )
+        for corpus, kb in rec["kbs"].items()
+    }
+    print(json.dumps(out, indent=1))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(prog="exam-today")
-    ap.add_argument("cmd", choices=["check", "db", "launch", "setup", "load", "access"])
+    ap.add_argument("cmd", choices=["check", "db", "launch", "setup", "load", "access", "versions"])
     ap.add_argument("--run", type=Path)
     a = ap.parse_args()
-    if a.cmd in ("setup", "load", "access") and not a.run:
+    if a.cmd in ("setup", "load", "access", "versions") and not a.run:
         raise SystemExit("--run is needed")
     if a.cmd == "check":
         cmd_check()
@@ -414,8 +446,10 @@ def main() -> None:
         cmd_setup(a.run.resolve())
     elif a.cmd == "load":
         cmd_load(a.run.resolve())
-    else:
+    elif a.cmd == "access":
         cmd_access(a.run.resolve())
+    else:
+        cmd_versions(a.run.resolve())
     sys.exit(0)
 
 
