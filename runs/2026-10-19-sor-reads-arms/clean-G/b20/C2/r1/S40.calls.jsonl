@@ -1,0 +1,49 @@
+{"at": "2026-10-19T15:53:22-0400", "tool": "find_entities", "arguments": {"q": "SR-39881"}, "status": 200, "is_error": false, "chars": 198, "ms": 32}
+{"at": "2026-10-19T15:53:22-0400", "tool": "find_entities", "arguments": {"q": "Blue River"}, "status": 200, "is_error": false, "chars": 2335, "ms": 18}
+{"at": "2026-10-19T15:53:24-0400", "tool": "get_entity", "arguments": {"entity_id": "b7a0bb5c-80ef-4b5b-b7e6-67d345249ce6"}, "status": 200, "is_error": false, "chars": 11342, "ms": 27}
+{"at": "2026-10-19T15:53:28-0400", "tool": "get_entity", "arguments": {"entity_id": "a1bef58a-3338-4a88-9ca6-6f52a0124681"}, "status": 200, "is_error": false, "chars": 33096, "ms": 23}
+{"at": "2026-10-19T15:53:28-0400", "tool": "get_entity", "arguments": {"entity_id": "8956359a-675f-4f1c-b822-9f0d7fbe5e8e"}, "status": 200, "is_error": false, "chars": 7980, "ms": 22}
+{"at": "2026-10-19T15:53:32-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 5550, "ms": 54}
+{"at": "2026-10-19T15:53:32-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 2458, "ms": 24}
+{"at": "2026-10-19T15:53:35-0400", "tool": "get_entity", "arguments": {"entity_id": "d8d5494f-2964-400f-8051-6d76414f5ebb"}, "status": 200, "is_error": false, "chars": 6850, "ms": 22}
+{"at": "2026-10-19T15:53:39-0400", "tool": "get_entity", "arguments": {"entity_id": "19c0b25a-005b-4123-a75c-40bd09ee43ab"}, "status": 200, "is_error": false, "chars": 5351, "ms": 27}
+{"at": "2026-10-19T15:53:41-0400", "tool": "find_entities", "arguments": {"q": "Service Level Schedule"}, "status": 200, "is_error": false, "chars": 992, "ms": 19}
+{"at": "2026-10-19T15:53:41-0400", "tool": "find_entities", "arguments": {"q": "Silver"}, "status": 200, "is_error": false, "chars": 11, "ms": 18}
+{"at": "2026-10-19T15:53:42-0400", "tool": "find_entities", "arguments": {"q": "Severity"}, "status": 200, "is_error": false, "chars": 1405, "ms": 40}
+{"at": "2026-10-19T15:53:44-0400", "tool": "list_facts", "arguments": {"entity_id": "366d7150-9c1c-4730-a5cc-637745abec3c"}, "status": 200, "is_error": false, "chars": 39039, "ms": 35}
+{"at": "2026-10-19T15:53:48-0400", "tool": "list_facts", "arguments": {"entity_id": "366d7150-9c1c-4730-a5cc-637745abec3c", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 38219, "ms": 22}
+{"at": "2026-10-19T15:53:51-0400", "tool": "list_facts", "arguments": {"entity_id": "366d7150-9c1c-4730-a5cc-637745abec3c", "cursor": "MTAw"}, "status": 200, "is_error": false, "chars": 5380, "ms": 40}
+{"at": "2026-10-19T15:53:56-0400", "tool": "list_facts", "arguments": {"entity_id": "dff2af87-16e7-4ec5-a147-e15053ba81fe"}, "status": 200, "is_error": false, "chars": 1918, "ms": 24}
+{"at": "2026-10-19T15:53:56-0400", "tool": "find_entities", "arguments": {"q": "business hours"}, "status": 200, "is_error": false, "chars": 11, "ms": 67}
+{"at": "2026-10-19T15:53:56-0400", "tool": "find_entities", "arguments": {"q": "Escalation"}, "status": 200, "is_error": false, "chars": 928, "ms": 15}
+{"at": "2026-10-19T15:53:56-0400", "tool": "find_entities", "arguments": {"q": "Holiday"}, "status": 200, "is_error": false, "chars": 868, "ms": 25}
+{"at": "2026-10-19T15:54:01-0400", "tool": "list_facts", "arguments": {"entity_id": "58810daf-bcd6-4969-8336-68e23ee507b6"}, "status": 200, "is_error": false, "chars": 3606, "ms": 43}
+{"at": "2026-10-19T15:54:02-0400", "tool": "list_facts", "arguments": {"entity_id": "f9e9c7f2-3aec-4fcf-8713-4500009264c0"}, "status": 200, "is_error": false, "chars": 1437, "ms": 18}
+{"at": "2026-10-19T15:54:03-0400", "tool": "list_facts", "arguments": {"entity_id": "d3488bef-960f-4c10-9ec5-f78988b47aa6"}, "status": 200, "is_error": false, "chars": 638, "ms": 16}
+{"at": "2026-10-19T15:54:03-0400", "tool": "list_facts", "arguments": {"entity_id": "cb4af66e-1d07-447a-a54f-458270f3ce0c"}, "status": 200, "is_error": false, "chars": 3783, "ms": 25}
+{"at": "2026-10-19T15:54:09-0400", "tool": "neighbourhood", "arguments": {"entity_id": "cb4af66e-1d07-447a-a54f-458270f3ce0c", "hops": 1}, "status": 200, "is_error": false, "chars": 1303, "ms": 20}
+{"at": "2026-10-19T15:54:09-0400", "tool": "list_facts", "arguments": {"entity_id": "12947478-6d13-4d79-a9f1-48664283e72c"}, "status": 200, "is_error": false, "chars": 28413, "ms": 21}
+{"at": "2026-10-19T15:54:21-0400", "tool": "neighbourhood", "arguments": {"entity_id": "efd94e32-487c-48e4-8456-f9a9a9d5d25e", "hops": 1}, "status": 200, "is_error": false, "chars": 1606, "ms": 22}
+{"at": "2026-10-19T15:54:21-0400", "tool": "list_facts", "arguments": {"entity_id": "0f228317-afca-4bcf-8a8c-df1b4f1ad39f"}, "status": 200, "is_error": false, "chars": 2661, "ms": 22}
+{"at": "2026-10-19T15:54:25-0400", "tool": "find_entities", "arguments": {"kind": "person"}, "status": 200, "is_error": false, "chars": 4039, "ms": 28}
+{"at": "2026-10-19T15:54:25-0400", "tool": "find_entities", "arguments": {"q": "Support", "kind": "organization"}, "status": 200, "is_error": false, "chars": 2190, "ms": 26}
+{"at": "2026-10-19T15:54:28-0400", "tool": "neighbourhood", "arguments": {"entity_id": "a67c03c8-1f92-45f3-80d9-14a9ad436244", "hops": 1}, "status": 200, "is_error": false, "chars": 2174, "ms": 106}
+{"at": "2026-10-19T15:54:29-0400", "tool": "neighbourhood", "arguments": {"entity_id": "a72288d1-2f34-48d5-845d-1278ec7c65fb", "hops": 1}, "status": 200, "is_error": false, "chars": 839, "ms": 22}
+{"at": "2026-10-19T15:54:29-0400", "tool": "find_entities", "arguments": {"kind": "person", "q": ""}, "status": 200, "is_error": false, "chars": 4039, "ms": 28}
+{"at": "2026-10-19T15:54:33-0400", "tool": "get_entity", "arguments": {"entity_id": "7ed1d025-13d8-45e7-8468-e1384613039c"}, "status": 200, "is_error": false, "chars": 24027, "ms": 25}
+{"at": "2026-10-19T15:54:38-0400", "tool": "neighbourhood", "arguments": {"entity_id": "12947478-6d13-4d79-a9f1-48664283e72c", "hops": 1}, "status": 200, "is_error": false, "chars": 4175, "ms": 31}
+{"at": "2026-10-19T15:54:43-0400", "tool": "find_entities", "arguments": {"kind": "person", "q": "", "cursor": "MjA="}, "status": 200, "is_error": false, "chars": 4039, "ms": 24}
+{"at": "2026-10-19T15:54:47-0400", "tool": "neighbourhood", "arguments": {"entity_id": "59484e71-1022-4b42-b886-46d27f96e97b", "hops": 1}, "status": 200, "is_error": false, "chars": 5722, "ms": 30}
+{"at": "2026-10-19T15:54:47-0400", "tool": "neighbourhood", "arguments": {"entity_id": "0f228317-afca-4bcf-8a8c-df1b4f1ad39f", "hops": 2}, "status": 200, "is_error": false, "chars": 1790, "ms": 22}
+{"at": "2026-10-19T15:54:51-0400", "tool": "list_facts", "arguments": {"entity_id": "6c5bc54e-cb30-4e8f-86dc-b99cb171e71e"}, "status": 200, "is_error": false, "chars": 2915, "ms": 17}
+{"at": "2026-10-19T15:54:51-0400", "tool": "list_facts", "arguments": {"entity_id": "8d6ee2ac-7567-4f60-9c7c-93f8fad5544e"}, "status": 200, "is_error": false, "chars": 3705, "ms": 25}
+{"at": "2026-10-19T15:54:52-0400", "tool": "list_facts", "arguments": {"entity_id": "9aca62e1-631a-4693-92b1-7c1239b0216e"}, "status": 200, "is_error": false, "chars": 3675, "ms": 22}
+{"at": "2026-10-19T15:54:52-0400", "tool": "list_facts", "arguments": {"entity_id": "03b95732-4475-4592-85eb-474c4834874f"}, "status": 200, "is_error": false, "chars": 3649, "ms": 29}
+{"at": "2026-10-19T15:55:01-0400", "tool": "neighbourhood", "arguments": {"entity_id": "b7a0bb5c-80ef-4b5b-b7e6-67d345249ce6", "hops": 1}, "status": 200, "is_error": false, "chars": 3171, "ms": 18}
+{"at": "2026-10-19T15:55:05-0400", "tool": "get_entity", "arguments": {"entity_id": "ac2e30ca-9837-4922-a833-01c329d3432d"}, "status": 200, "is_error": false, "chars": 2284, "ms": 20}
+{"at": "2026-10-19T15:55:05-0400", "tool": "get_entity", "arguments": {"entity_id": "fe820465-1351-4474-b585-ab6bed2638d8"}, "status": 200, "is_error": false, "chars": 1820, "ms": 17}
+{"at": "2026-10-19T15:55:09-0400", "tool": "get_entity", "arguments": {"entity_id": "e47bc2d3-1194-4eef-8aee-41614f14715a"}, "status": 200, "is_error": false, "chars": 1708, "ms": 22}
+{"at": "2026-10-19T15:55:18-0400", "tool": "find_entities", "arguments": {"q": "initial response"}, "status": 200, "is_error": false, "chars": 441, "ms": 21}
+{"at": "2026-10-19T15:55:19-0400", "tool": "find_entities", "arguments": {"q": "acknowledg"}, "status": 200, "is_error": false, "chars": 315, "ms": 22}
+{"at": "2026-10-19T15:55:21-0400", "tool": "get_entity", "arguments": {"entity_id": "4c3a6499-393d-4d9f-b051-30b7361f1d85"}, "status": 200, "is_error": false, "chars": 1842, "ms": 27}
+{"at": "2026-10-19T15:55:22-0400", "tool": "get_entity", "arguments": {"entity_id": "0f0f09b6-02e0-41b4-94ee-ae218ae66250"}, "status": 200, "is_error": false, "chars": 4414, "ms": 21}
