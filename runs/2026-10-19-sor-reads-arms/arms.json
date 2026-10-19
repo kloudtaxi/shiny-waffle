@@ -1,0 +1,11 @@
+{
+ "arms": {
+  "b20": {
+   "mode": "bearer",
+   "url": "http://127.0.0.1:8200",
+   "token_file": "_owm-local/b20-reader.token",
+   "kbs": {"base": "6551486f-aec5-4133-9821-b98fd22246ce"},
+   "foundation": "B-20, blueleaf-knowledge-foundation 02e9cc9 (clean checkout), identifier rules on, fresh store data/g51-02e9cc9, :8200, K10 hybrid as in the exam's b20 arm; 38 files from shiny-waffle e74b561 (tree 26820c28e673), no MANIFEST.yaml; base 'Northstar Industrial Systems (3)'"
+  }
+ }
+}

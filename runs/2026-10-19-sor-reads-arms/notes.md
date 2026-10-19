@@ -1,6 +1,6 @@
 # Systems of record by query, the three-arm test: notes
 
-**Status (2026-10-19): built and frozen; waiting for the B-20 base (garbanzo, on the user's go). No reader spend yet.** Plan: `plan.md` (708c8fe).
+**Status (2026-10-19): clean run 1 starting.** The B-20 base is up; the attacked base is requested (garbanzo, on the user's confirmation). Plan: `plan.md` (708c8fe).
 
 ## Amendments and clarifications to the plan (all before any question)
 
@@ -103,6 +103,19 @@
 
 ## The foundation
 
-Garbanzo received the request for a fresh B-20 base at 02e9cc9. It is holding the build for **the
-user's own go**, because the build spends on the user's OpenAI key. A relay of the user's design
-choice isn't that go (its rule L-80).
+- **Garbanzo built it on the user's own go** (2026-10-19):
+  - B-20 at 02e9cc9 (clean checkout), identifier rules on, in a fresh store `data/g51-02e9cc9` on
+    :8200;
+  - K10 hybrid, as in the exam's b20 arm;
+  - the 38 files from e74b561 (tree 26820c28e673, the same as this repo's HEAD), no MANIFEST.yaml.
+- **Settled (garbanzo's report):** 38 documents and 38 versions. Every stage is done, nothing is
+  queued or failed, and no document has zero facts.
+- **OpenAI usage:** 118 gpt-6-luna calls (effort low), 389,586 prompt and 197,990 completion
+  tokens, 20,180 embedding tokens. B-20 meters tokens, not dollars.
+- **Read back by the lab through the reader token:** K1 lists `6551486f-aec5-4133-9821-b98fd22246ce`,
+  "Northstar Industrial Systems (3)", 38 documents. K2 gives 38. K10 search and find_entities
+  answer.
+- **Live probe, all three arms** (G, GD, GS; about $0.16, outside this folder's spend): no
+  problems; 23 entities for "Northstar" through each.
+- **The attacked base** ("… (4)", the same files plus the two sealed documents by path and hash):
+  requested from garbanzo, to be built once the user confirms to it.
