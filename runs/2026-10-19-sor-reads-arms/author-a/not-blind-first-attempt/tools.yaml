@@ -1,0 +1,447 @@
+# MCP Toolbox for Databases v1.14.0: declared read tools over Northstar's systems-of-record
+# database (one read-only SQLite file holding the CRM, ERP, HR and service-desk exports).
+#
+# Format: multi-document YAML, one `kind:` per document (source, tool, toolset), as documented at
+# https://mcp-toolbox.dev/documentation/configuration/ and
+# https://mcp-toolbox.dev/integrations/sqlite/tools/sqlite-sql/ (see file-list.md).
+#
+# Rules this file keeps:
+# - Stored values only: every tool selects columns exactly as stored. No computed columns, no
+#   time-zone conversion, no CASE, no aggregation. Joins return stored columns only.
+# - Bound parameters only: every agent-supplied value is a typed `?` parameter (bound in the order
+#   listed). No templateParameters anywhere.
+# - SELECT only.
+#
+# Timestamps (opened_at, restored_at, at, sent_at, window_start, window_end) are ISO 8601 text
+# carrying the UTC offset the source system recorded. They are returned as stored and never
+# converted. Multi-row tools return rows in stored (export) order, ordered by rowid, so that no
+# ordering is imposed by comparing timestamp text with different offsets.
+
+kind: source
+name: sor
+type: sqlite
+database: "${SOR_DB}"
+---
+kind: tool
+name: get_ticket
+type: sqlite-sql
+source: sor
+description: |
+  Returns the service-desk record for one support ticket, every column as stored:
+  ticket_id; account_id (the CRM account, CRM-nnnn); customer_on_ticket (the customer name as
+  typed on the ticket, free text, not an identifier); site; product_sku (joins products.sku);
+  channel (how the ticket was opened, as recorded, e.g. phone or portal); contact; opened_at;
+  reported_priority (the customer's reported priority, P1 to P4); description (the business
+  impact as recorded); status; restored_at (NULL when no restoration is recorded).
+  opened_at and restored_at are ISO 8601 text with the UTC offset the source recorded; they are
+  not converted to Central Time. The table has no severity column.
+  Call with the ticket number: {"ticket_id": "SR-nnnnn"}. Returns no row if the ticket is unknown.
+  Follow up with list_ticket_events (history), get_crm_account (tier and owner) and
+  get_product_by_sku.
+parameters:
+  - name: ticket_id
+    type: string
+    description: Ticket number, in the form SR-nnnnn.
+statement: |
+  SELECT ticket_id, account_id, customer_on_ticket, site, product_sku, channel, contact,
+         opened_at, reported_priority, description, status, restored_at
+  FROM service_tickets
+  WHERE ticket_id = ?
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_ticket_events
+type: sqlite-sql
+source: sor
+description: |
+  Returns a ticket's recorded history from the service desk: one row per event, with
+  ticket_id, at (when it was recorded: ISO 8601 text with the UTC offset the source recorded,
+  not converted), event (the event type as stored, e.g. created, engineer_response, restored,
+  credit_claim; other types may appear), actor (who acted, free text) and detail (free text).
+  This is the only per-ticket history the database holds.
+  Rows come in stored (export) order, not re-sorted by time. Before comparing two `at` values,
+  take each one's offset into account.
+  Call with the ticket number: {"ticket_id": "SR-nnnnn"}. Returns no rows if none are recorded.
+parameters:
+  - name: ticket_id
+    type: string
+    description: Ticket number, in the form SR-nnnnn.
+statement: |
+  SELECT ticket_id, at, event, actor, detail
+  FROM ticket_events
+  WHERE ticket_id = ?
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_account_tickets
+type: sqlite-sql
+source: sor
+description: |
+  Returns every service-desk ticket recorded for one CRM account, with the same stored columns
+  as get_ticket (ticket_id, account_id, customer_on_ticket, site, product_sku, channel, contact,
+  opened_at, reported_priority, description, status, restored_at), in stored (export) order.
+  Use it to see a customer's other tickets, e.g. others opened in the same month.
+  Call with the CRM account id from the ticket: {"account_id": "CRM-nnnn"}.
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id, in the form CRM-nnnn (service_tickets.account_id).
+statement: |
+  SELECT ticket_id, account_id, customer_on_ticket, site, product_sku, channel, contact,
+         opened_at, reported_priority, description, status, restored_at
+  FROM service_tickets
+  WHERE account_id = ?
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: get_crm_account
+type: sqlite-sql
+source: sor
+description: |
+  Returns one CRM account, every column as stored: account_id (CRM-nnnn), account_name,
+  account_tier (the CRM account tier, e.g. Strategic or Standard), segment, industry,
+  billing_street, billing_city, billing_state, duns_number (DUNS, NN-NNN-NNNN),
+  account_owner (the owner's name as recorded in CRM) and owner_email (matches employees.email).
+  Call with the account id from a ticket, credit or notice: {"account_id": "CRM-nnnn"}.
+  To find the ERP customer for this account, use list_erp_customers_for_crm_account.
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id, in the form CRM-nnnn.
+statement: |
+  SELECT account_id, account_name, account_tier, segment, industry, billing_street,
+         billing_city, billing_state, duns_number, account_owner, owner_email
+  FROM crm_accounts
+  WHERE account_id = ?
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: find_crm_accounts_by_duns
+type: sqlite-sql
+source: sor
+description: |
+  Returns every CRM account whose stored duns_number equals the DUNS number given, with all
+  crm_accounts columns as stored (see get_crm_account). Use it when a document or another system
+  identifies a customer by DUNS. Exact match on the stored text.
+  Call with the DUNS as written, dashes included: {"duns_number": "NN-NNN-NNNN"}.
+parameters:
+  - name: duns_number
+    type: string
+    description: DUNS number exactly as stored, in the form NN-NNN-NNNN.
+statement: |
+  SELECT account_id, account_name, account_tier, segment, industry, billing_street,
+         billing_city, billing_state, duns_number, account_owner, owner_email
+  FROM crm_accounts
+  WHERE duns_number = ?
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: get_erp_customer
+type: sqlite-sql
+source: sor
+description: |
+  Returns one ERP customer master record, every column as stored: erp_customer_id (C-nnnn),
+  customer_name (the ERP legal or billing name), industry, bill_to_street, bill_to_city,
+  bill_to_state, bill_to_postal_code, duns_number (NN-NNN-NNNN) and payment_terms.
+  Call with the ERP customer id: {"erp_customer_id": "C-nnnn"}.
+parameters:
+  - name: erp_customer_id
+    type: string
+    description: ERP customer id, in the form C-nnnn.
+statement: |
+  SELECT erp_customer_id, customer_name, industry, bill_to_street, bill_to_city, bill_to_state,
+         bill_to_postal_code, duns_number, payment_terms
+  FROM customers
+  WHERE erp_customer_id = ?
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: find_erp_customers_by_duns
+type: sqlite-sql
+source: sor
+description: |
+  Returns every ERP customer whose stored duns_number equals the DUNS number given, with all
+  customers columns as stored (see get_erp_customer). The support terms documents identify each
+  customer by legal name and DUNS. Exact match on the stored text.
+  Call with the DUNS as written, dashes included: {"duns_number": "NN-NNN-NNNN"}.
+parameters:
+  - name: duns_number
+    type: string
+    description: DUNS number exactly as stored, in the form NN-NNN-NNNN.
+statement: |
+  SELECT erp_customer_id, customer_name, industry, bill_to_street, bill_to_city, bill_to_state,
+         bill_to_postal_code, duns_number, payment_terms
+  FROM customers
+  WHERE duns_number = ?
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_erp_customers_for_crm_account
+type: sqlite-sql
+source: sor
+description: |
+  Returns the ERP customer record(s) that share a DUNS number with one CRM account. DUNS is the
+  only identifier stored in both the CRM accounts and the ERP customer master; the database holds
+  no other CRM-to-ERP cross-reference. Each row has the CRM account's account_id, account_name and
+  duns_number, followed by the ERP customer's erp_customer_id, customer_name, industry,
+  bill_to_street, bill_to_city, bill_to_state, bill_to_postal_code and payment_terms, all as
+  stored. Returns no rows if no ERP customer has that DUNS, and more than one row if several do.
+  Call with the CRM account id: {"account_id": "CRM-nnnn"}.
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id, in the form CRM-nnnn.
+statement: |
+  SELECT a.account_id, a.account_name, a.duns_number,
+         c.erp_customer_id, c.customer_name, c.industry, c.bill_to_street, c.bill_to_city,
+         c.bill_to_state, c.bill_to_postal_code, c.payment_terms
+  FROM crm_accounts AS a
+  JOIN customers AS c ON c.duns_number = a.duns_number
+  WHERE a.account_id = ?
+  ORDER BY c.rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_ticket_service_credits
+type: sqlite-sql
+source: sor
+description: |
+  Returns the service credits already approved for one ticket, every column as stored:
+  credit_id (SCR-nnnnn), ticket_id, account_id (CRM-nnnn), ticket_opened (the ticket's open date
+  as stored, YYYY-MM-DD), amount_usd (US dollars, a decimal number) and approved_on (YYYY-MM-DD).
+  Returns no rows if no credit has been recorded for the ticket.
+  Call with the ticket number: {"ticket_id": "SR-nnnnn"}.
+parameters:
+  - name: ticket_id
+    type: string
+    description: Ticket number, in the form SR-nnnnn.
+statement: |
+  SELECT credit_id, ticket_id, account_id, ticket_opened, amount_usd, approved_on
+  FROM service_credits
+  WHERE ticket_id = ?
+  ORDER BY approved_on, rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_account_service_credits
+type: sqlite-sql
+source: sor
+description: |
+  Returns every service credit already approved for one CRM account, across all its tickets, with
+  credit_id, ticket_id, account_id, ticket_opened (YYYY-MM-DD as stored), amount_usd (US dollars,
+  decimal) and approved_on (YYYY-MM-DD), ordered by approved_on (then stored order). Each row
+  carries its own ticket_opened, so you can see which month's tickets a credit belongs to without
+  reading the ticket. Nothing is summed; add amounts yourself if you need a total.
+  Call with the CRM account id: {"account_id": "CRM-nnnn"}.
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id, in the form CRM-nnnn.
+statement: |
+  SELECT credit_id, ticket_id, account_id, ticket_opened, amount_usd, approved_on
+  FROM service_credits
+  WHERE account_id = ?
+  ORDER BY approved_on, rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_account_maintenance_notices
+type: sqlite-sql
+source: sor
+description: |
+  Returns the maintenance notices recorded for one CRM account, every column as stored:
+  notice_id (MN-nnnn), account_id (CRM-nnnn), products (the product SKU or SKUs the notice
+  names, as text), sent_at (when the notice was sent), window_start and window_end (the
+  maintenance window), and notice (the notice text). sent_at, window_start and window_end are
+  ISO 8601 text with the UTC offset the source recorded, not converted. Rows in stored order.
+  Returns no rows if the account has no notice on record.
+  Call with the CRM account id from the ticket: {"account_id": "CRM-nnnn"}.
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id, in the form CRM-nnnn.
+statement: |
+  SELECT notice_id, account_id, products, sent_at, window_start, window_end, notice
+  FROM maintenance_notices
+  WHERE account_id = ?
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: get_maintenance_notice
+type: sqlite-sql
+source: sor
+description: |
+  Returns one maintenance notice by its number, with the same stored columns as
+  list_account_maintenance_notices (notice_id, account_id, products, sent_at, window_start,
+  window_end, notice). Use it when a ticket event or document cites an MN number.
+  Call with the notice number: {"notice_id": "MN-nnnn"}.
+parameters:
+  - name: notice_id
+    type: string
+    description: Maintenance notice number, in the form MN-nnnn.
+statement: |
+  SELECT notice_id, account_id, products, sent_at, window_start, window_end, notice
+  FROM maintenance_notices
+  WHERE notice_id = ?
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_maintenance_notices
+type: sqlite-sql
+source: sor
+description: |
+  Returns every maintenance notice on record, for all accounts, with the same stored columns as
+  list_account_maintenance_notices, in stored order. Takes no parameters: call with {}.
+statement: |
+  SELECT notice_id, account_id, products, sent_at, window_start, window_end, notice
+  FROM maintenance_notices
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: get_product_by_sku
+type: sqlite-sql
+source: sor
+description: |
+  Returns the product catalogue entry for one SKU, every column as stored: product_id
+  (PROD-nnn), sku, product_name, category (e.g. Equipment, Software, Service) and
+  list_price_usd (whole US dollars). Tickets, notices and support documents name products by SKU
+  and by product name; this maps one to the other.
+  Call with the SKU exactly as stored: {"sku": "NS-..."} (for example the ticket's product_sku).
+parameters:
+  - name: sku
+    type: string
+    description: Product SKU exactly as stored (products.sku, service_tickets.product_sku).
+statement: |
+  SELECT product_id, sku, product_name, category, list_price_usd
+  FROM products
+  WHERE sku = ?
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_products
+type: sqlite-sql
+source: sor
+description: |
+  Returns the whole product catalogue (product_id, sku, product_name, category, list_price_usd),
+  every column as stored, in stored order. Takes no parameters: call with {}.
+statement: |
+  SELECT product_id, sku, product_name, category, list_price_usd
+  FROM products
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: get_employee_by_email
+type: sqlite-sql
+source: sor
+description: |
+  Returns the HR record for the employee with this email, every column as stored: employee_id
+  (EMP-nnn), full_name, preferred_name (NULL when none), title, department, manager_id (the
+  manager's employee_id, NULL when none), email and location. Use it to look up an account owner
+  (crm_accounts.owner_email) or a person named in a document by email.
+  Call with the email exactly as stored (lower case): {"email": "first.last@northstar.example"}.
+parameters:
+  - name: email
+    type: string
+    description: Email address exactly as stored, e.g. first.last@northstar.example.
+statement: |
+  SELECT employee_id, full_name, preferred_name, title, department, manager_id, email, location
+  FROM employees
+  WHERE email = ?
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: get_employee_by_id
+type: sqlite-sql
+source: sor
+description: |
+  Returns the HR record for one employee id, with the same stored columns as
+  get_employee_by_email. Use it to follow manager_id to an employee's manager.
+  Call with the employee id: {"employee_id": "EMP-nnn"}.
+parameters:
+  - name: employee_id
+    type: string
+    description: Employee id, in the form EMP-nnn.
+statement: |
+  SELECT employee_id, full_name, preferred_name, title, department, manager_id, email, location
+  FROM employees
+  WHERE employee_id = ?
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: tool
+name: list_employees
+type: sqlite-sql
+source: sor
+description: |
+  Returns the whole HR employee list (employee_id, full_name, preferred_name, title, department,
+  manager_id, email, location), every column as stored, in stored order. Use it to find who holds
+  a title. Takes no parameters: call with {}.
+statement: |
+  SELECT employee_id, full_name, preferred_name, title, department, manager_id, email, location
+  FROM employees
+  ORDER BY rowid
+annotations:
+  readOnlyHint: true
+  idempotentHint: true
+---
+kind: toolset
+name: declared
+tools:
+  - get_ticket
+  - list_ticket_events
+  - list_account_tickets
+  - get_crm_account
+  - find_crm_accounts_by_duns
+  - get_erp_customer
+  - find_erp_customers_by_duns
+  - list_erp_customers_for_crm_account
+  - list_ticket_service_credits
+  - list_account_service_credits
+  - list_account_maintenance_notices
+  - get_maintenance_notice
+  - list_maintenance_notices
+  - get_product_by_sku
+  - list_products
+  - get_employee_by_email
+  - get_employee_by_id
+  - list_employees

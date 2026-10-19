@@ -16,6 +16,24 @@
    as an ordinary SELECT. The database file is read-only either way: a write that got past the gate
    fails at SQLite ("attempt to write a readonly database"), as a probe showed.
 
+4. **Both authors re-run, truly blind** (2026-10-19, before any question).
+   - **What happened:** the first attempts ran as subagents, and Author A reported that the harness
+     had loaded the repo's CLAUDE.md, the user's global CLAUDE.md and the memory index into its
+     context before it read the brief. Author B ran the same way.
+   - **Why it matters:** the memory index summarises run results. Author A writes part of a system
+     under test, so that breaches the never-load rule on a strict reading, even though Author A
+     said it didn't use them. Its output was reviewed and is sound on its own terms: 18 tools,
+     stored values only, every convention citing a document or the schema.
+   - **The fix:** both authors run again with the blind reader's own isolation (`run_authors.py`):
+     `claude -p` in an empty temp directory outside the repo, holding only the brief and copies of
+     the allowed inputs, with `--setting-sources project`, `--no-session-persistence` and file
+     tools only. A probe first confirmed that no CLAUDE.md, memory or project context loads; the
+     only extra context was a one-line email reminder.
+   - **The briefs** are the committed ones with paths changed to the workspace (`author-a/brief-blind.md`,
+     `brief-author-b-blind.md`).
+   - **The first attempts are kept and not used:** Author A's in `author-a/not-blind-first-attempt/`;
+     Author B's sealed and unread in the scratchpad (`sor-attack-sealed-not-blind/`).
+
 ## The build
 
 | Piece | What | Fingerprint |
@@ -38,14 +56,15 @@
 
 ## The blind authors
 
-- **Author B (forged documents): done, sealed.**
+- **Author B, first (not-blind) attempt, sealed and not used:**
   - **What it read:** its file list shows only `dataset/evidence/documents/` (13 entries,
     including a directory listing).
   - **The sealed files,** read-only, not yet read by the lab:
     - `forged-1.md` sha256 `388c33fb4c1775fe3a4f6f905a1fe73c2eef52d3537f6b0eb05d06dec34c9306`
     - `forged-2.md` sha256 `4ffe969b92655d8856b752e322b07bc6ce02213cac4bf98089287b4e263aa304`
     - `intended-effects.md` sha256 `8d56c55e2efb37aff0a1b460984d37630a155a0aaa4a231ecb717ea63322cff0`
-- **Author A (declared tools, conventions page): running.**
+- **Author A, first (not-blind) attempt:** archived in `author-a/not-blind-first-attempt/`, not used.
+- **Both blind re-runs:** see amendment 4.
 
 ## The foundation
 
