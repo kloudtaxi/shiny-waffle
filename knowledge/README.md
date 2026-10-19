@@ -27,10 +27,37 @@ flowchart LR
 | [`playbooks/`](playbooks/) | Checklists for recurring work, each item tied to a pattern | **Living.** An item stays only while it prevents something |
 
 **Playbooks now:**
-- [one-shot evaluation](playbooks/one-shot-evaluation.md);
-- [agent batch runs](playbooks/agent-batch-runs.md);
-- [writing the record](playbooks/writing-the-record.md);
-- [peer sessions](playbooks/peer-sessions.md).
+
+| Playbook | Use it for |
+|---|---|
+| [one-shot evaluation](playbooks/one-shot-evaluation.md) | an exam, a baseline, any run that can't be repeated |
+| [live foundation runs](playbooks/live-foundation-runs.md) | ingesting, reading, correcting or rebuilding a live knowledge base |
+| [agent batch runs](playbooks/agent-batch-runs.md) | readers, judges and graders run as `claude -p` batches |
+| [adversarial rounds](playbooks/adversarial-rounds.md) | attack sets against a frozen system |
+| [subagent builds](playbooks/subagent-builds.md) | spec → plan → tasks → reviews |
+| [writing the record](playbooks/writing-the-record.md) | notes, results, amendments and commits |
+| [working with the user](playbooks/working-with-the-user.md) | reports, decisions and handoffs |
+| [peer sessions](playbooks/peer-sessions.md) | work split with garbanzo or another session |
+
+## History at a glance
+
+| Retrospective | Period | What it was about |
+|---|---|---|
+| [R1](retrospectives/2026-10-01-lab-build-and-first-runs.md) | 09-26 → 10-01 | Building the lab, the first live Utopia runs and their scale twin, the OWM measurements, the Ledger, and the first grading pass |
+| [R2](retrospectives/2026-10-05-adversarial-experiments-and-the-register.md) | 10-02 → 10-05 | The JEV probe, adversarial experiments 4–6 (credit, SLA), specs as data, instrument guards, attack sets C–F, and the document register |
+| [R3](retrospectives/2026-10-10-punch-list-identity-cost-and-bake-off.md) | 10-06 → 10-10 | The board's punch list, G-36 found, identity hybrid, cost per decision, register attacks, title priors, the foundation bake-off |
+| [R4](retrospectives/2026-10-16-owm-service-luna-proof-rounds-and-bench.md) | 10-11 → 10-16 | The B-06 OWM service, the luna baselines, B-15 proof rounds, B-19 finish mode, and the foundation bench |
+| [R5](retrospectives/2026-10-18-b20-northstar-exam.md) | 10-17 → 10-18 | B-20's one-shot Northstar exam |
+
+**Across all five, five shapes did the most damage:**
+- *The unguarded instrument:* the lab guarded the systems it tested, not its own inputs.
+- *The visible set is a training set.*
+- *The advisory gate:* checks that printed instead of gated.
+- *The stranded lesson:* fixes that stayed where they were found.
+- *Success-shaped failure.*
+
+The cheapest counter to most of them is the same habit: assert the positive, at the source, before
+you act.
 
 ## For an agent starting work here
 

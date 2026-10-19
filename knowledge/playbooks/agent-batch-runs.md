@@ -37,6 +37,18 @@ limit as subtype `success` ([Success-shaped failure](../patterns.md#success-shap
   graph. Price per question from a pilot, then re-price from
   the run's own answers. In the exam, that predicted $115, and $123 was spent.
 
+## Price it, and check it, before trusting it
+
+- **Re-price per call from the current corpus** before each batch. Never reuse an old run's unit
+  price: $0.18 assumed, $0.31 actual after the corpus grew.
+- **A probe of 3–8 calls for any new model or arm,** and an early guard on the first calls. A probe
+  of 3 pairs predicted $11, and it cost $10.99.
+- **An extreme result means checking the harness before reporting it.** 18,402 false merges turned
+  out to be a scoring rule, not a bug, and the check was worth it.
+- **Run code lives in the repo before its results are cited,** never only in a session scratchpad.
+- **Load a sibling run's module by path, under a unique name** (`importlib.util`). Run folders share
+  file names, so `import run_reader` can load the wrong one.
+
 ## Blindness checklist (the reader and judge controls)
 
 - Use a fresh temp directory outside the repo, `--tools ""`, `--strict-mcp-config`,
@@ -46,5 +58,7 @@ limit as subtype `success` ([Success-shaped failure](../patterns.md#success-shap
   serves, such as a search score.
 - Run a probe before every batch: the tools in context, the MCP server connected, no permission
   denials.
+- Use a read token per run, scoped to the run's bases and revoked at the end. Probe the agent's
+  ambient context too: who it works for, and today's date.
 - For a judge: show no arm name, give a fixed prompt, take three runs and the majority (a
   three-way split counts as partial), and keep every run's answer.

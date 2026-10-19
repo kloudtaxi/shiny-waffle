@@ -37,6 +37,19 @@ flowchart LR
       out of the public repo.
 - [ ] **Clear every session's permissions before the go:** list what each session will run, and
       have the user approve it there.
+- [ ] **Input-consistency pre-flight:** every record, id or document a question names exists in the
+      evidence handed to the reader. Re-run it after any change to truth, scenarios or the corpus.
+      ([The unguarded instrument](../patterns.md#the-unguarded-instrument))
+- [ ] **Measures as code at pre-registration,** each run once on a case that should count and one
+      that shouldn't. ([The measure misses the question](../patterns.md#the-measure-misses-the-question))
+- [ ] **Held-out scenarios are frozen before any component is tuned.** Label every number "visible"
+      or "held-out", and cite only held-out.
+      ([The visible set is a training set](../patterns.md#the-visible-set-is-a-training-set))
+- [ ] **Credentials, keys and tokens are requested at pre-registration,** and checked to exist
+      before the go.
+- [ ] **Fingerprint the instrument** (binary sha256, workspace models and effort, base counts), and
+      **probe agents' ambient context** (account, date). See
+      [live foundation runs](live-foundation-runs.md).
 
 ## During the run
 
@@ -61,5 +74,7 @@ flowchart LR
   - archive without the key- and token-bearing tables, and check the archive for key prefixes;
   - stop the servers, drop the throwaway databases, and delete the local secret files.
 - [ ] Move every workaround the run needed into provisioning, so the next fresh run doesn't need
-      it again.
+      it again. ([The stranded lesson](../patterns.md#the-stranded-lesson))
+- [ ] If the run changes how an earlier run reads, append an addendum to that run's notes, and log
+      it on the gaps it touches.
 - [ ] Write the retrospective while it's fresh.

@@ -17,6 +17,11 @@ The record is what the next agent believes, so it gets the same rigour as the co
 - [ ] **A deviations section:** every departure from the pre-registration, with its time, cause
       and who decided.
 - [ ] **A spend table:** each component, including refused attempts and anything outside the cap.
+- [ ] **Compute, don't type:** times from `date -u`, sums from a computation, counts from a count.
+      Ledger times typed by hand went wrong; a hand sum was off by $2.
+- [ ] **State findings with their conditions:** model, effort, instance fingerprint. Add a
+      comparability line (before or after a named commit) to every headline number.
+- [ ] **Failed predictions go under their own heading,** "reported, not tuned away".
 - [ ] **Commercial lens, briefly:** what it means for the product. Keep it in the results, never in
       lessons.
 
@@ -26,6 +31,10 @@ The record is what the next agent believes, so it gets the same rigour as the co
       in memory, not here). Never write a secret's value anywhere; test for it as true or false.
 - [ ] Don't force, amend or rewrite history. Runs are results: add to them, never rewrite them.
 - [ ] One concern per commit, with a subject that says what changed and why it matters.
+- [ ] **No conclusion in a commit message before the system has settled.** A pushed message is
+      permanent.
+- [ ] **Scrub provider error text from snapshots before committing.** Error messages can carry
+      account identifiers; one did, at 9dc9ca9.
 - [ ] Big artifacts: gzip snapshots. Transcripts are committed as they are, as in earlier runs.
       No file over 50 MB.
 
@@ -35,3 +44,8 @@ The record is what the next agent believes, so it gets the same rigour as the co
 - [ ] A dated log with each event's time and its commit.
 - [ ] Each deviation logged when it happens, not reconstructed later.
 - [ ] Each user ruling quoted as given, with how it was read.
+- [ ] **A superseded finding is flagged in place,** with a banner naming what superseded it. Never
+      rewrite it silently.
+- [ ] **A re-run never writes over committed results:** it gets a new name, and the harness refuses
+      to overwrite a tracked file.
+- [ ] **When a later run changes how an earlier one reads,** append an addendum to the earlier notes.
