@@ -114,7 +114,11 @@ conceptual OWM. Every ontology type there is tagged `layer: foundation | owm` as
 - **Never load `dataset/answer-key/`, `dataset/evaluation/`, `truth/` or `site/` into the
   system under test.** Only `dataset/evidence/` and `dataset/evidence-variants/<name>/` go into
   Utopia, each as its own knowledge base. `site/index.html` is a self-contained landing page
-  and counts as scenery.
+  and counts as scenery. **The rule covers anything derived from those files too** (decided
+  2026-10-18): the lab's scorers and judge prompts, item lists such as `lab/exam/p2_items.yaml`,
+  test fixtures and run results are never loaded into a system under test or used to tune one. The
+  lab keeps and uses them for scoring. `dataset/evidence/MANIFEST.yaml` is never loaded either:
+  its descriptions hint at answers.
 - **Never use `owm/`, `README.md`'s trap and scenario tables or the four design docs to shape a
   foundation under test** (its classes, prompts or few-shot examples), whether today's foundation
   or BlueLeaf's own. They state the hypothesis the experiment tests and encode the traps' lessons
