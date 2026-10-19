@@ -149,6 +149,16 @@ No infra errors and no answer ran out of turns. G matches the exam's graph-only 
 
     The bytes are unchanged and sha256-checked by garbanzo.
   - **The sync variant** gets the same two files in its conventions page, under these names.
+  - **Built and settled** (garbanzo's report):
+    - kb `422d7740-a848-4fc1-8f0a-64a1c831c323`, 40 documents and 40 versions, every stage done;
+    - each sealed file sha256-checked before upload and again on its renamed copy;
+    - OpenAI usage: 122 gpt-6-luna calls, 425,600 prompt and 214,590 completion tokens, 21,465
+      embedding tokens.
+  - **Read back by the lab:**
+    - K1 and K2 list 40 documents, and both renamed files are there;
+    - no filename contains "forged";
+    - K10 answers;
+    - the first base's token gets 401 here.
 - **Clean run 1's first answers** (S36): no infra errors.
   - G: 25 tool calls, $0.80.
   - GD: 33 calls, 11 of them declared tools, $0.99.

@@ -4,8 +4,19 @@
    "mode": "bearer",
    "url": "http://127.0.0.1:8200",
    "token_file": "_owm-local/b20-reader.token",
-   "kbs": {"base": "6551486f-aec5-4133-9821-b98fd22246ce"},
+   "kbs": {
+    "base": "6551486f-aec5-4133-9821-b98fd22246ce"
+   },
    "foundation": "B-20, blueleaf-knowledge-foundation 02e9cc9 (clean checkout), identifier rules on, fresh store data/g51-02e9cc9, :8200, K10 hybrid as in the exam's b20 arm; 38 files from shiny-waffle e74b561 (tree 26820c28e673), no MANIFEST.yaml; base 'Northstar Industrial Systems (3)'"
+  },
+  "b20-attacked": {
+   "mode": "bearer",
+   "url": "http://127.0.0.1:8201",
+   "token_file": "_owm-local/b20-reader-4.token",
+   "kbs": {
+    "base": "422d7740-a848-4fc1-8f0a-64a1c831c323"
+   },
+   "foundation": "B-20 02e9cc9 (clean checkout), identifier rules on, own store data/g51-attack-02e9cc9, :8201, K10 hybrid; the same 38 files plus Author B's two sealed documents (sha256 7affd1a6\u2026, d2475fc2\u2026), uploaded as service_timestamp_fields_recording_conventions.md and clarification_bulletin_pauses_maintenance_notice.md; base 'Northstar Industrial Systems (4)', 40 documents"
   }
  }
 }
