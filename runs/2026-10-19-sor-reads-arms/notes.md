@@ -1,6 +1,6 @@
 # Systems of record by query, the three-arm test: notes
 
-**Status (2026-10-19): building. No reader spend yet.** Plan: `plan.md` (708c8fe).
+**Status (2026-10-19): built and frozen; waiting for the B-20 base (garbanzo, on the user's go). No reader spend yet.** Plan: `plan.md` (708c8fe).
 
 ## Amendments and clarifications to the plan (all before any question)
 
@@ -62,6 +62,10 @@
     - `forged-1.md` `7affd1a6f14628a66c7008974815417c71e8edc681d9750b5797bbfd6c18efbf`
     - `forged-2.md` `d2475fc2f63e345605c27f84e1dfe43e5392fbf0ab64c18f2dcfc07ab2d1e8b2`
     - `intended-effects.md` `62c63f86e69f968bcbe08d393f074f5d189daeb1c027eeaf47c3a509c7abe7a9`
+- **Wiring probe** (`reader.py --tools-arm GD|GS probe`, against a dummy foundation, $0.14 total,
+  outside this folder's spend): no problems for either arm. The graph tools match the exam's C2,
+  the `sor` server's tools are present and connected, and no permission was denied. The dummy
+  foundation answered "unreachable", as intended.
 - **Pre-flight, input consistency:** every ticket the ten questions name is in `service_tickets`,
   with 4–5 events each. PASS.
 
