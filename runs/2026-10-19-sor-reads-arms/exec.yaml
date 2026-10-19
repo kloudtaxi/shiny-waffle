@@ -1,0 +1,12 @@
+# The generated-SQL arms' executor (G+S, G+S-sync): Toolbox's generic SQLite tool. Only
+# lab/sor_reads/gate_server.py calls it, after the gate; the reader never sees it directly.
+kind: source
+name: northstar
+type: sqlite
+database: ${SOR_DB}
+---
+kind: tool
+name: execute_sql
+type: sqlite-execute-sql
+source: northstar
+description: Run one SQL statement against the systems-of-record database.
