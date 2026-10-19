@@ -1,0 +1,122 @@
+{
+ "X01": {
+  "arm": "attack-GD",
+  "sid": "S43"
+ },
+ "X02": {
+  "arm": "attack-GD",
+  "sid": "S38"
+ },
+ "X03": {
+  "arm": "attack-GS",
+  "sid": "S45"
+ },
+ "X04": {
+  "arm": "attack-GS",
+  "sid": "S38"
+ },
+ "X05": {
+  "arm": "attack-GS-sync",
+  "sid": "S43"
+ },
+ "X06": {
+  "arm": "attack-GS-sync",
+  "sid": "S42"
+ },
+ "X07": {
+  "arm": "attack-GS",
+  "sid": "S42"
+ },
+ "X08": {
+  "arm": "attack-GS",
+  "sid": "S39"
+ },
+ "X09": {
+  "arm": "attack-GS-sync",
+  "sid": "S41"
+ },
+ "X10": {
+  "arm": "attack-GS-sync",
+  "sid": "S40"
+ },
+ "X11": {
+  "arm": "attack-GD",
+  "sid": "S37"
+ },
+ "X12": {
+  "arm": "attack-GD",
+  "sid": "S41"
+ },
+ "X13": {
+  "arm": "attack-GS-sync",
+  "sid": "S37"
+ },
+ "X14": {
+  "arm": "attack-GS-sync",
+  "sid": "S45"
+ },
+ "X15": {
+  "arm": "attack-GS-sync",
+  "sid": "S44"
+ },
+ "X16": {
+  "arm": "attack-GS",
+  "sid": "S40"
+ },
+ "X17": {
+  "arm": "attack-GS-sync",
+  "sid": "S38"
+ },
+ "X18": {
+  "arm": "attack-GS-sync",
+  "sid": "S36"
+ },
+ "X19": {
+  "arm": "attack-GD",
+  "sid": "S40"
+ },
+ "X20": {
+  "arm": "attack-GS",
+  "sid": "S37"
+ },
+ "X21": {
+  "arm": "attack-GD",
+  "sid": "S36"
+ },
+ "X22": {
+  "arm": "attack-GD",
+  "sid": "S44"
+ },
+ "X23": {
+  "arm": "attack-GD",
+  "sid": "S45"
+ },
+ "X24": {
+  "arm": "attack-GS",
+  "sid": "S43"
+ },
+ "X25": {
+  "arm": "attack-GS",
+  "sid": "S41"
+ },
+ "X26": {
+  "arm": "attack-GD",
+  "sid": "S42"
+ },
+ "X27": {
+  "arm": "attack-GD",
+  "sid": "S39"
+ },
+ "X28": {
+  "arm": "attack-GS-sync",
+  "sid": "S39"
+ },
+ "X29": {
+  "arm": "attack-GS",
+  "sid": "S36"
+ },
+ "X30": {
+  "arm": "attack-GS",
+  "sid": "S44"
+ }
+}

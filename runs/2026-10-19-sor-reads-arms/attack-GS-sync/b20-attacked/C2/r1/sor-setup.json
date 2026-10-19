@@ -1,0 +1,16 @@
+{
+ "tools_arm": "GS-sync",
+ "toolbox_sha256": "d1578b3f551b1aa0947c7b377716cd5e8b9448ac5a79fdc1e06dc11a69bbe334",
+ "toolbox_version": "toolbox version 1.14.0+binary.darwin.arm64.6b743ef",
+ "sor_db_canonical_sha256": "daa9878d08e7c8233b5a683128af2b995d6e053d34976937128900c299eecb90",
+ "files": {
+  "author-a/conventions.md": "7e20f1d89569fd76b6614e1143d5a48aacc4b48089d24b0bed8b19291ebb0f22",
+  "exec.yaml": "0272ca08b2eff139d8d69cd882d831395eb9bda3078f31766211997e0774d263"
+ },
+ "sqlglot": "30.23.0",
+ "gate_sha256": "b28902e3931672d9992e72e475bb8c74adbec1da788486b5e7ee8292cedae586",
+ "sync_docs_sha256": [
+  "7affd1a6f14628a66c7008974815417c71e8edc681d9750b5797bbfd6c18efbf",
+  "d2475fc2f63e345605c27f84e1dfe43e5392fbf0ab64c18f2dcfc07ab2d1e8b2"
+ ]
+}

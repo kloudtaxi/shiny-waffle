@@ -1,0 +1,25 @@
+{"at": "2026-10-19T19:03:48-0400", "tool": "find_entities", "arguments": {"q": "Cedar Health"}, "status": 200, "is_error": false, "chars": 2526, "ms": 49}
+{"at": "2026-10-19T19:03:50-0400", "tool": "get_entity", "arguments": {"entity_id": "2f32851c-cae8-42e1-8213-2e4fa95d0090"}, "status": 200, "is_error": false, "chars": 10747, "ms": 35}
+{"at": "2026-10-19T19:03:52-0400", "tool": "find_entities", "arguments": {"q": "Service Level Schedule"}, "status": 200, "is_error": false, "chars": 1222, "ms": 45}
+{"at": "2026-10-19T19:03:52-0400", "tool": "neighbourhood", "arguments": {"entity_id": "546ce009-5771-441f-8f98-f1d32556df98"}, "status": 200, "is_error": false, "chars": 3441, "ms": 35}
+{"at": "2026-10-19T19:03:54-0400", "tool": "list_facts", "arguments": {"entity_id": "847f9977-06ad-4e53-9c1d-0d1be4d2e3b5"}, "status": 200, "is_error": false, "chars": 40140, "ms": 45}
+{"at": "2026-10-19T19:03:54-0400", "tool": "list_facts", "arguments": {"entity_id": "60ab7d64-3983-41c1-a7d2-d183112db801"}, "status": 200, "is_error": false, "chars": 38463, "ms": 46}
+{"at": "2026-10-19T19:03:58-0400", "tool": "list_facts", "arguments": {"entity_id": "847f9977-06ad-4e53-9c1d-0d1be4d2e3b5", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 15039, "ms": 46}
+{"at": "2026-10-19T19:04:02-0400", "tool": "list_facts", "arguments": {"entity_id": "2c1b5916-3d3a-4fd6-b10a-34d9c7f37625"}, "status": 200, "is_error": false, "chars": 4275, "ms": 28}
+{"at": "2026-10-19T19:04:02-0400", "tool": "find_entities", "arguments": {"q": "severity"}, "status": 200, "is_error": false, "chars": 2803, "ms": 35}
+{"at": "2026-10-19T19:04:03-0400", "tool": "find_entities", "arguments": {"q": "escalation"}, "status": 200, "is_error": false, "chars": 1220, "ms": 25}
+{"at": "2026-10-19T19:04:05-0400", "tool": "list_facts", "arguments": {"entity_id": "3501a2c7-aa53-4163-b935-a8f91968cd84"}, "status": 200, "is_error": false, "chars": 8755, "ms": 40}
+{"at": "2026-10-19T19:04:05-0400", "tool": "list_facts", "arguments": {"entity_id": "f0e09235-f020-409a-afdd-ad265d49ec0e"}, "status": 200, "is_error": false, "chars": 18382, "ms": 22}
+{"at": "2026-10-19T19:04:06-0400", "tool": "list_facts", "arguments": {"entity_id": "018817a3-f57f-4cf2-a4b6-bc44663b6155"}, "status": 200, "is_error": false, "chars": 2040, "ms": 25}
+{"at": "2026-10-19T19:04:15-0400", "tool": "list_facts", "arguments": {"entity_id": "60ab7d64-3983-41c1-a7d2-d183112db801", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 14097, "ms": 46}
+{"at": "2026-10-19T19:04:19-0400", "tool": "neighbourhood", "arguments": {"entity_id": "c17b53cb-de4e-4618-a031-fab5882fe292"}, "status": 200, "is_error": false, "chars": 296, "ms": 37}
+{"at": "2026-10-19T19:04:19-0400", "tool": "find_entities", "arguments": {"q": "clock"}, "status": 200, "is_error": false, "chars": 808, "ms": 45}
+{"at": "2026-10-19T19:04:21-0400", "tool": "list_facts", "arguments": {"entity_id": "fe5d3823-627f-4b6e-9e33-188137e75104"}, "status": 200, "is_error": false, "chars": 2854, "ms": 43}
+{"at": "2026-10-19T19:04:22-0400", "tool": "list_facts", "arguments": {"entity_id": "2708fc6f-026c-4d23-9b64-245e36fddad7"}, "status": 200, "is_error": false, "chars": 7505, "ms": 33}
+{"at": "2026-10-19T19:04:23-0400", "tool": "list_facts", "arguments": {"entity_id": "8682ba93-f831-41b2-a11e-7add89aa4fc6"}, "status": 200, "is_error": false, "chars": 2844, "ms": 53}
+{"at": "2026-10-19T19:04:26-0400", "tool": "find_entities", "arguments": {"q": "telephone"}, "status": 200, "is_error": false, "chars": 219, "ms": 18}
+{"at": "2026-10-19T19:04:29-0400", "tool": "neighbourhood", "arguments": {"entity_id": "15cf1a32-8a28-48c9-8c1b-98a7ee654556"}, "status": 200, "is_error": false, "chars": 283, "ms": 55}
+{"at": "2026-10-19T19:04:29-0400", "tool": "neighbourhood", "arguments": {"entity_id": "54752683-0b75-4bc4-ba37-b63b547c8f14"}, "status": 200, "is_error": false, "chars": 289, "ms": 39}
+{"at": "2026-10-19T19:04:34-0400", "tool": "find_entities", "arguments": {"q": "hotline"}, "status": 200, "is_error": false, "chars": 433, "ms": 39}
+{"at": "2026-10-19T19:04:36-0400", "tool": "neighbourhood", "arguments": {"entity_id": "f6fd5c89-1c4a-4c51-b163-5c286e0a049a"}, "status": 200, "is_error": false, "chars": 290, "ms": 26}
+{"at": "2026-10-19T19:04:37-0400", "tool": "neighbourhood", "arguments": {"entity_id": "afd5276d-e8c4-4cc0-aba1-1831c32ede56"}, "status": 200, "is_error": false, "chars": 778, "ms": 43}

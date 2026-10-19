@@ -58,6 +58,13 @@
    the stop couldn't cut it. The attacked base wasn't ready when run 1 ended, and at $42.20 of
    $200 (about $1.41 an answer, so about $169 projected for 120), the stop can't cut it anyway.
 
+8. **The "fooled" check was made by a blind judge subagent, not by me.** Opus was given only
+   Author B's `intended-effects.md`, the two forged documents and a packet of the 30 attacked
+   answers. In the packet the arm labels were replaced by shuffled codes (seed 20261019) and the
+   tool names were masked. The code-to-arm mapping was written read-only beside it, and the judge
+   was told not to open it. That's stricter than the plan's "I read them blind to the arm": the
+   judge never knew the arms existed. Everything is in `attack/judging/`.
+
 ## Clean run 1 (interim; one run is not the result)
 
 Scored with `lab/exam/score_part2.py`, unchanged, into each arm folder's `scores.md`:
