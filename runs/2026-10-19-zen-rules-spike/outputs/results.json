@@ -1,0 +1,225 @@
+{
+ "zen_engine": "2.1.3",
+ "build": {
+  "tables": [
+   "CREDIT-POLICY-2025.v1",
+   "CREDIT-POLICY-2026.v1",
+   "PRICING-POLICY-2025.v1",
+   "PRICING-POLICY-2026.v1",
+   "PRICING-POLICY-2027.v1",
+   "SLA-SCHEDULE-1.0.v1",
+   "SLA-SCHEDULE-2.0.v1"
+  ],
+  "sizes": {
+   "CREDIT-POLICY-2025.v1": {
+    "kind": "credit_policy",
+    "terms_yaml_lines": 23,
+    "terms_yaml_bytes": 679,
+    "jdm_pretty_bytes": 3871,
+    "jdm_compact_bytes": 2569,
+    "rules": 7
+   },
+   "CREDIT-POLICY-2026.v1": {
+    "kind": "credit_policy",
+    "terms_yaml_lines": 27,
+    "terms_yaml_bytes": 745,
+    "jdm_pretty_bytes": 3992,
+    "jdm_compact_bytes": 2641,
+    "rules": 8
+   },
+   "PRICING-POLICY-2025.v1": {
+    "kind": "pricing_policy",
+    "terms_yaml_lines": 11,
+    "terms_yaml_bytes": 317,
+    "jdm_pretty_bytes": 3038,
+    "jdm_compact_bytes": 2003,
+    "rules": 6
+   },
+   "PRICING-POLICY-2026.v1": {
+    "kind": "pricing_policy",
+    "terms_yaml_lines": 16,
+    "terms_yaml_bytes": 523,
+    "jdm_pretty_bytes": 3323,
+    "jdm_compact_bytes": 2172,
+    "rules": 9
+   },
+   "PRICING-POLICY-2027.v1": {
+    "kind": "pricing_policy",
+    "terms_yaml_lines": 15,
+    "terms_yaml_bytes": 452,
+    "jdm_pretty_bytes": 3330,
+    "jdm_compact_bytes": 2179,
+    "rules": 9
+   },
+   "SLA-SCHEDULE-1.0.v1": {
+    "kind": "sla_schedule",
+    "terms_yaml_lines": 48,
+    "terms_yaml_bytes": 828,
+    "jdm_pretty_bytes": 3860,
+    "jdm_compact_bytes": 2405,
+    "rules": 9
+   },
+   "SLA-SCHEDULE-2.0.v1": {
+    "kind": "sla_schedule",
+    "terms_yaml_lines": 56,
+    "terms_yaml_bytes": 934,
+    "jdm_pretty_bytes": 4094,
+    "jdm_compact_bytes": 2535,
+    "rules": 11
+   }
+  },
+  "variant_terms_identical": {
+   "base.yaml:CREDIT-POLICY-2025.v1": true,
+   "base.yaml:CREDIT-POLICY-2026.v1": true,
+   "base.yaml:PRICING-POLICY-2025.v1": true,
+   "base.yaml:PRICING-POLICY-2026.v1": true,
+   "base.yaml:PRICING-POLICY-2027.v1": true,
+   "base.yaml:SLA-SCHEDULE-1.0.v1": true,
+   "base.yaml:SLA-SCHEDULE-2.0.v1": true,
+   "missing-contract-evidence.yaml:CREDIT-POLICY-2025.v1": true,
+   "missing-contract-evidence.yaml:CREDIT-POLICY-2026.v1": true,
+   "missing-contract-evidence.yaml:PRICING-POLICY-2025.v1": true,
+   "missing-contract-evidence.yaml:PRICING-POLICY-2026.v1": true,
+   "missing-contract-evidence.yaml:PRICING-POLICY-2027.v1": true,
+   "missing-contract-evidence.yaml:SLA-SCHEDULE-1.0.v1": true,
+   "missing-contract-evidence.yaml:SLA-SCHEDULE-2.0.v1": true,
+   "missing-guarantee-evidence.yaml:CREDIT-POLICY-2025.v1": true,
+   "missing-guarantee-evidence.yaml:CREDIT-POLICY-2026.v1": true,
+   "missing-guarantee-evidence.yaml:PRICING-POLICY-2025.v1": true,
+   "missing-guarantee-evidence.yaml:PRICING-POLICY-2026.v1": true,
+   "missing-guarantee-evidence.yaml:PRICING-POLICY-2027.v1": true,
+   "missing-guarantee-evidence.yaml:SLA-SCHEDULE-1.0.v1": true,
+   "missing-guarantee-evidence.yaml:SLA-SCHEDULE-2.0.v1": true
+  }
+ },
+ "P1": {
+  "identical": true,
+  "live_jev": [
+   0,
+   0
+  ],
+  "differences": [],
+  "zen_calls": 400,
+  "trace_sample": [
+   {
+    "table": "CREDIT-POLICY-2026.v1.json",
+    "doc_id": "CREDIT-POLICY-2026",
+    "version": 1,
+    "context": {
+     "amount": 400000.0,
+     "title": "Enterprise Account Executive",
+     "tier": null
+    },
+    "rows": {
+     "The requestor's own limit": "l-other",
+     "Who must approve (New credit limit ($))": "b2",
+     "Who must also concur": []
+    },
+    "us": 5496.6
+   },
+   {
+    "table": "CREDIT-POLICY-2026.v1.json",
+    "doc_id": "CREDIT-POLICY-2026",
+    "version": 1,
+    "context": {
+     "amount": 400000.0,
+     "title": "Enterprise Account Executive",
+     "tier": "Strategic"
+    },
+    "rows": {
+     "The requestor's own limit": "l-other",
+     "Who must approve (New credit limit ($))": "b2",
+     "Who must also concur": []
+    },
+    "us": 249.6
+   }
+  ]
+ },
+ "P2": {
+  "points": 1445,
+  "differences": [],
+  "expected_exceptions": 77,
+  "exception_sample": [
+   {
+    "at": "CREDIT-POLICY-2025.v1 {'amount': -1.0, 'title': 'Director of Finance', 'tier': 'Standard'} limit",
+    "zen": "unlimited",
+    "kernel": 1.0
+   },
+   {
+    "at": "CREDIT-POLICY-2025.v1 {'amount': -1.0, 'title': 'Director of Finance', 'tier': 'Unknown Tier'} limit",
+    "zen": "unlimited",
+    "kernel": 1.0
+   },
+   {
+    "at": "CREDIT-POLICY-2025.v1 {'amount': -1.0, 'title': 'Director of Finance', 'tier': None} limit",
+    "zen": "unlimited",
+    "kernel": 1.0
+   }
+  ]
+ },
+ "P3": {
+  "validate_real": {
+   "CREDIT-POLICY-2025.v1.json": [],
+   "CREDIT-POLICY-2026.v1.json": [],
+   "PRICING-POLICY-2025.v1.json": [],
+   "PRICING-POLICY-2026.v1.json": [],
+   "PRICING-POLICY-2027.v1.json": [],
+   "SLA-SCHEDULE-1.0.v1.json": [],
+   "SLA-SCHEDULE-2.0.v1.json": []
+  },
+  "coverage_real": {
+   "CREDIT-POLICY-2025.v1.json": [],
+   "CREDIT-POLICY-2026.v1.json": [],
+   "PRICING-POLICY-2025.v1.json": [],
+   "PRICING-POLICY-2026.v1.json": [],
+   "PRICING-POLICY-2027.v1.json": []
+  },
+  "validate_planted_function": [
+   "node 'fn' has type 'functionNode', which isn't allowed in a registered table"
+  ],
+  "coverage_planted_gap": [
+   "gap between b1 and b2: (100000.0..150000.0] matches nothing"
+  ],
+  "coverage_planted_overlap": [
+   "b2 overlaps b1 (starts at 90000.0, b1 ends at 100000.0)"
+  ]
+ },
+ "P4": {
+  "requestor": "robert.hernandez@northstar.example",
+  "requestor_title": "Accounts Receivable Specialist",
+  "first_pass_requestor": "sarah.chen@northstar.example",
+  "as_registered": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 100000.0,
+   "requestor_authorized": false,
+   "required_role": "Accounts Receivable Specialist",
+   "approver": "Elena Novak"
+  },
+  "kernel_as_registered": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 100000.0,
+   "requestor_authorized": false,
+   "required_role": "Accounts Receivable Specialist",
+   "approver": "Elena Novak"
+  },
+  "table_sod_off": {
+   "policy": "CREDIT-POLICY-2026",
+   "requestor_limit": 100000.0,
+   "requestor_authorized": true,
+   "required_role": "Accounts Receivable Specialist",
+   "approver": "Robert Hernandez"
+  },
+  "unsupported_handoff": "refused: the table's hand-off 'the CFO' isn't one the kernel can resolve",
+  "yaml_terms_unchanged": true
+ },
+ "latency_us": {
+  "calls": 622,
+  "median": 264.2,
+  "max": 499.0
+ },
+ "guards": {
+  "protected_files": 24,
+  "unchanged": true,
+  "zen_expected": true
+ }
+}

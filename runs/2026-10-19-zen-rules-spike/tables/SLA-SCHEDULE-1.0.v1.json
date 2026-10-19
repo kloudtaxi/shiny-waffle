@@ -1,0 +1,241 @@
+{
+ "name": "SLA-SCHEDULE-1.0 v1: SLA targets and credits",
+ "nodes": [
+  {
+   "id": "in",
+   "type": "inputNode",
+   "name": "Request",
+   "position": {
+    "x": 0,
+    "y": 0
+   }
+  },
+  {
+   "id": "targets",
+   "type": "decisionTableNode",
+   "name": "Targets",
+   "position": {
+    "x": 260,
+    "y": 0
+   },
+   "content": {
+    "hitPolicy": "first",
+    "outputPath": "target",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "Severity",
+      "field": "severity"
+     },
+     {
+      "id": "i1",
+      "name": "Plan",
+      "field": "plan"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Response (min)",
+      "field": "response_minutes"
+     },
+     {
+      "id": "o1",
+      "name": "Restoration (min)",
+      "field": "restoration_minutes"
+     },
+     {
+      "id": "o2",
+      "name": "Clock",
+      "field": "clock"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "t1",
+      "i0": "1",
+      "i1": "",
+      "o0": "60",
+      "o1": "480",
+      "o2": "\"24x7\""
+     },
+     {
+      "_id": "t2",
+      "i0": "2",
+      "i1": "\"Platinum\"",
+      "o0": "240",
+      "o1": "1440",
+      "o2": "\"24x7\""
+     },
+     {
+      "_id": "t3",
+      "i0": "2",
+      "i1": "\"Silver\"",
+      "o0": "240",
+      "o1": "1440",
+      "o2": "\"business\""
+     },
+     {
+      "_id": "t4",
+      "i0": "3",
+      "i1": "",
+      "o0": "480",
+      "o1": "3000",
+      "o2": "\"business\""
+     },
+     {
+      "_id": "t5",
+      "i0": "4",
+      "i1": "",
+      "o0": "1200",
+      "o1": "null",
+      "o2": "\"business\""
+     }
+    ]
+   }
+  },
+  {
+   "id": "credits",
+   "type": "decisionTableNode",
+   "name": "Service credits",
+   "position": {
+    "x": 260,
+    "y": 120
+   },
+   "content": {
+    "hitPolicy": "first",
+    "outputPath": "credit",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "Severity",
+      "field": "severity"
+     },
+     {
+      "id": "i1",
+      "name": "Missed target",
+      "field": "target"
+     },
+     {
+      "id": "i2",
+      "name": "Band",
+      "field": "band"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Credit (fraction of monthly fee)",
+      "field": "pct"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "k1",
+      "i0": "1",
+      "i1": "\"response\"",
+      "i2": "",
+      "o0": "0.05"
+     },
+     {
+      "_id": "k2",
+      "i0": "2",
+      "i1": "\"response\"",
+      "i2": "",
+      "o0": "0.02"
+     },
+     {
+      "_id": "k3",
+      "i0": "1",
+      "i1": "\"restoration\"",
+      "i2": "",
+      "o0": "0.1"
+     },
+     {
+      "_id": "k4",
+      "i0": "2",
+      "i1": "\"restoration\"",
+      "i2": "",
+      "o0": "0.05"
+     }
+    ]
+   }
+  },
+  {
+   "id": "terms",
+   "type": "expressionNode",
+   "name": "Other terms",
+   "position": {
+    "x": 260,
+    "y": 240
+   },
+   "content": {
+    "expressions": [
+     {
+      "id": "x0",
+      "key": "cap_pct",
+      "value": "0.2"
+     },
+     {
+      "id": "x1",
+      "key": "claim_days",
+      "value": "60"
+     },
+     {
+      "id": "x2",
+      "key": "notice_business_days",
+      "value": "3"
+     }
+    ],
+    "outputPath": "terms"
+   }
+  },
+  {
+   "id": "out",
+   "type": "outputNode",
+   "name": "Decision",
+   "position": {
+    "x": 560,
+    "y": 0
+   }
+  }
+ ],
+ "edges": [
+  {
+   "id": "e-in-targets",
+   "sourceId": "in",
+   "targetId": "targets",
+   "type": "edge"
+  },
+  {
+   "id": "e-in-credits",
+   "sourceId": "in",
+   "targetId": "credits",
+   "type": "edge"
+  },
+  {
+   "id": "e-in-terms",
+   "sourceId": "in",
+   "targetId": "terms",
+   "type": "edge"
+  },
+  {
+   "id": "e-targets-out",
+   "sourceId": "targets",
+   "targetId": "out",
+   "type": "edge"
+  },
+  {
+   "id": "e-credits-out",
+   "sourceId": "credits",
+   "targetId": "out",
+   "type": "edge"
+  },
+  {
+   "id": "e-terms-out",
+   "sourceId": "terms",
+   "targetId": "out",
+   "type": "edge"
+  }
+ ]
+}

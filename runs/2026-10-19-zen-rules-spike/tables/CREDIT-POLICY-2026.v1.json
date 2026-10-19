@@ -1,0 +1,239 @@
+{
+ "name": "CREDIT-POLICY-2026 v1: credit authority",
+ "nodes": [
+  {
+   "id": "in",
+   "type": "inputNode",
+   "name": "Request",
+   "position": {
+    "x": 0,
+    "y": 0
+   }
+  },
+  {
+   "id": "bands",
+   "type": "decisionTableNode",
+   "name": "Who must approve (New credit limit ($))",
+   "position": {
+    "x": 260,
+    "y": 0
+   },
+   "content": {
+    "hitPolicy": "first",
+    "outputPath": "band",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "New credit limit ($)",
+      "field": "amount"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Required title",
+      "field": "required_title"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "b1",
+      "i0": "<= 100000",
+      "o0": "\"Accounts Receivable Specialist\""
+     },
+     {
+      "_id": "b2",
+      "i0": "(100000..500000]",
+      "o0": "\"Finance Manager\""
+     },
+     {
+      "_id": "b3",
+      "i0": "> 500000",
+      "o0": "\"Director of Finance\""
+     }
+    ]
+   }
+  },
+  {
+   "id": "limits",
+   "type": "decisionTableNode",
+   "name": "The requestor's own limit",
+   "position": {
+    "x": 260,
+    "y": 120
+   },
+   "content": {
+    "hitPolicy": "first",
+    "outputPath": "limit",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "Requestor's title",
+      "field": "title"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Limit",
+      "field": "limit"
+     },
+     {
+      "id": "o1",
+      "name": "Unlimited",
+      "field": "unlimited"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "l1",
+      "i0": "\"Accounts Receivable Specialist\"",
+      "o0": "100000",
+      "o1": "false"
+     },
+     {
+      "_id": "l2",
+      "i0": "\"Finance Manager\"",
+      "o0": "500000",
+      "o1": "false"
+     },
+     {
+      "_id": "l3",
+      "i0": "\"Director of Finance\"",
+      "o0": "null",
+      "o1": "true"
+     },
+     {
+      "_id": "l-other",
+      "i0": "",
+      "o0": "0",
+      "o1": "false"
+     }
+    ]
+   }
+  },
+  {
+   "id": "concurrence",
+   "type": "decisionTableNode",
+   "name": "Who must also concur",
+   "position": {
+    "x": 260,
+    "y": 240
+   },
+   "content": {
+    "hitPolicy": "collect",
+    "outputPath": "concurrence",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "New credit limit ($)",
+      "field": "amount"
+     },
+     {
+      "id": "i1",
+      "name": "Account tier",
+      "field": "tier"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Concurring title",
+      "field": "title"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "c1",
+      "i0": "> 500000",
+      "i1": "\"Strategic\"",
+      "o0": "\"VP Sales\""
+     }
+    ]
+   }
+  },
+  {
+   "id": "policy",
+   "type": "expressionNode",
+   "name": "Separation of duties",
+   "position": {
+    "x": 260,
+    "y": 360
+   },
+   "content": {
+    "expressions": [
+     {
+      "id": "x0",
+      "key": "separation_of_duties",
+      "value": "true"
+     },
+     {
+      "id": "x1",
+      "key": "passes_to",
+      "value": "\"requestor's manager\""
+     }
+    ],
+    "outputPath": "policy"
+   }
+  },
+  {
+   "id": "out",
+   "type": "outputNode",
+   "name": "Decision",
+   "position": {
+    "x": 560,
+    "y": 0
+   }
+  }
+ ],
+ "edges": [
+  {
+   "id": "e-in-bands",
+   "sourceId": "in",
+   "targetId": "bands",
+   "type": "edge"
+  },
+  {
+   "id": "e-in-limits",
+   "sourceId": "in",
+   "targetId": "limits",
+   "type": "edge"
+  },
+  {
+   "id": "e-in-concurrence",
+   "sourceId": "in",
+   "targetId": "concurrence",
+   "type": "edge"
+  },
+  {
+   "id": "e-in-policy",
+   "sourceId": "in",
+   "targetId": "policy",
+   "type": "edge"
+  },
+  {
+   "id": "e-bands-out",
+   "sourceId": "bands",
+   "targetId": "out",
+   "type": "edge"
+  },
+  {
+   "id": "e-limits-out",
+   "sourceId": "limits",
+   "targetId": "out",
+   "type": "edge"
+  },
+  {
+   "id": "e-concurrence-out",
+   "sourceId": "concurrence",
+   "targetId": "out",
+   "type": "edge"
+  },
+  {
+   "id": "e-policy-out",
+   "sourceId": "policy",
+   "targetId": "out",
+   "type": "edge"
+  }
+ ]
+}

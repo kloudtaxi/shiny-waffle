@@ -1,0 +1,186 @@
+{
+ "name": "PRICING-POLICY-2025 v1: discount authority",
+ "nodes": [
+  {
+   "id": "in",
+   "type": "inputNode",
+   "name": "Request",
+   "position": {
+    "x": 0,
+    "y": 0
+   }
+  },
+  {
+   "id": "bands",
+   "type": "decisionTableNode",
+   "name": "Who must approve (Discount (fraction of list))",
+   "position": {
+    "x": 260,
+    "y": 0
+   },
+   "content": {
+    "hitPolicy": "first",
+    "outputPath": "band",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "Discount (fraction of list)",
+      "field": "discount"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Required title",
+      "field": "required_title"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "b1",
+      "i0": "<= 0.15",
+      "o0": "\"Enterprise Account Executive\""
+     },
+     {
+      "_id": "b2",
+      "i0": "> 0.15",
+      "o0": "\"VP Sales\""
+     }
+    ]
+   }
+  },
+  {
+   "id": "limits",
+   "type": "decisionTableNode",
+   "name": "The requestor's own limit",
+   "position": {
+    "x": 260,
+    "y": 120
+   },
+   "content": {
+    "hitPolicy": "first",
+    "outputPath": "limit",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "Requestor's title",
+      "field": "title"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Limit",
+      "field": "limit"
+     },
+     {
+      "id": "o1",
+      "name": "Unlimited",
+      "field": "unlimited"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "l1",
+      "i0": "\"Enterprise Account Executive\"",
+      "o0": "0.15",
+      "o1": "false"
+     },
+     {
+      "_id": "l2",
+      "i0": "\"VP Sales\"",
+      "o0": "null",
+      "o1": "true"
+     },
+     {
+      "_id": "l-other",
+      "i0": "",
+      "o0": "0",
+      "o1": "false"
+     }
+    ]
+   }
+  },
+  {
+   "id": "evidence",
+   "type": "decisionTableNode",
+   "name": "Recorded approval evidence required",
+   "position": {
+    "x": 260,
+    "y": 240
+   },
+   "content": {
+    "hitPolicy": "first",
+    "outputPath": "evidence",
+    "inputs": [
+     {
+      "id": "i0",
+      "name": "Discount (fraction of list)",
+      "field": "discount"
+     }
+    ],
+    "outputs": [
+     {
+      "id": "o0",
+      "name": "Required",
+      "field": "required"
+     }
+    ],
+    "rules": [
+     {
+      "_id": "v-other",
+      "i0": "",
+      "o0": "false"
+     }
+    ]
+   }
+  },
+  {
+   "id": "out",
+   "type": "outputNode",
+   "name": "Decision",
+   "position": {
+    "x": 560,
+    "y": 0
+   }
+  }
+ ],
+ "edges": [
+  {
+   "id": "e-in-bands",
+   "sourceId": "in",
+   "targetId": "bands",
+   "type": "edge"
+  },
+  {
+   "id": "e-in-limits",
+   "sourceId": "in",
+   "targetId": "limits",
+   "type": "edge"
+  },
+  {
+   "id": "e-in-evidence",
+   "sourceId": "in",
+   "targetId": "evidence",
+   "type": "edge"
+  },
+  {
+   "id": "e-bands-out",
+   "sourceId": "bands",
+   "targetId": "out",
+   "type": "edge"
+  },
+  {
+   "id": "e-limits-out",
+   "sourceId": "limits",
+   "targetId": "out",
+   "type": "edge"
+  },
+  {
+   "id": "e-evidence-out",
+   "sourceId": "evidence",
+   "targetId": "out",
+   "type": "edge"
+  }
+ ]
+}
