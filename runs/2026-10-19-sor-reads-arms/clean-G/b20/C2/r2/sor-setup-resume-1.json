@@ -1,0 +1,7 @@
+{
+ "tools_arm": "G",
+ "toolbox_sha256": "d1578b3f551b1aa0947c7b377716cd5e8b9448ac5a79fdc1e06dc11a69bbe334",
+ "toolbox_version": "toolbox version 1.14.0+binary.darwin.arm64.6b743ef",
+ "sor_db_canonical_sha256": "daa9878d08e7c8233b5a683128af2b995d6e053d34976937128900c299eecb90",
+ "files": {}
+}
