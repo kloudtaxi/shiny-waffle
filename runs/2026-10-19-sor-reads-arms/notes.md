@@ -1,6 +1,14 @@
 # Systems of record by query, the three-arm test: notes
 
-**Status (2026-10-19): clean run 1 done ($42.20); clean run 2 starting.** The B-20 base is up; the attacked base is requested (garbanzo, on the user's confirmation). Plan: `plan.md` (708c8fe).
+**Status (2026-10-19, paused at the account's usage limit):**
+- clean run 1 is done;
+- clean run 2 has 9, 10 and 9 answers (G, GD, GS), with 2 infra errors each in G and GS. Under the
+  exam's rules, those questions are asked once more on a later run;
+- folder spend is $82.35;
+- **still to do:** finish run 2 (the missing S-ids), the attack phase (GD, GS and GS-sync on
+  `b20-attacked`, rep 1), clean run 3, then scoring and results;
+- per-process caps follow amendment 6. Both B-20 bases stay up until the lab tells garbanzo it's
+  done. The B-20 base is up; the attacked base is requested (garbanzo, on the user's confirmation). Plan: `plan.md` (708c8fe).
 
 ## Amendments and clarifications to the plan (all before any question)
 
