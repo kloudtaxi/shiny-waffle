@@ -1,0 +1,35 @@
+{"at": "2026-10-19T19:26:46-0400", "tool": "find_entities", "arguments": {"q": "Acme"}, "status": 200, "is_error": false, "chars": 9417, "ms": 59}
+{"at": "2026-10-19T19:26:47-0400", "tool": "list_facts", "arguments": {"entity_id": "4f9400a9-5bcd-4501-881b-8b2da57aa8ff"}, "status": 200, "is_error": false, "chars": 37253, "ms": 48}
+{"at": "2026-10-19T19:26:50-0400", "tool": "find_entities", "arguments": {"kind": "agreement"}, "status": 200, "is_error": false, "chars": 2458, "ms": 43}
+{"at": "2026-10-19T19:26:50-0400", "tool": "find_entities", "arguments": {"kind": "document"}, "status": 200, "is_error": false, "chars": 5550, "ms": 38}
+{"at": "2026-10-19T19:26:51-0400", "tool": "list_facts", "arguments": {"entity_id": "40f1b507-091e-465a-acc6-f701f6ad9565"}, "status": 200, "is_error": false, "chars": 15259, "ms": 45}
+{"at": "2026-10-19T19:26:53-0400", "tool": "list_facts", "arguments": {"entity_id": "19c0b25a-005b-4123-a75c-40bd09ee43ab"}, "status": 200, "is_error": false, "chars": 728, "ms": 50}
+{"at": "2026-10-19T19:26:54-0400", "tool": "find_entities", "arguments": {"q": "Service Level Schedule"}, "status": 200, "is_error": false, "chars": 992, "ms": 44}
+{"at": "2026-10-19T19:26:56-0400", "tool": "list_facts", "arguments": {"entity_id": "366d7150-9c1c-4730-a5cc-637745abec3c"}, "status": 200, "is_error": false, "chars": 39039, "ms": 47}
+{"at": "2026-10-19T19:26:56-0400", "tool": "list_facts", "arguments": {"entity_id": "11ac6d8e-35b8-44f4-9328-29885efe3e00"}, "status": 200, "is_error": false, "chars": 39226, "ms": 39}
+{"at": "2026-10-19T19:27:01-0400", "tool": "list_facts", "arguments": {"entity_id": "11ac6d8e-35b8-44f4-9328-29885efe3e00", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 13443, "ms": 52}
+{"at": "2026-10-19T19:27:04-0400", "tool": "find_entities", "arguments": {"q": "claim"}, "status": 200, "is_error": false, "chars": 500, "ms": 27}
+{"at": "2026-10-19T19:27:05-0400", "tool": "list_facts", "arguments": {"entity_id": "162bbe61-7d1d-488f-ac3c-a463fd7e6b20"}, "status": 200, "is_error": false, "chars": 1413, "ms": 41}
+{"at": "2026-10-19T19:27:05-0400", "tool": "find_entities", "arguments": {"q": "Escalation"}, "status": 200, "is_error": false, "chars": 928, "ms": 42}
+{"at": "2026-10-19T19:27:05-0400", "tool": "find_entities", "arguments": {"q": "Severity"}, "status": 200, "is_error": false, "chars": 1405, "ms": 46}
+{"at": "2026-10-19T19:27:07-0400", "tool": "list_facts", "arguments": {"entity_id": "12947478-6d13-4d79-a9f1-48664283e72c"}, "status": 200, "is_error": false, "chars": 28413, "ms": 46}
+{"at": "2026-10-19T19:27:08-0400", "tool": "list_facts", "arguments": {"entity_id": "dff2af87-16e7-4ec5-a147-e15053ba81fe"}, "status": 200, "is_error": false, "chars": 1918, "ms": 41}
+{"at": "2026-10-19T19:27:08-0400", "tool": "list_facts", "arguments": {"entity_id": "d3488bef-960f-4c10-9ec5-f78988b47aa6"}, "status": 200, "is_error": false, "chars": 638, "ms": 44}
+{"at": "2026-10-19T19:27:10-0400", "tool": "neighbourhood", "arguments": {"entity_id": "dff2af87-16e7-4ec5-a147-e15053ba81fe"}, "status": 200, "is_error": false, "chars": 783, "ms": 53}
+{"at": "2026-10-19T19:27:12-0400", "tool": "list_facts", "arguments": {"entity_id": "cdd76cbf-95e9-48f7-bbb8-132b111e724e"}, "status": 200, "is_error": false, "chars": 702, "ms": 38}
+{"at": "2026-10-19T19:27:13-0400", "tool": "list_facts", "arguments": {"entity_id": "58810daf-bcd6-4969-8336-68e23ee507b6"}, "status": 200, "is_error": false, "chars": 3606, "ms": 28}
+{"at": "2026-10-19T19:27:13-0400", "tool": "list_facts", "arguments": {"entity_id": "d437b2cc-969f-4c2f-9920-3d1fcab626cc"}, "status": 200, "is_error": false, "chars": 49, "ms": 44}
+{"at": "2026-10-19T19:27:17-0400", "tool": "list_facts", "arguments": {"entity_id": "366d7150-9c1c-4730-a5cc-637745abec3c", "cursor": "NTA="}, "status": 200, "is_error": false, "chars": 38219, "ms": 29}
+{"at": "2026-10-19T19:27:19-0400", "tool": "find_entities", "arguments": {"q": "window"}, "status": 200, "is_error": false, "chars": 259, "ms": 37}
+{"at": "2026-10-19T19:27:21-0400", "tool": "neighbourhood", "arguments": {"entity_id": "11ac6d8e-35b8-44f4-9328-29885efe3e00"}, "status": 200, "is_error": false, "chars": 1831, "ms": 46}
+{"at": "2026-10-19T19:27:24-0400", "tool": "find_entities", "arguments": {"q": "restoration date"}, "status": 200, "is_error": false, "chars": 11, "ms": 40}
+{"at": "2026-10-19T19:27:24-0400", "tool": "find_entities", "arguments": {"q": "calendar days"}, "status": 200, "is_error": false, "chars": 11, "ms": 49}
+{"at": "2026-10-19T19:27:25-0400", "tool": "find_entities", "arguments": {"q": "SR-38862"}, "status": 200, "is_error": false, "chars": 204, "ms": 37}
+{"at": "2026-10-19T19:27:26-0400", "tool": "list_facts", "arguments": {"entity_id": "090fa32d-9242-4f31-b31d-916cdda43197"}, "status": 200, "is_error": false, "chars": 11446, "ms": 46}
+{"at": "2026-10-19T19:27:28-0400", "tool": "list_facts", "arguments": {"entity_id": "11ac6d8e-35b8-44f4-9328-29885efe3e00", "predicate": "credit_claim_window"}, "status": 200, "is_error": false, "chars": 49, "ms": 30}
+{"at": "2026-10-19T19:27:29-0400", "tool": "find_entities", "arguments": {"q": "Edward Floyd"}, "status": 200, "is_error": false, "chars": 506, "ms": 23}
+{"at": "2026-10-19T19:27:31-0400", "tool": "list_facts", "arguments": {"entity_id": "366d7150-9c1c-4730-a5cc-637745abec3c", "cursor": "MTAw"}, "status": 200, "is_error": false, "chars": 5380, "ms": 51}
+{"at": "2026-10-19T19:27:32-0400", "tool": "get_entity", "arguments": {"entity_id": "11ac6d8e-35b8-44f4-9328-29885efe3e00"}, "status": 200, "is_error": false, "chars": 52832, "ms": 48}
+{"at": "2026-10-19T19:27:41-0400", "tool": "find_entities", "arguments": {"q": "timely"}, "status": 200, "is_error": false, "chars": 11, "ms": 40}
+{"at": "2026-10-19T19:27:41-0400", "tool": "get_fact", "arguments": {"fact_id": "6509822f-3e48-4245-9717-b430b06c528f"}, "status": 200, "is_error": false, "chars": 698, "ms": 41}
+{"at": "2026-10-19T19:27:45-0400", "tool": "list_facts", "arguments": {"entity_id": "73ce0211-3da8-4253-b285-ddcb28af78fb"}, "status": 200, "is_error": false, "chars": 712, "ms": 52}
