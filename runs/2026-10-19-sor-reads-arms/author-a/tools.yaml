@@ -1,0 +1,400 @@
+# MCP Toolbox for Databases v1.14.0 configuration: Northstar systems-of-record (read-only).
+# All tools return stored columns only and bind every agent-supplied value as a parameter.
+kind: source
+name: northstar-sor
+type: sqlite
+database: ${SOR_DB}
+---
+# ---------------------------------------------------------------- tickets
+kind: tool
+name: get_ticket
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the service ticket row for one ticket number: ticket_id, account_id (CRM account),
+  customer_on_ticket (free text as typed, not an identifier), site, product_sku, channel
+  (e.g. phone, portal), contact, opened_at (ISO 8601 with the UTC offset as recorded),
+  reported_priority (the customer's P1-P4 view, not the severity), description (business impact
+  as reported), status and restored_at (ISO 8601 with offset, NULL if not restored).
+  Call with ticket_id, e.g. "SR-12345". Returns zero rows if the ticket does not exist.
+parameters:
+  - name: ticket_id
+    type: string
+    description: Ticket number in the form SR-nnnnn.
+statement: |
+  SELECT ticket_id, account_id, customer_on_ticket, site, product_sku, channel, contact,
+         opened_at, reported_priority, description, status, restored_at
+  FROM service_tickets
+  WHERE ticket_id = ?
+---
+kind: tool
+name: get_ticket_events
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the full event history of one ticket: one row per event with ticket_id, at (ISO 8601
+  timestamp with the UTC offset as recorded), event (event type, e.g. created,
+  engineer_response, restored, credit_claim), actor (who performed it, as recorded) and detail
+  (free-text note). Rows are sorted by the stored `at` text; when events carry different UTC
+  offsets, convert to a common zone before relying on order. Call with ticket_id ("SR-nnnnn").
+parameters:
+  - name: ticket_id
+    type: string
+    description: Ticket number in the form SR-nnnnn.
+statement: |
+  SELECT ticket_id, at, event, actor, detail
+  FROM ticket_events
+  WHERE ticket_id = ?
+  ORDER BY at
+---
+kind: tool
+name: list_tickets_for_account
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns every service ticket on one CRM account (same columns as get_ticket), sorted by the
+  stored opened_at text. Use it to find the account's other tickets, e.g. those opened in the
+  same calendar month as a given ticket. Call with account_id ("CRM-nnnn").
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id in the form CRM-nnnn.
+statement: |
+  SELECT ticket_id, account_id, customer_on_ticket, site, product_sku, channel, contact,
+         opened_at, reported_priority, description, status, restored_at
+  FROM service_tickets
+  WHERE account_id = ?
+  ORDER BY opened_at
+---
+# ---------------------------------------------------------------- accounts and customers
+kind: tool
+name: get_crm_account
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the CRM account row for one account id: account_id, account_name, account_tier
+  (e.g. Strategic, Standard; a CRM tier, unrelated to the support plan), segment, industry,
+  billing_street, billing_city, billing_state, duns_number, account_owner (name) and
+  owner_email. Call with account_id ("CRM-nnnn"), e.g. the account_id on a ticket.
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id in the form CRM-nnnn.
+statement: |
+  SELECT account_id, account_name, account_tier, segment, industry, billing_street,
+         billing_city, billing_state, duns_number, account_owner, owner_email
+  FROM crm_accounts
+  WHERE account_id = ?
+---
+kind: tool
+name: get_erp_customer_for_account
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the ERP customer record(s) whose DUNS number equals the DUNS number of one CRM
+  account: account_id, account_name and account duns_number from CRM, plus erp_customer_id,
+  customer_name (legal/ERP name), industry, bill_to_street, bill_to_city, bill_to_state,
+  bill_to_postal_code, duns_number and payment_terms from ERP. DUNS is the shared identifier
+  between CRM and ERP. Zero rows means no ERP customer shares the DUNS. Call with account_id
+  ("CRM-nnnn").
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id in the form CRM-nnnn.
+statement: |
+  SELECT a.account_id, a.account_name, a.duns_number AS account_duns_number,
+         c.erp_customer_id, c.customer_name, c.industry, c.bill_to_street, c.bill_to_city,
+         c.bill_to_state, c.bill_to_postal_code, c.duns_number, c.payment_terms
+  FROM crm_accounts AS a
+  JOIN customers AS c ON c.duns_number = a.duns_number
+  WHERE a.account_id = ?
+---
+kind: tool
+name: get_erp_customer
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the ERP customer row for one ERP customer id: erp_customer_id, customer_name,
+  industry, bill_to_street, bill_to_city, bill_to_state, bill_to_postal_code, duns_number and
+  payment_terms. Call with erp_customer_id ("C-nnnn").
+parameters:
+  - name: erp_customer_id
+    type: string
+    description: ERP customer id in the form C-nnnn.
+statement: |
+  SELECT erp_customer_id, customer_name, industry, bill_to_street, bill_to_city,
+         bill_to_state, bill_to_postal_code, duns_number, payment_terms
+  FROM customers
+  WHERE erp_customer_id = ?
+---
+kind: tool
+name: find_crm_accounts_by_duns
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns every CRM account carrying one DUNS number (same columns as get_crm_account). Use it
+  to match a company named in a support agreement (which states the DUNS) to its CRM account.
+  Call with duns_number exactly as written, e.g. "04-812-7730".
+parameters:
+  - name: duns_number
+    type: string
+    description: DUNS number in the form nn-nnn-nnnn.
+statement: |
+  SELECT account_id, account_name, account_tier, segment, industry, billing_street,
+         billing_city, billing_state, duns_number, account_owner, owner_email
+  FROM crm_accounts
+  WHERE duns_number = ?
+---
+kind: tool
+name: find_erp_customers_by_duns
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns every ERP customer carrying one DUNS number (same columns as get_erp_customer). Use
+  it to match a company named in a support agreement (which states the DUNS) to its ERP
+  customer record. Call with duns_number exactly as written, e.g. "04-812-7730".
+parameters:
+  - name: duns_number
+    type: string
+    description: DUNS number in the form nn-nnn-nnnn.
+statement: |
+  SELECT erp_customer_id, customer_name, industry, bill_to_street, bill_to_city,
+         bill_to_state, bill_to_postal_code, duns_number, payment_terms
+  FROM customers
+  WHERE duns_number = ?
+---
+kind: tool
+name: search_crm_accounts_by_name
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns CRM accounts whose account_name matches a SQL LIKE pattern (case-insensitive for
+  ASCII), with account_id, account_name, account_tier, billing_city, billing_state,
+  duns_number, account_owner and owner_email. Names are not identifiers: several companies
+  can have similar names, so confirm a match by account_id or DUNS. Call with a pattern such
+  as "%River%".
+parameters:
+  - name: name_pattern
+    type: string
+    description: SQL LIKE pattern for account_name; % matches any run of characters, _ one character.
+statement: |
+  SELECT account_id, account_name, account_tier, billing_city, billing_state, duns_number,
+         account_owner, owner_email
+  FROM crm_accounts
+  WHERE account_name LIKE ?
+---
+kind: tool
+name: search_erp_customers_by_name
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns ERP customers whose customer_name matches a SQL LIKE pattern (case-insensitive for
+  ASCII), with erp_customer_id, customer_name, bill_to_city, bill_to_state and duns_number.
+  Names are not identifiers; confirm a match by erp_customer_id or DUNS. Call with a pattern
+  such as "%Health%".
+parameters:
+  - name: name_pattern
+    type: string
+    description: SQL LIKE pattern for customer_name; % matches any run of characters, _ one character.
+statement: |
+  SELECT erp_customer_id, customer_name, bill_to_city, bill_to_state, duns_number
+  FROM customers
+  WHERE customer_name LIKE ?
+---
+# ---------------------------------------------------------------- service credits
+kind: tool
+name: get_service_credits_for_ticket
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns service credits already issued for one ticket: credit_id, ticket_id, account_id,
+  ticket_opened (date the ticket was opened, YYYY-MM-DD), amount_usd (US dollars) and
+  approved_on (YYYY-MM-DD). Zero rows means no credit is recorded for the ticket.
+  Call with ticket_id ("SR-nnnnn").
+parameters:
+  - name: ticket_id
+    type: string
+    description: Ticket number in the form SR-nnnnn.
+statement: |
+  SELECT credit_id, ticket_id, account_id, ticket_opened, amount_usd, approved_on
+  FROM service_credits
+  WHERE ticket_id = ?
+---
+kind: tool
+name: list_service_credits_for_account
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns every service credit already issued on one CRM account (same columns as
+  get_service_credits_for_ticket), sorted by approved_on then credit_id. Use it to see credits
+  already counted for tickets opened in a given month. Call with account_id ("CRM-nnnn").
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id in the form CRM-nnnn.
+statement: |
+  SELECT credit_id, ticket_id, account_id, ticket_opened, amount_usd, approved_on
+  FROM service_credits
+  WHERE account_id = ?
+  ORDER BY approved_on, credit_id
+---
+# ---------------------------------------------------------------- maintenance notices
+kind: tool
+name: list_maintenance_notices_for_account
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns every scheduled-maintenance notice recorded for one CRM account: notice_id
+  (MN-nnnn), account_id, products (product SKU(s) the notice names, as stored text), sent_at,
+  window_start and window_end (ISO 8601 with UTC offset as recorded) and notice (text).
+  Zero rows means no notice is recorded for the account. Call with account_id ("CRM-nnnn").
+parameters:
+  - name: account_id
+    type: string
+    description: CRM account id in the form CRM-nnnn.
+statement: |
+  SELECT notice_id, account_id, products, sent_at, window_start, window_end, notice
+  FROM maintenance_notices
+  WHERE account_id = ?
+  ORDER BY window_start
+---
+kind: tool
+name: get_maintenance_notice
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns one maintenance notice by its number (same columns as
+  list_maintenance_notices_for_account). Call with notice_id ("MN-nnnn").
+parameters:
+  - name: notice_id
+    type: string
+    description: Maintenance notice number in the form MN-nnnn.
+statement: |
+  SELECT notice_id, account_id, products, sent_at, window_start, window_end, notice
+  FROM maintenance_notices
+  WHERE notice_id = ?
+---
+# ---------------------------------------------------------------- staff
+kind: tool
+name: list_employees
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns all employees from the HR export: employee_id, full_name, preferred_name, title,
+  department, manager_id (employee_id of the manager, NULL if none), email and location.
+  Takes no parameters. Use it to find the holder of a title (e.g. VP Sales) or to resolve
+  an account owner's email to a person.
+statement: |
+  SELECT employee_id, full_name, preferred_name, title, department, manager_id, email, location
+  FROM employees
+  ORDER BY employee_id
+---
+kind: tool
+name: get_employee_by_email
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the employee whose email matches exactly (same columns as list_employees). Use it
+  with a CRM account's owner_email. Call with email, e.g. "first.last@northstar.example".
+parameters:
+  - name: email
+    type: string
+    description: Employee email address, exactly as stored.
+statement: |
+  SELECT employee_id, full_name, preferred_name, title, department, manager_id, email, location
+  FROM employees
+  WHERE email = ?
+---
+kind: tool
+name: get_account_owner_for_ticket
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns, for one ticket, its CRM account's account_id, account_name, account_tier,
+  account_owner and owner_email, plus the matching employee record (employee_id, full_name,
+  title, department, email, location) joined on owner_email = employees.email. Employee
+  columns are NULL if no employee has that email. Call with ticket_id ("SR-nnnnn").
+parameters:
+  - name: ticket_id
+    type: string
+    description: Ticket number in the form SR-nnnnn.
+statement: |
+  SELECT t.ticket_id, a.account_id, a.account_name, a.account_tier, a.account_owner,
+         a.owner_email, e.employee_id, e.full_name, e.title, e.department, e.email, e.location
+  FROM service_tickets AS t
+  JOIN crm_accounts AS a ON a.account_id = t.account_id
+  LEFT JOIN employees AS e ON e.email = a.owner_email
+  WHERE t.ticket_id = ?
+---
+# ---------------------------------------------------------------- products and billing
+kind: tool
+name: get_product_by_sku
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the product catalogue row for one SKU: product_id, sku, product_name, category
+  (Equipment, Software, Service) and list_price_usd. Call with sku exactly as stored on a
+  ticket's product_sku, e.g. "NS-CLOUD".
+parameters:
+  - name: sku
+    type: string
+    description: Product SKU, e.g. NS-500 or NS-CLOUD.
+statement: |
+  SELECT product_id, sku, product_name, category, list_price_usd
+  FROM products
+  WHERE sku = ?
+---
+kind: tool
+name: list_products
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns the whole product catalogue (product_id, sku, product_name, category,
+  list_price_usd). Takes no parameters.
+statement: |
+  SELECT product_id, sku, product_name, category, list_price_usd
+  FROM products
+  ORDER BY product_id
+---
+kind: tool
+name: list_invoices_for_customer
+type: sqlite-sql
+source: northstar-sor
+description: >-
+  Returns every ERP invoice for one ERP customer: invoice_id, erp_customer_id, invoice_date,
+  due_date, amount_usd, paid_date (NULL if unpaid) and reference (sales order id or
+  free-text description), sorted by invoice_date. Call with erp_customer_id ("C-nnnn"); get
+  it from get_erp_customer_for_account.
+parameters:
+  - name: erp_customer_id
+    type: string
+    description: ERP customer id in the form C-nnnn.
+statement: |
+  SELECT invoice_id, erp_customer_id, invoice_date, due_date, amount_usd, paid_date, reference
+  FROM erp_invoices
+  WHERE erp_customer_id = ?
+  ORDER BY invoice_date, invoice_id
+---
+kind: toolset
+name: declared
+tools:
+  - get_ticket
+  - get_ticket_events
+  - list_tickets_for_account
+  - get_crm_account
+  - get_erp_customer_for_account
+  - get_erp_customer
+  - find_crm_accounts_by_duns
+  - find_erp_customers_by_duns
+  - search_crm_accounts_by_name
+  - search_erp_customers_by_name
+  - get_service_credits_for_ticket
+  - list_service_credits_for_account
+  - list_maintenance_notices_for_account
+  - get_maintenance_notice
+  - list_employees
+  - get_employee_by_email
+  - get_account_owner_for_ticket
+  - get_product_by_sku
+  - list_products
+  - list_invoices_for_customer

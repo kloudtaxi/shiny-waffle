@@ -90,6 +90,8 @@ def gate(sql: str, tables: set[str]) -> tuple[str | None, str | None]:
     """(the SQL to run, None) or (None, why it was refused)."""
     try:
         parsed = [s for s in sqlglot.parse(sql, read="sqlite", error_level=ErrorLevel.RAISE) if s]
+        # a comment after the last semicolon parses as a comment-only Semicolon: not a statement
+        parsed = [s for s in parsed if not isinstance(s, exp.Semicolon)]
     except (ParseError, sqlglot.errors.TokenError) as e:
         return None, f"refused: the SQL could not be parsed ({str(e).splitlines()[0]})"
     if len(parsed) != 1:
