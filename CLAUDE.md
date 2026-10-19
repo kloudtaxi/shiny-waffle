@@ -151,6 +151,14 @@ filenames contain an em dash, so quote paths:
   with a pinned `ArtifactData` update that appends to its `log`, and never overwrite the user's
   status changes or decisions.
 
+## The lab's engineering knowledge (`knowledge/`)
+
+What the lab has learned by doing: retrospectives, recurring failure patterns, durable insights,
+agents' own habits, and playbooks. **Read `knowledge/README.md` and `knowledge/agent-habits.md`
+before planning a run, and the matching playbook before running it.** After a period of work or a
+costly incident, write a retrospective and distil it into the other files. Nothing in it may tune
+or shape a foundation under test.
+
 ## Local-only context (gitignored)
 
 `_owm-local/` holds local notes on running Utopia (the knowledge foundation under test, a
