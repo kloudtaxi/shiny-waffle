@@ -170,3 +170,15 @@ No infra errors and no answer ran out of turns. G matches the exam's graph-only 
   - G: 25 tool calls, $0.80.
   - GD: 33 calls, 11 of them declared tools, $0.99.
   - GS: 42 calls, 7 of them `run_sql`, $1.32.
+
+## Teardown (2026-10-19)
+
+Garbanzo, at the lab's request after the results were committed:
+- revoked the read-only lab-reader grant in each store, matching each to its token file by sha256
+  first;
+- deleted `_owm-local/b20-reader.token` and `b20-reader-4.token`;
+- stopped :8200 and :8201;
+- kept both stores (`data/g51-02e9cc9`, `data/g51-attack-02e9cc9`). B-20 is still at 02e9cc9,
+  clean.
+
+Checked from the lab: no `b20-reader*` file remains in `_owm-local/`, and neither port answers.
