@@ -180,3 +180,37 @@ runs the DataIQ 100 list, which data leaders (the buyers) will know.
 - Historical documents keep the old names behind a pointer, as the EIQ era did.
 
 I haven't edited owm-edd.
+
+## Part 3: ContextForge (the user's note on G-51)
+
+The user noted that ContextForge "may cover some if not all the gaps". It's the other half of
+GatewayIX (IBM/mcp-context-forge). Read 2026-10-19, nothing installed:
+
+| | |
+|---|---|
+| **What** | An MCP gateway and registry that federates MCP, REST, gRPC and A2A, with virtual servers, RBAC with teams, a plugin framework and an admin UI |
+| **State** | Apache-2.0, Python. v1.0.11 on 2026-09-28, about every two weeks. About 4.7k stars and 708 open issues. IBM, with one named core author. A 2.0 with "streamlined authentication and access control" is on the roadmap. One filter-bypass CVE (CVE-2026-11918, nested payloads slipped past the regex and deny filters, fixed in 1.0.5). arm64 isn't supported in production |
+
+**Against the list of what's left to scope:**
+
+| Left to scope | ContextForge | So |
+|---|---|---|
+| 1. Generating SQL from questions | No | Still ours (Vanna, post-beta) |
+| 2. History and as-of reads | No | Still per-source work in each declared tool |
+| 3. SaaS reach | **Partly.** A plain REST API becomes an MCP tool without writing a server: a URL with path parameters, query and header mappings, a timeout and a host allow-list. OAuth to the upstream, pagination and body templating aren't documented for these tools | It covers simple declared reads ("get incident INC-123"). Salesforce SOQL, NetSuite SuiteQL and auth flows still need thin adapters, or a warehouse replica read through Toolbox |
+| 4. Governing the declared tools | **Partly.** JSON export and import with dry-run, so tool definitions can live in Git; RBAC, teams, visibility. **No tool versions and no approval workflow** | The register stays the governance (versions, approvals, admission). ContextForge import is the deployment step |
+| 5. Evidence in the record | **A hook, not a record.** The audit trail is off by default, isn't tamper-evident, and doesn't log tool arguments or results. A `tool_post_invoke` plugin sees both | Write the decision's evidence (tool, version, bound parameters, rows or their hash, as-of) from that hook into the OWM's own append-only store |
+| 6. Identity across systems | No | The Knowledge Foundation and the OWM |
+| Timeouts, limits | **Yes, at the gateway:** Watchdog (maximum runtime), Rate Limiter, Circuit Breaker, Schema Guard, REST `timeout_ms` | Closes the gap Toolbox left. Keep database-side timeouts too |
+| Scoping a call to the mandate | **Identity propagation** (`X-Forwarded-User-*` or `_meta`, HMAC-signed, off by default). But **no "argument must equal a token claim" check** | Toolbox does that for SQL tools; for REST tools it's a custom plugin |
+| Gating generated SQL | **SQL Sanitizer plugin:** a keyword guard (DROP, DELETE without WHERE…), not a parser | Not a substitute for sqlglot's AST gate. The CVE shows pattern filters get bypassed |
+
+**So: some, not all.** ContextForge closes timeouts and limits, gives simple SaaS reads and a
+deployment path for tool definitions, and offers the hook where evidence capture belongs. It
+doesn't touch generation, history or identity. Tool governance and the evidence record remain ours.
+Its maturity argues for pinning versions and keeping it behind the GatewayIX boundary, as the canon
+already does.
+
+**Canon note:** the slim OWM Gateway carve-out keeps GatewayIX's tool catalog out of *standalone*
+OWM. REST-tool virtualization belongs to the BlueLeaf platform's GatewayIX, which is where these
+reads run anyway.
