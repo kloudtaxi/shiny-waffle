@@ -496,3 +496,9 @@ Checked against later runs, docs, memory and the Ledger export. Only items still
 - The reader's silent repair from titles: G-37 tested it on 10-08 and found no dependence on title
   priors.
 - Governance on the scale KBs: on again since 09-29 16:14 UTC.
+
+## Follow-up (2026-10-18, appended)
+
+- **The OpenAI project id in history at 9dc9ca9:** the user ruled to leave it. It's an identifier,
+  not a credential, and a rewrite would break every existing clone. It's recorded as a known,
+  accepted item; the current tree is clean.

@@ -453,3 +453,11 @@ Each was checked against later docs, runs, memory and the Ledger on 10-18.
 
 **Resolved since:** the commit scan has gated the commit since 10-11 (incident 4). Decisions come
 as options with a recommendation since 10-06 (incident 6).
+
+## Follow-up (2026-10-18, appended)
+
+- **`uv run ruff check` on main:** the user ruled to exclude `runs/` from lint, since runs are
+  recorded results kept as they ran (pyproject `extend-exclude`). Lint passes on main.
+  `ruff format --check` still flags two plan documents in `docs/superpowers/plans/`, in Python
+  blocks inside markdown.
+- **Set G (G-31 P1, G-33):** the user ruled to run it on its own, without waiting for the MCP build.
