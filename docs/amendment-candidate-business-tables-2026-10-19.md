@@ -1,7 +1,7 @@
 # Amendment candidate: business tables in registered terms, behind a rules port
 
 **2026-10-19. A candidate for the BlueLeaf canon (owm-edd), not an applied amendment.**
-- **Source:** G-52, recorded as a decided direction with the build deferred.
+- **Source:** G-52, decided and closed by the user.
 - **Evidence:** the ZEN spike, `runs/2026-10-19-zen-rules-spike/` (dfe4b61), and the user's own
   read-through.
 - **Analysis:** `docs/rules-engine-zen-evaluation-2026-10-19.md`.
@@ -10,7 +10,7 @@
 |---|---|
 | **Canon axes** | Component architecture (the register's term schema, a new port) and the substrate register (ZEN, as an adapter) |
 | **Rules it** | MM |
-| **Status** | Direction decided on the user's delegation (2026-10-19: "I'm not prescribing, if it's a distraction then drop it"). **The build is deferred** until the register moves into the product, or an approver-facing view is built, whichever comes first |
+| **Status** | **Decided by the user on G-52** (2026-10-20): for registered business tables; our format with ZEN behind a port; G-52 closed. **Recommended timing:** defer the build until the register moves into the product, or an approver-facing view is built, whichever comes first |
 
 ## The problem
 
