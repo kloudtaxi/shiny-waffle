@@ -22,7 +22,10 @@ limit as subtype `success` ([Success-shaped failure](../patterns.md#success-shap
 - **Halting:** after the first infra error, start nothing new, and let the driver stop too. The
   lab's `part2-arm.sh` greps for `INFRA ERROR` after each pass.
 - **A resumed pass keeps its first `setup.json`,** and writes `setup-resume-<n>.json` beside it.
-- **The spend guard sums every answer in the run folder,** refused attempts included.
+- **The spend guard sums every answer in the run folder,** refused attempts included, but only once,
+  when its process starts. After that it adds its own answers. **With k processes in parallel,** give
+  each `--cap-usd` = spent + (budget − spent) / k, and compute the true folder total between phases
+  (R6: three arms printed $11–16 each while the folder held $42.20).
 - **Monitors match every terminal state:** done, halted, skipped, failed, crashed, and the spend
   guard. Silence isn't success.
 
@@ -62,3 +65,10 @@ limit as subtype `success` ([Success-shaped failure](../patterns.md#success-shap
   ambient context too: who it works for, and today's date.
 - For a judge: show no arm name, give a fixed prompt, take three runs and the majority (a
   three-way split counts as partial), and keep every run's answer.
+- **Blind authors and judges never run as subagents.** A subagent inherits CLAUDE.md and the memory
+  index. Run them as `claude -p` in an empty temp directory holding only their brief and copies of
+  their allowed inputs, with file tools only, and probe that nothing else loaded (R6; the three-arm
+  test's `run_authors.py`).
+- **For a judge that must not know the arms,** build a coded packet: shuffle the answers under
+  random codes, mask tool names that reveal an arm, and write the mapping read-only beside it,
+  unopened until the verdicts are in (R6, `attack/judging/`).

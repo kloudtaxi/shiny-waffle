@@ -93,8 +93,11 @@ itself. R1–R5 are the retrospectives listed in [patterns.md](patterns.md).
   - a run note called an answer a reasoning slip from its decision block, while its prose was right
     (R1).
 - **Why it's tempting:** status fields exist to be read, and reading content is more code.
+  - "blind subagent" was a label in a brief, not a property of the runtime. The subagents had the
+    CLAUDE.md files and the memory index loaded (R6).
 - **Countermeasure:** classify by content (cost, turns, text, a decision present). Treat answers that
-  are too fast, cost $0 or are identical as alarms.
+  are too fast, cost $0 or are identical as alarms. For a property such as blindness, probe for it:
+  ask the agent what context it was given.
 
 ### Watching for the failures we expect
 - **How it showed up:** the first watch flagged running out of turns as an API error, and missed the

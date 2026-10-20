@@ -10,7 +10,7 @@ cheaply. Each one says:
 Its evidence is in the retrospectives. When you meet a pattern again, add the evidence; don't start
 a new entry. A pattern that stops recurring stays here, marked as quiet.
 
-**Retrospectives cited** (R1–R5):
+**Retrospectives cited** (R1–R6):
 
 | | Period | File |
 |---|---|---|
@@ -19,6 +19,7 @@ a new entry. A pattern that stops recurring stays here, marked as quiet.
 | R3 | 10-06 → 10-10, the punch list, identity, cost and the bake-off | [2026-10-10-punch-list-identity-cost-and-bake-off.md](retrospectives/2026-10-10-punch-list-identity-cost-and-bake-off.md) |
 | R4 | 10-11 → 10-16, the OWM service, luna, proof rounds and the bench | [2026-10-16-owm-service-luna-proof-rounds-and-bench.md](retrospectives/2026-10-16-owm-service-luna-proof-rounds-and-bench.md) |
 | R5 | 10-17 → 10-18, B-20's Northstar exam | [2026-10-18-b20-northstar-exam.md](retrospectives/2026-10-18-b20-northstar-exam.md) |
+| R6 | 10-19, structured data, a rules engine and the three-arm test | [2026-10-19-structured-data-rules-and-the-three-arm-test.md](retrospectives/2026-10-19-structured-data-rules-and-the-three-arm-test.md) |
 
 ## The families
 
@@ -156,7 +157,9 @@ plus two classifier readings.
 ### Settled by the wrong signal
 
 **Signature:** "settled", "idle" or "no errors" is judged by one surface (documents ready, zero
-failed jobs) while background work is still queued, failing, or logging provider errors.
+failed jobs) while background work is still queued, failing, or logging provider errors. A variant:
+a state read once, at start, is taken for the state now. One example is a spend guard that reads the
+folder's total when its process starts, then counts only its own answers.
 
 **Root cause:** the cheapest visible signal is taken for the state. A count taken mid-failure reads
 as steady.
@@ -172,6 +175,8 @@ as steady.
   a spend limit, went into a pushed commit message.
 - R4, bench finding 1 (a hypothesis for the luna runs): governance's second layer failing while
   failed jobs read 0.
+- R6, incident 2: three parallel arms each printed their own running total ($11.60, $14.29, $16.31).
+  The folder's real spend was $42.20. Each process now gets an equal share of the remaining budget.
 
 ---
 
@@ -260,9 +265,15 @@ files, not the runtime, and transcripts don't show the injected context unless t
 **Counter:**
 - before a counted round, ask the agent directly who it works for and what today's date is;
 - run under an empty config directory with the agent's own token;
-- hold anything you can't remove equal across arms, and record it as a known limit.
+- hold anything you can't remove equal across arms, and record it as a known limit;
+- **a subagent is never blind.** It inherits the session's CLAUDE.md files and memory index.
+  Anything that must be blind (an author, a judge, a reader) runs as `claude -p` under the
+  blindness checklist, with a probe first.
 
 **Evidence:**
+- R6, incident 1: two "blind" author subagents had the repo's CLAUDE.md, the global CLAUDE.md and the
+  memory index (which summarises run results) in context. Author A reported it. Both re-ran as
+  isolated `claude -p` sessions.
 - R4, incident 4: B-15's counted round was confounded by the signed-in account (fixed in 081d8e5).
   The real date tripled the cost of B-19's rehearsal.
 - R1: an early probe showed the repo's name in the reader's working directory, so readers now run in
@@ -454,6 +465,9 @@ A variant: a structure built for code, served to an agent without the context th
 - R2, incidents 3 and 5: a set-aside schedule read as "out of scope"; a forged instrument passed
   where coverage wasn't stated; a rule stored as a bare `true` dropped who takes over.
 - R3: a thesis review said "no customer"; design partners exist.
+- R6, incident 3: G-51's platform decisions were framed as open, because the lab and Utopia were read
+  and the canon wasn't. The canon already gave structured data to DataIQ. Read the canon before
+  framing a platform decision.
 
 ---
 

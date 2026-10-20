@@ -48,8 +48,9 @@ flowchart LR
 | [R3](retrospectives/2026-10-10-punch-list-identity-cost-and-bake-off.md) | 10-06 → 10-10 | The board's punch list, G-36 found, identity hybrid, cost per decision, register attacks, title priors, the foundation bake-off |
 | [R4](retrospectives/2026-10-16-owm-service-luna-proof-rounds-and-bench.md) | 10-11 → 10-16 | The B-06 OWM service, the luna baselines, B-15 proof rounds, B-19 finish mode, and the foundation bench |
 | [R5](retrospectives/2026-10-18-b20-northstar-exam.md) | 10-17 → 10-18 | B-20's one-shot Northstar exam |
+| [R6](retrospectives/2026-10-19-structured-data-rules-and-the-three-arm-test.md) | 10-19 | Structured data by query (G-51), a rules engine (G-52), the names (G-53), the ZEN spike and the three-arm test |
 
-**Across all five, five shapes did the most damage:**
+**Across R1–R5, five shapes did the most damage** (R6 added evidence to *Ambient context*, *Settled by the wrong signal* and *Silence read as a fact*):
 - *The unguarded instrument:* the lab guarded the systems it tested, not its own inputs.
 - *The visible set is a training set.*
 - *The advisory gate:* checks that printed instead of gated.
