@@ -16,7 +16,15 @@ def cite_preflight(
     run: Path, *, questions_sha256: str | None, model: str, flags: str, est_usd: float
 ) -> dict[str, Any]:
     """The latest pass, fail or accepted record, compared with what this run is about to use."""
-    found = latest_record(run, frozenset({"pass", "fail", "accepted"}))
+    try:
+        found = latest_record(run, frozenset({"pass", "fail", "accepted"}))
+    except Exception:  # a damaged record must never block a paid run
+        return {
+            "record": None,
+            "status": "unreadable",
+            "estimate_usd": est_usd,
+            "warnings": ["the latest pre-flight record could not be read"],
+        }
     if found is None:
         return {
             "record": None,
@@ -25,13 +33,21 @@ def cite_preflight(
             "warnings": ["no pre-flight record in preflight/"],
         }
     path, record = found
+    fingerprint = [c for c in record.checks if c.name == "fingerprint"]
     values: dict[str, Any] = {}
-    for check in record.checks:
-        if check.name == "fingerprint":
-            values = {v.field: v.value for v in check.values}
+    for check in fingerprint:
+        values = {v.field: v.value for v in check.values}
     warnings: list[str] = []
     if record.status == "fail":
         warnings.append("the latest pre-flight record failed")
+    if not fingerprint:
+        warnings.append("the pre-flight record has no fingerprint")
+        return {
+            "record": str(path.relative_to(run)),
+            "status": record.status,
+            "estimate_usd": est_usd,
+            "warnings": warnings,
+        }
     if _fingerprint(values, "inputs.questions_sha256") != questions_sha256:
         warnings.append("the pre-flight checked another questions file")
     if _fingerprint(values, "reader.model") != model:

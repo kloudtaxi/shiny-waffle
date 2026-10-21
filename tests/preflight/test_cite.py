@@ -84,3 +84,24 @@ def test_a_failed_or_mismatched_record_warns(run_dir: Path) -> None:
     write_record(run_dir, record_with(status="pass", q="q", model="m", flags="x"), AT + 2 * MIN)
     w = cite_preflight(run_dir, questions_sha256="q", model="m", flags="f", est_usd=1.0)["warnings"]
     assert w == ["the pre-flight checked other flags"]
+
+
+def test_an_unreadable_record_warns_and_does_not_raise(run_dir: Path) -> None:
+    folder = run_dir / "preflight"
+    folder.mkdir()
+    (folder / "2026-10-21T09-14-02Z.json").write_text("{garbage")
+    c = cite_preflight(run_dir, questions_sha256="q", model="m", flags="f", est_usd=1.0)
+    assert c == {
+        "record": None,
+        "status": "unreadable",
+        "estimate_usd": 1.0,
+        "warnings": ["the latest pre-flight record could not be read"],
+    }
+
+
+def test_a_record_without_a_fingerprint_gets_one_warning(run_dir: Path) -> None:
+    rec = record_with(status="pass", q="q", model="m", flags="f")
+    rec = rec.model_copy(update={"checks": []})
+    write_record(run_dir, rec, AT)
+    c = cite_preflight(run_dir, questions_sha256="q", model="m", flags="f", est_usd=1.0)
+    assert c["warnings"] == ["the pre-flight record has no fingerprint"]
