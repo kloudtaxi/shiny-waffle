@@ -96,7 +96,11 @@ def test_the_b20_exam_questions_pass(repo: Path) -> None:
     r = check_inputs(observe_inputs(cfg, run, repo), cfg)
     assert r.status == "pass", r.problems
     supplied = next(v for v in r.values if v.field == "inputs.supplied").value
-    assert isinstance(supplied, list) and supplied and all("(request_id)" in s for s in supplied)
+    assert (
+        isinstance(supplied, list)
+        and supplied
+        and all(isinstance(s, str) and "(request_id)" in s for s in supplied)
+    )
 
 
 def test_the_g51_questions_pass_with_nothing_supplied(repo: Path) -> None:
