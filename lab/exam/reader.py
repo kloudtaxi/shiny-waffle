@@ -24,9 +24,10 @@ ruling. After any infra error, the run starts no new question. Running out of tu
 The account's own session or usage limit never counts toward the two: it says nothing about the
 question, the reader or the foundation (the user's ruling, 2026-10-18).
 
-**The spend guard:** every answer's `total_cost_usd` is summed across the whole exam folder (the
-pilot, probes aside, included), finished answers too. No new question starts once the sum
-reaches `--cap-usd`.
+**The spend guard** is `lab/preflight/spend.py`'s, shared by every process on the run folder: each
+answer's `total_cost_usd` is summed across the whole exam folder (the pilot, probes aside,
+included), plus a reservation of `--est-usd` for every answer still running, in any process. A
+question whose reservation would pass `--cap-usd` is skipped.
 """
 
 from __future__ import annotations
@@ -51,6 +52,8 @@ sys.path[:0] = [str(LAB / "lab"), str(LAB / "lab" / "utopia")]
 from blind_reader import DEFAULT_MODEL, SYSTEM_PROMPT  # noqa: E402
 
 from contract_reader.tools import TEXT_TOOLS, TOOLS  # noqa: E402
+from preflight.cite import cite_preflight  # noqa: E402
+from preflight.spend import CapReached, Guard, recorded_usd  # noqa: E402
 
 SERVER_NAME = "foundation"
 SERVER = LAB / "lab" / "contract_reader" / "server.py"
@@ -62,11 +65,18 @@ PROCEDURES = {
 HIDDEN = {"C1": [], "C2": list(TEXT_TOOLS)}
 ALL_TOOLS = [t["name"] for t in TOOLS]
 MAX_TURNS = 40
+# the exam's recorded per-answer cost (R6; knowledge/insights.md)
+EST_USD = 1.58
+FLAGS = (
+    "--tools '' --strict-mcp-config --setting-sources project "
+    f"--no-session-persistence --max-turns {MAX_TURNS}; cwd = fresh temp dir outside the repo"
+)
 PROBE_PROMPT = (
     "Before using any tool: (1) list the names of every tool available to you; "
     "(2) say whether you were given any instruction files, memory, or project "
     "context besides this message and your system prompt, and if so quote their "
-    "first lines. Then call find_entities once with q 'Northstar' and report "
+    "first lines; (3) say who you work for, and today's date, if you know them. "
+    "Then call find_entities once with q 'Northstar' and report "
     "how many entities came back. Nothing else."
 )
 
@@ -194,15 +204,6 @@ def infra_attempts(out: Path, qid: str) -> list[Path]:
     )
 
 
-def cost_so_far(run: Path) -> float:
-    total = 0.0
-    for p in run.rglob("*.jsonl"):
-        if p.name.endswith(".calls.jsonl"):
-            continue
-        total += float(result_of(p.read_text()).get("total_cost_usd") or 0)
-    return total
-
-
 def summarize(q: dict[str, str], arm: str, variant: str, kb: str, stream: str) -> str:
     evs = events(stream)
     init = next((e for e in evs if e.get("type") == "system" and e.get("subtype") == "init"), {})
@@ -244,14 +245,34 @@ def summarize(q: dict[str, str], arm: str, variant: str, kb: str, stream: str) -
     )
 
 
+def expected_tools(variant: str) -> list[str] | None:
+    """The tool names the reader's context must hold for this variant."""
+    return sorted(f"mcp__{SERVER_NAME}__{t}" for t in ALL_TOOLS if t not in HIDDEN[variant])
+
+
+def expected_servers() -> list[str]:
+    return [SERVER_NAME]
+
+
+def write_probe_out(stream: str, meta: dict[str, Any]) -> None:
+    """Hand the probe's raw stream and metadata to pre-flight, when it asked for them."""
+    target = os.environ.get("PREFLIGHT_PROBE_OUT")
+    if not target:
+        return
+    out = Path(target)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "probe.jsonl").write_text(stream)
+    (out / "probe.json").write_text(json.dumps(meta, indent=1) + "\n")
+
+
 def check_probe(stream: str, variant: str) -> list[str]:
     """What's wrong with a probe, if anything: the pre-registered checks."""
     evs = events(stream)
     init = next((e for e in evs if e.get("type") == "system" and e.get("subtype") == "init"), {})
     tools = sorted(init.get("tools") or [])
-    want = sorted(f"mcp__{SERVER_NAME}__{t}" for t in ALL_TOOLS if t not in HIDDEN[variant])
+    want = expected_tools(variant)
     problems = []
-    if tools != want:
+    if want is not None and tools != want:
         problems.append(f"tools in context {tools} != {want}")
     servers = init.get("mcp_servers") or []
     if not any(s.get("name") == SERVER_NAME and s.get("status") == "connected" for s in servers):
@@ -282,6 +303,7 @@ def main() -> None:
     rp.add_argument("--only", default="", help="comma-separated question ids")
     rp.add_argument("--workers", type=int, default=4)
     rp.add_argument("--cap-usd", type=float, required=True)
+    rp.add_argument("--est-usd", type=float, default=EST_USD, help="reserved for each answer")
     rp.add_argument("--out", default="part2", help="folder under the run, e.g. pilot")
     a = ap.parse_args()
 
@@ -295,6 +317,18 @@ def main() -> None:
         sysprompt, _ = system_prompt("discount")
         stream = ask(PROBE_PROMPT, sysprompt, server_env(cfg, kb, log), a.variant, a.model)
         problems = check_probe(stream, a.variant)
+        write_probe_out(
+            stream,
+            {
+                "runner": "exam-reader",
+                "model": a.model,
+                "flags": FLAGS,
+                "expected_tools": expected_tools(a.variant),
+                "expected_servers": expected_servers(),
+                "system_prompt_sha256": hashlib.sha256(sysprompt.encode()).hexdigest(),
+                "problems": problems,
+            },
+        )
         res = result_of(stream)
         print(json.dumps({"arm": a.arm, "variant": a.variant, "problems": problems,
                           "cost_usd": res.get("total_cost_usd"),
@@ -305,6 +339,12 @@ def main() -> None:
     todo = [q for q in qs if not only or q["id"] in only]
     out = run / a.out / a.arm / a.variant / f"r{a.rep}"
     out.mkdir(parents=True, exist_ok=True)
+    questions_sha = hashlib.sha256((run / "questions.tsv").read_bytes()).hexdigest()
+    cited = cite_preflight(
+        run, questions_sha256=questions_sha, model=a.model, flags=FLAGS, est_usd=a.est_usd
+    )
+    for w in cited["warnings"]:
+        print(f"WARNING: pre-flight: {w}", flush=True)
     setup = {
         "arm": a.arm,
         "foundation": cfg,
@@ -314,12 +354,12 @@ def main() -> None:
         "model": a.model,
         "system_prompt": SYSTEM_PROMPT,
         "procedures": {k: system_prompt(k)[1] for k in PROCEDURES},
-        "questions_sha256": hashlib.sha256((run / "questions.tsv").read_bytes()).hexdigest(),
+        "questions_sha256": questions_sha,
         "lab_commit": git_head(),
-        "flags": "--tools '' --strict-mcp-config --setting-sources project "
-        f"--no-session-persistence --max-turns {MAX_TURNS}; cwd = fresh temp dir outside the repo",
+        "flags": FLAGS,
         "cap_usd": a.cap_usd,
         "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "preflight": cited,
     }
     name = "setup.json"
     if (out / name).exists():  # a resume keeps the first setup and adds its own
@@ -327,7 +367,7 @@ def main() -> None:
     (out / name).write_text(json.dumps(setup, indent=1, ensure_ascii=False) + "\n")
 
     lock = threading.Lock()
-    spent = [cost_so_far(run)]
+    guard = Guard(run, a.cap_usd, a.est_usd, f"exam-reader {a.arm}/{a.variant}/r{a.rep}")
     halted = [False]
 
     def one(q: dict[str, str]) -> None:
@@ -343,43 +383,44 @@ def main() -> None:
             if halted[0]:
                 print(f"{q['id']} skipped: an infra error halted this run", flush=True)
                 return
-            if spent[0] >= a.cap_usd:
-                print(f"{q['id']} skipped: the spend guard is at ${spent[0]:.2f}", flush=True)
-                return
-        kb = cfg["kbs"][q["corpus"]]
-        sysprompt, _ = system_prompt(q["process"])
-        log = out / f"{q['id']}.calls.jsonl"
-        t0 = time.time()
         try:
-            stream = ask(q["question"], sysprompt, server_env(cfg, kb, log), a.variant, a.model)
-        except Exception as exc:  # recorded; the run goes on
-            (out / f"{q['id']}.error.txt").write_text(str(exc)[:4000])
-            print(f"{q['id']} FAILED: {str(exc)[:200]}", flush=True)
+            reservation = guard.reserve(q["id"])
+        except CapReached as exc:
+            print(f"{q['id']} skipped: {exc}", flush=True)
             return
-        res = result_of(stream)
-        c = float(res.get("total_cost_usd") or 0)
-        if infra(res):
-            k = len(earlier) + 1
-            (out / f"{q['id']}.infra-error-{k}.jsonl").write_text(stream)
-            if log.exists():
-                log.rename(out / f"{q['id']}.infra-error-{k}.calls.jsonl")
-            with lock:
-                spent[0] += c
-                halted[0] = True
-            print(f"{q['id']} INFRA ERROR {k}: {str(res.get('result'))[:120]}", flush=True)
-            return
-        path.write_text(stream)
-        (out / f"{q['id']}.md").write_text(summarize(q, a.arm, a.variant, kb, stream))
-        with lock:
-            spent[0] += c
-        print(
-            f"{q['id']} done in {time.time() - t0:.0f}s, ${c:.3f} (total ${spent[0]:.2f})",
-            flush=True,
-        )
+        with reservation:  # released after the cost is on disk
+            kb = cfg["kbs"][q["corpus"]]
+            sysprompt, _ = system_prompt(q["process"])
+            log = out / f"{q['id']}.calls.jsonl"
+            t0 = time.time()
+            try:
+                stream = ask(q["question"], sysprompt, server_env(cfg, kb, log), a.variant, a.model)
+            except Exception as exc:  # recorded; the run goes on
+                (out / f"{q['id']}.error.txt").write_text(str(exc)[:4000])
+                print(f"{q['id']} FAILED: {str(exc)[:200]}", flush=True)
+                return
+            res = result_of(stream)
+            c = float(res.get("total_cost_usd") or 0)
+            if infra(res):
+                k = len(earlier) + 1
+                (out / f"{q['id']}.infra-error-{k}.jsonl").write_text(stream)
+                if log.exists():
+                    log.rename(out / f"{q['id']}.infra-error-{k}.calls.jsonl")
+                with lock:
+                    halted[0] = True
+                print(f"{q['id']} INFRA ERROR {k}: {str(res.get('result'))[:120]}", flush=True)
+                return
+            path.write_text(stream)
+            (out / f"{q['id']}.md").write_text(summarize(q, a.arm, a.variant, kb, stream))
+            print(
+                f"{q['id']} done in {time.time() - t0:.0f}s, ${c:.3f} "
+                f"(total ${recorded_usd(run):.2f})",
+                flush=True,
+            )
 
     with cf.ThreadPoolExecutor(max_workers=a.workers) as pool:
         list(pool.map(one, todo))
-    print(f"spent so far across the exam: ${spent[0]:.2f} (cap ${a.cap_usd:.0f})")
+    print(f"spent so far across the exam: ${recorded_usd(run):.2f} (cap ${a.cap_usd:.0f})")
 
 
 if __name__ == "__main__":

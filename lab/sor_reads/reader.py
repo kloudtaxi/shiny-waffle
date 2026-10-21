@@ -165,7 +165,12 @@ def main() -> None:
         raise SystemExit(f"usage: reader.py --tools-arm {{{','.join(ARMS)}}} probe|run …")
     STATE["arm"] = argv[1]
     exam.mcp_config_original = exam.mcp_config
+    exam_expected = exam.expected_tools
     exam.mcp_config, exam.ask, exam.check_probe = mcp_config, ask, check_probe
+    # P1: the graph-only arm's tools are the exam's; the others' come from tools.yaml, so the
+    # runner's own check_probe stays binding and pre-flight only records them.
+    exam.expected_tools = lambda v: exam_expected(v) if STATE["arm"] == "G" else None
+    exam.expected_servers = lambda: [exam.SERVER_NAME] + ([] if STATE["arm"] == "G" else ["sor"])
     fp = fingerprint()
     rest = argv[2:]
     if rest and rest[0] == "run":

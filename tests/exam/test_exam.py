@@ -266,3 +266,57 @@ def test_the_scorer_skips_infra_attempts(tmp_path: Path) -> None:
             raise AssertionError(f"graded {sid}")
 
     assert score(tmp_path / "part2", Never()) == []  # type: ignore[arg-type]
+
+
+def test_the_probe_writes_its_stream_and_metadata_for_preflight(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.setenv("PREFLIGHT_PROBE_OUT", str(tmp_path))
+    reader.write_probe_out("{}\n", {"runner": "exam-reader"})
+    assert (tmp_path / "probe.jsonl").read_text() == "{}\n"
+    assert json.loads((tmp_path / "probe.json").read_text())["runner"] == "exam-reader"
+
+
+def test_the_probe_writes_nothing_without_the_variable(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.delenv("PREFLIGHT_PROBE_OUT", raising=False)
+    monkeypatch.chdir(tmp_path)
+    reader.write_probe_out("{}\n", {})
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_the_probe_prompt_asks_who_and_when() -> None:
+    assert "(3) say who you work for, and today's date, if you know them." in reader.PROBE_PROMPT
+
+
+def test_a_refused_reservation_skips_the_question(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    folder = tmp_path / "runs" / "r"
+    folder.mkdir(parents=True)
+    (folder / "questions.tsv").write_text(
+        "id\tcorpus\tprocess\tquestion\nS01\tbase\tdiscount\tq1\nS02\tbase\tdiscount\tq2\n"
+    )
+    arm = {"mode": "bearer", "url": "http://x", "token_file": "nope.token", "kbs": {"base": "k"}}
+    (folder / "arms.json").write_text(json.dumps({"arms": {"a": arm}}))
+    (folder / "S00.jsonl").write_text(json.dumps({"type": "result", "total_cost_usd": 10.0}) + "\n")
+    calls: list[str] = []
+
+    def fail_ask(*args: Any, **kwargs: Any) -> str:
+        calls.append("ask")
+        raise AssertionError("ask was called")
+
+    monkeypatch.setattr(reader, "ask", fail_ask)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reader", "run", "--run", str(folder), "--arm", "a", "--variant", "C1", "--rep", "1",
+         "--cap-usd", "5"],
+    )  # fmt: skip
+    reader.main()
+    out = capsys.readouterr().out
+    assert "skipped: spend guard: $10.00 recorded" in out and calls == []
+    assert out.count("skipped: spend guard") == 2
+    setup = json.loads((folder / "part2/a/C1/r1/setup.json").read_text())
+    assert setup["preflight"]["status"] == "missing"
+    assert setup["flags"] == reader.FLAGS
