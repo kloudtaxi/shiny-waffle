@@ -44,7 +44,19 @@ from typing import Any
 
 import utopia
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from preflight.cite import cite_preflight, write_probe_out  # noqa: E402
+from preflight.spend import CapReached, Guard  # noqa: E402
+
 DEFAULT_MODEL = "claude-opus-5-5"
+# mean answer cost of 20 answers in runs/2026-10-13-utopia-aad5b06+c4da9cc-luna-scale-large/arm-b
+# ($0.3034), rounded up
+EST_USD = 0.31
+FLAGS = (
+    "--tools '' --strict-mcp-config --setting-sources project "
+    "--no-session-persistence --max-turns 40; cwd = fresh temp dir outside the repo"
+)
 SERVER = "utopia"
 STANDIN = "owm"
 STANDIN_SERVER = Path(__file__).resolve().parents[1] / "owm_standin" / "server.py"
@@ -62,7 +74,8 @@ PROBE_PROMPT = (
     "Before using any tool: (1) list the names of every tool available to you; "
     "(2) say whether you were given any instruction files, memory, or project "
     "context besides this message and your system prompt, and if so quote their "
-    "first lines. Then call find_entities once with name 'Northstar' and report "
+    "first lines; (3) say who you work for, and today's date, if you know them. "
+    "Then call find_entities once with name 'Northstar' and report "
     "how many entities came back. Nothing else."
 )
 
@@ -285,6 +298,8 @@ def main() -> None:
     sub.choices["probe"].add_argument("--variant", choices=sorted(HIDDEN), default="B1")
     run_p = sub.choices["run"]
     run_p.add_argument("--out", type=Path, required=True, help="e.g. runs/<run>/arm-b")
+    run_p.add_argument("--cap-usd", type=float, required=True)
+    run_p.add_argument("--est-usd", type=float, default=EST_USD, help="reserved for each answer")
     run_p.add_argument(
         "--procedure",
         type=Path,
@@ -320,6 +335,19 @@ def main() -> None:
                 5,
                 standin=standin,
             )
+            write_probe_out(
+                out,
+                {
+                    "runner": "blind-reader",
+                    "model": a.model,
+                    "flags": FLAGS,
+                    "expected_tools": [f"mcp__{SERVER}__{t}" for t in allowed[a.variant]]
+                    + [f"mcp__{STANDIN}__{t}" for t in (standin or {}).get("tools", [])],
+                    "expected_servers": [SERVER] + ([STANDIN] if standin else []),
+                    "system_prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
+                    "problems": [],
+                },
+            )
             print(summarize("probe", a.variant, kbs[0], "(probe)", out, allowed[a.variant]))
             return
 
@@ -353,6 +381,13 @@ def main() -> None:
                 ),
                 "call_log": standin["log"],
             }
+        questions_sha = hashlib.sha256((run / "questions.tsv").read_bytes()).hexdigest()
+        cited = cite_preflight(
+            run, questions_sha256=questions_sha, model=a.model, flags=FLAGS, est_usd=a.est_usd
+        )
+        for w in cited["warnings"]:
+            print(f"WARNING: pre-flight: {w}", flush=True)
+        guard = Guard(run, a.cap_usd, a.est_usd, f"blind-reader {','.join(a.variants)}")
         setup = {
             "model": a.model,
             "system_prompt": system_prompt,
@@ -362,8 +397,8 @@ def main() -> None:
             "variants": {v: allowed[v] for v in a.variants},
             "hidden_via_disallowedTools": {v: HIDDEN[v] for v in a.variants},
             "tools_list": mcp_tools(token, kbs[0]),
-            "flags": "--tools '' --strict-mcp-config --setting-sources project "
-            "--no-session-persistence --max-turns 40; cwd = fresh temp dir outside the repo",
+            "flags": FLAGS,
+            "preflight": cited,
             "token": f"{token_name}: read scope, kb_ids = {kbs}, 2-day expiry, revoked after run",
             "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         }
@@ -376,26 +411,32 @@ def main() -> None:
             for sid, kb, question in qs:
                 if (vdir / f"{sid}.jsonl").exists():
                     continue  # already run; never re-ask a finished question
-                t0 = time.time()
                 try:
-                    stream = reader(
-                        token,
-                        kb,
-                        question,
-                        allowed[variant],
-                        HIDDEN[variant],
-                        a.model,
-                        system_prompt=system_prompt,
-                        standin=standin,
-                    )
-                except Exception as exc:  # keep going; record the failure
-                    (vdir / f"{sid}.error.txt").write_text(str(exc))
-                    print(f"{variant} {sid} FAILED: {str(exc)[:200]}", flush=True)
+                    reservation = guard.reserve(f"{variant}/{sid}")
+                except CapReached as exc:
+                    print(f"{variant} {sid} skipped: {exc}", flush=True)
                     continue
-                (vdir / f"{sid}.jsonl").write_text(stream)
-                summary = summarize(sid, variant, kb, question, stream, allowed[variant])
-                (vdir / f"{sid}.md").write_text(summary)
-                print(f"{variant} {sid} done in {time.time() - t0:.0f}s", flush=True)
+                with reservation:  # released after the cost is on disk
+                    t0 = time.time()
+                    try:
+                        stream = reader(
+                            token,
+                            kb,
+                            question,
+                            allowed[variant],
+                            HIDDEN[variant],
+                            a.model,
+                            system_prompt=system_prompt,
+                            standin=standin,
+                        )
+                    except Exception as exc:  # keep going; record the failure
+                        (vdir / f"{sid}.error.txt").write_text(str(exc))
+                        print(f"{variant} {sid} FAILED: {str(exc)[:200]}", flush=True)
+                        continue
+                    (vdir / f"{sid}.jsonl").write_text(stream)
+                    summary = summarize(sid, variant, kb, question, stream, allowed[variant])
+                    (vdir / f"{sid}.md").write_text(summary)
+                    print(f"{variant} {sid} done in {time.time() - t0:.0f}s", flush=True)
 
         with cf.ThreadPoolExecutor(max_workers=len(a.variants)) as pool:
             list(pool.map(one_variant, a.variants))

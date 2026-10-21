@@ -39,8 +39,12 @@ LAB = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(LAB / "lab"), str(LAB / "src")]
 
 from exam.part1 import items  # noqa: E402
+from preflight.spend import CapReached, Guard, Reservation, run_folder_of  # noqa: E402
 
 MODEL = "claude-sonnet-5-5"
+# the exam's judge runs: mean cost of 1026 runs in runs/2026-10-17-b20-northstar-exam/part1 was
+# $0.01225, rounded up
+EST_USD = 0.02
 MAX_FACTS_PER_ENTITY = 60
 MAX_LINES = 400
 VERDICTS = ("stated", "partly", "not_stated")
@@ -193,6 +197,8 @@ def main() -> None:
     ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--cap-usd", type=float, required=True)
+    ap.add_argument("--est-usd", type=float, default=EST_USD, help="reserved for each call")
     a = ap.parse_args()
     snap = json.loads(a.snapshot.read_text())
     rs = readings(snap)
@@ -210,18 +216,35 @@ def main() -> None:
             answers[i] = [x for x in r["runs"] if not hollow(x)]
     jobs = [(i, r) for i in range(len(rs)) for r in range(a.runs - len(answers[i]))]
 
-    def go(job: tuple[int, int]) -> tuple[int, dict[str, Any]]:
-        i, _ = job
-        return i, ask(rs[i]["statement"], rs[i]["facts"])
+    guard = Guard(run_folder_of(a.snapshot.resolve()), a.cap_usd, a.est_usd,
+                  f"judge {a.snapshot.name}")  # fmt: skip
+    held: list[Reservation] = []
 
-    with cf.ThreadPoolExecutor(a.workers) as pool:
-        for i, ans in pool.map(go, jobs):
-            answers[i].append(ans)
-    for i, r in enumerate(rs):
-        r["runs"] = answers[i]
-        r["verdict"] = majority([x["verdict"] for x in answers[i]])
-    out.write_text(json.dumps({"model": MODEL, "prompt": PROMPT, "readings": rs}, indent=1,
-                              ensure_ascii=False) + "\n")  # fmt: skip
+    def go(job: tuple[int, int]) -> tuple[int, dict[str, Any]] | None:
+        i, _ = job
+        try:
+            reservation = guard.reserve(f"{i}")
+        except CapReached as exc:
+            print(f"reading {i} skipped: {exc}", flush=True)
+            return None
+        held.append(reservation)  # stays live, at its settled cost, until the file is written
+        ans = ask(rs[i]["statement"], rs[i]["facts"])
+        reservation.settle(float(ans.get("cost_usd") or 0))
+        return i, ans
+
+    try:
+        with cf.ThreadPoolExecutor(a.workers) as pool:
+            for res in pool.map(go, jobs):
+                if res is not None:
+                    answers[res[0]].append(res[1])
+        for i, r in enumerate(rs):
+            r["runs"] = answers[i]
+            r["verdict"] = majority([x["verdict"] for x in answers[i]])
+        out.write_text(json.dumps({"model": MODEL, "prompt": PROMPT, "readings": rs}, indent=1,
+                                  ensure_ascii=False) + "\n")  # fmt: skip
+    finally:
+        for reservation in held:
+            reservation.release()
     cost = sum(float(x.get("cost_usd") or 0) for v in answers.values() for x in v)
     left = sum(hollow(x) for v in answers.values() for x in v)
     if left:

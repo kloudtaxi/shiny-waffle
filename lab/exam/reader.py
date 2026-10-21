@@ -53,6 +53,7 @@ from blind_reader import DEFAULT_MODEL, SYSTEM_PROMPT  # noqa: E402
 
 from contract_reader.tools import TEXT_TOOLS, TOOLS  # noqa: E402
 from preflight.cite import cite_preflight  # noqa: E402
+from preflight.cite import write_probe_out as write_probe_out  # noqa: E402
 from preflight.spend import CapReached, Guard, recorded_usd  # noqa: E402
 
 SERVER_NAME = "foundation"
@@ -252,17 +253,6 @@ def expected_tools(variant: str) -> list[str] | None:
 
 def expected_servers() -> list[str]:
     return [SERVER_NAME]
-
-
-def write_probe_out(stream: str, meta: dict[str, Any]) -> None:
-    """Hand the probe's raw stream and metadata to pre-flight, when it asked for them."""
-    target = os.environ.get("PREFLIGHT_PROBE_OUT")
-    if not target:
-        return
-    out = Path(target)
-    out.mkdir(parents=True, exist_ok=True)
-    (out / "probe.jsonl").write_text(stream)
-    (out / "probe.json").write_text(json.dumps(meta, indent=1) + "\n")
 
 
 def check_probe(stream: str, variant: str) -> list[str]:

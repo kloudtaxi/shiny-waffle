@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -60,3 +62,14 @@ def cite_preflight(
         "estimate_usd": est_usd,
         "warnings": warnings,
     }
+
+
+def write_probe_out(stream: str, meta: dict[str, Any]) -> None:
+    """Hand the probe's raw stream and metadata to pre-flight, when it asked for them."""
+    target = os.environ.get("PREFLIGHT_PROBE_OUT")
+    if not target:
+        return
+    out = Path(target)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "probe.jsonl").write_text(stream)
+    (out / "probe.json").write_text(json.dumps(meta, indent=1) + "\n")
