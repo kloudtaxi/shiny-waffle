@@ -230,3 +230,6 @@ tracker/seed/
 
 # Proof-rounds harness state
 .owm-rounds/
+
+# Pre-flight spend ledgers (G-50)
+runs/**/.spend/

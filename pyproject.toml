@@ -51,7 +51,7 @@ known-first-party = ["northstar", "owm_service", "rounds"]
 [tool.mypy]
 python_version = "3.11"
 strict = true
-files = ["src", "tests", "lab/owm_service", "lab/rounds", "lab/contract_reader", "lab/exam"]
+files = ["src", "tests", "lab/owm_service", "lab/rounds", "lab/contract_reader", "lab/exam", "lab/preflight"]
 mypy_path = ["src", "lab"]
 plugins = ["pydantic.mypy"]
 
