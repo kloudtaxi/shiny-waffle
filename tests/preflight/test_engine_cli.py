@@ -23,6 +23,7 @@ from preflight.record import (
     LabRef,
     Record,
     latest_record,
+    record_name,
     write_record,
 )
 from preflight.spend import live_reservations
@@ -191,6 +192,23 @@ def test_one_evaluation_can_fail_then_be_accepted(run_dir: Path, repo: Path) -> 
     amendments = [n for n in notes if n.startswith("- **Amendment (pre-flight drift,")]
     assert amendments == [acc.amendment]
     assert acc.amendment.endswith(f"Record: preflight/{accepted.path.name}.")
+
+
+def test_finish_writes_at_the_time_it_is_given(run_dir: Path, repo: Path) -> None:  # T12-a
+    write_config(run_dir, LOCAL_CFG)
+    cfg = load_config(run_dir, repo)
+    run_preflight(run_dir, repo, cfg, deps=fake_deps())
+    deps = fake_deps("2.1.304", t0=AT + timedelta(minutes=5))
+    ev = evaluate(run_dir, repo, cfg, deps, lambda e: None)
+    at = AT + timedelta(hours=2, seconds=7)
+    out = finish(run_dir, repo, ev, "CLI auto-updated overnight", deps, at=at)
+    assert out.path.name == record_name(at) == "2026-10-21T11-14-07Z.json"
+    assert out.record.accepted is not None
+    line = out.record.accepted.amendment
+    assert line.startswith("- **Amendment (pre-flight drift, 2026-10-21 11:14 UTC):** ")
+    assert line.endswith("Record: preflight/2026-10-21T11-14-07Z.json.")
+    taken = finish(run_dir, repo, ev, None, deps, at=at)  # the name is taken: one second later
+    assert taken.path.name == "2026-10-21T11-14-08Z.json"
 
 
 def test_a_reason_with_nothing_drifted_writes_no_amendment(

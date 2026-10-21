@@ -406,13 +406,25 @@ def _status(ev: Evaluation, reason: str) -> tuple[Literal["pass", "fail", "accep
     return "accepted", None
 
 
-def finish(run: Path, repo: Path, ev: Evaluation, accept_reason: str | None, deps: Deps) -> Outcome:
-    """Write the evaluation's record once; on accepted drift, append the amendment to notes.md."""
+def finish(
+    run: Path,
+    repo: Path,
+    ev: Evaluation,
+    accept_reason: str | None,
+    deps: Deps,
+    *,
+    at: datetime | None = None,
+) -> Outcome:
+    """Write the evaluation's record once; on accepted drift, append the amendment to notes.md.
+
+    `at` names the record and stamps the amendment (default: now), so a front end can preview
+    the exact line it will write (T12-a). A taken name moves on a second at a time.
+    """
     reason = " ".join((accept_reason or "").split())  # T2-a: an amendment stays one line
     status, note = _status(ev, reason)
     has_fp = any(c.name == "fingerprint" for c in ev.checks)
     groups = compared_groups(ev.baseline) if has_fp else frozenset()
-    at = deps.now()
+    at = deps.now() if at is None else at
     for k in range(RETRIES + 1):
         when = at + timedelta(seconds=k)
         accepted: Accepted | None = None

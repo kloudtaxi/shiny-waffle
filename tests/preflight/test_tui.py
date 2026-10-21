@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from textual.pilot import Pilot
 from textual.widgets import Button, DataTable, Input, Static
 
 from preflight import cli
@@ -295,6 +296,123 @@ def test_an_engine_error_is_one_line_not_a_traceback(
             assert len(said.messages) == 1 and said.messages[0].startswith("ValidationError: ")
 
     asyncio.run(go())
+
+
+# --- fix round 1 (T12-a, T12-b, T12-d) ---------------------------------------------------------
+
+QUITTING = "quitting once the probe finishes…"
+
+
+def status_of(app: PreflightApp) -> str:
+    return text_of(app.main_screen.query_one("#status", Static))
+
+
+async def accept(app: PreflightApp, pilot: Pilot[None], reason: str) -> str:
+    """Open the dialog, type `reason` and confirm; return the line the dialog previewed."""
+    await pilot.press("a")
+    assert isinstance(app.screen, AcceptDriftScreen)
+    app.screen.query_one(Input).value = reason
+    await pilot.pause()
+    previewed = text_of(app.screen.query_one("#preview", Static))
+    await pilot.click("#confirm")
+    await app.workers.wait_for_complete()
+    await pilot.pause()
+    return previewed
+
+
+def test_the_previewed_line_is_the_line_written(run_dir: Path, repo: Path) -> None:  # T12-a
+    async def go() -> None:
+        app = app_with_drift(run_dir, repo)  # its clock moves a second on every read
+        async with app.run_test() as pilot:
+            await app.workers.wait_for_complete()
+            await pilot.pause()
+            previewed = await accept(app, pilot, REASON)
+            assert app.outcome is not None and app.outcome.record.accepted is not None
+            assert previewed == app.outcome.record.accepted.amendment
+        assert (run_dir / "notes.md").read_text().splitlines()[-1] == previewed
+
+    asyncio.run(go())
+
+
+def test_the_preview_skips_a_record_name_already_taken(run_dir: Path, repo: Path) -> None:
+    async def go() -> None:  # T12-a: the fail record and the dialog fall in the same second
+        app = app_with_drift(run_dir, repo)
+        app.deps.now = lambda: LATER
+        async with app.run_test() as pilot:
+            await app.workers.wait_for_complete()
+            await pilot.pause()
+            assert app.outcome is not None
+            assert app.outcome.path.name == "2026-10-21T09-19-00Z.json"
+            previewed = await accept(app, pilot, REASON)
+            assert previewed.endswith("Record: preflight/2026-10-21T09-19-01Z.json.")
+            assert app.outcome.record.accepted is not None
+            assert previewed == app.outcome.record.accepted.amendment
+
+    asyncio.run(go())
+
+
+def test_q_while_the_probe_runs_quits_once_it_finishes(
+    run_dir: Path, repo: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:  # T12-b
+    async def go() -> None:
+        gate = threading.Event()
+        app = app_with_slow_probe(run_dir, repo, gate)
+        said = Said()
+        monkeypatch.setattr(app, "notify", said)
+        async with app.run_test() as pilot:
+            await pilot.press("q")
+            await pilot.press("q")  # repeats the notice
+            assert app.is_running and app.return_code is None
+            assert status_of(app) == QUITTING and said.messages == [QUITTING, QUITTING]
+            gate.set()
+            await app.workers.wait_for_complete()
+            for _ in range(300):
+                if not app.is_running:
+                    break
+                await asyncio.sleep(0.01)
+            assert not app.is_running and app.return_code == 0  # it left on its own
+        assert len(records(run_dir)) == 1  # and the evaluation's record was still written
+
+    asyncio.run(go())
+
+
+def test_ctrl_q_while_the_probe_runs_leaves_now_and_says_why_it_waits(
+    run_dir: Path, repo: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    async def go() -> None:
+        gate = threading.Event()
+        app = app_with_slow_probe(run_dir, repo, gate)
+        async with app.run_test() as pilot:
+            await pilot.press("ctrl+q")
+            assert app.return_code is not None
+        gate.set()  # after the app has closed and cancelled its worker
+
+    asyncio.run(go())
+    assert "the probe is still running" in capsys.readouterr().err
+    assert records(run_dir) == []  # a cancelled evaluation writes nothing
+
+
+def test_an_acceptance_marks_the_accepted_rows(run_dir: Path, repo: Path) -> None:  # T12-d
+    async def go() -> None:
+        app = app_with_drift(run_dir, repo)
+        async with app.run_test() as pilot:
+            await app.workers.wait_for_complete()
+            await pilot.pause()
+            await accept(app, pilot, REASON)
+            table = app.screen.query_one("#fingerprint", DataTable)
+            rows = [table.get_row_at(i) for i in range(table.row_count)]
+            marks = {str(r[1]): str(r[0]) for r in rows}
+            assert marks["claude --version"] == "✔" and "✖" not in marks.values()
+            checks = app.screen.query_one("#checks", DataTable)
+            assert str(checks.get_cell("fingerprint", "mark")) == "✔"
+            assert str(checks.get_cell("fingerprint", "summary")).endswith(f"accepted: {REASON}")
+
+    asyncio.run(go())
+
+
+def test_the_app_does_not_import_the_cli(repo: Path) -> None:  # T12-d
+    for p in (repo / "lab/preflight/tui").glob("*.py"):
+        assert "preflight.cli" not in p.read_text(), p
 
 
 # --- the CLI's app paths -----------------------------------------------------------------------

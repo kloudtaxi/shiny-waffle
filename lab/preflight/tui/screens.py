@@ -5,7 +5,6 @@ Screens only show what the engine produced; the app owns the workers and every e
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 from typing import ClassVar
@@ -19,10 +18,11 @@ from textual.screen import ModalScreen, Screen
 from textual.widgets import Button, DataTable, Footer, Input, Static
 
 from preflight.baseline import baseline_values
-from preflight.cli import LABEL, MARK
 from preflight.config import CheckName
 from preflight.engine import Evaluation, Event, describe_exc, repo_relative
+from preflight.labels import LABEL, MARK
 from preflight.record import (
+    Accepted,
     CheckResult,
     Value,
     amendment_line,
@@ -34,6 +34,8 @@ from preflight.spend import spend_view
 
 RUNNING = "◌"
 STYLE = {"✔": "bold green", "✖": "bold red", RUNNING: "yellow", "·": "dim"}
+ACCEPTED = "✔"  # accepted drift: a pass mark, in the warning colour
+ACCEPTED_STYLE = "bold yellow"
 SHORT = 18  # longer values are cut in the main table; `enter` shows them whole
 SHORT_SOURCE = 30
 SPEND_SECONDS = 3
@@ -46,8 +48,8 @@ FINGERPRINT_COLUMNS = (
 )
 
 
-def _mark(mark: str) -> Text:
-    return Text(mark, style=STYLE.get(mark, ""))
+def _mark(mark: str, style: str | None = None) -> Text:
+    return Text(mark, style=STYLE.get(mark, "") if style is None else style)
 
 
 def _cut(text: str, width: int | None) -> Text:
@@ -125,8 +127,10 @@ class MainScreen(Screen[None]):
         self.query_one("#baseline", Static).update("baseline: …")  # an acceptance moves it
         self.set_status("running…")
 
-    def _set_row(self, checks: CheckTable, name: str, mark: str, text: str) -> None:
-        checks.update_cell(name, "mark", _mark(mark))
+    def _set_row(
+        self, checks: CheckTable, name: str, mark: str, text: str, style: str | None = None
+    ) -> None:
+        checks.update_cell(name, "mark", _mark(mark, style))
         checks.update_cell(name, "summary", Text(text), update_width=True)
 
     def show_event(self, e: Event) -> None:
@@ -165,6 +169,19 @@ class MainScreen(Screen[None]):
                 _cut(v.source, SHORT_SOURCE),
                 key=v.field,
             )
+
+    def show_accepted(self, accepted: Accepted) -> None:
+        """The accepted record's fields stop reading as drift: marked accepted, with the reason."""
+        accept = _mark(ACCEPTED, ACCEPTED_STYLE)
+        table = self.query_one("#fingerprint", DataTable)
+        for field in accepted.fields:
+            if field in table.rows:
+                table.update_cell(field, "mark", accept)
+        fp = self.results.get("fingerprint")
+        if fp is not None:
+            checks = self.query_one("#checks", CheckTable)
+            text = f"{fp.summary} · accepted: {accepted.reason}"
+            self._set_row(checks, "fingerprint", ACCEPTED, text, ACCEPTED_STYLE)
 
     def on_data_table_row_selected(self, event: DataTable.RowSelected) -> None:
         name = event.row_key.value if event.data_table.id == "checks" else "fingerprint"
@@ -213,10 +230,11 @@ class AcceptDriftScreen(ModalScreen[str | None]):
 
     BINDINGS: ClassVar[list[BindingType]] = [Binding("escape", "cancel", "cancel")]
 
-    def __init__(self, drift: list[Value], now: Callable[[], datetime]) -> None:
+    def __init__(self, drift: list[Value], at: datetime) -> None:
+        """`at` is fixed when the dialog opens and is the time `finish` writes at (T12-a)."""
         super().__init__()
         self.drift = drift
-        self.now = now
+        self.at = at
 
     def compose(self) -> ComposeResult:
         with Vertical(id="dialog"):
@@ -231,9 +249,8 @@ class AcceptDriftScreen(ModalScreen[str | None]):
                 yield Button("Cancel", id="cancel")
 
     def _preview(self, reason: str) -> str:
-        at = self.now()
         shown = " ".join(reason.split()) or "<reason>"  # as finish() will write it
-        return amendment_line(at, self.drift, shown, f"preflight/{record_name(at)}")
+        return amendment_line(self.at, self.drift, shown, f"preflight/{record_name(self.at)}")
 
     def on_input_changed(self, event: Input.Changed) -> None:
         self.query_one("#confirm", Button).disabled = not event.value.strip()

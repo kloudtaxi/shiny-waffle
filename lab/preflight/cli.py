@@ -14,16 +14,10 @@ from pathlib import Path
 
 from preflight.config import ConfigError, load_config
 from preflight.engine import Deps, describe_exc, repo_relative, run_preflight
+from preflight.labels import LABEL, MARK
 from preflight.record import CheckResult, drift_text
 from preflight.spend import spend_view
 
-MARK = {"pass": "✔", "fail": "✖", "n/a": "·"}
-LABEL = {
-    "inputs": "Inputs",
-    "fingerprint": "Fingerprint",
-    "settled": "Settled",
-    "agent_context": "Agent context",
-}
 NO_APP = "the app needs the tui dependency group: uv sync --group tui"
 
 

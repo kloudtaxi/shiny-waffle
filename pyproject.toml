@@ -24,14 +24,14 @@ owm-service = [
     "uvicorn>=0.54.0",
 ]
 tui = [
-    "pytest-textual-snapshot>=1.0.0",
     "textual>=8.2,<9",
     "textual-serve>=1.1,<2",
 ]
 
 [tool.uv]
-# The pre-flight app (lab/preflight/tui/, G-50) is tested in the gate, so `uv sync` installs it.
-default-groups = ["dev", "tui"]
+# The gate tests the pre-flight app (lab/preflight/tui/, G-50) and type-checks lab/owm_service,
+# so a plain `uv sync` installs both groups (T12-c).
+default-groups = ["dev", "tui", "owm-service"]
 
 [build-system]
 requires = ["hatchling"]

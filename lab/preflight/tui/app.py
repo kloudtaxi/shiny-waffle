@@ -7,6 +7,7 @@ by `finish`, the same code the plain `check` uses.
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import ClassVar
 
@@ -14,11 +15,12 @@ from textual import work
 from textual.app import App
 from textual.binding import Binding, BindingType
 from textual.reactive import reactive
-from textual.worker import get_current_worker
+from textual.worker import Worker, WorkerState, get_current_worker
 
 from preflight.config import RunConfig
 from preflight.engine import (
     ORDER,
+    RETRIES,
     Deps,
     Evaluation,
     Event,
@@ -28,11 +30,16 @@ from preflight.engine import (
     finish,
     repo_relative,
 )
-from preflight.record import Value
+from preflight.record import Value, record_name
 from preflight.tui.screens import AcceptDriftScreen, MainScreen, SpendScreen
 
 RUNNING = "◌ RUNNING"
 BLOCKED_IN_DIALOG = frozenset({"rerun", "accept_drift", "spend"})
+QUITTING = "quitting once the probe finishes…"
+HARD_QUIT = (
+    "pre-flight: the probe is still running; this terminal returns when it ends, "
+    "and this evaluation writes no record"
+)
 
 
 def banner(status: str, drift: list[Value]) -> str:
@@ -53,7 +60,7 @@ class PreflightApp(App[None]):
         Binding("r", "rerun", "re-run"),
         Binding("a", "accept_drift", "accept drift…"),
         Binding("s", "spend", "spend"),
-        Binding("q", "quit", "quit"),
+        Binding("q", "quit_when_done", "quit"),
     ]
 
     banner_text: reactive[str] = reactive(RUNNING)
@@ -68,6 +75,8 @@ class PreflightApp(App[None]):
         self.outcome: Outcome | None = None
         self.error: str | None = None
         self.running = False
+        self.quit_pending = False
+        self.accept_at: datetime | None = None
         self.main_screen = MainScreen(run, repo, [n for n in ORDER if n in cfg.checks])
 
     @property
@@ -89,6 +98,25 @@ class PreflightApp(App[None]):
     def check_action(self, action: str, parameters: tuple[object, ...]) -> bool | None:
         """The dialog has the keys while it is open."""
         return not (isinstance(self.screen, AcceptDriftScreen) and action in BLOCKED_IN_DIALOG)
+
+    # --- quitting (T12-b): a worker can't be interrupted, so `q` waits for it ------------------
+
+    def action_quit_when_done(self) -> None:
+        if not self.running:
+            self.exit(return_code=self.exit_code)
+            return
+        self.quit_pending = True
+        self.main_screen.set_status(QUITTING)
+        self.notify(QUITTING)
+
+    async def action_quit(self) -> None:
+        """ctrl+q: leave now. A running probe still holds the process until it ends."""
+        self.exit(return_code=self.exit_code, message=HARD_QUIT if self.running else None)
+
+    def on_worker_state_changed(self, event: Worker.StateChanged) -> None:
+        """Leave once the worker `q` waited for has finished (its record is written by then)."""
+        if self.quit_pending and event.state in (WorkerState.SUCCESS, WorkerState.ERROR):
+            self.exit(return_code=self.exit_code)
 
     # --- evaluating ----------------------------------------------------------------------------
 
@@ -152,20 +180,31 @@ class PreflightApp(App[None]):
         if self.outcome is not None and self.outcome.record.status == "accepted":
             self.notify("drift already accepted")
             return
-        self.push_screen(AcceptDriftScreen(ev.drift, self.deps.now), self._accept)
+        self.accept_at = self._free_at(self.deps.now())
+        self.push_screen(AcceptDriftScreen(ev.drift, self.accept_at), self._accept)
+
+    def _free_at(self, at: datetime) -> datetime:
+        """`at`, or the next second whose record name is free: finish's own retry, done first,
+        so the dialog's preview is the line written even just after the fail record."""
+        folder = self.run_dir / "preflight"
+        for _ in range(RETRIES):
+            if not (folder / record_name(at)).exists():
+                break
+            at += timedelta(seconds=1)
+        return at
 
     def _accept(self, reason: str | None) -> None:
-        if reason is None or self.evaluation is None:
+        if reason is None or self.evaluation is None or self.accept_at is None:
             return
         self.running = True
         self.main_screen.set_status("writing the accepted record…")
-        self._finish_accepted(self.evaluation, reason)
+        self._finish_accepted(self.evaluation, reason, self.accept_at)
 
     @work(thread=True, exclusive=True)
-    def _finish_accepted(self, ev: Evaluation, reason: str) -> None:
+    def _finish_accepted(self, ev: Evaluation, reason: str, at: datetime) -> None:
         worker = get_current_worker()
         try:
-            out = finish(self.run_dir, self.repo, ev, reason, self.deps)
+            out = finish(self.run_dir, self.repo, ev, reason, self.deps, at=at)
         except Exception as exc:
             if not worker.is_cancelled:
                 self.call_from_thread(self._failed, describe_exc(exc))
@@ -177,8 +216,9 @@ class PreflightApp(App[None]):
         self.running = False
         self.outcome = out
         status = f"record: {repo_relative(out.path, self.repo)}"
-        if out.record.status == "accepted":
+        if out.record.accepted is not None:
             status += " · amendment appended to notes.md"
+            self.main_screen.show_accepted(out.record.accepted)
         elif out.note:
             status = out.note
             self.notify(out.note, severity="warning")
