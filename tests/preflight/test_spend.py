@@ -53,6 +53,7 @@ def test_five_processes_and_room_for_three(tmp_path: Path) -> None:
     assert got == [False, False, True, True, True]  # 40 + 3 x 1.58 = 44.74; a fourth: 46.32
     for p in procs:
         p.join(timeout=30)
+        assert p.exitcode == 0
     assert live_reservations(run) == []
 
 
@@ -118,7 +119,7 @@ def test_threads_share_one_cap(tmp_path: Path) -> None:
         t.start()
     tried.wait(10)
     for t in ts:
-        t.join()
+        t.join(timeout=10)
     assert len(granted) == 10
 
 
@@ -135,3 +136,36 @@ def test_run_folder_of(tmp_path: Path) -> None:
     assert run_folder_of(tmp_path / "runs" / "r" / "part1" / "x.json") == tmp_path / "runs" / "r"
     with pytest.raises(ValueError):
         run_folder_of(tmp_path / "x.json")
+
+
+def test_release_during_the_reserve_scan_cannot_hide_spend(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from preflight import spend
+
+    run = tmp_path / "runs" / "r"
+    run.mkdir(parents=True)
+    (run / "S00.jsonl").write_text(stream(cost=8.50))
+    held = Guard(run, 10.0, 1.0, "other").reserve("S01")
+    real = spend.recorded_usd
+    blocked: list[bool] = []
+
+    def finish() -> None:
+        (run / "S01.jsonl").write_text(stream(cost=1.0))  # the answer lands...
+        held.release()  # ...then the reservation goes
+
+    def scan(r: Path) -> float:
+        total = real(r)  # read before the answer file exists
+        t = threading.Thread(target=finish)
+        t.start()
+        t.join(timeout=0.5)
+        blocked.append(t.is_alive())  # release must wait for the lock
+        scan.thread = t  # type: ignore[attr-defined]
+        return total
+
+    monkeypatch.setattr(spend, "recorded_usd", scan)
+    with pytest.raises(CapReached):
+        Guard(run, 10.0, 1.0, "t").reserve("S02")
+    scan.thread.join(timeout=10)  # type: ignore[attr-defined]
+    assert blocked == [True]
+    assert live_reservations(run) == []

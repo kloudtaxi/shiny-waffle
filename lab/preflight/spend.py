@@ -88,7 +88,10 @@ def recorded_usd(run: Path) -> float:
     for path in sorted(run.rglob("*.jsonl")):
         if path.name.endswith(".calls.jsonl") or spend_dir in path.parents:
             continue
-        total += result_cost(path.read_text(errors="replace"))
+        try:
+            total += result_cost(path.read_text(errors="replace"))
+        except OSError:
+            continue
     # Judge files (P3): per snapshot prefix, `.judge.json` else the newest infra-<k>.
     chosen: dict[tuple[Path, str], tuple[int, Path]] = {}
     for path in run.rglob("*.judge*.json"):
@@ -172,7 +175,10 @@ class Reservation:
                 _write_info(self._info)
 
     def release(self) -> None:
-        self._info.path.unlink(missing_ok=True)
+        # Under the lock, so a reserve never sees the answer file missing and the
+        # reservation gone (T4-c), and settle cannot resurrect a released file.
+        with _locked(self._run):
+            self._info.path.unlink(missing_ok=True)
 
     def __enter__(self) -> Self:
         return self
