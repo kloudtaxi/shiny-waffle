@@ -95,21 +95,34 @@ def check_settled(
         problems.append("counts moved during the window: " + "; ".join(moved))
 
     src = f"foundation {kind}"
+
+    def where(state: str) -> str:
+        return attest.path if state == "attested" and attest is not None else src
+
     values = [
         Value(field="settled.jobs", label="Jobs settled", group="foundation", value=jobs_val,
-              source=src, state=jobs_state),
+              source=where(jobs_state), state=jobs_state),
         Value(field="settled.documents", label="Documents settled", group="foundation",
-              value=docs_val, source=src, state=docs_state),
+              value=docs_val, source=where(docs_state), state=docs_state),
         Value(field="settled.log", label="Log clean", group="foundation", value=log_val,
-              source=src, state=log_state),
+              source=where(log_state), state=log_state),
         Value(field="settled.counts", label="Counts steady", group="foundation",
               value=not moved, source=src, state="read twice"),
     ]  # fmt: skip
+    if attest is not None:
+        values.append(
+            Value(
+                field="settled.attestation", label="Attestation", group="foundation",
+                value={"path": attest.path, "sha256": attest.sha256, "mtime": attest.mtime},
+                source=attest.path, state="attested",
+            )
+        )  # fmt: skip
 
     name = _LABEL.get(kind, kind)
     if problems:
+        plural = f"{len(problems)} problem{'s' if len(problems) != 1 else ''}"
         return CheckResult(
-            name="settled", status="fail", summary=f"{name} not settled: {len(problems)} problems",
+            name="settled", status="fail", summary=f"{name} not settled: {plural}",
             values=values, problems=problems,
         )  # fmt: skip
     secs = f"{window_seconds:g}"
@@ -132,6 +145,10 @@ def foundation_values(
     name = _LABEL.get(kind, kind)
     src = f"foundation {kind}"
     out: list[Value] = []
+    if snap.binary_sha256 is None and kind == "utopia":
+        out.append(Value(field="foundation.binary_sha256", label=f"{name} binary sha256",
+                         group="foundation", value=None, source=src,
+                         state="unread", compare="equal"))  # fmt: skip
     if snap.binary_sha256 is not None:
         out.append(Value(field="foundation.binary_sha256", label=f"{name} binary sha256",
                          group="foundation", value=snap.binary_sha256, source=src,
@@ -145,7 +162,12 @@ def foundation_values(
                          group="foundation", value=n, source=src, state="read",
                          compare="equal"))  # fmt: skip
     if kind == "b20":
-        ok = attest is not None and "commit" in attest.covers
+        ok = (
+            attest is not None
+            and attest.fresh
+            and "commit" in attest.covers
+            and attest.commit is not None
+        )
         out.append(Value(
             field="foundation.commit", label=f"{name} commit", group="foundation",
             value=attest.commit if ok and attest is not None else None,

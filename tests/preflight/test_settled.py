@@ -32,13 +32,15 @@ def snap(**kw: Any) -> FoundationSnapshot:
     return FoundationSnapshot(**base)
 
 
-def make_attest(tmp_path: Path, kind: str | None) -> Attestation | None:
+def make_attest(
+    tmp_path: Path, kind: str | None, line: str = "commit: 02e9cc9"
+) -> Attestation | None:
     if kind is None:
         return None
     run = tmp_path / "run"
     (run / "attest").mkdir(parents=True)
     f = run / "attest" / "b20-settled.md"
-    f.write_text("settled by hand\ncommit: 02e9cc9\n")
+    f.write_text(f"settled by hand\n{line}\n")
     age = timedelta(hours=3) if kind == "stale" else timedelta(minutes=5)
     ts = (NOW - age).timestamp()
     os.utime(f, (ts, ts))
@@ -128,3 +130,46 @@ def test_foundation_values(tmp_path: Path) -> None:
     assert b["foundation.commit"].state == "attested" and b["foundation.commit"].value == "02e9cc9"
     none = {v.field: v for v in foundation_values("b20", snap(), None)}
     assert none["foundation.commit"].state == "unread"
+
+
+@pytest.mark.parametrize(
+    "line",
+    ["commit: 02e9cc9", "commit: `02e9cc9`", "**commit:** 02e9cc9", "Commit: 02e9cc9",
+     "- commit: 02e9cc9", "commit: 02E9CC9"],
+)  # fmt: skip
+def test_commit_line_forms(tmp_path: Path, line: str) -> None:
+    a = make_attest(tmp_path, "fresh", line)
+    assert a is not None and a.commit == "02e9cc9"
+
+
+def test_commit_unread_without_line_or_when_stale(tmp_path: Path) -> None:
+    a = make_attest(tmp_path, "fresh", "no commit here")
+    assert a is not None and a.commit is None
+    v = {x.field: x for x in foundation_values("b20", snap(), a)}
+    assert v["foundation.commit"].state == "unread"
+    stale = make_attest(tmp_path / "s", "stale")
+    v = {x.field: x for x in foundation_values("b20", snap(), stale)}
+    assert v["foundation.commit"].state == "unread"
+
+
+def test_utopia_binary_hash_is_always_listed() -> None:
+    v = {x.field: x for x in foundation_values("utopia", snap(binary_sha256=None), None)}
+    assert v["foundation.binary_sha256"].state == "unread"
+    assert v["foundation.binary_sha256"].value is None
+
+
+def test_attestation_details_reach_the_record(tmp_path: Path) -> None:
+    b = snap(jobs_active=None, jobs_failed_since=None, documents_unfinished=None, log_errors=None)
+    a = make_attest(tmp_path, "fresh")
+    assert a is not None
+    r = check_settled("b20", b, b, a, 60)
+    v = {x.field: x for x in r.values}
+    assert v["settled.attestation"].value == {
+        "path": a.path, "sha256": a.sha256, "mtime": a.mtime,
+    }  # fmt: skip
+    assert v["settled.jobs"].source == a.path
+
+
+def test_fail_summary_counts_problems() -> None:
+    r = check_settled("utopia", snap(), snap(jobs_active=1), None, 60)
+    assert r.summary.endswith("1 problem")

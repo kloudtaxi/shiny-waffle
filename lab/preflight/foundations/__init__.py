@@ -45,11 +45,13 @@ def make_foundation(cfg: FoundationConfig, run: Path, repo: Path) -> Foundation:
     if cfg.kind == "b20":
         from contract_reader.client import bearer
 
-        assert cfg.arm is not None
+        if cfg.arm is None:
+            raise ValueError("a b20 foundation needs arm")
         arm = json.loads((run / "arms.json").read_text())["arms"][cfg.arm]
         contract = bearer(arm["url"], repo / arm["token_file"])
         return B20Foundation(contract, dict(arm["kbs"]))
-    assert cfg.kbs and cfg.db_container and cfg.binary and cfg.log
+    if not (cfg.kbs and cfg.db_container and cfg.binary and cfg.log):
+        raise ValueError("a utopia foundation needs kbs, db_container, binary and log")
     log = cfg.log
     if log.file is not None:
         log = LogSource(file=str(repo / log.file))

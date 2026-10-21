@@ -14,6 +14,7 @@ from preflight.config import LogSource
 from preflight.foundations import FoundationSnapshot
 
 SQL: dict[str, str] = {
+    "bases": "select id from knowledge_bases where id in ({kbs})",
     "settings": (
         "select workspace_id, chat_model, chat_reasoning_effort, embed_model from llm_settings "
         "where workspace_id in (select workspace_id from knowledge_bases where id in ({kbs}))"
@@ -57,9 +58,8 @@ class UtopiaFoundation:
         psql: Callable[[str], list[list[str]]] | None = None,
         logs: Callable[[datetime], str] | None = None,
     ) -> None:
-        for kb in kbs.values():
-            uuid.UUID(kb)  # raises ValueError: ids are interpolated into SQL
-        self.kbs = kbs
+        # raises ValueError for a non-UUID: ids are interpolated into SQL
+        self.kbs = {corpus: str(uuid.UUID(kb)) for corpus, kb in kbs.items()}
         self.container = container
         self.binary = binary
         self.log = log
@@ -72,15 +72,20 @@ class UtopiaFoundation:
             "docker", "exec", "-e", "PGOPTIONS=-c default_transaction_read_only=on",
             self.container, "psql", "-U", "utopia", "-d", "utopia", "-At", "-F", "\t", "-c", sql,
         ]  # fmt: skip
-        r = subprocess.run(cmd, capture_output=True, text=True)
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
         if r.returncode != 0:
-            raise RuntimeError("psql failed")
+            first = (r.stderr.splitlines() or [""])[0][:200]
+            raise RuntimeError(f"psql failed: {first}")
         return [line.split("\t") for line in r.stdout.splitlines() if line]
 
     def _default_logs(self, since: datetime) -> str:
+        """The log text since `since`; raises when the log cannot be read."""
         if self.log.docker is not None:
             cmd = ["docker", "logs", "--since", _iso(since), self.log.docker]
-            r = subprocess.run(cmd, capture_output=True, text=True)
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            if r.returncode != 0:
+                first = (r.stderr.splitlines() or [""])[0][:200]
+                raise RuntimeError(f"docker logs failed: {first}")
             return r.stdout + r.stderr
         assert self.log.file is not None
         out: list[str] = []
@@ -106,11 +111,25 @@ class UtopiaFoundation:
 
     def _count(self, name: str, since: datetime) -> int:
         rows = self._q(name, since)
-        return int(rows[0][0]) if rows and rows[0] else 0
+        if not rows or not rows[0]:
+            raise RuntimeError(f"psql returned no rows for {name}")
+        return int(rows[0][0])
+
+    def _read_log(self, since: datetime) -> list[str] | None:
+        """Matching log lines, or None when the log cannot be read."""
+        try:
+            text = self._logs(since)
+        except (RuntimeError, OSError, subprocess.SubprocessError):
+            return None
+        return [line[:200] for line in text.splitlines() if self.error_pattern.search(line)]
 
     def snapshot(self, since: datetime) -> FoundationSnapshot:
         since = since.astimezone(UTC)
         names = {kb: corpus for corpus, kb in self.kbs.items()}
+        found = {row[0] for row in self._q("bases", since)}
+        for corpus, kb in self.kbs.items():
+            if kb not in found:
+                raise ValueError(f"base {corpus} not found")
         counts: dict[str, int] = {}
         for kb, status, graph, n in self._q("documents", since):
             counts[f"{names[kb]}.documents.{status}/{graph}"] = int(n)
@@ -123,12 +142,11 @@ class UtopiaFoundation:
             settings[f"{ws}.chat_model"] = chat
             settings[f"{ws}.chat_reasoning_effort"] = effort
             settings[f"{ws}.embed_model"] = embed
-        errors = [
-            line[:200] for line in self._logs(since).splitlines() if self.error_pattern.search(line)
-        ]
-        digest = (
-            hashlib.sha256(self.binary.read_bytes()).hexdigest() if self.binary.exists() else None
-        )
+        errors = self._read_log(since)
+        digest: str | None = None
+        if self.binary.is_file():
+            with self.binary.open("rb") as fh:
+                digest = hashlib.file_digest(fh, "sha256").hexdigest()
         return FoundationSnapshot(
             at=datetime.now(UTC),
             counts=counts,

@@ -11,7 +11,7 @@ from pathlib import Path
 
 from preflight.config import Attest
 
-_COMMIT = re.compile(r"^commit:\s*([0-9a-f]{7,40})\s*$", re.M)
+_COMMIT = re.compile(r"^[\s>*_-]*commit[\s*_]*:[\s*_`]*([0-9a-f]{7,40})[\s*_`]*$", re.M | re.I)
 
 
 @dataclass(frozen=True)
@@ -22,7 +22,7 @@ class Attestation:
     covers: frozenset[str]
     commit: str | None
     fresh: bool
-    max_age_hours: float = 0.0
+    max_age_hours: float
 
 
 def read_attestation(cfg: Attest, run: Path, now: datetime) -> Attestation | None:
@@ -39,7 +39,7 @@ def read_attestation(cfg: Attest, run: Path, now: datetime) -> Attestation | Non
         sha256=hashlib.sha256(data).hexdigest(),
         mtime=mtime.strftime("%Y-%m-%dT%H:%M:%SZ"),
         covers=frozenset(cfg.covers),
-        commit=m.group(1) if m else None,
+        commit=m.group(1).lower() if m else None,
         fresh=age_hours <= cfg.max_age_hours,
         max_age_hours=cfg.max_age_hours,
     )
