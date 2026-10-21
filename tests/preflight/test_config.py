@@ -32,6 +32,12 @@ def test_a_good_config_loads(run_dir: Path, repo: Path) -> None:
     [
         (GOOD + "extra: 1\n", "extra"),  # unknown key
         (GOOD.replace("dataset/evidence", "dataset/answer-key"), "deny"),  # never-load path
+        (GOOD.replace("dataset/evidence", "truth"), "deny-listed"),
+        (GOOD.replace("dataset/evidence", "site"), "deny-listed"),
+        (GOOD.replace("dataset/evidence", "owm"), "deny-listed"),
+        (GOOD.replace("dataset/evidence", "dataset/evaluation"), "deny-listed"),
+        (GOOD.replace("dataset/evidence", "dataset"), "contains a deny-listed"),
+        (GOOD.replace("[dataset/evidence]", "['.']"), "contains a deny-listed"),
         (GOOD.replace("dataset/evidence", "dataset/evidence/MANIFEST.yaml"), "MANIFEST"),
         (GOOD.replace("dataset/evidence", "../elsewhere"), "outside"),
         (GOOD.replace("\\bCRM-\\d{4}\\b", "(unclosed"), "pattern"),

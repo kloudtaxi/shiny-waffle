@@ -140,8 +140,10 @@ def _check_evidence(cfg: RunConfig, repo: Path) -> None:
             if full.name == "MANIFEST.yaml":
                 raise ConfigError(f"evidence path {raw!r}: MANIFEST.yaml is never loaded")
             for d in DENIED:
-                if rel == Path(d) or rel.is_relative_to(d):
+                if rel.is_relative_to(d):
                     raise ConfigError(f"evidence path {raw!r} is deny-listed ({d})")
+                if Path(d).is_relative_to(rel):
+                    raise ConfigError(f"evidence path {raw!r} contains a deny-listed path ({d})")
 
 
 def load_config(run: Path, repo: Path) -> RunConfig:
