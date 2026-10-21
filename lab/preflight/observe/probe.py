@@ -32,14 +32,13 @@ class ProbeObservation:
     error: str | None
 
 
-def run_subprocess(cmd: list[str], env: dict[str, str], cwd: Path) -> int:
-    """Run `cmd` and return its exit code; a timeout counts as exit 124."""
-    try:
-        return subprocess.run(
-            cmd, env=env, cwd=cwd, capture_output=True, timeout=TIMEOUT_SECONDS, check=False
-        ).returncode
-    except subprocess.TimeoutExpired:
-        return 124
+def run_subprocess(
+    cmd: list[str], env: dict[str, str], cwd: Path, timeout: float = TIMEOUT_SECONDS
+) -> int:
+    """Run `cmd` and return its exit code. Raises OSError or subprocess.TimeoutExpired."""
+    return subprocess.run(
+        cmd, env=env, cwd=cwd, capture_output=True, timeout=timeout, check=False
+    ).returncode
 
 
 def stream_events(raw: str) -> list[dict[str, Any]]:
@@ -92,25 +91,48 @@ def run_probe(
     out = Path(tempfile.mkdtemp(prefix="preflight-probe-"))
     try:
         env = {**os.environ, "PREFLIGHT_PROBE_OUT": str(out)}
-        code = runner(cfg.probe, env, repo)
+        error: str | None = None
+        code = 0
+        try:
+            code = runner(cfg.probe, env, repo)
+        except subprocess.TimeoutExpired as exc:
+            error = f"probe timed out after {exc.timeout:g} s"
+        except OSError:
+            error = f"probe command not found: {cfg.probe[0] if cfg.probe else ''}"
         stream_file = out / "probe.jsonl"
         if not stream_file.is_file():
-            return ProbeObservation("", {}, None, None, f"the probe wrote no stream (exit {code})")
+            return ProbeObservation(
+                "", {}, None, None, error or f"the probe wrote no stream (exit {code})"
+            )
         raw = stream_file.read_text(encoding="utf-8")
-        meta_file = out / "probe.json"
-        meta: dict[str, Any] = json.loads(meta_file.read_text()) if meta_file.is_file() else {}
+        meta = _read_meta(out / "probe.json")
+        if error is None and meta is None:
+            error = "the runner wrote no usable probe.json"
         saved = _save(run / "preflight", started, redact(raw, markers))
-        return ProbeObservation(raw, meta, _cost(raw), saved, None)
+        return ProbeObservation(raw, meta or {}, _cost(raw), saved, error)
     finally:
         shutil.rmtree(out, ignore_errors=True)
 
 
+def _read_meta(path: Path) -> dict[str, Any] | None:
+    try:
+        meta = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return meta if isinstance(meta, dict) else None
+
+
 def _cli_version_output() -> str:
-    done = subprocess.run(["claude", "--version"], capture_output=True, text=True, check=False)
+    done = subprocess.run(
+        ["claude", "--version"], capture_output=True, text=True, check=True, timeout=30
+    )
     return done.stdout
 
 
-def claude_cli_version(read: Callable[[], str] = _cli_version_output) -> str:
-    """The first token of `claude --version`'s output."""
-    words = read().split()
-    return words[0] if words else ""
+def claude_cli_version(read: Callable[[], str] = _cli_version_output) -> str | None:
+    """The first token of `claude --version`'s output, or None if it can't be read."""
+    try:
+        words = read().split()
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return words[0] if words else None

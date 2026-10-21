@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import functools
 import json
+import os
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
@@ -12,7 +14,12 @@ import pytest
 
 from preflight.checks.agent_context import check_agent_context, reader_values
 from preflight.config import AgentContextConfig
-from preflight.observe.probe import ProbeObservation, claude_cli_version, run_probe
+from preflight.observe.probe import (
+    ProbeObservation,
+    claude_cli_version,
+    run_probe,
+    run_subprocess,
+)
 from tests.preflight.fakes import MARKERS as M
 from tests.preflight.fakes import stream
 
@@ -168,3 +175,122 @@ def test_run_probe_without_a_stream_is_an_error(run_dir: Path, repo: Path) -> No
 
 def test_claude_cli_version_parses_the_first_token() -> None:
     assert claude_cli_version(lambda: "2.1.299 (Claude Code)\n") == "2.1.299"
+
+
+def _cfg(*cmd: str) -> AgentContextConfig:
+    return AgentContextConfig(probe=list(cmd), est_usd=0.25, cap_usd=5)
+
+
+AT = datetime(2026, 10, 21, 9, 14, 2, tzinfo=UTC)
+GOOD_JSONL = stream(init=INIT, answer="ok", cost=0.0)
+
+
+@pytest.mark.parametrize("meta_text", [None, "{not json", "[]"])
+def test_an_unusable_probe_json_is_an_error(
+    run_dir: Path, repo: Path, meta_text: str | None
+) -> None:
+    def runner(cmd: list[str], env: dict[str, str], cwd: Path) -> int:
+        out = Path(env["PREFLIGHT_PROBE_OUT"])
+        (out / "probe.jsonl").write_text(GOOD_JSONL)
+        if meta_text is not None:
+            (out / "probe.json").write_text(meta_text)
+        return 0
+
+    o = run_probe(_cfg("x"), run_dir, repo, M, AT, runner=runner)
+    assert o.error == "the runner wrote no usable probe.json"
+    r = check_agent_context(o, repo, M)
+    assert r.status == "fail" and r.problems == ["the runner wrote no usable probe.json"]
+
+
+def test_a_missing_cwd_result_or_an_error_result_fails(repo: Path) -> None:
+    no_cwd = {k: v for k, v in INIT.items() if k != "cwd"}
+    assert "probe init event has no cwd" in check_agent_context(obs(init=no_cwd), repo, M).problems
+    assert (
+        "probe init event has no cwd"
+        in check_agent_context(obs(init={**INIT, "cwd": ""}), repo, M).problems
+    )
+    no_result = ProbeObservation(
+        stream(init=INIT).rsplit("\n", 2)[0] + "\n", META, None, None, None
+    )
+    assert "probe stream has no result event" in check_agent_context(no_result, repo, M).problems
+    errored = ProbeObservation(
+        stream(init=INIT).replace('"is_error": false', '"is_error": true'), META, None, None, None
+    )
+    assert "the probe ended on an error" in check_agent_context(errored, repo, M).problems
+
+
+def test_a_nonempty_permission_denials_list_fails(repo: Path) -> None:
+    raw = stream(init=INIT).replace(
+        '"is_error": false', '"is_error": false, "permission_denials": [{}]'
+    )
+    o = ProbeObservation(raw, META, None, None, None)
+    assert "a permission was denied" in check_agent_context(o, repo, M).problems
+
+
+def test_a_missing_command_is_an_error(run_dir: Path, repo: Path) -> None:
+    o = run_probe(_cfg("/nonexistent/zzz-probe", "secret-arg"), run_dir, repo, M, AT)
+    assert o.error == "probe command not found: /nonexistent/zzz-probe"
+    assert o.saved is None
+
+
+def test_a_timeout_is_an_error_even_with_a_partial_stream(run_dir: Path, repo: Path) -> None:
+    runner = functools.partial(run_subprocess, timeout=1)
+    o = run_probe(_cfg(sys.executable, str(FAKE), "--sleep", "30"), run_dir, repo, M, AT, runner)
+    assert o.error == "probe timed out after 1 s"
+
+
+def test_a_timeout_after_a_partial_stream_stays_an_error(run_dir: Path, repo: Path) -> None:
+    import subprocess
+
+    def runner(cmd: list[str], env: dict[str, str], cwd: Path) -> int:
+        out = Path(env["PREFLIGHT_PROBE_OUT"])
+        (out / "probe.jsonl").write_text(GOOD_JSONL)
+        (out / "probe.json").write_text(json.dumps(META))
+        raise subprocess.TimeoutExpired(cmd, 900)
+
+    o = run_probe(_cfg("x"), run_dir, repo, M, AT, runner=runner)
+    assert o.error == "probe timed out after 900 s" and o.saved is not None
+
+
+def test_meta_strings_are_redacted_in_values() -> None:
+    meta = {**META, "flags": "--add-dir /Users/ada/x", "expected_tools": ["t-/Users/ada"]}
+    vals = {x.field: x for x in reader_values(obs(meta=meta), "2.1.299", M)}
+    assert vals["reader.flags"].value == "--add-dir <marker:home>/x"
+    assert "/Users/ada" not in json.dumps([x.model_dump(mode="json") for x in vals.values()])
+
+
+def test_a_non_dict_server_item_does_not_crash(repo: Path) -> None:
+    o = obs(init={**INIT, "mcp_servers": ["foundation"]})
+    assert "MCP server foundation not connected" in check_agent_context(o, repo, M).problems
+
+
+def test_an_unreadable_auto_memory_dir_is_a_problem(
+    repo: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def boom(self: Path) -> Any:
+        raise PermissionError
+
+    monkeypatch.setattr(Path, "iterdir", boom)
+    o = obs(init={**INIT, "memory_paths": {"auto": str(tmp_path)}})
+    assert "auto memory directory can't be read" in check_agent_context(o, repo, M).problems
+
+
+def test_an_unreadable_cli_version_is_unread() -> None:
+    def fail() -> str:
+        raise FileNotFoundError
+
+    assert claude_cli_version(fail) is None
+    v = next(x for x in reader_values(obs(), None, M) if x.field == "reader.claude_cli_version")
+    assert v.state == "unread" and v.value is None
+
+
+def test_the_probe_temp_dir_is_outside_the_repo_and_removed(run_dir: Path, repo: Path) -> None:
+    seen: list[Path] = []
+
+    def runner(cmd: list[str], env: dict[str, str], cwd: Path) -> int:
+        seen.append(Path(env["PREFLIGHT_PROBE_OUT"]))
+        assert "PREFLIGHT_PROBE_OUT" not in os.environ
+        return 0
+
+    run_probe(_cfg("x"), run_dir, repo, M, AT, runner=runner)
+    assert not seen[0].resolve().is_relative_to(repo.resolve()) and not seen[0].exists()
