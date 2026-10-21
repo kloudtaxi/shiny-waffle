@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import sys
 import threading
 from collections.abc import Callable
@@ -13,12 +14,19 @@ import pytest
 
 from preflight import cli
 from preflight.config import AgentContextConfig, FoundationConfig, load_config
-from preflight.engine import Deps, Event, evaluate, finish, run_preflight
+from preflight.engine import Deps, Event, describe_exc, evaluate, finish, run_preflight
 from preflight.foundations import Foundation, FoundationSnapshot
 from preflight.markers import Markers
 from preflight.observe.lab import LabObservation
 from preflight.observe.probe import ProbeObservation
-from preflight.record import CheckResult, latest_record
+from preflight.record import (
+    BaselineRef,
+    CheckResult,
+    LabRef,
+    Record,
+    latest_record,
+    write_record,
+)
 from preflight.spend import live_reservations
 from tests.preflight.fakes import MARKERS as M
 from tests.preflight.fakes import stream, write_config
@@ -130,6 +138,8 @@ def test_first_run_passes_and_sets_the_baseline(run_dir: Path, repo: Path) -> No
     assert rec.status == "pass" and "baseline set by this record" in fp.summary
     assert next(c for c in rec.checks if c.name == "settled").status == "n/a"
     assert rec.probe is not None and rec.probe.cost_usd == 0.05
+    assert rec.probe.estimate_usd == 0.25  # the estimate the reservation used (§7)
+    assert rec.baseline.record is None and rec.baseline.compared_groups == []  # nothing compared
 
 
 def test_drift_fails_then_a_reason_amends_once_and_moves_the_baseline(
@@ -198,6 +208,8 @@ def test_the_probe_reserves_spend_and_a_cap_refusal_fails_agent_context(
     ac = check(found[1].checks, "agent_context")
     assert any(p.startswith("spend guard:") for p in ac.problems)
     assert ac.problems[0].startswith("spend guard:") and found[1].probe is None
+    fp = check(found[1].checks, "fingerprint")  # a refused probe read nothing: no reader values
+    assert [v.field for v in fp.values if v.group == "reader"] == []
 
 
 def test_spend_prints_the_folder_total(run_dir: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -271,19 +283,26 @@ def test_a_reason_with_nothing_drifted_writes_no_amendment(
     assert (run_dir / "notes.md").read_text() == "# Notes\n"
 
 
-def test_a_collector_that_raises_fails_only_its_own_check(run_dir: Path, repo: Path) -> None:
+@pytest.mark.parametrize(
+    "message, problem",
+    [
+        ("disk went away\nand more", "could not read: OSError: disk went away"),
+        ("", "could not read: OSError"),  # no trailing ": " for an empty message
+    ],
+)
+def test_a_collector_that_raises_fails_only_its_own_check(
+    run_dir: Path, repo: Path, message: str, problem: str
+) -> None:
     write_config(run_dir, LOCAL_CFG)
     deps = fake_deps()
 
     def no_inputs(cfg: Any, run: Path, repo: Path) -> Any:
-        raise OSError("disk went away\nand more")
+        raise OSError(message)
 
     deps.observe_inputs = no_inputs
     out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
     inputs = check(out.record.checks, "inputs")
-    assert inputs.status == "fail" and inputs.problems == [
-        "could not read: OSError: disk went away"
-    ]
+    assert inputs.status == "fail" and inputs.problems == [problem]
     assert check(out.record.checks, "fingerprint").status == "pass"  # it still ran
     assert check(out.record.checks, "agent_context").status == "pass"
     assert out.record.status == "fail"
@@ -360,28 +379,37 @@ settled: {window_seconds: 12}
 
 
 class FakeFoundation:
-    kind = "utopia"
+    """Snapshots from a list of counts. Utopia reads its signals; B-20's are unreadable here."""
 
-    def __init__(self, clock: Clock, facts: list[int]) -> None:
+    def __init__(self, clock: Clock, counts: list[dict[str, int]], kind: str = "utopia") -> None:
+        self.kind = kind
         self.clock = clock
-        self.facts = facts
+        self.counts = counts
         self.since: list[datetime] = []
         self.taken: list[FoundationSnapshot] = []
 
     def snapshot(self, since: datetime) -> FoundationSnapshot:
         self.since.append(since)
+        read = 0 if self.kind == "utopia" else None
+        counts = self.counts.pop(0)
+        if not counts:
+            raise RuntimeError("psql failed: connection refused")
         snap = FoundationSnapshot(
             at=self.clock.now(),
-            counts={"base.facts": self.facts.pop(0)},
+            counts=counts,
             settings={},
-            binary_sha256="abc",
-            jobs_active=0,
-            jobs_failed_since=0,
-            documents_unfinished=0,
-            log_errors=[],
+            binary_sha256="abc" if self.kind == "utopia" else None,
+            jobs_active=read,
+            jobs_failed_since=read,
+            documents_unfinished=read,
+            log_errors=[] if read is not None else None,
         )
         self.taken.append(snap)
         return snap
+
+
+def facts(*ns: int) -> list[dict[str, int]]:
+    return [{"base.facts": n} for n in ns]
 
 
 def utopia_deps(clock: Clock, foundation: FakeFoundation) -> Deps:
@@ -399,7 +427,7 @@ def utopia_deps(clock: Clock, foundation: FakeFoundation) -> Deps:
 def test_settled_waits_out_the_window_then_reads_again(run_dir: Path, repo: Path) -> None:
     write_config(run_dir, UTOPIA_CFG)
     clock = Clock(AT)
-    foundation = FakeFoundation(clock, [10, 10])
+    foundation = FakeFoundation(clock, facts(10, 10))
     events: list[Event] = []
     ev = evaluate(run_dir, repo, load_config(run_dir, repo), utopia_deps(clock, foundation),
                   events.append)  # fmt: skip
@@ -418,7 +446,7 @@ def test_settled_waits_out_the_window_then_reads_again(run_dir: Path, repo: Path
 def test_counts_that_move_in_the_window_fail_settled(run_dir: Path, repo: Path) -> None:
     write_config(run_dir, UTOPIA_CFG)
     clock = Clock(AT)
-    deps = utopia_deps(clock, FakeFoundation(clock, [10, 11]))
+    deps = utopia_deps(clock, FakeFoundation(clock, facts(10, 11)))
     out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
     settled = check(out.record.checks, "settled")
     assert settled.status == "fail" and "counts moved during the window" in settled.problems[0]
@@ -439,3 +467,183 @@ def test_the_app_commands_wait_for_the_app(
 ) -> None:
     assert cli.main([*cmd, "--run", str(run_dir)]) == 2
     assert "the app isn't built yet" in capsys.readouterr().err
+
+
+# --- fix round 1 (T9-a, T9-b, T9-c) ------------------------------------------------------------
+
+
+def test_check_prints_each_drifted_value_as_the_amendment_does(
+    run_dir: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    write_config(run_dir, LOCAL_CFG)
+    assert cli.main(["check", "--run", str(run_dir)], fake_deps()) == 0
+    capsys.readouterr()
+    assert cli.main(["check", "--run", str(run_dir)], fake_deps("2.1.304")) == 1
+    lines = capsys.readouterr().out.splitlines()
+    at = next(i for i, ln in enumerate(lines) if ln.startswith("✖ Fingerprint"))
+    assert lines[at + 1] == "    - claude --version 2.1.299 → 2.1.304"
+    argv = ["check", "--run", str(run_dir), "--accept-drift", "CLI auto-updated overnight"]
+    assert cli.main(argv, fake_deps("2.1.304")) == 0
+    assert "claude --version 2.1.299 → 2.1.304. Reason:" in (run_dir / "notes.md").read_text()
+
+
+def test_drift_with_no_baseline_prints_the_value_alone(
+    run_dir: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    write_config(run_dir, LOCAL_CFG)
+    deps = fake_deps()
+    deps.observe_lab = lambda repo: LabObservation(commit="81f24e8", dirty_paths=["lab/x.py"])
+    assert cli.main(["check", "--run", str(run_dir)], deps) == 1
+    lines = capsys.readouterr().out.splitlines()
+    at = next(i for i, ln in enumerate(lines) if ln.startswith("✖ Fingerprint"))
+    assert lines[at + 1] == "    - Lab code tree clean: false"
+
+
+FINGERPRINT_ONLY = UTOPIA_CFG.replace("checks: [fingerprint, settled]", "checks: [fingerprint]")
+
+
+def test_an_accepted_disappearance_stays_accepted(run_dir: Path, repo: Path) -> None:
+    write_config(run_dir, FINGERPRINT_ONLY)
+    cfg = load_config(run_dir, repo)
+    both = {"base.facts": 10, "base.entities": 5}
+    clock = Clock(AT)
+    deps = utopia_deps(clock, FakeFoundation(clock, [both, {"base.facts": 10}]))
+    assert run_preflight(run_dir, repo, cfg, deps=deps).record.status == "pass"
+    gone = run_preflight(run_dir, repo, cfg, accept_reason="entities retired", deps=deps)
+    assert gone.record.accepted is not None
+    assert gone.record.accepted.fields == ["foundation.counts.base.entities"]
+    deps = utopia_deps(clock, FakeFoundation(clock, [{"base.facts": 10}]))
+    again = run_preflight(run_dir, repo, cfg, deps=deps)
+    assert again.record.status == "pass", check(again.record.checks, "fingerprint").summary
+
+
+def test_a_reason_with_an_unreadable_fingerprint_gets_the_read_failure_note(
+    run_dir: Path, repo: Path
+) -> None:  # T9-b
+    write_config(run_dir, LOCAL_CFG)
+    deps = fake_deps()
+
+    def no_git(repo: Path) -> LabObservation:
+        raise RuntimeError("git is gone")
+
+    deps.observe_lab = no_git
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), accept_reason="r", deps=deps)
+    assert out.record.status == "fail" and out.note is not None
+    assert out.note.startswith("drift can be accepted only when the fingerprint read everything")
+    assert "could not read: RuntimeError: git is gone" in out.note
+
+
+def test_a_corrupt_record_exits_2_with_one_line(
+    run_dir: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    write_config(run_dir, LOCAL_CFG)
+    (run_dir / "preflight").mkdir()
+    (run_dir / "preflight" / "2026-10-20T00-00-00Z.json").write_text("{not json")
+    assert cli.main(["check", "--run", str(run_dir)], fake_deps()) == 2
+    err = capsys.readouterr().err.splitlines()
+    assert len(err) == 1 and err[0].startswith("preflight: ValidationError: ")
+
+
+def test_record_names_exhausted_exits_2(run_dir: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    write_config(run_dir, LOCAL_CFG)
+    taken = Record(
+        run=run_dir.name, started="s", finished="f", status="fail",
+        lab=LabRef(commit="c", dirty_paths=[]),
+        baseline=BaselineRef(record=None, compared_groups=[]), checks=[],
+    )  # fmt: skip
+    for k in range(6):
+        write_record(run_dir, taken, AT + timedelta(seconds=k))
+    frozen = fake_deps()
+    frozen.now = lambda: AT
+    assert cli.main(["check", "--run", str(run_dir)], frozen) == 2
+    err = capsys.readouterr().err.splitlines()
+    assert err == ["preflight: FileExistsError: no free record name near 2026-10-21T09-14-00Z.json"]
+    assert len(list((run_dir / "preflight").glob("*Z.json"))) == 6
+
+
+def test_the_reservation_is_released_when_the_probe_raises(run_dir: Path, repo: Path) -> None:
+    write_config(run_dir, LOCAL_CFG)
+    held: list[int] = []
+
+    def probe(
+        cfg: AgentContextConfig, run: Path, repo: Path, markers: Markers, started: datetime
+    ) -> ProbeObservation:
+        held.append(len(live_reservations(run)))
+        raise RuntimeError("the runner crashed")
+
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=fake_deps(probe=probe))
+    ac = check(out.record.checks, "agent_context")
+    assert ac.problems == ["could not read: RuntimeError: the runner crashed"]
+    assert held == [1] and live_reservations(run_dir) == [] and out.record.probe is None
+
+
+def test_a_foundation_that_cannot_be_built_is_settled_s_single_problem(
+    run_dir: Path, repo: Path
+) -> None:
+    write_config(run_dir, UTOPIA_CFG)
+    clock = Clock(AT)
+    deps = utopia_deps(clock, FakeFoundation(clock, []))
+
+    def cannot(cfg: FoundationConfig, run: Path, repo: Path) -> Foundation:
+        raise ValueError("badly formed hexadecimal UUID string")
+
+    deps.make_foundation = cannot
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
+    settled = check(out.record.checks, "settled")
+    assert settled.problems == ["could not read: ValueError: badly formed hexadecimal UUID string"]
+    assert check(out.record.checks, "fingerprint").status == "pass"  # it still ran
+
+
+def test_a_second_snapshot_that_fails_is_settled_s_single_problem(
+    run_dir: Path, repo: Path
+) -> None:
+    write_config(run_dir, UTOPIA_CFG)
+    clock = Clock(AT)
+    deps = utopia_deps(clock, FakeFoundation(clock, [{"base.facts": 10}, {}]))  # {} raises
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
+    settled = check(out.record.checks, "settled")
+    assert settled.status == "fail"
+    assert settled.problems == ["could not read: RuntimeError: psql failed: connection refused"]
+    fp = check(out.record.checks, "fingerprint")  # the first snapshot still reaches it
+    assert any(v.field == "foundation.counts.base.facts" for v in fp.values)
+
+
+B20_CFG = r"""checks: [fingerprint, settled]
+foundation:
+  kind: b20
+  arm: b20
+  attest: {file: garbanzo-note.md, max_age_hours: 24, covers: [jobs, documents, log, commit]}
+settled: {window_seconds: 12}
+"""
+
+
+def test_an_attestation_reaches_settled_and_the_fingerprint(run_dir: Path, repo: Path) -> None:
+    # R-pre2
+    write_config(run_dir, B20_CFG)
+    note = run_dir / "garbanzo-note.md"
+    note.write_text("Queue empty, every document done, no provider errors.\ncommit: 02e9cc9\n")
+    hour_ago = (AT - timedelta(hours=1)).timestamp()
+    os.utime(note, (hour_ago, hour_ago))
+    clock = Clock(AT)
+    deps = utopia_deps(clock, FakeFoundation(clock, facts(10, 10), kind="b20"))
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
+    settled = check(out.record.checks, "settled")
+    assert settled.status == "pass", settled.problems
+    assert settled.summary == (
+        "B-20 · counts stable 12 s · jobs, documents, log attested (garbanzo-note.md)"
+    )
+    assert {v.field: v.state for v in settled.values}["settled.attestation"] == "attested"
+    commit = next(
+        v for v in check(out.record.checks, "fingerprint").values if v.field == "foundation.commit"
+    )
+    assert (commit.value, commit.state, commit.source) == (
+        "02e9cc9",
+        "attested",
+        "garbanzo-note.md",
+    )
+
+
+def test_describe_exc() -> None:
+    assert describe_exc(OSError()) == "OSError"
+    assert describe_exc(ValueError("a\nb")) == "ValueError: a"
+    assert describe_exc(ValueError("x" * 300)) == "ValueError: " + "x" * 200

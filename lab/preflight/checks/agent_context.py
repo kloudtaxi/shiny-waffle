@@ -116,7 +116,10 @@ def _digest(items: object) -> str:
 
 
 def reader_values(obs: ProbeObservation, cli_version: str | None, markers: Markers) -> list[Value]:
-    """What the reader's setup was, for the fingerprint. Names are hashed, never paths."""
+    """What the reader's setup was, for the fingerprint. Names are hashed, never paths.
+
+    A probe that failed (`obs.error`) read nothing: every probe-derived value is unread.
+    """
     init = _init(obs) or {}
     meta = obs.meta
     known = "date" in found_kinds(_answer(obs), markers)
@@ -139,7 +142,7 @@ def reader_values(obs: ProbeObservation, cli_version: str | None, markers: Marke
             compare="equal",
         )
 
-    return [
+    out = [
         v("runner", "Runner", clean(meta.get("runner"))),
         v("model", "Model", clean(meta.get("model"))),
         v("flags", "Flags", clean(meta.get("flags"))),
@@ -160,3 +163,10 @@ def reader_values(obs: ProbeObservation, cli_version: str | None, markers: Marke
         v("slash_commands", "Slash commands", _digest(init.get("slash_commands"))),
         v("knows_real_date", "Knows the real date", known),
     ]
+    if obs.error:
+        cli_field = "reader.claude_cli_version"
+        out = [
+            x if x.field == cli_field else x.model_copy(update={"value": None, "state": "unread"})
+            for x in out
+        ]
+    return out

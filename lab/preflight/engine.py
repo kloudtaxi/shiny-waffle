@@ -131,10 +131,15 @@ class _ProbeRead:
     problem: str | None = None
 
 
+def describe_exc(exc: BaseException) -> str:
+    """`Type: first line of the message (≤200 chars)`, or just `Type` when there is no message."""
+    first = (str(exc).splitlines() or [""])[0][:200]
+    return f"{type(exc).__name__}: {first}" if first else type(exc).__name__
+
+
 def _could_not_read(exc: BaseException) -> str:
     """The single problem a collector's exception becomes."""
-    first = (str(exc).splitlines() or [""])[0][:200]
-    return f"could not read: {type(exc).__name__}: {first}"
+    return f"could not read: {describe_exc(exc)}"
 
 
 def _failed(name: CheckName, problems: list[str]) -> CheckResult:
@@ -323,7 +328,7 @@ def evaluate(
             values += inputs_values(inputs_obs)
         elif inputs_problem is not None and "inputs" not in listed:
             fp_problems.append(inputs_problem)
-        if "agent_context" in listed and probe.obs is not None:
+        if probe.ran and probe.obs is not None:  # a refused or broken probe read nothing
             values += reader_values(probe.obs, probe.cli, markers)
         snap = found.second if found.second is not None else found.first
         if snap is not None and cfg.foundation is not None:
@@ -343,9 +348,11 @@ def evaluate(
         done(fp)
 
     probe_ref: ProbeRef | None = None
-    if probe.ran and probe.obs is not None:
+    if probe.ran and probe.obs is not None and cfg.agent_context is not None:
         stream = None if probe.obs.saved is None else repo_relative(probe.obs.saved, repo)
-        probe_ref = ProbeRef(stream=stream, cost_usd=probe.obs.cost_usd)
+        probe_ref = ProbeRef(
+            stream=stream, cost_usd=probe.obs.cost_usd, estimate_usd=cfg.agent_context.est_usd
+        )
     return Evaluation(
         started=started,
         finished=deps.now(),
@@ -382,6 +389,12 @@ def _status(ev: Evaluation, reason: str) -> tuple[Literal["pass", "fail", "accep
         return "pass", ("nothing drifted; no amendment written" if reason else None)
     if not reason:
         return "fail", None
+    fp = next((c for c in failing if c.name == "fingerprint"), None)
+    if fp is not None and fp.problems:
+        return "fail", (
+            "drift can be accepted only when the fingerprint read everything "
+            f"({fp.problems[0]}); no amendment written"
+        )
     if not ev.drift:
         return "fail", "nothing drifted; no amendment written"
     others = [c.name for c in failing if c.name != "fingerprint"]
@@ -389,12 +402,6 @@ def _status(ev: Evaluation, reason: str) -> tuple[Literal["pass", "fail", "accep
         return "fail", (
             "drift can be accepted only when the other checks pass "
             f"({', '.join(others)} failed); no amendment written"
-        )
-    fp = next(c for c in failing if c.name == "fingerprint")
-    if fp.problems:
-        return "fail", (
-            f"drift can be accepted only when the fingerprint read everything "
-            f"({fp.problems[0]}); no amendment written"
         )
     return "accepted", None
 

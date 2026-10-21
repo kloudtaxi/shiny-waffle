@@ -27,6 +27,10 @@ def check_fingerprint(values: list[Value], baseline: Baseline | None) -> CheckRe
             out.append(v.model_copy(update={"ok": None}))
     now = {v.field for v in values}
     for field, old in then.items():
+        # Absent now and already absent (unread) in the baseline: an accepted disappearance
+        # stays accepted. A value that is present now but unread still differs (above).
+        if old.state == "unread":
+            continue
         if old.compare == "equal" and old.group in groups and field not in now:
             compared += 1
             out.append(

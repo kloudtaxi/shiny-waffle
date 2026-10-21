@@ -62,10 +62,14 @@ class Accepted(_Model):
 
 
 class ProbeRef(_Model):
-    """`stream` is the repo-relative path of the saved probe stream, or None if none was saved."""
+    """`stream` is the repo-relative path of the saved probe stream, or None if none was saved.
+
+    `estimate_usd` is the estimate the probe's spend reservation used (§7).
+    """
 
     stream: str | None
     cost_usd: float | None
+    estimate_usd: float | None = None
 
 
 class Record(_Model):
@@ -123,7 +127,8 @@ def latest_record(
     return None
 
 
-def _fmt(v: JsonValue) -> str:
+def fmt_value(v: JsonValue) -> str:
+    """A value as people read it: true/false, thousands separators, list sizes."""
     if isinstance(v, bool):
         return "true" if v else "false"
     if isinstance(v, int):
@@ -133,14 +138,16 @@ def _fmt(v: JsonValue) -> str:
     return str(v)
 
 
+def drift_text(v: Value) -> str:
+    """One drifted value: `label baseline → now`, or `label: now` when there is no baseline."""
+    if v.baseline is None:
+        return f"{v.label}: {fmt_value(v.value)}"
+    return f"{v.label} {fmt_value(v.baseline)} → {fmt_value(v.value)}"
+
+
 def amendment_line(at: datetime, drifted: list[Value], reason: str, record_rel: str) -> str:
     """The one-line note appended to notes.md when drift is accepted."""
-    parts = [
-        f"{v.label}: {_fmt(v.value)}"
-        if v.baseline is None
-        else f"{v.label} {_fmt(v.baseline)} → {_fmt(v.value)}"
-        for v in drifted
-    ]
+    parts = [drift_text(v) for v in drifted]
     stamp = _utc(at).strftime("%Y-%m-%d %H:%M UTC")
     return (
         f"- **Amendment (pre-flight drift, {stamp}):** {'; '.join(parts)}. "

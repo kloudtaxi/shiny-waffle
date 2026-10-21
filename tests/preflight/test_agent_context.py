@@ -294,3 +294,19 @@ def test_the_probe_temp_dir_is_outside_the_repo_and_removed(run_dir: Path, repo:
 
     run_probe(_cfg("x"), run_dir, repo, M, AT, runner=runner)
     assert not seen[0].resolve().is_relative_to(repo.resolve()) and not seen[0].exists()
+
+
+def test_a_failed_probe_reads_no_reader_values() -> None:
+    failed = ProbeObservation(
+        raw_stream=stream(init=INIT, answer="I don't know.", cost=0.1),
+        meta=META,
+        cost_usd=0.1,
+        saved=None,
+        error="probe timed out after 900 s",
+    )
+    vals = {x.field: x for x in reader_values(failed, "2.1.299", M)}
+    cli = vals.pop("reader.claude_cli_version")
+    assert (cli.value, cli.state) == ("2.1.299", "read")
+    assert vals and all(x.value is None and x.state == "unread" for x in vals.values())
+    unread = {x.field: x for x in reader_values(failed, None, M)}["reader.claude_cli_version"]
+    assert (unread.value, unread.state) == (None, "unread")

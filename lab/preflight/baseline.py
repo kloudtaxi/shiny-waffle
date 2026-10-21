@@ -29,8 +29,10 @@ def pick_baseline(spec: str, run: Path, repo: Path) -> Baseline | None:
 
 
 def compared_groups(baseline: Baseline | None) -> frozenset[Group]:
-    """Another run's baseline says nothing about this run's questions or evidence."""
-    if baseline is not None and not baseline.same_run:
+    """No baseline compares nothing; another run's says nothing about this run's inputs."""
+    if baseline is None:
+        return frozenset()
+    if not baseline.same_run:
         return frozenset({"reader", "foundation"})
     return frozenset({"inputs", "reader", "foundation"})
 

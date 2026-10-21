@@ -15,10 +15,12 @@ from preflight.record import (
     CheckResult,
     Compare,
     LabRef,
+    ProbeRef,
     Record,
     Value,
     amendment_line,
     append_amendment,
+    drift_text,
     latest_record,
     load_record,
     record_name,
@@ -115,6 +117,20 @@ def test_a_field_without_a_baseline_shows_its_value() -> None:
 def test_lists_render_as_counts() -> None:
     v = value("lab.dirty", "dirty paths", ["a", "b"], compare="true")
     assert "dirty paths: [2 items]" in amendment_line(AT, [v], "r", "x")
+
+
+def test_drift_text_is_the_amendment_s_rendering() -> None:
+    moved = value("foundation.counts.base.facts", "B-20 base facts", 1880, baseline=1912)
+    clean = value("lab.clean", "lab tree clean", False, compare="true")
+    assert drift_text(moved) == "B-20 base facts 1,912 → 1,880"
+    assert drift_text(clean) == "lab tree clean: false"
+    line = amendment_line(AT, [moved, clean], "r", "x")
+    assert f"{drift_text(moved)}; {drift_text(clean)}. Reason: r." in line
+
+
+def test_a_probe_ref_records_its_estimate() -> None:
+    assert ProbeRef(stream=None, cost_usd=0.05).estimate_usd is None  # older records still load
+    assert ProbeRef(stream=None, cost_usd=0.05, estimate_usd=0.25).estimate_usd == 0.25
 
 
 def test_appending_keeps_every_earlier_byte(run_dir: Path, tmp_path: Path) -> None:

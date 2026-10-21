@@ -10,8 +10,8 @@ import sys
 from pathlib import Path
 
 from preflight.config import ConfigError, load_config
-from preflight.engine import Deps, repo_relative, run_preflight
-from preflight.record import CheckResult
+from preflight.engine import Deps, describe_exc, repo_relative, run_preflight
+from preflight.record import CheckResult, drift_text
 from preflight.spend import spend_view
 
 MARK = {"pass": "✔", "fail": "✖", "n/a": "·"}
@@ -50,6 +50,10 @@ def _print_check(c: CheckResult) -> None:
     print(f"{MARK[c.status]} {LABEL[c.name]:<14} {c.summary}")
     for problem in c.problems:
         print(f"    - {problem}")
+    if c.name == "fingerprint":
+        for v in c.values:
+            if v.ok is False:
+                print(f"    - {drift_text(v)}")  # rendered as the amendment renders it
 
 
 def _check(run: Path, repo: Path, reason: str | None, deps: Deps | None) -> int:
@@ -61,6 +65,9 @@ def _check(run: Path, repo: Path, reason: str | None, deps: Deps | None) -> int:
         outcome = run_preflight(run, repo, cfg, accept_reason=reason, deps=deps)
     except ConfigError as exc:  # a broken config, or a baseline path naming no record (T7)
         return _config_error(exc)
+    except Exception as exc:  # a corrupt record, no free record name, an OSError: one line
+        print(f"preflight: {describe_exc(exc)}", file=sys.stderr)
+        return 2
     for c in outcome.record.checks:
         _print_check(c)
     print(f"record: {repo_relative(outcome.path, repo)}")

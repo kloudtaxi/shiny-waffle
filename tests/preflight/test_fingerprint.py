@@ -180,3 +180,16 @@ def test_unread_with_unread_baseline_still_fails(run_dir: Path) -> None:
     base = baseline_with(run_dir, [old])
     r = check_fingerprint([old], base)
     assert r.status == "fail" and r.values[0].ok is False
+
+
+def test_no_baseline_compares_no_groups() -> None:
+    assert compared_groups(None) == frozenset()
+
+
+def test_an_accepted_disappearance_is_not_flagged_again(run_dir: Path) -> None:
+    gone = v("foundation.counts.base.entities", None, "foundation").model_copy(
+        update={"state": "unread"}
+    )
+    base = baseline_with(run_dir, [v("reader.model", "opus"), gone])
+    r = check_fingerprint([v("reader.model", "opus")], base)
+    assert r.status == "pass" and [x.field for x in r.values] == ["reader.model"]
