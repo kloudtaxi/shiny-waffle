@@ -23,6 +23,15 @@ owm-service = [
     "httpx>=0.28.1",
     "uvicorn>=0.54.0",
 ]
+tui = [
+    "pytest-textual-snapshot>=1.0.0",
+    "textual>=8.2,<9",
+    "textual-serve>=1.1,<2",
+]
+
+[tool.uv]
+# The pre-flight app (lab/preflight/tui/, G-50) is tested in the gate, so `uv sync` installs it.
+default-groups = ["dev", "tui"]
 
 [build-system]
 requires = ["hatchling"]

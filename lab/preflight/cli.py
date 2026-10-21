@@ -1,11 +1,14 @@
-"""The plain front end: `check`, `spend`; `tui` and `serve` arrive with the app (Task 12).
+"""The plain front end (`check`, `spend`) and the doors to the app (`tui`, `serve`).
 
 Exit codes: 0 pass or accepted, 1 fail, 2 a config error, an empty reason or a bad command line.
+Textual is imported only inside the `tui` and `serve` paths.
 """
 
 from __future__ import annotations
 
 import argparse
+import os
+import shlex
 import sys
 from pathlib import Path
 
@@ -21,7 +24,7 @@ LABEL = {
     "settled": "Settled",
     "agent_context": "Agent context",
 }
-NO_APP = "the app isn't built yet"
+NO_APP = "the app needs the tui dependency group: uv sync --group tui"
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -80,14 +83,33 @@ def _check(run: Path, repo: Path, reason: str | None, deps: Deps | None) -> int:
 def _app(run: Path, repo: Path, deps: Deps | None) -> int | None:
     """Run the Textual app on a terminal; None when it isn't installed (behave as `check`)."""
     try:
-        from preflight.tui.app import run_app  # type: ignore[import-not-found, unused-ignore]
+        from preflight.tui.app import run_app
     except ImportError:
         return None
     try:
         cfg = load_config(run, repo)
     except ConfigError as exc:
         return _config_error(exc)
-    return int(run_app(run, repo, cfg, deps))
+    return run_app(run, repo, cfg, deps)
+
+
+def _serve(run: Path, repo: Path, port: int) -> int:
+    """Serve the app in a browser tab on localhost; each tab runs `preflight tui` for the run."""
+    try:
+        from textual_serve.server import Server
+    except ImportError:
+        print(NO_APP, file=sys.stderr)
+        return 2
+    try:
+        load_config(run, repo)  # refuse a broken config here, not in the browser
+    except ConfigError as exc:
+        return _config_error(exc)
+    lab = str(repo / "lab")
+    path = os.environ.get("PYTHONPATH")
+    os.environ["PYTHONPATH"] = f"{lab}{os.pathsep}{path}" if path else lab
+    command = f"{shlex.quote(sys.executable)} -m preflight tui --run {shlex.quote(str(run))}"
+    Server(command, host="localhost", port=port).serve()
+    return 0
 
 
 def main(argv: list[str] | None = None, deps: Deps | None = None) -> int:
@@ -115,5 +137,10 @@ def main(argv: list[str] | None = None, deps: Deps | None = None) -> int:
             return 2
         print(spend_view(a.run))
         return 0
-    print(NO_APP, file=sys.stderr)  # tui and serve: Task 12
-    return 2
+    if a.cmd == "serve":
+        return _serve(a.run, repo, a.port)
+    code = _app(a.run, repo, deps)  # tui
+    if code is None:
+        print(NO_APP, file=sys.stderr)
+        return 2
+    return code

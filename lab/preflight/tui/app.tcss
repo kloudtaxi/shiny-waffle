@@ -1,0 +1,125 @@
+/* The pre-flight app (G-50). Layout follows the spec's §9 mockup. */
+
+#header {
+    height: 1;
+    padding: 0 1;
+    background: $boost;
+}
+
+/* One-line rows: a long path is cut with an ellipsis, never wrapped out of sight. */
+#header Static, #statusline Static, #title {
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}
+
+#run {
+    width: 1fr;
+    text-style: bold;
+}
+
+#baseline {
+    width: auto;
+    max-width: 60%;
+    color: $text-muted;
+}
+
+#checks {
+    height: auto;
+    max-height: 6;
+    margin: 1 0;
+    overflow-x: hidden;  /* a long summary is cut; `enter` shows it whole */
+}
+
+#fingerprint {
+    height: 1fr;
+}
+
+#statusline {
+    height: 1;
+    padding: 0 1;
+    background: $boost;
+}
+
+#status {
+    width: 1fr;
+    color: $text-muted;
+}
+
+#banner {
+    width: auto;
+    text-style: bold;
+}
+
+#banner.-pass {
+    color: $success;
+}
+
+#banner.-fail {
+    color: $error;
+}
+
+#banner.-running {
+    color: $warning;
+}
+
+#title {
+    height: auto;
+    padding: 0 1;
+    text-style: bold;
+    background: $boost;
+}
+
+#problems {
+    height: auto;
+    padding: 1;
+}
+
+#values {
+    height: 1fr;
+}
+
+#spend {
+    padding: 1 2;
+}
+
+AcceptDriftScreen {
+    align: center middle;
+}
+
+#dialog {
+    width: 76;
+    max-width: 100%;
+    height: auto;
+    padding: 1 2;
+    border: thick $warning;
+    background: $surface;
+}
+
+#dialog-title {
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#drifted {
+    color: $error;
+    margin-bottom: 1;
+}
+
+#dialog .hint {
+    color: $text-muted;
+    margin-top: 1;
+}
+
+#preview {
+    height: auto;
+}
+
+#buttons {
+    height: auto;
+    margin-top: 1;
+    align-horizontal: right;
+}
+
+#buttons Button {
+    margin-left: 2;
+}

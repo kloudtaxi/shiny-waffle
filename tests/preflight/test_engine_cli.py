@@ -4,9 +4,7 @@ from __future__ import annotations
 
 import os
 import sys
-import threading
-from collections.abc import Callable
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -28,99 +26,22 @@ from preflight.record import (
     write_record,
 )
 from preflight.spend import live_reservations
-from tests.preflight.fakes import MARKERS as M
-from tests.preflight.fakes import stream, write_config
-
-AT = datetime(2026, 10, 21, 9, 14, 0, tzinfo=UTC)
-
-# The evidence lives in the repo (load_config refuses paths outside it); the questions in the run.
-LOCAL_CFG = r"""checks: [inputs, fingerprint, settled, agent_context]
-inputs:
-  id_patterns: ['\bCRM-\d{4}\b']
-  evidence: {base: [tests/preflight/fixtures/evidence]}
-foundation: {kind: local}
-agent_context:
-  probe: [runner, probe]
-  est_usd: 0.25
-  cap_usd: 5
-"""
-QUESTIONS = "id\tcorpus\tprocess\tquestion\nS01\tbase\tdiscount\tWhat did CRM-0001 ask for?\n"
-
-INIT: dict[str, Any] = {
-    "cwd": "/tmp/northstar-exam-blind-x",
-    "tools": ["mcp__foundation__find_entities"],
-    "mcp_servers": [{"name": "foundation", "status": "connected"}],
-    "model": "claude-opus-5-5",
-    "claude_code_version": "2.1.299",
-    "apiKeySource": "none",
-    "skills": [],
-    "plugins": [],
-    "agents": [],
-    "slash_commands": [],
-}
-META: dict[str, Any] = {
-    "runner": "exam-reader",
-    "model": "claude-opus-5-5",
-    "flags": "f",
-    "expected_tools": ["mcp__foundation__find_entities"],
-    "expected_servers": ["foundation"],
-    "system_prompt_sha256": "s",
-    "problems": [],
-}
-
-ProbeFn = Callable[[AgentContextConfig, Path, Path, Markers, datetime], ProbeObservation]
+from tests.preflight.fakes import (
+    AT,
+    LOCAL_CFG,
+    META,
+    QUESTIONS,
+    Clock,
+    fake_deps,
+    probe_with,
+    stream,
+    write_config,
+)
 
 
 @pytest.fixture(autouse=True)
 def _questions(run_dir: Path) -> None:
     (run_dir / "questions.tsv").write_text(QUESTIONS)
-
-
-class Clock:
-    """A fake clock: each read advances `tick` seconds; `sleep` advances the time slept."""
-
-    def __init__(self, t0: datetime, tick: float = 1.0) -> None:
-        self.t = t0
-        self.tick = timedelta(seconds=tick)
-        self.lock = threading.Lock()
-
-    def now(self) -> datetime:
-        with self.lock:
-            t = self.t
-            self.t += self.tick
-            return t
-
-    def sleep(self, seconds: float) -> None:
-        with self.lock:
-            self.t += timedelta(seconds=seconds)
-
-
-def probe_with(meta: dict[str, Any] = META, saved: Path | None = None) -> ProbeFn:
-    def run_probe(
-        cfg: AgentContextConfig, run: Path, repo: Path, markers: Markers, started: datetime
-    ) -> ProbeObservation:
-        return ProbeObservation(
-            raw_stream=stream(init=INIT, answer="I don't know.", cost=0.05),
-            meta=meta,
-            cost_usd=0.05,
-            saved=saved,
-            error=None,
-        )
-
-    return run_probe
-
-
-def fake_deps(
-    version: str | None = "2.1.299", t0: datetime = AT, probe: ProbeFn | None = None
-) -> Deps:
-    return Deps(
-        observe_lab=lambda repo: LabObservation(commit="81f24e8", dirty_paths=[]),
-        run_probe=probe or probe_with(),
-        claude_version=lambda: version,
-        markers=lambda repo, today: M,
-        now=Clock(t0).now,
-        sleep=lambda seconds: None,
-    )
 
 
 def check(checks: list[CheckResult], name: str) -> CheckResult:
@@ -459,14 +380,6 @@ def test_no_subcommand_on_a_terminal_without_the_app_runs_check(
     monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
     monkeypatch.setitem(sys.modules, "preflight.tui.app", None)  # importing it raises
     assert cli.main(["--run", str(run_dir)], fake_deps()) == 0
-
-
-@pytest.mark.parametrize("cmd", [["tui"], ["serve", "--port", "9000"]])
-def test_the_app_commands_wait_for_the_app(
-    run_dir: Path, capsys: pytest.CaptureFixture[str], cmd: list[str]
-) -> None:
-    assert cli.main([*cmd, "--run", str(run_dir)]) == 2
-    assert "the app isn't built yet" in capsys.readouterr().err
 
 
 # --- fix round 1 (T9-a, T9-b, T9-c) ------------------------------------------------------------
