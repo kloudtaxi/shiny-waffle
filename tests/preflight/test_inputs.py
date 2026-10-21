@@ -166,3 +166,27 @@ def test_values(tmp_path: Path) -> None:
     assert vals["inputs.questions_sha256"].compare == "equal"
     assert vals["inputs.evidence_tree.base"].label == "evidence tree (base)"
     assert vals["inputs.questions"].value == 1 and vals["inputs.ids"].value == 1
+
+
+def test_supplied_ids_reads_nested_and_brace_bearing_records() -> None:
+    nested = 'x {"request_id": "DR-9101", "meta": {"a": 1}} y'
+    assert supplied_ids(nested, ["request_id"]) == {"DR-9101": "request_id"}
+    braced = 'x {"request_id": "DR-9102", "note": "a } b { c"} y'
+    assert supplied_ids(braced, ["request_id"]) == {"DR-9102": "request_id"}
+    assert supplied_ids('{oops {"request_id": "DR-1"}', ["request_id"]) == {"DR-1": "request_id"}
+
+
+def test_a_nested_supplied_record_is_not_reported_missing(tmp_path: Path) -> None:
+    q = 'S09\tbase\tp\tDecide {"request_id": "DR-9101", "meta": {"a": 1}}'
+    cfg, run = _setup(tmp_path, [q])
+    assert check_inputs(observe_inputs(cfg, run, tmp_path), cfg).status == "pass"
+
+
+def test_a_corpus_with_no_evidence_files_fails(tmp_path: Path) -> None:
+    cfg, run = _setup(tmp_path, ["S01\tbase\tp\tCRM-0001"])
+    cfg = InputsConfig(
+        id_patterns=PATS, supplied_keys=["request_id"], evidence={"base": ["nowhere"]}
+    )
+    r = check_inputs(observe_inputs(cfg, run, tmp_path), cfg)
+    assert r.status == "fail"
+    assert "corpus base has no evidence files" in r.problems

@@ -14,6 +14,9 @@ def check_inputs(obs: InputsObservation, cfg: InputsConfig) -> CheckResult:
     problems: list[str] = []
     if not obs.header_ok:
         problems.append("questions file header is not id, corpus, process, question")
+    for corpus, n in obs.file_counts.items():
+        if n == 0:
+            problems.append(f"corpus {corpus} has no evidence files")
     missing = 0
     unknown: set[str] = set()
     n_ids = 0

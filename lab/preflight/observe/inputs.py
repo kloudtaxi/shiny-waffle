@@ -11,7 +11,6 @@ from pathlib import Path
 from preflight.config import InputsConfig
 
 HEADER = ["id", "corpus", "process", "question"]
-_RECORD = re.compile(r"\{[^{}]*\}")
 
 
 @dataclass(frozen=True)
@@ -35,6 +34,7 @@ class InputsObservation:
     # Per question, in question order: the ids its text names, and those it supplies itself.
     ids: list[list[str]] = field(default_factory=list)
     supplied: list[dict[str, str]] = field(default_factory=list)
+    file_counts: dict[str, int] = field(default_factory=dict)
 
 
 def find_ids(text: str, patterns: list[str]) -> list[str]:
@@ -59,17 +59,20 @@ def appears(ident: str, text: str) -> bool:
 def supplied_ids(text: str, keys: list[str]) -> dict[str, str]:
     """Ids the question supplies itself: string values of `keys` in inline JSON records."""
     out: dict[str, str] = {}
-    for m in _RECORD.finditer(text):
+    dec = json.JSONDecoder()
+    pos = text.find("{")
+    while pos != -1:
         try:
-            rec = json.loads(m.group(0))
+            rec, end = dec.raw_decode(text, pos)
         except ValueError:
+            pos = text.find("{", pos + 1)
             continue
-        if not isinstance(rec, dict):
-            continue
-        for k in keys:
-            v = rec.get(k)
-            if isinstance(v, str):
-                out[v] = k
+        if isinstance(rec, dict):
+            for k in keys:
+                v = rec.get(k)
+                if isinstance(v, str):
+                    out[v] = k
+        pos = text.find("{", end)
     return out
 
 
@@ -118,8 +121,10 @@ def observe_inputs(cfg: InputsConfig, run: Path, repo: Path) -> InputsObservatio
         questions.append(Question(id=parts[0], corpus=parts[1], text=parts[3]))
     corpus_text: dict[str, str] = {}
     tree_hash: dict[str, str] = {}
+    file_counts: dict[str, int] = {}
     for corpus, rels in cfg.evidence.items():
         paths = [repo / r for r in rels]
+        file_counts[corpus] = len(_files(paths))
         corpus_text[corpus] = "\n".join(
             f.read_bytes().decode("utf-8", errors="replace") for f in _files(paths)
         )
@@ -132,4 +137,5 @@ def observe_inputs(cfg: InputsConfig, run: Path, repo: Path) -> InputsObservatio
         tree_hash=tree_hash,
         ids=[find_ids(q.text, cfg.id_patterns) for q in questions],
         supplied=[supplied_ids(q.text, cfg.supplied_keys) for q in questions],
+        file_counts=file_counts,
     )
