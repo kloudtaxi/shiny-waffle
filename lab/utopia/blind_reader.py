@@ -314,8 +314,23 @@ def main() -> None:
         default=None,
         help="an OWM procedure appended to the system prompt",
     )
-    run_p.add_argument("variants", nargs="*", choices=sorted(HIDDEN), default=["B1", "B2"])
+    # No `choices`: argparse checks a `nargs="*"` positional's default (and on 3.11 an empty
+    # list) against them as one value and refuses it (gh-53834), so `run` checks the names below.
+    run_p.add_argument(
+        "variants",
+        nargs="*",
+        default=["B1", "B2"],
+        metavar="VARIANT",
+        help=f"any of {', '.join(sorted(HIDDEN))} (default: B1 B2)",
+    )
     a = parser.parse_args()
+    if a.cmd == "run":
+        for v in a.variants:
+            if v not in HIDDEN:
+                run_p.error(
+                    f"argument variants: invalid choice: {v!r} "
+                    f"(choose from {', '.join(sorted(HIDDEN))})"
+                )
 
     run = a.run.resolve()
     if a.cmd == "run" and not a.out.resolve().is_relative_to(run):

@@ -42,9 +42,7 @@ def _one_reading(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_blind_reader_requires_a_cap(
     monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    # A variant is named: argparse rejects the default variants list against `choices` (a
-    # separate, older quirk), which is how this test used to pass without `required=True`.
-    argv = ["blind_reader", "run", "--run", "x", "--out", "y", "B1"]
+    argv = ["blind_reader", "run", "--run", "x", "--out", "y"]
     monkeypatch.setattr(sys, "argv", argv)
     with pytest.raises(SystemExit) as e:
         blind_reader.main()
@@ -158,6 +156,64 @@ def test_blind_reader_accepts_an_out_inside_the_run(
     monkeypatch.setattr(sys, "argv", [*argv, "--cap-usd", "5", "B1"])
     with pytest.raises(_StopError):
         blind_reader.main()
+
+
+# --- the variants `run` reads (a bug since 82c9a2e: naming none failed in argparse) -----------
+
+
+def _stop_at_the_guard(monkeypatch: pytest.MonkeyPatch, labels: list[str]) -> None:
+    """Fake Utopia's calls, and end `main` at the spend guard, which names the variants."""
+    monkeypatch.setattr(blind_reader, "mint_token", lambda name, kbs: ("t", "tid"))
+    monkeypatch.setattr(blind_reader, "revoke", lambda token_id: None)
+    monkeypatch.setattr(blind_reader, "mcp_tools", lambda token, kb: [])
+    monkeypatch.setattr(blind_reader, "cite_preflight", lambda run, **kw: {"warnings": []})
+
+    def guard(run: Path, cap_usd: float, est_usd: float, label: str) -> None:
+        labels.append(label)
+        raise _StopError
+
+    monkeypatch.setattr(blind_reader, "Guard", guard)
+
+
+@pytest.mark.parametrize(
+    ("named", "label"),
+    [
+        ([], "blind-reader B1,B2"),
+        (["B2"], "blind-reader B2"),
+        (["B1n", "B2"], "blind-reader B1n,B2"),
+    ],
+)
+def test_blind_reader_run_reads_the_named_variants_or_b1_and_b2(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, named: list[str], label: str
+) -> None:
+    run = tmp_path / "runs" / "r"
+    run.mkdir(parents=True)
+    (run / "questions.tsv").write_text("id\tkb\tquestion\nS01\tk\tq\n")
+    labels: list[str] = []
+    _stop_at_the_guard(monkeypatch, labels)
+    argv = ["blind_reader", "run", "--run", str(run), "--out", str(run / "arm-b")]
+    monkeypatch.setattr(sys, "argv", [*argv, "--cap-usd", "5", *named])
+    with pytest.raises(_StopError):
+        blind_reader.main()
+    assert labels == [label]
+
+
+def test_blind_reader_run_refuses_an_unknown_variant(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    run = tmp_path / "runs" / "r"
+    run.mkdir(parents=True)
+
+    def no_token(name: str, kbs: list[str]) -> tuple[str, str]:
+        raise AssertionError("a token was minted")
+
+    monkeypatch.setattr(blind_reader, "mint_token", no_token)
+    argv = ["blind_reader", "run", "--run", str(run), "--out", str(run / "arm-b")]
+    monkeypatch.setattr(sys, "argv", [*argv, "--cap-usd", "5", "B1", "B3"])
+    with pytest.raises(SystemExit) as e:
+        blind_reader.main()
+    assert e.value.code == 2
+    assert "invalid choice: 'B3' (choose from B1, B1n, B2)" in capsys.readouterr().err
 
 
 def test_blind_reader_s_probe_records_the_flags_it_ran_with(
