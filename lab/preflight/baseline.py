@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+from preflight.config import ConfigError
 from preflight.record import Group, Record, Value, latest_record, load_record
 
 
@@ -21,6 +22,8 @@ def pick_baseline(spec: str, run: Path, repo: Path) -> Baseline | None:
         found = latest_record(run)
         return None if found is None else Baseline(found[0], found[1], True)
     path = repo / spec
+    if not path.is_file():
+        raise ConfigError(f"baseline record not found: {spec}")
     same = path.parent.parent.resolve() == run.resolve()
     return Baseline(path, load_record(path), same)
 

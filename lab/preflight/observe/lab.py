@@ -43,7 +43,7 @@ def observe_lab(repo: Path, git: Callable[[list[str]], str] | None = None) -> La
     """Read HEAD and the dirty code paths (tracked changes, plus untracked files under lab/)."""
     run = git if git is not None else (lambda args: run_git(repo, args))
     commit = run(["rev-parse", "HEAD"]).strip()
-    status = run(["status", "--porcelain=v1", "--", "lab", "src"])
+    status = run(["status", "--porcelain=v1", "-uall", "--", "lab", "src"])
     return LabObservation(commit=commit, dirty_paths=_dirty(status))
 
 

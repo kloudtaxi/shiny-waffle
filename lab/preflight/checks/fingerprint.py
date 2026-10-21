@@ -14,6 +14,7 @@ def check_fingerprint(values: list[Value], baseline: Baseline | None) -> CheckRe
     compared = 0
     for v in values:
         if v.compare == "true":
+            compared += 1
             out.append(v.model_copy(update={"ok": v.value is True}))
         elif v.compare == "equal" and v.group in groups and baseline is not None:
             compared += 1
@@ -36,7 +37,10 @@ def check_fingerprint(values: list[Value], baseline: Baseline | None) -> CheckRe
     drift = sum(1 for v in out if v.ok is False)
     status = "fail" if drift else "pass"
     if baseline is None:
-        summary = "baseline set by this record" if not drift else "lab code tree is not clean"
+        summary = "baseline set by this record"
+        if drift:
+            bad = "; ".join(f"{v.label} is {v.value}" for v in out if v.ok is False)
+            summary += f"; {bad}"
     elif drift:
         summary = f"{drift} of {compared} compared fields differ from the baseline"
     else:

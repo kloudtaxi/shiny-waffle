@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from pathlib import Path
 
+import pytest
 from pydantic import JsonValue
 
 from preflight.baseline import (
@@ -14,6 +15,7 @@ from preflight.baseline import (
     pick_baseline,
 )
 from preflight.checks.fingerprint import check_fingerprint
+from preflight.config import ConfigError
 from preflight.observe.lab import lab_values, observe_lab
 from preflight.record import (
     BaselineRef,
@@ -114,7 +116,7 @@ def _git(args: list[str]) -> str:
     return {
         "rev-parse": "81f24e8\n",
         "status": " M lab/exam/reader.py\n?? lab/x/__pycache__/a.pyc\n?? runs/r/notes.md\n"
-        "?? lab/new.py\n",
+        "?? lab/new.py\n?? lab/newdir/__pycache__/b.pyc\n",
     }[args[0]]
 
 
@@ -152,3 +154,29 @@ def test_a_path_baseline_from_another_run(tmp_path: Path, run_dir: Path) -> None
     assert got is not None and not got.same_run
     same = pick_baseline(str(path.relative_to(tmp_path)), other, tmp_path)
     assert same is not None and same.same_run
+
+
+def test_a_dirty_tree_against_a_baseline_counts_in_the_summary(run_dir: Path) -> None:
+    base = baseline_with(run_dir, [v("reader.model", "opus")])
+    dirty = observe_lab(run_dir, lambda a: {"rev-parse": "a", "status": " M lab/x.py\n"}[a[0]])
+    r = check_fingerprint([v("reader.model", "opus"), *lab_values(dirty)], base)
+    assert r.status == "fail"
+    assert r.summary == "1 of 2 compared fields differ from the baseline"
+
+
+def test_no_baseline_summary_names_the_failing_field() -> None:
+    dirty = observe_lab(Path("."), lambda a: {"rev-parse": "a", "status": " M lab/x.py\n"}[a[0]])
+    r = check_fingerprint(lab_values(dirty), None)
+    assert r.summary == "baseline set by this record; Lab code tree clean is False"
+
+
+def test_a_missing_baseline_path_is_a_config_error(run_dir: Path, repo: Path) -> None:
+    with pytest.raises(ConfigError, match="baseline record not found: runs/nope/preflight/x.json"):
+        pick_baseline("runs/nope/preflight/x.json", run_dir, repo)
+
+
+def test_unread_with_unread_baseline_still_fails(run_dir: Path) -> None:
+    old = v("foundation.commit", None, "foundation").model_copy(update={"state": "unread"})
+    base = baseline_with(run_dir, [old])
+    r = check_fingerprint([old], base)
+    assert r.status == "fail" and r.values[0].ok is False
