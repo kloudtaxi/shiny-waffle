@@ -39,6 +39,7 @@ flowchart LR
       have the user approve it there.
 - [ ] **Input-consistency pre-flight:** every record, id or document a question names exists in the
       evidence handed to the reader. Re-run it after any change to truth, scenarios or the corpus.
+      Run it with `lab/preflight.sh check` (G-50).
       ([The unguarded instrument](../patterns.md#the-unguarded-instrument))
 - [ ] **Measures as code at pre-registration,** each run once on a case that should count and one
       that shouldn't. ([The measure misses the question](../patterns.md#the-measure-misses-the-question))

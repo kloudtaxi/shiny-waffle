@@ -22,10 +22,10 @@ limit as subtype `success` ([Success-shaped failure](../patterns.md#success-shap
 - **Halting:** after the first infra error, start nothing new, and let the driver stop too. The
   lab's `part2-arm.sh` greps for `INFRA ERROR` after each pass.
 - **A resumed pass keeps its first `setup.json`,** and writes `setup-resume-<n>.json` beside it.
-- **The spend guard sums every answer in the run folder,** refused attempts included, but only once,
-  when its process starts. After that it adds its own answers. **With k processes in parallel,** give
-  each `--cap-usd` = spent + (budget − spent) / k, and compute the true folder total between phases
-  (R6: three arms printed $11–16 each while the folder held $42.20).
+- **The spend guard is shared** (`lab/preflight/spend.py`). Before each paid call, it re-reads
+  the folder's recorded costs and the live reservations, under a lock, so one cap holds across
+  processes and threads. `lab/preflight.sh spend --run runs/<x>` shows the total. R6's
+  equal-share workaround is retired.
 - **Monitors match every terminal state:** done, halted, skipped, failed, crashed, and the spend
   guard. Silence isn't success.
 

@@ -15,7 +15,7 @@ which is gitignored. The commands below read them from the `UTOPIA_EMAIL` and
 | # | Step | Time |
 |---|---|---|
 | 0 | `uv run northstar check`, then start a run folder and copy the evaluation sheets into it | 2 min |
-| 1 | Pre-flight: run a one-document smoke test so a broken model config can't fail silently | 10 min |
+| 1 | Pre-flight: `lab/preflight.sh check --run runs/<x>` (G-50), then the one-document smoke test | 10 min |
 | 2 | Create two **fresh** KBs: *Northstar Industrial Systems* and *Northstar — missing contract evidence* | 2 min |
 | 3 | Upload the **17 evidence files only** (not `MANIFEST.yaml`), and the 14-file variant into the second KB | 2 min |
 | 4 | Wait for the pipeline, then check failed jobs, drops, and whether each document got a date | 30–60 min |
@@ -166,7 +166,24 @@ lost on the next rebuild.
 Start `$RUN/notes.md` with the Utopia commit, the extraction and chat model, the ontology
 packs, the seed (20260923) and the lab commit.
 
-### Step 1: pre-flight smoke test
+### Step 1: pre-flight
+
+Run `lab/preflight.sh check --run $RUN` (G-50). It runs four checks and writes a record in the
+run folder:
+
+- **Inputs:** every record, id and document a question names exists in the evidence.
+- **Fingerprint:** the lab, foundation and model settings match the run's baseline.
+- **Settled:** the foundation has finished its work.
+- **Agent context:** one paid probe shows the reader sees the tools and rules it should.
+
+The runners cite the record in `setup.json` and warn without blocking when it's missing, damaged or
+stale. Drift continues only with `--accept-drift "<reason>"`, which appends an amendment to
+`notes.md`. `lab/preflight.sh tui` and `serve` run the same checks in an operator app (on trial,
+see `knowledge/insights.md`). `lab/preflight.sh spend --run $RUN` shows the run's spend.
+
+The lock (`uv.lock`) is revision 5, so use a uv recent enough to read it. The lab used uv 0.13.1.
+
+Then the smoke test.
 
 Create a scratch KB, upload one small evidence file (e.g. `products.csv`), and wait for it:
 

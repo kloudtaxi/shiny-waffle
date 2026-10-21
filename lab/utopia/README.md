@@ -39,10 +39,10 @@ tail -n +2 runs/<run>/questions.tsv | while IFS=$'\t' read -r sid kb q; do
 
 # arm B: probe first (about $0.06), then the runs
 python3 lab/utopia/blind_reader.py probe --run runs/<run> --variant B2
-python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/arm-b B1 B2
-python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/repeats/r2 B2
+python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/arm-b --cap-usd N B1 B2
+python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/repeats/r2 --cap-usd N B2
 # with an OWM procedure appended to the fixed system prompt (path and sha256 go in setup-*.json)
-python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/procedure/arm-b/r1 \
+python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/procedure/arm-b/r1 --cap-usd N \
   --procedure owm/procedures/discount-approval.md B2
 ```
 

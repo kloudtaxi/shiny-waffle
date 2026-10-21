@@ -1,7 +1,7 @@
 """Arm B: a blind reader (headless `claude -p`) that answers the scenarios over Utopia's MCP.
 
     python3 lab/utopia/blind_reader.py probe --run runs/<run> [--variant B2]
-    python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/arm-b B1 B2
+    python3 lab/utopia/blind_reader.py run --run runs/<run> --out runs/<run>/arm-b --cap-usd N B1 B2
 
 Variants: B1 sees all of Utopia's MCP tools. B2 is graph only: `search_chunks` and
 `get_document` are removed from the reader's context entirely (`--disallowedTools`). Tools that

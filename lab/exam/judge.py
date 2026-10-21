@@ -1,6 +1,6 @@
 """P2 and P4: does the base state each item? A blind judge reads the base's own facts.
 
-    uv run python lab/exam/judge.py <snapshot file> [--runs 3] [--workers 6]
+    uv run python lab/exam/judge.py <snapshot file> --cap-usd N [--runs 3] [--workers 6]
 
 For each item of `p2_items.yaml`:
 - **What the judge reads** is gathered the same way from every foundation: the entities K15 finds

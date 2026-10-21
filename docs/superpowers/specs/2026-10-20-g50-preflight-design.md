@@ -325,7 +325,7 @@ sequenceDiagram
 - `live_reservations(run: Path) -> list[ReservationInfo]`.
 
 **Recorded costs** are summed over the run folder (the folder directly under `runs/`):
-- **every `*.jsonl` except `*.calls.jsonl`:** the last `result` event's `total_cost_usd`. This is
+- **every `*.jsonl` except `*.calls.jsonl`:** the first `result` event's `total_cost_usd`. This is
   today's `cost_so_far`, moved here, and it covers infra-error attempts and pre-flight probes;
 - **every `*.judge*.json`:** each run entry's `cost_usd`. Today's sum misses these.
 
