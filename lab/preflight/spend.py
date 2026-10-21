@@ -11,9 +11,10 @@ import fcntl
 import json
 import os
 import re
+import threading
 import time
 import uuid
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -67,6 +68,10 @@ def result_cost(text: str) -> float:
     return 0.0
 
 
+def _stream_cost(path: Path) -> float:
+    return result_cost(path.read_text(errors="replace"))
+
+
 def _judge_cost(path: Path) -> float:
     try:
         data = json.loads(path.read_text())
@@ -81,15 +86,41 @@ def _judge_cost(path: Path) -> float:
     return total
 
 
-def recorded_usd(run: Path) -> float:
-    """Everything already written under the run folder, counted once."""
+# Each file's parsed cost, keyed by its (mtime_ns, size) when read (F-11). The scan runs under the
+# lock before every paid call; re-parsing a 1,400-file folder took 0.5-0.8 s each time.
+_COSTS: dict[Path, tuple[int, int, float]] = {}
+_COSTS_LOCK = threading.Lock()
+
+
+def _cost_of(path: Path, parse: Callable[[Path], float], cached: bool) -> float:
+    """`parse(path)`, reused while the file's mtime and size are unchanged. OSError propagates."""
+    if not cached:
+        return parse(path)
+    st = path.stat()
+    key = (st.st_mtime_ns, st.st_size)
+    with _COSTS_LOCK:
+        hit = _COSTS.get(path)
+    if hit is not None and hit[:2] == key:
+        return hit[2]
+    cost = parse(path)  # read after the stat: a later change moves the key and is read again
+    with _COSTS_LOCK:
+        _COSTS[path] = (*key, cost)
+    return cost
+
+
+def recorded_usd(run: Path, *, cached: bool = True) -> float:
+    """Everything already written under the run folder, counted once.
+
+    `cached` reuses a file's cost while its mtime and size are unchanged; the total is exactly
+    the uncached scan's (the same files, summed in the same order).
+    """
     spend_dir = run / ".spend"
     total = 0.0
     for path in sorted(run.rglob("*.jsonl")):
         if path.name.endswith(".calls.jsonl") or spend_dir in path.parents:
             continue
         try:
-            total += result_cost(path.read_text(errors="replace"))
+            total += _cost_of(path, _stream_cost, cached)
         except OSError:
             continue
     # Judge files (P3): per snapshot prefix, `.judge.json` else the newest infra-<k>.
@@ -103,7 +134,10 @@ def recorded_usd(run: Path) -> float:
         if key not in chosen or rank > chosen[key][0]:
             chosen[key] = (rank, path)
     for _, path in chosen.values():
-        total += _judge_cost(path)
+        try:
+            total += _cost_of(path, _judge_cost, cached)
+        except OSError:  # gone since the walk: as `_judge_cost` reads a missing file, 0
+            continue
     return total
 
 

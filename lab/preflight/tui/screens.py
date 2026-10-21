@@ -11,11 +11,14 @@ from typing import ClassVar
 
 from pydantic import JsonValue
 from rich.text import Text
+from textual import work
 from textual.app import ComposeResult
 from textual.binding import Binding, BindingType
 from textual.containers import Horizontal, Vertical
+from textual.css.query import NoMatches
 from textual.screen import ModalScreen, Screen
 from textual.widgets import Button, DataTable, Footer, Input, Static
+from textual.worker import get_current_worker
 
 from preflight.baseline import baseline_values
 from preflight.checks.agent_context import CHECKED
@@ -292,7 +295,10 @@ class AcceptDriftScreen(ModalScreen[str | None]):
 
 
 class SpendScreen(Screen[None]):
-    """The run folder's spend, re-read every few seconds."""
+    """The run folder's spend, re-read every few seconds in a thread worker (F-11).
+
+    The scan walks the whole run folder, so it never runs on the UI thread.
+    """
 
     BINDINGS: ClassVar[list[BindingType]] = [Binding("escape", "app.pop_screen", "back")]
 
@@ -302,17 +308,28 @@ class SpendScreen(Screen[None]):
 
     def compose(self) -> ComposeResult:
         yield Static(f"Spend  {self.run_dir.name}", id="title", markup=False)
-        yield Static(self._view(), id="spend", markup=False)
+        yield Static("reading the run folder's spend…", id="spend", markup=False)
         yield Footer()
 
     def on_mount(self) -> None:
-        self.set_interval(SPEND_SECONDS, self._refresh)
+        self._read()
+        self.set_interval(SPEND_SECONDS, self._read)
 
     def _view(self) -> str:
         try:
             return spend_view(self.run_dir)
-        except Exception as exc:  # a timer callback that raises would end the app
+        except Exception as exc:  # a worker that raises would end the app
             return f"spend unreadable: {describe_exc(exc)}"
 
-    def _refresh(self) -> None:
-        self.query_one("#spend", Static).update(self._view())
+    @work(thread=True, exclusive=True, group="spend")
+    def _read(self) -> None:
+        worker = get_current_worker()
+        text = self._view()
+        if not worker.is_cancelled:
+            self.app.call_from_thread(self._show, text)
+
+    def _show(self, text: str) -> None:
+        try:
+            self.query_one("#spend", Static).update(text)
+        except NoMatches:  # the screen closed while the worker read
+            pass

@@ -222,6 +222,8 @@ def test_with_nothing_drifted_a_says_so_s_toggles_and_r_reruns(
             assert isinstance(app.screen, MainScreen) and said.messages == ["nothing to accept"]
             await pilot.press("s")
             assert isinstance(app.screen, SpendScreen)
+            await app.workers.wait_for_complete()  # the spend view is read in a worker (F-11)
+            await pilot.pause()
             assert text_of(app.screen.query_one("#spend", Static)).startswith("recorded: $")
             await pilot.press("s")
             assert isinstance(app.screen, MainScreen)
@@ -505,7 +507,61 @@ def test_serve_runs_the_tui_command_on_localhost(
     ]
 
 
-# --- final review (F-14) ---------------------------------------------------------------------
+# --- final review (F-11, F-14) -----------------------------------------------------------------
+
+
+def test_the_spend_screen_reads_the_folder_off_the_ui_thread(
+    run_dir: Path, repo: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    async def go() -> None:
+        setup_run(run_dir)
+        on_ui: list[bool] = []
+
+        def view(run: Path) -> str:
+            on_ui.append(threading.current_thread() is threading.main_thread())
+            return "recorded: $1.23"
+
+        monkeypatch.setattr("preflight.tui.screens.spend_view", view)
+        monkeypatch.setattr("preflight.tui.screens.SPEND_SECONDS", 0.05)
+        app = PreflightApp(run_dir, repo, load_config(run_dir, repo), fake_deps())
+        async with app.run_test() as pilot:
+            await app.workers.wait_for_complete()
+            await pilot.press("s")
+            assert isinstance(app.screen, SpendScreen)
+            for _ in range(200):  # the first read, then at least one refresh
+                await pilot.pause(0.01)
+                if len(on_ui) >= 2:
+                    break
+            await app.workers.wait_for_complete()
+            await pilot.pause()
+            assert text_of(app.screen.query_one("#spend", Static)) == "recorded: $1.23"
+            await pilot.press("escape")
+            assert isinstance(app.screen, MainScreen)
+        assert len(on_ui) >= 2 and not any(on_ui)
+
+    asyncio.run(go())
+
+
+def test_a_spend_view_that_raises_is_shown_not_fatal(
+    run_dir: Path, repo: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    async def go() -> None:
+        setup_run(run_dir)
+
+        def broken(run: Path) -> str:
+            raise OSError("folder went away")
+
+        monkeypatch.setattr("preflight.tui.screens.spend_view", broken)
+        app = PreflightApp(run_dir, repo, load_config(run_dir, repo), fake_deps())
+        async with app.run_test() as pilot:
+            await app.workers.wait_for_complete()
+            await pilot.press("s")
+            await app.workers.wait_for_complete()
+            await pilot.pause()
+            spend = text_of(app.screen.query_one("#spend", Static))
+            assert spend == "spend unreadable: OSError: folder went away" and app.is_running
+
+    asyncio.run(go())
 
 
 def test_agent_context_details_show_the_reader_values(run_dir: Path, repo: Path) -> None:  # F-14

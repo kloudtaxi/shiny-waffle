@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import multiprocessing as mp
+import os
 import subprocess
 import sys
 import threading
@@ -11,6 +12,7 @@ from pathlib import Path
 
 import pytest
 
+from preflight import spend
 from preflight.spend import CapReached, Guard, live_reservations, recorded_usd, run_folder_of
 from tests.preflight import spend_worker
 from tests.preflight.fakes import stream
@@ -169,3 +171,56 @@ def test_release_during_the_reserve_scan_cannot_hide_spend(
     scan.thread.join(timeout=10)  # type: ignore[attr-defined]
     assert blocked == [True]
     assert live_reservations(run) == []
+
+
+# --- final review (F-11): the scan's per-file cache --------------------------------------------
+
+
+def _folder(tmp_path: Path) -> tuple[Path, Path, Path]:
+    run = tmp_path / "runs" / "r"
+    (run / "a").mkdir(parents=True)
+    answer = run / "a" / "S01.jsonl"
+    answer.write_text(stream(cost=1.25))
+    (run / "a" / "S02.jsonl").write_text(stream(cost=0.1) + "not json\n")
+    (run / "a" / "S02.calls.jsonl").write_text(stream(cost=9.0))
+    judge = run / "a" / "base.judge.json"
+    judge.write_text(json.dumps({"readings": [{"runs": [{"cost_usd": 0.02}]}]}))
+    (run / "a" / "other.judge.infra-1.json").write_text("{broken")
+    return run, answer, judge
+
+
+def _same_mtime(path: Path, mtime_ns: int) -> None:
+    os.utime(path, ns=(mtime_ns, mtime_ns))
+
+
+def test_cached_and_uncached_scans_agree_and_the_cache_is_used(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    run, _, _ = _folder(tmp_path)
+    first = recorded_usd(run)
+    assert first == recorded_usd(run, cached=False) == 1.25 + 0.1 + 0.02  # exactly equal
+    parsed: list[str] = []
+    real = spend.result_cost
+
+    def counting(text: str) -> float:
+        parsed.append(text)
+        return real(text)
+
+    monkeypatch.setattr(spend, "result_cost", counting)
+    assert recorded_usd(run) == first and parsed == []  # nothing re-read
+    assert recorded_usd(run, cached=False) == first and len(parsed) == 2
+
+
+def test_a_rewritten_file_is_read_again(tmp_path: Path) -> None:
+    run, answer, judge = _folder(tmp_path)
+    assert recorded_usd(run) == 1.25 + 0.1 + 0.02
+    before = answer.stat().st_mtime_ns
+    answer.write_text(stream(cost=3.75))  # the same size: only the mtime moves
+    _same_mtime(answer, before + 1_000)
+    assert recorded_usd(run) == recorded_usd(run, cached=False) == 3.75 + 0.1 + 0.02
+    before = judge.stat().st_mtime_ns
+    judge.write_text(json.dumps({"readings": [{"runs": [{"cost_usd": 0.5}, {"cost_usd": 1}]}]}))
+    _same_mtime(judge, before)  # the same mtime: only the size moves
+    assert recorded_usd(run) == recorded_usd(run, cached=False) == 3.75 + 0.1 + 1.5
+    answer.unlink()
+    assert recorded_usd(run) == recorded_usd(run, cached=False) == 0.1 + 1.5
