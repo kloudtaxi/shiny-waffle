@@ -74,11 +74,24 @@ def _check(run: Path, repo: Path, reason: str | None, deps: Deps | None) -> int:
     return 0 if outcome.record.status in ("pass", "accepted") else 1
 
 
+TEXTUAL = frozenset({"textual", "textual_serve"})
+
+
+def _textual_missing(exc: ImportError) -> bool:
+    """Whether the import failed for want of Textual itself, not a bug in the app (F-13)."""
+    return (exc.name or "").split(".")[0] in TEXTUAL
+
+
 def _app(run: Path, repo: Path, deps: Deps | None) -> int | None:
-    """Run the Textual app on a terminal; None when it isn't installed (behave as `check`)."""
+    """Run the Textual app on a terminal; None when Textual isn't installed (behave as `check`).
+
+    Any other ImportError is a broken app, and is raised, not hidden behind `check`.
+    """
     try:
         from preflight.tui.app import run_app
-    except ImportError:
+    except ImportError as exc:
+        if not _textual_missing(exc):
+            raise
         return None
     try:
         cfg = load_config(run, repo)

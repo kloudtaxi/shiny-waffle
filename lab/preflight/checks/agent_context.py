@@ -11,6 +11,17 @@ from preflight.observe.probe import ProbeObservation, stream_events
 from preflight.record import CheckResult, State, Value
 
 PASS_SUMMARY = "cwd outside repo · tools as expected · MCP connected · no operator named"
+# Every condition `_problems` tests, for a front end to list when no values were recorded.
+CHECKED = (
+    "cwd outside the repo",
+    "tools as expected",
+    "MCP servers connected",
+    "auto memory empty",
+    "no permission denied",
+    "the probe ended without an error",
+    "no problems from the runner",
+    "no operator named",
+)
 
 
 def _init(obs: ProbeObservation) -> dict[str, Any] | None:
@@ -148,7 +159,7 @@ def reader_values(obs: ProbeObservation, cli_version: str | None, markers: Marke
         v("flags", "Flags", clean(meta.get("flags"))),
         v("expected_tools", "Expected tools", clean(meta.get("expected_tools"))),
         v("system_prompt_sha256", "System prompt hash", clean(meta.get("system_prompt_sha256"))),
-        v("tools", "Tools in context", sorted(init.get("tools") or [])),
+        v("tools", "Tools in context", sorted(clean(list(init.get("tools") or [])))),
         v("claude_code_version", "Claude Code version", init.get("claude_code_version")),
         v(
             "claude_cli_version",

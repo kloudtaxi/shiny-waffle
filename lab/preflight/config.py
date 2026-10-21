@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, ValidationError, model_validator
+from pydantic import BaseModel, ConfigDict, ValidationError, field_validator, model_validator
 
 CheckName = Literal["inputs", "fingerprint", "settled", "agent_context"]
 
@@ -15,6 +15,9 @@ DENIED: tuple[str, ...] = ("dataset/answer-key", "dataset/evaluation", "truth", 
 DEFAULT_ERROR_PATTERN = (
     r"(?i)(rate.?limit|\b429\b|insufficient_quota|provider error|upstream error)"
 )
+# The questions file's columns the inputs check reads, by role (F-2). The exam's file is
+# `id, corpus, process, question`; Utopia's (blind_reader) is `id, kb, question`.
+DEFAULT_COLUMNS: dict[str, str] = {"id": "id", "corpus": "corpus", "question": "question"}
 
 
 class ConfigError(Exception):
@@ -29,9 +32,20 @@ class InputsConfig(_Model):
     """What the run feeds the system under test."""
 
     questions: str = "questions.tsv"
+    columns: dict[str, str] = DEFAULT_COLUMNS  # role → header name; a partial map keeps the rest
     id_patterns: list[str]
     supplied_keys: list[str] = []
-    evidence: dict[str, list[str]]
+    evidence: dict[str, list[str]]  # corpus (or kb id, for Utopia) → paths in the repo
+
+    @field_validator("columns")
+    @classmethod
+    def _known_roles(cls, columns: dict[str, str]) -> dict[str, str]:
+        unknown = sorted(set(columns) - set(DEFAULT_COLUMNS))
+        if unknown:
+            raise ValueError(
+                f"columns: unknown key {', '.join(unknown)} (the keys are id, corpus, question)"
+            )
+        return {**DEFAULT_COLUMNS, **columns}
 
     @model_validator(mode="after")
     def _patterns_compile(self) -> InputsConfig:

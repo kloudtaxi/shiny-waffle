@@ -53,10 +53,18 @@ DEFAULT_MODEL = "claude-opus-5-5"
 # mean answer cost of 20 answers in runs/2026-10-13-utopia-aad5b06+c4da9cc-luna-scale-large/arm-b
 # ($0.3034), rounded up
 EST_USD = 0.31
-FLAGS = (
-    "--tools '' --strict-mcp-config --setting-sources project "
-    "--no-session-persistence --max-turns 40; cwd = fresh temp dir outside the repo"
-)
+MAX_TURNS = 40
+
+
+def flags_for(max_turns: int) -> str:
+    """The reader's flags as recorded: the probe and every answer record the turns they ran."""
+    return (
+        "--tools '' --strict-mcp-config --setting-sources project "
+        f"--no-session-persistence --max-turns {max_turns}; cwd = fresh temp dir outside the repo"
+    )
+
+
+FLAGS = flags_for(MAX_TURNS)
 SERVER = "utopia"
 STANDIN = "owm"
 STANDIN_SERVER = Path(__file__).resolve().parents[1] / "owm_standin" / "server.py"
@@ -165,7 +173,7 @@ def reader(
     allowed: list[str],
     hidden: list[str],
     model: str,
-    max_turns: int = 40,
+    max_turns: int = MAX_TURNS,
     system_prompt: str = SYSTEM_PROMPT,
     standin: dict[str, Any] | None = None,
 ) -> str:
@@ -310,6 +318,10 @@ def main() -> None:
     a = parser.parse_args()
 
     run = a.run.resolve()
+    if a.cmd == "run" and not a.out.resolve().is_relative_to(run):
+        # The spend guard scans --run: answers written elsewhere would never count (F-12).
+        print(f"blind_reader: --out {a.out} must be inside --run {a.run}", file=sys.stderr)
+        raise SystemExit(2)
     qs = questions(run)
     kbs = sorted({kb for _, kb, _ in qs})
     token_name = a.token_name or f"northstar-{a.cmd}-{time.strftime('%Y%m%d-%H%M')}"
@@ -325,6 +337,9 @@ def main() -> None:
             }
             standin["tools"] = standin_tools(standin)
         if a.cmd == "probe":
+            # The probe runs as a counted call does (its turn limit included), so the flags it
+            # records are the ones it ran with and match what `run` cites (F-12, spec §4.4).
+            turns = MAX_TURNS
             out = reader(
                 token,
                 kbs[0],
@@ -332,7 +347,7 @@ def main() -> None:
                 allowed[a.variant],
                 HIDDEN[a.variant],
                 a.model,
-                5,
+                turns,
                 standin=standin,
             )
             write_probe_out(
@@ -340,7 +355,7 @@ def main() -> None:
                 {
                     "runner": "blind-reader",
                     "model": a.model,
-                    "flags": FLAGS,
+                    "flags": flags_for(turns),
                     "expected_tools": [f"mcp__{SERVER}__{t}" for t in allowed[a.variant]]
                     + [f"mcp__{STANDIN}__{t}" for t in (standin or {}).get("tools", [])],
                     "expected_servers": [SERVER] + ([STANDIN] if standin else []),

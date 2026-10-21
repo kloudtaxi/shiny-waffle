@@ -193,3 +193,19 @@ def test_an_accepted_disappearance_is_not_flagged_again(run_dir: Path) -> None:
     base = baseline_with(run_dir, [v("reader.model", "opus"), gone])
     r = check_fingerprint([v("reader.model", "opus")], base)
     assert r.status == "pass" and [x.field for x in r.values] == ["reader.model"]
+
+
+# --- final review (F-10) -----------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("pinned", [False, True], ids=["latest", "pinned"])
+def test_a_baseline_record_without_a_fingerprint_is_no_baseline(
+    tmp_path: Path, run_dir: Path, pinned: bool
+) -> None:
+    rec = _record([]).model_copy(update={"checks": []})  # e.g. a run that listed only inputs
+    path = write_record(run_dir, rec, datetime(2026, 10, 20, 1, 2, 3, tzinfo=UTC))
+    spec = str(path.relative_to(tmp_path)) if pinned else "latest"
+    picked = pick_baseline(spec, run_dir, tmp_path)
+    assert picked is None
+    r = check_fingerprint([v("reader.model", "m"), v("reader.flags", "f")], picked)
+    assert r.status == "pass" and r.summary == "baseline set by this record"

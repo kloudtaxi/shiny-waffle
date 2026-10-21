@@ -2,9 +2,14 @@
 
 from __future__ import annotations
 
+import ast
+import subprocess
+import sys
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Literal
+
+import pytest
 
 from preflight.cite import cite_preflight
 from preflight.record import (
@@ -105,3 +110,46 @@ def test_a_record_without_a_fingerprint_gets_one_warning(run_dir: Path) -> None:
     write_record(run_dir, rec, AT)
     c = cite_preflight(run_dir, questions_sha256="q", model="m", flags="f", est_usd=1.0)
     assert c["warnings"] == ["the pre-flight record has no fingerprint"]
+
+
+# --- final review (F-3): blind_reader stays standard-library only ------------------------------
+
+
+def test_cite_without_the_record_module_is_unreadable(
+    run_dir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setitem(sys.modules, "preflight.record", None)  # importing it raises
+    c = cite_preflight(run_dir, questions_sha256="q", model="m", flags="f", est_usd=1.0)
+    assert c["status"] == "unreadable" and c["record"] is None
+
+
+def test_cite_and_spend_import_only_the_standard_library(repo: Path) -> None:
+    for name in ("cite.py", "spend.py"):
+        tree = ast.parse((repo / "lab/preflight" / name).read_text())
+        top: list[str] = []
+        for node in tree.body:  # module level only; a lazy import inside a function is fine
+            if isinstance(node, ast.Import):
+                top += [a.name for a in node.names]
+            elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+                top.append(node.module)
+        roots = {t.split(".")[0] for t in top} - {"__future__"}
+        assert roots <= sys.stdlib_module_names, (name, roots - sys.stdlib_module_names)
+
+
+def test_blind_reader_runs_without_pydantic_or_yaml(repo: Path, tmp_path: Path) -> None:
+    script = repo / "lab/utopia/blind_reader.py"
+    code = "\n".join(
+        [
+            "import runpy, sys",
+            "sys.modules['pydantic'] = None",
+            "sys.modules['yaml'] = None",
+            f"sys.path.insert(0, {str(script.parent)!r})",
+            "sys.argv = ['blind_reader', '--help']",
+            f"runpy.run_path({str(script)!r}, run_name='__main__')",
+        ]
+    )
+    done = subprocess.run(
+        [sys.executable, "-c", code], capture_output=True, text=True, timeout=60, cwd=tmp_path
+    )
+    assert done.returncode == 0, done.stderr
+    assert "usage: blind_reader" in done.stdout

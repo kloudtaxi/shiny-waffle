@@ -9,11 +9,21 @@ from preflight.record import CheckResult, Value
 _SOURCE = "questions file + evidence"
 
 
+def _n(count: int, noun: str) -> str:
+    """`1 question`, `2 questions` (F-14)."""
+    return f"{count} {noun}" if count == 1 else f"{count} {noun}s"
+
+
 def check_inputs(obs: InputsObservation, cfg: InputsConfig) -> CheckResult:
     """Fail when a question names an id its corpus's evidence does not hold."""
     problems: list[str] = []
-    if not obs.header_ok:
-        problems.append("questions file header is not id, corpus, process, question")
+    missing_cols = [c for c in cfg.columns.values() if c not in obs.header]
+    if missing_cols:
+        word = "column" if len(missing_cols) == 1 else "columns"
+        problems.append(
+            f"questions file header has no {', '.join(missing_cols)} {word} "
+            f"(it needs {', '.join(cfg.columns.values())})"
+        )
     for corpus, n in obs.file_counts.items():
         if n == 0:
             problems.append(f"corpus {corpus} has no evidence files")
@@ -36,10 +46,11 @@ def check_inputs(obs: InputsObservation, cfg: InputsConfig) -> CheckResult:
             missing += 1
             problems.append(f"{q.id} names {ident}, not in {q.corpus}'s evidence")
     if problems:
-        summary = f"{missing} ids missing" if missing else f"{len(problems)} problems"
+        summary = f"{_n(missing, 'id')} missing" if missing else _n(len(problems), "problem")
         return CheckResult(name="inputs", status="fail", summary=summary, problems=problems)
     summary = (
-        f"{len(obs.questions)} questions · {n_ids} ids · every id found in its corpus's evidence"
+        f"{_n(len(obs.questions), 'question')} · {_n(n_ids, 'id')} · "
+        "every id found in its corpus's evidence"
     )
     if n_supplied:
         summary += f"; {n_supplied} supplied by their questions"

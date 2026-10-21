@@ -1,4 +1,9 @@
-"""What a paid runner says about the latest pre-flight record: it warns, it never blocks."""
+"""What a paid runner says about the latest pre-flight record: it warns, it never blocks.
+
+Standard library only at module level (F-3): `lab/utopia/blind_reader.py` imports this and
+promises no install. The record model (pydantic) is imported lazily, inside the guard, so a
+missing package is the same "unreadable" warning as a damaged record.
+"""
 
 from __future__ import annotations
 
@@ -6,8 +11,6 @@ import json
 import os
 from pathlib import Path
 from typing import Any
-
-from preflight.record import latest_record
 
 
 def _fingerprint(values: dict[str, Any], field: str) -> Any:
@@ -19,8 +22,10 @@ def cite_preflight(
 ) -> dict[str, Any]:
     """The latest pass, fail or accepted record, compared with what this run is about to use."""
     try:
+        from preflight.record import latest_record  # lazily: pydantic may not be installed
+
         found = latest_record(run, frozenset({"pass", "fail", "accepted"}))
-    except Exception:  # a damaged record must never block a paid run
+    except Exception:  # a damaged record, or no pydantic, must never block a paid run
         return {
             "record": None,
             "status": "unreadable",

@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
 import re
+import tempfile
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
@@ -17,6 +19,10 @@ State = Literal["read", "read twice", "attested", "unread"]
 Compare = Literal["equal", "record", "true"]
 
 _NAME = re.compile(r"^\d{4}-\d\d-\d\dT\d\d-\d\d-\d\dZ\.json$")
+
+
+class RecordError(ValueError):
+    """A record that can't be read; the message names its file."""
 
 
 class _Model(BaseModel):
@@ -99,18 +105,36 @@ def record_name(at: datetime) -> str:
 
 
 def write_record(run: Path, record: Record, at: datetime) -> Path:
-    """Write a record once; an existing name raises FileExistsError."""
+    """Write a record once; an existing name raises FileExistsError.
+
+    Atomic (F-6): the text goes to a hidden temp file in the same folder, which is then linked
+    to the record's name (a link never replaces an existing name, so write-once holds) and
+    unlinked. A crash leaves at most a hidden temp file, never a partial record.
+    """
     folder = run / "preflight"
     folder.mkdir(parents=True, exist_ok=True)
     path = folder / record_name(at)
     text = json.dumps(record.model_dump(by_alias=True, mode="json"), indent=1, ensure_ascii=False)
-    with path.open("x", encoding="utf-8") as fh:
-        fh.write(text + "\n")
+    fd, tmp = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=folder)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            fh.write(text + "\n")
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.link(tmp, path)
+    finally:
+        os.unlink(tmp)
     return path
 
 
 def load_record(path: Path) -> Record:
-    return Record.model_validate_json(path.read_text(encoding="utf-8"))
+    """Read one record; a damaged or unreadable one raises RecordError naming the file."""
+    try:
+        return Record.model_validate_json(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:  # pydantic's ValidationError is a ValueError
+        first = (str(exc).splitlines() or [""])[0][:200]
+        why = f"{type(exc).__name__}: {first}" if first else type(exc).__name__
+        raise RecordError(f"unreadable pre-flight record {path.name}: {why}") from exc
 
 
 def latest_record(

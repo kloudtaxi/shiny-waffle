@@ -143,9 +143,9 @@ def test_manifest_text_is_not_evidence(tmp_path: Path) -> None:
 def test_a_wrong_header_or_unknown_corpus_fails(tmp_path: Path) -> None:
     cfg, run = _setup(tmp_path, ["S01\tbase\tp\tCRM-0001"], header="id\tquestion")
     obs = observe_inputs(cfg, run, tmp_path)
-    assert not obs.header_ok
+    assert obs.header == ["id", "question"] and obs.questions == []
     assert check_inputs(obs, cfg).problems[0] == (
-        "questions file header is not id, corpus, process, question"
+        "questions file header has no corpus column (it needs id, corpus, question)"
     )
     cfg, run = _setup(tmp_path / "b", ["S01\tother\tp\tCRM-0001"])
     r = check_inputs(observe_inputs(cfg, run, tmp_path / "b"), cfg)
@@ -190,3 +190,68 @@ def test_a_corpus_with_no_evidence_files_fails(tmp_path: Path) -> None:
     r = check_inputs(observe_inputs(cfg, run, tmp_path), cfg)
     assert r.status == "fail"
     assert "corpus base has no evidence files" in r.problems
+
+
+# --- final review (F-2): the Utopia questions format -------------------------------------------
+
+LUNA = "runs/2026-10-13-utopia-aad5b06+c4da9cc-luna-scale-large"
+LUNA_KBS = {  # its notes.md: the base and the missing-contract knowledge bases
+    "01a136fa-8e1d-77c0-b01d-bfc6423990b4": ["dataset/evidence"],
+    "01a136fa-a00d-7421-b90b-4ad99714585b": ["dataset/evidence-variants/missing-contract-evidence"],
+}
+
+
+def test_the_utopia_questions_format_is_read_by_column_name(repo: Path) -> None:
+    run = repo / LUNA
+    assert (run / "questions.tsv").read_text().splitlines()[0].split("\t") == [
+        "id",
+        "kb",
+        "question",
+    ]
+    cfg = InputsConfig(
+        id_patterns=PATS, columns={"corpus": "kb"}, supplied_keys=["request_id"], evidence=LUNA_KBS
+    )
+    obs = observe_inputs(cfg, run, repo)
+    assert [q.id for q in obs.questions][:2] == ["S01", "S02"] and len(obs.questions) == 10
+    assert {q.corpus for q in obs.questions} == set(LUNA_KBS)
+    r = check_inputs(obs, cfg)
+    assert r.status == "pass", r.problems
+    assert r.summary.startswith("10 questions · ")
+
+
+def test_the_utopia_format_without_columns_fails_on_the_header(repo: Path) -> None:
+    cfg = InputsConfig(id_patterns=PATS, evidence=LUNA_KBS)
+    r = check_inputs(observe_inputs(cfg, repo / LUNA, repo), cfg)
+    assert r.problems == [
+        "questions file header has no corpus column (it needs id, corpus, question)"
+    ]
+
+
+def test_a_last_question_column_may_hold_tabs(tmp_path: Path) -> None:
+    cfg, run = _setup(tmp_path, ["S01\tbase\tp\tAbout\tCRM-0001\tand CRM-0002"])
+    obs = observe_inputs(cfg, run, tmp_path)
+    assert obs.questions[0].text == "About\tCRM-0001\tand CRM-0002"
+    assert check_inputs(obs, cfg).problems == ["S01 names CRM-0002, not in base's evidence"]
+
+
+def test_columns_may_come_in_any_order(tmp_path: Path) -> None:
+    cfg, run = _setup(tmp_path, ["CRM-0001 and CRM-0009\tS01\tbase"], header="question\tid\tcorpus")
+    obs = observe_inputs(cfg, run, tmp_path)
+    assert obs.questions[0].id == "S01" and obs.questions[0].corpus == "base"
+    assert check_inputs(obs, cfg).problems == ["S01 names CRM-0009, not in base's evidence"]
+
+
+def test_counts_in_summaries_agree_with_their_number(tmp_path: Path) -> None:  # F-14
+    cfg, run = _setup(tmp_path, ["S01\tbase\tp\tCRM-0001"])
+    assert check_inputs(observe_inputs(cfg, run, tmp_path), cfg).summary.startswith(
+        "1 question · 1 id · "
+    )
+    cfg, run = _setup(tmp_path / "b", ["S01\tbase\tp\tCRM-0001", "S02\tbase\tp\tCRM-0001 CRM-0009"])
+    r = check_inputs(observe_inputs(cfg, run, tmp_path / "b"), cfg)
+    assert r.summary == "1 id missing"
+    cfg, run = _setup(tmp_path / "c", ["S01\tbase\tp\tCRM-0001", "S02\tbase\tp\tCRM-0001"])
+    assert check_inputs(observe_inputs(cfg, run, tmp_path / "c"), cfg).summary.startswith(
+        "2 questions · 2 ids · "
+    )
+    cfg, run = _setup(tmp_path / "d", ["S01\tother\tp\tx"])
+    assert check_inputs(observe_inputs(cfg, run, tmp_path / "d"), cfg).summary == "1 problem"

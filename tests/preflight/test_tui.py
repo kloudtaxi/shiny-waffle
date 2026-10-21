@@ -293,7 +293,9 @@ def test_an_engine_error_is_one_line_not_a_traceback(
             await app.workers.wait_for_complete()
             await pilot.pause()
             assert app.banner_text == "✖ ERROR" and app.exit_code == 2
-            assert len(said.messages) == 1 and said.messages[0].startswith("ValidationError: ")
+            assert len(said.messages) == 1 and said.messages[0].startswith(
+                "RecordError: unreadable pre-flight record 2026-10-20T00-00-00Z.json: "
+            )
 
     asyncio.run(go())
 
@@ -443,13 +445,32 @@ def test_no_subcommand_on_a_terminal_opens_the_app(
     assert not (run_dir / "preflight").exists()  # the (fake) app ran, not `check`
 
 
+def without(monkeypatch: pytest.MonkeyPatch, module: str) -> None:
+    """Make `module` unimportable, and the app import afresh so it meets that."""
+    monkeypatch.delitem(sys.modules, "preflight.tui.app", raising=False)
+    monkeypatch.setitem(sys.modules, module, None)  # importing it raises
+
+
 def test_tui_without_textual_says_which_group_to_install(
     run_dir: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
     setup_run(run_dir)
-    monkeypatch.setitem(sys.modules, "preflight.tui.app", None)  # importing it raises
+    without(monkeypatch, "textual")
     assert cli.main(["tui", "--run", str(run_dir)]) == 2
     assert "uv sync --group tui" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("argv", [["tui"], []], ids=["tui", "no subcommand"])
+def test_a_broken_app_is_not_mistaken_for_a_missing_textual(
+    run_dir: Path, monkeypatch: pytest.MonkeyPatch, argv: list[str]
+) -> None:  # F-13
+    setup_run(run_dir)
+    monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
+    without(monkeypatch, "preflight.tui.screens")  # textual is there; the app's own import fails
+    with pytest.raises(ImportError) as e:
+        cli.main([*argv, "--run", str(run_dir)])
+    assert e.value.name == "preflight.tui.screens"
+    assert not (run_dir / "preflight").exists()  # it didn't fall back to `check`
 
 
 @pytest.mark.parametrize("cmd", [["tui"], ["serve"]])
@@ -482,3 +503,46 @@ def test_serve_runs_the_tui_command_on_localhost(
         (command, "localhost", 9000),
         ("served", f"{repo / 'lab'}{os.pathsep}/elsewhere", 0),
     ]
+
+
+# --- final review (F-14) ---------------------------------------------------------------------
+
+
+def test_agent_context_details_show_the_reader_values(run_dir: Path, repo: Path) -> None:  # F-14
+    async def go() -> None:
+        setup_run(run_dir)
+        app = PreflightApp(run_dir, repo, load_config(run_dir, repo), fake_deps())
+        async with app.run_test() as pilot:
+            await app.workers.wait_for_complete()
+            await pilot.pause()
+            for _ in range(3):  # inputs, fingerprint, settled, then agent context
+                await pilot.press("down")
+            await pilot.press("enter")
+            assert isinstance(app.screen, DetailScreen)
+            assert app.screen.check.name == "agent_context" and app.screen.check.values == []
+            fp = app.main_screen.results["fingerprint"]
+            reader = [v for v in fp.values if v.group == "reader"]
+            assert reader and app.screen.query_one(DataTable).row_count == len(reader)
+            note = text_of(app.screen.query_one("#problems", Static))
+            assert note == "no problems · the reader's values, as the fingerprint recorded them"
+
+    asyncio.run(go())
+
+
+def test_agent_context_details_without_a_fingerprint_list_what_was_checked(
+    run_dir: Path, repo: Path
+) -> None:  # F-14
+    async def go() -> None:
+        setup_run(run_dir)
+        write_config(run_dir, LOCAL_CFG.replace("[inputs, fingerprint, settled, agent_context]",
+                                                "[agent_context]"))  # fmt: skip
+        app = PreflightApp(run_dir, repo, load_config(run_dir, repo), fake_deps())
+        async with app.run_test() as pilot:
+            await app.workers.wait_for_complete()
+            await pilot.pause()
+            await pilot.press("enter")
+            assert isinstance(app.screen, DetailScreen)
+            note = text_of(app.screen.query_one("#problems", Static))
+            assert note.startswith("no problems · checked: cwd outside the repo")
+
+    asyncio.run(go())

@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import os
 import sys
-from datetime import datetime, timedelta
+from datetime import UTC, date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -14,9 +15,9 @@ from preflight import cli
 from preflight.config import AgentContextConfig, FoundationConfig, load_config
 from preflight.engine import Deps, Event, describe_exc, evaluate, finish, run_preflight
 from preflight.foundations import Foundation, FoundationSnapshot
-from preflight.markers import Markers
+from preflight.markers import Markers, collect_markers
 from preflight.observe.lab import LabObservation
-from preflight.observe.probe import ProbeObservation
+from preflight.observe.probe import ProbeObservation, run_probe
 from preflight.record import (
     BaselineRef,
     CheckResult,
@@ -29,11 +30,13 @@ from preflight.record import (
 from preflight.spend import live_reservations
 from tests.preflight.fakes import (
     AT,
+    INIT,
     LOCAL_CFG,
     META,
     QUESTIONS,
     Clock,
     fake_deps,
+    fake_git,
     probe_with,
     stream,
     write_config,
@@ -157,7 +160,7 @@ def test_the_check_lines_and_record_path_print_in_order(
     write_config(run_dir, LOCAL_CFG)
     assert cli.main(["check", "--run", str(run_dir)], fake_deps()) == 0
     lines = capsys.readouterr().out.splitlines()
-    assert lines[0].startswith("✔ Inputs         1 questions · 1 ids")
+    assert lines[0].startswith("✔ Inputs         1 question · 1 id · ")  # F-14
     assert lines[1] == "✔ Fingerprint    baseline set by this record"
     assert lines[2] == "· Settled        not applicable (local foundation)"
     assert lines[3].startswith("✔ Agent context  cwd outside repo")
@@ -396,7 +399,8 @@ def test_no_subcommand_on_a_terminal_without_the_app_runs_check(
 ) -> None:
     write_config(run_dir, LOCAL_CFG)
     monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
-    monkeypatch.setitem(sys.modules, "preflight.tui.app", None)  # importing it raises
+    monkeypatch.delitem(sys.modules, "preflight.tui.app", raising=False)
+    monkeypatch.setitem(sys.modules, "textual", None)  # textual isn't installed
     assert cli.main(["--run", str(run_dir)], fake_deps()) == 0
 
 
@@ -472,7 +476,10 @@ def test_a_corrupt_record_exits_2_with_one_line(
     (run_dir / "preflight" / "2026-10-20T00-00-00Z.json").write_text("{not json")
     assert cli.main(["check", "--run", str(run_dir)], fake_deps()) == 2
     err = capsys.readouterr().err.splitlines()
-    assert len(err) == 1 and err[0].startswith("preflight: ValidationError: ")
+    assert len(err) == 1 and err[0].startswith(  # F-6: the error names the record
+        "preflight: RecordError: unreadable pre-flight record 2026-10-20T00-00-00Z.json: "
+        "ValidationError: "
+    )
 
 
 def test_record_names_exhausted_exits_2(run_dir: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -578,3 +585,101 @@ def test_describe_exc() -> None:
     assert describe_exc(OSError()) == "OSError"
     assert describe_exc(ValueError("a\nb")) == "ValueError: a"
     assert describe_exc(ValueError("x" * 300)) == "ValueError: " + "x" * 200
+
+
+# --- final review (F-1, F-7) -------------------------------------------------------------------
+
+PACIFIC = timezone(timedelta(hours=-7))
+
+
+def real_markers(repo: Path, days: list[date]) -> Markers:
+    return collect_markers(repo, days, "/Users/ada", fake_git)
+
+
+def test_the_local_date_counts_when_utc_is_already_tomorrow(run_dir: Path, repo: Path) -> None:
+    write_config(run_dir, LOCAL_CFG)
+    late = datetime(2026, 10, 21, 2, 0, tzinfo=UTC)  # 19:00 on the 20th in US-Pacific
+    days: list[list[date]] = []
+
+    def runner(cmd: list[str], env: dict[str, str], cwd: Path) -> int:
+        out = Path(env["PREFLIGHT_PROBE_OUT"])
+        (out / "probe.jsonl").write_text(stream(init=INIT, answer="Today is 2026-10-20."))
+        (out / "probe.json").write_text(json.dumps(META))
+        return 0
+
+    def probe(
+        cfg: AgentContextConfig, run: Path, repo: Path, markers: Markers, started: datetime
+    ) -> ProbeObservation:
+        return run_probe(cfg, run, repo, markers, started, runner=runner)
+
+    def markers(repo: Path, d: list[date]) -> Markers:
+        days.append(d)
+        return real_markers(repo, d)
+
+    deps = fake_deps(t0=late, probe=probe)
+    deps.markers = markers
+    deps.local_date = lambda t: t.astimezone(PACIFIC).date()
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
+    assert days[0] == [date(2026, 10, 20), date(2026, 10, 21)]  # local, then UTC
+    fp = check(out.record.checks, "fingerprint")
+    knows = next(v for v in fp.values if v.field == "reader.knows_real_date")
+    assert knows.value is True
+    assert out.record.probe is not None and out.record.probe.stream is not None
+    saved = Path(out.record.probe.stream).read_text()
+    assert "2026-10-20" not in saved and "Today is <marker:date>." in saved
+
+
+def test_the_local_date_is_the_clock_s_own_zone_by_default() -> None:
+    t = datetime(2026, 10, 21, 2, 0, tzinfo=UTC)
+    assert Deps().local_date(t) == t.astimezone().date()
+
+
+@pytest.mark.parametrize("cfg", [LOCAL_CFG, UTOPIA_CFG], ids=["local", "utopia"])
+def test_a_collector_s_home_path_is_stored_as_a_marker(
+    run_dir: Path, repo: Path, cfg: str
+) -> None:  # F-7: with or without the agent-context check
+    write_config(run_dir, cfg)
+    message = "cannot open /Users/ada/tokens/k.token (2026-10-21)"
+    clock = Clock(AT)
+    deps = fake_deps() if cfg == LOCAL_CFG else utopia_deps(clock, FakeFoundation(clock, []))
+    deps.markers = real_markers
+
+    def no_inputs(cfg: Any, run: Path, repo: Path) -> Any:
+        raise OSError(message)
+
+    def no_foundation(cfg: FoundationConfig, run: Path, repo: Path) -> Foundation:
+        raise OSError(message)
+
+    deps.observe_inputs = no_inputs
+    deps.make_foundation = no_foundation
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
+    want = "could not read: OSError: cannot open <marker:home>/tokens/k.token (2026-10-21)"
+    failed = [c for c in out.record.checks if c.status == "fail"]
+    assert failed and all(c.problems[0] == want and c.summary == want for c in failed)
+    text = out.path.read_text()
+    assert "/Users/ada" not in text and "2026-10-21T09:14:00Z" in text  # dates are not redacted
+    assert out.record.started == "2026-10-21T09:14:00Z"
+
+
+def test_a_runner_s_probe_problems_are_stored_redacted(run_dir: Path, repo: Path) -> None:  # F-7
+    write_config(run_dir, LOCAL_CFG)
+    deps = fake_deps(probe=probe_with({**META, "problems": ["MCP config at /Users/ada/x.json"]}))
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), deps=deps)
+    ac = check(out.record.checks, "agent_context")
+    assert ac.problems == ["runner: MCP config at <marker:home>/x.json"]
+    assert "/Users/ada" not in out.path.read_text()
+
+
+def test_a_note_quoting_a_problem_is_redacted_like_the_record(run_dir: Path, repo: Path) -> None:
+    write_config(run_dir, FINGERPRINT_ONLY)  # F-7: the fingerprint carries the foundation's error
+    clock = Clock(AT)
+    deps = utopia_deps(clock, FakeFoundation(clock, []))
+    deps.markers = real_markers
+
+    def no_foundation(cfg: FoundationConfig, run: Path, repo: Path) -> Foundation:
+        raise OSError("cannot open /Users/ada/tokens/k.token")
+
+    deps.make_foundation = no_foundation
+    out = run_preflight(run_dir, repo, load_config(run_dir, repo), accept_reason="r", deps=deps)
+    assert out.note is not None and "<marker:home>/tokens/k.token" in out.note
+    assert "/Users/ada" not in out.note

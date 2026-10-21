@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import threading
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +14,7 @@ from contract_reader.tools import TEXT_TOOLS
 from exam import questions as q
 from exam import reader
 from exam.score_part2 import Scorers, table
+from preflight.spend import Guard, Reservation, live_reservations
 
 SYSTEM_PROMPT = vars(reader)["SYSTEM_PROMPT"]  # the blind reader's, imported by reader
 RUN = Path(__file__).resolve().parents[2] / "runs" / "2026-10-17-b20-northstar-exam"
@@ -320,3 +322,63 @@ def test_a_refused_reservation_skips_the_question(
     setup = json.loads((folder / "part2/a/C1/r1/setup.json").read_text())
     assert setup["preflight"]["status"] == "missing"
     assert setup["flags"] == reader.FLAGS
+
+
+def test_a_question_waiting_on_its_reservation_starts_nothing_after_a_halt(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:  # G-50 F-9: S02 passes the halted check, then waits in reserve while S01 halts
+    folder = tmp_path / "runs" / "r"
+    folder.mkdir(parents=True)
+    (folder / "questions.tsv").write_text(
+        "id\tcorpus\tprocess\tquestion\nS01\tbase\tdiscount\tq1\nS02\tbase\tdiscount\tq2\n"
+    )
+    arm = {"mode": "bearer", "url": "http://x", "token_file": "nope.token", "kbs": {"base": "k"}}
+    (folder / "arms.json").write_text(json.dumps({"arms": {"a": arm}}))
+    s02_reserving = threading.Event()
+    s01_released = threading.Event()
+    asked: list[str] = []
+
+    class Held:
+        def __init__(self, inner: Reservation, item: str) -> None:
+            self.inner, self.item = inner, item
+
+        def __enter__(self) -> Held:
+            return self
+
+        def __exit__(self, *exc: object) -> None:
+            self.release()
+
+        def release(self) -> None:
+            self.inner.release()
+            if self.item == "S01":
+                s01_released.set()
+
+    class GatedGuard:
+        def __init__(self, run: Path, cap: float, est: float, label: str) -> None:
+            self.inner = Guard(run, cap, est, label)
+
+        def reserve(self, item: str) -> Held:
+            if item == "S02":
+                s02_reserving.set()
+                assert s01_released.wait(10)  # S01 has halted the run and let go
+            return Held(self.inner.reserve(item), item)
+
+    def ask(prompt: str, *args: Any) -> str:
+        asked.append(prompt)
+        if prompt == "q1":
+            assert s02_reserving.wait(10)
+            return json.dumps({"type": "result", "is_error": True, "subtype": "success"}) + "\n"
+        return json.dumps({"type": "result", "subtype": "success", "result": "ok"}) + "\n"
+
+    monkeypatch.setattr(reader, "Guard", GatedGuard)
+    monkeypatch.setattr(reader, "ask", ask)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reader", "run", "--run", str(folder), "--arm", "a", "--variant", "C1", "--rep", "1",
+         "--cap-usd", "50", "--workers", "2"],
+    )  # fmt: skip
+    reader.main()
+    out = capsys.readouterr().out
+    assert asked == ["q1"]
+    assert "S01 INFRA ERROR 1" in out and "S02 skipped: an infra error halted this run" in out
+    assert live_reservations(folder) == []  # S02's reservation was released, not leaked

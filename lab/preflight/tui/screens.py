@@ -18,6 +18,7 @@ from textual.screen import ModalScreen, Screen
 from textual.widgets import Button, DataTable, Footer, Input, Static
 
 from preflight.baseline import baseline_values
+from preflight.checks.agent_context import CHECKED
 from preflight.config import CheckName
 from preflight.engine import Evaluation, Event, describe_exc, repo_relative
 from preflight.labels import LABEL, MARK
@@ -189,22 +190,42 @@ class MainScreen(Screen[None]):
         if result is None:
             self.app.notify("still running")
             return
+        if result.name == "agent_context" and not result.values:
+            # Its values are the reader's, which the fingerprint records (F-14).
+            fp = self.results.get("fingerprint")
+            reader = [v for v in fp.values if v.group == "reader"] if fp is not None else []
+            if reader:
+                note = "the reader's values, as the fingerprint recorded them"
+                self.app.push_screen(DetailScreen(result, reader, note))
+            else:
+                self.app.push_screen(DetailScreen(result, [], f"checked: {', '.join(CHECKED)}"))
+            return
         self.app.push_screen(DetailScreen(result))
 
 
 class DetailScreen(Screen[None]):
-    """Every value of one check, with its source and state, and its problems."""
+    """Every value of one check, with its source and state, and its problems.
+
+    `values` and `note` let a check show values another check recorded (agent context's are
+    the fingerprint's reader values) and say so.
+    """
 
     BINDINGS: ClassVar[list[BindingType]] = [Binding("escape", "app.pop_screen", "back")]
 
-    def __init__(self, check: CheckResult) -> None:
+    def __init__(
+        self, check: CheckResult, values: list[Value] | None = None, note: str | None = None
+    ) -> None:
         super().__init__()
         self.check = check
+        self.values = check.values if values is None else values
+        self.note = note
 
     def compose(self) -> ComposeResult:
         c = self.check
         yield Static(f"{MARK[c.status]} {LABEL[c.name]}  {c.summary}", id="title", markup=False)
-        none = "no problems" if c.values else "no values recorded"
+        none = "no problems" if self.values or self.note else "no values recorded"
+        if self.note:
+            none += f" · {self.note}"
         problems = "\n".join(f"- {p}" for p in c.problems) or none
         yield Static(problems, id="problems", markup=False)
         yield DataTable[Text](id="values", cursor_type="row")
@@ -214,7 +235,7 @@ class DetailScreen(Screen[None]):
         table = self.query_one("#values", DataTable)
         for label in ("", "field", "compared with", "now", "state", "read from"):
             table.add_column(label)
-        for v in self.check.values:
+        for v in self.values:
             table.add_row(
                 _mark(_value_mark(v)),
                 Text(v.label),

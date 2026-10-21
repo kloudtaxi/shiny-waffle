@@ -17,6 +17,7 @@ from preflight.record import (
     LabRef,
     ProbeRef,
     Record,
+    RecordError,
     Value,
     amendment_line,
     append_amendment,
@@ -142,3 +143,49 @@ def test_appending_keeps_every_earlier_byte(run_dir: Path, tmp_path: Path) -> No
     fresh.parent.mkdir()
     append_amendment(fresh, "- line")  # a missing notes.md is created
     assert fresh.read_text() == "- line\n"
+
+
+# --- final review (F-6): a crash mid-write bricks nothing --------------------------------------
+
+
+def test_a_crash_before_the_record_is_named_leaves_no_record(
+    run_dir: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def crash(fd: int) -> None:
+        raise OSError("disk went away")
+
+    monkeypatch.setattr("preflight.record.os.fsync", crash)  # after the write, before the name
+    with pytest.raises(OSError, match="disk went away"):
+        write_record(run_dir, sample_record(), AT)
+    assert list((run_dir / "preflight").iterdir()) == []  # no record, no temp file
+    assert latest_record(run_dir) is None
+
+
+def test_a_stray_temp_file_is_not_a_record(run_dir: Path) -> None:
+    folder = run_dir / "preflight"
+    folder.mkdir()
+    (folder / ".2026-10-21T09-14-02Z.json.k3j2.tmp").write_text("")  # a killed writer's leftover
+    assert latest_record(run_dir) is None
+    path = write_record(run_dir, sample_record(), AT)
+    assert load_record(path) == sample_record()
+
+
+def test_a_written_record_is_whole_and_still_write_once(run_dir: Path) -> None:
+    path = write_record(run_dir, sample_record(), AT)
+    assert json.loads(path.read_text())["status"] == "pass"
+    with pytest.raises(FileExistsError):
+        write_record(run_dir, sample_record("fail"), AT)
+    assert load_record(path).status == "pass"
+    assert sorted(p.name for p in path.parent.iterdir()) == [path.name]
+
+
+def test_an_unreadable_record_s_error_names_it(run_dir: Path) -> None:
+    folder = run_dir / "preflight"
+    folder.mkdir()
+    (folder / "2026-10-21T09-14-02Z.json").write_text("")
+    with pytest.raises(
+        RecordError, match=r"^unreadable pre-flight record 2026-10-21T09-14-02Z\.json: "
+    ):
+        latest_record(run_dir)
+    with pytest.raises(RecordError, match="2026-10-21T09-14-02Z.json"):
+        load_record(folder / "2026-10-21T09-14-02Z.json")

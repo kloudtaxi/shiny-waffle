@@ -14,6 +14,7 @@ from exam import (
     reader,  # noqa: F401  (puts lab/utopia on sys.path)
 )
 from preflight.spend import live_reservations, recorded_usd
+from tests.preflight.fakes import stream
 
 import blind_reader  # noqa: E402  isort: skip
 
@@ -38,11 +39,18 @@ def _one_reading(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(judge, "readings", lambda snap: [dict(reading)])
 
 
-def test_blind_reader_requires_a_cap(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "argv", ["blind_reader", "run", "--run", "x", "--out", "y"])
+def test_blind_reader_requires_a_cap(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # A variant is named: argparse rejects the default variants list against `choices` (a
+    # separate, older quirk), which is how this test used to pass without `required=True`.
+    argv = ["blind_reader", "run", "--run", "x", "--out", "y", "B1"]
+    monkeypatch.setattr(sys, "argv", argv)
     with pytest.raises(SystemExit) as e:
         blind_reader.main()
-    assert e.value.code == 2  # argparse: --cap-usd is required
+    assert e.value.code == 2
+    err = capsys.readouterr().err  # F-15: argparse refused it for want of --cap-usd
+    assert "the following arguments are required: --cap-usd" in err
 
 
 def test_blind_reader_probe_prompt_asks_who_and_when() -> None:
@@ -55,11 +63,15 @@ def test_blind_reader_shares_the_one_probe_writer() -> None:
     assert blind_reader.write_probe_out is reader.write_probe_out
 
 
-def test_judge_requires_a_cap(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+def test_judge_requires_a_cap(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
     monkeypatch.setattr(sys, "argv", ["judge", str(tmp_path / "s.json")])
     with pytest.raises(SystemExit) as e:
         judge.main()
     assert e.value.code == 2
+    err = capsys.readouterr().err  # F-15: argparse refused it for want of --cap-usd
+    assert "the following arguments are required: --cap-usd" in err
 
 
 def test_judge_settles_each_call_and_releases_after_writing(
@@ -103,3 +115,75 @@ def test_judge_refusal_skips_a_reading_and_says_so(
     )
     judge.main()
     assert "skipped: spend guard:" in capsys.readouterr().out and calls == []
+
+
+# --- final review (F-12, F-15) -----------------------------------------------------------------
+
+
+class _StopError(Exception):
+    """Raised by a fake to end `main` once the step under test has passed."""
+
+
+def test_blind_reader_refuses_an_out_outside_the_guarded_run(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    run = tmp_path / "runs" / "r"
+    run.mkdir(parents=True)
+
+    def no_token(name: str, kbs: list[str]) -> tuple[str, str]:
+        raise AssertionError("a token was minted")
+
+    monkeypatch.setattr(blind_reader, "mint_token", no_token)
+    argv = ["blind_reader", "run", "--run", str(run), "--out", str(tmp_path / "arm-b")]
+    monkeypatch.setattr(sys, "argv", [*argv, "--cap-usd", "5", "B1"])
+    with pytest.raises(SystemExit) as e:
+        blind_reader.main()
+    assert e.value.code == 2
+    err = capsys.readouterr().err
+    assert "--out" in err and "inside --run" in err
+
+
+def test_blind_reader_accepts_an_out_inside_the_run(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    run = tmp_path / "runs" / "r"
+    run.mkdir(parents=True)
+    (run / "questions.tsv").write_text("id\tkb\tquestion\nS01\tk\tq\n")
+
+    def stop(name: str, kbs: list[str]) -> tuple[str, str]:
+        raise _StopError
+
+    monkeypatch.setattr(blind_reader, "mint_token", stop)
+    argv = ["blind_reader", "run", "--run", str(run), "--out", str(run / "arm-b")]
+    monkeypatch.setattr(sys, "argv", [*argv, "--cap-usd", "5", "B1"])
+    with pytest.raises(_StopError):
+        blind_reader.main()
+
+
+def test_blind_reader_s_probe_records_the_flags_it_ran_with(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    run = tmp_path / "runs" / "r"
+    run.mkdir(parents=True)
+    (run / "questions.tsv").write_text("id\tkb\tquestion\nS01\tk\tq\n")
+    out = tmp_path / "probe-out"
+    turns: list[int] = []
+
+    def fake_reader(
+        token: str, kb: str, prompt: str, allowed: list[str], hidden: list[str], model: str,
+        max_turns: int = blind_reader.MAX_TURNS, **kw: Any,
+    ) -> str:  # fmt: skip
+        turns.append(max_turns)
+        return stream(init={"tools": []}, answer="I don't know.")
+
+    monkeypatch.setattr(blind_reader, "mint_token", lambda name, kbs: ("tok", "tid"))
+    monkeypatch.setattr(blind_reader, "revoke", lambda tid: None)
+    monkeypatch.setattr(blind_reader, "mcp_tools", lambda token, kb: [{"name": "find_entities"}])
+    monkeypatch.setattr(blind_reader, "reader", fake_reader)
+    monkeypatch.setenv("PREFLIGHT_PROBE_OUT", str(out))
+    monkeypatch.setattr(sys, "argv", ["blind_reader", "probe", "--run", str(run)])
+    blind_reader.main()
+    meta = json.loads((out / "probe.json").read_text())
+    assert turns and meta["flags"] == blind_reader.flags_for(turns[0])
+    assert f"--max-turns {turns[0]};" in meta["flags"]
+    assert meta["flags"] == blind_reader.FLAGS  # the probe runs as a counted call: no cite warning

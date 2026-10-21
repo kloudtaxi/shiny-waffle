@@ -378,6 +378,12 @@ def main() -> None:
         except CapReached as exc:
             print(f"{q['id']} skipped: {exc}", flush=True)
             return
+        with lock:  # an infra error may have halted the run while this thread waited (F-9)
+            stop = halted[0]
+        if stop:
+            reservation.release()
+            print(f"{q['id']} skipped: an infra error halted this run", flush=True)
+            return
         with reservation:  # released after the cost is on disk
             kb = cfg["kbs"][q["corpus"]]
             sysprompt, _ = system_prompt(q["process"])

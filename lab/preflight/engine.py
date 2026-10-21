@@ -31,7 +31,7 @@ from preflight.config import (
 from preflight.foundations import Foundation, FoundationSnapshot
 from preflight.foundations import make_foundation as _make_foundation
 from preflight.foundations.attest import Attestation, read_attestation
-from preflight.markers import Markers
+from preflight.markers import Markers, redact
 from preflight.markers import default_markers as _default_markers
 from preflight.observe.inputs import InputsObservation
 from preflight.observe.inputs import observe_inputs as _observe_inputs
@@ -77,6 +77,11 @@ def _now_utc() -> datetime:
     return datetime.now(UTC)
 
 
+def _local_date(t: datetime) -> date:
+    """The operator's local date at `t`: what an agent on this machine is told is today."""
+    return t.astimezone().date()
+
+
 @dataclass
 class Deps:
     """Everything with I/O or a clock, so tests can pass fakes."""
@@ -88,8 +93,9 @@ class Deps:
         _run_probe
     )
     claude_version: Callable[[], str | None] = _claude_cli_version
-    markers: Callable[[Path, date], Markers] = _default_markers
+    markers: Callable[[Path, list[date]], Markers] = _default_markers
     now: Callable[[], datetime] = _now_utc
+    local_date: Callable[[datetime], date] = _local_date
     sleep: Callable[[float], None] = time.sleep
 
 
@@ -104,6 +110,8 @@ class Evaluation:
     baseline: Baseline | None
     probe: ProbeRef | None
     drift: list[Value]
+    # In memory only, for `finish` to redact problems with (F-7). Never serialise it.
+    markers: Markers = field(default_factory=lambda: Markers({}), repr=False)
 
 
 @dataclass(frozen=True)
@@ -248,13 +256,15 @@ def evaluate(
         if name in listed:
             on_event(Event(name, "started", "running"))
 
+    # Always read: `finish` redacts every check's problems with them (F-7). Today is both the
+    # operator's local date and the UTC date (F-1).
     markers = Markers({})
     markers_problem: str | None = None
-    if "agent_context" in listed:
-        try:
-            markers = deps.markers(repo, deps.now().date())
-        except Exception as exc:
-            markers_problem = _could_not_read(exc)
+    try:
+        days = list(dict.fromkeys([deps.local_date(started), started.astimezone(UTC).date()]))
+        markers = deps.markers(repo, days)
+    except Exception as exc:
+        markers_problem = _could_not_read(exc)
 
     results: dict[CheckName, CheckResult] = {}
 
@@ -361,6 +371,7 @@ def evaluate(
         baseline=baseline,
         probe=probe_ref,
         drift=drift,
+        markers=markers,
     )
 
 
@@ -406,6 +417,22 @@ def _status(ev: Evaluation, reason: str) -> tuple[Literal["pass", "fail", "accep
     return "accepted", None
 
 
+REDACTED_KINDS = frozenset({"operator", "home", "repo"})  # not dates: record times hold them
+
+
+def _redacted(checks: list[CheckResult], markers: Markers) -> list[CheckResult]:
+    """Every check's summary and problems without operator, home or repo values (F-7)."""
+    return [
+        c.model_copy(
+            update={
+                "summary": redact(c.summary, markers, REDACTED_KINDS),
+                "problems": [redact(p, markers, REDACTED_KINDS) for p in c.problems],
+            }
+        )
+        for c in checks
+    ]
+
+
 def finish(
     run: Path,
     repo: Path,
@@ -418,10 +445,14 @@ def finish(
     """Write the evaluation's record once; on accepted drift, append the amendment to notes.md.
 
     `at` names the record and stamps the amendment (default: now), so a front end can preview
-    the exact line it will write (T12-a). A taken name moves on a second at a time.
+    the exact line it will write (T12-a). A taken name moves on a second at a time. Problems and
+    summaries are redacted before they are written (F-7).
     """
     reason = " ".join((accept_reason or "").split())  # T2-a: an amendment stays one line
     status, note = _status(ev, reason)
+    checks = _redacted(ev.checks, ev.markers)
+    if note is not None:  # it may quote a problem: shown as the record shows it
+        note = redact(note, ev.markers, REDACTED_KINDS)
     has_fp = any(c.name == "fingerprint" for c in ev.checks)
     groups = compared_groups(ev.baseline) if has_fp else frozenset()
     at = deps.now() if at is None else at
@@ -442,7 +473,7 @@ def finish(
                 record=None if ev.baseline is None else repo_relative(ev.baseline.path, repo),
                 compared_groups=[g for g in GROUPS if g in groups],
             ),
-            checks=ev.checks,
+            checks=checks,
             accepted=accepted,
             probe=ev.probe,
         )

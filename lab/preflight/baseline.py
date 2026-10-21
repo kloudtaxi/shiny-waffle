@@ -17,15 +17,26 @@ class Baseline:
 
 
 def pick_baseline(spec: str, run: Path, repo: Path) -> Baseline | None:
-    """`latest` is the run's newest pass/accepted record; otherwise a repo-relative record path."""
+    """`latest` is the run's newest pass/accepted record; otherwise a repo-relative record path.
+
+    A record without a fingerprint check holds nothing to compare with, so it is no baseline
+    (F-10): this evaluation's record sets one.
+    """
     if spec == "latest":
         found = latest_record(run)
-        return None if found is None else Baseline(found[0], found[1], True)
-    path = repo / spec
-    if not path.is_file():
-        raise ConfigError(f"baseline record not found: {spec}")
-    same = path.parent.parent.resolve() == run.resolve()
-    return Baseline(path, load_record(path), same)
+        if found is None:
+            return None
+        path, record = found
+        same = True
+    else:
+        path = repo / spec
+        if not path.is_file():
+            raise ConfigError(f"baseline record not found: {spec}")
+        record = load_record(path)
+        same = path.parent.parent.resolve() == run.resolve()
+    if not any(c.name == "fingerprint" for c in record.checks):
+        return None
+    return Baseline(path, record, same)
 
 
 def compared_groups(baseline: Baseline | None) -> frozenset[Group]:

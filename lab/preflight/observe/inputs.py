@@ -10,12 +10,10 @@ from pathlib import Path
 
 from preflight.config import InputsConfig
 
-HEADER = ["id", "corpus", "process", "question"]
-
 
 @dataclass(frozen=True)
 class Question:
-    """One row of the questions file."""
+    """One row of the questions file: the configured id, corpus and question columns."""
 
     id: str
     corpus: str
@@ -27,7 +25,7 @@ class InputsObservation:
     """What the questions file and the evidence trees hold."""
 
     questions_sha256: str
-    header_ok: bool
+    header: list[str]  # the file's header; rows are read only when it has every configured column
     questions: list[Question]
     corpus_text: dict[str, str]
     tree_hash: dict[str, str]
@@ -110,15 +108,20 @@ def observe_inputs(cfg: InputsConfig, run: Path, repo: Path) -> InputsObservatio
     """Read the questions file and every configured evidence tree."""
     raw = (run / cfg.questions).read_bytes()
     lines = raw.decode("utf-8", errors="replace").splitlines()
-    header_ok = bool(lines) and lines[0].split("\t") == HEADER
+    header = lines[0].split("\t") if lines else []
+    cols = cfg.columns
     questions: list[Question] = []
-    for line in lines[1:]:
-        if not line.strip():
-            continue
-        parts = line.split("\t", 3)
-        if len(parts) < 4:
-            parts += [""] * (4 - len(parts))
-        questions.append(Question(id=parts[0], corpus=parts[1], text=parts[3]))
+    if all(c in header for c in cols.values()):
+        for line in lines[1:]:
+            if not line.strip():
+                continue
+            # Only the last column may hold tabs: it takes the rest of the line.
+            parts = line.split("\t", len(header) - 1)
+            parts += [""] * (len(header) - len(parts))
+            row = dict(zip(header, parts, strict=True))
+            questions.append(
+                Question(id=row[cols["id"]], corpus=row[cols["corpus"]], text=row[cols["question"]])
+            )
     corpus_text: dict[str, str] = {}
     tree_hash: dict[str, str] = {}
     file_counts: dict[str, int] = {}
@@ -131,7 +134,7 @@ def observe_inputs(cfg: InputsConfig, run: Path, repo: Path) -> InputsObservatio
         tree_hash[corpus] = evidence_tree_hash(paths, repo)
     return InputsObservation(
         questions_sha256=hashlib.sha256(raw).hexdigest(),
-        header_ok=header_ok,
+        header=header,
         questions=questions,
         corpus_text=corpus_text,
         tree_hash=tree_hash,

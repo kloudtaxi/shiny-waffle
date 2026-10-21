@@ -253,7 +253,7 @@ def test_a_timeout_after_a_partial_stream_stays_an_error(run_dir: Path, repo: Pa
 
 
 def test_meta_strings_are_redacted_in_values() -> None:
-    meta = {**META, "flags": "--add-dir /Users/ada/x", "expected_tools": ["t-/Users/ada"]}
+    meta = {**META, "flags": "--add-dir /Users/ada/x", "expected_tools": ["/Users/ada/t"]}
     vals = {x.field: x for x in reader_values(obs(meta=meta), "2.1.299", M)}
     assert vals["reader.flags"].value == "--add-dir <marker:home>/x"
     assert "/Users/ada" not in json.dumps([x.model_dump(mode="json") for x in vals.values()])
@@ -310,3 +310,12 @@ def test_a_failed_probe_reads_no_reader_values() -> None:
     assert vals and all(x.value is None and x.state == "unread" for x in vals.values())
     unread = {x.field: x for x in reader_values(failed, None, M)}["reader.claude_cli_version"]
     assert (unread.value, unread.state) == (None, "unread")
+
+
+def test_tools_in_context_are_redacted_too() -> None:  # F-7
+    init = {**INIT, "tools": ["mcp__foundation__find_entities", "/Users/ada/bin/tool"]}
+    vals = {x.field: x for x in reader_values(obs(init=init), "2.1.299", M)}
+    assert vals["reader.tools"].value == [
+        "<marker:home>/bin/tool",
+        "mcp__foundation__find_entities",
+    ]

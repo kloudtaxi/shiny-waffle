@@ -58,3 +58,24 @@ def test_bad_configs_are_refused_with_the_problem_named(
 def test_a_missing_config_is_a_config_error(run_dir: Path, repo: Path) -> None:
     with pytest.raises(ConfigError, match="preflight.yaml"):
         load_config(run_dir, repo)
+
+
+def test_columns_default_and_merge_a_partial_override(run_dir: Path, repo: Path) -> None:  # F-2
+    write_config(run_dir, GOOD)
+    cfg = load_config(run_dir, repo).inputs
+    assert cfg is not None and cfg.columns == {
+        "id": "id",
+        "corpus": "corpus",
+        "question": "question",
+    }
+    write_config(
+        run_dir, GOOD.replace("  supplied_keys:", "  columns: {corpus: kb}\n  supplied_keys:")
+    )
+    cfg = load_config(run_dir, repo).inputs
+    assert cfg is not None and cfg.columns == {"id": "id", "corpus": "kb", "question": "question"}
+
+
+def test_an_unknown_column_key_is_refused(run_dir: Path, repo: Path) -> None:  # F-2
+    write_config(run_dir, GOOD.replace("  supplied_keys:", "  columns: {kb: kb}\n  supplied_keys:"))
+    with pytest.raises(ConfigError, match="columns"):
+        load_config(run_dir, repo)
