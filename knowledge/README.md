@@ -22,7 +22,7 @@ flowchart LR
 |---|---|---|
 | [`retrospectives/`](retrospectives/) | One per period of work: timeline, incidents ranked by consequence with root causes, what worked, insights, decisions, open actions | **Append-only.** A retrospective is a record; a correction is added below it |
 | [`patterns.md`](patterns.md) | The recurring shapes behind incidents: signature, root cause, counter, evidence | **Living.** New evidence is added to an existing pattern. A pattern needs one costly incident or two cheap ones |
-| [`insights.md`](insights.md) | Durable truths about measuring, cost and time, and working together | **Living.** Rewritten when the evidence changes, saying why |
+| [`insights.md`](insights.md) | Durable truths about measuring, cost and time, tooling (Textual for operator tools), and working together | **Living.** Rewritten when the evidence changes, saying why |
 | [`agent-habits.md`](agent-habits.md) | How agents here go wrong (claims, labels, monitors, sizing, rules, records), and what stops it | **Living.** Honest and blameless, in the first person plural |
 | [`playbooks/`](playbooks/) | Checklists for recurring work, each item tied to a pattern | **Living.** An item stays only while it prevents something |
 

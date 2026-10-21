@@ -102,6 +102,7 @@ lab/preflight.sh       wrapper: PYTHONPATH=lab uv run python -m preflight "$@"
 checks: [inputs, fingerprint, settled, agent_context]
 inputs:
   questions: questions.tsv                    # id, corpus, process, question
+  # columns: {corpus: kb}                     # header names to read; Utopia's file is id, kb, question
   id_patterns: ['\bCRM-\d{4}\b', '\bDR-\d{4}\b', '\bCR-\d{4}\b', '\bSR-\d{5}\b', '\bNS-[A-Z0-9]+\b']
   supplied_keys: [request_id]                 # ids a question's own inline record defines (§4.1)
   evidence:                                   # corpus → paths, relative to the repo
@@ -119,6 +120,7 @@ settled:
 agent_context:
   probe: [uv, run, python, lab/exam/reader.py, probe, --run, runs/<x>, --arm, b20, --variant, C2]
   est_usd: 0.25
+  cap_usd: 200                                # required: checked against the whole folder's spend
 baseline: latest                              # or a record path: runs/<other>/preflight/<ts>.json
 ```
 

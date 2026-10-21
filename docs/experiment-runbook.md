@@ -15,12 +15,12 @@ which is gitignored. The commands below read them from the `UTOPIA_EMAIL` and
 | # | Step | Time |
 |---|---|---|
 | 0 | `uv run northstar check`, then start a run folder and copy the evaluation sheets into it | 2 min |
-| 1 | Pre-flight: `lab/preflight.sh check --run runs/<x>` (G-50), then the one-document smoke test | 10 min |
+| 1 | Smoke test: one document through the pipeline, so a broken model config can't fail silently | 10 min |
 | 2 | Create two **fresh** KBs: *Northstar Industrial Systems* and *Northstar — missing contract evidence* | 2 min |
 | 3 | Upload the **17 evidence files only** (not `MANIFEST.yaml`), and the 14-file variant into the second KB | 2 min |
 | 4 | Wait for the pipeline, then check failed jobs, drops, and whether each document got a date | 30–60 min |
 | 5 | Snapshot what Utopia knows: RDF export, ontology, review queue | 5 min |
-| 6 | Ask each scenario verbatim, **one new conversation per question**. S05 goes only to the variant KB | 30 min |
+| 6 | Pre-flight (`lab/preflight.sh check --run runs/<x>`, G-50), then ask each scenario verbatim, **one new conversation per question**. S05 goes only to the variant KB | 35 min |
 | 7 | Fill `fact-checklist.csv`: for each fact, is it in the graph, only in text, or absent? | 45 min |
 | 8 | Score each answer against the rubric and write up the candidate OWM capabilities | 30 min |
 
@@ -166,24 +166,9 @@ lost on the next rebuild.
 Start `$RUN/notes.md` with the Utopia commit, the extraction and chat model, the ontology
 packs, the seed (20260923) and the lab commit.
 
-### Step 1: pre-flight
+### Step 1: smoke test
 
-Run `lab/preflight.sh check --run $RUN` (G-50). It runs four checks and writes a record in the
-run folder:
-
-- **Inputs:** every record, id and document a question names exists in the evidence.
-- **Fingerprint:** the lab, foundation and model settings match the run's baseline.
-- **Settled:** the foundation has finished its work.
-- **Agent context:** one paid probe shows the reader sees the tools and rules it should.
-
-The runners cite the record in `setup.json` and warn without blocking when it's missing, damaged or
-stale. Drift continues only with `--accept-drift "<reason>"`, which appends an amendment to
-`notes.md`. `lab/preflight.sh tui` and `serve` run the same checks in an operator app (on trial,
-see `knowledge/insights.md`). `lab/preflight.sh spend --run $RUN` shows the run's spend.
-
-The lock (`uv.lock`) is revision 5, so use a uv recent enough to read it. The lab used uv 0.13.1.
-
-Then the smoke test.
+Pre-flight comes later, at Step 6, once the knowledge bases exist and have settled.
 
 Create a scratch KB, upload one small evidence file (e.g. `products.csv`), and wait for it:
 
@@ -264,9 +249,109 @@ The RDF export is Utopia's supported read contract. It includes both time axes, 
 evidence, and the derivations. With it, later scoring can be re-checked without the instance.
 Also note the number of items in the Review queue, and screenshot the ontology page.
 
-### Step 6: ask the scenarios
+### Step 6: pre-flight, then ask the scenarios
 
-Open the KB's chat in the UI. Paste each question **verbatim** from `$RUN/scenario-scorecard.csv`,
+**Run pre-flight first, just before the first paid call:** it reads the knowledge bases from
+Step 2, the pipeline that settled in Step 4 and the reader that is about to ask, so at Step 1
+there would be nothing for it to check.
+
+Run `lab/preflight.sh check --run $RUN` (G-50). It runs four checks and writes a record in the
+run folder:
+
+- **Inputs:** every record, id and document a question names exists in the evidence.
+- **Fingerprint:** the lab, foundation and model settings match the run's baseline.
+- **Settled:** the foundation has finished its work.
+- **Agent context:** one paid probe shows the reader sees the tools and rules it should.
+
+The runners cite the record in `setup.json` and warn without blocking when it's missing, damaged or
+stale. Drift continues only with `--accept-drift "<reason>"`, which appends an amendment to
+`notes.md`. `lab/preflight.sh tui` and `serve` run the same checks in an operator app (on trial,
+see `knowledge/insights.md`). `lab/preflight.sh spend --run $RUN` shows the run's spend.
+
+The lock (`uv.lock`) is revision 5, so use a uv recent enough to read it. The lab used uv 0.13.1.
+
+**Write `$RUN/preflight.yaml` first.** Without it, `check` exits 2 ("no preflight.yaml in …").
+The config is validated before anything runs: an unknown key, a missing section or a
+deny-listed evidence path exits 2 with the problem named. Three examples:
+
+*Utopia* (this runbook; arm B's `blind_reader.py` questions file is `id, kb, question`):
+
+```yaml
+checks: [inputs, fingerprint, settled, agent_context]
+inputs:
+  columns: {corpus: kb}               # the column naming each question's corpus: here, a kb id
+  id_patterns: ['\bCRM-\d{4}\b', '\bDR-\d{4}\b', '\bNS-[A-Z0-9]+\b']
+  supplied_keys: [request_id]
+  evidence:                           # each kb id → its evidence, as paths in the repo
+    <KB>: [dataset/evidence]
+    <KB5>: [dataset/evidence-variants/missing-contract-evidence]
+foundation:
+  kind: utopia
+  kbs: {base: <KB>, missing-contract-evidence: <KB5>}
+  db_container: utopia-db-1
+  binary: ../utopia/target/debug/utopia-server   # relative to the repo
+  log: {docker: <server container>}   # or {file: <path>}
+settled: {window_seconds: 60}
+agent_context:
+  probe: [python3, lab/utopia/blind_reader.py, probe, --run, runs/<x>, --variant, B2]
+  est_usd: 0.10                       # reserved for the probe (about $0.06)
+  cap_usd: 5                          # checked against the whole folder's spend: see below
+baseline: latest
+```
+
+*B-20* (the exam reader; its questions file is `id, corpus, process, question`, the default):
+
+```yaml
+checks: [inputs, fingerprint, settled, agent_context]
+inputs:
+  id_patterns: ['\bCRM-\d{4}\b', '\bDR-\d{4}\b', '\bCR-\d{4}\b', '\bSR-\d{5}\b', '\bNS-[A-Z0-9]+\b']
+  supplied_keys: [request_id]
+  evidence:
+    base: [dataset/evidence]
+    missing-contract-evidence: [dataset/evidence-variants/missing-contract-evidence]
+foundation:
+  kind: b20
+  arm: b20                            # url, token file and bases come from runs/<x>/arms.json
+  attest:                             # the signals we can't read, vouched for by their owner
+    file: attest/b20-settled.md
+    max_age_hours: 2
+    covers: [jobs, log, documents, commit]
+settled: {window_seconds: 60}
+agent_context:
+  probe: [uv, run, python, lab/exam/reader.py, probe, --run, runs/<x>, --arm, b20, --variant, C2]
+  est_usd: 0.25
+  cap_usd: 200
+baseline: latest
+```
+
+*Local* (the lab's own service, an `adapter` arm in `arms.json`; there is no server to read):
+
+```yaml
+checks: [inputs, fingerprint, agent_context]   # settled would only say "not applicable"
+inputs:
+  id_patterns: ['\bCRM-\d{4}\b', '\bDR-\d{4}\b']
+  supplied_keys: [request_id]
+  evidence: {base: [dataset/evidence]}
+foundation: {kind: local}
+agent_context:
+  probe: [uv, run, python, lab/exam/reader.py, probe, --run, runs/<x>, --arm, <arm>, --variant, C1]
+  est_usd: 0.25
+  cap_usd: 20
+```
+
+What to know before the first check:
+
+- **`cap_usd` is checked against the whole run folder's recorded spend,** not pre-flight's own:
+  every answer, infra-error attempt, judge file and earlier probe under `runs/<x>/`, plus any
+  call still running. Pick it above what the folder has already spent (`lab/preflight.sh spend
+  --run $RUN`), or the probe is refused and Agent context fails with "spend guard: …".
+- **A pinned baseline keeps comparing with that record.** `baseline: runs/<other>/preflight/<ts>.json`
+  compares every check with the other run's record, so drift you accepted once is drift again on
+  the next check. Switch to `baseline: latest` once this run has its own passing record.
+- **`lab/preflight.sh serve` starts a fresh evaluation, with its paid probe, for every browser tab
+  it serves and every reload.**
+
+Then the scenarios. Open the KB's chat in the UI. Paste each question **verbatim** from `$RUN/scenario-scorecard.csv`,
 each in a **new conversation**, and ask nothing else.
 
 | Ask in | Scenarios |

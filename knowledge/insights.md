@@ -1,7 +1,7 @@
 # Insights
 
-Durable things the lab has learned about measuring, cost and time, and working together, since it
-began (2026-09-26). These aren't failure patterns ([patterns.md](patterns.md)) or checklists
+Durable things the lab has learned about measuring, cost and time, tooling, and working together,
+since it began (2026-09-26). These aren't failure patterns ([patterns.md](patterns.md)) or checklists
 ([playbooks/](playbooks/)). They're how this work behaves, for an agent planning the next
 experiment. Each insight names its evidence; R1–R6 are the retrospectives listed in
 [patterns.md](patterns.md). Keep an insight only while its evidence holds. When it stops holding,
@@ -132,7 +132,9 @@ rewrite it and say why.
     - **Demo: yes, in Chrome.** `preflight serve` (textual-serve 1.1.3) bound to localhost only.
       Keys stayed live during a 20 s probe, `s` showed the live reservation at once, and records
       were written with no leaked reservation. Keys pressed right after a screen change can be
-      lost.
+      lost. Two cosmetic gaps, both since fixed (F-14): Agent context's details read "no values
+      recorded" (its reader values live in the fingerprint; the details now show them), and the
+      inputs summary said "1 questions".
     - **Snapshots: they coexist, and weren't kept.** `pytest-textual-snapshot` 1.0.0 resolved with
       the dev group, with syrupy 6.1.1, not 4.8.0, and rendered deterministically. It has no
       `py.typed` and its fixture's declared signature is wrong for strict mypy, and nothing used
@@ -143,7 +145,9 @@ rewrite it and say why.
       900 s cap); Ctrl+Q leaves the UI at once and says the terminal returns when the probe ends.
       Ctrl+C is not an escape in Textual 8.2.8. Killing the probe needs a cancel hook in the engine.
     - The app is a front end. The plain `lab/preflight.sh check` stays complete without it.
-    - The `tui` group is in `default-groups`, so a plain `uv sync` installs textual and aiohttp.
+    - `default-groups` is `["dev", "tui", "owm-service"]`, so a plain `uv sync` installs textual
+      and aiohttp, and keeps owm-service's fastapi, httpx and uvicorn, which mypy needs for
+      `lab/owm_service` and `lab/rounds` (ruling T12-c).
 
     (G-50, 3bda32d, 76e3d0c)
 

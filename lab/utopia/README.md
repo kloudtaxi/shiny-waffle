@@ -66,5 +66,11 @@ Changing any of these changes the experiment. Record the change in the run's not
 - **Resumable.** A question whose `.jsonl` exists is never asked again.
 - **Probe before a batch.** The init event must list only `mcp__utopia__*` tools (11 for
   B1, 9 for B2), the MCP server must be `connected`, and there must be 0 permission denials.
+  The probe runs with the answers' flags (`--max-turns 40` included), so pre-flight (G-50)
+  records the flags a counted call uses.
+- **One spend cap per run folder.** `run` requires `--cap-usd`. The guard
+  (`lab/preflight/spend.py`, standard library) counts everything recorded under `--run`, so
+  `--out` must be inside `--run`. Without pydantic installed, the pre-flight citation in
+  `setup-*.json` reads `unreadable`; it warns and never blocks.
 - **Cost.** About $1.5 for a B1 batch and $2.7–3.2 for a B2 batch (10 questions each, Opus
   5.5), billed to the Claude Code plan in use.
