@@ -1,0 +1,117 @@
+# A free-standing BlueLeaf prototype: what's outstanding before its spec
+
+2026-10-21. The user asked, with a product manager's view:
+
+1. What are the minimum outstanding items before we can cut a spec for a free-standing prototype,
+   built without Utopia, that we then hand to the OWM team to implement?
+2. We stopped work on our MCP server. Does it need to be ready for the prototype?
+
+**Short answers:**
+
+1. Six items: four decisions that are yours, and two facts the lab can establish at $0 (a fit check of
+   about a day, and a sizing).
+   None of the Ledger's open gaps blocks the spec. They become scope lines or known limits inside
+   it.
+2. No. The stopped server is a lab instrument for running experiments from Claude Desktop. The
+   prototype does need agent tools (decide, clearance, the register, evidence). That's a small tool
+   layer specified inside the prototype, not the stopped server.
+
+## What a free-standing prototype is made of today
+
+| Part | What exists | Free of Utopia? | What's missing |
+|---|---|---|---|
+| Knowledge Foundation | B-20, `kloudtaxi/blueleaf-knowledge-foundation`, frozen at 02e9cc9; serves contract v0.2 natively (Docling + langextract, byte spans) | Yes | Text formats only; PDF and Word are "later" (F2b). No screens or sign-in, by design |
+| OWM decision service | `lab/owm_service` (B-06, `owm-decisions` contract v1.4): register, procedures, decision records, clearance, the approval ratchet | Yes: no Utopia calls | It reads Northstar's evidence **folder** directly (`_lab.py`: `dataset/evidence`), not through a foundation. It's lab code on Northstar's layout, with three hand-written specs |
+| Judgment model | Jev (`jev-1.13.0`) behind the decision-engine port; replays every recorded call under `runs/`, live only under a cap | Yes | Replay covers recorded inputs only: a new org or a new request needs Jev live |
+| Data Foundation | G-57 decided (own repo, contract first, a fresh session builds it); the lab's declared reads (`lab/sor_reads`, G-51) | Yes | No contract yet; it waits for your docs |
+| Agent runtime and tools | Agno (decided 10-07). The B-15 proof rounds drive an agent through decide → clearance → adapter | **No**: `lab/rounds/foundation.py` reads the BlueLeaf base through Utopia | Agent tools that point at B-20 and the OWM service |
+| Screens | web-next (Use / Manage / Operate, governance v1.1) | **No**: it lives in garbanzo's fork of Utopia | A decision on whether v1 needs screens at all |
+
+```mermaid
+flowchart LR
+  agent["Agent (Agno)"] -->|"agent tools: decide, clearance,<br/>register + coverage, evidence"| owm["OWM decision service<br/>(contract v1.4)"]
+  owm -->|"EvidenceProvider (new port)<br/>today: reads the evidence folder"| kf["Knowledge Foundation<br/>B-20, contract v0.2"]
+  owm -->|"RecordReadProvider (new port)<br/>v1: a stub on the lab's declared reads"| df["Data Foundation<br/>(contract to come, G-57)"]
+  owm -->|"decision-engine port"| jev["Jev (replay + live under a cap)"]
+  agent -->|"action tools ask for clearance<br/>before they write"| sor["Systems of record (CRM)"]
+```
+
+What makes it free-standing is two ports the OWM service doesn't have yet: evidence through the
+Knowledge Foundation's contract, and records through the Data Foundation's. Both were proposed as
+G-54's sixth re-cut item. Everything else exists.
+
+## Question 1: the minimum outstanding items
+
+### Decisions only you can make (spec blockers)
+
+| # | Decision | My recommendation | Why it blocks |
+|---|---|---|---|
+| D1 | **What the prototype is for, and when it's done.** A reference for the OWM team (contracts, acceptance tests, a running system), a client demo, or both | **A reference first.** Done when the OWM team can implement against its contracts and a fixed acceptance suite passes on the prototype | It sets fidelity, and it decides whether screens are in scope |
+| D2 | **The slice: which procedures, and which journey** | **Discount first**, on B-15's journey: an agent is asked to put DR-9001 through → decide → approval → clearance → the CRM write. Credit second; SLA later (G-48 is open on SLA, and in the exam's Part 2 no arm decided SLA) | It sets what the acceptance suite tests |
+| D3 | **G-54, unparked: what the OWM team implements into** | **C: keep sovera-owm and re-cut its core.** Your framing already rules out A: if the OWM team implements, the lab doesn't become the product. What's left is whether they re-cut first (tenancy, the log first, #94, one decision record, proposal port v2, the foundation ports) | The prototype's contracts should be the shapes sovera-owm is re-cut to; otherwise the handover is a translation |
+| D4 | **The Data Foundation in v1** | **A stub behind `RecordReadProvider`**, on the lab's declared reads, until your docs and the contract arrive. The port is fixed in the spec; what serves it can change | The decision path needs system-of-record reads, and the real contract doesn't exist yet |
+
+Two smaller defaults I'd write in unless you object:
+
+- **Screens:** none in v1. The journey runs through agents, which is the agents-first claim. web-next
+  stays where it is, because re-pointing it means working in the Utopia fork.
+- **Jev:** live under a cap, as today. A replay-only prototype can't take a new org.
+
+### Facts the lab must establish ($0)
+
+| # | Check | Why |
+|---|---|---|
+| F1 | **The fit check:** can B-20's contract v0.2 serve everything the kernel reads today (documents and versions, canonical text, spans, structured tables)? List the gaps | It decides whether `EvidenceProvider` is an adapter or a contract amendment (v0.3). This is the fit spike G-54 and G-57 both point to |
+| F2 | **Size the held-out org:** what writing a second `truth/` costs (`northstar build --truth DIR` builds it), and what the kernel needs to run on it unchanged (today it reads Northstar's layout and holds three hand-written specs). Writing it is separate work, ideally by someone other than the lab (G-39) | B-06 and the kernel were built on Northstar's scenarios, so a suite on Northstar alone measures what they were tuned on. The OWM team needs a held-out org to accept against |
+
+### Open gaps that don't block the spec
+
+These become scope lines, build items or known limits inside it.
+
+| Gap | In the spec as |
+|---|---|
+| G-45 (nothing enforces blocking conditions), G-46 (the requester re-runs into her own authority) | **Already built in the OWM service** (clearance, the ratchet); the Ledger keeps them open for the executor half. The prototype closes that half if its action tools ask for clearance before they write. That's worth showing: "what stops the agent applying the discount?" |
+| G-47 (RR-14 accepts a child under a revoked agreement), G-48 (a second SLA payment) | Small kernel fixes in the build. G-48 only if SLA is in scope |
+| G-01, G-02, G-31, G-33 (the register and its serving) | Ship the fixed serving (coverage and explicit absences; full terms). Set G, the fresh test, stays open evidence; it waits for your attack set |
+| G-39 (one designer wrote the truth, the key and the engines) | The handover gate runs on the second org (F2). An outside red team stays on the roadmap |
+| G-18, G-19, G-20, G-22, G-23, G-38, G-43, G-44, G-49 | Out of scope for v1; listed as known limits |
+| G-55, G-56 (web-next) | Out of scope if there are no screens (D1) |
+| The exam's S02/S03 hand review, Ledger grades | Unrelated to the prototype |
+
+## Question 2: does the MCP server need to be ready?
+
+**No.** There are two different things here:
+
+- **The stopped server** (`skunkworks/blueleaf-mcp`; spec, buildability review and plan; never
+  built). It's a lab instrument: experimenter and blind-subject modes, a seal that keeps the subject
+  blind, sandboxes and `promote` into run folders. Its job was to run Northstar experiments from
+  Claude Desktop, so set G wouldn't need a zip. On 2026-10-18 you ruled that set G runs without it.
+  Nothing in the prototype needs it.
+- **The prototype's agent tools.** BlueLeaf is agents-first, and in the canon the OWM's consumers
+  are agents served over MCP. So the prototype needs a small tool layer over the two contracts:
+  - `decide`, `clearance` and `report` (contract v1.4);
+  - the register, with its coverage and absences (G-31);
+  - evidence and passages (the Knowledge Foundation contract).
+
+  This is a thin adapter, specified inside the prototype. Reuse the stopped server's subject-mode
+  tool list as a starting point; drop the seal, the experimenter mode and the sandboxes.
+
+Two reasons the tool layer pays twice:
+
+- **The lab can test it.** The B-15 proof-round harness can test the prototype through the same
+  tools. Today its reads go through Utopia (`lab/rounds/foundation.py`), so the round becomes the
+  prototype's agent-level acceptance test.
+- **sovera-owm already speaks MCP** (14 tools). The prototype's tool list becomes what the OWM team
+  adds.
+
+## One risk to name in the spec
+
+A prototype assembled from lab code can become the product by accident. The OWM team should take
+the **contracts and the acceptance suite** from it, not its files. That's G-54's rule: port the
+decision path as mechanisms under sovera-owm's constitution. The lab stays the independent
+instrument, and parity is measured on the held-out org.
+
+## Next step
+
+Give me your answers to D1–D4 (or "use your defaults"). I'll run F1 and F2, then start the
+prototype's design with you section by section, as with G-50.
