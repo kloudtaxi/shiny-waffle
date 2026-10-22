@@ -12,9 +12,13 @@
    about a day, and a sizing).
    None of the Ledger's open gaps blocks the spec. They become scope lines or known limits inside
    it.
-2. No. The stopped server is a lab instrument for running experiments from Claude Desktop. The
-   prototype does need agent tools (decide, clearance, the register, evidence). That's a small tool
-   layer specified inside the prototype, not the stopped server.
+2. An MCP server, yes; the stopped one, no. The prototype's agents reach the kernel only over MCP,
+   so its MCP server is the prototype's front door and gets its own contract in the spec. It grows
+   from `deal_desk` (`lab/rounds/tools_server.py`), the MCP server the proof round already runs
+   against the OWM service. The stopped skunkworks server is a lab bench for blind experiments
+   from Claude Desktop; finishing it first wouldn't move the prototype forward. (Revised
+   2026-10-22: the first version said "No" and called the tool layer a thin adapter, which
+   undersold it.)
 
 ## What a free-standing prototype is made of today
 
@@ -80,29 +84,60 @@ These become scope lines, build items or known limits inside it.
 
 ## Question 2: does the MCP server need to be ready?
 
-**No.** There are two different things here:
+*Revised 2026-10-22, after the user challenged the first answer.* The first version said "No" and
+called the agent tools "a thin adapter". That was imprecise. **The prototype needs an MCP server.
+It doesn't need the stopped one**, and finishing that one first wouldn't move the prototype forward.
 
-- **The stopped server** (`skunkworks/blueleaf-mcp`; spec, buildability review and plan; never
-  built). It's a lab instrument: experimenter and blind-subject modes, a seal that keeps the subject
-  blind, sandboxes and `promote` into run folders. Its job was to run Northstar experiments from
-  Claude Desktop, so set G wouldn't need a zip. On 2026-10-18 you ruled that set G runs without it.
-  Nothing in the prototype needs it.
-- **The prototype's agent tools.** BlueLeaf is agents-first, and in the canon the OWM's consumers
-  are agents served over MCP. So the prototype needs a small tool layer over the two contracts:
-  - `decide`, `clearance` and `report` (contract v1.4);
-  - the register, with its coverage and absences (G-31);
-  - evidence and passages (the Knowledge Foundation contract).
+### Three MCP servers, three jobs
 
-  This is a thin adapter, specified inside the prototype. Reuse the stopped server's subject-mode
-  tool list as a starting point; drop the seal, the experimenter mode and the sandboxes.
+| | Skunkworks `blueleaf-mcp` (stopped) | `deal_desk` (`lab/rounds/tools_server.py`) | The prototype's MCP server |
+|---|---|---|---|
+| State | Spec, buildability review, plan kickoff; never built | Built; ran the 10-14 proof round | New |
+| Who connects | A person in Claude Desktop, as experimenter or as a blind subject | The proof round's Deal Desk Agent (`claude -p`) | Business agents on Agno, and any MCP client, Claude Desktop included |
+| Unit of work | A graded question, labelled Q1…Qn | One request: DR-9001, S22 only (a scenario lock) | Any request in the org |
+| Tools | Experimenter: 28 (sandboxes, planting documents, engines, scoring, `promote`). Subject: read documents, get procedure, get register, `decide`, `submit_decision` (an answer, for grading) | `get_request`, `decide`, `apply_discount` (decide → clearance → adapter) | `decide`, clearance, `report`, the register with coverage, evidence; action tools that ask for clearance before they write |
+| What it calls | The kernel modules directly (`lab/owm_kernel`, `lab/owm_register`, Jev), on sandbox copies of the corpus, around the service | `lab/owm_service`, contract v1.4 | `lab/owm_service` v1.4, which sits on those same modules, through the two new ports |
+| Evidence | Files in a sandbox's corpus folder | None of its own; the service reads the evidence folder | The Knowledge Foundation, through `EvidenceProvider` |
+| Writes and approvals | None: nothing is written to any system | The CRM, only on a clearance | The CRM, only on a clearance; people approve outside the agent tools |
+| Most of it is | The walls that keep a subject blind (imports, files, the seal), sandboxes, scoring | Lab routes (`/lab/sor`, `/lab/adapter`, `/lab/clock`) and the scenario lock | The product's front door |
 
-Two reasons the tool layer pays twice:
+### Why the stopped server doesn't come first
 
-- **The lab can test it.** The B-15 proof-round harness can test the prototype through the same
-  tools. Today its reads go through Utopia (`lab/rounds/foundation.py`), so the round becomes the
-  prototype's agent-level acceptance test.
-- **sovera-owm already speaks MCP** (14 tools). The prototype's tool list becomes what the OWM team
-  adds.
+- **It does a different job.** It lets a person run blind experiments. Its subject side answers
+  graded questions. It never acts on a request, asks for a clearance or writes to a system, and
+  that journey is what the prototype exists to show.
+- **Most of its spec is experiment machinery:** the seal, sandboxes, scoring and `promote`. None of
+  it ships in the prototype, and none of it is for the OWM team to implement.
+- **It goes around the service.** It calls the kernel modules directly on sandbox copies, so it
+  has none of what `owm_service` v1.4 adds on top of them: sessions, versioned decision records,
+  clearance, the ratchet, the systems-of-record overlay. The prototype and the handover are built
+  on that contract.
+- **Its trigger is gone.** It was built for set G, and on 2026-10-18 you ruled that set G runs
+  without it.
+
+### What the prototype's MCP server is
+
+- **The front door.** It is the only way an agent reaches the kernel, so it gets its own section
+  in the spec: a fixed tool list, schemas, error shapes, and the agent's identity (whom it acts
+  for; agents never take a person's step).
+- **It starts from `deal_desk`:** lift the S22 lock, drop the lab routes and the `direct` arm, and
+  add the register, evidence and `report`.
+- **It is part of the handover.** sovera-owm already speaks MCP (14 tools), and the prototype's
+  tool list is what the OWM team adds.
+- **It is small in code, not in importance.** The proof round's BlueLeaf result was partly
+  structural: the agent had no tool that writes without a clearance. That structure lives in this
+  server.
+- **The lab can test through it.** The B-15 harness drives an agent through these same tools.
+  Today its reads go through Utopia (`lab/rounds/foundation.py`); pointed at the prototype, the
+  round becomes the prototype's agent-level acceptance test.
+
+### When the stopped server would earn its place
+
+- **To attack the prototype** the way sets C–F attacked the engines: planted documents, blind
+  subjects in Desktop, scoring. That is lab work after the prototype runs. Its subject mode would
+  be re-pointed at the prototype's MCP server rather than at the experiment engines.
+- **Not to try or demo the prototype from Claude Desktop.** Add the prototype's own MCP server to
+  Desktop's config for that.
 
 ## One risk to name in the spec
 
