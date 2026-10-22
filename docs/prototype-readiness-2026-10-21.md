@@ -24,7 +24,7 @@
 
 | # | Decision | Note |
 |---|---|---|
-| D1 | **Approved:** the prototype is the OWM team's reference | Screens in v1 wait for garbanzo. You've been removing Utopia from web-next in favour of blueleaf-knowledge-foundation; the question went to garbanzo on 10-22 |
+| D1 | **Approved:** the prototype is the OWM team's reference | Screens: after garbanzo's answer (below), **none in v1** (your choice, 10-22). People approve through the API or an approver's tool |
 | D2 | **Approved:** discount on DR-9001 first, credit second, SLA later | In your words: "we are building a platform not an SaaS product. we need to generalize the solution so it can be applied to various use cases" |
 | D3 | **Approved:** C, keep sovera-owm and re-cut its core | Ledger G-54, decided (v4) |
 | D4 | **Approved:** a stub behind `RecordReadProvider` in v1 | Ledger G-57's log (v3) |
@@ -119,8 +119,10 @@ G-54's sixth re-cut item. Everything else exists.
 Two smaller defaults I'd write in unless you object:
 
 - **Screens:** none in v1. The journey runs through agents, which is the agents-first claim. web-next
-  stays where it is, because re-pointing it means working in the Utopia fork. *(2026-10-22: open
-  again. It waits for garbanzo's word on how far web-next has moved off Utopia; see D1 above.)*
+  stays where it is, because re-pointing it means working in the Utopia fork. *(2026-10-22: after
+  garbanzo's answer, below, **you chose no screens in v1.** People confirm and approve through the
+  API or an approver's tool, which the spec picks. web-next stays a later option; garbanzo's
+  contract asks still apply to whatever surface v1 uses.)*
 - **Jev:** live under a cap, as today. A replay-only prototype can't take a new org.
 
 ### Facts the lab must establish ($0)
