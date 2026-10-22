@@ -42,6 +42,45 @@ the spec has to:
 
 F2 now includes an audit of what is Northstar-specific and discount-specific in the decision path.
 
+### Garbanzo's answer on screens (2026-10-22)
+
+Garbanzo read the code at glowing-garbanzo edc584b; nothing was built or run. **Yes: web-next can
+be v1's screens for the approvals slice, with about one to two days of small fixes in web-next and
+no contract change.**
+
+- **Already off Utopia:** sign-in (web-next signs its own cookie), and every governance path:
+  the register, procedures, `/me`, approvals, decisions and clearances go only to the OWM service.
+  Knowledge comes from B-20 through its contract (F5, 10-19).
+- **The approvals surface works by the code.** Sarah's confirm is the condition-resolve route,
+  Michael's approval is approve or decline, and then comes the clearance. All are OWM routes the lab
+  service serves. No run has had Utopia switched off yet, so a journey run against the prototype is
+  the proof.
+- **Still on Utopia, and out of the approvals slice:** Ask (B-20 serves no K11 or K12) and the
+  platform screens (documents and upload, People, Trust rules, Configuration, activity).
+- **The fixes:**
+  - load the bases without a Utopia workspace (hours);
+  - a "no platform" setting that hides those screens (about a day);
+  - stop linking register sources the foundation doesn't hold (hours; F5's finding 1);
+  - a journey run with Utopia off (hours).
+- **Outside the fork:** web-next has its own package and lockfile, and no import leaves it. Moving
+  it is your call; the code doesn't force it either way.
+
+**What it asks of the prototype's contracts.** These are spec items:
+
+1. **Sessions.** Name a session route in the contract, even if it's for demos only, bound to
+   loopback or behind a service key. Today it is `POST /lab/sessions`, outside the contract, and
+   it has no auth. That's G-56: you ruled "leave auth open for now", but for the OWM team's
+   reference, anything that reaches the service can open a session as anyone.
+2. **v1.4's routes and shapes stay as they are.**
+3. **Register entries.** An entry's sha256 is that of the canonical text. When the foundation
+   doesn't hold the document, `source_id` is null rather than a lab path. This is a fix in the
+   OWM service.
+4. **The MCP server acts through the same decision and clearance routes,** as an actor of kind
+   `agent` with `on_behalf_of`. Then what an agent did shows in the record Sarah and Michael see.
+5. **Person ids are the HR export's employee ids.**
+6. **No change to B-20's contract for the screens.** web-next's reads (K1, K2, K5, K9, K10, K13,
+   K15 and spans) were all served in F5.
+
 ## What a free-standing prototype is made of today
 
 | Part | What exists | Free of Utopia? | What's missing |
