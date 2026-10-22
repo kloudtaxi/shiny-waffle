@@ -129,7 +129,7 @@ Two smaller defaults I'd write in unless you object:
 
 | # | Check | Why |
 |---|---|---|
-| F1 | **The fit check:** can B-20's contract v0.2 serve everything the kernel reads today (documents and versions, canonical text, spans, structured tables)? List the gaps | It decides whether `EvidenceProvider` is an adapter or a contract amendment (v0.3). This is the fit spike G-54 and G-57 both point to |
+| F1 | **The fit check:** can B-20's contract v0.2 serve everything the kernel reads today (documents and versions, canonical text, spans, structured tables)? List the gaps | It decides whether `EvidenceProvider` is an adapter or a contract amendment (v0.3). This is the fit spike G-54 and G-57 both point to. **Done 2026-10-22** (`docs/prototype-f1-kf-fit-2026-10-22.md`): an adapter over v0.2, no v0.3. Of 31 reads, 5 are served as-is, 7 need the adapter, 9 go to the Data Foundation and 10 are the OWM's own. The adapter must fail closed on an unreadable document, take one snapshot per decision, and leave the record exports out |
 | F2 | **Size the held-out org:** what writing a second `truth/` costs (`northstar build --truth DIR` builds it), and what the kernel needs to run on it unchanged (today it reads Northstar's layout and holds three hand-written specs). Writing it is separate work, ideally by someone other than the lab (G-39) | B-06 and the kernel were built on Northstar's scenarios, so a suite on Northstar alone measures what they were tuned on. The OWM team needs a held-out org to accept against |
 
 ### Open gaps that don't block the spec
