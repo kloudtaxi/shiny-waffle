@@ -20,6 +20,28 @@
    2026-10-22: the first version said "No" and called the tool layer a thin adapter, which
    undersold it.)
 
+## Your decisions (2026-10-22)
+
+| # | Decision | Note |
+|---|---|---|
+| D1 | **Approved:** the prototype is the OWM team's reference | Screens in v1 wait for garbanzo. You've been removing Utopia from web-next in favour of blueleaf-knowledge-foundation; the question went to garbanzo on 10-22 |
+| D2 | **Approved:** discount on DR-9001 first, credit second, SLA later | In your words: "we are building a platform not an SaaS product. we need to generalize the solution so it can be applied to various use cases" |
+| D3 | **Approved:** C, keep sovera-owm and re-cut its core | Ledger G-54, decided (v4) |
+| D4 | **Approved:** a stub behind `RecordReadProvider` in v1 | Ledger G-57's log (v3) |
+
+**What D2's platform rule asks of the spec.** Discount is the first use case, not the product. So
+the spec has to:
+
+- say how a new use case is added: its procedure, its register terms, its actions, and the
+  systems it reads and writes. Where that still takes code in the kernel or the MCP server, the
+  spec names the place;
+- decide whether the MCP server's action tools are generic and clearance-gated, or generated
+  from each registered action. `deal_desk`'s `apply_discount` is one instance of that;
+- prove it in the acceptance suite: credit is added the documented way, as the second use case,
+  and both run on the held-out org (F2).
+
+F2 now includes an audit of what is Northstar-specific and discount-specific in the decision path.
+
 ## What a free-standing prototype is made of today
 
 | Part | What exists | Free of Utopia? | What's missing |
@@ -58,7 +80,8 @@ G-54's sixth re-cut item. Everything else exists.
 Two smaller defaults I'd write in unless you object:
 
 - **Screens:** none in v1. The journey runs through agents, which is the agents-first claim. web-next
-  stays where it is, because re-pointing it means working in the Utopia fork.
+  stays where it is, because re-pointing it means working in the Utopia fork. *(2026-10-22: open
+  again. It waits for garbanzo's word on how far web-next has moved off Utopia; see D1 above.)*
 - **Jev:** live under a cap, as today. A replay-only prototype can't take a new org.
 
 ### Facts the lab must establish ($0)
