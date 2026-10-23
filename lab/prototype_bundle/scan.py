@@ -27,8 +27,9 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 ATTACK_CASES = Path("runs/2026-10-08-register-attacks/sealed/cases")
 LAB_PLAN_NAMES = ("2026-10-23-prototype-lab-work", "prototype-lab-work")
 
-# Kinds looked for inside the org's own content (inputs/): the lab's markers, never the org's names.
-LAB_MARKER_KINDS = frozenset({"scenario_id", "fact_id", "trap_name", "attack_id", "plan_name"})
+# Kinds looked for inside the org's own content (inputs/): the lab's own ids. Never the org's
+# names, and never trap labels, which were named after phrases the org's documents use.
+LAB_MARKER_KINDS = frozenset({"scenario_id", "fact_id", "attack_id", "plan_name"})
 ORG_CONTENT = "inputs/"
 
 # Trap names that are also the spec's own design vocabulary. The spec designs for the property

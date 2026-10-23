@@ -226,3 +226,15 @@ def test_deny_list_scopes_to_the_lab_repo(repo: Path, tmp_path: Path) -> None:
     dest, _ = _run(repo, tmp_path, allowlist=allow)
     assert (dest / "contracts/kf-foundation-contract-v0.2.md").read_text() == "# KF v0.2\n"
     assert f"`{sha}`" in (dest / "README.md").read_text()
+
+
+def test_doc_rewrites_are_listed_as_changes(repo: Path, tmp_path: Path) -> None:
+    scrub = """
+replace:
+  - {file: docs/spec.md, match: "# Spec", replace: "# The spec", kind: doc,
+     why: a heading in a copied document is reworded}
+keep: []
+"""
+    dest, report = _run(repo, tmp_path, scrub=scrub)
+    assert (dest / "docs/spec.md").read_text() == "# The spec\n"
+    assert report.code_changes == ["docs/spec.md: a heading in a copied document is reworded"]

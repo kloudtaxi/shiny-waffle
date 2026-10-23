@@ -49,13 +49,14 @@ def test_hit_never_holds_the_term(tmp_path: Path) -> None:
 
 
 def test_org_inputs_are_checked_for_lab_markers_only(tmp_path: Path) -> None:
-    # The org's own documents may name its people and requests (spec §11.3); a lab marker such as
-    # a scenario id must still never appear there.
+    # The org's own documents may name its people and requests (spec §11.3), and use the ordinary
+    # phrases the lab's trap labels were named after; a lab id such as a scenario id never appears.
     root = _tree(
         tmp_path,
         {
             "inputs/northstar/documents/memo.md": "From Sarah Chen about DR-9001.\n",
             "inputs/northstar/structured/notes.csv": "id,note\n1,see S05\n",
+            "inputs/northstar/structured/tickets.csv": "id,note\n2,reported priority P1\n",
         },
     )
     assert [(h.file, h.term_kind) for h in scan(root)] == [

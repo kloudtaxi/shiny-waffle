@@ -144,15 +144,15 @@ def _scrub(files: dict[str, bytes], doc: Mapping[str, Any]) -> tuple[int, list[s
         path, match, count = str(e["file"]), str(e["match"]), int(e.get("count", 1))
         if path not in files:
             raise BundleRefusedError(f"scrub: {path} is not in the bundle")
-        if e.get("kind") not in ("comment", "code"):
-            raise BundleRefusedError(f"scrub: {path}: kind must be comment or code")
+        if e.get("kind") not in ("comment", "code", "doc"):
+            raise BundleRefusedError(f"scrub: {path}: kind must be comment, code or doc")
         text = files[path].decode("utf-8")
         found = text.count(match)
         if found != count:
             raise BundleRefusedError(f"scrub: {path}: expected {count} match(es), found {found}")
         files[path] = text.replace(match, str(e["replace"])).encode("utf-8")
         lines += max(1, len(match.splitlines())) * count
-        if e["kind"] == "code":
+        if e["kind"] in ("code", "doc"):  # listed in the README; a comment rewrite isn't
             changes.append(f"{path}: {e['why']}")
     return lines, changes
 

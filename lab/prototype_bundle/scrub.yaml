@@ -1,0 +1,314 @@
+# The scrub (lab plan L1.2; LW-4): the reviewed rewrites applied to the bundle's source.
+#
+# `replace`: {file, match, replace, kind, why, count}. `file` is the path inside the bundle; `match`
+# is a literal that must occur exactly `count` times (default 1), so drift refuses the export. A
+# comment is rewritten as the mechanism it protects. A code change, or a rewrite in a copied
+# document (`doc`), is listed in the export's README under "changed from source", with its `why`.
+#
+# `keep`: {file, match, why}. Reviewed mechanism words that the pattern
+# `\bS[0-9]{1,2}\b|[Ss]cenario|[Tt]rap|[Tt]ruth|answer.key|MANIFEST` matches but that carry no
+# lab knowledge. `file` is an fnmatch pattern.
+
+replace:
+  # -- the kernel: plan paths under runs/ ---------------------------------------------------------
+  - file: source/lab/owm_kernel/governed.py
+    match: "(G-13, `runs/2026-10-06-procedures-governed/plan.md`)."
+    replace: "(G-13)."
+    kind: comment
+  - file: source/lab/owm_kernel/flow.py
+    match: "`runs/2026-10-04-specs-as-data/plan.md` describes it. A spec is data:"
+    replace: "A spec is data:"
+    kind: comment
+  - file: source/lab/owm_kernel/kernel.py
+    match: |-
+      Refactored for experiment 5 (`runs/2026-10-03-exp5-credit/plan.md`) out of experiment 4's guarded
+      discount engine (`runs/2026-10-03-adversarial/hybrid_v3.py`). The code moved verbatim; what the
+    replace: "Refactored out of an earlier guarded discount engine. The code moved verbatim; what the"
+    kind: comment
+  - file: source/lab/owm_kernel/kernel.py
+    match: |-
+      (RR-12,
+              `runs/2026-10-08-register-attacks/freeze.md`).
+    replace: |-
+      (the
+              registrar's RR-12).
+    kind: comment
+  - file: source/lab/owm_kernel/kernel.py
+    match: "revocation, `runs/2026-10-08-register-attacks/plan.md`, RR-12)."
+    replace: "revocation, RR-12)."
+    kind: comment
+  - file: source/lab/owm_kernel/specs/credit_v3.yaml
+    match: " (2026-10-05, runs/2026-10-05-register/plan.md)."
+    replace: " (2026-10-05)."
+    kind: comment
+  - file: source/lab/owm_kernel/SPEC_FORMAT.md
+    match: |-
+      **Admission.** A spec is used only after it passes the admission gate
+      (`lab/spec_admission/admit.py`, G-07), in its deployed form, with the company's register:
+      - **A:** every clean scenario of its type is right;
+      - **B:** no unsafe decision, and no error, on any sealed attack set of its type;
+    replace: |-
+      **Admission.** A spec is used only after it passes an admission check in its deployed form, with
+      the company's register:
+      - **A:** it decides its type's known cases correctly;
+      - **B:** no unsafe decision, and no error, on its type's attack cases;
+    kind: comment
+  - file: source/lab/owm_kernel/SPEC_FORMAT.md
+    match: "Always available: `sid`, the scenario id."
+    replace: "Always available: `sid`, the id the caller gives the decision."
+    kind: comment
+
+  # -- the registrar ------------------------------------------------------------------------------
+  - file: source/lab/owm_register/registrar.py
+    match: "bootstrap import (`runs/2026-10-08-register-attacks/plan.md`, rules RR-1 to RR-14)."
+    replace: "bootstrap import (rules RR-1 to RR-14)."
+    kind: comment
+  - file: source/lab/owm_register/registrar.py
+    match: 'acting_as={"EMP-401", "EMP-402"})'
+    replace: 'acting_as={"P-1", "P-2"})'
+    kind: comment
+
+  # -- the service: the as_of rule, examples that name one org's people and ids --------------------
+  - file: source/lab/owm_service/models.py
+    match: "(§3.5, S23's trap)"
+    replace: "(§3.5: a submitted date could pick an older policy)"
+    kind: comment
+  - file: source/lab/owm_service/decisions.py
+    match: "Never from the body (S23's trap);"
+    replace: "Never from the body (a submitted date could pick an older policy);"
+    kind: comment
+  - file: source/lab/owm_service/prepare.py
+    match: "keeps version 1's `as_of` (S23's trap) and"
+    replace: "keeps version 1's `as_of` (never a submitted date) and"
+    kind: comment
+  - file: source/lab/owm_service/state.py
+    match: |-
+      (`DR-9001`, `CR-9201`,
+      `SR-39385`)
+    replace: |-
+      (a discount request's,
+      credit request's or ticket's id)
+    kind: comment
+  - file: source/lab/owm_service/conditions.py
+    match: |-
+      (`version 2 is within Sarah
+          Chen's own authority`
+    replace: |-
+      (`version 2 is within the
+          requester's own authority`
+    kind: comment
+  - file: source/lab/owm_service/assemble.py
+    match: "such as `owner:CRM-2048`,"
+    replace: "such as `owner:<crm account id>`,"
+    kind: comment
+  - file: source/lab/owm_service/contract/owm-decisions.ts
+    match: 'e.g. "owner:CRM-2048"'
+    replace: 'e.g. "owner:<crm account id>"'
+    kind: comment
+  - file: source/lab/owm_service/contract/owm-decisions.ts
+    match: "one name per figure, the truth model's (the oracle compares by these)."
+    replace: "one name per figure, the same in every record."
+    kind: comment
+  - file: source/lab/owm_service/contract/owm-decisions.ts
+    match: "not emitted until the truth has a duplicate-request scenario and the lab has tested it (§12.3)."
+    replace: "not emitted until a duplicate-request case is specified and tested (§12.3)."
+    kind: comment
+  - file: source/lab/owm_service/contract/owm-decisions.ts
+    match: "e.g. S36's issue_memo holder."
+    replace: "e.g. the holder of an issue_memo obligation."
+    kind: comment
+  - file: source/lab/owm_service/contract/owm-decisions.ts
+    match: |-
+      Never from the body (S23's
+         * trap), and a re-run doesn't move it.
+    replace: |-
+      Never from the body (a submitted
+         * date could pick an older policy), and a re-run doesn't move it.
+    kind: comment
+
+  # -- the service's one boundary to lab code -----------------------------------------------------
+  - file: source/lab/owm_service/_lab.py
+    match: |-
+      It never loads the
+      admission gate, because the gate loads the lab's scenarios and answer side.
+    replace: |-
+      It never loads the
+      lab's procedure-admission gate. `build_procedures` and `serve` are lab modules this bundle leaves
+      out; a port replaces this module with its own ports.
+    kind: comment
+  - file: source/lab/owm_service/_lab.py
+    match: "every recording under `runs/`, by request hash."
+    replace: "recorded answers by request hash, from its own file."
+    kind: comment
+  - file: source/lab/owm_service/_lab.py
+    match: |
+      def replay_files(lab_root: Path) -> list[Path]:
+          """Every recorded Jev exchange under `<lab_root>/runs`, as the admission gate reads them."""
+          runs = lab_root / "runs"
+          return sorted({*runs.rglob("*engine-calls*.jsonl"), *runs.rglob("*jev-calls*.jsonl")})
+    replace: |
+      def replay_files(lab_root: Path) -> list[Path]:
+          """Recorded Jev exchanges to replay besides the engine's own file. The lab replayed its run
+          records here; a port replays only its own recordings, so there are none."""
+          return []
+    kind: code
+    why: the Jev replay over the lab's run records is removed; the engine replays only its own recordings
+
+  # -- the lab's MCP tool server ------------------------------------------------------------------
+  - file: source/lab/rounds/tools_server.py
+    match: "DEAL_DESK_SCENARIO (`S22`)"
+    replace: "DEAL_DESK_CASE_FILE"
+    kind: comment
+  - file: source/lab/rounds/tools_server.py
+    match: |
+      from rounds.scenarios import (  # noqa: E402
+          APPLY_DISCOUNT_DESCRIPTION,
+          DECIDE_DESCRIPTION,
+          GET_REQUEST_DESCRIPTION,
+          SCENARIOS,
+          Scenario,
+      )
+    replace: |+
+      # The tool descriptions are neutral, and the one request this server acts on comes from a case
+      # file the caller supplies (DEAL_DESK_CASE_FILE), never from lab constants.
+      GET_REQUEST_DESCRIPTION = "Read one discount request from the system of record."
+      APPLY_DISCOUNT_DESCRIPTION = "Apply a discount to one discount request."
+      DECIDE_DESCRIPTION = "Ask the OWM to decide one discount request."
+
+
+      @dataclass(frozen=True)
+      class Case:
+          """The one request this server acts on: its id, the requester's email, and the body of
+          POST /decisions, from a JSON file."""
+
+          request_id: str
+          requester_email: str
+          decide_body: dict[str, Any]
+
+          @classmethod
+          def load(cls, path: str) -> Case:
+              raw = json.loads(Path(path).read_text())
+              return cls(str(raw["request_id"]), str(raw["requester_email"]), dict(raw["decide_body"]))
+
+    kind: code
+    why: >-
+      the lab's per-case constants and tool prompts (imported from a module not in this bundle)
+      are removed; the one request comes from a case file the caller supplies, and the tool
+      descriptions are neutral
+  - file: source/lab/rounds/tools_server.py
+    match: '_REQUEST_ID = {"type": "string", "description": "For example DR-9001."}'
+    replace: '_REQUEST_ID = {"type": "string", "description": "The request''s id in the system of record."}'
+    kind: code
+    why: a request id fixed in the tool schema's example is removed
+  - file: source/lab/rounds/tools_server.py
+    match: "    scenario: Scenario\n"
+    replace: "    case: Case\n"
+    kind: code
+    why: the context holds the case from the case file
+  - file: source/lab/rounds/tools_server.py
+    match: "ctx.scenario."
+    replace: "ctx.case."
+    count: 4
+    kind: code
+    why: the four reads of the request's fields read the case
+  - file: source/lab/rounds/tools_server.py
+    match: '        scenario=SCENARIOS[os.environ.get("DEAL_DESK_SCENARIO", "S22")],'
+    replace: '        case=Case.load(os.environ["DEAL_DESK_CASE_FILE"]),'
+    kind: code
+    why: the server reads its one request from DEAL_DESK_CASE_FILE; there is no default case
+
+  # -- the Knowledge Foundation contract's copy (from glowing-garbanzo; listed as doc changes) ------
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      A name match alone is never a basis. The lab's identity scenario (CRM-2048 ≡ C-1001 ≡
+      ACME-MFG-2025) is exactly this endpoint's test.
+    replace: |-
+      A name match alone is never a basis.
+    kind: doc
+    why: a sentence giving the lab's identity-resolution case and its answer is removed
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      It's also why the live S26 and S36 runs could decide on documents that the foundation
+      couldn't show anyone.
+    replace: |-
+      It's also why a decision could otherwise rest on documents that the foundation
+      couldn't show anyone.
+    kind: doc
+    why: a sentence citing two lab runs by case id is reworded as the mechanism
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      `file.source_id` is the lab's corpus path. "In the base" means a document in *Northstar Industrial
+      Systems* with that file name.
+
+      | Register entry | Status | Copy on file | In the base |
+      |---|---|---|---|
+      | PRICING-POLICY-2025 | superseded | `pricing_policy_2025.md` | yes |
+      | PRICING-POLICY-2026 | in force | `pricing_policy_2026.md` | yes |
+      | PRICING-POLICY-2027 | scheduled | `pricing_policy_2027.md` | no |
+      | ACME-MFG-2025 | in force | `acme_master_supply_agreement.md` | yes |
+      | EXC-ACME-NS500-15 | in force | `acme_pricing_exception.md` | yes |
+      | EXC-ACME-NS500-10 | superseded | `acme_pricing_exception_2023.md` | yes |
+      | CREDIT-POLICY-2025 | superseded | `credit_policy_2025.md` | no |
+      | CREDIT-POLICY-2026 | in force | `credit_policy_2026.md` | no |
+      | GRT-ACME-2026 | in force | `acme_parent_guarantee.md` | no |
+      | SLA-SCHEDULE-1.0 | superseded | `sla_schedule_v1.md` | no |
+      | SLA-SCHEDULE-2.0 | in force | `sla_schedule_v2.md` | no |
+      | SUP-ACME-C | in force | `acme_support_schedule_c.md` | no |
+      | SUP-BRL-2025 | in force | `blueriver_support_terms.md` | no |
+      | SUP-CHS-2025 | in force | `cedar_support_terms.md` | no |
+      | HR-HOLIDAYS-2025-26 | in force | `holiday_calendar.md` | no |
+      | SOP-SUPPORT-007 | in force | `support_escalation_procedure.md` | no |
+      | SUP-SEVERITY-GUIDE | in force | `support_severity_guide.md` | no |
+      | MANDATE-DEALDESK-2026 | in force | `fixtures/mandate-dealdesk-2026.md` (the lab service's fixture) | no |
+    replace: |-
+      This copy leaves out the lab's table of one org's register entries, their status, and whether the
+      live base held each document.
+    kind: doc
+    why: Appendix A's table of one org's register entries and their status is removed
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      CRM-2048
+    replace: |-
+      CRM-0001
+    count: 7
+    kind: doc
+    why: one org's CRM account id in the examples is replaced by a neutral one
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      Acme Manufacturing
+    replace: |-
+      Example Co.
+    count: 2
+    kind: doc
+    why: one org's customer name in the examples is replaced
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      "Acme (CRM-0001)"
+    replace: |-
+      "Example (CRM-0001)"
+    kind: doc
+    why: one org's customer name in an example is replaced
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      ACME Manufacturing
+    replace: |-
+      one customer
+    kind: doc
+    why: one org's customer name in a graph statistic is replaced
+
+keep:
+  - file: "*"
+    match: bootstrap
+    why: the register's one-time import; "bootstrap" contains "trap"
+  - file: "*"
+    match: Bootstrap
+    why: the register's one-time import; "Bootstrap" contains "trap"
+  - file: source/lab/owm_kernel/SPEC_FORMAT.md
+    match: "scenario: sid"
+    why: the record key the kernel fills from `sid`
+  - file: source/lab/owm_kernel/specs/*.yaml
+    match: "scenario: sid"
+    why: the record key the kernel fills from `sid`
+  - file: source/lab/owm_service/prepare.py
+    match: "fills the record's `scenario`"
+    why: names the record key the kernel fills
