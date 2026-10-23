@@ -1,0 +1,53 @@
+# What the prototype's builder may read of the lab (spec §11.4; lab plan L1.1). Nothing outside this
+# list is copied, and the exporter's deny list (truth/, the answer key, evaluation, site/, owm/, runs/,
+# tests/, MANIFEST.yaml, the lab's own plan) wins over it for the lab repo.
+#
+# repos: `path` is relative to shiny-waffle's root. `ref: "@export"` is the lab repo at the commit
+# being exported (LW-2 cuts dataset-2026-10-23 there, so the dataset files are that tag's).
+repos:
+  lab: {path: ".", ref: "@export"}
+  glowing-garbanzo: {path: ../../glowing-garbanzo, ref: 19147e79bae9b1dfd9430736f28ca4e8b6e0946f}
+  sovera-owm: {path: ../../../Sandbox/sovera-owm, ref: 3e470fdfd27dac1654780bdf0f947e8236926f0e}
+
+files:
+  # The builder's documents.
+  - {repo: lab, from: docs/superpowers/specs/2026-10-23-prototype-core-design.md, to: docs/spec.md}
+  - {repo: lab, from: docs/superpowers/specs/2026-10-23-prototype-core-rulings.md, to: docs/rulings.md}
+  - {repo: lab, from: docs/superpowers/plans/2026-10-23-prototype-core.md, to: docs/plan.md}
+
+  # The kernel and its spec runner, with the discount and credit procedures (not SLA).
+  - {repo: lab, from: lab/owm_kernel/kernel.py, to: source/lab/owm_kernel/kernel.py}
+  - {repo: lab, from: lab/owm_kernel/flow.py, to: source/lab/owm_kernel/flow.py}
+  - {repo: lab, from: lab/owm_kernel/governed.py, to: source/lab/owm_kernel/governed.py}
+  - {repo: lab, from: lab/owm_kernel/additions.py, to: source/lab/owm_kernel/additions.py}
+  - {repo: lab, from: lab/owm_kernel/SPEC_FORMAT.md, to: source/lab/owm_kernel/SPEC_FORMAT.md}
+  - {repo: lab, from: lab/owm_kernel/specs/discount.yaml, to: source/lab/owm_kernel/specs/discount.yaml}
+  - {repo: lab, from: lab/owm_kernel/specs/credit_v3.yaml, to: source/lab/owm_kernel/specs/credit_v3.yaml}
+
+  # The registrar (the register's rules) and the Jev client.
+  - {repo: lab, from: lab/owm_register/registrar.py, to: source/lab/owm_register/registrar.py}
+  - {repo: lab, from: lab/decision_engine/engine.py, to: source/lab/decision_engine/engine.py}
+
+  # The OWM service at contract v1.4, without its smoke script, worked examples, fixtures,
+  # Dockerfile or README.
+  - {repo: lab, glob: "lab/owm_service/*.py", exclude: [lab/owm_service/smoke.py],
+     to: source/lab/owm_service/}
+  - {repo: lab, from: lab/owm_service/contract/owm-decisions.ts,
+     to: source/lab/owm_service/contract/owm-decisions.ts}
+  - {repo: lab, from: lab/owm_service/contract/README.md,
+     to: source/lab/owm_service/contract/README.md}
+
+  # The lab's MCP tool server.
+  - {repo: lab, from: lab/rounds/tools_server.py, to: source/lab/rounds/tools_server.py}
+
+  # The contracts the prototype starts from.
+  - {repo: glowing-garbanzo, from: owm/docs/foundation-contract-v0.2.md,
+     to: contracts/kf-foundation-contract-v0.2.md}
+  - {repo: sovera-owm, from: specs/001-identity-authz-ports/contracts/identity-provider.md,
+     to: contracts/sovera-owm/identity-provider.md}
+  - {repo: sovera-owm, from: specs/001-identity-authz-ports/contracts/authorization-provider.md,
+     to: contracts/sovera-owm/authorization-provider.md}
+
+  # One org's content: its documents and exported tables (MANIFEST.yaml is denied).
+  - {repo: lab, glob: "dataset/evidence/documents/**", to: inputs/northstar/documents/}
+  - {repo: lab, glob: "dataset/evidence/structured/**", to: inputs/northstar/structured/}
