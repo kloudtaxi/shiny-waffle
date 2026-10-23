@@ -118,7 +118,12 @@ conceptual OWM. Every ontology type there is tagged `layer: foundation | owm` as
   2026-10-18): the lab's scorers and judge prompts, item lists such as `lab/exam/p2_items.yaml`,
   test fixtures and run results are never loaded into a system under test or used to tune one. The
   lab keeps and uses them for scoring. `dataset/evidence/MANIFEST.yaml` is never loaded either:
-  its descriptions hint at answers.
+  its descriptions hint at answers. **The one exception** (decided 2026-10-23, for the
+  free-standing prototype): an org's register entries, meaning its governing documents' structured
+  terms, may be derived from that org's `truth/`. They are entered through the system's register
+  API by two named people acting as the org's function owners. They are what a customer's own
+  people would enter: policy terms, never expected outcomes, scenarios, answer keys or anything
+  scored. Nothing else derived from `truth/` is covered.
 - **Never use `owm/`, `README.md`'s trap and scenario tables or the four design docs to shape a
   foundation under test** (its classes, prompts or few-shot examples), whether today's foundation
   or BlueLeaf's own. They state the hypothesis the experiment tests and encode the traps' lessons
