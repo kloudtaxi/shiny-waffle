@@ -1,0 +1,36 @@
+# The lab's Opik instance (LW-8): loopback only, pinned, no usage report, no demo data.
+#
+# Upstream's compose file (Opik 2.2.119, deployment/docker-compose/) publishes the frontend on every
+# interface and the backend's 3003 on an ephemeral port on every interface, and the open-source build
+# has no login. This override closes both, and never loads upstream's docker-compose.override.yaml
+# (which publishes the databases), because the files are always passed with -f.
+#
+#   docker compose -p owm-lab-opik --env-file lab/prototype_eval/opik.env \
+#     -f ../lab-opik/deployment/docker-compose/docker-compose.yaml \
+#     -f lab/prototype_eval/opik-compose.override.yaml --profile opik up -d
+#
+# (run from shiny-waffle's root; ../lab-opik is the sparse checkout at tag 2.2.119)
+services:
+  mysql: { pull_policy: missing }
+  redis: { pull_policy: missing }
+  clickhouse: { pull_policy: missing }
+  zookeeper: { pull_policy: missing }
+  minio-init: { pull_policy: missing }
+  minio: { pull_policy: missing }
+  mc: { pull_policy: missing }
+  backend:
+    pull_policy: missing
+    ports: !reset []
+    environment:
+      OPIK_USAGE_REPORT_ENABLED: "false"
+  python-backend:
+    pull_policy: missing
+    privileged: false # upstream runs it privileged for Docker-in-Docker; the lab uses the process executor
+  demo-data-generator:
+    profiles: !override ["disabled"]
+    environment:
+      CREATE_DEMO_DATA: "false"
+  frontend:
+    pull_policy: missing
+    ports: !override
+      - "127.0.0.1:${NGINX_PORT}:${NGINX_PORT}"

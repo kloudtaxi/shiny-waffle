@@ -105,6 +105,14 @@ never exported in the bundle. The bundle's scan (Task L1.3) refuses an export th
   - **Lifetime:** it runs only during gate runs and E0. Otherwise it is stopped, with its volumes
     kept.
   - **Why:** the open-source build has no login. Anyone who can reach it can read it.
+  - **Settled in E0** (`runs/2026-10-23-e0-eval-spike/notes.md`):
+    - The files are always passed with `-f`, so upstream's `docker-compose.override.yaml`, which
+      publishes the databases, never loads.
+    - The backend's 3003 is unpublished.
+    - The python-backend runs unprivileged.
+    - The lab's SDK calls set `OPIK_CONFIG_PATH`, `OPIK_SENTRY_ENABLE=false` (the SDK reports
+      errors to Sentry by default) and `LITELLM_LOCAL_MODEL_COST_MAP=True`.
+    - Opik puts the `owm.*` attributes in span input. The scorers and rules read them there.
 - **LW-9. Northstar traces never leave this machine.**
   - The gate runner starts every prototype process with a clean environment (`env -i` plus an
     explicit list) and `OWM_OTLP_ENDPOINT` pointing at the lab's instance.
@@ -119,6 +127,10 @@ never exported in the bundle. The bundle's scan (Task L1.3) refuses an export th
 ---
 
 ## E0: the evaluation spike (before L1.5's export)
+
+**Done 2026-10-23. Opik passes every check, and the spec stands.** MLflow's open-source online rules
+need its AI Gateway, which would store the provider key, or unisolated custom code. See
+`runs/2026-10-23-e0-eval-spike/notes.md`.
 
 The spec now names Opik. If E0 rejects it, the spec needs another amendment before the bundle
 leaves. L1.1–L1.4 can run alongside.

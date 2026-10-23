@@ -221,6 +221,14 @@ The flaws concentrate on exactly the features we would use: scorers, evaluate an
 
 ## 6. Spike E0, before we commit
 
+**Done 2026-10-23: Opik passes every check.** See `runs/2026-10-23-e0-eval-spike/notes.md`.
+- **Opik:** OTLP-ingested traces can be scored by a code metric, by an LLM judge, by an experiment
+  over a dataset, and by an online Python rule.
+- **MLflow:** its mapping is as good or better. But in open source, its online rules need the AI
+  Gateway (the provider key stored in MLflow) or `exec()` in the server.
+
+The plan below is kept as it was run.
+
 E0 is lab-side. It takes about two hours plus a few cents of Claude judge calls. It needs the
 user's OK to download the Opik Compose images and the OTel Python packages. MLflow runs through
 `uvx` for the fallback comparison.
