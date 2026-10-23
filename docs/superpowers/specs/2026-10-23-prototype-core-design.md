@@ -1,8 +1,18 @@
 # The free-standing prototype core (sub-project 1): design
 
 **Status:** designed with the user section by section on 2026-10-22 and 2026-10-23. Every section
-below was approved in conversation. This written spec awaits the user's review. Nothing is built
-yet, and no repository has been created.
+below was approved in conversation, and the user approved this written spec on 2026-10-23. It was
+amended once while planning (see "Amendments" below). Nothing is built yet, and no repository has
+been created.
+
+**Amendments:**
+- **2026-10-23, while planning** (`docs/superpowers/plans/2026-10-23-prototype-core.md`, PL-2 and
+  PL-6):
+  - The parity counts are corrected from 42 to 32 at P2 (22 discount, 10 credit). The lab's 42
+    include 10 SLA scenarios, which v1 leaves out. The re-run at P4 covers discount's 22, and P6
+    covers credit's 10.
+  - At P6, Northstar's credit bindings and register entries are the lab's to register. The builder
+    delivers the credit pack and its own org's credit configuration.
 
 **What it is:** the core of a free-standing BlueLeaf prototype: an OWM service, its contracts, its
 MCP server, a reference agent and an approver's tool, running on real identity, with no Utopia. It is
@@ -896,7 +906,7 @@ screen can do the same job on the same routes.
 flowchart TD
   P0["P0 spike · Authorizer"] -->|"gate: spike report; the user picks a fallback if needed"| P1
   P1["P1 contract · contract/ before any code"] -->|"gate: lab and user review; frozen as v2.0-rc"| P2
-  P2["P2 port · core/ and ports/ with fakes; kernel on Northstar's evidence; owmctl"] -->|"gate: kernel parity, 42 scenarios"| P3
+  P2["P2 port · core/ and ports/ with fakes; kernel on Northstar's evidence; owmctl"] -->|"gate: kernel parity, 32 scenarios"| P3
   P3["P3 service · event log, register API, clearance, executor + sor_stub, KF adapter, df_stub"] -->|"gate: 24 register attacks, 0 admitted"| P4
   P4["P4 generalize · packs, profile, core vocabulary, catalog gate, structural check, authority from terms"] -->|"gate: P2 and P3 parity again with Northstar as configuration; no org names in code"| P5
   P5["P5 front door · Authorizer adapters, MCP server, reference agent, approver tool"] -->|"gate: the journey by the agent AND a plain MCP client; the claim test; the delegation attacks"| P6
@@ -907,11 +917,11 @@ flowchart TD
 |---|---|---|
 | **P0** | A spike report on §6.7's three questions | The user reads it and picks a fallback if one is needed |
 | **P1** | `contract/`: owm-decisions v2, pack and profile schemas, grants and delegations, the core vocabulary, `authz.fga`, the error shape, the MCP tool rules, the ports | The lab and the user review it; it is frozen as v2.0-rc |
-| **P2** | `core/` and `ports/` with fakes; the kernel ported; `owmctl decide` (corpus, decision type, subject, clock) printing the record as JSON; `owmctl register` running the register's rules | Kernel parity: the lab's 42 decision scenarios give the same results |
+| **P2** | `core/` and `ports/` with fakes; the kernel ported; `owmctl decide` (corpus, decision type, subject, clock) printing the record as JSON; `owmctl register` running the register's rules | Kernel parity: the lab's 32 discount and credit decision scenarios give the same results (SLA's 10 are out of v1) |
 | **P3** | `service/` with the event log, the register API, clearance, the executor and `sor_stub`, the KF adapter, `df_stub` | 24 register attacks, 0 admitted |
-| **P4** | Packs and the profile; the ~20 hand-wired places removed; the catalog gate; the structural check; discount authority read from registered terms | P2 and P3 parity again, with Northstar now just configuration; a scan finds no org or pack names in code |
+| **P4** | Packs and the profile; the ~20 hand-wired places removed; the catalog gate; the structural check; discount authority read from registered terms | P2 and P3 parity again (discount's 22, since credit has no pack until P6), with Northstar now just configuration; a scan finds no org or pack names in code |
 | **P5** | The Authorizer adapters; the MCP server with generated tools; the reference agent; the approver's tool | The journey (§8) run by the agent and by a plain MCP client; "an agent read a different figure" still can't get it applied; the delegation and grant attacks (§12) |
-| **P6** | The credit pack, Northstar's credit bindings and register entries | An empty diff under `core/`, `service/`, `contract/` and `mcp/`; credit's parity holds |
+| **P6** | The credit pack and the builder's own org's credit configuration. The lab registers Northstar's profile version that enables credit | An empty diff under `core/`, `service/`, `contract/` and `mcp/`; credit's 10 scenarios match |
 
 **Why this order.** Real identity comes late: until P5 the service runs on the core team's fake
 adapters, while P0 settles the risk early. The MCP server comes after generalizing because its tools
@@ -980,7 +990,7 @@ mechanisms, it checks:
 
 | Check | Phase |
 |---|---|
-| The kernel's 42 decision scenarios give the lab's results | P2, again at P4 |
+| The kernel's 32 discount and credit decision scenarios give the lab's results | P2; discount's 22 again at P4; credit's 10 at P6 |
 | 24 register attacks: none admitted | P3, again at P4 |
 | Discount authority from terms: any change from the lab's results is judged against the expected outcomes, not against the lab's output | P4 |
 | No org or pack names in `contract/`, `core/`, `service/`, `mcp/` | P4 onward |
