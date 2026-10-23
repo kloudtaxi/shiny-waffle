@@ -20,6 +20,8 @@ front, and credit is added as data at the end.
 - jsonschema for contract documents; PyJWT for tokens.
 - Authorizer 2.4.2 (embedded OpenFGA on SQLite) for identity and access.
 - The MCP Python SDK 2.x; Agno 3.x for the reference agent; Textual 8.2 for the approver's screen.
+- OpenTelemetry 1.45 (API, SDK, OTLP/HTTP export), the OTel GenAI instrumentations and
+  `opentelemetry-util-genai` (§9.7). No vendor SDK.
 - pytest, mypy (strict) and ruff.
 
 **Spec:** `docs/superpowers/specs/2026-10-23-prototype-core-design.md`, approved by the user on
@@ -51,10 +53,18 @@ allows. The lab's own work (L1–L4) has a separate plan, which the builder does
     `agno>=3.1.10,<4`, `textual>=8.2,<9`.
   - Dev: `pytest>=8.2`, `mypy>=1.11`, `ruff>=0.6`, `types-PyYAML`, `types-jsonschema`.
   - Only if P0 picks standalone OpenFGA: `openfga-sdk>=0.10.5`.
+  - **Telemetry, pinned exactly, not floors** (§9.7), from P3 on:
+    - `opentelemetry-api==1.45.1`, `opentelemetry-sdk==1.45.1`,
+      `opentelemetry-exporter-otlp-proto-http==1.45.1`;
+    - `opentelemetry-instrumentation-fastapi==0.66b1`, `opentelemetry-instrumentation-httpx==0.66b1`;
+    - `opentelemetry-util-genai==1.3b0`;
+    - in `agent/` only, `opentelemetry-instrumentation-genai-agno==1.3b0`. If it doesn't work with
+      Agno 3.x, the fallback is `openinference-instrumentation-agno==1.0.15`. Never install both.
 - **Boundaries.** `tests/boundaries/test_imports.py` (Task 1.1) enforces all of these:
   - `owm_contract` imports only the stdlib.
   - `owm_ports` imports only the stdlib and `owm_contract`.
   - `owm_core` imports only the stdlib, `owm_contract` and `owm_ports`, and does no I/O.
+  - None of those three ever imports `opentelemetry` (§9.7).
   - `owm_mcp`, `owm_agent`, `owm_approver` and `owm_org` never import `owm_core`, `owm_service`,
     `owm_ports`, `owm_adapters` or `owm_cli`. They reach the OWM over HTTP.
   - Nothing imports a lab module. Ported code is copied in and renamed.
@@ -73,7 +83,8 @@ allows. The lab's own work (L1–L4) has a separate plan, which the builder does
   - 401 and 5xx responses use the typed error (§9.4, Task 1.3).
   - 403, 409 and 422 keep v1.4's `Refusals` body.
 - **Credentials.** Credentials are never printed, logged or committed. They are: Authorizer client
-  secrets, the operator token, the Jev key and the agent model's key.
+  secrets, the operator token, the Jev key, the agent model's key and the Opik workspace key
+  (PL-16).
   - Each lives in a file under `var/secrets/`. The Jev key's file is the one named by
     `TYPESAFE_API_KEY_FILE`.
   - `.env` and `var/` are gitignored.
@@ -83,7 +94,15 @@ allows. The lab's own work (L1–L4) has a separate plan, which the builder does
     model reads.
 - **Jev recordings.** The adapter records every live call to `var/jev-recordings/`. It may replay
   only those recordings. It never reads anything from the lab's `runs/`.
-- **After the freeze** (Task 1.11), the contract changes only through the user, as amendments.
+- **Telemetry** (§9.7):
+  - The exporter is built only from `OWM_OTLP_ENDPOINT`, plus `OWM_OTLP_HEADERS_FILE`. If the
+    endpoint isn't set, nothing is exported.
+  - Never use the OTel default endpoint or the `OTEL_EXPORTER_OTLP_*` variables. On this machine,
+    `localhost:4318` is another system's collector.
+  - GenAI content capture stays `NO_CONTENT`. Agno's usage telemetry is off: `AGNO_TELEMETRY=false`,
+    and `telemetry=False` on the agent.
+  - No token, key or message content ever goes in a span, an event or a metric.
+- **After the freeze** (Task 1.12), the contract changes only through the user, as amendments.
 - **Commits:** small and frequent. No amend, no force-push, no history rewrite. Use the trailers
   your session's harness gives you.
 
@@ -175,6 +194,23 @@ the lab's code forced a choice.
   - Their adapters must pass the contract tables in the bundle's copies (I1–I8 for identity, and the
     authorization table).
   - The prototype's own ports (§9.5) are `Protocol`s.
+- **PL-15. The telemetry contract is contract, frozen with the rest (PL-5).**
+  - It consists of `contract/telemetry.yaml` and `owm_contract.telemetry`. The latter is stdlib
+    string constants: span names, attribute names, and the forbidden list.
+  - An eleventh workspace member, `telemetry/` (`owm_telemetry`), holds the one setup function that
+    every process calls: the service, `owmctl`, the MCP server and the agent. It may import only the
+    stdlib, `owm_contract` and `opentelemetry`.
+  - Everyone may import `owm_telemetry` except `owm_contract`, `owm_ports` and `owm_core`. The front
+    door may too, since it isn't the OWM.
+  - The spec's other directory names stay (PL-3).
+- **PL-16. Your traces go to the user's Opik cloud workspace. Tests never use a network backend.**
+  - Tests use the SDK's in-memory span exporter.
+  - For your own runs, the endpoint is the workspace's OTLP traces URL,
+    `https://www.comet.com/opik/api/v1/private/otel/v1/traces`. The user puts the workspace's key
+    and name in the file that `OWM_OTLP_HEADERS_FILE` names, as `Authorization`, `Comet-Workspace`
+    and `projectName` header lines. You never print it.
+  - Opik builds a trace only from a root span, so every request starts one.
+  - The lab's instance isn't yours. You are never given its address, and you never look for it.
 
 ## Review Focus
 
@@ -202,6 +238,12 @@ cover, most likely first. Each has a pinning test in the task named.
 5. **A governing document saved with a UTF-8 byte-order mark and CRLF line endings.** The adapter's
    fingerprint equals the `text.sha256` that the Knowledge Foundation reports for it in K5.
    - *Tests:* Task 3.7.
+6. **A token, a key or message text ends up in an exported span.**
+   - Across a whole journey, no span name, attribute, event or resource holds a bearer token, a key
+     file's content, or the word `Bearer`.
+   - This holds even when someone sets the HTTP header-capture variable to `.*`: the `Authorization`
+     header is then redacted or absent.
+   - *Tests:* Tasks 3.9 and 5.7.
 
 ## File structure
 
@@ -214,12 +256,13 @@ cover, most likely first. Each has a pinning test in the task named.
 │  ├─ authz.fga                   the OpenFGA model
 │  ├─ authz.fga.yaml              its model tests (OpenFGA store-test format)
 │  ├─ errors.yaml                 the closed list of error codes
+│  ├─ telemetry.yaml              spans, kinds, required and forbidden attributes; conventions commit
 │  ├─ schemas/                    JSON Schema 2020-12: vocabulary, error, pack, profile, grant,
 │  │                              delegation, register-entry, owmctl-decide-output, mcp/*.json
 │  ├─ owmctl.md · org-package.md · operator.md · sor-stub.md · mcp-tools.md
 │  ├─ CHANGES-v2.md               every §3.2 change, mapped to the TypeScript diff
 │  ├─ README.md                   index and version
-│  └─ owm_contract/               stdlib dataclasses: vocabulary, errors, shapes, auth
+│  └─ owm_contract/               stdlib dataclasses: vocabulary, errors, shapes, auth; telemetry names
 ├─ ports/owm_ports/               Protocols (§9.5) and the two ABCs (§6.6), plus port errors
 ├─ core/owm_core/                 the ported kernel, register rules, and the decision rules
 ├─ service/owm_service/           the HTTP API, bindings layer, event log, register queue
@@ -230,6 +273,7 @@ cover, most likely first. Each has a pinning test in the task named.
 ├─ approver/owm_approver/         the approver's CLI and Textual screen
 ├─ org/owm_org/                   the org loader
 ├─ cli/owm_cli/                   owmctl
+├─ telemetry/owm_telemetry/       the one OTel setup function (PL-15), from P3
 ├─ packs/<use_case>/              definition.yaml, procedure.yaml, terms/*.schema.json,
 │                                 findings.schema.json   (from P2 for procedures, P4 for the rest)
 ├─ orgs/fernhill/                 the builder's own org package (PL-10)
@@ -355,6 +399,8 @@ IO_IN_CORE = {"os", "io", "pathlib", "sqlite3", "socket", "subprocess", "shutil"
 def test_inner_packages_import_only_what_they_may() -> None: ...
     # for each .py under each INNER package: every imported top-level name is in
     # sys.stdlib_module_names, or the package itself, or in INNER[pkg]
+def test_inner_packages_never_import_opentelemetry() -> None: ...
+    # covered by the stdlib rule; asserted by name too, so the message is plain (§9.7)
 def test_core_does_no_io() -> None: ...
     # owm_core imports nothing in IO_IN_CORE and never calls open(), .read_text(), .write_text(),
     # .read_bytes(), .write_bytes()
@@ -820,7 +866,60 @@ grants/*.yaml · delegations/*.yaml   each with submitted_by and approved_by
 - [ ] **Step 4: Run them.** Expected: PASS.
 - [ ] **Step 5: Commit** ("contract: owmctl, org package, operator surface, sor_stub, MCP tools").
 
-### Task 1.11: The contract's README and the freeze (gate)
+### Task 1.11: The telemetry contract (PL-15)
+
+**Files:**
+- Create:
+  - `contract/telemetry.yaml`;
+  - `contract/owm_contract/telemetry.py`;
+  - `tests/contract/test_telemetry.py`.
+
+**Interfaces:**
+- **Produces:** `owm_contract.telemetry`, which holds stdlib constants only.
+  - `SPANS: Mapping[str, SpanSpec]`. `SpanSpec(name_template: str, kind: str,
+    required: tuple[str, ...], on_success: tuple[str, ...] = (), on_error: tuple[str, ...] = ())`
+    is a frozen dataclass. `required` always holds. `on_success` holds when the span's work
+    succeeded (a decision was made), and `on_error` when it didn't. The keys are `http_route`, `decide`, `port`,
+    `judgment`, `mcp_tool_call`, `execute` and `agent`, matching §9.7's table row for row.
+  - `ALWAYS_FORBIDDEN: tuple[str, ...]`:
+    - `http.request.header.authorization`;
+    - `http.request.header.cookie`;
+    - `http.request.header.x-api-key`.
+  - `CONTENT_ATTRIBUTES: tuple[str, ...]`. These appear only when someone turns content capture on:
+    - `gen_ai.input.messages`, `gen_ai.output.messages`;
+    - `gen_ai.system_instructions`;
+    - `gen_ai.tool.call.arguments`, `gen_ai.tool.call.result`.
+  - `CONVENTIONS_COMMIT: str`, the `semantic-conventions-genai` commit the contract follows.
+  - The attribute-name constants, `ATTR_DECISION_ID = "owm.decision.id"` and so on, one per
+    attribute in §9.7.
+
+- [ ] **Step 1: Write the failing tests** in `tests/contract/test_telemetry.py`.
+  - `test_spans_match_the_spec_table`: the seven keys above.
+    - `decide` is `("owm.decide {decision_type}", "INTERNAL", ...)`.
+    - It has `required == ("owm.decision.type",)`.
+    - Its `on_success` is `owm.decision.id`, `owm.outcome`, `owm.procedure.id`,
+      `owm.procedure.version`, `owm.pack.version` and `owm.profile.version`.
+    - Its `on_error` is `("error.type", "owm.error.who_can_fix")`. `mcp_tool_call` is
+    `("tools/call {tool}", "SERVER", ...)` and requires `mcp.method.name`, `mcp.session.id` and
+    `gen_ai.tool.name`.
+  - `test_yaml_and_constants_agree`: every span and attribute in `telemetry.yaml` has a constant,
+    and every constant appears in the YAML.
+  - `test_on_success_and_on_error_disjoint`: for every span, `on_success` and `on_error` share
+    nothing.
+  - `test_conventions_commit_is_a_full_sha`: it matches `^[0-9a-f]{40}$`.
+  - `test_forbidden_and_content_lists_disjoint_from_required`: no span may list a forbidden or
+    content attribute in `required`, `on_success` or `on_error`.
+- [ ] **Step 2: Run `uv run pytest tests/contract/test_telemetry.py -v`.** Expected: FAIL, because
+  the module doesn't exist.
+- [ ] **Step 3: Write `telemetry.yaml` and `owm_contract/telemetry.py`.**
+  - Take the conventions commit from
+    `gh api repos/open-telemetry/semantic-conventions-genai/commits/main --jq .sha` on the day you
+    write it.
+  - Check the GenAI and MCP attribute names against that commit's `docs/gen-ai/` pages.
+- [ ] **Step 4: Run the tests.** Expected: PASS.
+- [ ] **Step 5: Commit** ("contract: telemetry (spans, attributes, forbidden list)").
+
+### Task 1.12: The contract's README and the freeze (gate)
 
 **Files:**
 - Modify: `contract/README.md`, which indexes every file, gives the version `2.0-rc1`, and lists the
@@ -1174,7 +1273,52 @@ owm-decisions v2's routes are served. Decision behaviour stays v1.4's; P4 change
 - **Review Focus 1:** in `test_execute_twice_concurrently_writes_once`, two concurrent executes give
   one write. The second call gets the first one's report.
 
-**Done when** Tasks 3.1–3.8 pass. Then push, and ask the lab to run the P3 gate.
+### Task 3.9: Telemetry: the setup, the service and port spans, and the secret scan
+
+**Files:**
+- `telemetry/pyproject.toml`, `telemetry/owm_telemetry/{__init__,setup,spans}.py`
+- `service/owm_service/tracing.py`; the port calls in `adapters/` are wrapped by
+  `owm_telemetry.port_span`
+- `tests/telemetry/test_setup.py`, `tests/service/test_spans.py`, `tests/helpers/spans.py`
+- Modify: the root `pyproject.toml` (the eleventh member), and `tests/boundaries/test_imports.py`
+  (`owm_telemetry` imports only the stdlib, `owm_contract` and `opentelemetry`)
+
+**Interfaces:**
+- **Consumes:** `owm_contract.telemetry` (Task 1.11).
+- **Produces:**
+  - `owm_telemetry.setup(service_name: str, env: Mapping[str, str]) -> TracerProvider | None`. It
+    returns `None` and installs nothing when `OWM_OTLP_ENDPOINT` is unset. It sets
+    `AGNO_TELEMETRY=false` for its process.
+  - `owm_telemetry.port_span(port: str, operation: str) -> ContextManager[Span]`. It sets
+    `error.type` from a port error's class.
+  - The Jev adapter's judgment span, built with `opentelemetry-util-genai`'s `TelemetryHandler`. It
+    adds `owm.judgment.question`, `owm.judgment.answer_type` and `owm.judgment.out_of_type`.
+  - `tests/helpers/spans.py: assert_matches_contract(spans: Sequence[ReadableSpan]) -> None`.
+    - It checks `required` on every span.
+    - It checks `on_error` on spans with status ERROR, and `on_success` on the rest.
+    - Task 5.7 reuses it.
+
+**Tests:**
+- With `OWM_OTLP_ENDPOINT` unset and `OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:<test port>`, a
+  decision exports nothing. A listener on the test port receives no request.
+- With the in-memory exporter, one `decide` call gives the HTTP route span, `owm.decide {type}`,
+  and one `owm.port` span per port call. They are all in one trace, and all pass
+  `assert_matches_contract`.
+- A run with no decision sets `error.type` to the typed code, plus `owm.error.who_can_fix`.
+- An out-of-type Jev answer sets `owm.judgment.out_of_type` to true.
+- Executing a clearance gives `owm.execute {action}`.
+- **Review Focus 6:** in `test_no_secret_in_any_span`, a register, decide, clearance and execute
+  sequence runs with a known fake token and a fake Jev key file. It runs again with
+  `OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST=".*"`. Each time, a scan of every
+  exported span's name, attributes, events and resource finds neither value, nor `Bearer`.
+
+**Then, once, by hand:**
+- Ask the user for the Opik workspace's key (PL-16). They write the headers file themselves.
+- Run one fernhill decision with the endpoint set, and confirm it shows as one trace in the
+  workspace.
+- Report the trace id, never the key.
+
+**Done when** Tasks 3.1–3.9 pass. Then push, and ask the lab to run the P3 gate.
 
 ---
 
@@ -1404,6 +1548,11 @@ authority from terms, typed judgments and the structural check come in.
   - Visibility comes from `GET /api/v1/me`.
   - Calling an action's tool requests the clearance, then executes it.
   - It reaches the service only through its HTTP API.
+  - Each tool call is a `tools/call {tool}` SERVER span (§9.7).
+    - It continues the trace from `params._meta.traceparent` and carries the context on to the
+      service in the request headers.
+    - The OTel Python MCP SDK has no instrumentation, so the span is written by hand to the
+      conventions.
 
 **Tests:**
 - An agent without an approval grant never sees `approve`.
@@ -1412,6 +1561,8 @@ authority from terms, typed judgments and the structural check come in.
 - **Review Focus 2:** in `test_tool_call_with_token_bound_elsewhere_refused`, a token bound to one
   subject is refused on another.
 - No tool's schema has a token field.
+- A tool call with a `traceparent` in `_meta` gives spans in that trace, down to the service's
+  `owm.decide`.
 
 ### Task 5.5: The approver's tool
 
@@ -1438,11 +1589,15 @@ authority from terms, typed judgments and the structural check come in.
   - Its tools are a direct Knowledge Foundation read tool and the OWM's MCP tools. It has no write
     tool.
   - The model and the cap come from its config.
+  - It is traced by the Agno instrumentation named in Global Constraints. Its MCP client puts
+    `traceparent` in `params._meta`. It is built with `telemetry=False`.
 
 **Tests** (with a scripted model):
 - The tool list has no write tool.
 - The runtime adds the token header; the model never sees it.
 - A refused action is reported as refused, not retried as a write somewhere else.
+- With the in-memory exporter, one agent turn gives `invoke_agent` → `execute_tool` →
+  `tools/call` in one trace.
 
 ### Task 5.7: The journey, and the failure ends, on fernhill
 
@@ -1461,6 +1616,9 @@ authority from terms, typed judgments and the structural check come in.
   - over the cap.
 - With each port faulted through the operator surface, there is no decision, the typed error comes
   back, and nothing else is written.
+- The journey's trace, from the in-memory exporter, is one connected trace from the client's call
+  to the port calls, and passes `assert_matches_contract`.
+- **Review Focus 6:** the secret scan of Task 3.9, run over the whole journey, finds 0 hits.
 
 **Done when** Tasks 5.1–5.7 pass. Then tag `p5-gate`, push the tag, and ask the lab to run the P5
 gate. Its runs use the reference agent, under a spend cap that the lab pre-registers. P6's empty

@@ -4,6 +4,18 @@
 Opik or Ragas, with MLflow (reviewed 2026-09-28, `docs/tracking-mlflow-review.md`) as a reference
 point? And does plain OpenTelemetry cover observability?
 
+**Decided (the user, 2026-10-23):**
+- **Opik.**
+- **The OTel design as proposed.** It is now spec §9.7, plus the plans' PL-15, PL-16 and LW-8 to
+  LW-10.
+- **Spike E0 on both Opik and MLflow,** after first checking that no Opik instance is already
+  running.
+- **The isolation, using the user's own Opik cloud account.**
+  - The builder's traces go to the cloud workspace, since they hold only fernhill data.
+  - The lab's instance stays local, since it holds Northstar data and must not leave the machine.
+
+  This replaces §5's "two local instances".
+
 **Verdict.**
 - **Observability: yes, plain OpenTelemetry.** The prototype emits OTel traces over OTLP and carries
   no vendor SDK. Its GenAI support is a set of semantic conventions plus instrumentation packages,
@@ -29,8 +41,8 @@ flowchart LR
     M --> S["service<br/>owm.decide {type}"]
     S --> P["ports<br/>evidence · records · judgment(Jev) · access"]
   end
-  proto -->|"OTLP/HTTP"| DEV["builder's Opik<br/>(fernhill traces only)"]
-  proto -->|"OTLP/HTTP, gate runs only"| LAB["lab's Opik<br/>(Northstar traces, datasets, scores)"]
+  proto -->|"OTLP/HTTP"| DEV["builder's Opik: the user's cloud workspace<br/>(fernhill traces only)"]
+  proto -->|"OTLP/HTTP, gate runs only, loopback"| LAB["lab's Opik, local<br/>(Northstar traces, datasets, scores)"]
   LAB --> SC["lab scorers<br/>code metrics · Claude judge · annotation queue"]
   SC -.->|"results to runs/ and the Ledger"| LED["Ledger"]
 ```
@@ -192,7 +204,9 @@ The flaws concentrate on exactly the features we would use: scorers, evaluate an
 
 ## 5. Keeping the never-load rule
 
-- **There are two Opik instances, with separate Compose projects, volumes and ports.**
+- *(Superseded by the decision above: the builder uses the user's Opik cloud workspace, and the lab
+  keeps the one local instance.)* **There are two Opik instances, with separate Compose projects,
+  volumes and ports.**
   - The builder's instance holds fernhill traces only.
   - The lab's instance holds Northstar traces, datasets with expected outcomes, and scores. It runs
     only during gate runs.
@@ -225,6 +239,19 @@ user's OK to download the Opik Compose images and the OTel Python packages. MLfl
 **Pass:** Opik does steps 2–4, and the choice stands. **If Opik fails and MLflow passes:** MLflow,
 bound to loopback and on at least 3.17.2. **If both fail on step 3:** the lab scores its own way
 (pytest over traces exported to files) and uses either tool as a viewer only.
+
+## 6a. Found on this machine (2026-10-23)
+
+- **No Opik is installed or running:** no Opik containers, images or volumes.
+- **Port 5173**, Opik's default for its web app, is held by **Utopia's web dev server**. The lab's
+  Opik uses another port.
+- **Port 4318**, the default OTLP endpoint, is held by **sovera-owm's OTel collector**, bound to
+  every interface. An exporter left on its defaults would quietly send traces into sovera-owm. Hence
+  §9.7's rule: the endpoint is always explicit, and nothing is exported without one.
+- **Opik's Compose file publishes the web app on every interface** (`${NGINX_PORT}:${NGINX_PORT}`).
+  The open-source build has no login, so the lab's override binds it to `127.0.0.1`.
+- **`~/.opik.config` exists** (not opened). The Opik SDK reads it by default, and it probably points
+  at the user's cloud. The lab's calls use their own config file (`OPIK_CONFIG_PATH`).
 
 ## 7. Open questions
 

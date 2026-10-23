@@ -2,7 +2,7 @@
 
 **Status:** designed with the user section by section on 2026-10-22 and 2026-10-23. Every section
 below was approved in conversation, and the user approved this written spec on 2026-10-23. It was
-amended once while planning (see "Amendments" below). Nothing is built yet, and no repository has
+amended twice on the same day (see "Amendments" below). Nothing is built yet, and no repository has
 been created.
 
 **Amendments:**
@@ -13,6 +13,10 @@ been created.
     covers credit's 10.
   - At P6, Northstar's credit bindings and register entries are the lab's to register. The builder
     delivers the credit pack and its own org's credit configuration.
+- **2026-10-23, after planning** (the lab's evaluation and observability review; the user's choice):
+  - Observability is OpenTelemetry only, with a telemetry contract frozen with the rest (§9.7).
+  - Evaluation uses Opik. The builder's traces go to the user's Opik cloud workspace. The lab's go to
+    its own local instance, which the builder never reads.
 
 **What it is:** the core of a free-standing BlueLeaf prototype: an OWM service, its contracts, its
 MCP server, a reference agent and an approver's tool, running on real identity, with no Utopia. It is
@@ -145,6 +149,8 @@ flowchart LR
 | Netflix sharpenings | All three: `customer` not `party`; a catalog gate; typed judgments | the user, 10-22 |
 | Port bundle | The builder reads a scrubbed, allowlisted bundle only | the user, 10-23 |
 | Register entries | The one named never-load exception (`CLAUDE.md`, 785a3a1) | the user, 10-23 |
+| Observability | OpenTelemetry only, exported over OTLP/HTTP; no vendor SDK in the prototype (§9.7) | the user, 10-23 |
+| Evaluation | Opik. The builder's traces go to the user's Opik cloud workspace; the lab's to its own local instance | the user, 10-23 |
 
 ### 1.3 Not in v1
 
@@ -169,7 +175,8 @@ append-only SQLite event log as the source of truth.
 ```
  the prototype repo (private, contract-first)
  ├─ contract/   owm-decisions v2 · pack and profile schemas · grants and delegations ·
- │              core vocabulary · authz.fga · error shape · MCP tool rules   (depends on nothing)
+ │              core vocabulary · authz.fga · error shape · MCP tool rules · telemetry
+ │                                                                (depends on nothing)
  ├─ core/       procedure runner · registers · authority from terms · ratchet ·
  │              decision records · clearance rules                (stdlib only, no I/O)
  ├─ ports/      Evidence · Records · Identity · Access · Judgment · Executor ·
@@ -200,6 +207,7 @@ append-only SQLite event log as the source of truth.
   its shapes directly.
 - Nothing imports the lab. The lab tests the prototype from outside.
 - `mcp/`, `agent/` and `approver/` never import `core/` or `service/`.
+- `contract/`, `core/` and `ports/` never import OpenTelemetry. Spans start at the edges (§9.7).
 - No use-case or org name appears in `contract/`, `core/`, `service/` or `mcp/` after P4 (§3.3).
 
 ### 2.2 The two stubs
@@ -231,6 +239,7 @@ These are the documents the OWM team takes.
 | **MCP tool contract** | The front door | the lab's tool server | §10.1 |
 | **Identity claims** | Token shapes, with the actor chain | sovera-owm's `IdentityProvider` | §6.2, §6.6 |
 | **Error shape** | One typed error for every failure | new | §9.4 |
+| **Telemetry contract** | `contract/telemetry.yaml`: span names, required and forbidden attributes | new | §9.7 |
 | **Ports** | The internal seams, handed over with the rest | F1 and sovera-owm | §9.5 |
 
 ### 3.2 owm-decisions v2: what changes from v1.4
@@ -858,6 +867,64 @@ From F1, decided here:
 - **Governing documents are Markdown or plain text in v1.** Their kind, owner and window come from
   the register entry, not from parsing the document.
 
+### 9.7 Observability
+
+The prototype emits OpenTelemetry and nothing else. Whoever runs it chooses where the traces go.
+
+- **The OTel API and SDK only, exported over OTLP/HTTP.** No vendor SDK is imported anywhere.
+  - The exporter is built only from `OWM_OTLP_ENDPOINT`, plus `OWM_OTLP_HEADERS_FILE`, a file under
+    `var/secrets/`. With no endpoint set, nothing is exported.
+  - The standard `OTEL_EXPORTER_OTLP_*` variables and the OTel default endpoint are never used. On
+    the build machine, `localhost:4318` belongs to another system.
+- **Where spans start.** `contract/`, `core/` and `ports/` never import OpenTelemetry. Spans start at
+  the edges: `service/`, `adapters/`, `mcp/` and `agent/`.
+- **The telemetry contract,** `contract/telemetry.yaml`, is frozen with the rest of the contract. It
+  lists span names, kinds, required attributes and forbidden attributes. The lab's scorers read these
+  spans, so they are a cross-team interface.
+
+| Span | Kind | Where | Required attributes |
+|---|---|---|---|
+| One per HTTP route | SERVER | `service/`, by the FastAPI instrumentation | the route template and the status |
+| `owm.decide {decision_type}` | INTERNAL | `service/` | Always `owm.decision.type`. With a decision: `owm.decision.id`, `owm.outcome`, `owm.procedure.id`, `owm.procedure.version`, `owm.pack.version`, `owm.profile.version`. With none: `error.type` is the typed error's code, plus `owm.error.who_can_fix` |
+| `owm.port {port} {operation}` | CLIENT | `adapters/` | `owm.port`, `owm.operation`; a port error in `error.type` |
+| `{gen_ai.operation.name} {gen_ai.request.model}`, for a Jev judgment | CLIENT | `adapters/` | the GenAI attributes (operation, provider, model, token usage), plus `owm.judgment.question`, `owm.judgment.answer_type` and `owm.judgment.out_of_type` |
+| `tools/call {tool}` | SERVER | `mcp/` | the MCP attributes (`mcp.method.name`, `mcp.session.id`, `gen_ai.tool.name`) |
+| `owm.execute {action}` | INTERNAL | `service/` | `owm.clearance.id`, `owm.action`, the outcome |
+| `invoke_agent`, `chat`, `execute_tool` | per the conventions | `agent/` | from the OTel GenAI Agno instrumentation |
+
+- **One connected trace per request.** The agent's turn, its MCP calls, the decision and the port
+  calls share one trace id.
+  - The MCP client carries `traceparent` in `params._meta`, and the MCP server continues the trace
+    from it.
+  - The service continues the trace from the HTTP headers.
+- **Never in a span or a metric:**
+  - a bearer token, or the `Authorization` header. The HTTP instrumentation's header capture stays
+    off, and its sanitize list names `authorization`;
+  - a key file's content;
+  - message content. GenAI content capture stays `NO_CONTENT` unless whoever runs the prototype
+    turns it on for their own run.
+
+  Span names hold only names from the contract; ids and figures are attributes.
+- **Three metrics:**
+  - `owm.decisions`, by type and outcome;
+  - `owm.errors`, by code;
+  - the GenAI token usage that the instrumentation records.
+
+  There are no OTel logs in v1. Stdlib logging carries the trace id.
+- **Third-party telemetry stays off:** `AGNO_TELEMETRY=false`.
+- **Pins.** The GenAI and MCP conventions are at Development status, and they moved repos in
+  June 2026.
+  - The SDK, the instrumentations and `opentelemetry-util-genai` are pinned to exact versions.
+  - The commit of `semantic-conventions-genai` that the contract follows is recorded in
+    `contract/telemetry.yaml`.
+  - Attribute names live in one module of constants.
+- **A record's trace is not this.** What a decision relied on is part of its record. Spans carry the
+  record's ids, never its basis.
+- **Where the traces go:**
+  - The builder's go to the user's Opik cloud workspace, set in the builder's own environment.
+  - The lab's gate runs go to the lab's own instance on loopback.
+  - The builder never reads the lab's instance.
+
 ---
 
 ## 10. The front door
@@ -876,6 +943,8 @@ From F1, decided here:
 - **It acts through the same routes** as everything else, as an actor of kind `agent` with
   `on_behalf_of`, so what an agent did shows in the record people see.
 - **Its errors are the service's typed errors,** passed through unchanged.
+- **Traced.** Each tool call is a `tools/call {tool}` server span that continues the caller's
+  trace (§9.7).
 
 ### 10.2 The reference agent
 
@@ -884,6 +953,7 @@ From F1, decided here:
   tool that writes anywhere.
 - Its model is set in its config. Each gate run that uses it is pre-registered with the model and a
   spend cap.
+- **Traced** by the OTel GenAI Agno instrumentation, with Agno's own usage telemetry off (§9.7).
 
 ### 10.3 The approver's tool
 
@@ -916,11 +986,11 @@ flowchart TD
 | Phase | The builder delivers | The gate (run by the lab, from outside) |
 |---|---|---|
 | **P0** | A spike report on §6.7's three questions | The user reads it and picks a fallback if one is needed |
-| **P1** | `contract/`: owm-decisions v2, pack and profile schemas, grants and delegations, the core vocabulary, `authz.fga`, the error shape, the MCP tool rules, the ports | The lab and the user review it; it is frozen as v2.0-rc |
+| **P1** | `contract/`: owm-decisions v2, pack and profile schemas, grants and delegations, the core vocabulary, `authz.fga`, the error shape, the MCP tool rules, the ports, the telemetry contract | The lab and the user review it; it is frozen as v2.0-rc |
 | **P2** | `core/` and `ports/` with fakes; the kernel ported; `owmctl decide` (corpus, decision type, subject, clock) printing the record as JSON; `owmctl register` running the register's rules | Kernel parity: the lab's 32 discount and credit decision scenarios give the same results (SLA's 10 are out of v1) |
-| **P3** | `service/` with the event log, the register API, clearance, the executor and `sor_stub`, the KF adapter, `df_stub` | 24 register attacks, 0 admitted |
+| **P3** | `service/` with the event log, the register API, clearance, the executor and `sor_stub`, the KF adapter, `df_stub`; the service and port spans (§9.7) | 24 register attacks, 0 admitted |
 | **P4** | Packs and the profile; the ~20 hand-wired places removed; the catalog gate; the structural check; discount authority read from registered terms | P2 and P3 parity again (discount's 22, since credit has no pack until P6), with Northstar now just configuration; a scan finds no org or pack names in code |
-| **P5** | The Authorizer adapters; the MCP server with generated tools; the reference agent; the approver's tool | The journey (§8) run by the agent and by a plain MCP client; "an agent read a different figure" still can't get it applied; the delegation and grant attacks (§12) |
+| **P5** | The Authorizer adapters; the MCP server with generated tools; the reference agent; the approver's tool; the MCP and agent spans | The journey (§8) run by the agent and by a plain MCP client; "an agent read a different figure" still can't get it applied; the delegation and grant attacks (§12); the journey's trace checks (§12) |
 | **P6** | The credit pack and the builder's own org's credit configuration. The lab registers Northstar's profile version that enables credit | An empty diff under `core/`, `service/`, `contract/` and `mcp/`; credit's 10 scenarios match |
 
 **Why this order.** Real identity comes late: until P5 the service runs on the core team's fake
@@ -944,6 +1014,7 @@ are generated from the packs' actions.
 | The port bundle | `owm/`, the README's trap and scenario tables, the four design docs |
 | Northstar's documents and exports, as one org's content, through its own ports (directory-backed fakes until P3, then its KF base and `df_stub`) | the lab's tests, fixtures, `runs/`, scorers, judge prompts, exam items |
 | KF contract v0.2; sovera-owm's port contracts (read only) | the acceptance suite, org B, and anything about org B |
+| The builder's own traces, in the user's Opik cloud workspace | the lab's Opik instance and anything in it |
 
 **Working rules:**
 - **The builder writes its own tests** from this spec, on a small made-up org of its own. That org is
@@ -953,7 +1024,8 @@ are generated from the packs' actions.
 - **This spec and the contract change only through the user, as amendments.** Neither side edits the
   other's repo.
 - **The user's approvals don't carry over.** The builder needs the user's own go to create the repo,
-  to download Authorizer, and to spend on Jev and the reference agent under their caps.
+  to download Authorizer, to spend on Jev and the reference agent under their caps, and to be given
+  the Opik workspace's key.
 
 ### 11.4 The port bundle
 
@@ -998,6 +1070,7 @@ mechanisms, it checks:
 | An agent that read a different figure directly can't get it applied | P5 |
 | Self-approval through two hats; an expired or revoked delegation mid-decision; re-delegation; an agent approving over its cap; `agent_approval: never` holding against every grant | P5 |
 | Failure ends (§9): each port down gives no decision and a typed error; an Access outage gives 503 everywhere | P5 |
+| The journey's trace (§9.7): one connected trace from the agent's turn to the port calls; every span the contract names, with its required attributes; no token, key or message content in any span the lab's instance receives | P5 |
 | Credit as data: an empty diff under `core/`, `service/`, `contract/`, `mcp/` | P6; on org B in sub-project 3 |
 
 ---
@@ -1060,6 +1133,8 @@ reference agent's gate runs are pre-registered with their own cap. Nothing else 
 5. **Live judgments may differ from the lab's recorded ones,** since parity runs call Jev live. When
    a parity difference traces to a judgment answer, the lab asks its own service the same case live.
    Only a difference the lab's own service doesn't share counts against the port.
+6. **The GenAI and MCP conventions are still at Development status.** Exact pins, a recorded
+   conventions commit and one constants module keep a rename to one place. Upgrades are deliberate.
 
 **Amendment candidates** (for the core team, through the canon's amendment process):
 - **A-1:** an optional `act` chain on `TokenClaims`.

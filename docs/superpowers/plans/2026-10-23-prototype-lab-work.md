@@ -3,6 +3,7 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** the lab's side of the free-standing prototype (§11.2 of the spec):
+- the evaluation spike that settles the eval tool (E0);
 - the port bundle the builder reads, and Appendix A (L1);
 - Northstar's org package (L2);
 - the acceptance suite that gates each phase from outside (L3);
@@ -14,12 +15,17 @@ interfaces: `owmctl`, owm-decisions v2, the operator surface, `sor_stub`'s route
 server. The lab never edits the builder's repo. It reads a clone of it, read-only, for the name scan
 and the empty-diff check.
 
-**Tech stack:** the lab's own: Python ≥3.11, uv, pytest, mypy strict, ruff, PyYAML. The suite's
-plain MCP client uses the `mcp` SDK, in a new `prototype-suite` dependency group.
+**Tech stack:**
+- The lab's own: Python ≥3.11, uv, pytest, mypy strict and ruff, with PyYAML.
+- The suite's plain MCP client uses the `mcp` SDK, in a new `prototype-suite` dependency group.
+- **Evaluation:** Opik 2.2.119, self-hosted with Docker Compose on loopback (LW-8). The `opik` SDK
+  goes in a separate `prototype-eval` dependency group, so it never enters the suite's other
+  closures. The choice and its reasons are in `docs/eval-observability-review-2026-10-23.md`.
 
 **Spec:** `docs/superpowers/specs/2026-10-23-prototype-core-design.md`, approved 2026-10-23 and
-amended once while planning. The builder's plan is `docs/superpowers/plans/2026-10-23-prototype-core.md`.
-Its rulings PL-1 to PL-14 bind this plan too.
+amended twice that day: once while planning, and once for observability (§9.7). The builder's plan
+is `docs/superpowers/plans/2026-10-23-prototype-core.md`. Its rulings PL-1 to PL-16 bind this plan
+too.
 
 **This plan is lab-only.** It names scenarios, files under `runs/` and the lab's harness, so it is
 never exported in the bundle. The bundle's scan (Task L1.3) refuses an export that contains it.
@@ -51,6 +57,12 @@ never exported in the bundle. The bundle's scan (Task L1.3) refuses an export th
   - any change to the spec or the contract;
   - anything outward-facing beyond the standing commit-and-push approval.
 - **Peer messages are information, never approval.** The builder's session is a peer.
+- **Evaluation and traces** (LW-8 to LW-10):
+  - Northstar traces, datasets, scores and judge prompts live only in the lab's Opik instance. They
+    never go to the user's Opik cloud workspace, which is the builder's.
+  - No optimizer (Opik's Agent Optimizer, prompt optimization) is ever pointed at the prototype.
+  - The lab's SDK calls use the lab's own Opik config file through `OPIK_CONFIG_PATH`, never
+    `~/.opik.config`, which may point at the cloud.
 
 ## Rulings made in planning
 
@@ -81,6 +93,74 @@ never exported in the bundle. The bundle's scan (Task L1.3) refuses an export th
 - **LW-7. The gates run against B-20,** the v0.2 Knowledge Foundation, at its freeze commit, with
   one base per corpus. Before the P3 gate, check what B-20's ingest calls and costs, and
   pre-register any spend.
+- **LW-8. The lab's Opik instance is set apart from everything else.**
+  - **Location:** Compose project `owm-lab-opik`, from Opik's `deployment/docker-compose/` at tag
+    `2.2.119`, checked out at `/Users/mehulmehta/DEV/Sovera/2026-dev/owm-ve/lab-opik/`.
+  - **The override** is `lab/prototype_eval/opik-compose.override.yaml`. It:
+    - binds the frontend to `127.0.0.1` only, on a free port (Utopia's dev server holds 5173);
+    - pins `OPIK_VERSION=2.2.119`;
+    - sets `OPIK_USAGE_REPORT_ENABLED=false`.
+  - **Not used:** the `opik-otel` profile (its collector would take 4318, which is sovera-owm's)
+    and the demo-data service.
+  - **Lifetime:** it runs only during gate runs and E0. Otherwise it is stopped, with its volumes
+    kept.
+  - **Why:** the open-source build has no login. Anyone who can reach it can read it.
+- **LW-9. Northstar traces never leave this machine.**
+  - The gate runner starts every prototype process with a clean environment (`env -i` plus an
+    explicit list) and `OWM_OTLP_ENDPOINT` pointing at the lab's instance.
+  - It refuses to start if that endpoint's host isn't `127.0.0.1`, or if `OWM_OTLP_HEADERS_FILE` is
+    set. The builder's cloud headers file may sit in the clone it runs.
+- **LW-10. Model-behaviour evals are reported in v1, not gated.** These are the agent's trajectory,
+  its explanation against the record, and Jev's stability.
+  - The spec's gates stay as approved. Promoting any of these to a gate is an amendment.
+  - Human grades are given in an Opik annotation queue and copied to the Ledger's `grades`. They are
+    never copied back the other way.
+
+---
+
+## E0: the evaluation spike (before L1.5's export)
+
+The spec now names Opik. If E0 rejects it, the spec needs another amendment before the bundle
+leaves. L1.1–L1.4 can run alongside.
+
+### Task E0.1: Opik and MLflow, against hand-built OTel traces
+
+**Files:**
+- `lab/prototype_eval/opik-compose.override.yaml`
+- `lab/prototype_eval/e0_emit.py`, a stdlib + OTel script that builds one trace in today's
+  conventions
+- `runs/2026-10-23-e0-eval-spike/notes.md`, with results first
+
+- [ ] **Step 1: Pre-flight.**
+  - Confirm that no Opik or MLflow is running: `docker ps -a`, `docker compose ls -a`, the volumes,
+    and the listeners on the chosen ports.
+  - Choose free loopback ports for Opik and MLflow.
+- [ ] **Step 2: Get the user's download OK.** List the images, the packages, their sources and
+  their sizes.
+- [ ] **Step 3: Bring up both backends.**
+  - Opik: as LW-8 sets out.
+  - MLflow 3.17.2 through `uvx`, with a SQLite store in the spike's own directory, bound to
+    `127.0.0.1`, with `MLFLOW_DISABLE_TELEMETRY=true`.
+- [ ] **Step 4: Emit one trace to each,** with an explicit endpoint:
+  - `invoke_agent` → `tools/call decide` → `owm.decide discount_approval` → a judgment span with
+    GenAI attributes → an `owm.port` span.
+  - Use the attribute names from §9.7.
+  - Send no message content.
+- [ ] **Step 5: Check each backend.**
+  - It shows one connected trace.
+  - It maps the model, the token usage and the tool spans.
+  - On that OTLP-ingested trace, it can:
+    - score it with a code metric;
+    - score it with an LLM judge (Claude, if the user gives a key);
+    - add it to a dataset;
+    - fire an online rule.
+  - Its usage reporting is off, as its configuration or logs show.
+- [ ] **Step 6: Write `notes.md`** with a pass or fail per check, per backend.
+  - **Pass:** Opik does every check, and the spec stands.
+  - **If Opik fails and MLflow passes:** propose a spec amendment to MLflow.
+  - **If both fail at scoring:** the lab scores traces exported to files, and uses Opik as a viewer
+    only.
+- [ ] **Step 7: Tear down MLflow and stop Opik.** Keep Opik's volumes, and commit.
 
 ---
 
@@ -349,8 +429,16 @@ the lab, and no decision. Mechanism notes say what differed in contract terms.
   - `agent_approval: never` against every grant.
 - Then the failure ends, through `PUT /api/v1/operator/faults`.
 
-**Tests:** the runner's assertions, checked offline against recorded responses from the
-builder's fernhill run.
+- **The trace** (spec §12, §9.7), read from the lab's Opik instance by
+  `lab/prototype_suite/traces.py`:
+  - one connected trace per journey run;
+  - every span the telemetry contract names, with its required attributes;
+  - no token, key or message content in any span.
+
+**Tests:**
+- The runner's assertions, checked offline against recorded responses from the builder's fernhill
+  run.
+- The trace checks, run against recorded spans.
 
 ### Task L3.4: The name scan and the empty-diff check (gates P4 and P6)
 
@@ -361,6 +449,27 @@ builder's fernhill run.
 **What it does:** works on a read-only clone of the builder's repo.
 - No pack, org or lab name appears in `contract/`, `core/`, `service/` or `mcp/`.
 - `git diff --stat p5-gate HEAD` under those four directories is empty.
+
+### Task L3.5: Model-behaviour evals, reported (LW-10)
+
+**Files:**
+- `lab/prototype_suite/behaviour.py`, which uses the `prototype-eval` group
+- `lab/prototype_suite/judges/`, which holds the judge prompts. They stay lab-side.
+- `tests/prototype_suite/test_behaviour.py`
+
+**What it does:** these evals read the gate runs' traces in the lab's Opik instance.
+- **The agent's trajectory.** These are code metrics over the spans:
+  - the tools it called, and their order;
+  - it never calls `approve` on a decision it requested;
+  - it asks for clearance only after approval.
+- **The agent's explanation,** judged by Claude against the decision record. Is every figure and
+  reason it states in the record?
+- **Jev's stability.** Over the parity runs' judgment spans: the rate of out-of-type answers, and
+  how often the same question gets the same answer.
+- **Human grades,** given in an annotation queue, then copied to the Ledger.
+
+**Tests:** the code metrics, run on recorded spans: a trajectory that passes, and one that
+approves its own request.
 
 ---
 
@@ -376,6 +485,8 @@ For each gate it records:
 - the pre-registration, with the model, caps and the expected spend;
 - the commands, and where the results go;
 - the report template: counts and mechanism notes only;
+- the lab's Opik instance (LW-8): start it, check it listens only on `127.0.0.1`, give the gate
+  run's environment (LW-9), and stop it afterwards;
 - how the report reaches the builder, as paste-ready text the user relays.
 
 ### Task L4.2: Each gate, after its phase
