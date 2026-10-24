@@ -2,7 +2,7 @@
 
 **Status:** designed with the user section by section on 2026-10-22 and 2026-10-23. Every section
 below was approved in conversation, and the user approved this written spec on 2026-10-23. It was
-amended twice on the same day (see "Amendments" below). Nothing is built yet, and no repository has
+amended three times on the same day (see "Amendments" below). Nothing is built yet, and no repository has
 been created.
 
 **Amendments:**
@@ -17,6 +17,9 @@ been created.
   - Observability is OpenTelemetry only, with a telemetry contract frozen with the rest (§9.7).
   - Evaluation uses Opik. The builder's traces go to the user's Opik cloud workspace. The lab's go to
     its own local instance, which the builder never reads.
+- **2026-10-23, at the port bundle's review** (the user's ruling): the builder reads nothing from
+  glowing-garbanzo beyond the bundle's copies (§11.3). Its docs folder holds lab-derived material.
+  The exporter enforces this in code.
 
 **What it is:** the core of a free-standing BlueLeaf prototype: an OWM service, its contracts, its
 MCP server, a reference agent and an approver's tool, running on real identity, with no Utopia. It is
@@ -1015,6 +1018,7 @@ are generated from the packs' actions.
 | Northstar's documents and exports, as one org's content, through its own ports (directory-backed fakes until P3, then its KF base and `df_stub`) | the lab's tests, fixtures, `runs/`, scorers, judge prompts, exam items |
 | KF contract v0.2; sovera-owm's port contracts (read only) | the acceptance suite, org B, and anything about org B |
 | The builder's own traces, in the user's Opik cloud workspace | the lab's Opik instance and anything in it |
+| | glowing-garbanzo, beyond the bundle's copies of its two contract files |
 
 **Working rules:**
 - **The builder writes its own tests** from this spec, on a small made-up org of its own. That org is

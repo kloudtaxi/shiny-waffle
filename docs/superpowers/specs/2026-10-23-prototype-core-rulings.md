@@ -6,15 +6,16 @@ contract and the ports, and marks its fate in the prototype:
 
 - **kept:** the prototype does the same. Spec §3.2's rule applies: everything in owm-decisions v1.4
   stays unless something in the spec changes it.
-- **changed:** the spec changes it, and the row names the section. **changed (proposed)** marks
-  a change the spec implies but doesn't decide; it needs the user's ruling before P1 freezes it.
+- **changed:** the spec changes it, and the row names the section. Where the spec implied a change
+  without deciding it, the row records the user's ruling.
 - **dropped:** it concerned only the lab's own build, tests or demo, or the SLA use case (not in
   v1, §1.3). The row says which.
 
 The numbers are the lab's, so a gate's mechanism notes can cite them. "§" means a section of the
 spec (`docs/spec.md` in the bundle), and "PL-n" means a ruling in the builder's plan.
 
-**Summary:** 26 kept, 22 changed (3 of them proposed, pending the user's ruling: R25, R31, R62), 17 dropped (2 of them superseded by later rulings).
+**Summary:** 26 kept, 22 changed, 17 dropped (2 of them superseded by later rulings). The user ruled on R25, R31 and R62 and confirmed R23,
+R43, R56 and R60 as written (2026-10-23).
 
 ## Deciding and the record
 
@@ -29,15 +30,15 @@ spec (`docs/spec.md` in the bundle), and "PL-n" means a ruling in the builder's 
 | R22 | When the system of record has no row, the requester is the signed-in person or the agent's principal, and a submitted requester stays in `submitted` | changed: §7.1. The catalog gate routes a subject with no row (`no_record`), and the requester is always the token's `sub`, never the body |
 | R23 | For the self-sourced-basis flag, the reference time is the subject's first ask. The floor belongs to the subject, so a fresh ask must not reset the window | kept |
 | R24 | When another decision set the floor, the ratchet's condition and flag name that decision. Two "version 1"s from different decisions would read as a contradiction | kept |
-| R25 | A version below the floor whose confirmer would be the requester is not recorded. The requester never confirms their own lower level | changed (proposed): v1.4 ended this with 503 and `decision.failed`, but §9.1 keeps 503 for a port that can't answer. Proposed: a 403 refusal, since it is a people rule (§6.4), with the rule code named at P1. Pending the user's ruling |
+| R25 | A version below the floor whose confirmer would be the requester is not recorded. The requester never confirms their own lower level | changed: v1.4 ended this with 503 and `decision.failed`, but §9.1 keeps 503 for a port that can't answer. It is a **403** refusal, a people rule (§6.4), with the rule code named at P1 (the user's ruling, 2026-10-23) |
 | R26 | (A dropped concurrence confirmed by the floor band's holder alone) | dropped: superseded by R61 |
 | R28 | A resolution must fit its condition's source: an input conflict takes a confirmed or corrected record; a ratchet takes a confirmed lower level. Anything else is refused (DC-2) | changed: §3.2. `missing_record` is gone with the catalog gate, so its corrected-record resolution goes too |
 | R29 | A decline isn't held back by an open condition (DC-4) and closes the decision; "declined" is derived before "not ready". Otherwise the decision stays live and the next re-run drops the decline | kept |
-| R31 | A re-run whose record now names a different requester is not recorded. This blocks reassigning a request to oneself and then approving it; a legitimate reassignment needs a new decision | changed (proposed): as R25, but proposed as a 409 refusal, since the record moved under the decision. Pending the user's ruling |
+| R31 | A re-run whose record now names a different requester is not recorded. This blocks reassigning a request to oneself and then approving it; a legitimate reassignment needs a new decision | changed: as R25, but a **409** refusal, since the record moved under the decision (the user's ruling, 2026-10-23) |
 | R32 | A resolved input conflict covers its figure again if the record returns to the exact value confirmed. Approvals reset per version, and the ratchet catches a lower level | kept |
 | R33 | Every event that changes a decision's derived state goes on the subject's stream: redemptions, reports and incidents included. Writes re-check the stream's last sequence, so an approval can't land on a spent decision | kept (Review Focus 1 in the plan) |
 | R61 | A lower level below the floor opens one ratchet condition per confirmer, each naming one person. The conditions one version opens are a round. A round keeps its ids while re-runs stay below the floor at that version's level for the same confirmers, and the floor drops only when every condition in the round is confirmed; `floor.confirmed_by` names whoever completed it. The round's size is read from the log, so an old round never completes short of its confirmers. A new level opens a new round, and a confirmation in an unfinished round lowers nothing. The concurrence holder's condition reads "Confirm dropping the <title> concurrence: …" | kept |
-| R62 | One person in two confirmer roles is not recorded: the confirmers are never the same person | changed (proposed): as R25, a 403 refusal (separation of duties, §6.4). Pending the user's ruling |
+| R62 | One person in two confirmer roles is not recorded: the confirmers are never the same person | changed: as R25, a **403** refusal (separation of duties, §6.4) (the user's ruling, 2026-10-23) |
 | R63 | After one of a round's confirmations, `what_changed` names who the round still needs. "Still below the floor" alone reads as if the confirmation did nothing | kept |
 
 ## Clearance, redemption and reporting

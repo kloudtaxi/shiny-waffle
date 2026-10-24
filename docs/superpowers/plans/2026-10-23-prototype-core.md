@@ -37,6 +37,8 @@ allows. The lab's own work (L1–L4) has a separate plan, which the builder does
   the lab.
   - Never ask for scenario ids, expected outcomes, the acceptance suite, or anything about a second
     org.
+  - Read nothing from glowing-garbanzo, or any other repo, beyond the bundle's copies. Those other
+    repos hold lab-derived material (spec §11.3).
   - Gate results come back to you as counts and mechanism notes.
 - **Get the user's own go in chat** before each of these. One approval never covers another.
   - Creating the GitHub repo. The name is the user's to choose.
