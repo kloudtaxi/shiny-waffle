@@ -21,6 +21,11 @@ been created.
   glowing-garbanzo beyond the bundle's copies (§11.3). Its docs folder holds lab-derived material.
   The exporter enforces this in code.
 
+**Exports** (the port bundle, §11.4):
+- **`2026-10-23-7f9eea6`** (2026-10-23, approved by the user): lab commit 7f9eea6, tag
+  `dataset-2026-10-23`; 90 files; its `FILES.sha256` records every hash. This spec's copy in it is
+  the text above, without this log.
+
 **What it is:** the core of a free-standing BlueLeaf prototype: an OWM service, its contracts, its
 MCP server, a reference agent and an approver's tool, running on real identity, with no Utopia. It is
 the **reference the OWM team implements from**: they take its contracts and the lab's acceptance
