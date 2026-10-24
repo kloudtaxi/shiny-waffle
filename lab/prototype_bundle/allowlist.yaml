@@ -43,6 +43,8 @@ files:
   # The contracts the prototype starts from.
   - {repo: glowing-garbanzo, from: owm/docs/foundation-contract-v0.2.md,
      to: contracts/kf-foundation-contract-v0.2.md}
+  - {repo: glowing-garbanzo, from: web-next/lib/contract/knowledge.ts,
+     to: contracts/kf-knowledge.ts}
   - {repo: sovera-owm, from: specs/001-identity-authz-ports/contracts/identity-provider.md,
      to: contracts/sovera-owm/identity-provider.md}
   - {repo: sovera-owm, from: specs/001-identity-authz-ports/contracts/authorization-provider.md,

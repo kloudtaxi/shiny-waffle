@@ -52,7 +52,9 @@ replace:
       the company's register:
       - **A:** it decides its type's known cases correctly;
       - **B:** no unsafe decision, and no error, on its type's attack cases;
-    kind: comment
+      (This was the lab's own admission gate. The prototype checks a pack's structure instead, spec §5.3.)
+    kind: doc
+    why: the lab's admission gate is described as the lab's; the prototype's check is structural (spec §5.3)
   - file: source/lab/owm_kernel/SPEC_FORMAT.md
     match: "Always available: `sid`, the scenario id."
     replace: "Always available: `sid`, the id the caller gives the decision."
@@ -296,6 +298,138 @@ replace:
     kind: doc
     why: one org's customer name in a graph statistic is replaced
 
+
+  # -- the vendored contract's README and header: no pointers to worked examples or lab-derived docs
+  - file: source/lab/owm_service/contract/README.md
+    match: |-
+      # Vendored contract
+
+      These files are copies from `kloudtaxi/glowing-garbanzo` (https://github.com/kloudtaxi/glowing-garbanzo)
+      at commit **6b6619e** (contract v1.4):
+
+      | Here | There |
+      |---|---|
+      | `owm-decisions.ts` | `web-next/lib/contract/owm-decisions.ts` |
+      | `s22.example.ts` | `web-next/lib/contract/s22.example.ts` |
+      | `s22.example.json` | generated from `s22.example.ts` (below) |
+
+      The service models (`../models.py`) mirror `owm-decisions.ts`. `tests/owm_service/test_contract_drift.py`
+      parses every export of `s22.example.json` through them, so a change to the contract that the models
+      don't follow fails there. Node is only needed to regenerate the JSON, not to run the tests.
+
+      Two later contract versions re-vendor only `owm-decisions.ts`:
+      - **v1.4 (6b6619e):** every list is a `Page<T>`, `{items, next_cursor}` (D-24);
+      - **v1.3 (589e0c7):** the dry run's own response (R34), and notes on R58 and `WorkItem.href`.
+
+      `s22.example.ts` hasn't changed since 30977cd, so `s22.example.json` stands.
+
+      ## Regenerate
+
+      ```bash
+      G=<a glowing-garbanzo clone>
+      git -C $G show 6b6619e:web-next/lib/contract/owm-decisions.ts > lab/owm_service/contract/owm-decisions.ts
+      git -C $G show 6b6619e:web-next/lib/contract/s22.example.ts   > lab/owm_service/contract/s22.example.ts
+      (cd lab/owm_service/contract && node -e "import('./s22.example.ts').then(m=>process.stdout.write(JSON.stringify(m,null,1)+'\n'))" > s22.example.json)
+      ```
+
+      Node 22.6 or later is needed for the TypeScript type-stripping.
+    replace: |-
+      # The contract
+
+      `owm-decisions.ts` is owm-decisions v1.4, the contract the lab's service was built to, copied from
+      glowing-garbanzo at commit 6b6619e. The service's models (`../models.py`) mirror it.
+
+      The prototype's contract is v2. Spec §3.2 lists what v2 changes from this file.
+    kind: doc
+    why: the README named the worked example files the bundle leaves out and how to fetch them; it now says only where v1.4 came from
+  - file: source/lab/owm_service/contract/owm-decisions.ts
+    match: |2-
+       * The v1.4 contract on `owm-decisions`: the shapes the OWM service serves for
+       * the register, decisions, approvals and clearance. owm/docs/contract-v1.2.md
+       * is the reference; section numbers below point into it. Revised after the
+       * lab's review and re-review (shiny-waffle docs/contract-v1.2-review-2026-10-09.md,
+       * c196b31 and 74aef92).
+    replace: |2-
+       * The v1.4 contract on `owm-decisions`: the shapes the OWM service serves for
+       * the register, decisions, approvals and clearance. Section numbers below point
+       * into an earlier contract document that this bundle doesn't carry; the
+       * prototype spec (§3.2) and its Appendix A say what v2 keeps and changes.
+    kind: doc
+    why: the header named an earlier contract document and a lab review as the reference; neither is in the bundle
+
+  # -- the registrar: the lab's corpus variants stay in the lab (spec §11.4) ---------------------
+  - file: source/lab/owm_register/registrar.py
+    match: |-
+      (`build_register.py`, the 17 / 14 / 16 entries per corpus)
+    replace: |-
+      (`build_register.py`)
+    kind: comment
+  - file: source/lab/owm_register/registrar.py
+    match: |-
+      CORPORA = {"base": LAB / "dataset/evidence",
+                 "missing-contract-evidence": LAB / "dataset/evidence-variants/missing-contract-evidence",
+                 "missing-guarantee-evidence":
+                     LAB / "dataset/evidence-variants/missing-guarantee-evidence"}  # fmt: skip
+    replace: |-
+      CORPORA = {"base": LAB / "dataset/evidence"}  # other corpora are the caller's to supply
+    kind: code
+    why: the lab's corpus variants are removed from CORPORA; only the base corpus is named
+
+  # -- the KF contract's pointers to documents outside the bundle ---------------------------------
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      **Types:** `web-next/lib/contract/knowledge.ts`, which typechecks.
+    replace: |-
+      **Types:** `contracts/kf-knowledge.ts` in this bundle, which typechecks.
+    kind: doc
+    why: the types file is pointed to in the bundle, not in another repo
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      `owm/docs/probes/foundation-register-join.py` is read-only. It reads
+    replace: |-
+      A read-only probe reads
+    kind: doc
+    why: a pointer to a probe script in another repo is removed
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      added
+        (shiny-waffle `runs/2026-09-28-utopia-aad5b06/curation/curate.py`). **This base
+    replace: |-
+      added.
+        **This base
+    kind: doc
+    why: a pointer to a lab run is removed
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: |-
+      (`b18-lightrag-evaluation.md`)
+    replace: |-
+      (an evaluation not in this bundle)
+    count: 2
+    kind: doc
+    why: a pointer to an evaluation document in another repo is removed
+  - file: contracts/kf-knowledge.ts
+    match: |-
+      "CRM-2048"
+    replace: |-
+      "CRM-0001"
+    kind: doc
+    why: one org's CRM account id in an example is replaced by a neutral one
+
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: "by `web-next/scripts/load-northstar-base.mjs`"
+    replace: "by a load script outside this bundle"
+    kind: doc
+    why: a pointer to a script in another repo is removed
+  - file: contracts/kf-knowledge.ts
+    match: |2-
+       * owm/docs/foundation-contract-v0.2.md is the reference; section numbers below
+       * point into it.
+    replace: |2-
+       * contracts/kf-foundation-contract-v0.2.md in this bundle is the reference;
+       * section numbers below point into it.
+    kind: doc
+    why: the reference is pointed to in the bundle, not in another repo
+
 keep:
   - file: "*"
     match: bootstrap
@@ -312,3 +446,12 @@ keep:
   - file: source/lab/owm_service/prepare.py
     match: "fills the record's `scenario`"
     why: names the record key the kernel fills
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: "(`web-next/lib/demo/knowledge-texts.ts`)"
+    why: describes where another repo's UI demo keeps its texts; no lab material, nothing to fetch for the build
+  - file: contracts/kf-foundation-contract-v0.2.md
+    match: "(`web-next/lib/demo/knowledge-graph.ts`)"
+    why: describes where another repo's UI demo keeps its graph; no lab material, nothing to fetch for the build
+  - file: source/lab/owm_service/_lab.py
+    match: '"dataset/evidence-variants"'
+    why: names the folder a variant corpus would live in; no variant is in the bundle (spec §11.4)

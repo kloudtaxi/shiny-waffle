@@ -233,3 +233,6 @@ tracker/seed/
 
 # Pre-flight spend ledgers (G-50)
 runs/**/.spend/
+
+# the port bundle exporter stages here, outside the handover folder (lab/prototype_bundle)
+.bundle-staging/
